@@ -11,7 +11,7 @@
 	<name>BOM</name>
 
 	<properties>
-		<revision>0.0.1-SNAPSHOT</revision>
+		<revision>0.1.0-SNAPSHOT</revision>
 	</properties>
 
 	<dependencies>
@@ -27,7 +27,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-poi-excel</artifactId>
+			<artifactId>easyjava-office-excel</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
