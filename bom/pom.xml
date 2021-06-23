@@ -3,32 +3,45 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.wangliang181230.easyjava</groupId>
+		<artifactId>easyjava-project</artifactId>
+		<version>${revision}</version>
+	</parent>
 
-	<groupId>org.wangliang181230.easyjava</groupId>
 	<artifactId>easyjava-bom</artifactId>
 	<packaging>pom</packaging>
-	<version>${revision}</version>
-	<name>BOM</name>
+	<name>BOM ${project.version}</name>
 
-	<properties>
-		<revision>0.1.0-SNAPSHOT</revision>
-	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- All -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyjava-all</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-web</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-office-excel</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+			<!-- Core -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyjava-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Web -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyjava-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Office -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyjava-office-excel</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
