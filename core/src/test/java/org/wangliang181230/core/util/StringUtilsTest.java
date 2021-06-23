@@ -3,9 +3,9 @@ package org.wangliang181230.core.util;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author 王良/wangliang@jyhk.com
- * @version 1.0
- * @since 2021/6/23 19:20
+ * StringUtils单元测试
+ *
+ * @author 王良
  */
 public class StringUtilsTest {
 
