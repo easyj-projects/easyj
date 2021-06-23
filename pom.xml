@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.wangliang181230.easyjava</groupId>
+	<artifactId>easyjava-project</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+	<name>project</name>
+
+	<properties>
+		<!-- Project version -->
+		<revision>0.0.1-SNAPSHOT</revision>
+
+		<!-- Compiler settings properties -->
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- Maven plugins version  -->
+		<flatten-maven-plugin.version>1.2.5</flatten-maven-plugin.version>
+	</properties>
+
+	<modules>
+		<module>bom</module>
+		<module>dependencies</module>
+
+		<module>core</module>
+		<module>web</module>
+		<module>poi</module>
+	</modules>
+
+	<inceptionYear>2021</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>wangliang181230</id>
+			<name>王良</name>
+			<url>https://gitee.com/wangliang181230</url>
+			<email>841369634@qq.com</email>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>wangliang181230</name>
+		<url>https://gitee.com/wangliang181230</url>
+	</organization>
+
+	<scm>
+		<url>https://gitee.com/wangliang181230/easyjava</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/wangliang181230/easyjava/issues</url>
+	</issueManagement>
+
+	<profiles>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>${flatten-maven-plugin.version}</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
