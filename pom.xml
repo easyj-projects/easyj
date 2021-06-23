@@ -28,8 +28,8 @@
 		<module>dependencies</module>
 
 		<module>core</module>
+		<module>office</module>
 		<module>web</module>
-		<module>poi</module>
 	</modules>
 
 	<inceptionYear>2021</inceptionYear>

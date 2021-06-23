@@ -5,18 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.wangliang181230.easyjava</groupId>
-		<artifactId>easyjava-poi</artifactId>
+		<artifactId>easyjava-dependencies</artifactId>
 		<version>${revision}</version>
+		<relativePath>../dependencies/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>easyjava-poi-excel</artifactId>
-	<name>poi-excel</name>
+	<artifactId>easyjava-office</artifactId>
+	<packaging>pom</packaging>
+	<name>office</name>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>excel</module>
+	</modules>
 </project>
