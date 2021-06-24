@@ -75,4 +75,20 @@
 		<system>gitee</system>
 		<url>https://gitee.com/easyjava-projects/easyjava/issues</url>
 	</issueManagement>
+
+	<!-- 资源仓库管理 -->
+	<repositories>
+		<repository>
+			<id>kt-nexus</id>
+			<name>kt-nexus</name>
+			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
