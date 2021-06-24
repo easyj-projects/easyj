@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.easyframework</groupId>
-		<artifactId>easyjava-project</artifactId>
+		<artifactId>easyjava-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
@@ -13,14 +13,29 @@
 	<name>core</name>
 
 	<dependencies>
+		<!-- 工具类依赖 -->
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
 		</dependency>
 
+		<!-- 日志 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- Findbugs -->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

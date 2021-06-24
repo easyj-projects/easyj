@@ -5,15 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.easyframework</groupId>
-		<artifactId>easyjava-build-parent</artifactId>
+		<artifactId>easyjava-build</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
-	<artifactId>easyjava-project</artifactId>
+	<artifactId>easyjava-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
-	<name>project</name>
+	<name>Parent</name>
+	<url>https://gitee.com/easyjava-projects/easyjava</url>
 
 	<properties>
 		<!-- 编译配置 -->
@@ -46,6 +47,11 @@
 		</license>
 	</licenses>
 
+	<organization>
+		<name>王良组织的开源项目</name>
+		<url>https://gitee.com/easyjava-projects</url>
+	</organization>
+
 	<developers>
 		<developer>
 			<id>wangliang181230</id>
@@ -59,11 +65,6 @@
 			</roles>
 		</developer>
 	</developers>
-
-	<organization>
-		<name>王良-个人开源项目</name>
-		<url>https://gitee.com/wangliang181230</url>
-	</organization>
 
 	<scm>
 		<url>https://gitee.com/easyjava-projects/easyjava</url>
