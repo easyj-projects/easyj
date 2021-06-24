@@ -4,20 +4,33 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.wangliang181230.easyjava</groupId>
-		<artifactId>easyjava-dependencies</artifactId>
+		<groupId>org.easyframework</groupId>
+		<artifactId>easyjava-project</artifactId>
 		<version>${revision}</version>
-		<relativePath>../dependencies/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyjava-web</artifactId>
 	<name>web</name>
 
 	<dependencies>
+		<!-- 当前项目的依赖 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyjava-core</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<!-- 日志 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
 		</dependency>
 	</dependencies>
 </project>

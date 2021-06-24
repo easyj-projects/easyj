@@ -3,36 +3,33 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.easyframework</groupId>
+		<artifactId>easyjava-build-parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath/>
+	</parent>
 
-	<groupId>org.wangliang181230.easyjava</groupId>
 	<artifactId>easyjava-project</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>project</name>
 
 	<properties>
-		<!-- Project version -->
-		<revision>0.1.0-SNAPSHOT</revision>
-
-		<!-- Compiler settings properties -->
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- 编译配置 -->
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- Maven plugins version  -->
-		<flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
-		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<!-- 项目版本 -->
+		<revision>0.1.0-SNAPSHOT</revision>
 	</properties>
 
 	<modules>
 		<module>all</module>
 		<module>bom</module>
-
-		<module>dependencies</module>
 
 		<module>core</module>
 		<module>office</module>
@@ -55,144 +52,27 @@
 			<name>王良</name>
 			<url>https://gitee.com/wangliang181230</url>
 			<email>841369634@qq.com</email>
+			<organization>浙江蕙康科技有限公司</organization>
+			<organizationUrl>https://www.jyhk.com</organizationUrl>
+			<roles>
+				<role>Java架构师</role>
+			</roles>
 		</developer>
 	</developers>
 
 	<organization>
-		<name>wangliang181230</name>
+		<name>王良-个人开源项目</name>
 		<url>https://gitee.com/wangliang181230</url>
 	</organization>
 
 	<scm>
-		<url>https://gitee.com/wangliang181230/easyjava</url>
-		<connection>scm:git@gitee.com:wangliang181230/easyjava.git</connection>
-		<developerConnection>scm:git@gitee.com:wangliang181230/easyjava.git</developerConnection>
+		<url>https://gitee.com/easyjava-projects/easyjava</url>
+		<connection>scm:git@gitee.com:easyjava-projects/easyjava.git</connection>
+		<developerConnection>scm:git@gitee.com:easyjava-projects/easyjava.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>gitee</system>
-		<url>https://gitee.com/wangliang181230/easyjava/issues</url>
+		<url>https://gitee.com/easyjava-projects/easyjava/issues</url>
 	</issueManagement>
-
-	<build>
-		<plugins>
-			<!-- Compiler -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
-			</plugin>
-			<!-- Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<version>${flatten-maven-plugin.version}</version>
-				<configuration>
-					<updatePomFile>true</updatePomFile>
-					<flattenMode>resolveCiFriendliesOnly</flattenMode>
-				</configuration>
-				<executions>
-					<execution>
-						<id>flatten</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>flatten</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>flatten.clean</id>
-						<phase>clean</phase>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!-- Surefire -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${maven-surefire-plugin.version}</version>
-				</plugin>
-				<!-- Source -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven-source-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>oss</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<!-- Javadoc -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven-javadoc-plugin.version}</version>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-	<profiles>
-		<profile>
-			<id>pr-pushed</id>
-			<build>
-				<plugins>
-					<!-- Surefire -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-					</plugin>
-					<!-- Javadoc -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
-					<!-- Surefire -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-					</plugin>
-					<!-- Source -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-					</plugin>
-					<!-- Javadoc -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
