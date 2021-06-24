@@ -21,7 +21,7 @@ public class UrlUtilsTest {
 		//case: empty
 		Assertions.assertEquals("/", UrlUtils.normalizePath(""));
 		//case: 都是斜杆
-		Assertions.assertEquals("/", UrlUtils.normalizePath("///\\\\"));
+		Assertions.assertEquals("/", UrlUtils.normalizePath("///  \\\\"));
 		//case: 前面没有”/“
 		Assertions.assertEquals("/abc", UrlUtils.normalizePath("abc"));
 		//case: 后面有”/“
