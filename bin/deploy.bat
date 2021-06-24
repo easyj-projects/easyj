@@ -1,0 +1,1 @@
+mvn clean deploy -P release -Dmaven.test.skip=false -Dmaven.javadoc.skip=false

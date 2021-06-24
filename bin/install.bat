@@ -1,0 +1,1 @@
+mvn clean install -Prelease -Dmaven.test.skip=false -Dmaven.javadoc.skip=false
