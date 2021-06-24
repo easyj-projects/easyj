@@ -1,0 +1,52 @@
+package org.easyframework.web.cache304;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.easyframework.core.exception.SkipCallbackWrapperException;
+import org.easyframework.web.util.HttpUtils;
+
+/**
+ * Cache304过滤器
+ *
+ * @author wangliang181230
+ */
+public class Cache304Filter implements Filter {
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		// 直接强转类型
+		HttpServletRequest httpRequest = (HttpServletRequest)request;
+		HttpServletResponse httpResponse = (HttpServletResponse)response;
+
+		// 非GET请求，不使用Cache304
+		if (!HttpUtils.isGetRequest(httpRequest)) {
+			chain.doFilter(request, response);
+			return;
+		}
+
+		// 执行Cache304逻辑
+		try {
+			Cache304Utils.doCache(httpRequest, httpResponse, () -> {
+				try {
+					chain.doFilter(request, response);
+				} catch (IOException | ServletException e) {
+					throw new SkipCallbackWrapperException(e);
+				}
+			});
+		} catch (SkipCallbackWrapperException ex) {
+			Throwable e = ex.getCause();
+			if (e instanceof IOException) {
+				throw (IOException)e;
+			} else {
+				throw (ServletException)e;
+			}
+		}
+	}
+}
