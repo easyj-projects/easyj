@@ -1,5 +1,7 @@
 package org.easyframework.core.util;
 
+import javax.annotation.Nonnull;
+
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
@@ -28,6 +30,7 @@ public class UrlUtils {
 	 * @param path 路径
 	 * @return path 标准化后的路径
 	 */
+	@Nonnull
 	public static String normalizePath(String path) {
 		Assert.notNull(path, "path must be not null");
 
