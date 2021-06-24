@@ -1,4 +1,4 @@
-package org.easyframework.core.constant;
+package org.easyframework.core.date;
 
 /**
  * Date相关常量
@@ -15,7 +15,7 @@ public interface DateConstant {
 	/**
 	 * 半天的秒数
 	 */
-	long HALF_DAY_SEC = 12 * 60 * 60;
+	long HALF_DAY_SEC = ONE_DAY_SEC / 2;
 
 	/**
 	 * 一天的毫秒数
@@ -25,5 +25,5 @@ public interface DateConstant {
 	/**
 	 * 半天的毫秒数
 	 */
-	long HALF_DAY_MILL = HALF_DAY_SEC * 1000;
+	long HALF_DAY_MILL = ONE_DAY_MILL / 2;
 }

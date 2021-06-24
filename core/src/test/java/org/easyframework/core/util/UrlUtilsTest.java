@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * URLUtils测试类
+ * {@link UrlUtils} 测试类
  *
  * @author wangliang181230
  */
