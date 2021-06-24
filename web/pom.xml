@@ -10,7 +10,13 @@
 	</parent>
 
 	<artifactId>easyjava-web</artifactId>
-	<name>web</name>
+	<packaging>pom</packaging>
+	<name>Web</name>
+
+	<modules>
+		<module>web-cache304</module>
+		<module>web-core</module>
+	</modules>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->

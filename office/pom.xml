@@ -14,6 +14,6 @@
 	<name>Office</name>
 
 	<modules>
-		<module>excel</module>
+		<module>office-excel</module>
 	</modules>
 </project>

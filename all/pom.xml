@@ -12,9 +12,6 @@
 	<artifactId>easyjava-all</artifactId>
 	<name>ALL</name>
 
-	<properties>
-	</properties>
-
 	<dependencies>
 		<!-- Core -->
 		<dependency>
@@ -26,7 +23,12 @@
 		<!-- Web -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-web</artifactId>
+			<artifactId>easyjava-web-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyjava-web-cache304</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
