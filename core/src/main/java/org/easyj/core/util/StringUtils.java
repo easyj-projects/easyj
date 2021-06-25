@@ -21,7 +21,7 @@ public class StringUtils {
 	 * @param obj 任意类型的对象
 	 * @return str 解析后的字符串
 	 */
-	@SuppressWarnings("all")
+	@SuppressWarnings("deprecation")
 	public static String toString(final Object obj) {
 		if (obj == null) {
 			return "null";
@@ -86,22 +86,23 @@ public class StringUtils {
 
 			// Gets all fields, excluding static or synthetic fields
 			Field[] fields = ReflectionUtils.getAllFields(obj.getClass());
+			Object fieldValue = null;
 			for (Field field : fields) {
-				field.setAccessible(true);
-
 				if (sb.length() > initialLength) {
 					sb.append(", ");
 				}
 				sb.append(field.getName());
 				sb.append("=");
+
 				try {
-					Object f = field.get(obj);
-					if (f == obj) {
-						sb.append("(this ").append(f.getClass().getSimpleName()).append(")");
-					} else {
-						sb.append(toString(f));
-					}
+					fieldValue = ReflectionUtils.getFieldValue(obj, field);
 				} catch (Exception ignore) {
+					continue;
+				}
+				if (fieldValue == obj) {
+					sb.append("(this ").append(fieldValue.getClass().getSimpleName()).append(")");
+				} else {
+					sb.append(toString(fieldValue));
 				}
 			}
 

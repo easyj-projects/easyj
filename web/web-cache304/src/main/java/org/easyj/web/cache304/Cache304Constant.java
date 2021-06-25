@@ -17,5 +17,5 @@ public interface Cache304Constant {
 	 * 临界误差时间：10分钟
 	 * 用于解决：以天来计算缓存秒数时，避免客户端与服务器端的时间差导致缓存多存了一天
 	 */
-	long CRITICAL_TIME = 10 * 60 * 1000;
+	long CRITICAL_TIME = 10 * 60 * 1000L;
 }

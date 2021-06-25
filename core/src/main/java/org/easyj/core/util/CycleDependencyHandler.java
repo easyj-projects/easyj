@@ -47,7 +47,7 @@ public class CycleDependencyHandler {
 	}
 
 	private static void start() {
-		OBJECT_SET_LOCAL.set(new HashSet<>(8));
+		OBJECT_SET_LOCAL.set(new HashSet<>(4));
 	}
 
 	private static void end() {

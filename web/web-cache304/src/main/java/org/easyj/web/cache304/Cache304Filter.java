@@ -28,7 +28,6 @@ public class Cache304Filter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// 直接强转类型
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
-		HttpServletResponse httpResponse = (HttpServletResponse)response;
 
 		// 非GET请求，不使用Cache304
 		if (!HttpUtils.isGetRequest(httpRequest)) {
@@ -44,6 +43,7 @@ public class Cache304Filter implements Filter {
 
 		// 执行Cache304逻辑
 		try {
+			HttpServletResponse httpResponse = (HttpServletResponse)response;
 			Cache304Utils.doCache(httpRequest, httpResponse, config, () -> {
 				try {
 					chain.doFilter(request, response);

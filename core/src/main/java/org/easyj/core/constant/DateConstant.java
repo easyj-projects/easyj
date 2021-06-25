@@ -10,7 +10,7 @@ public interface DateConstant {
 	/**
 	 * 一天的秒数
 	 */
-	long ONE_DAY_SEC = 24 * 60 * 60;
+	long ONE_DAY_SEC = 24 * 60 * 60L;
 
 	/**
 	 * 半天的秒数

@@ -59,7 +59,6 @@ public class Cache304Aspect {
 		}
 
 		HttpServletRequest request = HttpUtils.getRequest();
-		HttpServletResponse response = HttpUtils.getResponse();
 
 		// 获取当前调用的controller方法
 		MethodSignature ms = (MethodSignature)jp.getSignature();
@@ -86,6 +85,7 @@ public class Cache304Aspect {
 
 		// 执行304缓存方法
 		try {
+			HttpServletResponse response = HttpUtils.getResponse();
 			return Cache304Utils.doCache(request, response, () -> {
 				try {
 					return jp.proceed();

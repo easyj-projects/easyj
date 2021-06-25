@@ -1,6 +1,7 @@
 package org.easyj.core.util;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -82,6 +83,26 @@ public class ReflectionUtils {
 			clazz = clazz.getSuperclass();
 		}
 		return interfaces;
+	}
+
+	//endregion
+
+
+	//region Accessible
+
+	/**
+	 * set accessible to true if false
+	 *
+	 * @param accessible the accessible
+	 * @param <T>        the type of the accessible
+	 * @return the accessible itself
+	 */
+	@SuppressWarnings("all")
+	public static <T extends AccessibleObject> T setAccessible(T accessible) {
+		if (!accessible.isAccessible()) {
+			accessible.setAccessible(true);
+		}
+		return accessible;
 	}
 
 	//endregion
@@ -176,9 +197,7 @@ public class ReflectionUtils {
 		Assert.notNull(target, "target must be not null");
 
 		while (true) {
-			if (!field.isAccessible()) {
-				field.setAccessible(true);
-			}
+			setAccessible(field);
 			try {
 				return (T)field.get(target);
 			} catch (IllegalAccessException ignore) {
@@ -224,9 +243,7 @@ public class ReflectionUtils {
 		Assert.notNull(target, "target must be not null");
 
 		while (true) {
-			if (!field.isAccessible()) {
-				field.setAccessible(true);
-			}
+			setAccessible(field);
 			try {
 				field.set(target, fieldValue);
 				return;
@@ -258,7 +275,7 @@ public class ReflectionUtils {
 	}
 
 	/**
-	 * modify `static` or `static final` field value
+	 * set `static` or `static final` field value
 	 *
 	 * @param staticField the static field
 	 * @param newValue    the new value
@@ -277,18 +294,18 @@ public class ReflectionUtils {
 
 		// remove the `final` keyword from the field
 		if (Modifier.isFinal(staticField.getModifiers())) {
-			Field modifiers = staticField.getClass().getDeclaredField("modifiers");
-			modifiers.setAccessible(true);
-			modifiers.setInt(staticField, staticField.getModifiers() & ~Modifier.FINAL);
+			Field modifiersField = staticField.getClass().getDeclaredField("modifiers");
+			setAccessible(modifiersField);
+			modifiersField.setInt(staticField, staticField.getModifiers() & ~Modifier.FINAL);
 		}
 
 		// set new value
-		staticField.setAccessible(true);
+		setAccessible(staticField);
 		staticField.set(staticField.getDeclaringClass(), newValue);
 	}
 
 	/**
-	 * modify `static` or `static final` field value
+	 * set `static` or `static final` field value
 	 *
 	 * @param targetClass     the target class
 	 * @param staticFieldName the static field name
@@ -372,9 +389,7 @@ public class ReflectionUtils {
 	public static Object invokeMethod(Object target, Method method, Object... args)
 			throws InvocationTargetException, IllegalArgumentException, SecurityException {
 		while (true) {
-			if (!method.isAccessible()) {
-				method.setAccessible(true);
-			}
+			setAccessible(method);
 			try {
 				return method.invoke(target, args);
 			} catch (IllegalAccessException ignore) {
@@ -641,6 +656,18 @@ public class ReflectionUtils {
 		return annotation;
 	}
 
+	/**
+	 * get annotation values
+	 *
+	 * @param annotation the annotation
+	 * @return annotationValues the annotation values
+	 * @throws NoSuchFieldException the no such field exception
+	 */
+	public static Map<String, Object> getAnnotationValues(Annotation annotation) throws NoSuchFieldException {
+		InvocationHandler h = Proxy.getInvocationHandler(annotation);
+		return getFieldValue(h, "memberValues");
+	}
+
 	//endregion
 
 
@@ -669,23 +696,6 @@ public class ReflectionUtils {
 				throw new IllegalArgumentException("new instance failed, class: " + clazz, e);
 			}
 		});
-	}
-
-	//endregion
-
-
-	//region Annotation
-
-	/**
-	 * get annotation values
-	 *
-	 * @param annotation the annotation
-	 * @return annotationValues the annotation values
-	 * @throws NoSuchFieldException the no such field exception
-	 */
-	public static Map<String, Object> getAnnotationValues(Annotation annotation) throws NoSuchFieldException {
-		InvocationHandler h = Proxy.getInvocationHandler(annotation);
-		return getFieldValue(h, "memberValues");
 	}
 
 	//endregion

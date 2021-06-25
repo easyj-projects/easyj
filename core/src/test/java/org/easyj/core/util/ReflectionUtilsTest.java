@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
  *
  * @author wangliang181230
  */
-public class ReflectionUtilsTest {
+class ReflectionUtilsTest {
 
 	private static final String STRING = "d";
 
@@ -33,13 +33,13 @@ public class ReflectionUtilsTest {
 	public final String testValue2 = (null != null ? "hello world" : "hello world");
 
 	@Test
-	public void testGetClassByName() throws ClassNotFoundException {
+	void testGetClassByName() throws ClassNotFoundException {
 		Assertions.assertEquals(String.class,
 				ReflectionUtils.getClassByName("java.lang.String"));
 	}
 
 	@Test
-	public void testGetFieldValue() throws NoSuchFieldException {
+	void testGetFieldValue() throws NoSuchFieldException {
 		Assertions.assertEquals("d", ReflectionUtils.getFieldValue(new ReflectionUtilsTest(), "STRING"));
 		Assertions.assertThrows(ClassCastException.class, () -> {
 			Integer var = ReflectionUtils.getFieldValue(new ReflectionUtilsTest(), "STRING");
@@ -52,7 +52,7 @@ public class ReflectionUtilsTest {
 	}
 
 	@Test
-	public void testInvokeMethod() throws NoSuchMethodException, InvocationTargetException {
+	void testInvokeMethod() throws NoSuchMethodException, InvocationTargetException {
 		Assertions.assertEquals(0, ReflectionUtils.invokeMethod("", "length"));
 		Assertions.assertEquals(3,
 				ReflectionUtils.invokeMethod("foo", "length"));
@@ -62,7 +62,7 @@ public class ReflectionUtilsTest {
 	}
 
 	@Test
-	public void testInvokeMethod2() throws NoSuchMethodException, InvocationTargetException {
+	void testInvokeMethod2() throws NoSuchMethodException, InvocationTargetException {
 		Assertions.assertEquals(0, ReflectionUtils
 				.invokeMethod("", "length", null, EMPTY_OBJECT_ARRAY));
 		Assertions.assertEquals(3, ReflectionUtils
@@ -73,7 +73,7 @@ public class ReflectionUtilsTest {
 	}
 
 	@Test
-	public void testInvokeMethod3() throws NoSuchMethodException, InvocationTargetException {
+	void testInvokeMethod3() throws NoSuchMethodException, InvocationTargetException {
 		Assertions.assertEquals("0", ReflectionUtils.invokeStaticMethod(
 				String.class, "valueOf",
 				new Class<?>[]{int.class}, 0));
@@ -86,7 +86,7 @@ public class ReflectionUtilsTest {
 	}
 
 	@Test
-	public void testGetInterfaces() {
+	void testGetInterfaces() {
 		Assertions.assertArrayEquals(new Object[]{Serializable.class},
 				ReflectionUtils.getInterfaces(Serializable.class).toArray());
 
@@ -97,7 +97,7 @@ public class ReflectionUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	public void testSetStaticFieldValue() throws NoSuchFieldException, IllegalAccessException {
+	void testSetStaticFieldValue() throws NoSuchFieldException, IllegalAccessException {
 		Assertions.assertEquals("hello", testValue);
 		ReflectionUtils.setStaticFieldValue(ReflectionUtilsTest.class, "testValue", "hello world");
 		Assertions.assertEquals("hello world", testValue);
@@ -112,7 +112,7 @@ public class ReflectionUtilsTest {
 	//region test the method 'getAllFields'
 
 	@Test
-	public void testGetAllFields() {
+	void testGetAllFields() {
 		// TestClass
 		this.testGetAllFieldsInternal(TestClass.class, "f1", "f2");
 		// TestSuperClass
@@ -134,7 +134,7 @@ public class ReflectionUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	public void testGetSingleton() {
+	void testGetSingleton() {
 		// case: normal Class
 		TestClass testClass = ReflectionUtils.getSingleton(TestClass.class);
 		Assertions.assertNotNull(testClass);

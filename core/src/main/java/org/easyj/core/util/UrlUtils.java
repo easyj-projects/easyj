@@ -41,7 +41,7 @@ public class UrlUtils {
 		}
 
 		// "\"替换为"/"
-		path = path.replaceAll("\\\\", StrPool.SLASH);
+		path = path.replace(CharPool.BACKSLASH, CharPool.SLASH);
 
 		// 为URL时，取路径
 		if (path.startsWith(HTTP_PRE) || path.startsWith(HTTPS_PRE)) {
