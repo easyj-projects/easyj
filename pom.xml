@@ -4,17 +4,17 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyframework</groupId>
-		<artifactId>easyjava-build</artifactId>
+		<groupId>org.easyj</groupId>
+		<artifactId>easyj-build</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
-	<artifactId>easyjava-parent</artifactId>
+	<artifactId>easyj-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>Parent</name>
-	<url>https://gitee.com/easyjava-projects/easyjava</url>
+	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<properties>
 		<!-- 编译配置 -->
@@ -48,8 +48,8 @@
 	</licenses>
 
 	<organization>
-		<name>王良创建的开源项目组织</name>
-		<url>https://gitee.com/easyjava-projects</url>
+		<name>Easyj开源项目组</name>
+		<url>https://gitee.com/easyj-projects</url>
 	</organization>
 
 	<developers>
@@ -67,14 +67,14 @@
 	</developers>
 
 	<scm>
-		<url>https://gitee.com/easyjava-projects/easyjava</url>
-		<connection>scm:git@gitee.com:easyjava-projects/easyjava.git</connection>
-		<developerConnection>scm:git@gitee.com:easyjava-projects/easyjava.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
 	</scm>
 
 	<issueManagement>
 		<system>gitee</system>
-		<url>https://gitee.com/easyjava-projects/easyjava/issues</url>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
 
 	<!-- 资源仓库管理 -->

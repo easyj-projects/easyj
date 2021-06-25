@@ -4,11 +4,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyframework</groupId>
-		<artifactId>easyjava-web</artifactId>
+		<groupId>org.easyj</groupId>
+		<artifactId>easyj-web</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyjava-web-core</artifactId>
+	<artifactId>easyj-web-core</artifactId>
 	<name>web-core</name>
 </project>

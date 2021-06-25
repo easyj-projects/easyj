@@ -4,38 +4,38 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyframework</groupId>
-		<artifactId>easyjava-parent</artifactId>
+		<groupId>org.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyjava-all</artifactId>
+	<artifactId>easyj-all</artifactId>
 	<name>ALL</name>
 
 	<dependencies>
 		<!-- Core -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-core</artifactId>
+			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Web -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-web-core</artifactId>
+			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-web-cache304</artifactId>
+			<artifactId>easyj-web-cache304</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Office -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyjava-office-excel</artifactId>
+			<artifactId>easyj-office-excel</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

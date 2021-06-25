@@ -1,0 +1,66 @@
+package org.easyj.core.util;
+
+import javax.annotation.Nonnull;
+
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.text.CharPool;
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.URLUtil;
+
+import static org.easyj.core.constant.UrlConstant.HTTPS_PRE;
+import static org.easyj.core.constant.UrlConstant.HTTP_PRE;
+
+/**
+ * URL工具类
+ *
+ * @author wangliang181230
+ */
+public class UrlUtils {
+
+	/**
+	 * 标准化路径
+	 * <ol>
+	 *     <li>"\"替换为"/"</li>
+	 *     <li>为URL时，取路径</li>
+	 *     <li>连续的'/'和\s，替换为单个'/'</li>
+	 *     <li>移除最后一位'/'</li>
+	 *     <li>前面补齐’/‘</li>
+	 * </ol>
+	 *
+	 * @param path 路径
+	 * @return path 标准化后的路径
+	 */
+	@Nonnull
+	public static String normalizePath(String path) {
+		Assert.notNull(path, "path must be not null");
+
+		path = path.trim();
+
+		if (path.isEmpty()) {
+			return StrPool.SLASH;
+		}
+
+		// "\"替换为"/"
+		path = path.replaceAll("\\\\", StrPool.SLASH);
+
+		// 为URL时，取路径
+		if (path.startsWith(HTTP_PRE) || path.startsWith(HTTPS_PRE)) {
+			path = URLUtil.getPath(path);
+		}
+
+		// 连续的'/'和\s，替换为单个'/'
+		path = path.replaceAll("[/\\s]+", StrPool.SLASH);
+
+		// 移除最后一位'/'
+		if (path.length() > 1 && CharPool.SLASH == path.charAt(path.length() - 1)) {
+			path = path.substring(0, path.length() - 1);
+		}
+
+		// 前面补齐’/‘
+		if (CharPool.SLASH != path.charAt(0)) {
+			path = StrPool.SLASH + path;
+		}
+
+		return path;
+	}
+}
