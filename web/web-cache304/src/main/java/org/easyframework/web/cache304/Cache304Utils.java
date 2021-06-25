@@ -2,7 +2,6 @@ package org.easyframework.web.cache304;
 
 import java.util.Date;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +12,7 @@ import org.easyframework.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
@@ -70,7 +70,8 @@ public class Cache304Utils {
 		long cacheTime = CacheTimeComputer.computeTime(lastModified, config); // 缓存有效时间
 		if (passedTime < cacheTime) {
 			// 存在缓存且未过期，设置304响应状态，并返回null
-			return HttpUtils.setCache304AndReturnNull(response);
+			HttpUtils.setResponseStatus304(response);
+			return null;
 		} else {
 			// 缓存存在但已过期，执行业务并设置缓存响应头
 			return doCallbackAndSetCache304Header(callback, response, config, cacheTime);

@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 import org.easyframework.web.cache304.Cache304Constant;
 import org.easyframework.web.cache304.Cache304Utils;
 import org.easyframework.web.cache304.config.Cache304Config;
+import org.springframework.core.annotation.AliasFor;
 
 /**
  * 304缓存注解
@@ -31,6 +32,7 @@ public @interface Cache304 {
 	 *
 	 * @return cacheSeconds 缓存秒数
 	 */
+	@AliasFor("cacheSeconds")
 	long value() default Cache304Constant.DEFAULT_CACHE_SECONDS;
 
 	/**
@@ -41,6 +43,7 @@ public @interface Cache304 {
 	 *
 	 * @return cacheSeconds 缓存秒数
 	 */
+	@AliasFor("value")
 	long cacheSeconds() default Cache304Constant.DEFAULT_CACHE_SECONDS;
 
 	/**

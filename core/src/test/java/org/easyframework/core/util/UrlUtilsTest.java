@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-public class UrlUtilsTest {
+class UrlUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
