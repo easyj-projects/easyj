@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 class UrlUtilsTest {
 
 	@Test
-	@SuppressWarnings("all")
 	void testNormalizePath() {
 		//case: null
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {

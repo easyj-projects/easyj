@@ -3,8 +3,8 @@ package org.easyj.web.cache304.config;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.map.MapUtil;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * Cache304配置存储器
@@ -49,7 +49,7 @@ public interface ICache304ConfigStorage {
 	 * @param configMap 配置集合
 	 */
 	default void putConfig(Map<String, Cache304Config> configMap) {
-		if (MapUtil.isNotEmpty(configMap)) {
+		if (!CollectionUtils.isEmpty(configMap)) {
 			configMap.forEach(this::putConfig);
 		}
 	}

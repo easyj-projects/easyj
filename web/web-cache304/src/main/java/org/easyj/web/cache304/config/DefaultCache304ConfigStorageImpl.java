@@ -3,8 +3,8 @@ package org.easyj.web.cache304.config;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.hutool.core.lang.Assert;
 import org.easyj.core.util.UrlUtils;
+import org.springframework.util.Assert;
 
 /**
  * Cache304配置存储器 默认实现类

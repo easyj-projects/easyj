@@ -63,10 +63,10 @@ public class Cache304Aspect {
 
 		// 获取当前调用的controller方法
 		MethodSignature ms = (MethodSignature)jp.getSignature();
-		Method method = ms.getMethod(); // action方法
+		Method method = ms.getMethod();
 
 		// 只有GET请求可使用 @Cache304
-		if (!"GET".equals(request.getMethod())) {
+		if (!HttpUtils.isGetRequest(request)) {
 			if (LOGGER.isWarnEnabled()) {
 				LOGGER.warn("`@{}`不能用于非GET请求，建议将该注解从方法`{}`上移除掉。",
 						Cache304.class.getSimpleName(), ReflectionUtils.methodToString(method));

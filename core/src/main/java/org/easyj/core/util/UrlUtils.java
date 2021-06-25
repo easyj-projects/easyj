@@ -2,10 +2,10 @@ package org.easyj.core.util;
 
 import javax.annotation.Nonnull;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.URLUtil;
+import org.springframework.util.Assert;
 
 import static org.easyj.core.constant.UrlConstant.HTTPS_PRE;
 import static org.easyj.core.constant.UrlConstant.HTTP_PRE;

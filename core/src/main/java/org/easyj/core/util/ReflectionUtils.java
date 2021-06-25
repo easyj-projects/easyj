@@ -171,7 +171,6 @@ public class ReflectionUtils {
 	 * @throws SecurityException        the security exception
 	 * @throws ClassCastException       if the type of the variable receiving the field value is not equals to the field type
 	 */
-	@SuppressWarnings("all")
 	public static <T> T getFieldValue(Object target, Field field)
 			throws IllegalArgumentException, SecurityException {
 		Assert.notNull(target, "target must be not null");
@@ -656,7 +655,6 @@ public class ReflectionUtils {
 	 * @return the singleton
 	 * @throws IllegalArgumentException if {@code clazz} is null
 	 */
-	@SuppressWarnings("all")
 	public static <T> T getSingleton(Class<T> clazz) {
 		Assert.notNull(clazz, "clazz must be not null");
 

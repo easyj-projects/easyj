@@ -105,28 +105,28 @@ public class DateUtils {
 
 
 	@Nonnull
-	public static Date parseMonthUnsign(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MM_UNSIGN);
+	public static Date parseMonthUnsigned(String str) throws ParseException {
+		return parse(str, DateFormatConstant.MM_UNSIGNED);
 	}
 
 	@Nonnull
-	public static Date parseDateUnsign(String str) throws ParseException {
-		return parse(str, DateFormatConstant.DD_UNSIGN);
+	public static Date parseDateUnsigned(String str) throws ParseException {
+		return parse(str, DateFormatConstant.DD_UNSIGNED);
 	}
 
 	@Nonnull
-	public static Date parseMinutesUnsign(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MI_UNSIGN);
+	public static Date parseMinutesUnsigned(String str) throws ParseException {
+		return parse(str, DateFormatConstant.MI_UNSIGNED);
 	}
 
 	@Nonnull
-	public static Date parseSecondsUnsign(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SS_UNSIGN);
+	public static Date parseSecondsUnsigned(String str) throws ParseException {
+		return parse(str, DateFormatConstant.SS_UNSIGNED);
 	}
 
 	@Nonnull
-	public static Date parseMillisecondUnsign(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SSS_UNSIGN);
+	public static Date parseMillisecondUnsigned(String str) throws ParseException {
+		return parse(str, DateFormatConstant.SSS_UNSIGNED);
 	}
 
 	/**
@@ -171,15 +171,15 @@ public class DateUtils {
 					}
 
 				case 6:
-					return parseMonthUnsign(str);
+					return parseMonthUnsigned(str);
 				case 8:
-					return parseDateUnsign(str);
+					return parseDateUnsigned(str);
 				case 12:
-					return parseMinutesUnsign(str);
+					return parseMinutesUnsigned(str);
 				case 14:
-					return parseSecondsUnsign(str);
+					return parseSecondsUnsigned(str);
 				case 17:
-					return parseMillisecondUnsign(str);
+					return parseMillisecondUnsigned(str);
 
 				default:
 					break;
