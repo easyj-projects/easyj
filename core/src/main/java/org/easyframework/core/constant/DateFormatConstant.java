@@ -1,4 +1,4 @@
-package org.easyframework.core.date;
+package org.easyframework.core.constant;
 
 /**
  * 时间格式化相关常量

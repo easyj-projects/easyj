@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.easyframework.core.date.DateUtils;
+import org.easyframework.core.util.DateUtils;
 import org.easyframework.web.cache304.config.Cache304Config;
 import org.easyframework.web.cache304.config.Cache304ConfigStorageFactory;
 import org.easyframework.web.util.HttpUtils;
@@ -58,7 +58,8 @@ public class Cache304Utils {
 			lastModified = DateUtils.parseAll(ifModifiedSince);
 		} catch (Exception ex) {
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("解析时间字符串失败，header[\"{}\"] = {}", HttpHeaders.IF_MODIFIED_SINCE, ifModifiedSince);
+				LOGGER.debug("解析时间字符串失败，header[\"{}\"] = {}, error = {}",
+						HttpHeaders.IF_MODIFIED_SINCE, ifModifiedSince, ex.getMessage());
 			}
 			// 头信息有误，执行业务并设置缓存响应头
 			return doCallbackAndSetCache304Header(callback, response, config, -1);
@@ -76,27 +77,23 @@ public class Cache304Utils {
 		}
 	}
 
-	//region 重载方法
+	//region `doCache`重载方法
 
-	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Supplier<Object> executor) {
-		Cache304Config parameter = Cache304ConfigStorageFactory.getStorage().getConfig(request);
-		return doCache(request, response, parameter, executor);
+	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Supplier<Object> callback) {
+		Cache304Config config = Cache304ConfigStorageFactory.getStorage().getConfig(request);
+		return doCache(request, response, config, callback);
 	}
 
-	public static void doCache(HttpServletRequest request, HttpServletResponse response, Cache304Config parameter, Runnable runnable) {
-		if (parameter == null) {
-			runnable.run();
-		}
-
-		doCache(request, response, parameter, () -> {
+	public static void doCache(HttpServletRequest request, HttpServletResponse response, Cache304Config config, Runnable runnable) {
+		doCache(request, response, config, () -> {
 			runnable.run();
 			return null;
 		});
 	}
 
 	public static void doCache(HttpServletRequest request, HttpServletResponse response, Runnable runnable) {
-		Cache304Config parameter = Cache304ConfigStorageFactory.getStorage().getConfig(request);
-		doCache(request, response, parameter, runnable);
+		Cache304Config config = Cache304ConfigStorageFactory.getStorage().getConfig(request);
+		doCache(request, response, config, runnable);
 	}
 
 	//endregion

@@ -92,4 +92,20 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
+	<profiles>
+		<!-- profile：Release -->
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<!-- 使用插件：Javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

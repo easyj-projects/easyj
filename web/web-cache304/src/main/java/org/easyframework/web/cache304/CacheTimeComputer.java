@@ -2,11 +2,11 @@ package org.easyframework.web.cache304;
 
 import java.util.Date;
 
-import org.easyframework.core.date.DateUtils;
+import org.easyframework.core.util.DateUtils;
 import org.easyframework.web.cache304.config.Cache304Config;
 
-import static org.easyframework.core.date.DateConstant.ONE_DAY_MILL;
-import static org.easyframework.core.date.DateConstant.ONE_DAY_SEC;
+import static org.easyframework.core.constant.DateConstant.ONE_DAY_MILL;
+import static org.easyframework.core.constant.DateConstant.ONE_DAY_SEC;
 import static org.easyframework.web.cache304.Cache304Constant.CRITICAL_TIME;
 
 /**

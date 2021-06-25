@@ -1,12 +1,13 @@
-package org.easyframework.core.date;
+package org.easyframework.core.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 
-import org.springframework.util.StringUtils;
+import org.easyframework.core.constant.DateFormatConstant;
 
-import static org.easyframework.core.date.DateConstant.ONE_DAY_MILL;
+import static org.easyframework.core.constant.DateConstant.ONE_DAY_MILL;
 
 /**
  * Date工具类
@@ -46,36 +47,44 @@ public class DateUtils {
 	 * @return time
 	 * @throws ParseException 解析异常
 	 */
+	@Nonnull
 	public static Date parse(String str, String format) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return sdf.parse(str);
 	}
 
+	@Nonnull
 	public static Date parseMonth(String str) throws ParseException {
 		return parse(str, DateFormatConstant.MM);
 	}
 
+	@Nonnull
 	public static Date parseDate(String str) throws ParseException {
 		return parse(str, DateFormatConstant.DD);
 	}
 
+	@Nonnull
 	public static Date parseMinutes(String str) throws ParseException {
 		return parse(str, DateFormatConstant.MI);
 	}
 
+	@Nonnull
 	public static Date parseSeconds(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SS);
 	}
 
+	@Nonnull
 	public static Date parseMillisecond(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SSS);
 	}
 
 
+	@Nonnull
 	public static Date parseMonth2(String str) throws ParseException {
 		return parse(str, DateFormatConstant.MM2);
 	}
 
+	@Nonnull
 	public static Date parseDate2(String str) throws ParseException {
 		return parse(str, DateFormatConstant.DD2);
 	}
@@ -84,31 +93,38 @@ public class DateUtils {
 		return parse(str, DateFormatConstant.MI2);
 	}
 
+	@Nonnull
 	public static Date parseSeconds2(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SS2);
 	}
 
+	@Nonnull
 	public static Date parseMillisecond2(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SSS2);
 	}
 
 
+	@Nonnull
 	public static Date parseMonthUnsign(String str) throws ParseException {
 		return parse(str, DateFormatConstant.MM_UNSIGN);
 	}
 
+	@Nonnull
 	public static Date parseDateUnsign(String str) throws ParseException {
 		return parse(str, DateFormatConstant.DD_UNSIGN);
 	}
 
+	@Nonnull
 	public static Date parseMinutesUnsign(String str) throws ParseException {
 		return parse(str, DateFormatConstant.MI_UNSIGN);
 	}
 
+	@Nonnull
 	public static Date parseSecondsUnsign(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SS_UNSIGN);
 	}
 
+	@Nonnull
 	public static Date parseMillisecondUnsign(String str) throws ParseException {
 		return parse(str, DateFormatConstant.SSS_UNSIGN);
 	}
@@ -119,11 +135,8 @@ public class DateUtils {
 	 * @param str 时间字符串
 	 * @return time 时间
 	 */
+	@Nonnull
 	public static Date parseAll(String str) {
-		if (StringUtils.isEmpty(str)) {
-			return null;
-		}
-
 		try {
 			switch (str.length()) {
 				case 7:
