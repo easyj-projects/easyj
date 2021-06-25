@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.easyframework.core.exception.SkipCallbackWrapperException;
 import org.easyframework.web.util.HttpUtils;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 /**
  * Cache304过滤器
  *
  * @author wangliang181230
  */
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class Cache304Filter implements Filter {
 
 	@Override
