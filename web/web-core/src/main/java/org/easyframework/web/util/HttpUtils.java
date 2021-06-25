@@ -3,9 +3,13 @@ package org.easyframework.web.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.easyframework.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.easyframework.web.constant.HttpConstant.GET_METHOD;
 import static org.easyframework.web.constant.HttpConstant.NO_CACHE;
@@ -18,6 +22,52 @@ import static org.easyframework.web.constant.HttpConstant.POST_METHOD;
  * @author wangliang181230
  */
 public class HttpUtils {
+
+	//region 获取`HttpServletRequest`和`HttpServletResponse`
+
+	/**
+	 * 获取 HttpServletRequest
+	 *
+	 * @return request 请求实例
+	 * @throws RequestContextNotFoundException HTTP请求上下文不存在的异常
+	 */
+	@NonNull
+	public static HttpServletRequest getRequest() throws RequestContextNotFoundException {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		if (requestAttributes == null) {
+			throw new RequestContextNotFoundException();
+		}
+
+		// 上下文存在时，request肯定存在，无需判断空
+		return requestAttributes.getRequest();
+	}
+
+	/**
+	 * 获取 HttpServletResponse
+	 *
+	 * @return response 响应实例
+	 * @throws RequestContextNotFoundException HTTP请求上下文不存在的异常
+	 */
+	@NonNull
+	public static HttpServletResponse getResponse() throws RequestContextNotFoundException {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		if (requestAttributes == null) {
+			throw new RequestContextNotFoundException();
+		}
+
+		// 上下文存在时，response不一定已经存在，判断一下空值。
+		HttpServletResponse response = requestAttributes.getResponse();
+		if (response == null) {
+			throw new RequestContextNotFoundException();
+		}
+
+		return response;
+	}
+
+	//endregion
+
+
+	//region 校验请求信息
 
 	/**
 	 * 判断是否为GET请求
@@ -54,14 +104,18 @@ public class HttpUtils {
 		return false;
 	}
 
+	//endregion
+
+	//region 设置响应信息
+
 	/**
-	 * 设置304响应状态
+	 * 设置响应状态为304
 	 *
 	 * @param response 响应实例
-	 * @return null
 	 */
-	public static Object setCache304AndReturnNull(HttpServletResponse response) {
+	public static void setResponseStatus304(HttpServletResponse response) {
 		response.setStatus(HttpStatus.NOT_MODIFIED.value());
-		return null;
 	}
+
+	//endregion
 }

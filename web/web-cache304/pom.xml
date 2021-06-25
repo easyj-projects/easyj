@@ -13,10 +13,18 @@
 	<name>web-cache304</name>
 
 	<dependencies>
+		<!-- 当前项目的依赖 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyjava-web-core</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<!-- AOP -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
 		</dependency>
 	</dependencies>
 </project>

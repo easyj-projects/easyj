@@ -30,7 +30,7 @@ public interface ICache304ConfigStorage {
 	Cache304Config getConfig(String path);
 
 
-	//region default methods
+	//region Default Methods
 
 	/**
 	 * 添加配置
