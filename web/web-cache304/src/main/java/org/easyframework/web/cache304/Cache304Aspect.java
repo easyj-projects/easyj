@@ -33,12 +33,31 @@ public class Cache304Aspect {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cache304Aspect.class);
 
+	//region 当前切面的启用状态
+
+	private static final ThreadLocal<Boolean> DISABLED_LOCAL = new ThreadLocal<>();
+
+	public static void disable() {
+		DISABLED_LOCAL.set(true);
+	}
+
+	public static void enable() {
+		DISABLED_LOCAL.remove();
+	}
+
+	//endregion
+
+
 	@Pointcut("@annotation(org.easyframework.web.cache304.annotation.Cache304)")
 	private void pointcutCache304() {
 	}
 
 	@Around("pointcutCache304()")
 	public Object doCache304(ProceedingJoinPoint jp) throws Throwable {
+		if (Boolean.TRUE.equals(DISABLED_LOCAL.get())) {
+			return jp.proceed();
+		}
+
 		HttpServletRequest request = HttpUtils.getRequest();
 		HttpServletResponse response = HttpUtils.getResponse();
 

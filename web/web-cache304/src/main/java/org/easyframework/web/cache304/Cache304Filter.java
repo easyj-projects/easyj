@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.easyframework.core.exception.SkipCallbackWrapperException;
+import org.easyframework.web.cache304.config.Cache304Config;
+import org.easyframework.web.cache304.config.Cache304ConfigStorageFactory;
 import org.easyframework.web.util.HttpUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -34,9 +36,15 @@ public class Cache304Filter implements Filter {
 			return;
 		}
 
+		// 获取当前请求的配置
+		Cache304Config config = Cache304ConfigStorageFactory.getStorage().getConfig(httpRequest);
+		if (config != null) {
+			Cache304Aspect.disable();
+		}
+
 		// 执行Cache304逻辑
 		try {
-			Cache304Utils.doCache(httpRequest, httpResponse, () -> {
+			Cache304Utils.doCache(httpRequest, httpResponse, config, () -> {
 				try {
 					chain.doFilter(request, response);
 				} catch (IOException | ServletException e) {
@@ -49,6 +57,10 @@ public class Cache304Filter implements Filter {
 				throw (IOException)e;
 			} else {
 				throw (ServletException)e;
+			}
+		} finally {
+			if (config != null) {
+				Cache304Aspect.enable();
 			}
 		}
 	}
