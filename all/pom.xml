@@ -37,6 +37,17 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-office-excel</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<!-- 引用all以后，如果要使用 ExcelUtils 的功能，则需自行引用以下依赖。 -->
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
