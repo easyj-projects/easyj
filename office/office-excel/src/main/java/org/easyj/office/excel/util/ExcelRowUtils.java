@@ -28,8 +28,8 @@ import org.springframework.util.StringUtils;
  * @author wangliang181230
  */
 @SuppressWarnings("deprecation")
-public abstract class ExcelRowUtil {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelRowUtil.class);
+public abstract class ExcelRowUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelRowUtils.class);
 
 	/**
 	 * 行数据转换为映射的类对象
@@ -73,12 +73,12 @@ public abstract class ExcelRowUtil {
 
 				// 获取单元格
 				cell = row.getCell(cellNum);
-				if (ExcelCellUtil.isEmptyCell(cell)) {
+				if (ExcelCellUtils.isEmptyCell(cell)) {
 					continue;
 				}
 
 				// 获取单元格的值
-				value = ExcelCellUtil.getCellValue(cell, cellMapping);
+				value = ExcelCellUtils.getCellValue(cell, cellMapping);
 				if (value == null || value.toString().trim().isEmpty()) {
 					continue;
 				}
@@ -114,7 +114,7 @@ public abstract class ExcelRowUtil {
 		Object value;
 		if (cell != null) {
 			// 如果当前列头与配置的列头一致，直接返回当前列号
-			value = ExcelCellUtil.getCellValue(cell);
+			value = ExcelCellUtils.getCellValue(cell);
 			if (value != null && value.toString().trim().equals(cellMapping.getHeadName())) {
 				return cellNum;
 			}
@@ -126,7 +126,7 @@ public abstract class ExcelRowUtil {
 			if (cell == null) {
 				continue;
 			}
-			value = ExcelCellUtil.getCellValue(cell);
+			value = ExcelCellUtils.getCellValue(cell);
 			if (value != null && value.toString().trim().equals(cellMapping.getHeadName())) {
 				return i;
 			}
@@ -158,7 +158,7 @@ public abstract class ExcelRowUtil {
 				continue;
 			}
 
-			value = ExcelCellUtil.getCellValue(cell);
+			value = ExcelCellUtils.getCellValue(cell);
 			if (value == null || value.toString().isEmpty()) {
 				continue;
 			}
@@ -189,7 +189,7 @@ public abstract class ExcelRowUtil {
 		for (int i = cellStart; i <= cellEnd; i++) {
 			try {
 				cell = row.getCell(i);
-				if (!ExcelCellUtil.isEmptyCell(cell)) { // 判断单元格是否为空
+				if (!ExcelCellUtils.isEmptyCell(cell)) { // 判断单元格是否为空
 					return false; // 单元格不为空，行就不为空
 				}
 			} catch (Exception e) {
@@ -307,7 +307,7 @@ public abstract class ExcelRowUtil {
 				cell = row.createCell(cellNum++);
 				// 设置单元格的值
 				try {
-					ExcelCellUtil.setCellValue(cell, data, cellMapping);
+					ExcelCellUtils.setCellValue(cell, data, cellMapping);
 				} catch (Exception e) {
 					LOGGER.error("设置列“" + cellMapping.getHeadName() + "”的信息失败：" + e.getMessage(), e);
 				}

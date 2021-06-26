@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  *
  * @author wangliang181230
  */
-public abstract class ExcelExportUtil {
+public abstract class ExcelExportUtils {
 
 	/**
 	 * 数据转换为excel文件并下载
@@ -25,7 +25,7 @@ public abstract class ExcelExportUtil {
 	 */
 	public static <T extends Object> void listToExcelAndExport(HttpServletResponse response, List<T> dataList, Class<T> clazz, String fileName) throws IOException {
 		// 数据转换为excel工作薄
-		Workbook book = ExcelUtil.listToExcel(dataList, clazz);
+		Workbook book = ExcelUtils.listToExcel(dataList, clazz);
 		// 设置响应头及响应流
 		exportExcel(response, book, fileName);
 	}

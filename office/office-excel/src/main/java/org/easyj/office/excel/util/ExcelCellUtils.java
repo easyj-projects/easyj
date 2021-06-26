@@ -35,8 +35,8 @@ import org.springframework.util.StringUtils;
  * @author wangliang181230
  */
 @SuppressWarnings({"unchecked", "deprecation"})
-public abstract class ExcelCellUtil {
-	private static final Logger logger = LoggerFactory.getLogger(ExcelCellUtil.class);
+public abstract class ExcelCellUtils {
+	private static final Logger logger = LoggerFactory.getLogger(ExcelCellUtils.class);
 
 	/**
 	 * 值类型转换的函数集合
@@ -291,7 +291,7 @@ public abstract class ExcelCellUtil {
 			return value;
 		}
 
-		Function<Object, Object> fun = ExcelCellUtil.getChangeFun(value.getClass(), field.getType());
+		Function<Object, Object> fun = ExcelCellUtils.getChangeFun(value.getClass(), field.getType());
 		if (fun == null) {
 			throw new RuntimeException("缺失值类型转换函数，无法将" + value.getClass().getName() + "转换为" + field.getType().getName());
 		}

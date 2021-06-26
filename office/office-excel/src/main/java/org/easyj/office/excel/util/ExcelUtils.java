@@ -26,8 +26,8 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public abstract class ExcelUtil {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelUtil.class);
+public abstract class ExcelUtils {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelUtils.class);
 
 	//region excel转换为数据
 
@@ -52,7 +52,7 @@ public abstract class ExcelUtil {
 			// 获取数据实际的起始行号
 			int rowStart = sheet.getFirstRowNum();
 			int rowEnd = sheet.getLastRowNum();
-			while (ExcelRowUtil.isEmptyRow(sheet.getRow(rowStart))) {
+			while (ExcelRowUtils.isEmptyRow(sheet.getRow(rowStart))) {
 				rowStart++; // 过滤起始的空行
 			}
 			if (rowStart > rowEnd) {
@@ -84,12 +84,12 @@ public abstract class ExcelUtil {
 			for (int i = rowStart; i <= rowEnd; i++) {
 				// 读取行
 				row = sheet.getRow(i);
-				if (ExcelRowUtil.isEmptyRow(row)) {
+				if (ExcelRowUtils.isEmptyRow(row)) {
 					continue; // 空行不读取
 				}
 
 				// 行转换为对象
-				t = ExcelRowUtil.rowToObject(row, hasNumberCell, headRow, clazz, mapping);
+				t = ExcelRowUtils.rowToObject(row, hasNumberCell, headRow, clazz, mapping);
 
 				// 如果有数据有效性验证方法，则验证对象是否有效
 				if (validDataFun == null || validDataFun.test(t)) {
@@ -152,10 +152,10 @@ public abstract class ExcelUtil {
 		Object cellValue;
 		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 			row = sheet.getRow(i);
-			if (ExcelRowUtil.isEmptyRow(row)) continue;
+			if (ExcelRowUtils.isEmptyRow(row)) continue;
 			for (int j = 0; j < row.getLastCellNum(); j++) {
 				cell = row.getCell(j);
-				cellValue = ExcelCellUtil.getCellValue(cell);
+				cellValue = ExcelCellUtils.getCellValue(cell);
 				if (cellValue == null) continue;
 				if (cellValue.equals(mapping.getNumberCellHeadName()) || cellValue.equals("序号")) {
 					return true;
@@ -177,7 +177,7 @@ public abstract class ExcelUtil {
 		Row row = sheet.getRow(firstRowNum);
 		if (row == null) return false;
 
-		return ExcelRowUtil.isHeadRow(row, mapping);
+		return ExcelRowUtils.isHeadRow(row, mapping);
 	}
 
 	//endregion
@@ -215,13 +215,13 @@ public abstract class ExcelUtil {
 			if (StringUtils.isEmpty(mapping.getSheetName())) sheet = book.createSheet();
 			else sheet = book.createSheet(mapping.getSheetName());
 			// 写文件前，设置样式
-			ExcelCellUtil.setCellStyle(sheet, mapping, true);
+			ExcelCellUtils.setCellStyle(sheet, mapping, true);
 			// 创建头行
-			ExcelRowUtil.createHeadRow(sheet, mapping);
+			ExcelRowUtils.createHeadRow(sheet, mapping);
 			// 创建数据行
-			ExcelRowUtil.createDataRows(sheet, dataList, mapping);
+			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
 			// 写文件后，设置样式：如自适应宽度等
-			ExcelCellUtil.setCellStyle(sheet, mapping, false);
+			ExcelCellUtils.setCellStyle(sheet, mapping, false);
 		} catch (Exception e) {
 			try {
 				if (book != null) book.close();
