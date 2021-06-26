@@ -7,7 +7,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-public class ArrayUtils {
+public abstract class ArrayUtils {
 
 	/**
 	 * Array To String.

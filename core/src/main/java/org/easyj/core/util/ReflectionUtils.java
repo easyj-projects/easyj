@@ -29,7 +29,7 @@ import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
  *
  * @author wangliang181230
  */
-public class ReflectionUtils {
+public abstract class ReflectionUtils {
 
 	//region Constant
 

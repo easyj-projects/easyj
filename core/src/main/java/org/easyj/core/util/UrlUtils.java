@@ -1,7 +1,5 @@
 package org.easyj.core.util;
 
-import javax.annotation.Nonnull;
-
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.URLUtil;
@@ -15,7 +13,7 @@ import static org.easyj.core.constant.UrlConstant.HTTP_PRE;
  *
  * @author wangliang181230
  */
-public class UrlUtils {
+public abstract class UrlUtils {
 
 	/**
 	 * 标准化路径
@@ -30,7 +28,6 @@ public class UrlUtils {
 	 * @param path 路径
 	 * @return path 标准化后的路径
 	 */
-	@Nonnull
 	public static String normalizePath(String path) {
 		Assert.notNull(path, "path must be not null");
 

@@ -8,7 +8,7 @@ import java.util.function.Function;
  *
  * @author wangliang181230
  */
-public class MapUtils {
+public abstract class MapUtils {
 
 	/**
 	 * Map to string.

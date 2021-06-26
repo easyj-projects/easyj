@@ -3,14 +3,13 @@ package org.easyj.core.util;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
-import javax.annotation.Nonnull;
 
 /**
  * 循环依赖处理器
  *
  * @author wangliang181230
  */
-public class CycleDependencyHandler {
+public abstract class CycleDependencyHandler {
 
 	private static final ThreadLocal<Set<Object>> OBJECT_SET_LOCAL = new ThreadLocal<>();
 
@@ -37,7 +36,6 @@ public class CycleDependencyHandler {
 		}
 	}
 
-	@Nonnull
 	public static String toRefString(Object obj) {
 		return "(ref " + obj.getClass().getSimpleName() + ")";
 	}

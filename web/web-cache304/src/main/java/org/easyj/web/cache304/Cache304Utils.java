@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class Cache304Utils {
+public abstract class Cache304Utils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cache304Utils.class);
 

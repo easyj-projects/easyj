@@ -21,7 +21,7 @@ import static org.easyj.web.constant.HttpHeaderConstant.NO_STORE;
  *
  * @author wangliang181230
  */
-public class HttpUtils {
+public abstract class HttpUtils {
 
 	//region 获取`HttpServletRequest`和`HttpServletResponse`
 

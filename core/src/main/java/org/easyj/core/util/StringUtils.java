@@ -3,23 +3,53 @@ package org.easyj.core.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+
+import org.springframework.lang.NonNull;
 
 /**
  * 字符串工具类
  *
  * @author wangliang181230
  */
-public class StringUtils {
+public abstract class StringUtils {
+
+	//region 字符串长度相关方法
+
+	/**
+	 * 计算字符串长度，中文计2个字符
+	 *
+	 * @param str 字符串
+	 * @return strLength 字符串
+	 */
+	public static int getStrLength(String str) {
+		if (str == null || str.isEmpty()) {
+			return 0;
+		}
+
+		int valueLength = str.length();
+		String chinese = "[\u4e00-\u9fa5]";
+		for (int i = 0; i < str.length(); i++) {
+			String temp = str.substring(i, i + 1);
+			if (temp.matches(chinese)) {
+				valueLength++;
+			}
+		}
+		return valueLength;
+	}
+
+	//endregion
+
+
+	//region toString
 
 	/**
 	 * 将对象转换为字符串
 	 *
 	 * @param obj 任意类型的对象
-	 * @return str 解析后的字符串
+	 * @return str 转换后的字符串
 	 */
 	@SuppressWarnings("deprecation")
 	public static String toString(final Object obj) {
@@ -33,19 +63,7 @@ public class StringUtils {
 			return obj.toString();
 		}
 		if (obj instanceof Date) {
-			Date date = (Date)obj;
-			long time = date.getTime();
-			String dateFormat;
-			if (date.getHours() == 0 && date.getMinutes() == 0 && date.getSeconds() == 0 && time % 1000 == 0) {
-				dateFormat = "yyyy-MM-dd";
-			} else if (time % (60 * 1000) == 0) {
-				dateFormat = "yyyy-MM-dd HH:mm";
-			} else if (time % 1000 == 0) {
-				dateFormat = "yyyy-MM-dd HH:mm:ss";
-			} else {
-				dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
-			}
-			return new SimpleDateFormat(dateFormat).format(obj);
+			return DateUtils.toString((Date)obj);
 		}
 		if (obj instanceof Enum) {
 			return obj.getClass().getSimpleName() + "." + ((Enum)obj).name();
@@ -79,6 +97,17 @@ public class StringUtils {
 
 		//endregion
 
+		// 未知类型的对象转换为字符串
+		return unknownTypeObjectToString(obj);
+	}
+
+	/**
+	 * 未知类型的对象转换为字符串
+	 *
+	 * @param obj 未知类型的对象
+	 * @return str 转换后的字符串
+	 */
+	private static String unknownTypeObjectToString(@NonNull Object obj) {
 		return CycleDependencyHandler.wrap(obj, o -> {
 			StringBuilder sb = new StringBuilder(32);
 			sb.append(obj.getClass().getSimpleName()).append("(");
@@ -86,7 +115,7 @@ public class StringUtils {
 
 			// Gets all fields, excluding static or synthetic fields
 			Field[] fields = ReflectionUtils.getAllFields(obj.getClass());
-			Object fieldValue = null;
+			Object fieldValue;
 			for (Field field : fields) {
 				if (sb.length() > initialLength) {
 					sb.append(", ");
@@ -99,6 +128,7 @@ public class StringUtils {
 				} catch (Exception ignore) {
 					continue;
 				}
+
 				if (fieldValue == obj) {
 					sb.append("(this ").append(fieldValue.getClass().getSimpleName()).append(")");
 				} else {
@@ -110,4 +140,6 @@ public class StringUtils {
 			return sb.toString();
 		});
 	}
+
+	//endregion
 }

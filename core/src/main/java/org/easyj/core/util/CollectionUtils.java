@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-public class CollectionUtils {
+public abstract class CollectionUtils {
 
 	/**
 	 * Collection To String.
