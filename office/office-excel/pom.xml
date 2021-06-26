@@ -19,5 +19,22 @@
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+		</dependency>
 	</dependencies>
 </project>
