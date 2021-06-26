@@ -12,9 +12,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.easyj.web.constant.HttpConstant.GET_METHOD;
-import static org.easyj.web.constant.HttpConstant.NO_CACHE;
-import static org.easyj.web.constant.HttpConstant.NO_STORE;
 import static org.easyj.web.constant.HttpConstant.POST_METHOD;
+import static org.easyj.web.constant.HttpHeaderConstant.NO_CACHE;
+import static org.easyj.web.constant.HttpHeaderConstant.NO_STORE;
 
 /**
  * Http工具类
@@ -70,7 +70,7 @@ public class HttpUtils {
 	//region 校验请求信息
 
 	/**
-	 * 判断是否为GET请求
+	 * 判断是否GET请求
 	 *
 	 * @param request 请求实例
 	 * @return isGetRequest 是否为GET请求
@@ -80,13 +80,33 @@ public class HttpUtils {
 	}
 
 	/**
-	 * 判断是否为POST请求
+	 * 判断是否不是GET请求
+	 *
+	 * @param request 请求实例
+	 * @return isGetRequest 是否为GET请求
+	 */
+	public static boolean isNotGetRequest(HttpServletRequest request) {
+		return !isGetRequest(request);
+	}
+
+	/**
+	 * 判断是否POST请求
 	 *
 	 * @param request 请求实例
 	 * @return isPostRequest 是否为POST请求
 	 */
 	public static boolean isPostRequest(HttpServletRequest request) {
 		return POST_METHOD.equalsIgnoreCase(request.getMethod());
+	}
+
+	/**
+	 * 判断是否不是POST请求
+	 *
+	 * @param request 请求实例
+	 * @return isPostRequest 是否为POST请求
+	 */
+	public static boolean isNotPostRequest(HttpServletRequest request) {
+		return !isPostRequest(request);
 	}
 
 	/**

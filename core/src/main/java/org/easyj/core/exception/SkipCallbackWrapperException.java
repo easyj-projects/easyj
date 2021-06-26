@@ -7,13 +7,11 @@ package org.easyj.core.exception;
  */
 public class SkipCallbackWrapperException extends WrapperException {
 
-	public SkipCallbackWrapperException(Throwable cause) {
-		super(cause);
+	public SkipCallbackWrapperException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	@Override
-	public synchronized Throwable fillInStackTrace() {
-		// do nothing
-		return null;
+	public SkipCallbackWrapperException(Throwable cause) {
+		super(cause);
 	}
 }

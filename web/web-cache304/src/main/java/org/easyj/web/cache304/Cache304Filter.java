@@ -30,7 +30,7 @@ public class Cache304Filter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 
 		// 非GET请求，不使用Cache304
-		if (!HttpUtils.isGetRequest(httpRequest)) {
+		if (HttpUtils.isNotGetRequest(httpRequest)) {
 			chain.doFilter(request, response);
 			return;
 		}

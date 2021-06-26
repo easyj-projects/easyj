@@ -65,7 +65,7 @@ public class Cache304Aspect {
 		Method method = ms.getMethod();
 
 		// 只有GET请求可使用 @Cache304
-		if (!HttpUtils.isGetRequest(request)) {
+		if (HttpUtils.isNotGetRequest(request)) {
 			if (LOGGER.isWarnEnabled()) {
 				LOGGER.warn("`@{}`不能用于非GET请求，建议将该注解从方法`{}`上移除掉。",
 						Cache304.class.getSimpleName(), ReflectionUtils.methodToString(method));

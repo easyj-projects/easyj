@@ -7,19 +7,17 @@ package org.easyj.core.exception;
  */
 public class WrapperException extends RuntimeException {
 
-	public WrapperException() {
-		super();
-	}
-
-	public WrapperException(String message) {
-		super(message);
-	}
-
 	public WrapperException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	public WrapperException(Throwable cause) {
 		super(cause);
+	}
+
+	@Override
+	public synchronized Throwable fillInStackTrace() {
+		// do nothing
+		return null;
 	}
 }

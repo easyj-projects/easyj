@@ -25,6 +25,6 @@ public interface DateFormatConstant {
 	String SS_UNSIGNED = "yyyyMMddHHmmss"; // 精确到秒，长度：14
 	String SSS_UNSIGNED = "yyyyMMddHHmmssSSS"; // 完整格式，精确到毫秒，长度：17
 
-	String TIME_MM = "HH:mm";
-	String TIME_SS = "HH:mm:ss";
+	String TIME_MM = "HH:mm"; // 无日期，精确到分钟，长度：5
+	String TIME_SS = "HH:mm:ss"; // 无日期，精确到秒，长度：8
 }
