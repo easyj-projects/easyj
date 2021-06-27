@@ -30,10 +30,19 @@
 			<artifactId>poi-ooxml</artifactId>
 		</dependency>
 
-		<!-- servlet -->
+
+		<!-- 以下是 @ExcelExportSupport 注解功能所需的依赖。如要使用该功能，请自行引用以下依赖。 -->
+		<!-- Web -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-web-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+		</dependency>
+		<!-- AOP -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
 			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
 		</dependency>
 	</dependencies>

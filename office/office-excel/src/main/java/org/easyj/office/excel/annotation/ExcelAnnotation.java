@@ -1,6 +1,7 @@
 package org.easyj.office.excel.annotation;
 
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -12,6 +13,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 public @interface ExcelAnnotation {
 
 	// 表名
@@ -55,5 +57,4 @@ public @interface ExcelAnnotation {
 
 	// 配置列信息，主要用于获取基类中的属性
 	ExcelCellAnnotation[] cells() default {};
-
 }

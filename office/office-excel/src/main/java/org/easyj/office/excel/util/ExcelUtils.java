@@ -281,8 +281,11 @@ public abstract class ExcelUtils {
 			book = new HSSFWorkbook();
 			// 创建表
 			Sheet sheet;
-			if (StringUtils.isEmpty(mapping.getSheetName())) sheet = book.createSheet();
-			else sheet = book.createSheet(mapping.getSheetName());
+			if (StringUtils.isEmpty(mapping.getSheetName())) {
+				sheet = book.createSheet();
+			} else {
+				sheet = book.createSheet(mapping.getSheetName());
+			}
 			// 写文件前，设置样式
 			ExcelCellUtils.setCellStyle(sheet, mapping, true);
 			// 创建头行

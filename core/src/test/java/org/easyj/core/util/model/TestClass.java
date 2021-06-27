@@ -1,5 +1,10 @@
 package org.easyj.core.util.model;
 
+/**
+ * 测试用的类
+ *
+ * @author wangliang181230
+ */
 public class TestClass extends TestSuperClass {
 
 	private String f1;
