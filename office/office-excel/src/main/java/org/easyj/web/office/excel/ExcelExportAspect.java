@@ -86,7 +86,7 @@ public class ExcelExportAspect {
 				// 准备参数
 				HttpServletResponse response = HttpUtils.getResponse();
 				List dataList = result == null ? Collections.emptyList() : (List)result;
-				Class dataType = annotation.getClass();
+				Class dataType = annotation.dataType();
 				String fileName = fileNamePre + DateUtils.toString(new Date()).replace(':', '：') + ".xlsx";
 
 				// 转为excel并导出
