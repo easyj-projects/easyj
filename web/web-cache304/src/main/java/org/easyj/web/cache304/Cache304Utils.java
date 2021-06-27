@@ -140,9 +140,9 @@ public abstract class Cache304Utils {
 		response.addDateHeader(HttpHeaders.LAST_MODIFIED, now.getTime());
 
 		// 设置cache响应头
-		response.setDateHeader(HttpHeaders.EXPIRES, new Date(now.getTime() + cacheSeconds * 1000).getTime());
 		if (config.isUseMaxAge()) {
-			cacheSeconds += 2; // 加2秒，防止客户端已过期，但服务端验证未过期
+			response.setDateHeader(HttpHeaders.EXPIRES, new Date(now.getTime() + cacheSeconds * 1000).getTime());
+			cacheSeconds += 1; // 加1秒，防止客户端已过期，但服务端验证未过期
 			response.addHeader(HttpHeaders.CACHE_CONTROL, "max-age=" + cacheSeconds);
 		}
 
