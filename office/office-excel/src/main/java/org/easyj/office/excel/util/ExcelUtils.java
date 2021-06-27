@@ -34,6 +34,75 @@ public abstract class ExcelUtils {
 	/**
 	 * 加载Excel中的数据到List中
 	 *
+	 * @param book         Excel
+	 * @param clazz        Excel文件映射类的信息
+	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
+	 * @param hasHeadRow   Excel中是否含的头行，如果为true，则跳过头行，从第二行开始读取数据行。（注：如果此参数传入null，则系统会自动根据映射类的属性注解中的头信息去验证Excel第一行是否为头行。
+	 * @param <T>          泛型参数，即Excel文件映射的类
+	 * @return 返回映射类的集合
+	 * @throws Exception 异常
+	 */
+	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
+		Sheet sheet = book.getSheetAt(0);
+
+		// 获取映射
+		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
+
+		// 获取数据实际的起始行号
+		int rowStart = sheet.getFirstRowNum();
+		int rowEnd = sheet.getLastRowNum();
+		while (ExcelRowUtils.isEmptyRow(sheet.getRow(rowStart))) {
+			rowStart++; // 过滤起始的空行
+		}
+		if (rowStart > rowEnd) {
+			return new ArrayList<>(); // 没有数据了
+		}
+
+		// 如果hasHeadRow为空，则自动判断数据中的第一行是否为头行
+		if (hasHeadRow == null) { // 如果是否含有行号参数为空，则自动根据excel的首行内容来判断首行是否为头行
+			hasHeadRow = hasHeadRow(sheet, rowStart, mapping);
+		}
+		if (hasHeadRow) {
+			rowStart++; // 有头行，则数据读取行号加1
+			if (rowStart > rowEnd) {
+				return new ArrayList<>(); // 没有数据了
+			}
+		}
+		if (rowStart < 0) {
+			return new ArrayList<>(); // 没有数据，返回一个空
+		}
+
+		// 是否含有序号列
+		boolean hasNumberCell = getHasNumberCell(sheet, mapping);
+
+		// 开始读取数据
+		List<T> result = new ArrayList<>(); // 需要返回的数据列表
+		Row row;
+		Row headRow = (hasHeadRow ? sheet.getRow(rowStart - 1) : null);
+		T t;
+		for (int i = rowStart; i <= rowEnd; i++) {
+			// 读取行
+			row = sheet.getRow(i);
+			if (ExcelRowUtils.isEmptyRow(row)) {
+				continue; // 空行不读取
+			}
+
+			// 行转换为对象
+			t = ExcelRowUtils.rowToObject(row, hasNumberCell, headRow, clazz, mapping);
+
+			// 如果有数据有效性验证方法，则验证对象是否有效
+			if (validDataFun == null || validDataFun.test(t)) {
+				result.add(t);
+			}
+		}
+
+		// 返回结果
+		return result;
+	}
+
+	/**
+	 * 加载Excel中的数据到List中
+	 *
 	 * @param is           Excel文件流
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
@@ -42,7 +111,7 @@ public abstract class ExcelUtils {
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> excelToList(InputStream is, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
+	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
 		try (Workbook book = WorkbookFactory.create(is)) {
 			Sheet sheet = book.getSheetAt(0);
 
@@ -103,40 +172,40 @@ public abstract class ExcelUtils {
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(InputStream is, Class<T> clazz) throws Exception {
-		return excelToList(is, clazz, null, null);
+	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz) throws Exception {
+		return toList(is, clazz, null, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
-		return excelToList(is, clazz, validDataFun, null);
+	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+		return toList(is, clazz, validDataFun, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(InputStream is, Class<T> clazz, Boolean hasHeadRow) throws Exception {
-		return excelToList(is, clazz, null, hasHeadRow);
+	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Boolean hasHeadRow) throws Exception {
+		return toList(is, clazz, null, hasHeadRow);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(String filePath, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
+	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
 		try (InputStream is = new FileInputStream(filePath)) {
-			return excelToList(is, clazz, validDataFun, hasHeadRow);
+			return toList(is, clazz, validDataFun, hasHeadRow);
 		}
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(String filePath, Class<T> clazz) throws Exception {
-		return excelToList(filePath, clazz, null, null);
+	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz) throws Exception {
+		return toList(filePath, clazz, null, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
-		return excelToList(filePath, clazz, validDataFun, null);
+	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+		return toList(filePath, clazz, validDataFun, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> excelToList(String filePath, Class<T> clazz, Boolean hasHeadRow) throws Exception {
-		return excelToList(filePath, clazz, null, hasHeadRow);
+	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Boolean hasHeadRow) throws Exception {
+		return toList(filePath, clazz, null, hasHeadRow);
 	}
 
 	/**
@@ -193,7 +262,7 @@ public abstract class ExcelUtils {
 	 * @param <T>      数据类型
 	 * @return wbk 返回excel文件流
 	 */
-	public static <T extends Object> Workbook listToExcel(List<T> dataList, Class<T> clazz) {
+	public static <T extends Object> Workbook toExcel(List<T> dataList, Class<T> clazz) {
 		if (clazz == null) {
 			if (StringUtils.isEmpty(dataList)) {
 				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
@@ -243,27 +312,14 @@ public abstract class ExcelUtils {
 	 * @param <T>      数据类型
 	 * @throws IOException IO异常
 	 */
-	public static <T extends Object> void listToExcelFile(List<T> dataList, Class<T> clazz, String filePath) throws IOException {
-		Workbook book = listToExcel(dataList, clazz);
+	public static <T extends Object> void saveToExcelFile(List<T> dataList, Class<T> clazz, String filePath) throws IOException {
+		try (Workbook book = toExcel(dataList, clazz)) {
+			// 将excel工作薄对象保存到文件中
+			File file = new File(filePath);
 
-		// 将excel工作薄对象保存到文件中
-		File file = new File(filePath);
-
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(file);
-			book.write(fos);
-			fos.flush();
-		} finally {
-			try {
-				book.close();
-			} catch (IOException ignore) {
-			}
-			if (fos != null) {
-				try {
-					fos.close();
-				} catch (IOException ignore) {
-				}
+			try (FileOutputStream fos = new FileOutputStream(file)) {
+				book.write(fos);
+				fos.flush();
 			}
 		}
 	}
