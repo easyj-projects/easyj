@@ -38,7 +38,7 @@
 
 ### 使用说明
 
-#### 1、`@ExcelExport`一个注解实现Excel文件导出功能
+#### 1、`@ExcelExport, @Excel, @ExcelCell`三个注解，实现Excel文件导出功能
 
 ###### # 注：下面的`MyEntity`为自定义的任意领域模型类。
 
@@ -46,7 +46,27 @@
 2. 在`MyEntity`类上添加`@Excel`注解，用于配置导出的表格的样式，如：是否添加序号列、是否冻结首行、是否添加数据筛选等等
 3. 在`MyEntity`类的属性上添加`@ExcelCell`注解，用于配置列相关信息，如：列名、列号、列宽、列字体颜色、列背景颜色等等
 
-#### 2、`@Cache304`一个注解实现GET接口的304缓存功能
+#### 2、`ExcelUtils`一个方法，`@Excel, @ExcelCell`两个注解，实现Excel文件导入功能
+
+1.
+
+```
+@PostMapping("/test/excel-import")
+public List<MyEntity> testExcelImport(@RequestPart("file") MultipartFile file) throws Exception {
+    // excel文件转为列表数据
+    List<MyEntity> list = ExcelUtils.toList(file.getInputStream(), MyEntity.class);
+
+    // 打印一下
+    System.out.println(StringUtils.toString(list));
+
+    // 将转换后的数据直接返回，方便查看
+    return list;
+}
+```
+
+2. `@Excel`和`@ExcelCell`注解的使用方法同`Excel文件导出功能`中的使用方法
+
+#### 3、`@Cache304`一个注解实现GET接口的304缓存功能
 
 1. 在Controller的GET接口上，添加`@Cache304(cacheSeconds = 60, cacheDays = 1, useMaxAge = true)`
 2. 在自定义领域模型类`MyEntity`上添加`@Excel`注解，用于配置导出的表格的样式
