@@ -4,47 +4,48 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyj</groupId>
-		<artifactId>easyj-parent</artifactId>
+		<groupId>org.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-bom</artifactId>
+	<artifactId>easyj-spring-boot-bom</artifactId>
 	<packaging>pom</packaging>
-	<name>BOM - ${project.version}</name>
+	<name>Spring Boot BOM - ${project.version}</name>
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- All -->
+			<!-- Easyj -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-all</artifactId>
+				<groupId>org.easyj</groupId>
+				<artifactId>easyj-bom</artifactId>
 				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 
-			<!-- Core -->
+			<!-- EasyJ Spring Boot -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Web -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-web-core</artifactId>
+				<artifactId>easyj-spring-boot-autoconfigure</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-web-cache304</artifactId>
+				<artifactId>easyj-spring-boot-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
+			<!-- Spring Boot Starters -->
 			<!-- Office -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-office-excel</artifactId>
+				<artifactId>easyj-spring-boot-starter-office-excel</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Web -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

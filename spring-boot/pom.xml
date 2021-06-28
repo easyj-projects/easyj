@@ -9,12 +9,14 @@
 		<version>${revision}</version>
 	</parent>
 
+	<groupId>org.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot</artifactId>
 	<packaging>pom</packaging>
 	<name>Spring Boot</name>
 
 	<modules>
 		<module>spring-boot-autoconfigure</module>
+		<module>spring-boot-bom</module>
 		<module>spring-boot-starters</module>
 	</modules>
 </project>
