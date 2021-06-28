@@ -46,6 +46,21 @@ public class ExcelExportAspect {
 	//endregion
 
 
+	/**
+	 * Excel导出器
+	 */
+	private final IExcelExporter excelExporter;
+
+	/**
+	 * 构造函数
+	 *
+	 * @param excelExporter Excel导出器
+	 */
+	public ExcelExportAspect(IExcelExporter excelExporter) {
+		this.excelExporter = excelExporter;
+	}
+
+
 	@Pointcut("@annotation(org.easyj.web.office.excel.ExcelExport)")
 	private void pointcutExcelExport() {
 	}
@@ -90,7 +105,7 @@ public class ExcelExportAspect {
 				String fileName = fileNamePre + sdf.format(new Date()) + ".xlsx";
 
 				// 转为excel并导出
-				ExcelExportUtils.toExcelAndExport(response, dataList, dataType, fileName);
+				excelExporter.toExcelAndExport(response, dataList, dataType, fileName);
 
 				// 文件导出，无需返回值
 				return null;
