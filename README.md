@@ -1,37 +1,74 @@
 # easyj
 
 ### 介绍
-为了使Java开发变得更加简单，代码更加简洁，此仓库提供一系列的工具类、常用功能封装类等等。
 
-### 软件架构
-软件架构说明
-
+本项目主要提供一系列的封装好的工具类或功能，供大家使用。 项目宗旨：能用一行代码解决的问题，就不用两行。
 
 ### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. springboot项目
+
+```
+<dependencies>
+    <groupId>org.easyj.boot</groupId>
+    <artifactId>easyj-spring-boot-bom</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependencies>
+<!-- @ExcelExport所需依赖 -->
+<dependencies>
+    <groupId>org.easyj.boot</groupId>
+    <artifactId>easyj-spring-boot-starter-office-excel</artifactId>
+</dependencies>
+<!-- @Cache304所需依赖 -->
+<dependencies>
+    <groupId>org.easyj.boot</groupId>
+    <artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
+</dependencies>
+或引用所有功能的依赖
+<!-- All -->
+<dependencies>
+    <groupId>org.easyj.boot</groupId>
+    <artifactId>easyj-spring-boot-starter-all</artifactId>
+</dependencies>
+```
+
+2. 非springboot项目
+
+```
+<dependencies>
+    <groupId>org.easyj</groupId>
+    <artifactId>easyj-bom</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependencies>
+<dependencies>
+    <groupId>org.easyj</groupId>
+    <artifactId>easyj-all</artifactId>
+</dependencies>
+```
 
 ### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 1、`@ExcelExport`一个注解实现Excel文件导出功能
 
-### 参与贡献
+###### # 注：下面的`MyEntity`为自定义的任意领域模型类。
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1. 在Controller接口上，添加`@ExcelExport(fileNamePre = "文件名前缀", dataType = MyEntity.class)`
+2. 在`MyEntity`类上添加`@Excel`注解，用于配置导出的表格的样式，如：是否添加序号列、是否冻结首行、是否添加数据筛选等等
+3. 在`MyEntity`类的属性上添加`@ExcelCell`注解，用于配置列相关信息，如：列名、列号、列宽、列字体颜色、列背景颜色等等
 
+#### 2、`@Cache304`一个注解实现GET接口的304缓存功能
 
-### 特技
+1. 在Controller的GET接口上，添加`@Cache304(cacheSeconds = 60, cacheDays = 1, useMaxAge = true)`
+2. 在自定义领域模型类`MyEntity`上添加`@Excel`注解，用于配置导出的表格的样式
+3. 在自定义领域模型类`MyEntity`的属性上添加`@ExcelCell`注解，用于配置列相关信息
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### 使用示例
+
+详见使用示例项目：[https://gitee.com/easyj-projects/easyj-samples](https://gitee.com/easyj-projects/easyj-samples)
+
+### 参与贡献的方法
+
+1. Fork 本仓库到自己的个人仓库中
+2. 在Fork下来的仓库的最新代码上新建分支，名称分支可任意自定义
+3. 编写代码，并Push
+4. 回到本仓库提交 Pull Request，[传送门](https://gitee.com/easyj-projects/easyj/pull/new)

@@ -68,6 +68,12 @@
 				<version>${project.version}</version>
 			</dependency>
 			<!-- Spring Boot Starters -->
+			<!-- All -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-spring-boot-starter-all</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- Office -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
