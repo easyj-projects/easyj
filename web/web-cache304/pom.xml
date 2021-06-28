@@ -20,7 +20,7 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- AOP -->
+		<!-- Aspect -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
