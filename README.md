@@ -24,12 +24,6 @@
     <groupId>org.easyj.boot</groupId>
     <artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
 </dependencies>
-或引用所有功能的依赖
-<!-- All -->
-<dependencies>
-    <groupId>org.easyj.boot</groupId>
-    <artifactId>easyj-spring-boot-starter-all</artifactId>
-</dependencies>
 ```
 
 2. 非springboot项目
@@ -37,12 +31,8 @@
 ```
 <dependencies>
     <groupId>org.easyj</groupId>
-    <artifactId>easyj-bom</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-</dependencies>
-<dependencies>
-    <groupId>org.easyj</groupId>
     <artifactId>easyj-all</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
 </dependencies>
 ```
 
