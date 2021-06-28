@@ -2,7 +2,6 @@ package org.easyj.spring.boot.autoconfigure.web;
 
 import org.easyj.web.cache304.Cache304Aspect;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Bean;
  * @author wangliang@181230
  */
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(EasyjWebCache304Properties.class)
 public class EasyjWebCache304AutoConfiguration {
 
 	@Bean

@@ -7,7 +7,6 @@ import org.easyj.web.office.excel.IExcelExporter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -15,8 +14,8 @@ import org.springframework.context.annotation.Bean;
  *
  * @author wangliang@181230
  */
+@ConditionalOnClass(Workbook.class) // 默认的实现强依赖于Apache-POI，未来考虑做多种Excel解析的扩展支持
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(EasyjOfficeExcelProperties.class)
 public class EasyjOfficeExcelAutoConfiguration {
 
 	/**
@@ -25,7 +24,6 @@ public class EasyjOfficeExcelAutoConfiguration {
 	 * @return excelExport Excel导出器
 	 */
 	@Bean
-	@ConditionalOnClass(Workbook.class) // 默认的实现强依赖于Apache-POI，未来考虑做多种Excel解析的扩展支持
 	@ConditionalOnMissingBean
 	public IExcelExporter defaultExcelExporter() {
 		return new DefaultExcelExporterImpl();
