@@ -38,9 +38,9 @@
 
 ### 使用说明
 
-#### 1、`@ExcelExport, @Excel, @ExcelCell`三个注解，实现Excel文件导出功能
+###### # 注：下面的`MyEntity`为任意的自定义领域模型类。
 
-###### # 注：下面的`MyEntity`为自定义的任意领域模型类。
+#### 1、`@ExcelExport, @Excel, @ExcelCell`三个注解，实现Excel文件导出功能
 
 1. 在Controller接口上，添加`@ExcelExport(fileNamePre = "文件名前缀", dataType = MyEntity.class)`
 2. 在`MyEntity`类上添加`@Excel`注解，用于配置导出的表格的样式，如：是否添加序号列、是否冻结首行、是否添加数据筛选等等
