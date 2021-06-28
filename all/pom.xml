@@ -6,8 +6,7 @@
 	<parent>
 		<groupId>org.easyj</groupId>
 		<artifactId>easyj-parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>easyj-all</artifactId>

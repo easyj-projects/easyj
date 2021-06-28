@@ -93,13 +93,17 @@
 		</repository>
 	</repositories>
 
+	<!-- Profiles -->
 	<profiles>
 		<!-- profile：Release -->
 		<profile>
 			<id>release</id>
 			<build>
 				<plugins>
-					<!-- 使用插件：Javadoc -->
+					<!--
+					使用插件：Javadoc
+					注：在`org.easyj:easyj-build`中，已经添加过，但是这里不添加，gitee上就无法生成javadoc。
+					-->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
