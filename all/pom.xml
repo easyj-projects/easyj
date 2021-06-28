@@ -108,6 +108,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- 其他依赖 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
