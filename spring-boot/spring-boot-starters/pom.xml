@@ -14,8 +14,6 @@
 	<name>Spring Boot Starters</name>
 
 	<modules>
-		<module>spring-boot-starter</module>
-
 		<!-- Office -->
 		<module>spring-boot-starter-office-excel</module>
 

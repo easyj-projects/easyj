@@ -3,7 +3,6 @@ package org.easyj.core.util;
 import java.util.Collection;
 import java.util.List;
 
-import cn.hutool.core.collection.CollUtil;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -60,7 +59,7 @@ public abstract class CollectionUtils {
 	 */
 	@Nullable
 	public static <T> T getLast(List<T> list) {
-		if (CollUtil.isEmpty(list)) {
+		if (list == null) {
 			return null;
 		}
 

@@ -1,4 +1,4 @@
-package org.easyj.office.excel.util;
+package org.easyj.web.office.excel;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.easyj.office.excel.util.ExcelUtils;
 
 /**
  * Excel导出工具类

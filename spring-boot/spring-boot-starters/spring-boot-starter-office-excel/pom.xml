@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-spring-boot-starter</artifactId>
+			<artifactId>easyj-spring-boot-autoconfigure</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

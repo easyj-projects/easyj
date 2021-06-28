@@ -89,11 +89,6 @@
 				<artifactId>easyj-spring-boot-autoconfigure</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-spring-boot-starter</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- Spring Boot Starters -->
 			<!-- Office -->
 			<dependency>
