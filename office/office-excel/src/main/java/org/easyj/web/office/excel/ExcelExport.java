@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface ExcelExportSupport {
+public @interface ExcelExport {
 
 	/**
 	 * 导出文件名前缀，格式如：{fileNamePre}_{yyyy-MM-dd_HH：mm：ss_SSS}.xlsx

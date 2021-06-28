@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.easyj.office.excel.annotation.ExcelAnnotation;
+import org.easyj.office.excel.annotation.Excel;
 import org.springframework.util.StringUtils;
 
 /**
@@ -20,7 +20,7 @@ public class ExcelMapping {
 	private Class<?> clazz;
 
 	// 注解信息
-	private ExcelAnnotation anno;
+	private Excel anno;
 	// 解析注解信息
 	private String sheetName; // 表名
 	private boolean needBorder = true; // 是否需要边框
@@ -54,11 +54,11 @@ public class ExcelMapping {
 		this.clazz = clazz;
 	}
 
-	public ExcelAnnotation getAnno() {
+	public Excel getAnno() {
 		return anno;
 	}
 
-	public void setAnno(ExcelAnnotation anno) {
+	public void setAnno(Excel anno) {
 		this.anno = anno;
 	}
 
@@ -182,7 +182,7 @@ public class ExcelMapping {
 		// 类信息
 		mapping.setClazz(clazz);
 
-		ExcelAnnotation anno = clazz.getAnnotation(ExcelAnnotation.class);
+		Excel anno = clazz.getAnnotation(Excel.class);
 		if (anno != null) {
 			// 注解信息
 			mapping.setAnno(anno);

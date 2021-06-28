@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.easyj.office.excel.annotation.ExcelCellAnnotation;
+import org.easyj.office.excel.annotation.ExcelCell;
 import org.easyj.office.excel.model.ExcelMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -272,7 +272,7 @@ public abstract class ExcelUtils {
 
 		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
 		if (StringUtils.isEmpty(mapping.getCellMappingList())) {
-			throw new RuntimeException("“" + clazz.getName() + "” 类中未使用@" + ExcelCellAnnotation.class.getSimpleName() + "配置任何列信息");
+			throw new RuntimeException("“" + clazz.getName() + "” 类中未使用@" + ExcelCell.class.getSimpleName() + "配置任何列信息");
 		}
 
 		Workbook book = null;

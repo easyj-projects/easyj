@@ -13,9 +13,9 @@ import java.util.Map;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.easyj.core.util.ReflectionUtils;
-import org.easyj.office.excel.annotation.ExcelAnnotation;
-import org.easyj.office.excel.annotation.ExcelCellAnnotation;
-import org.easyj.office.excel.annotation.ExcelCellAnnotations;
+import org.easyj.office.excel.annotation.Excel;
+import org.easyj.office.excel.annotation.ExcelCell;
+import org.easyj.office.excel.annotation.ExcelCells;
 import org.easyj.office.excel.style.ExcelFormats;
 import org.springframework.util.StringUtils;
 
@@ -34,7 +34,7 @@ public class ExcelCellMapping {
 	private String column; // 所要展示的数据字段名，可以是多级的，如：obj.field1.field2
 
 	// 注解信息
-	private ExcelCellAnnotation anno;
+	private ExcelCell anno;
 	// 解析注解信息
 	private String headName; // 列头
 	private String headComment; // 列头注释
@@ -72,11 +72,11 @@ public class ExcelCellMapping {
 		this.column = column;
 	}
 
-	public ExcelCellAnnotation getAnno() {
+	public ExcelCell getAnno() {
 		return anno;
 	}
 
-	public void setAnno(ExcelCellAnnotation anno) {
+	public void setAnno(ExcelCell anno) {
 		this.anno = anno;
 	}
 
@@ -233,7 +233,7 @@ public class ExcelCellMapping {
 		Field[] fields = clazz.getDeclaredFields();
 		ExcelCellMapping cellMapping;
 		for (Field f : fields) {
-			ExcelCellAnnotation anno1 = f.getAnnotation(ExcelCellAnnotation.class);
+			ExcelCell anno1 = f.getAnnotation(ExcelCell.class);
 			if (anno1 != null) {
 				// 注解转换为映射类对象
 				cellMapping = toMapping(anno1, clazz, f, mapping);
@@ -241,9 +241,9 @@ public class ExcelCellMapping {
 				mappingList.add(cellMapping);
 			}
 
-			ExcelCellAnnotations annos = f.getAnnotation(ExcelCellAnnotations.class);
+			ExcelCells annos = f.getAnnotation(ExcelCells.class);
 			if (annos != null && annos.value().length > 0) {
-				for (ExcelCellAnnotation anno2 : annos.value()) {
+				for (ExcelCell anno2 : annos.value()) {
 					// 注解转换为映射类对象
 					cellMapping = toMapping(anno2, clazz, f, mapping);
 					// 添加到列表中
@@ -252,12 +252,12 @@ public class ExcelCellMapping {
 			}
 		}
 
-		// 获取ExcelAnnotation里配置的列映射
+		// 获取`@Excel`里配置的列映射
 		if (mapping.getAnno() != null && ArrayUtils.isNotEmpty(mapping.getAnno().cells())) {
 			Field f;
-			for (ExcelCellAnnotation cellAnno : mapping.getAnno().cells()) {
+			for (ExcelCell cellAnno : mapping.getAnno().cells()) {
 				if (StringUtils.isEmpty(cellAnno.column())) {
-					throw new RuntimeException("在@" + ExcelAnnotation.class.getSimpleName() + "注解的cells属性中配置的列信息，column属性不能为空");
+					throw new RuntimeException("在@" + Excel.class.getSimpleName() + "注解的cells属性中配置的列信息，column属性不能为空");
 				}
 				try {
 					f = ReflectionUtils.getField(clazz, cellAnno.column().split("\\.")[0]);
@@ -285,7 +285,7 @@ public class ExcelCellMapping {
 	 * @param f
 	 * @return
 	 */
-	private static ExcelCellMapping toMapping(ExcelCellAnnotation anno, Class<?> clazz, Field f, ExcelMapping mapping) {
+	private static ExcelCellMapping toMapping(ExcelCell anno, Class<?> clazz, Field f, ExcelMapping mapping) {
 		ExcelCellMapping cellMapping = new ExcelCellMapping();
 
 		// 属性信息
@@ -303,7 +303,7 @@ public class ExcelCellMapping {
 				} else {
 					if (!column.startsWith(f.getName())) {
 						throw new RuntimeException("在类“" + clazz.getName() + "”的属性“" + f.getName() + "”上的注解@"
-								+ ExcelCellAnnotation.class.getSimpleName() + "(column=\"" + column + "\")有误");
+								+ ExcelCell.class.getSimpleName() + "(column=\"" + column + "\")有误");
 					}
 				}
 			}

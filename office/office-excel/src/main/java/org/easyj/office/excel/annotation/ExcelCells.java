@@ -5,8 +5,7 @@ package org.easyj.office.excel.annotation;
  *
  * @author wangliang181230
  */
-public @interface ExcelCellAnnotations {
+public @interface ExcelCells {
 
-	ExcelCellAnnotation[] value();
-
+	ExcelCell[] value();
 }

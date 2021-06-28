@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface ExcelCellAnnotation {
+public @interface ExcelCell {
 
 	// 列头
 	String headName();

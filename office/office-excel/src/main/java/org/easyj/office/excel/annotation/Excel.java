@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface ExcelAnnotation {
+public @interface Excel {
 
 	// 表名
 	String sheetName() default "";
@@ -27,7 +27,7 @@ public @interface ExcelAnnotation {
 	int defaultWidth() default -1; // <=0时，表示采用excel默认的列宽
 
 	// 列宽自适应
-	// 注意：此功能对中文的支持不是很好。尽量在使用 @ExcelCellAnnotation 注解时自定义width列宽。
+	// 注意：此功能对中文的支持不是很好。尽量在使用 @ExcelCell 注解时自定义width列宽。
 	// 警告：此功能可能存在性能问题，数据较多时谨慎使用。
 	boolean widthAutoSize() default false;
 
@@ -56,5 +56,5 @@ public @interface ExcelAnnotation {
 	boolean needFilter() default true; // 默认：true=需要
 
 	// 配置列信息，主要用于获取基类中的属性
-	ExcelCellAnnotation[] cells() default {};
+	ExcelCell[] cells() default {};
 }

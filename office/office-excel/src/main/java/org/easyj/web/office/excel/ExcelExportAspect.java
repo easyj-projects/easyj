@@ -1,6 +1,7 @@
 package org.easyj.web.office.excel;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.easyj.core.util.DateUtils;
 import org.easyj.core.util.ReflectionUtils;
 import org.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
@@ -46,8 +46,8 @@ public class ExcelExportAspect {
 	//endregion
 
 
-	@Pointcut("@annotation(org.easyj.web.office.excel.ExcelExportSupport)")
-	private void pointcutExcelExportSupport() {
+	@Pointcut("@annotation(org.easyj.web.office.excel.ExcelExport)")
+	private void pointcutExcelExport() {
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class ExcelExportAspect {
 	 * @return 返回查询结果
 	 * @throws Throwable 异常
 	 */
-	@Around("pointcutExcelExportSupport()")
+	@Around("pointcutExcelExport()")
 	public Object doQueryAndExportExcel(ProceedingJoinPoint jp) throws Throwable {
 		Object result = jp.proceed();
 
@@ -76,7 +76,7 @@ public class ExcelExportAspect {
 			Method method = ms.getMethod();
 
 			if (result == null || result instanceof List) {
-				ExcelExportSupport annotation = method.getAnnotation(ExcelExportSupport.class);
+				ExcelExport annotation = method.getAnnotation(ExcelExport.class);
 				String fileNamePre = annotation.fileNamePre();
 				if (!fileNamePre.endsWith("_")) {
 					fileNamePre += "_";
@@ -86,7 +86,8 @@ public class ExcelExportAspect {
 				HttpServletResponse response = HttpUtils.getResponse();
 				List dataList = result == null ? Collections.emptyList() : (List)result;
 				Class dataType = annotation.dataType();
-				String fileName = fileNamePre + DateUtils.toString(new Date()).replace(':', '：') + ".xlsx";
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH：mm：ss_SSS");
+				String fileName = fileNamePre + sdf.format(new Date()) + ".xlsx";
 
 				// 转为excel并导出
 				ExcelExportUtils.toExcelAndExport(response, dataList, dataType, fileName);
@@ -96,7 +97,7 @@ public class ExcelExportAspect {
 			} else {
 				if (LOGGER.isErrorEnabled()) {
 					LOGGER.error("返回数据不是列表数据，不支持Excel文件导出，请将注解`@{}`从方法`{}`上移除。",
-							ExcelExportSupport.class.getSimpleName(), ReflectionUtils.methodToString(method));
+							ExcelExport.class.getSimpleName(), ReflectionUtils.methodToString(method));
 				}
 			}
 		}
