@@ -19,7 +19,7 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- aop -->
+		<!-- spring-boot-aop -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>

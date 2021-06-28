@@ -31,6 +31,13 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- 多个模块所需依赖：Aspect -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
