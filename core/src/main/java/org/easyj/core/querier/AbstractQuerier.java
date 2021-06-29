@@ -20,7 +20,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	/**
 	 * The page number
 	 */
-	protected int pageNumber = PageConstant.FIRST_PAGE_INDEX;
+	protected int pageNumber = PageConstant.FIRST_PAGE_NUMBER;
 
 	/**
 	 * The page size
@@ -92,6 +92,9 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 		}
 
 		int fromIndex = this.getFromIndex();
+		if (fromIndex < 0) {
+			fromIndex = 0;
+		}
 		if (fromIndex >= list.size()) {
 			return Collections.emptyList();
 		}
@@ -112,7 +115,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	 * @return fromIndex
 	 */
 	public int getFromIndex() {
-		return (pageNumber - PageConstant.FIRST_PAGE_INDEX) * pageSize;
+		return (pageNumber - PageConstant.FIRST_PAGE_NUMBER) * pageSize;
 	}
 
 	/**

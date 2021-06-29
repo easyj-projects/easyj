@@ -10,7 +10,7 @@ public interface PageConstant {
 	/**
 	 * 第一页页号
 	 */
-	int FIRST_PAGE_INDEX = 1;
+	int FIRST_PAGE_NUMBER = 1;
 
 	/**
 	 * 每页默认展示数量
