@@ -66,6 +66,27 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- Crypto -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-crypto</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Data -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-data</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- POI -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-poi-excel</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- Web -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -75,13 +96,6 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-web-cache304</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Office -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-office-excel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -17,7 +17,7 @@
 <!-- @ExcelExport所需依赖 -->
 <dependencies>
     <groupId>org.easyj.boot</groupId>
-    <artifactId>easyj-spring-boot-starter-office-excel</artifactId>
+    <artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
 </dependencies>
 <!-- @Cache304所需依赖 -->
 <dependencies>

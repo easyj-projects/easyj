@@ -33,7 +33,9 @@
 		<module>bom</module>
 
 		<module>core</module>
-		<module>office</module>
+		<module>crypto</module>
+		<module>data</module>
+		<module>poi</module>
 		<module>web</module>
 	</modules>
 

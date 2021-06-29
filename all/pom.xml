@@ -79,22 +79,24 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Web -->
+		<!-- Crypto -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-web-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-web-cache304</artifactId>
+			<artifactId>easyj-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Office -->
+		<!-- Data -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-office-excel</artifactId>
+			<artifactId>easyj-data</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- POI -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-poi-excel</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<!-- 引用all以后，如果要使用 ExcelUtils 的功能，则需自行引用以下依赖。 -->
@@ -109,10 +111,39 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Web -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-web-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-web-cache304</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
 		<!-- 其他依赖 -->
+
+		<!-- 工具类依赖 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+		</dependency>
+
+		<!-- 日志依赖 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 		</dependency>
 	</dependencies>
 

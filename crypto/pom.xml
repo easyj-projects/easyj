@@ -9,33 +9,19 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-web-parent</artifactId>
-	<packaging>pom</packaging>
-	<name>Web Parent</name>
-
-	<modules>
-		<module>web-cache304</module>
-		<module>web-core</module>
-	</modules>
+	<artifactId>easyj-crypto</artifactId>
+	<name>crypto</name>
 
 	<dependencies>
-		<!-- 当前项目的依赖 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-
-		<!-- spring-web -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
 		</dependency>
 	</dependencies>
 </project>

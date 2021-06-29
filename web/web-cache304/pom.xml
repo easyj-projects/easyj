@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.easyj</groupId>
-		<artifactId>easyj-web</artifactId>
+		<artifactId>easyj-web-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
