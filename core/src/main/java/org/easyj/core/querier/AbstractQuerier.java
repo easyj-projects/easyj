@@ -25,7 +25,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	/**
 	 * The page size
 	 */
-	protected int pageSize = 0;
+	protected int pageSize = PageConstant.DEFAULT_PAGE_SIZE;
 
 	/**
 	 * Compare by field name.
