@@ -1,4 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.easyj.spring.boot.autoconfigure.office.EasyjOfficeExcelAutoConfiguration,\
-org.easyj.spring.boot.autoconfigure.web.EasyjWebCache304AutoConfiguration
