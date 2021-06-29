@@ -1,9 +1,9 @@
 package org.easyj.core.querier;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -47,14 +47,12 @@ public interface Querier<T> {
 	 * @return the list after filter
 	 */
 	default <D extends T> List<D> doFilter(List<D> list) {
-		if (CollectionUtils.isEmpty(list)) {
-			return Collections.emptyList();
-		}
-
 		List<D> found = new ArrayList<>();
-		for (D t : list) {
-			if (this.isMatch(t)) {
-				found.add(t);
+		if (!CollectionUtils.isEmpty(list)) {
+			for (D t : list) {
+				if (this.isMatch(t)) {
+					found.add(t);
+				}
 			}
 		}
 		return found;
@@ -67,6 +65,7 @@ public interface Querier<T> {
 	 * @param <D>  the data type
 	 * @return the list after sort
 	 */
+	@NonNull
 	<D extends T> List<D> doSort(List<D> list);
 
 	/**
@@ -87,18 +86,14 @@ public interface Querier<T> {
 	 * @return the list after query
 	 */
 	default <D extends T> List<D> doQuery(List<D> list) {
-		if (list == null) {
-			return Collections.emptyList();
-		}
-
-		if (list.isEmpty()) {
-			return list;
+		if (list == null || list.isEmpty()) {
+			return new ArrayList<>();
 		}
 
 		// do filter
 		list = this.doFilter(list);
 		if (CollectionUtils.isEmpty(list)) {
-			return list;
+			return list == null ? new ArrayList<>() : list;
 		}
 
 		// do sort
