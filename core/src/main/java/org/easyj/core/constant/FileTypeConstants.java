@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface FileTypeConstant {
+public interface FileTypeConstants {
 
 	/**
 	 * Excel2003及以前版本的excel文件后缀名

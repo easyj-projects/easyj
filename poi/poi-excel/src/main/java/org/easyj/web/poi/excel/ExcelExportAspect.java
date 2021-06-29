@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.easyj.core.constant.FileTypeConstant;
+import org.easyj.core.constant.FileTypeConstants;
 import org.easyj.core.util.ReflectionUtils;
 import org.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
@@ -90,7 +90,7 @@ public class ExcelExportAspect {
 				HttpServletResponse response = HttpUtils.getResponse();
 				List dataList = result == null ? Collections.emptyList() : (List)result;
 				Class dataType = annotation.dataType();
-				String fileName = HttpUtils.buildExportFileName(annotation.fileNamePre(), FileTypeConstant.EXCEL_2007);
+				String fileName = HttpUtils.buildExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
 
 				// 转为excel并导出
 				excelExporter.toExcelAndExport(response, dataList, dataType, fileName);

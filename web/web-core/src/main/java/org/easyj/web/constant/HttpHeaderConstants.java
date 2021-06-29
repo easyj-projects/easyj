@@ -5,7 +5,7 @@ package org.easyj.web.constant;
  *
  * @author wangliang181230
  */
-public interface HttpHeaderConstant {
+public interface HttpHeaderConstants {
 
 	/**
 	 * Cache-Control: no-cache

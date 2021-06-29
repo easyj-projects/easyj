@@ -1,6 +1,6 @@
 package org.easyj.web.cache304.config;
 
-import org.easyj.web.cache304.Cache304Constant;
+import org.easyj.web.cache304.Cache304Constants;
 
 /**
  * Cache304配置类
@@ -12,17 +12,17 @@ public class Cache304Config {
 	/**
 	 * 缓存秒数
 	 */
-	private long cacheSeconds = Cache304Constant.DEFAULT_CACHE_SECONDS;
+	private long cacheSeconds = Cache304Constants.DEFAULT_CACHE_SECONDS;
 
 	/**
 	 * 缓存天数
 	 */
-	private int cacheDays = Cache304Constant.DEFAULT_CACHE_DAYS;
+	private int cacheDays = Cache304Constants.DEFAULT_CACHE_DAYS;
 
 	/**
 	 * 是否使用`Cache-Control:max-age`响应头
 	 */
-	private boolean useMaxAge = Cache304Constant.DEFAULT_USE_MAX_AGE;
+	private boolean useMaxAge = Cache304Constants.DEFAULT_USE_MAX_AGE;
 
 
 	public long getCacheSeconds() {

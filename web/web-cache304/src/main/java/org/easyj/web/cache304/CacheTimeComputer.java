@@ -5,9 +5,9 @@ import java.util.Date;
 import org.easyj.core.util.DateUtils;
 import org.easyj.web.cache304.config.Cache304Config;
 
-import static org.easyj.core.constant.DateConstant.ONE_DAY_MILL;
-import static org.easyj.core.constant.DateConstant.ONE_DAY_SEC;
-import static org.easyj.web.cache304.Cache304Constant.CRITICAL_TIME;
+import static org.easyj.core.constant.DateConstants.ONE_DAY_MILL;
+import static org.easyj.core.constant.DateConstants.ONE_DAY_SEC;
+import static org.easyj.web.cache304.Cache304Constants.CRITICAL_TIME;
 
 /**
  * 缓存秒数计算机

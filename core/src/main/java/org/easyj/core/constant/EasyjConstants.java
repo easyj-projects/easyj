@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface EasyjConstant {
+public interface EasyjConstants {
 
 	String PREFIX = "easyj";
 

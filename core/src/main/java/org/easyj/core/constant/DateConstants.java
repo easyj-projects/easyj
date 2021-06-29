@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface DateConstant {
+public interface DateConstants {
 
 	/**
 	 * 一天的秒数

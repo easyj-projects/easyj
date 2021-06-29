@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface UrlConstant {
+public interface UrlConstants {
 
 	/**
 	 * http前缀

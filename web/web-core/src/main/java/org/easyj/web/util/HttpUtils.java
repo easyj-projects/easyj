@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
-import org.easyj.web.constant.HttpConstant;
-import org.easyj.web.constant.HttpHeaderConstant;
+import org.easyj.web.constant.HttpConstants;
+import org.easyj.web.constant.HttpHeaderConstants;
 import org.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import static org.easyj.web.constant.HttpConstant.GET_METHOD;
-import static org.easyj.web.constant.HttpConstant.POST_METHOD;
-import static org.easyj.web.constant.HttpHeaderConstant.NO_CACHE;
-import static org.easyj.web.constant.HttpHeaderConstant.NO_STORE;
+import static org.easyj.web.constant.HttpConstants.GET_METHOD;
+import static org.easyj.web.constant.HttpConstants.POST_METHOD;
+import static org.easyj.web.constant.HttpHeaderConstants.NO_CACHE;
+import static org.easyj.web.constant.HttpHeaderConstants.NO_STORE;
 
 /**
  * Http工具类
@@ -180,7 +180,7 @@ public abstract class HttpUtils {
 	 * @param response 响应实例
 	 */
 	public static void setResponseNotAllowCache(HttpServletResponse response) {
-		response.setHeader(HttpHeaders.CACHE_CONTROL, HttpHeaderConstant.NO_CACHE);
+		response.setHeader(HttpHeaders.CACHE_CONTROL, HttpHeaderConstants.NO_CACHE);
 		response.setDateHeader(HttpHeaders.EXPIRES, 0);
 	}
 
@@ -197,7 +197,7 @@ public abstract class HttpUtils {
 	 * @return isDoExportRequest 是否为导出文件请求
 	 */
 	public static boolean isDoExportRequest(HttpServletRequest request) {
-		return HttpConstant.DO_EXPORT_PARAM_VALUE.equalsIgnoreCase(request.getParameter(HttpConstant.DO_EXPORT_PARAM_NAME));
+		return HttpConstants.DO_EXPORT_PARAM_VALUE.equalsIgnoreCase(request.getParameter(HttpConstants.DO_EXPORT_PARAM_NAME));
 	}
 
 	// 重载方法

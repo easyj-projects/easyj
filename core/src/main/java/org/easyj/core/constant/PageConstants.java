@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface PageConstant {
+public interface PageConstants {
 
 	/**
 	 * 第一页页号

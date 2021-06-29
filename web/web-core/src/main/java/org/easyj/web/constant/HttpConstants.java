@@ -5,7 +5,7 @@ package org.easyj.web.constant;
  *
  * @author wangliang181230
  */
-public interface HttpConstant {
+public interface HttpConstants {
 
 	//region 请求方法常量
 

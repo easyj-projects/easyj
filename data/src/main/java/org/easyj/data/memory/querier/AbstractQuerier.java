@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.easyj.core.constant.PageConstant;
+import org.easyj.core.constant.PageConstants;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -20,12 +20,12 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	/**
 	 * The page number
 	 */
-	protected int pageNumber = PageConstant.FIRST_PAGE_NUMBER;
+	protected int pageNumber = PageConstants.FIRST_PAGE_NUMBER;
 
 	/**
 	 * The page size
 	 */
-	protected int pageSize = PageConstant.DEFAULT_PAGE_SIZE;
+	protected int pageSize = PageConstants.DEFAULT_PAGE_SIZE;
 
 	/**
 	 * Compare by field name.
@@ -115,7 +115,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	 * @return fromIndex
 	 */
 	public int getFromIndex() {
-		return (pageNumber - PageConstant.FIRST_PAGE_NUMBER) * pageSize;
+		return (pageNumber - PageConstants.FIRST_PAGE_NUMBER) * pageSize;
 	}
 
 	/**

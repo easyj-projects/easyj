@@ -4,10 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.easyj.core.constant.DateFormatConstant;
+import org.easyj.core.constant.DateFormatConstants;
 import org.springframework.lang.NonNull;
 
-import static org.easyj.core.constant.DateConstant.ONE_DAY_MILL;
+import static org.easyj.core.constant.DateConstants.ONE_DAY_MILL;
 
 /**
  * Date工具类
@@ -60,78 +60,78 @@ public abstract class DateUtils {
 
 	@NonNull
 	public static Date parseMonth(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MM);
+		return parse(str, DateFormatConstants.MM);
 	}
 
 	@NonNull
 	public static Date parseDate(String str) throws ParseException {
-		return parse(str, DateFormatConstant.DD);
+		return parse(str, DateFormatConstants.DD);
 	}
 
 	@NonNull
 	public static Date parseMinutes(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MI);
+		return parse(str, DateFormatConstants.MI);
 	}
 
 	@NonNull
 	public static Date parseSeconds(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SS);
+		return parse(str, DateFormatConstants.SS);
 	}
 
 	@NonNull
 	public static Date parseMillisecond(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SSS);
+		return parse(str, DateFormatConstants.SSS);
 	}
 
 
 	@NonNull
 	public static Date parseMonth2(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MM2);
+		return parse(str, DateFormatConstants.MM2);
 	}
 
 	@NonNull
 	public static Date parseDate2(String str) throws ParseException {
-		return parse(str, DateFormatConstant.DD2);
+		return parse(str, DateFormatConstants.DD2);
 	}
 
 	public static Date parseMinutes2(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MI2);
+		return parse(str, DateFormatConstants.MI2);
 	}
 
 	@NonNull
 	public static Date parseSeconds2(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SS2);
+		return parse(str, DateFormatConstants.SS2);
 	}
 
 	@NonNull
 	public static Date parseMillisecond2(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SSS2);
+		return parse(str, DateFormatConstants.SSS2);
 	}
 
 
 	@NonNull
 	public static Date parseMonthUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MM_UNSIGNED);
+		return parse(str, DateFormatConstants.MM_UNSIGNED);
 	}
 
 	@NonNull
 	public static Date parseDateUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstant.DD_UNSIGNED);
+		return parse(str, DateFormatConstants.DD_UNSIGNED);
 	}
 
 	@NonNull
 	public static Date parseMinutesUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstant.MI_UNSIGNED);
+		return parse(str, DateFormatConstants.MI_UNSIGNED);
 	}
 
 	@NonNull
 	public static Date parseSecondsUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SS_UNSIGNED);
+		return parse(str, DateFormatConstants.SS_UNSIGNED);
 	}
 
 	@NonNull
 	public static Date parseMillisecondUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstant.SSS_UNSIGNED);
+		return parse(str, DateFormatConstants.SSS_UNSIGNED);
 	}
 
 	/**

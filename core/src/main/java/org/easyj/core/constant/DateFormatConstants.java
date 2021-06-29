@@ -5,7 +5,7 @@ package org.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface DateFormatConstant {
+public interface DateFormatConstants {
 
 	String MM = "yyyy-MM"; // 精确到月，长度：7
 	String DD = "yyyy-MM-dd"; // 精确到日，长度：10

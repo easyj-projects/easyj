@@ -5,7 +5,7 @@ package org.easyj.web.cache304;
  *
  * @author wangliang181230
  */
-public interface Cache304Constant {
+public interface Cache304Constants {
 
 	long DEFAULT_CACHE_SECONDS = -1L;
 

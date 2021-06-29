@@ -5,8 +5,8 @@ import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.URLUtil;
 import org.springframework.util.Assert;
 
-import static org.easyj.core.constant.UrlConstant.HTTPS_PRE;
-import static org.easyj.core.constant.UrlConstant.HTTP_PRE;
+import static org.easyj.core.constant.UrlConstants.HTTPS_PRE;
+import static org.easyj.core.constant.UrlConstants.HTTP_PRE;
 
 /**
  * URL工具类

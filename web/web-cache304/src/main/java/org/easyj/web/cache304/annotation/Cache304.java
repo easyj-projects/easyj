@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.easyj.web.cache304.Cache304Constant;
+import org.easyj.web.cache304.Cache304Constants;
 import org.easyj.web.cache304.Cache304Utils;
 import org.easyj.web.cache304.config.Cache304Config;
 import org.springframework.core.annotation.AliasFor;
@@ -33,7 +33,7 @@ public @interface Cache304 {
 	 * @return cacheSeconds 缓存秒数
 	 */
 	@AliasFor("cacheSeconds")
-	long value() default Cache304Constant.DEFAULT_CACHE_SECONDS;
+	long value() default Cache304Constants.DEFAULT_CACHE_SECONDS;
 
 	/**
 	 * 缓存有效时间<br>
@@ -44,7 +44,7 @@ public @interface Cache304 {
 	 * @return cacheSeconds 缓存秒数
 	 */
 	@AliasFor("value")
-	long cacheSeconds() default Cache304Constant.DEFAULT_CACHE_SECONDS;
+	long cacheSeconds() default Cache304Constants.DEFAULT_CACHE_SECONDS;
 
 	/**
 	 * 缓存天数
@@ -54,7 +54,7 @@ public @interface Cache304 {
 	 *
 	 * @return cacheDays 缓存天数
 	 */
-	int cacheDays() default Cache304Constant.DEFAULT_CACHE_DAYS;
+	int cacheDays() default Cache304Constants.DEFAULT_CACHE_DAYS;
 
 	/**
 	 * 响应头中是否使用“Cache-Control: max-age=xxx”<br>
@@ -65,5 +65,5 @@ public @interface Cache304 {
 	 *
 	 * @return useMaxAge 是否使用`Cache-Control:max-age`响应头
 	 */
-	boolean useMaxAge() default Cache304Constant.DEFAULT_USE_MAX_AGE;
+	boolean useMaxAge() default Cache304Constants.DEFAULT_USE_MAX_AGE;
 }
