@@ -25,8 +25,9 @@ public abstract class ComparableUtils {
 	/**
 	 * Compare a and b.
 	 *
-	 * @param a the comparable object a
-	 * @param b the comparable object b
+	 * @param a   the comparable object a
+	 * @param b   the comparable object b
+	 * @param <T> the type of the a and b
 	 * @return 0: equals   -1: {@code a < b}   1: {@code a > b}
 	 */
 	public static <T extends Comparable> int compare(T a, T b) {
