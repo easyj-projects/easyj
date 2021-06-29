@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import org.easyj.web.constant.HttpConstant;
+import org.easyj.web.constant.HttpHeaderConstant;
 import org.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -172,6 +173,17 @@ public abstract class HttpUtils {
 	public static void setResponseStatus304() {
 		setResponseStatus304(getResponse());
 	}
+
+	/**
+	 * 设置响应信息，使该请求不允许被缓存
+	 *
+	 * @param response 响应实例
+	 */
+	public static void setResponseNotAllowCache(HttpServletResponse response) {
+		response.setHeader(HttpHeaders.CACHE_CONTROL, HttpHeaderConstant.NO_CACHE);
+		response.setDateHeader(HttpHeaders.EXPIRES, 0);
+	}
+
 
 	//endregion
 

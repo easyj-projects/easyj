@@ -2,11 +2,14 @@ package org.easyj.web.poi.excel;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.easyj.poi.excel.util.ExcelUtils;
+import org.easyj.web.util.HttpUtils;
+import org.springframework.http.HttpHeaders;
 
 /**
  * Excel导出工具类
@@ -42,7 +45,7 @@ public abstract class ExcelExportUtils {
 	 */
 	public static void exportExcel(HttpServletResponse response, Workbook book, String fileName) throws IOException {
 		// 设置响应头信息
-		setExcelHead(response, fileName);
+		setExcelExportResponse(response, fileName);
 
 		// 设置文件流到输出流中
 		book.write(response.getOutputStream());
@@ -53,19 +56,24 @@ public abstract class ExcelExportUtils {
 	}
 
 	/**
-	 * 设置excel文件所需的响应头
+	 * 设置导出Excel文件所需的响应信息
 	 *
 	 * @param fileName 文件名
 	 * @param response 响应对象
 	 * @throws IOException IO异常
 	 */
-	public static void setExcelHead(HttpServletResponse response, String fileName) throws IOException {
-		String filenameHead = new String(fileName.getBytes("gb2312"), "ISO8859-1");
+	public static void setExcelExportResponse(HttpServletResponse response, String fileName) throws IOException {
+		String fileNameForHeader = new String(fileName.getBytes("gb2312"), "ISO8859-1");
 
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + filenameHead + "\"");  // 设置文件头编码格式
-		response.setContentType("application/octet-stream; charset=UTF-8"); // 设置类型为流输出
-		response.setHeader("Cache-Control", "no-cache");// 设置缓存头：无缓存
-		response.setDateHeader("Expires", 0); // 设置时间头
+		// 内容配置
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileNameForHeader + "\"");  // 设置文件头编码格式
+		// 内容类型：微软excel文件
+		response.setContentType("application/vnd.ms-excel");
+		// 字符编码
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+		// 设置响应头，使该请求不被客户端缓存
+		HttpUtils.setResponseNotAllowCache(response);
 	}
 
 	/**
