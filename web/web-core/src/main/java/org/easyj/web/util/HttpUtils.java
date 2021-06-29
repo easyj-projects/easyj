@@ -1,8 +1,13 @@
 package org.easyj.web.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.text.CharPool;
+import cn.hutool.core.text.StrPool;
+import org.easyj.web.constant.HttpConstant;
 import org.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -79,6 +84,11 @@ public abstract class HttpUtils {
 		return GET_METHOD.equalsIgnoreCase(request.getMethod());
 	}
 
+	// 重载方法
+	public static boolean isGetRequest() {
+		return isGetRequest(getRequest());
+	}
+
 	/**
 	 * 判断是否不是GET请求
 	 *
@@ -87,6 +97,11 @@ public abstract class HttpUtils {
 	 */
 	public static boolean isNotGetRequest(HttpServletRequest request) {
 		return !isGetRequest(request);
+	}
+
+	// 重载方法
+	public static boolean isNotGetRequest() {
+		return !isGetRequest();
 	}
 
 	/**
@@ -99,6 +114,11 @@ public abstract class HttpUtils {
 		return POST_METHOD.equalsIgnoreCase(request.getMethod());
 	}
 
+	// 重载方法
+	public static boolean isPostRequest() {
+		return isPostRequest(getRequest());
+	}
+
 	/**
 	 * 判断是否不是POST请求
 	 *
@@ -107,6 +127,11 @@ public abstract class HttpUtils {
 	 */
 	public static boolean isNotPostRequest(HttpServletRequest request) {
 		return !isPostRequest(request);
+	}
+
+	// 重载方法
+	public static boolean isNotPostRequest() {
+		return !isPostRequest();
 	}
 
 	/**
@@ -124,7 +149,13 @@ public abstract class HttpUtils {
 		return false;
 	}
 
+	// 重载方法
+	public static boolean isNoCacheRequest() {
+		return isNoCacheRequest(getRequest());
+	}
+
 	//endregion
+
 
 	//region 设置响应信息
 
@@ -135,6 +166,46 @@ public abstract class HttpUtils {
 	 */
 	public static void setResponseStatus304(HttpServletResponse response) {
 		response.setStatus(HttpStatus.NOT_MODIFIED.value());
+	}
+
+	// 重载方法
+	public static void setResponseStatus304() {
+		setResponseStatus304(getResponse());
+	}
+
+	//endregion
+
+
+	//region 文件下载相关
+
+	/**
+	 * 判断是否为导出文件请求
+	 *
+	 * @param request 请求实例
+	 * @return isDoExportRequest 是否为导出文件请求
+	 */
+	public static boolean isDoExportRequest(HttpServletRequest request) {
+		return HttpConstant.DO_EXPORT_PARAM_VALUE.equalsIgnoreCase(request.getParameter(HttpConstant.DO_EXPORT_PARAM_NAME));
+	}
+
+	// 重载方法
+	public static boolean isDoExportRequest() {
+		return isDoExportRequest(getRequest());
+	}
+
+	/**
+	 * 生成导出文件的文件名
+	 *
+	 * @param fileNamePre 文件名前缀
+	 * @param fileSuffix  文件后续名
+	 * @return fileName 导出的文件名
+	 */
+	public static String buildExportFileName(String fileNamePre, String fileSuffix) {
+		if (!fileNamePre.endsWith(StrPool.UNDERLINE)) {
+			fileNamePre += StrPool.UNDERLINE;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		return fileNamePre + sdf.format(new Date()) + (fileSuffix.charAt(0) != CharPool.DOT ? CharPool.DOT : "") + fileSuffix;
 	}
 
 	//endregion

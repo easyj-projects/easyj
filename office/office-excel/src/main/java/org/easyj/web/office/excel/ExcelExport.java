@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface ExcelExport {
 
 	/**
-	 * 导出文件名前缀，格式如：{fileNamePre}_{yyyy-MM-dd_HH：mm：ss_SSS}.xlsx
+	 * 导出文件名前缀，格式如：{fileNamePre}_{yyyyMMddHHmmssSSS}.xlsx
 	 *
 	 * @return fileNamePre 文件名前缀
 	 */
@@ -29,18 +29,4 @@ public @interface ExcelExport {
 	 * @return dataType 数据类型
 	 */
 	Class<?> dataType();
-
-//	/**
-//	 * 切换为文件导出功能的依据参数的参数名
-//	 *
-//	 * @return paramName 参数名
-//	 */
-//	String paramName() default "doExcelExport";
-//
-//	/**
-//	 * 切换为文件导出功能的依据参数的参数值
-//	 *
-//	 * @return paramValue 参数值
-//	 */
-//	String paramValue() default "true";
 }

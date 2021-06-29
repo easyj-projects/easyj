@@ -1,11 +1,8 @@
 package org.easyj.web.office.excel;
 
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,6 +10,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.easyj.core.constant.FileTypeConstant;
 import org.easyj.core.util.ReflectionUtils;
 import org.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
@@ -81,28 +79,18 @@ public class ExcelExportAspect {
 			return result;
 		}
 
-		HttpServletRequest request = HttpUtils.getRequest();
-
-		String paramName = "doExcelExport";
-		String paramValue = "true";
-
-		if (paramValue.equalsIgnoreCase(request.getParameter(paramName))) {
+		if (HttpUtils.isDoExportRequest()) {
 			MethodSignature ms = (MethodSignature)jp.getSignature();
 			Method method = ms.getMethod();
 
 			if (result == null || result instanceof List) {
 				ExcelExport annotation = method.getAnnotation(ExcelExport.class);
-				String fileNamePre = annotation.fileNamePre();
-				if (!fileNamePre.endsWith("_")) {
-					fileNamePre += "_";
-				}
 
 				// 准备参数
 				HttpServletResponse response = HttpUtils.getResponse();
 				List dataList = result == null ? Collections.emptyList() : (List)result;
 				Class dataType = annotation.dataType();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH：mm：ss_SSS");
-				String fileName = fileNamePre + sdf.format(new Date()) + ".xlsx";
+				String fileName = HttpUtils.buildExportFileName(annotation.fileNamePre(), FileTypeConstant.EXCEL_2007);
 
 				// 转为excel并导出
 				excelExporter.toExcelAndExport(response, dataList, dataType, fileName);
