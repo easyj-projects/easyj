@@ -20,7 +20,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	/**
 	 * The page number
 	 */
-	protected int pageNumber = PageConstant.FIRST_PAGE_NUMBER;
+	protected int pageNumber = PageConstant.FIRST_PAGE_INDEX;
 
 	/**
 	 * The page size
@@ -112,7 +112,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	 * @return fromIndex
 	 */
 	public int getFromIndex() {
-		return (pageNumber - PageConstant.FIRST_PAGE_NUMBER) * pageSize;
+		return (pageNumber - PageConstant.FIRST_PAGE_INDEX) * pageSize;
 	}
 
 	/**
