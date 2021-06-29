@@ -45,8 +45,8 @@
 1. 在Controller接口上，添加`@ExcelExport(fileNamePre = "文件名前缀", dataType = MyEntity.class)`
 2. 在`MyEntity`类上添加`@Excel`注解，用于配置导出的表格的样式，如：是否添加序号列、是否冻结首行、是否添加数据筛选等等
 3. 在`MyEntity`类的属性上添加`@ExcelCell`注解，用于配置列相关信息，如：列名、列号、列宽、列字体颜色、列背景颜色等等
-4. 前端多传一个GET参数`&doExcelExport=true`，表示此次请求为文件导出请求
-5. 后端在接收到`doExcelExport`参数时，此次请求，将分页功能禁用掉，主要是为了导出不分页情况下的所有数据
+4. 请求多传一个GET参数`&doExport=true`，表示此次请求为文件导出请求
+5. 后端在接收到`doExport`参数时，此次请求，将分页功能禁用掉，主要是为了导出不分页情况下的所有数据
 
 #### 2、`ExcelUtils`一个方法，`@Excel, @ExcelCell`两个注解，实现Excel文件导入功能
 
