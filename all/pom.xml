@@ -12,7 +12,7 @@
 
 	<groupId>icu.easyj</groupId>
 	<artifactId>easyj-all</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 
 	<name>ALL</name>
 	<url>https://gitee.com/easyj-projects/easyj</url>
@@ -56,6 +56,18 @@
 		<system>gitee</system>
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-dependencies</artifactId>
+				<version>0.1.1-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<!-- Core -->
