@@ -71,7 +71,7 @@
 
 	<properties>
 		<!-- 项目版本 -->
-		<revision>0.1.0-SNAPSHOT</revision>
+		<revision>0.1.0</revision>
 
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>
