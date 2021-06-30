@@ -57,12 +57,17 @@
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
 
+	<properties>
+		<!-- EasyJ-Build版本 -->
+		<easyj-build.version>0.1.1-SNAPSHOT</easyj-build.version>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-dependencies</artifactId>
-				<version>0.1.1-SNAPSHOT</version>
+				<version>${easyj-build.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

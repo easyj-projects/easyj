@@ -79,6 +79,9 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- EasyJ-Build版本 -->
+		<easyj-build.version>0.1.1-SNAPSHOT</easyj-build.version>
 	</properties>
 
 	<dependencyManagement>
@@ -86,7 +89,7 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-dependencies</artifactId>
-				<version>0.1.1-SNAPSHOT</version>
+				<version>${easyj-build.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
