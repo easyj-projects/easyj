@@ -24,6 +24,10 @@
         <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
     <dependency>
+    <dependency>
+        <groupId>icu.easyj.boot</groupId>
+        <artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
+    <dependency>
     <!-- @Cache304所需依赖 -->
     <dependency>
         <groupId>icu.easyj.boot</groupId>

@@ -3,6 +3,12 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-build</artifactId>
+		<version>0.1.1-SNAPSHOT</version>
+		<relativePath/>
+	</parent>
 
 	<groupId>icu.easyj</groupId>
 	<artifactId>easyj-bom</artifactId>
@@ -100,32 +106,4 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<!-- 资源仓库管理 -->
-	<repositories>
-		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<!-- 资源上传仓库配置 -->
-	<distributionManagement>
-		<repository>
-			<id>kt-nexus-releases</id>
-			<url>http://www.kingtsoft.com:33084/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>kt-nexus-snapshots</id>
-			<url>http://www.kingtsoft.com:33084/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

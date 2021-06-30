@@ -13,32 +13,10 @@
 	<artifactId>easyj-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
+
 	<name>Parent</name>
 	<description>此项目的目标是为了简化Java项目的开发。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<properties>
-		<!-- 编译配置 -->
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<!-- 项目版本 -->
-		<revision>0.1.0-SNAPSHOT</revision>
-	</properties>
-
-	<modules>
-		<module>all</module>
-		<module>bom</module>
-
-		<module>core</module>
-		<module>crypto</module>
-		<module>data</module>
-		<module>poi</module>
-		<module>web</module>
-	</modules>
 
 	<inceptionYear>2021</inceptionYear>
 
@@ -80,39 +58,95 @@
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
 
-	<!-- 资源仓库管理 -->
-	<repositories>
-		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
+	<modules>
+		<module>all</module>
+		<module>bom</module>
 
-	<!-- Profiles -->
-	<profiles>
-		<!-- profile：Release -->
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
-					<!--
-					使用插件：Javadoc
-					注：在`icu.easyj:easyj-build`中，已经添加过，但是这里不添加，gitee上就无法生成javadoc。
-					-->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+		<module>core</module>
+		<module>crypto</module>
+		<module>data</module>
+		<module>poi</module>
+		<module>web</module>
+	</modules>
+
+	<properties>
+		<!-- 项目版本 -->
+		<revision>0.1.0-SNAPSHOT</revision>
+
+		<!-- 编译配置 -->
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-dependencies</artifactId>
+				<version>0.1.1-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- 引用依赖：Lombok，用于测试环境 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 引用依赖：Tests -->
+		<!-- org.junit -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- org.mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- org.assertj -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
