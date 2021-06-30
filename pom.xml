@@ -4,9 +4,9 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyj</groupId>
+		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.1.1-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
@@ -14,6 +14,7 @@
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 	<name>Parent</name>
+	<description>此项目的目标是为了简化Java项目的开发。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<properties>
@@ -104,7 +105,7 @@
 				<plugins>
 					<!--
 					使用插件：Javadoc
-					注：在`org.easyj:easyj-build`中，已经添加过，但是这里不添加，gitee上就无法生成javadoc。
+					注：在`icu.easyj:easyj-build`中，已经添加过，但是这里不添加，gitee上就无法生成javadoc。
 					-->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

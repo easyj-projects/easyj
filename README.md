@@ -11,7 +11,7 @@
 ```
 <dependencyManagement>
     <dependencies>
-        <groupId>org.easyj.boot</groupId>
+        <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-bom</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <type>pom</type>
@@ -21,12 +21,12 @@
 <dependencies>
     <!-- @ExcelExport所需依赖 -->
     <dependency>
-        <groupId>org.easyj.boot</groupId>
+        <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
     <dependency>
     <!-- @Cache304所需依赖 -->
     <dependency>
-        <groupId>org.easyj.boot</groupId>
+        <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
     <dependency>
 </dependencies>
@@ -37,7 +37,7 @@
 ```
 <dependencies>
     <dependency>
-        <groupId>org.easyj</groupId>
+        <groupId>icu.easyj</groupId>
         <artifactId>easyj-all</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </dependency>
