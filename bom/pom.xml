@@ -14,7 +14,7 @@
 	<artifactId>easyj-bom</artifactId>
 	<packaging>pom</packaging>
 	<name>BOM - ${project.version}</name>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 
 	<inceptionYear>2021</inceptionYear>
 
