@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>1.0.2</version>
 		<relativePath/>
 	</parent>
 
@@ -20,6 +20,11 @@
 
 	<inceptionYear>2021</inceptionYear>
 
+	<organization>
+		<name>EasyJ开源社区</name>
+		<url>https://gitee.com/easyj-projects</url>
+	</organization>
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -28,17 +33,12 @@
 		</license>
 	</licenses>
 
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
 	<developers>
 		<developer>
 			<id>wangliang181230</id>
 			<name>王良</name>
-			<url>https://gitee.com/wangliang181230</url>
 			<email>841369634@qq.com</email>
+			<url>https://gitee.com/wangliang181230</url>
 			<organization>浙江蕙康科技有限公司</organization>
 			<organizationUrl>https://www.jyhk.com</organizationUrl>
 			<roles>
@@ -48,9 +48,9 @@
 	</developers>
 
 	<scm>
-		<url>https://gitee.com/easyj-projects/easyj</url>
 		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
 		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
 	</scm>
 
 	<issueManagement>
@@ -59,6 +59,8 @@
 	</issueManagement>
 
 	<modules>
+		<module>dependencies</module>
+
 		<module>all</module>
 		<module>bom</module>
 
@@ -79,9 +81,6 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<!-- EasyJ-Build版本 -->
-		<easyj-build.version>0.1.1-SNAPSHOT</easyj-build.version>
 	</properties>
 
 	<dependencyManagement>
@@ -89,7 +88,7 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-dependencies</artifactId>
-				<version>${easyj-build.version}</version>
+				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -150,6 +149,26 @@
 					<flattenMode>resolveCiFriendliesOnly</flattenMode>
 				</configuration>
 			</plugin>
+			<!-- 插件定义：Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>kt-nexus</id>
+			<name>kt-nexus</name>
+			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

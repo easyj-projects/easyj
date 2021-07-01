@@ -6,45 +6,17 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>1.0.2</version>
 		<relativePath/>
 	</parent>
 
-	<groupId>icu.easyj</groupId>
 	<artifactId>easyj-all</artifactId>
 	<version>0.1.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>ALL</name>
+	<description>EasyJ的所有功能。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<inceptionYear>2021</inceptionYear>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
-	<developers>
-		<developer>
-			<id>wangliang181230</id>
-			<name>王良</name>
-			<url>https://gitee.com/wangliang181230</url>
-			<email>841369634@qq.com</email>
-			<organization>浙江蕙康科技有限公司</organization>
-			<organizationUrl>https://www.jyhk.com</organizationUrl>
-			<roles>
-				<role>Java架构师</role>
-			</roles>
-		</developer>
-	</developers>
 
 	<scm>
 		<url>https://gitee.com/easyj-projects/easyj</url>
@@ -57,17 +29,12 @@
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
 
-	<properties>
-		<!-- EasyJ-Build版本 -->
-		<easyj-build.version>0.1.1-SNAPSHOT</easyj-build.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-dependencies</artifactId>
-				<version>${easyj-build.version}</version>
+				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -169,6 +136,7 @@
 						</goals>
 						<configuration>
 							<createSourcesJar>true</createSourcesJar>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<artifactSet>
 								<includes>
 									<include>${project.groupId}:*:*</include>
@@ -186,6 +154,30 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>kt-nexus</id>
+			<name>kt-nexus</name>
+			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

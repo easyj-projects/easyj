@@ -6,49 +6,22 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>0.1.1-SNAPSHOT</version>
+		<version>1.0.2</version>
 		<relativePath/>
 	</parent>
 
-	<groupId>icu.easyj</groupId>
 	<artifactId>easyj-bom</artifactId>
-	<packaging>pom</packaging>
-	<name>BOM - ${project.version}</name>
 	<version>0.1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-	<inceptionYear>2021</inceptionYear>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
-	<developers>
-		<developer>
-			<id>wangliang181230</id>
-			<name>王良</name>
-			<url>https://gitee.com/wangliang181230</url>
-			<email>841369634@qq.com</email>
-			<organization>浙江蕙康科技有限公司</organization>
-			<organizationUrl>https://www.jyhk.com</organizationUrl>
-			<roles>
-				<role>Java架构师</role>
-			</roles>
-		</developer>
-	</developers>
+	<name>BOM - 0.1.1-SNAPSHOT</name>
+	<description>EasyJ的依赖清单。</description>
+	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<scm>
-		<url>https://gitee.com/easyj-projects/easyj</url>
 		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
 		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
 	</scm>
 
 	<issueManagement>
@@ -58,6 +31,15 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Dependencies -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 			<!-- All -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -106,4 +88,32 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>kt-nexus</id>
+			<name>kt-nexus</name>
+			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

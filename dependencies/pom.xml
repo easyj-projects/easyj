@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-build</artifactId>
+		<version>1.0.2</version>
+		<relativePath/>
+	</parent>
+
+	<artifactId>easyj-dependencies</artifactId>
+	<version>0.1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>dependencies</name>
+	<description>统一管理第三方依赖。</description>
+	<url>https://gitee.com/easyj-projects/easyj</url>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
+
+	<properties>
+		<!-- Commons version -->
+		<slf4j.version>1.7.31</slf4j.version>
+		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
+
+		<!-- Tools version -->
+		<commons-lang3.version>3.10</commons-lang3.version>
+		<hutool.version>5.7.2</hutool.version>
+
+		<!-- BouncyCastle -->
+		<bouncycastle.version>1.69</bouncycastle.version>
+
+		<!-- POI version -->
+		<apache-poi.version>5.0.0</apache-poi.version>
+		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
+
+		<!-- Spring version -->
+		<spring-boot.version>2.5.2</spring-boot.version>
+
+		<!-- Webs version -->
+		<servlet-api.version>4.0.1</servlet-api.version>
+
+		<!-- AOP version -->
+		<aspectj.version>1.9.6</aspectj.version>
+
+		<!-- Lombok version -->
+		<lombok.version>1.18.20</lombok.version>
+
+		<!-- Tests version -->
+		<mockito.version>3.11.2</mockito.version>
+		<assertj-core.version>3.20.2</assertj-core.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 依赖定义：Commons -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${findbugs.jsr305.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：Tools -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：BouncyCastle -->
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<version>${bouncycastle.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：POI -->
+			<!-- apache-poi -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${apache-poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${apache-poi.version}</version>
+			</dependency>
+			<!-- afterturn-easypoi -->
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-spring-boot-starter</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：Spring -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- 依赖定义：Webs -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：AOP -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：Lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：Tests -->
+			<!-- org.mockito -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+			<!-- org.assertj -->
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${assertj-core.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>kt-nexus</id>
+			<name>kt-nexus</name>
+			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>
