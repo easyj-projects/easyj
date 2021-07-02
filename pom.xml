@@ -15,7 +15,7 @@
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>此项目的目标是为了简化Java项目的开发。</description>
+	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<inceptionYear>2021</inceptionYear>

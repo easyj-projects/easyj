@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-core</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ核心，提供各种工具类、异常类、常量等等</description>
 
 	<dependencies>
 		<!-- 工具类依赖 -->

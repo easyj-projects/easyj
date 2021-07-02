@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-db</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ DB封装，简化对数据库的操作</description>
 
 	<dependencies>
 		<dependency>

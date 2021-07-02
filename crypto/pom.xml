@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-crypto</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ 加密解密封装，提供对称加密算法、非对称加密算法等等的功能</description>
 
 	<dependencies>
 		<dependency>

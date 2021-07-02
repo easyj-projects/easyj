@@ -10,5 +10,7 @@
 	</parent>
 
 	<artifactId>easyj-web-core</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ Web核心，包含：HTTP工具类、异常类、常量等等</description>
 </project>

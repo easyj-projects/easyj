@@ -15,7 +15,7 @@
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>统一管理第三方依赖。</description>
+	<description>EasyJ 统一管理第三方依赖</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<scm>

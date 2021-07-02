@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-web-cache304</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ Web对304缓存功能的封装</description>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->

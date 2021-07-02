@@ -11,7 +11,9 @@
 
 	<artifactId>easyj-poi-parent</artifactId>
 	<packaging>pom</packaging>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ POI封装，简化对MS Office的操作</description>
 
 	<modules>
 		<module>poi-excel</module>

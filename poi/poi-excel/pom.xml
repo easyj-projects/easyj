@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-poi-excel</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ POI封装，简化对MS Excel的操作</description>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->

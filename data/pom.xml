@@ -10,7 +10,9 @@
 	</parent>
 
 	<artifactId>easyj-data</artifactId>
+
 	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ Data封装，提供数据查询、数据处理的功能</description>
 
 	<dependencies>
 		<dependency>
