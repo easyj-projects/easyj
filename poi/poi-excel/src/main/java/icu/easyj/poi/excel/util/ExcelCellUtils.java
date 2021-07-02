@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2021 the original author or authors.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package icu.easyj.poi.excel.util;
 
 import java.lang.reflect.Field;
@@ -36,15 +51,15 @@ import org.springframework.util.StringUtils;
  */
 @SuppressWarnings({"unchecked", "deprecation"})
 public abstract class ExcelCellUtils {
-	private static final Logger logger = LoggerFactory.getLogger(ExcelCellUtils.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelCellUtils.class);
 
 	/**
 	 * 值类型转换的函数集合
 	 */
-	private static final Map<Class<?>, Map<Class<?>, Function<Object, Object>>> mapFun;
+	private static final Map<Class<?>, Map<Class<?>, Function<Object, Object>>> FUN_MAP;
 
 	static {
-		mapFun = new HashMap<>();
+		FUN_MAP = new HashMap<>();
 
 		// excel返回String的情况
 		addChangeFun(String.class, String.class, f -> f);
@@ -133,7 +148,7 @@ public abstract class ExcelCellUtils {
 		if (fun == null) {
 			return;
 		}
-		Map<Class<?>, Function<Object, Object>> map = mapFun.computeIfAbsent(classFrom, k -> new HashMap<>());
+		Map<Class<?>, Function<Object, Object>> map = FUN_MAP.computeIfAbsent(classFrom, k -> new HashMap<>());
 		map.put(classTo, fun);
 	}
 
@@ -145,7 +160,7 @@ public abstract class ExcelCellUtils {
 	 * @return fun 转换函数
 	 */
 	private static Function<Object, Object> getChangeFun(Class<?> classFrom, Class<?> classTo) {
-		Map<Class<?>, Function<Object, Object>> map = mapFun.get(classFrom);
+		Map<Class<?>, Function<Object, Object>> map = FUN_MAP.get(classFrom);
 		if (map == null) {
 			return null;
 		}

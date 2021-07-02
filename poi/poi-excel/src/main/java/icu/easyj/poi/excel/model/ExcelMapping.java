@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2021 the original author or authors.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package icu.easyj.poi.excel.model;
 
 import java.util.HashMap;
@@ -164,7 +179,7 @@ public class ExcelMapping {
 
 	//******************************** static *********************************/
 
-	private static final Map<Class<?>, ExcelMapping> caches = new HashMap<>();
+	private static final Map<Class<?>, ExcelMapping> CACHE_MAP = new HashMap<>();
 
 	/**
 	 * 获取属性与表格的映射关系
@@ -173,7 +188,7 @@ public class ExcelMapping {
 	 * @return excelMapping excel表映射映射
 	 */
 	public static ExcelMapping getMapping(Class<?> clazz) {
-		ExcelMapping mapping = caches.get(clazz);
+		ExcelMapping mapping = CACHE_MAP.get(clazz);
 		if (mapping != null) {
 			return mapping;
 		}
@@ -203,7 +218,7 @@ public class ExcelMapping {
 		List<ExcelCellMapping> cellMappingList = ExcelCellMapping.getCellMappingList(clazz, mapping);
 		mapping.setCellMappingList(cellMappingList);
 
-		caches.put(clazz, mapping);
+		CACHE_MAP.put(clazz, mapping);
 
 		return mapping;
 	}
