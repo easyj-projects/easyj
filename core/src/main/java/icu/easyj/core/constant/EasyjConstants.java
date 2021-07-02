@@ -9,5 +9,5 @@ public interface EasyjConstants {
 
 	String PREFIX = "easyj";
 
-	String VERSION = "0.1.1-SNAPSHOT";
+	String VERSION = "0.1.1";
 }
