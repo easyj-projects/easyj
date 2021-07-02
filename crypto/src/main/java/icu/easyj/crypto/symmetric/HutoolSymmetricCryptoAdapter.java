@@ -8,20 +8,20 @@ import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import org.springframework.util.Assert;
 
 /**
- * HuTool对称加密算法适配器
+ * Hutool对称加密算法适配器
  *
  * @author wangliang181230
  */
-public class HuToolSymmetricCryptoAdapter implements ISymmetricCrypto {
+public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 
 	private final SymmetricCrypto symmetricCrypto;
 
 	/**
 	 * 构造函数
 	 *
-	 * @param symmetricCrypto HuTool对称加密
+	 * @param symmetricCrypto Hutool对称加密
 	 */
-	public HuToolSymmetricCryptoAdapter(SymmetricCrypto symmetricCrypto) {
+	public HutoolSymmetricCryptoAdapter(SymmetricCrypto symmetricCrypto) {
 		Assert.notNull(symmetricCrypto, "symmetricCrypto must be not null");
 		this.symmetricCrypto = symmetricCrypto;
 	}

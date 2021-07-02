@@ -5,20 +5,20 @@ import cn.hutool.crypto.asymmetric.KeyType;
 import org.springframework.util.Assert;
 
 /**
- * HuTool非对称加密算法适配器
+ * Hutool非对称加密算法适配器
  *
  * @author wangliang181230
  */
-public class HuToolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
+public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 
 	private final AbstractAsymmetricCrypto asymmetricCrypto;
 
 	/**
 	 * 构造函数
 	 *
-	 * @param asymmetricCrypto HuTool非对称加密
+	 * @param asymmetricCrypto Hutool非对称加密
 	 */
-	public HuToolAsymmetricCryptoAdapter(AbstractAsymmetricCrypto asymmetricCrypto) {
+	public HutoolAsymmetricCryptoAdapter(AbstractAsymmetricCrypto asymmetricCrypto) {
 		Assert.notNull(asymmetricCrypto, "asymmetricCrypto must be not null");
 		this.asymmetricCrypto = asymmetricCrypto;
 	}
