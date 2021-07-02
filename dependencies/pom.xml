@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.6</version>
 		<relativePath/>
 	</parent>
 
@@ -14,7 +14,7 @@
 	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>dependencies</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>统一管理第三方依赖。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 

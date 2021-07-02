@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>easyj-core</artifactId>
-	<name>core</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 
 	<dependencies>
 		<!-- 工具类依赖 -->

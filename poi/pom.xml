@@ -11,7 +11,7 @@
 
 	<artifactId>easyj-poi-parent</artifactId>
 	<packaging>pom</packaging>
-	<name>POI Parent</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 
 	<modules>
 		<module>poi-excel</module>

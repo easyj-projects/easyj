@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.6</version>
 		<relativePath/>
 	</parent>
 
@@ -14,7 +14,7 @@
 	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ALL</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ的所有功能。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
@@ -91,12 +91,12 @@
 		<!-- Web -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-web-core</artifactId>
+			<artifactId>easyj-web-cache304</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-web-cache304</artifactId>
+			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

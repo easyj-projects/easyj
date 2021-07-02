@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>easyj-web-cache304</artifactId>
-	<name>web-cache304</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->

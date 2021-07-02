@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.6</version>
 		<relativePath/>
 	</parent>
 
@@ -14,7 +14,7 @@
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 
-	<name>Parent</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>此项目的目标是为了简化Java项目的开发。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
@@ -28,7 +28,7 @@
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>

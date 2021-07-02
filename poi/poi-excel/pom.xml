@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>easyj-poi-excel</artifactId>
-	<name>poi-excel</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->

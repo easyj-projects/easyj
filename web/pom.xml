@@ -11,7 +11,7 @@
 
 	<artifactId>easyj-web-parent</artifactId>
 	<packaging>pom</packaging>
-	<name>Web Parent</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 
 	<modules>
 		<module>web-cache304</module>

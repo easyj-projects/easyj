@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.3</version>
+		<version>1.0.6</version>
 		<relativePath/>
 	</parent>
 
@@ -14,7 +14,7 @@
 	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>BOM - 0.1.1-SNAPSHOT</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ的依赖清单。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
@@ -52,17 +52,17 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- DB -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-db</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 			<!-- Data -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-data</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- DB -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-db</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -76,12 +76,12 @@
 			<!-- Web -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-web-core</artifactId>
+				<artifactId>easyj-web-cache304</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-web-cache304</artifactId>
+				<artifactId>easyj-web-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
