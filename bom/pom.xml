@@ -31,15 +31,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Dependencies -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-dependencies</artifactId>
-				<version>${project.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 			<!-- All -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
