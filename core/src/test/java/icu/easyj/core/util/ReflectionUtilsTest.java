@@ -112,14 +112,14 @@ class ReflectionUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	void testSetStaticFieldValue() throws NoSuchFieldException, IllegalAccessException {
+	void testSetStaticFinalFieldValue() throws NoSuchFieldException, IllegalAccessException {
 		Assertions.assertEquals("hello", testValue);
-		ReflectionUtils.setStaticFieldValue(ReflectionUtilsTest.class, "testValue", "hello world");
+		ReflectionUtils.setStaticFinalFieldValue(ReflectionUtilsTest.class, "testValue", "hello world");
 		Assertions.assertEquals("hello world", testValue);
 
 		// case: not a static field
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			ReflectionUtils.setStaticFieldValue(ReflectionUtilsTest.class, "testValue2", "hello");
+			ReflectionUtils.setStaticFinalFieldValue(ReflectionUtilsTest.class, "testValue2", "hello");
 		});
 	}
 
