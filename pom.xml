@@ -164,7 +164,9 @@
 							<include>**/src/test/java/**</include>
 						</includes>
 						<excludes>
+							<exclude>**/src/main/java/icu/easyj/core/executor/Initialize.java</exclude>
 							<exclude>**/src/main/java/icu/easyj/core/loader/**</exclude>
+							<exclude>**/src/test/java/icu/easyj/core/loader/**</exclude>
 						</excludes>
 						<strictCheck>true</strictCheck>
 						<mapping>
