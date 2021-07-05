@@ -15,6 +15,18 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>方便引用测试所需的第三方依赖，并提供一些测试所需的类或功能。</description>
+	<url>https://gitee.com/easyj-projects/easyj</url>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -54,4 +66,17 @@
 			<artifactId>assertj-core</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
