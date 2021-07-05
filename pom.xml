@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.8</version>
+		<version>1.0.9</version>
 		<relativePath/>
 	</parent>
 
@@ -64,6 +64,7 @@
 		<module>all</module>
 		<module>bom</module>
 
+		<module>captcha</module>
 		<module>core</module>
 		<module>crypto</module>
 		<module>data</module>
@@ -97,11 +98,11 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- 引用依赖：Lombok，用于测试环境 -->
+		<!-- 引用依赖：Provided dependencies。（注：仅参与编译，无需被继承的依赖。） -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>test</scope>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- 引用依赖：Tests -->
@@ -122,11 +123,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- org.mockito -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>

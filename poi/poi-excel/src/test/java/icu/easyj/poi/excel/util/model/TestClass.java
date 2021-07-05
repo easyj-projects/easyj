@@ -18,16 +18,10 @@ package icu.easyj.poi.excel.util.model;
 import java.util.Date;
 
 import icu.easyj.poi.excel.annotation.ExcelCell;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author wangliang181230
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class TestClass {
 
 	@ExcelCell(headName = "姓名", cellNum = 0)
@@ -41,4 +35,46 @@ public class TestClass {
 
 	// 测试无注解的情况
 	private String desc;
+
+	public TestClass() {
+	}
+
+	public TestClass(String name, Integer age, Date birthday, String desc) {
+		this.name = name;
+		this.age = age;
+		this.birthday = birthday;
+		this.desc = desc;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 }

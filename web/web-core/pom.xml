@@ -13,4 +13,25 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ Web核心，包含：HTTP工具类、异常类、常量等等</description>
+
+	<dependencies>
+		<!-- 当前项目的依赖 -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<!-- spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+	</dependencies>
 </project>

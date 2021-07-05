@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.8</version>
+		<version>1.0.9</version>
 		<relativePath/>
 	</parent>
 
@@ -30,34 +30,31 @@
 	</issueManagement>
 
 	<properties>
-		<!-- Commons version -->
+		<!-- Common dependencies version -->
 		<slf4j.version>1.7.31</slf4j.version>
 		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
 
-		<!-- Tools version -->
+		<!-- Tool dependencies version -->
 		<commons-lang3.version>3.10</commons-lang3.version>
 		<hutool.version>5.7.2</hutool.version>
 
-		<!-- BouncyCastle -->
+		<!-- Spring dependencies version -->
+		<spring-framework.version>5.3.8</spring-framework.version>
+
+		<!-- Web dependencies version -->
+		<servlet-api.version>4.0.1</servlet-api.version>
+
+		<!-- AOP dependencies version -->
+		<aspectj.version>1.9.6</aspectj.version>
+
+		<!-- Crypto dependencies version -->
 		<bouncycastle.version>1.69</bouncycastle.version>
 
-		<!-- POI version -->
+		<!-- POI dependencies version -->
 		<apache-poi.version>5.0.0</apache-poi.version>
 		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
 
-		<!-- Spring version -->
-		<spring-framework.version>5.3.8</spring-framework.version>
-
-		<!-- Webs version -->
-		<servlet-api.version>4.0.1</servlet-api.version>
-
-		<!-- AOP version -->
-		<aspectj.version>1.9.6</aspectj.version>
-
-		<!-- Lombok version -->
-		<lombok.version>1.18.20</lombok.version>
-
-		<!-- Tests version -->
+		<!-- Test dependencies version -->
 		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.11.2</mockito.version>
 		<assertj-core.version>3.20.2</assertj-core.version>
@@ -65,7 +62,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- 依赖定义：Commons -->
+			<!-- 依赖定义：Common -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -77,7 +74,7 @@
 				<version>${findbugs.jsr305.version}</version>
 			</dependency>
 
-			<!-- 依赖定义：Tools -->
+			<!-- 依赖定义：Tool -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -89,7 +86,30 @@
 				<version>${hutool.version}</version>
 			</dependency>
 
-			<!-- 依赖定义：BouncyCastle -->
+			<!-- 依赖定义：Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>${spring-framework.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- 依赖定义：Web -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：AOP -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：Crypto -->
 			<dependency>
 				<groupId>org.bouncycastle</groupId>
 				<artifactId>bcprov-jdk15on</artifactId>
@@ -113,36 +133,6 @@
 				<groupId>cn.afterturn</groupId>
 				<artifactId>easypoi-spring-boot-starter</artifactId>
 				<version>${afterturn-easypoi.version}</version>
-			</dependency>
-
-			<!-- 依赖定义：Spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-framework-bom</artifactId>
-				<version>${spring-framework.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<!-- 依赖定义：Webs -->
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet-api.version}</version>
-			</dependency>
-
-			<!-- 依赖定义：AOP -->
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>${aspectj.version}</version>
-			</dependency>
-
-			<!-- 依赖定义：Lombok -->
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>${lombok.version}</version>
 			</dependency>
 
 			<!-- 依赖定义：Tests -->
