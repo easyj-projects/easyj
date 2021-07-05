@@ -13,18 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.loader;
+package icu.easyj.test.model;
 
 /**
- * The type Chinese hello.
+ * 测试用的空类
  *
- * @author Otis.z
+ * @author wangliang181230
  */
-@LoadLevel(name = "ChineseHello", order = Integer.MIN_VALUE)
-public class ChineseHello implements Hello {
-
-	@Override
-	public String say() {
-		return "ni hao!";
-	}
+public class EmptyTestClass {
 }

@@ -91,6 +91,13 @@
 				<artifactId>easyj-web-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- Test -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-test</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

@@ -14,7 +14,7 @@
 #  limitations under the License.
 #
 
-icu.easyj.core.loader.ChineseHello
-icu.easyj.core.loader.FrenchHello
-icu.easyj.core.loader.EnglishHello
-icu.easyj.core.loader.LatinHello
+icu.easyj.core.loader.model.ChineseHello
+icu.easyj.core.loader.model.FrenchHello
+icu.easyj.core.loader.model.EnglishHello
+icu.easyj.core.loader.model.LatinHello

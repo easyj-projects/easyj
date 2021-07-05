@@ -13,19 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.loader;
+package icu.easyj.core.loader.model;
+
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.Scope;
 
 /**
- * The interface Hello.
+ * The type LatinHello
  *
- * @author Otis.z
+ * @author haozhibei
  */
-public interface Hello {
+@LoadLevel(name = "LatinHello", order = 3, scope = Scope.PROTOTYPE)
+public class LatinHello implements Hello {
 
-	/**
-	 * Say string.
-	 *
-	 * @return the string
-	 */
-	String say();
+	@Override
+	public String say() {
+		return "Olá.";
+	}
 }

@@ -17,6 +17,11 @@ package icu.easyj.core.loader;
 
 import java.util.List;
 
+import icu.easyj.core.loader.model.ChineseHello;
+import icu.easyj.core.loader.model.EnglishHello;
+import icu.easyj.core.loader.model.FrenchHello;
+import icu.easyj.core.loader.model.Hello;
+import icu.easyj.core.loader.model.LatinHello;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

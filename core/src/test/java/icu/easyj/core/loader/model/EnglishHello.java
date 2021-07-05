@@ -13,18 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.loader;
+package icu.easyj.core.loader.model;
+
+import icu.easyj.core.loader.LoadLevel;
 
 /**
- * The type French hello.
+ * The type English hello.
  *
  * @author Otis.z
  */
-@LoadLevel(name = "FrenchHello", order = 2)
-public class FrenchHello implements Hello {
+@LoadLevel(name = "EnglishHello", order = 1)
+public class EnglishHello implements Hello {
 
 	@Override
 	public String say() {
-		return "Bonjour";
+		return "hello!";
 	}
 }

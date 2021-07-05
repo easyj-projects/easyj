@@ -13,12 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.util.model;
+package icu.easyj.test.model;
 
 /**
- * 测试接口
+ * 测试用的作为父类的类
  *
  * @author wangliang181230
  */
-public interface TestInterface {
+public class TestSuperClass {
+	private String f2;
+
+	public String getF2() {
+		return f2;
+	}
+
+	public void setF2(String f2) {
+		this.f2 = f2;
+	}
 }

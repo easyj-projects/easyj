@@ -13,21 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.util.model;
+package icu.easyj.test.model;
 
 /**
- * 测试类
+ * 测试用的不存在默认构造函数的类
  *
  * @author wangliang181230
  */
-public class TestSuperClass implements TestInterface {
-	private String f2;
+public class NotExistsNoArgsConstructorTestClass extends TestSuperClass {
 
-	public String getF2() {
-		return f2;
+	private String f1;
+
+	NotExistsNoArgsConstructorTestClass(String f1) {
+		this.f1 = f1;
 	}
 
-	public void setF2(String f2) {
-		this.f2 = f2;
+	public String getF1() {
+		return f1;
+	}
+
+	public void setF1(String f1) {
+		this.f1 = f1;
 	}
 }

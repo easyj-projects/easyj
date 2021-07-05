@@ -13,12 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.util.model;
+package icu.easyj.core.loader.model;
 
 /**
- * 测试用空类
+ * The interface Hello.
  *
- * @author wangliang181230
+ * @author Otis.z
  */
-public class TestEmptyClass {
+public interface Hello {
+
+	/**
+	 * Say string.
+	 *
+	 * @return the string
+	 */
+	String say();
 }

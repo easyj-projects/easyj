@@ -21,11 +21,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
-import icu.easyj.core.util.model.NotExistsNoArgsConstructorTestClass;
-import icu.easyj.core.util.model.TestClass;
-import icu.easyj.core.util.model.TestEmptyClass;
-import icu.easyj.core.util.model.TestInterface;
-import icu.easyj.core.util.model.TestSuperClass;
+import icu.easyj.test.model.EmptyTestClass;
+import icu.easyj.test.model.EmptyTestInterface;
+import icu.easyj.test.model.NotExistsNoArgsConstructorTestClass;
+import icu.easyj.test.model.TestClass;
+import icu.easyj.test.model.TestSuperClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -133,16 +133,16 @@ class ReflectionUtilsTest {
 		// TestSuperClass
 		this.testGetAllFieldsInternal(TestSuperClass.class, "f2");
 		// TestEmptyClass
-		this.testGetAllFieldsInternal(TestEmptyClass.class);
+		this.testGetAllFieldsInternal(EmptyTestClass.class);
 		// TestInterface
-		this.testGetAllFieldsInternal(TestInterface.class);
+		this.testGetAllFieldsInternal(EmptyTestInterface.class);
 		// Object
 		this.testGetAllFieldsInternal(Object.class);
 
 		// case: The fields of TestEmptyClass is `EMPTY_FIELD_ARRAY`
-		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(TestEmptyClass.class));
+		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(EmptyTestClass.class));
 		// case: The fields of TestInterface is `EMPTY_FIELD_ARRAY`
-		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(TestInterface.class));
+		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(EmptyTestInterface.class));
 		// case: The fields of Object is `EMPTY_FIELD_ARRAY`
 		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(Object.class));
 	}
@@ -161,7 +161,7 @@ class ReflectionUtilsTest {
 
 		// case: Interface
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			ReflectionUtils.getSingleton(TestInterface.class);
+			ReflectionUtils.getSingleton(EmptyTestInterface.class);
 		});
 
 		// case: not Exists No-Args Constructor Class
