@@ -16,28 +16,45 @@
 package icu.easyj.web.cache304.config;
 
 import icu.easyj.web.cache304.Cache304Constants;
+import icu.easyj.web.cache304.annotation.Cache304;
 
 /**
  * Cache304配置类
  *
  * @author wangliang181230
+ * @see Cache304
+ * @see icu.easyj.web.cache304.annotation.Cache304AnnotationParser#parse(Cache304)
  */
 public class Cache304Config {
 
 	/**
 	 * 缓存秒数
+	 *
+	 * @see Cache304#value()
+	 * @see Cache304#cacheSeconds()
 	 */
 	private long cacheSeconds = Cache304Constants.DEFAULT_CACHE_SECONDS;
 
 	/**
 	 * 缓存天数
+	 *
+	 * @see Cache304#cacheDays()
 	 */
 	private int cacheDays = Cache304Constants.DEFAULT_CACHE_DAYS;
 
 	/**
-	 * 是否使用`Cache-Control:max-age`响应头
+	 * 是否使用`Cache-Control:max-age=xxx`响应头
+	 *
+	 * @see Cache304#useMaxAge()
 	 */
 	private boolean useMaxAge = Cache304Constants.DEFAULT_USE_MAX_AGE;
+
+	/**
+	 * `Cache-Control:max-age=xxx`中max-age的上限值
+	 *
+	 * @see Cache304#limitMaxAge()
+	 */
+	private long limitMaxAge = Cache304Constants.DEFAULT_LIMIT_MAX_AGE;
 
 
 	public long getCacheSeconds() {
@@ -62,5 +79,13 @@ public class Cache304Config {
 
 	public void setUseMaxAge(boolean useMaxAge) {
 		this.useMaxAge = useMaxAge;
+	}
+
+	public long getLimitMaxAge() {
+		return limitMaxAge;
+	}
+
+	public void setLimitMaxAge(long limitMaxAge) {
+		this.limitMaxAge = limitMaxAge;
 	}
 }

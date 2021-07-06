@@ -156,6 +156,11 @@ public abstract class Cache304Utils {
 
 		// 设置cache响应头
 		if (config.isUseMaxAge()) {
+			// 如果缓存秒数超过`limitMaxAge`的值，则重置为`limitMaxAge`的值。（这样处理的原因见注解`@Cache304`）
+			if (cacheSeconds > config.getLimitMaxAge()) {
+				cacheSeconds = config.getLimitMaxAge();
+			}
+
 			response.setDateHeader(HttpHeaders.EXPIRES, new Date(now.getTime() + cacheSeconds * 1000).getTime());
 			cacheSeconds += 1; // 加1秒，防止客户端已过期，但服务端验证未过期
 			response.addHeader(HttpHeaders.CACHE_CONTROL, "max-age=" + cacheSeconds);
