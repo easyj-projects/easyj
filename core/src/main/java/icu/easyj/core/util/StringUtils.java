@@ -66,7 +66,6 @@ public abstract class StringUtils {
 	 * @param obj 任意类型的对象
 	 * @return str 转换后的字符串
 	 */
-	@SuppressWarnings("deprecation")
 	public static String toString(final Object obj) {
 		if (obj == null) {
 			return "null";

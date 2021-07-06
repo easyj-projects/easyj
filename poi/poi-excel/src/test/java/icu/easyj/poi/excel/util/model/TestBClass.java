@@ -15,39 +15,21 @@
  */
 package icu.easyj.poi.excel.util.model;
 
-import java.util.Date;
-
-import icu.easyj.poi.excel.annotation.ExcelCell;
-
 /**
  * @author wangliang181230
  */
-public class TestClass {
+public class TestBClass {
 
-	@ExcelCell(headName = "姓名", cellNum = 0)
 	private String name;
 
-	@ExcelCell(headName = "年龄", cellNum = 1)
 	private Integer age;
 
-	@ExcelCell(headName = "周岁", cellNum = 2, column = "age")
-	private TestBClass bClass;
-
-	@ExcelCell(headName = "出生日期", cellNum = 3)
-	private Date birthday;
-
-	// 测试无注解的情况
-	private String desc;
-
-	public TestClass() {
+	public TestBClass() {
 	}
 
-	public TestClass(String name, Integer age, Integer age2, Date birthday, String desc) {
+	public TestBClass(String name, Integer age) {
 		this.name = name;
 		this.age = age;
-		this.bClass = new TestBClass(null, age2);
-		this.birthday = birthday;
-		this.desc = desc;
 	}
 
 	public String getName() {
@@ -64,29 +46,5 @@ public class TestClass {
 
 	public void setAge(Integer age) {
 		this.age = age;
-	}
-
-	public TestBClass getbClass() {
-		return bClass;
-	}
-
-	public void setbClass(TestBClass bClass) {
-		this.bClass = bClass;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 }

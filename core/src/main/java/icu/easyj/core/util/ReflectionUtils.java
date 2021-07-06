@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.hutool.core.text.StrPool;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -190,16 +191,28 @@ public abstract class ReflectionUtils {
 		Assert.notNull(clazz, "clazz must be not null");
 		Assert.notNull(fieldName, "fieldName must be not null");
 
-		Class<?> cl = clazz;
-		while (cl != null && cl != Object.class && !cl.isInterface()) {
-			try {
-				return cl.getDeclaredField(fieldName);
-			} catch (NoSuchFieldException e) {
-				cl = cl.getSuperclass();
-			}
-		}
+		if (fieldName.contains(StrPool.DOT)) {
+			String[] fieldNameArr = fieldName.split("\\.");
 
-		throw new NoSuchFieldException("field not found: " + clazz.getName() + ", field: " + fieldName);
+			Class<?> currentClass = clazz;
+			Field currentField = getField(clazz, fieldNameArr[0]);
+			for (int i = 1; i < fieldNameArr.length; ++i) {
+				currentField = getField(currentClass, fieldNameArr[i]);
+				currentClass = currentField.getType();
+			}
+			return currentField;
+		} else {
+			Class<?> cl = clazz;
+			while (cl != null && cl != Object.class && !cl.isInterface()) {
+				try {
+					return cl.getDeclaredField(fieldName);
+				} catch (NoSuchFieldException e) {
+					cl = cl.getSuperclass();
+				}
+			}
+
+			throw new NoSuchFieldException("field not found: " + clazz.getName() + ", field: " + fieldName);
+		}
 	}
 
 	/**
@@ -249,11 +262,22 @@ public abstract class ReflectionUtils {
 		if (target instanceof Annotation) {
 			return getAnnotationValue((Annotation)target, fieldName);
 		} else {
-			// get field
-			Field field = getField(target.getClass(), fieldName);
-
-			// get field value
-			return getFieldValue(target, field);
+			if (fieldName.contains(StrPool.DOT)) {
+				String[] fieldNameArr = fieldName.split("\\.");
+				Object currentFieldValue = target;
+				for (int i = 0; i < fieldNameArr.length; ++i) {
+					currentFieldValue = getFieldValue(currentFieldValue, fieldNameArr[i]);
+					if (currentFieldValue == null) {
+						return null;
+					}
+				}
+				return (T)currentFieldValue;
+			} else {
+				// get field
+				Field field = getField(target.getClass(), fieldName);
+				// get field value
+				return getFieldValue(target, field);
+			}
 		}
 	}
 
@@ -291,16 +315,36 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchFieldException     if the field named {@code fieldName} does not exist
 	 * @throws SecurityException        the security exception
 	 */
-	public static void setFieldValue(Object target, String fieldName, Object fieldValue)
+	public static void setFieldValue(Object target, String fieldName, final Object fieldValue)
 			throws IllegalArgumentException, NoSuchFieldException, SecurityException {
 		Assert.notNull(target, "target must be not null");
 		Assert.notNull(fieldName, "fieldName must be not null");
 
-		// get field
-		Field field = getField(target.getClass(), fieldName);
-
-		// set new value
-		setFieldValue(target, field, fieldValue);
+		if (fieldName.contains(StrPool.DOT)) {
+			String[] fieldNameArr = fieldName.split("\\.");
+			Object parentTarget = target;
+			Field currentField;
+			Object currentTarget = null;
+			for (int i = 0; i < fieldNameArr.length - 1; ++i) {
+				currentField = getField(parentTarget.getClass(), fieldNameArr[i]);
+				currentTarget = getFieldValue(parentTarget, currentField);
+				if (currentTarget == null) {
+					try {
+						currentTarget = currentField.getType().newInstance();
+					} catch (InstantiationException | IllegalAccessException e) {
+						throw new IllegalArgumentException("new instance failed, class: " + fieldToString(currentField));
+					}
+					setFieldValue(parentTarget, currentField, currentTarget);
+				}
+				parentTarget = currentTarget;
+			}
+			setFieldValue(currentTarget, fieldNameArr[fieldNameArr.length - 1], fieldValue);
+		} else {
+			// get field
+			Field field = getField(target.getClass(), fieldName);
+			// set new value
+			setFieldValue(target, field, fieldValue);
+		}
 	}
 
 	/**
@@ -776,7 +820,7 @@ public abstract class ReflectionUtils {
 	 * @return the string
 	 */
 	public static String fieldToString(Class<?> clazz, String fieldName, Class<?> fieldType) {
-		return "Field<" + clazz.getSimpleName() + ".(" + fieldType.getSimpleName() + ")" + fieldName + ">";
+		return "Field<" + clazz.getSimpleName() + ".(" + fieldType.getSimpleName() + " " + fieldName + ")>";
 	}
 
 	/**

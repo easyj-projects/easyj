@@ -81,7 +81,7 @@ class StringUtilsTest {
 
 		//case: Field
 		Field field = clazz.getDeclaredField("s");
-		Assertions.assertEquals("Field<" + clazz.getSimpleName() + ".(String)s>", StringUtils.toString(field));
+		Assertions.assertEquals("Field<" + clazz.getSimpleName() + ".(String s)>", StringUtils.toString(field));
 
 		//case: List, and cycle dependency
 		List<Object> list = new ArrayList<>();
