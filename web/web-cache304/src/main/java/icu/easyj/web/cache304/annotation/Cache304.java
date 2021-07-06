@@ -85,9 +85,8 @@ public @interface Cache304 {
 	/**
 	 * 限制`maxAge`的值，避免服务端因为设置错误，设置了一个非常大的值，导致客户端缓存过久，使得这些用户一直读取着错误的缓存。<br>
 	 * 设置了上限值后，单个客户端每过半天会有一个请求发送到服务端，由服务端决定是否响应304，并继续延续半天客户端缓存。<br>
-	 * 默认上限值：半天<br>
 	 *
 	 * @return limitMaxAge maxAge上限值
 	 */
-	long limitMaxAge() default Cache304Constants.DEFAULT_LIMIT_MAX_AGE;
+	long limitMaxAge() default Cache304Constants.DEFAULT_LIMIT_MAX_AGE; // 默认值为-1，表示不启用该功能
 }

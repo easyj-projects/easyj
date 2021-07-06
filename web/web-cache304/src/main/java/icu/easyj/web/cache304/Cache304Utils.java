@@ -157,7 +157,7 @@ public abstract class Cache304Utils {
 		// 设置cache响应头
 		if (config.isUseMaxAge()) {
 			// 如果缓存秒数超过`limitMaxAge`的值，则重置为`limitMaxAge`的值。（这样处理的原因见注解`@Cache304`）
-			if (cacheSeconds > config.getLimitMaxAge()) {
+			if (config.getLimitMaxAge() > 0 && cacheSeconds > config.getLimitMaxAge()) {
 				cacheSeconds = config.getLimitMaxAge();
 			}
 

@@ -15,8 +15,6 @@
  */
 package icu.easyj.web.cache304;
 
-import icu.easyj.core.constant.DateConstants;
-
 /**
  * Cache304相关常量
  *
@@ -30,7 +28,7 @@ public interface Cache304Constants {
 
 	boolean DEFAULT_USE_MAX_AGE = true;
 
-	long DEFAULT_LIMIT_MAX_AGE = DateConstants.HALF_DAY_SEC;
+	long DEFAULT_LIMIT_MAX_AGE = -1;
 
 	/**
 	 * 临界误差时间：10分钟
