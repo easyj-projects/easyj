@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package icu.easyj.core.util.time;
+package icu.easyj.core.util.clock;
 
 /**
  * 记号时钟接口

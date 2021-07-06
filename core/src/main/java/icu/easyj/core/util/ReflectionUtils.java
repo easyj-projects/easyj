@@ -713,7 +713,7 @@ public abstract class ReflectionUtils {
 	 * @param <T>        the type of the field
 	 * @return annotationValue the field value
 	 * @throws IllegalArgumentException if {@code annotation} or {@code fieldName} is {@code null}
-	 * @throws NoSuchMethodException    the no such field exception
+	 * @throws NoSuchFieldException     the no such field exception
 	 */
 	@NonNull
 	public static <T> T getAnnotationValue(Annotation annotation, String fieldName) throws NoSuchFieldException {
