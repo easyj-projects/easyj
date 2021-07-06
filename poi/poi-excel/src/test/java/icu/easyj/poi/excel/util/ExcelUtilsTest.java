@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.util.model.TestClass;
 import icu.easyj.web.poi.excel.ExcelExportUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -63,6 +64,10 @@ class ExcelUtilsTest {
 
 			// 无注解，不会解析，所以值为空。可以在导出的excel文件中查看效果。
 			Assertions.assertNull(b.getDesc());
+
+			// 整体对象转为string后比较
+			a.setDesc(null); // 无注解的字段设置为null
+			Assertions.assertEquals(StringUtils.toString(a), StringUtils.toString(b));
 		}
 	}
 }
