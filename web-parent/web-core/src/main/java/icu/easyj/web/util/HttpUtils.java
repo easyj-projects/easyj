@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.constant.DateFormatConstants;
 import icu.easyj.web.constant.HttpConstants;
 import icu.easyj.web.constant.HttpHeaderConstants;
 import icu.easyj.web.exception.RequestContextNotFoundException;
@@ -231,7 +232,7 @@ public abstract class HttpUtils {
 		if (!fileNamePre.endsWith(StrPool.UNDERLINE)) {
 			fileNamePre += StrPool.UNDERLINE;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		SimpleDateFormat sdf = new SimpleDateFormat(DateFormatConstants.SSS_UNSIGNED);
 		return fileNamePre + sdf.format(new Date()) + (fileSuffix.charAt(0) != CharPool.DOT ? CharPool.DOT : "") + fileSuffix;
 	}
 

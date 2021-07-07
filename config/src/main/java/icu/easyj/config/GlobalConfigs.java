@@ -27,7 +27,7 @@ import icu.easyj.env.RunMode;
  *
  * @author wangliang181230
  */
-public abstract class GlobalConfig {
+public abstract class GlobalConfigs {
 
 	/**
 	 * 项目名
@@ -183,7 +183,7 @@ public abstract class GlobalConfig {
 	 * @param project 项目名
 	 */
 	static void setProject(String project) {
-		GlobalConfig.project = project;
+		GlobalConfigs.project = project;
 	}
 
 	/**
@@ -192,7 +192,7 @@ public abstract class GlobalConfig {
 	 * @param application 应用名
 	 */
 	static void setApplication(String application) {
-		GlobalConfig.application = application;
+		GlobalConfigs.application = application;
 	}
 
 	/**
@@ -201,7 +201,7 @@ public abstract class GlobalConfig {
 	 * @param env 环境名
 	 */
 	static void setEnv(String env) {
-		GlobalConfig.env = env;
+		GlobalConfigs.env = env;
 	}
 
 	/**
@@ -210,7 +210,7 @@ public abstract class GlobalConfig {
 	 * @param envType 环境类型
 	 */
 	static void setEnvType(EnvironmentType envType) {
-		GlobalConfig.envType = envType;
+		GlobalConfigs.envType = envType;
 	}
 
 	/**
@@ -219,7 +219,7 @@ public abstract class GlobalConfig {
 	 * @param runMode 运行模式
 	 */
 	static void setRunMode(RunMode runMode) {
-		GlobalConfig.runMode = runMode;
+		GlobalConfigs.runMode = runMode;
 	}
 
 	/**
@@ -240,7 +240,7 @@ public abstract class GlobalConfig {
 	 * @param <V>     配置值类型
 	 */
 	static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
-		GlobalConfig.CONFIGS.putAll(configs);
+		GlobalConfigs.CONFIGS.putAll(configs);
 	}
 
 	//endregion Setter end

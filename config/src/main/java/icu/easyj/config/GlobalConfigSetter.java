@@ -33,7 +33,7 @@ public abstract class GlobalConfigSetter {
 	 * @param project 项目名
 	 */
 	public static void setProject(String project) {
-		GlobalConfig.setProject(project);
+		GlobalConfigs.setProject(project);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public abstract class GlobalConfigSetter {
 	 * @param application 应用名
 	 */
 	public static void setApplication(String application) {
-		GlobalConfig.setApplication(application);
+		GlobalConfigs.setApplication(application);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public abstract class GlobalConfigSetter {
 	 * @param env 环境名
 	 */
 	public static void setEnv(String env) {
-		GlobalConfig.setEnv(env);
+		GlobalConfigs.setEnv(env);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public abstract class GlobalConfigSetter {
 	 * @param envType 环境类型
 	 */
 	public static void setEnvType(EnvironmentType envType) {
-		GlobalConfig.setEnvType(envType);
+		GlobalConfigs.setEnvType(envType);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class GlobalConfigSetter {
 	 * @param runMode 运行模式
 	 */
 	public static void setRunMode(RunMode runMode) {
-		GlobalConfig.setRunMode(runMode);
+		GlobalConfigs.setRunMode(runMode);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public abstract class GlobalConfigSetter {
 	 * @param value 配置值
 	 */
 	public static synchronized void addConfig(Object key, Object value) {
-		GlobalConfig.addConfig(key, value);
+		GlobalConfigs.addConfig(key, value);
 	}
 
 	/**
@@ -90,6 +90,6 @@ public abstract class GlobalConfigSetter {
 	 * @param <V>     配置值类型
 	 */
 	public static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
-		GlobalConfig.addConfigs(configs);
+		GlobalConfigs.addConfigs(configs);
 	}
 }

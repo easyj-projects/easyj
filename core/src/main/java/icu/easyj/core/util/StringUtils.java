@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 字符串工具类
@@ -53,6 +54,27 @@ public abstract class StringUtils {
 			}
 		}
 		return valueLength;
+	}
+
+	//endregion
+
+
+	//region 查找数据
+
+	/**
+	 * 查找一个不为空的字符串
+	 *
+	 * @param strArr 字符串数组
+	 * @return 返回找到的字符串，当所有字符串都为空时，返回 {@code null}
+	 */
+	@Nullable
+	public static String findNotEmptyOne(String... strArr) {
+		for (String str : strArr) {
+			if (org.springframework.util.StringUtils.hasLength(str)) {
+				return str;
+			}
+		}
+		return null;
 	}
 
 	//endregion
