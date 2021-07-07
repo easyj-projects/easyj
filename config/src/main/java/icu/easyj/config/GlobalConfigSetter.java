@@ -28,30 +28,57 @@ import icu.easyj.env.RunMode;
 public abstract class GlobalConfigSetter {
 
 	/**
-	 * 设置项目名
+	 * 设置项目代码
 	 *
-	 * @param project 项目名
+	 * @param project 项目代码
 	 */
 	public static void setProject(String project) {
 		GlobalConfigs.setProject(project);
 	}
 
 	/**
-	 * 设置应用名
+	 * 设置项目名称
 	 *
-	 * @param application 应用名
+	 * @param projectName 项目名称
+	 */
+	public static void setProjectName(String projectName) {
+		GlobalConfigs.setProjectName(projectName);
+	}
+
+	/**
+	 * 设置应用代码
+	 *
+	 * @param application 应用代码
 	 */
 	public static void setApplication(String application) {
 		GlobalConfigs.setApplication(application);
 	}
 
 	/**
-	 * 设置环境名
+	 * 设置应用名称
 	 *
-	 * @param env 环境名
+	 * @param applicationName 应用名称
+	 */
+	public static void setApplicationName(String applicationName) {
+		GlobalConfigs.setApplicationName(applicationName);
+	}
+
+	/**
+	 * 设置环境代码
+	 *
+	 * @param env 环境代码
 	 */
 	public static void setEnv(String env) {
 		GlobalConfigs.setEnv(env);
+	}
+
+	/**
+	 * 设置环境名称
+	 *
+	 * @param envName 环境名称
+	 */
+	public static void setEnvName(String envName) {
+		GlobalConfigs.setEnvName(envName);
 	}
 
 	/**

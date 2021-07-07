@@ -30,19 +30,34 @@ import icu.easyj.env.RunMode;
 public abstract class GlobalConfigs {
 
 	/**
-	 * 项目名
+	 * 项目代码
 	 */
 	private static String project;
 
 	/**
-	 * 应用名
+	 * 项目名称
+	 */
+	private static String projectName;
+
+	/**
+	 * 应用代码
 	 */
 	private static String application;
 
 	/**
-	 * 环境名
+	 * 应用名称
+	 */
+	private static String applicationName;
+
+	/**
+	 * 环境代码
 	 */
 	private static String env;
+
+	/**
+	 * 环境名称
+	 */
+	private static String envName;
 
 	/**
 	 * 环境类型
@@ -66,27 +81,49 @@ public abstract class GlobalConfigs {
 	//region Getter start
 
 	/**
-	 * @return 项目名
+	 * @return 项目代码
 	 */
 	public static String getProject() {
 		return project;
 	}
 
 	/**
-	 * @return 应用名
+	 * @return 项目名称
+	 */
+	public static String getProjectName() {
+		return projectName;
+	}
+
+	/**
+	 * @return 应用代码
 	 */
 	public static String getApplication() {
 		return application;
 	}
 
 	/**
-	 * @return 环境名
+	 * @return 应用名称
+	 */
+	public static String getApplicationName() {
+		return applicationName;
+	}
+
+
+	//region 环境相关 start
+
+	/**
+	 * @return 环境代码
 	 */
 	public static String getEnv() {
 		return env;
 	}
 
-	//region 环境类型 start
+	/**
+	 * @return 环境名称
+	 */
+	public static String getEnvName() {
+		return envName;
+	}
 
 	/**
 	 * @return 环境类型枚举
@@ -123,7 +160,8 @@ public abstract class GlobalConfigs {
 		return EnvironmentType.DEV == envType;
 	}
 
-	//endregion 环境类型 end
+	//endregion 环境相关 end
+
 
 	//region 运行模式 start
 
@@ -149,6 +187,7 @@ public abstract class GlobalConfigs {
 	}
 
 	//endregion 运行模式 end
+
 
 	//region 其他全局配置 start
 
@@ -178,30 +217,57 @@ public abstract class GlobalConfigs {
 	//region Setter start
 
 	/**
-	 * 设置项目名
+	 * 设置项目代码
 	 *
-	 * @param project 项目名
+	 * @param project 项目代码
 	 */
 	static void setProject(String project) {
 		GlobalConfigs.project = project;
 	}
 
 	/**
-	 * 设置应用名
+	 * 设置项目名称
 	 *
-	 * @param application 应用名
+	 * @param projectName 项目名称
+	 */
+	static void setProjectName(String projectName) {
+		GlobalConfigs.projectName = projectName;
+	}
+
+	/**
+	 * 设置应用代码
+	 *
+	 * @param application 应用代码
 	 */
 	static void setApplication(String application) {
 		GlobalConfigs.application = application;
 	}
 
 	/**
-	 * 设置环境名
+	 * 设置应用名称
 	 *
-	 * @param env 环境名
+	 * @param applicationName 应用名称
+	 */
+	static void setApplicationName(String applicationName) {
+		GlobalConfigs.applicationName = applicationName;
+	}
+
+	/**
+	 * 设置环境代码
+	 *
+	 * @param env 环境代码
 	 */
 	static void setEnv(String env) {
 		GlobalConfigs.env = env;
+	}
+
+	/**
+	 * 设置环境名称
+	 *
+	 * @param envName 环境名称
+	 */
+	static void setEnvName(String envName) {
+		GlobalConfigs.envName = envName;
 	}
 
 	/**
