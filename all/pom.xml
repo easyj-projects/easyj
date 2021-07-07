@@ -77,6 +77,13 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- Config -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-config</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Core -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

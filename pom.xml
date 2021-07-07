@@ -65,6 +65,7 @@
 		<module>bom</module>
 
 		<module>captcha</module>
+		<module>config</module>
 		<module>core</module>
 		<module>crypto</module>
 		<module>data</module>
