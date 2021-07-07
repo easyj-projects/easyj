@@ -36,7 +36,7 @@
 
 		<!-- Tool dependencies version -->
 		<commons-lang3.version>3.10</commons-lang3.version>
-		<hutool.version>5.7.2</hutool.version>
+		<hutool.version>5.7.3</hutool.version>
 
 		<!-- Spring dependencies version -->
 		<spring-framework.version>5.3.8</spring-framework.version>

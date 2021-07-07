@@ -50,7 +50,7 @@ class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 	@NonNull
 	public IClock createClock(DataSource dataSource) {
 		Assert.notNull(dataSource, "dataSource must be not null");
-		// FIXME: 待开发，已向hutool提交issue，希望他们的方言能够支持不同数据库不同`获取数据库时间的SQL`功能。
+		// TODO: @wangliang181230 待开发，已向hutool提交issue，希望他们的方言能够支持不同数据库不同`获取数据库时间的SQL`功能。
 		return null;
 	}
 

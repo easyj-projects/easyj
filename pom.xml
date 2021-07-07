@@ -69,8 +69,8 @@
 		<module>crypto</module>
 		<module>data</module>
 		<module>db</module>
-		<module>poi</module>
-		<module>web</module>
+		<module>poi-parent</module>
+		<module>web-parent</module>
 
 		<module>test</module>
 	</modules>

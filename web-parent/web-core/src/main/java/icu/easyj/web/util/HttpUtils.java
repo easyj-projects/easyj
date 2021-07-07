@@ -158,7 +158,7 @@ public abstract class HttpUtils {
 	 */
 	public static boolean isNoCacheRequest(HttpServletRequest request) {
 		String cacheControl = request.getHeader(HttpHeaders.CACHE_CONTROL);
-		if (!StringUtils.isEmpty(cacheControl)) {
+		if (StringUtils.hasLength(cacheControl)) {
 			cacheControl = cacheControl.toLowerCase();
 			return cacheControl.contains(NO_CACHE) || cacheControl.contains(NO_STORE);
 		}

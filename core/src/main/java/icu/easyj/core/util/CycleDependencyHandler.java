@@ -101,7 +101,7 @@ public abstract class CycleDependencyHandler {
 	 * @return the substitute object
 	 */
 	static Object getUniqueSubstituteObject(Object obj) {
-		// TODO: HELP-WANTED: Optimize this method to ensure uniqueness
+		// FIXME: Optimize this method to ensure uniqueness
 		return System.identityHashCode(obj);
 	}
 }

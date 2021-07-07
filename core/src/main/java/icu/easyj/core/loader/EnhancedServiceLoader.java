@@ -337,9 +337,10 @@ public class EnhancedServiceLoader {
 			}
 		}
 
+		@SuppressWarnings("deprecation")
 		private S loadExtension(String activateName, ClassLoader loader, Class<?>[] argTypes,
 								Object[] args) {
-			if (!StringUtils.hasLength(activateName)) {
+			if (StringUtils.isEmpty(activateName)) {
 				throw new IllegalArgumentException("the name of service provider for [" + type.getName() + "] name is null");
 			}
 			try {

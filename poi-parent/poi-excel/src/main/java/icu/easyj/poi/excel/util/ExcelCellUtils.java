@@ -40,8 +40,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 /**
@@ -49,9 +47,7 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class ExcelCellUtils {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelCellUtils.class);
 
 	/**
 	 * 值类型转换的函数集合
@@ -88,8 +84,6 @@ public abstract class ExcelCellUtils {
 
 		// excel返回Double的情况
 		addChangeFun(Double.class, String.class, ExcelCellValueChangeFuns::doubleToString);
-//		addChangeFun(Double.class, Character.class, ExcelCellValueChangeFuns::doubleToCharacter);
-//		addChangeFun(Double.class, char.class, ExcelCellValueChangeFuns::doubleToCharacter);
 		addChangeFun(Double.class, BigDecimal.class, ExcelCellValueChangeFuns::doubleToBigDecimal);
 		addChangeFun(Double.class, BigInteger.class, ExcelCellValueChangeFuns::doubleToBigInteger);
 		addChangeFun(Double.class, Double.class, f -> f);
@@ -107,16 +101,9 @@ public abstract class ExcelCellUtils {
 		addChangeFun(Double.class, Byte.class, ExcelCellValueChangeFuns::doubleToByte);
 		addChangeFun(Double.class, byte.class, ExcelCellValueChangeFuns::doubleToByte);
 		addChangeFun(Double.class, Date.class, ExcelCellValueChangeFuns::doubleToDate);
-//		addChangeFun(Double.class, java.sql.Date.class, ExcelCellValueChangeFuns::doubleToSqlDate);
-//		addChangeFun(Double.class, java.sql.Time.class, ExcelCellValueChangeFuns::doubleToSqlTime);
-//		addChangeFun(Double.class, java.sql.Timestamp.class, ExcelCellValueChangeFuns::doubleToSqlTimestamp);
 
 		// excel返回Boolean的情况
 		addChangeFun(Boolean.class, String.class, ExcelCellValueChangeFuns::booleanToString);
-//		addChangeFun(Boolean.class, Character.class, ExcelCellValueChangeFuns::booleanToCharacter);
-//		addChangeFun(Boolean.class, char.class, ExcelCellValueChangeFuns::booleanToCharacter);
-//		addChangeFun(Boolean.class, BigDecimal.class, ExcelCellValueChangeFuns::booleanToBigDecimal);
-//		addChangeFun(Boolean.class, BigInteger.class, ExcelCellValueChangeFuns::booleanToBigInteger);
 		addChangeFun(Boolean.class, Double.class, ExcelCellValueChangeFuns::booleanToDouble);
 		addChangeFun(Boolean.class, double.class, ExcelCellValueChangeFuns::booleanToDouble);
 		addChangeFun(Boolean.class, Float.class, ExcelCellValueChangeFuns::booleanToFloat);
@@ -131,10 +118,6 @@ public abstract class ExcelCellUtils {
 		addChangeFun(Boolean.class, boolean.class, f -> f);
 		addChangeFun(Boolean.class, Byte.class, ExcelCellValueChangeFuns::booleanToByte);
 		addChangeFun(Boolean.class, byte.class, ExcelCellValueChangeFuns::booleanToByte);
-//		addChangeFun(Boolean.class, Date.class, ExcelCellValueChangeFuns::booleanToDate);
-//		addChangeFun(Boolean.class, java.sql.Date.class, ExcelCellValueChangeFuns::booleanToSqlDate);
-//		addChangeFun(Boolean.class, java.sql.Time.class, ExcelCellValueChangeFuns::booleanToSqlTime);
-//		addChangeFun(Boolean.class, java.sql.Timestamp.class, ExcelCellValueChangeFuns::booleanToSqlTimestamp);
 	}
 
 	/**
@@ -200,9 +183,9 @@ public abstract class ExcelCellUtils {
 				return false;
 
 			// 其他的，均算作空值
-//			case CellType.BLANK: // 空值
-//			case CellType.ERROR: // 故障
-//			case -1:
+			case BLANK: // 空值
+			case ERROR: // 故障
+			case _NONE: // 空
 			default:
 				return true;
 		}
@@ -354,8 +337,11 @@ public abstract class ExcelCellUtils {
 		} else if (fieldValue instanceof Number) {
 			cell.setCellValue(((Number)fieldValue).doubleValue());
 		} else if (fieldValue instanceof Boolean) {
-			if ((Boolean)fieldValue) cell.setCellValue(cellMapping.getTrueText());
-			else cell.setCellValue(cellMapping.getFalseText());
+			if ((Boolean)fieldValue) {
+				cell.setCellValue(cellMapping.getTrueText());
+			} else {
+				cell.setCellValue(cellMapping.getFalseText());
+			}
 		} else {
 			String fieldValueStr = fieldValue.toString();
 			if (fieldValueStr.contains("\r\n")) {
@@ -380,13 +366,13 @@ public abstract class ExcelCellUtils {
 			Workbook book = sheet.getWorkbook();
 
 			// 设置默认列宽
-			// TODO: 此方法不起作用，在下面循环列时，直接设置在列上
+			// 注：此方法不起作用，在下面循环列时，直接设置在列上
 //			if (mapping.getDefaultWidth() > 0) {
 //				sheet.setDefaultColumnWidth(mapping.getDefaultWidth() * 36);
 //			}
 
 			// 冻结窗口设置
-			int colSplit = mapping.getFreezeDataCells() > 0 ? mapping.getFreezeDataCells() : 0; // 冻结的列数
+			int colSplit = Math.max(mapping.getFreezeDataCells(), 0); // 冻结的列数
 			int rowSplit = mapping.isNeedHeadRow() && mapping.isFreezeHeadRow() ? 1 : 0; // 冻结的行数
 			if (colSplit > 0) {
 				if (mapping.isNeedNumberCell()) {
@@ -430,7 +416,7 @@ public abstract class ExcelCellUtils {
 				// 设置列宽
 				if (cellMapping.getWidth() > 0) {
 					sheet.setColumnWidth(cellNum, (int)(cellMapping.getWidth() * 36.1));
-				} else if (mapping.getDefaultWidth() > 0) { // TODO: 由于上面设置默认列宽不起作用，直接设置在列上
+				} else if (mapping.getDefaultWidth() > 0) { // 注: 由于上面设置默认列宽不起作用，直接设置在列上
 					sheet.setColumnWidth(cellNum, (int)(mapping.getDefaultWidth() * 36.1));
 				}
 
