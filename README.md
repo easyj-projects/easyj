@@ -43,7 +43,7 @@
     <dependency>
         <groupId>icu.easyj</groupId>
         <artifactId>easyj-all</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3-SNAPSHOT</version>
     </dependency>
 </dependencies>
 ```
