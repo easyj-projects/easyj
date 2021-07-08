@@ -27,55 +27,75 @@ import icu.easyj.env.RunMode;
  *
  * @author wangliang181230
  */
-public abstract class GlobalConfigs {
+public class GlobalConfigs {
+
+	private GlobalConfigs() {
+	}
+
+	//region Fields
 
 	/**
 	 * 项目代码
 	 */
-	private static String project;
+	private String project;
 
 	/**
 	 * 项目名称
 	 */
-	private static String projectName;
+	private String projectName;
 
 	/**
 	 * 应用代码
 	 */
-	private static String application;
+	private String application;
 
 	/**
 	 * 应用名称
 	 */
-	private static String applicationName;
+	private String applicationName;
 
 	/**
 	 * 环境代码
 	 */
-	private static String env;
+	private String env;
 
 	/**
 	 * 环境名称
 	 */
-	private static String envName;
+	private String envName;
 
 	/**
 	 * 环境类型
 	 * 默认：生产环境
 	 */
-	private static EnvironmentType envType = EnvironmentType.PROD;
+	private EnvironmentType envType = EnvironmentType.PROD;
 
 	/**
 	 * 运行模式
 	 * 默认：发行模式
 	 * 用途举例：为DEBUG模式时，打印更多日志。比修改日志配置更加高效，运维成本更低。
 	 */
-	private static RunMode runMode = RunMode.RELEASE;
+	private RunMode runMode = RunMode.RELEASE;
 
 	/**
 	 * 其他全局配置Map
 	 */
-	private static final Map<Object, Object> CONFIGS = new HashMap<>(4);
+	private final Map<Object, Object> configs = new HashMap<>(4);
+
+	//endregion
+
+
+	//region Singleton 单例模式-嵌套类
+
+	private static class SingletonHolder {
+		private static final GlobalConfigs INSTANCE = new GlobalConfigs();
+	}
+
+	static GlobalConfigs getInstance() {
+		return SingletonHolder.INSTANCE;
+	}
+
+	//endregion
 
 
 	//region Getter start
@@ -84,28 +104,28 @@ public abstract class GlobalConfigs {
 	 * @return 项目代码
 	 */
 	public static String getProject() {
-		return project;
+		return getInstance().project;
 	}
 
 	/**
 	 * @return 项目名称
 	 */
 	public static String getProjectName() {
-		return projectName;
+		return getInstance().projectName;
 	}
 
 	/**
 	 * @return 应用代码
 	 */
 	public static String getApplication() {
-		return application;
+		return getInstance().application;
 	}
 
 	/**
 	 * @return 应用名称
 	 */
 	public static String getApplicationName() {
-		return applicationName;
+		return getInstance().applicationName;
 	}
 
 
@@ -115,49 +135,49 @@ public abstract class GlobalConfigs {
 	 * @return 环境代码
 	 */
 	public static String getEnv() {
-		return env;
+		return getInstance().env;
 	}
 
 	/**
 	 * @return 环境名称
 	 */
 	public static String getEnvName() {
-		return envName;
+		return getInstance().envName;
 	}
 
 	/**
 	 * @return 环境类型枚举
 	 */
 	public static EnvironmentType getEnvType() {
-		return envType;
+		return getInstance().envType;
 	}
 
 	/**
 	 * @return 是否为生产环境
 	 */
 	public static boolean isProdEnv() {
-		return EnvironmentType.PROD == envType;
+		return EnvironmentType.PROD == getEnvType();
 	}
 
 	/**
 	 * @return 是否为沙箱环境
 	 */
 	public static boolean isSandboxEnv() {
-		return EnvironmentType.SANDBOX == envType;
+		return EnvironmentType.SANDBOX == getEnvType();
 	}
 
 	/**
 	 * @return 是否为测试环境
 	 */
 	public static boolean isTestEnv() {
-		return EnvironmentType.TEST == envType;
+		return EnvironmentType.TEST == getEnvType();
 	}
 
 	/**
 	 * @return 是否为开发环境
 	 */
 	public static boolean isDevEnv() {
-		return EnvironmentType.DEV == envType;
+		return EnvironmentType.DEV == getEnvType();
 	}
 
 	//endregion 环境相关 end
@@ -169,21 +189,21 @@ public abstract class GlobalConfigs {
 	 * @return 运行模式
 	 */
 	public static RunMode getRunMode() {
-		return runMode;
+		return getInstance().runMode;
 	}
 
 	/**
 	 * @return 是否为发行模式
 	 */
 	public static boolean isReleaseMode() {
-		return RunMode.RELEASE == runMode;
+		return RunMode.RELEASE == getRunMode();
 	}
 
 	/**
 	 * @return 是否为调试模式
 	 */
 	public static boolean isDebugMode() {
-		return RunMode.DEBUG == runMode;
+		return RunMode.DEBUG == getRunMode();
 	}
 
 	//endregion 运行模式 end
@@ -195,7 +215,7 @@ public abstract class GlobalConfigs {
 	 * @return 全局配置Map
 	 */
 	public static Map<Object, Object> getConfigs() {
-		return Collections.unmodifiableMap(CONFIGS);
+		return Collections.unmodifiableMap(getInstance().configs);
 	}
 
 	/**
@@ -206,7 +226,7 @@ public abstract class GlobalConfigs {
 	 * @return 配置值
 	 */
 	public static <T> T getConfig(Object key) {
-		return (T)CONFIGS.get(key);
+		return (T)getInstance().configs.get(key);
 	}
 
 	//endregion 其他全局配置 end
@@ -222,7 +242,7 @@ public abstract class GlobalConfigs {
 	 * @param project 项目代码
 	 */
 	static void setProject(String project) {
-		GlobalConfigs.project = project;
+		getInstance().project = project;
 	}
 
 	/**
@@ -231,7 +251,7 @@ public abstract class GlobalConfigs {
 	 * @param projectName 项目名称
 	 */
 	static void setProjectName(String projectName) {
-		GlobalConfigs.projectName = projectName;
+		getInstance().projectName = projectName;
 	}
 
 	/**
@@ -240,7 +260,7 @@ public abstract class GlobalConfigs {
 	 * @param application 应用代码
 	 */
 	static void setApplication(String application) {
-		GlobalConfigs.application = application;
+		getInstance().application = application;
 	}
 
 	/**
@@ -249,7 +269,7 @@ public abstract class GlobalConfigs {
 	 * @param applicationName 应用名称
 	 */
 	static void setApplicationName(String applicationName) {
-		GlobalConfigs.applicationName = applicationName;
+		getInstance().applicationName = applicationName;
 	}
 
 	/**
@@ -258,7 +278,7 @@ public abstract class GlobalConfigs {
 	 * @param env 环境代码
 	 */
 	static void setEnv(String env) {
-		GlobalConfigs.env = env;
+		getInstance().env = env;
 	}
 
 	/**
@@ -267,7 +287,7 @@ public abstract class GlobalConfigs {
 	 * @param envName 环境名称
 	 */
 	static void setEnvName(String envName) {
-		GlobalConfigs.envName = envName;
+		getInstance().envName = envName;
 	}
 
 	/**
@@ -276,7 +296,7 @@ public abstract class GlobalConfigs {
 	 * @param envType 环境类型
 	 */
 	static void setEnvType(EnvironmentType envType) {
-		GlobalConfigs.envType = envType;
+		getInstance().envType = envType;
 	}
 
 	/**
@@ -285,7 +305,7 @@ public abstract class GlobalConfigs {
 	 * @param runMode 运行模式
 	 */
 	static void setRunMode(RunMode runMode) {
-		GlobalConfigs.runMode = runMode;
+		getInstance().runMode = runMode;
 	}
 
 	/**
@@ -295,7 +315,7 @@ public abstract class GlobalConfigs {
 	 * @param value 配置值
 	 */
 	static synchronized void addConfig(Object key, Object value) {
-		CONFIGS.put(key, value);
+		getInstance().configs.put(key, value);
 	}
 
 	/**
@@ -306,7 +326,7 @@ public abstract class GlobalConfigs {
 	 * @param <V>     配置值类型
 	 */
 	static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
-		GlobalConfigs.CONFIGS.putAll(configs);
+		getInstance().configs.putAll(configs);
 	}
 
 	//endregion Setter end
