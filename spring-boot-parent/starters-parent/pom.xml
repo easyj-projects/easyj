@@ -12,7 +12,7 @@
 	<artifactId>easyj-spring-boot-starters-parent</artifactId>
 	<packaging>pom</packaging>
 
-	<name>${project.groupId} :: easyj-spring-boot-starter == Parent ==</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ各功能的starter</description>
 
 	<modules>
