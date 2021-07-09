@@ -184,10 +184,24 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * @return 是否不为生产环境
+	 */
+	public static boolean isNotProdEnv() {
+		return !isProdEnv();
+	}
+
+	/**
 	 * @return 是否为沙箱环境
 	 */
 	public static boolean isSandboxEnv() {
 		return EnvironmentType.SANDBOX == getEnvType();
+	}
+
+	/**
+	 * @return 是否不为沙箱环境
+	 */
+	public static boolean isNotSandboxEnv() {
+		return !isSandboxEnv();
 	}
 
 	/**
@@ -198,10 +212,24 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * @return 是否不为测试环境
+	 */
+	public static boolean isNotTestEnv() {
+		return !isTestEnv();
+	}
+
+	/**
 	 * @return 是否为开发环境
 	 */
 	public static boolean isDevEnv() {
 		return EnvironmentType.DEV == getEnvType();
+	}
+
+	/**
+	 * @return 是否不为开发环境
+	 */
+	public static boolean isNotDevEnv() {
+		return !isDevEnv();
 	}
 
 	//endregion 环境相关 end
