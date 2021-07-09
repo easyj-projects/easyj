@@ -106,7 +106,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				continue;
 			}
 			PropertySource<?> propertySource = EnvironmentUtils.addPropertySourceToLast(filePath, true, environment);
-			if (propertySource != null) {
+			if (propertySource != null && previousPropertySourceName == null) {
 				previousPropertySourceName = currentPropertySourceName;
 			}
 		}

@@ -136,6 +136,7 @@ public abstract class EnvironmentUtils {
 		} else if (configFilePath.endsWith(".properties")) {
 			// 创建配置文件工厂对象
 			PropertiesFactoryBean pro = new PropertiesFactoryBean();
+			pro.setSingleton(false);
 			pro.setLocation(configFileResource);
 			// 创建配置源对象
 			try {
