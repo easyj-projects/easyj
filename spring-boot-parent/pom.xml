@@ -56,15 +56,13 @@
 		<module>dependencies</module>
 		<module>bom</module>
 
-		<!-- core -->
 		<module>core</module>
-
-		<!-- functions -->
 		<module>environment-enhanced</module>
 
-		<!-- AutoConfigure 和 Starters -->
 		<module>autoconfigure</module>
 		<module>starters-parent</module>
+
+		<module>test</module>
 	</modules>
 
 	<scm>
@@ -112,8 +110,9 @@
 
 		<!-- 引用依赖：Tests -->
 		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-test</artifactId>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot-test</artifactId>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

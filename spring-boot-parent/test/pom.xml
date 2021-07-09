@@ -10,11 +10,12 @@
 		<relativePath/>
 	</parent>
 
-	<artifactId>easyj-test</artifactId>
+	<groupId>icu.easyj.boot</groupId>
+	<artifactId>easyj-spring-boot-test</artifactId>
 	<version>0.1.3-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>方便引用测试所需的依赖，并提供一些测试所需的类或功能。</description>
+	<description>方便引用测试所需的依赖，并提供一些SpringBoot测试所需的类或功能。</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<scm>
@@ -32,7 +33,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-dependencies</artifactId>
+				<artifactId>easyj-spring-boot-dependencies</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -40,26 +41,17 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- 引用依赖：Tests -->
 	<dependencies>
-		<!-- org.junit -->
+		<!-- StringBoot Test -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
+
+		<!-- EasyJ Test -->
 		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-launcher</artifactId>
-		</dependency>
-		<!-- org.mockito -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-junit-jupiter</artifactId>
-		</dependency>
-		<!-- org.assertj -->
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-test</artifactId>
 		</dependency>
 	</dependencies>
 

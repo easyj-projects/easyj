@@ -55,6 +55,13 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- EasyJ Spring Boot Test -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>easyj-spring-boot-test</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- EasyJ Spring Boot Autoconfigure -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
