@@ -21,6 +21,7 @@ import icu.easyj.web.poi.excel.ExcelExportAspect;
 import icu.easyj.web.poi.excel.ExcelExportConfig;
 import icu.easyj.web.poi.excel.IExcelExporter;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,7 +36,7 @@ import org.springframework.context.annotation.Bean;
  * @see IExcelExporter
  * @see ExcelExportAspect
  */
-@ConditionalOnClass(Workbook.class)
+@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class})
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(ExcelExporterProperties.class)
 public class EasyjExcelExporterAutoConfiguration {

@@ -19,6 +19,7 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.excelexporterimpl.AfterturnExcelExporterImpl;
 import icu.easyj.web.poi.excel.IExcelExporter;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,7 +32,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author wangliang181230
  */
-@ConditionalOnClass({Workbook.class, Excel.class})
+@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class, Excel.class})
 @ConditionalOnWebApplication
 @AutoConfigureBefore(EasyjExcelExporterAutoConfiguration.class)
 public class AfterturnExcelExporterAutoConfiguration {
