@@ -20,7 +20,7 @@ import java.util.Date;
 import org.springframework.lang.NonNull;
 
 /**
- * 远程时钟持有者接口
+ * 远端时钟持有者接口
  *
  * @author wangliang181230
  * @see IClock

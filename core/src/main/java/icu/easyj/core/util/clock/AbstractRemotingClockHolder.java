@@ -23,7 +23,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * 抽象远程时钟持有者
+ * 抽象远端时钟持有者
  *
  * @author wangliang181230
  * @see IClock
