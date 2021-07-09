@@ -45,7 +45,7 @@ public class EasyjExcelExporterAutoConfiguration {
 	 *
 	 * @return excelExport Excel导出器
 	 * @see DefaultExcelExporterImpl
-	 * @see icu.easyj.web.poi.excel.ExcelExportAspect
+	 * @see ExcelExportAspect
 	 * @see icu.easyj.web.poi.excel.ExcelExportUtils
 	 */
 	@Bean
