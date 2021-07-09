@@ -95,7 +95,13 @@ public abstract class StringUtils {
 
 		//region Convert simple types to String directly
 
-		if (obj instanceof CharSequence || obj instanceof Number || obj instanceof Boolean || obj instanceof Character) {
+		if (obj instanceof Character) {
+			return "'" + obj + "'";
+		}
+		if (obj instanceof CharSequence) {
+			return "\"" + obj + "\"";
+		}
+		if (obj instanceof Number || obj instanceof Boolean) {
 			return obj.toString();
 		}
 		if (obj instanceof Date) {
