@@ -22,10 +22,13 @@ import icu.easyj.core.loader.model.EnglishHello;
 import icu.easyj.core.loader.model.FrenchHello;
 import icu.easyj.core.loader.model.Hello;
 import icu.easyj.core.loader.model.LatinHello;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * The type Enhanced service loader test.
@@ -40,7 +43,7 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void testLoadByClassAndClassLoader() {
 		Hello load = EnhancedServiceLoader.load(Hello.class, Hello.class.getClassLoader());
-		Assertions.assertEquals(load.say(), "Olá.");
+		assertEquals(load.say(), "Olá.");
 	}
 
 	/**
@@ -48,8 +51,8 @@ public class EnhancedServiceLoaderTest {
 	 */
 	@Test
 	public void testLoadException() {
-		Assertions.assertThrows(EnhancedServiceNotFoundException.class, () -> {
-			EnhancedServiceLoaderTest load = EnhancedServiceLoader.load(EnhancedServiceLoaderTest.class);
+		assertThrows(EnhancedServiceNotFoundException.class, () -> {
+			EnhancedServiceLoader.load(EnhancedServiceLoaderTest.class);
 		});
 	}
 
@@ -59,7 +62,7 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void testLoadByClass() {
 		Hello load = EnhancedServiceLoader.load(Hello.class);
-		assertThat(load.say()).isEqualTo("Olá.");
+		assertEquals("Olá.", load.say());
 	}
 
 	/**
@@ -68,7 +71,7 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void testLoadByClassAndActivateName() {
 		Hello englishHello = EnhancedServiceLoader.load(Hello.class, "EnglishHello");
-		assertThat(englishHello.say()).isEqualTo("hello!");
+		assertEquals("hello!", englishHello.say());
 	}
 
 	/**
@@ -78,7 +81,7 @@ public class EnhancedServiceLoaderTest {
 	public void testLoadByClassAndClassLoaderAndActivateName() {
 		Hello englishHello = EnhancedServiceLoader
 				.load(Hello.class, "EnglishHello", EnhancedServiceLoaderTest.class.getClassLoader());
-		assertThat(englishHello.say()).isEqualTo("hello!");
+		assertEquals("hello!", englishHello.say());
 	}
 
 	/**
@@ -87,10 +90,10 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void getAllExtensionClass() {
 		List<Class<?>> allExtensionClass = EnhancedServiceLoader.getAllExtensionClass(Hello.class);
-		assertThat(allExtensionClass.get(3).getSimpleName()).isEqualTo((LatinHello.class.getSimpleName()));
-		assertThat(allExtensionClass.get(2).getSimpleName()).isEqualTo((FrenchHello.class.getSimpleName()));
-		assertThat(allExtensionClass.get(1).getSimpleName()).isEqualTo((EnglishHello.class.getSimpleName()));
-		assertThat(allExtensionClass.get(0).getSimpleName()).isEqualTo((ChineseHello.class.getSimpleName()));
+		assertEquals(LatinHello.class, allExtensionClass.get(3));
+		assertEquals(FrenchHello.class, allExtensionClass.get(2));
+		assertEquals(EnglishHello.class, allExtensionClass.get(1));
+		assertEquals(ChineseHello.class, allExtensionClass.get(0));
 	}
 
 	/**
@@ -100,21 +103,21 @@ public class EnhancedServiceLoaderTest {
 	public void getAllExtensionClass1() {
 		List<Class<?>> allExtensionClass = EnhancedServiceLoader
 				.getAllExtensionClass(Hello.class, ClassLoader.getSystemClassLoader());
-		assertThat(allExtensionClass).isNotEmpty();
+		assertNotEquals(0, allExtensionClass.size());
 	}
 
 	@Test
 	public void getSingletonExtensionInstance() {
 		Hello hello1 = EnhancedServiceLoader.load(Hello.class, "ChineseHello");
 		Hello hello2 = EnhancedServiceLoader.load(Hello.class, "ChineseHello");
-		assertThat(hello1 == hello2).isTrue();
+		assertEquals(hello1, hello2);
 	}
 
 	@Test
 	public void getMultipleExtensionInstance() {
 		Hello hello1 = EnhancedServiceLoader.load(Hello.class, "LatinHello");
 		Hello hello2 = EnhancedServiceLoader.load(Hello.class, "LatinHello");
-		assertThat(hello1 == hello2).isFalse();
+		assertNotEquals(hello1, hello2);
 	}
 
 	@Test
@@ -123,9 +126,9 @@ public class EnhancedServiceLoaderTest {
 		List<Hello> hellows2 = EnhancedServiceLoader.loadAll(Hello.class);
 		for (Hello hello : hellows1) {
 			if (!hello.say().equals("Olá.")) {
-				assertThat(hellows2.contains(hello)).isTrue();
+				assertTrue(hellows2.contains(hello));
 			} else {
-				assertThat(hellows2.contains(hello)).isFalse();
+				assertFalse(hellows2.contains(hello));
 			}
 		}
 	}
