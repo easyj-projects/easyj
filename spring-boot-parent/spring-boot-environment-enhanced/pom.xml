@@ -11,7 +11,7 @@
 
 	<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
 
-	<name>spring-boot-environment-enhanced</name>
+	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ SpringBoot项目，环境配置能力增强，提供约定配置目录、工具型配置源等等。</description>
 
 	<dependencies>
