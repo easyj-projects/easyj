@@ -113,15 +113,15 @@ public class GlobalConfigs {
 	/**
 	 * @return 项目所属区域代码
 	 */
-	public String getArea() {
-		return area;
+	public static String getArea() {
+		return getInstance().area;
 	}
 
 	/**
 	 * @return 项目所属区域名称
 	 */
-	public String getAreaName() {
-		return areaName;
+	public static String getAreaName() {
+		return getInstance().areaName;
 	}
 
 	/**
@@ -357,7 +357,9 @@ public class GlobalConfigs {
 	 * @param value 配置值
 	 */
 	static synchronized void addConfig(Object key, Object value) {
-		getInstance().configs.put(key, value);
+		if (value != null) {
+			getInstance().configs.put(key, value);
+		}
 	}
 
 	/**
@@ -368,7 +370,9 @@ public class GlobalConfigs {
 	 * @param <V>     配置值类型
 	 */
 	static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
-		getInstance().configs.putAll(configs);
+		if (configs != null && !configs.isEmpty()) {
+			getInstance().configs.putAll(configs);
+		}
 	}
 
 	//endregion Setter end

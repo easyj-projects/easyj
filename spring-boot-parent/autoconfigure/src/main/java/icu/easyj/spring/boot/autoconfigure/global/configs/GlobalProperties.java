@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.autoconfigure.global.configs;
 import java.util.Map;
 
 import icu.easyj.config.GlobalConfigSetter;
+import icu.easyj.config.GlobalConfigs;
 import icu.easyj.env.EnvironmentType;
 import icu.easyj.env.RunMode;
 import org.springframework.beans.factory.InitializingBean;
@@ -120,6 +121,23 @@ public class GlobalProperties implements InitializingBean {
 		}
 		if (envType != null) {
 			GlobalConfigSetter.setEnvType(envType);
+		} else {
+			String env = GlobalConfigs.getEnv();
+			if (StringUtils.hasText(env)) {
+				env = env.toLowerCase();
+				if (env.startsWith("prod")) {
+					GlobalConfigSetter.setEnvType(EnvironmentType.PROD);
+				}
+				if (env.startsWith("sandbox")) {
+					GlobalConfigSetter.setEnvType(EnvironmentType.SANDBOX);
+				}
+				if (env.startsWith("test")) {
+					GlobalConfigSetter.setEnvType(EnvironmentType.TEST);
+				}
+				if (env.startsWith("dev")) {
+					GlobalConfigSetter.setEnvType(EnvironmentType.DEV);
+				}
+			}
 		}
 		if (runMode != null) {
 			GlobalConfigSetter.setRunMode(runMode);
