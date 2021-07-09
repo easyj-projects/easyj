@@ -37,6 +37,8 @@ import org.springframework.util.StringUtils;
 /**
  * 加载 `EasyJ约定的目录下的配置文件` 的环境处理器
  * 思路：约定大于配置
+ * 作用：框架中，可以使用此功能，快速的配置项目的一些通用配置、功能性约定配置、不同环境的不同通用和约定配置，以此来简化业务项目的配置。
+ * 使用场景：用来配置几乎不会改变的一些配置，如公司内部开发环境下的数据库、redis、各种MQ、注册中心、配置中心等等的一些配置。
  *
  * @author wangliang181230
  */
@@ -52,25 +54,41 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * 按优先级正序排序
 	 */
 	public static final String[] PATHS = new String[]{
-			// 项目配置文件，主要配置项目代码、项目名称
+			// 项目配置文件，主要配置项目代码、项目名称或其他全局配置，相同配置会覆盖区域配置文件
 			"config/project.yml",
 			"config/project.yaml",
 			"config/project.properties",
+			// 区域配置文件，主要配置区域代码、区域名称或其他全局配置
+			"config/area.yml",
+			"config/area.yaml",
+			"config/area.properties",
+			// 全局配置文件，优先级仅高于`defaultProperties`配置源的配置文件
+			"config/global.yml",
+			"config/global.yaml",
+			"config/global.properties",
 	};
 
 	/**
-	 * 需加载配置文件的目录
+	 * 需加载配置文件的目录，这些目录下的所有*.yml、*.yaml、*.properties文件，都将被加载
 	 * 按优先级倒序排列
 	 */
 	public static final String[] DIRECTORY_PATHS = new String[]{
 			// 全局默认配置
 			"config/default",
+			// 区域默认配置
+			"config/${area}/default",
 			// 项目默认配置
 			"config/${project}/default",
+			// 区域项目默认配置
+			"config/${area}/${project}/default",
 			// 环境配置
 			"config/${env}",
+			// 区域环境配置
+			"config/${area}/${env}",
 			// 项目环境配置
 			"config/${project}/${env}",
+			// 区域项目环境配置
+			"config/${area}/${project}/${env}",
 	};
 
 	@Override
@@ -91,6 +109,8 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			}
 		}
 
+		// 项目所属区域代码：在area配置文件加载后，再获取配置值
+		String area = environment.getProperty(EnvironmentUtils.AREA_KEY);
 		// 项目代码：在project配置文件加载后，再获取配置值
 		String project = environment.getProperty(EnvironmentUtils.PROJECT_KEY);
 		// 环境代码
@@ -100,6 +120,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		}
 
 		for (String dirPath : DIRECTORY_PATHS) {
+			if (dirPath.contains("${area}")) {
+				if (StringUtils.hasLength(area)) {
+					dirPath = dirPath.replace("${area}", area);
+				} else {
+					continue;
+				}
+			}
 			if (dirPath.contains("${project}")) {
 				if (StringUtils.hasLength(project)) {
 					dirPath = dirPath.replace("${project}", project);

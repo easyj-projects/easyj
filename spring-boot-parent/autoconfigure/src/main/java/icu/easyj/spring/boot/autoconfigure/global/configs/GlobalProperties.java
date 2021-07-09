@@ -34,6 +34,16 @@ import org.springframework.util.StringUtils;
 public class GlobalProperties implements InitializingBean {
 
 	/**
+	 * 项目所属区域代码
+	 */
+	private String area;
+
+	/**
+	 * 项目所属区域名称
+	 */
+	private String areaName;
+
+	/**
 	 * 项目代码
 	 */
 	private String project;
@@ -84,6 +94,12 @@ public class GlobalProperties implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		if (StringUtils.hasText(area)) {
+			GlobalConfigSetter.setArea(area.trim());
+		}
+		if (StringUtils.hasText(areaName)) {
+			GlobalConfigSetter.setAreaName(areaName.trim());
+		}
 		if (StringUtils.hasText(project)) {
 			GlobalConfigSetter.setProject(project.trim());
 		}
@@ -114,6 +130,22 @@ public class GlobalProperties implements InitializingBean {
 	}
 
 	//region Getter、Setter
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
 
 	public String getProject() {
 		return project;

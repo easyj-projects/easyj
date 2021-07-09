@@ -22,14 +22,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- EasyJ Spring Boot Environment Enhanced -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
-			<version>${project.version}</version>
-			<optional>true</optional><!--可选功能-->
-		</dependency>
-
 
 		<!-- Spring -->
 		<dependency>

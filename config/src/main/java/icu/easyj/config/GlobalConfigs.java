@@ -35,6 +35,16 @@ public class GlobalConfigs {
 	//region Fields
 
 	/**
+	 * 项目所属区域代码
+	 */
+	private String area;
+
+	/**
+	 * 项目所属区域名称，如：浙江省宁波市鄞州区
+	 */
+	private String areaName;
+
+	/**
 	 * 项目代码
 	 */
 	private String project;
@@ -99,6 +109,20 @@ public class GlobalConfigs {
 
 
 	//region Getter start
+
+	/**
+	 * @return 项目所属区域代码
+	 */
+	public String getArea() {
+		return area;
+	}
+
+	/**
+	 * @return 项目所属区域名称
+	 */
+	public String getAreaName() {
+		return areaName;
+	}
 
 	/**
 	 * @return 项目代码
@@ -235,6 +259,24 @@ public class GlobalConfigs {
 
 
 	//region Setter start
+
+	/**
+	 * 设置项目所属区域代码
+	 *
+	 * @param area 项目所属区域代码
+	 */
+	static void setArea(String area) {
+		getInstance().area = area;
+	}
+
+	/**
+	 * 设置项目所属区域名称
+	 *
+	 * @param areaName 项目所属区域名称
+	 */
+	static void setAreaName(String areaName) {
+		getInstance().areaName = areaName;
+	}
 
 	/**
 	 * 设置项目代码

@@ -46,6 +46,7 @@ public abstract class EnvironmentUtils {
 
 	public static final String PREFIX = "easyj.global";
 
+	public static final String AREA_KEY = PREFIX + ".area";
 	public static final String PROJECT_KEY = PREFIX + ".project";
 	public static final String ENV_KEY = PREFIX + ".env";
 

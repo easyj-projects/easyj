@@ -28,6 +28,24 @@ import icu.easyj.env.RunMode;
 public abstract class GlobalConfigSetter {
 
 	/**
+	 * 设置项目所属区域代码
+	 *
+	 * @param area 项目所属区域代码
+	 */
+	public static void setArea(String area) {
+		GlobalConfigs.setArea(area);
+	}
+
+	/**
+	 * 设置项目所属区域名称
+	 *
+	 * @param areaName 项目所属区域名称
+	 */
+	public static void setAreaName(String areaName) {
+		GlobalConfigs.setAreaName(areaName);
+	}
+
+	/**
 	 * 设置项目代码
 	 *
 	 * @param project 项目代码

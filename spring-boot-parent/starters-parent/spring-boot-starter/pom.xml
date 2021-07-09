@@ -15,12 +15,20 @@
 	<description>EasyJ的基础starter</description>
 
 	<dependencies>
+		<!-- EasyJ Spring Boot Autoconfigure：自动装配 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-spring-boot-autoconfigure</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- EasyJ Spring Boot Environment Enhanced：环境增强 -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
+		<!-- Spring Boot Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
