@@ -57,10 +57,10 @@
 		<module>bom</module>
 
 		<!-- core -->
-		<module>spring-boot</module>
+		<module>core</module>
 
 		<!-- functions -->
-		<module>spring-boot-environment-enhanced</module>
+		<module>environment-enhanced</module>
 
 		<!-- AutoConfigure 和 Starters -->
 		<module>autoconfigure</module>
