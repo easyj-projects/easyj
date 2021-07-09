@@ -1,0 +1,6 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+icu.easyj.spring.boot.autoconfigure.global.configs.GlobalConfigsAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.web.cache304.EasyjWebCache304AutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.EasyjExcelExporterAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.AfterturnExcelExporterAutoConfiguration

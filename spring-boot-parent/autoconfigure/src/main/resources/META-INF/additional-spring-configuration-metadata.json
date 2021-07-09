@@ -1,0 +1,87 @@
+{
+	"groups": [
+		{
+			"name": "easyj.global",
+			"description": "EasyJ定义的全局配置组."
+		},
+		{
+			"name": "easyj.web.excel.export",
+			"description": "Excel文件导出功能配置组."
+		}
+	],
+	"properties": [
+		{
+			"name": "easyj.global.project",
+			"description": "项目代码."
+		},
+		{
+			"name": "easyj.global.project-name",
+			"description": "项目名称."
+		},
+		{
+			"name": "easyj.global.application",
+			"description": "应用代码.",
+			"defaultValue": "${spring.application.name}"
+		},
+		{
+			"name": "easyj.global.application-name",
+			"description": "应用名称."
+		},
+		{
+			"name": "easyj.global.env",
+			"description": "环境代码.",
+			"defaultValue": "${spring.profiles.active[0]}"
+		},
+		{
+			"name": "easyj.global.env-name",
+			"description": "环境名称."
+		},
+		{
+			"name": "easyj.global.env-type",
+			"description": "环境类型：prod|test|dev，默认：prod.",
+			"defaultValue": "prod"
+		},
+		{
+			"name": "easyj.global.run-mode",
+			"description": "运行模式：release|debug，默认：release.",
+			"defaultValue": "release"
+		},
+		{
+			"name": "easyj.global.configs",
+			"description": "其他全局配置的Map."
+		},
+		{
+			"name": "easyj.web.excel.export.list-field-name",
+			"description": "全局配置列表属性名."
+		},
+		{
+			"name": "easyj.web.excel.export.type",
+			"description": "Excel导出器类型：auto|afterturn|easyj，默认：auto.",
+			"defaultValue": "auto"
+		}
+	],
+	"hints": [
+		{
+			"name": "easyj.web.excel.export.type",
+			"values": [
+				{
+					"value": "auto",
+					"description": "default-自动选择优先级最高的`IExcelExporter（Excel导出器）`实现."
+				},
+				{
+					"value": "afterturn",
+					"description": "基于`cn.afterturn:easypoi`开发的`IExcelExporter（Excel导出器）`实现."
+				},
+				{
+					"value": "easyj",
+					"description": "基于`icu.easyj:easyj-poi-excel`开发的`IExcelExporter（Excel导出器）`实现."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-spring-boot-starters-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId} :: easyj-spring-boot-starter == Parent ==</name>
+	<description>EasyJ各功能的starter</description>
+
+	<modules>
+		<module>spring-boot-starter</module>
+
+		<!-- POI -->
+		<module>spring-boot-starter-poi-excel</module>
+		<module>spring-boot-starter-poi-excel-afterturn</module>
+
+		<!-- Web -->
+		<module>spring-boot-starter-web-cache304</module>
+	</modules>
+</project>

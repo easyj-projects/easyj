@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-spring-boot-autoconfigure</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ各功能在Spring Boot项目中的自动装配功能，需要引用各功能的starter激活相应的自动装配类。</description>
+
+	<dependencies>
+		<!-- EasyJ Spring Boot -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- EasyJ Spring Boot Environment Enhanced -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional><!--只参与打包生成`spring-configuration-metadata.json`文件-->
+		</dependency>
+
+		<!-- spring-web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- 多个模块所需依赖：Aspect -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- poi-excel所需依赖：Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+
+		<!-- 其他的POI实现 -->
+
+		<!-- afterturn-easypoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+	</dependencies>
+</project>

@@ -13,7 +13,7 @@
     <dependencies>
         <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-bom</artifactId>
-        <version>${easyj-spring-boot.version}</version>
+        <version>0.1.3-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
     </dependencies>

@@ -54,6 +54,9 @@
 		<apache-poi.version>5.0.0</apache-poi.version>
 		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
 
+		<!-- XML dependencies version -->
+		<apache-xmlbeans.version>5.0.0</apache-xmlbeans.version>
+
 		<!-- Test dependencies version -->
 		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.11.2</mockito.version>
@@ -131,8 +134,30 @@
 			<!-- afterturn-easypoi -->
 			<dependency>
 				<groupId>cn.afterturn</groupId>
-				<artifactId>easypoi-spring-boot-starter</artifactId>
+				<artifactId>easypoi-base</artifactId>
 				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-annotation</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-web</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-wps</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+
+			<!-- 依赖定义：XML -->
+			<dependency>
+				<groupId>org.apache.xmlbeans</groupId>
+				<artifactId>xmlbeans</artifactId>
+				<version>${apache-xmlbeans.version}</version>
 			</dependency>
 
 			<!-- 依赖定义：Tests -->

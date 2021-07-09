@@ -10,12 +10,17 @@
 		<relativePath/>
 	</parent>
 
-	<artifactId>easyj-parent</artifactId>
+	<groupId>icu.easyj.boot</groupId>
+	<artifactId>easyj-spring-boot-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
+	<description>
+		为了在spring-boot项目中，更方便的使用EasyJ的功能，
+		此项目提供了EasyJ每个功能的starter，方便快速引用功能所需的依赖同时提供了自动装配类。
+		同时，一些仅spring-boot项目才能用的功能，都在此仓库中开发和维护。
+	</description>
 	<url>https://gitee.com/easyj-projects/easyj</url>
 
 	<inceptionYear>2021</inceptionYear>
@@ -47,6 +52,21 @@
 		</developer>
 	</developers>
 
+	<modules>
+		<module>dependencies</module>
+		<module>bom</module>
+
+		<!-- core -->
+		<module>spring-boot</module>
+
+		<!-- functions -->
+		<module>spring-boot-environment-enhanced</module>
+
+		<!-- AutoConfigure 和 Starters -->
+		<module>autoconfigure</module>
+		<module>starters-parent</module>
+	</modules>
+
 	<scm>
 		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
 		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
@@ -57,26 +77,6 @@
 		<system>gitee</system>
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
-
-	<modules>
-		<module>dependencies</module>
-
-		<module>all</module>
-		<module>bom</module>
-
-		<module>captcha</module>
-		<module>config</module>
-		<module>core</module>
-		<module>crypto</module>
-		<module>data</module>
-		<module>db</module>
-		<module>poi-parent</module>
-		<module>web-parent</module>
-
-		<module>spring-boot-parent</module>
-
-		<module>test</module>
-	</modules>
 
 	<properties>
 		<!-- 项目版本 -->
@@ -94,7 +94,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-dependencies</artifactId>
+				<artifactId>easyj-spring-boot-dependencies</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -112,9 +112,8 @@
 
 		<!-- 引用依赖：Tests -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-test</artifactId>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -129,7 +128,7 @@
 					<flattenMode>resolveCiFriendliesOnly</flattenMode>
 				</configuration>
 			</plugin>
-			<!-- 使用插件：Javadoc -->
+			<!-- 插件定义：Javadoc -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
