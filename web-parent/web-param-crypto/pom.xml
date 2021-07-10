@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-web-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-web-param-crypto</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ Web参数加密解密</description>
+
+	<dependencies>
+		<!-- 当前项目的依赖 -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-web-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-crypto</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Alibaba FastJSON -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+	</dependencies>
+</project>
