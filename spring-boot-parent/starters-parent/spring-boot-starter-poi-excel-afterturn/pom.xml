@@ -41,5 +41,10 @@
 			<groupId>cn.afterturn</groupId>
 			<artifactId>easypoi-base</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+		</dependency>
 	</dependencies>
 </project>
