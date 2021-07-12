@@ -22,6 +22,13 @@ package icu.easyj.web.constant;
  */
 public interface HttpHeaderConstants {
 
+	//region Keys
+
+	//endregion
+
+
+	//region Values
+
 	/**
 	 * Cache-Control: no-cache
 	 */
@@ -31,4 +38,6 @@ public interface HttpHeaderConstants {
 	 * Cache-Control: no-store
 	 */
 	String NO_STORE = "no-store";
+
+	//endregion
 }
