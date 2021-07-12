@@ -27,8 +27,6 @@ import icu.easyj.env.RunMode;
  *
  * @author wangliang181230
  * @see GlobalConfigSetter
- * @see icu.easyj.spring.boot.autoconfigure.global.configs.GlobalProperties
- * @see icu.easyj.spring.boot.autoconfigure.global.configs.GlobalConfigsAutoConfiguration
  */
 public class GlobalConfigs {
 
