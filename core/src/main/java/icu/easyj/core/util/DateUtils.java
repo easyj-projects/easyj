@@ -19,8 +19,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import icu.easyj.core.constant.DateFormatConstants;
+import icu.easyj.core.enums.DateFormatType;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 import static icu.easyj.core.constant.DateConstants.ONE_DAY_MILL;
 
@@ -32,7 +34,7 @@ import static icu.easyj.core.constant.DateConstants.ONE_DAY_MILL;
 @SuppressWarnings("deprecation")
 public abstract class DateUtils {
 
-	//region 获取日期
+	//region 获取特殊日期的方法
 
 	/**
 	 * 获取指定时间的日期
@@ -50,7 +52,8 @@ public abstract class DateUtils {
 	 * @param time 时间
 	 * @return tomorrowDate 明天的日期
 	 */
-	public static Date getTomorrowDate(Date time) {
+	@NonNull
+	public static Date getTomorrowDate(@NonNull Date time) {
 		return getDate(new Date(time.getTime() + ONE_DAY_MILL));
 	}
 
@@ -58,6 +61,20 @@ public abstract class DateUtils {
 
 
 	//region 解析时间字符串的方法
+
+	/**
+	 * 解析常用时间
+	 *
+	 * @param str    时间字符串
+	 * @param format 常用时间格式
+	 * @return time 时间
+	 * @throws ParseException 解析异常
+	 */
+	@NonNull
+	public static Date parse(@NonNull String str, @NonNull DateFormatType format) throws ParseException {
+		SimpleDateFormat sdf = LocalDateFormatHolder.get(format);
+		return sdf.parse(str);
+	}
 
 	/**
 	 * 解析时间
@@ -68,138 +85,140 @@ public abstract class DateUtils {
 	 * @throws ParseException 解析异常
 	 */
 	@NonNull
-	public static Date parse(String str, String format) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
+	public static Date parse(@NonNull String str, @NonNull String format) throws ParseException {
+		SimpleDateFormat sdf = LocalDateFormatHolder.get(format);
 		return sdf.parse(str);
 	}
 
 	@NonNull
-	public static Date parseMonth(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MM);
+	public static Date parseMonth(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MM);
 	}
 
 	@NonNull
-	public static Date parseDate(String str) throws ParseException {
-		return parse(str, DateFormatConstants.DD);
+	public static Date parseDate(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.DD);
 	}
 
 	@NonNull
-	public static Date parseMinutes(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MI);
+	public static Date parseMinutes(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MI);
 	}
 
 	@NonNull
-	public static Date parseSeconds(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SS);
+	public static Date parseSeconds(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.SS);
 	}
 
 	@NonNull
-	public static Date parseMillisecond(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SSS);
+	public static Date parseMillisecond(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.SSS);
 	}
 
 
 	@NonNull
-	public static Date parseMonth2(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MM2);
+	public static Date parseMonth2(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MM2);
 	}
 
 	@NonNull
-	public static Date parseDate2(String str) throws ParseException {
-		return parse(str, DateFormatConstants.DD2);
+	public static Date parseDate2(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.DD2);
 	}
 
-	public static Date parseMinutes2(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MI2);
+	public static Date parseMinutes2(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MI2);
 	}
 
 	@NonNull
-	public static Date parseSeconds2(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SS2);
+	public static Date parseSeconds2(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.SS2);
 	}
 
 	@NonNull
 	public static Date parseMillisecond2(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SSS2);
+		return parse(str, DateFormatType.SSS2);
 	}
 
 
 	@NonNull
-	public static Date parseMonthUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MM_UNSIGNED);
+	public static Date parseMonthUnsigned(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MM_UNSIGNED);
 	}
 
 	@NonNull
-	public static Date parseDateUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstants.DD_UNSIGNED);
+	public static Date parseDateUnsigned(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.DD_UNSIGNED);
 	}
 
 	@NonNull
-	public static Date parseMinutesUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstants.MI_UNSIGNED);
+	public static Date parseMinutesUnsigned(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MI_UNSIGNED);
 	}
 
 	@NonNull
-	public static Date parseSecondsUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SS_UNSIGNED);
+	public static Date parseSecondsUnsigned(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.SS_UNSIGNED);
 	}
 
 	@NonNull
-	public static Date parseMillisecondUnsigned(String str) throws ParseException {
-		return parse(str, DateFormatConstants.SSS_UNSIGNED);
+	public static Date parseMillisecondUnsigned(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.SSS_UNSIGNED);
 	}
 
 	/**
 	 * 解析时间字符串
 	 *
-	 * @param str 时间字符串
+	 * @param timeStr 时间字符串
 	 * @return time 时间
 	 */
 	@NonNull
-	public static Date parseAll(String str) {
+	public static Date parseAll(@NonNull String timeStr) {
+		Assert.notNull(timeStr, "timeStr must be not null");
+
 		try {
-			switch (str.length()) {
+			switch (timeStr.length()) {
 				case 7:
-					if (str.contains("-")) {
-						return parseMonth(str);
+					if (timeStr.contains("-")) {
+						return parseMonth(timeStr);
 					} else {
-						return parseMonth2(str);
+						return parseMonth2(timeStr);
 					}
 				case 10:
-					if (str.contains("-")) {
-						return parseDate(str);
+					if (timeStr.contains("-")) {
+						return parseDate(timeStr);
 					} else {
-						return parseDate2(str);
+						return parseDate2(timeStr);
 					}
 				case 16:
-					if (str.contains("-")) {
-						return parseMinutes(str);
+					if (timeStr.contains("-")) {
+						return parseMinutes(timeStr);
 					} else {
-						return parseSeconds2(str);
+						return parseSeconds2(timeStr);
 					}
 				case 19:
-					if (str.contains("-")) {
-						return parseSeconds(str);
+					if (timeStr.contains("-")) {
+						return parseSeconds(timeStr);
 					} else {
-						return parseMinutes2(str);
+						return parseMinutes2(timeStr);
 					}
 				case 23:
-					if (str.contains("-")) {
-						return parseMillisecond(str);
+					if (timeStr.contains("-")) {
+						return parseMillisecond(timeStr);
 					} else {
-						return parseMillisecond2(str);
+						return parseMillisecond2(timeStr);
 					}
 
 				case 6:
-					return parseMonthUnsigned(str);
+					return parseMonthUnsigned(timeStr);
 				case 8:
-					return parseDateUnsigned(str);
+					return parseDateUnsigned(timeStr);
 				case 12:
-					return parseMinutesUnsigned(str);
+					return parseMinutesUnsigned(timeStr);
 				case 14:
-					return parseSecondsUnsigned(str);
+					return parseSecondsUnsigned(timeStr);
 				case 17:
-					return parseMillisecondUnsigned(str);
+					return parseMillisecondUnsigned(timeStr);
 
 				default:
 					break;
@@ -207,8 +226,43 @@ public abstract class DateUtils {
 		} catch (ParseException ignore) {
 		}
 
-		// 如果上面的方式都失败，则直接使用 new Date(String s); 的方式转换
-		return new Date(str);
+		// 如果上面的方式都失败，则直接使用 new Date(String timeStr); 的方式转换
+		return new Date(timeStr);
+	}
+
+	//endregion
+
+
+	//region 格式化输出日期
+
+	/**
+	 * 时间格式化
+	 *
+	 * @param dateFormat 时间格式化
+	 * @param date       时间
+	 * @return dateStr 格式化的时间字符串
+	 */
+	@NonNull
+	public static String format(@NonNull String dateFormat, @NonNull Date date) {
+		Assert.notNull(dateFormat, "dateFormat must be not null");
+		Assert.notNull(date, "date must be not null");
+
+		return LocalDateFormatHolder.get(dateFormat).format(date);
+	}
+
+	/**
+	 * 时间格式化
+	 *
+	 * @param dateFormat 时间格式化
+	 * @param date       时间
+	 * @return dateStr 格式化的时间字符串
+	 */
+	@NonNull
+	public static String format(@NonNull DateFormatType dateFormat, @NonNull Date date) {
+		Assert.notNull(dateFormat, "dateFormat must be not null");
+		Assert.notNull(date, "date must be not null");
+
+		return LocalDateFormatHolder.get(dateFormat).format(date);
 	}
 
 	//endregion
@@ -219,26 +273,29 @@ public abstract class DateUtils {
 	/**
 	 * 将时间对象转换为字符串
 	 *
-	 * @param date 时间对象
+	 * @param date 时间
 	 * @return str 转换后的字符串
 	 */
-	public static String toString(Date date) {
+	@NonNull
+	public static String toString(@Nullable Date date) {
 		if (date == null) {
 			return "null";
 		}
 
 		long time = date.getTime();
-		String dateFormat;
+
+		DateFormatType dateFormat;
 		if (date.getHours() == 0 && date.getMinutes() == 0 && date.getSeconds() == 0 && time % 1000 == 0) {
-			dateFormat = "yyyy-MM-dd";
+			dateFormat = DateFormatType.DD;
 		} else if (time % (60 * 1000) == 0) {
-			dateFormat = "yyyy-MM-dd HH:mm";
+			dateFormat = DateFormatType.MM;
 		} else if (time % 1000 == 0) {
-			dateFormat = "yyyy-MM-dd HH:mm:ss";
+			dateFormat = DateFormatType.SS;
 		} else {
-			dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
+			dateFormat = DateFormatType.SSS;
 		}
-		return new SimpleDateFormat(dateFormat).format(date);
+
+		return DateUtils.format(dateFormat, date);
 	}
 
 	//endregion

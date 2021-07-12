@@ -125,16 +125,16 @@ public abstract class StringUtils {
 
 		//endregion
 
-		//region Convert the Collection and Map
+		//region Convert the Collection, Array and Map
 
 		if (obj instanceof Collection) {
 			return CollectionUtils.toString((Collection<?>)obj);
 		}
-		if (obj instanceof Map) {
-			return MapUtils.toString((Map<?, ?>)obj);
-		}
 		if (obj.getClass().isArray()) {
 			return ArrayUtils.toString((Object[])obj);
+		}
+		if (obj instanceof Map) {
+			return MapUtils.toString((Map<?, ?>)obj);
 		}
 
 		//endregion
