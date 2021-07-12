@@ -288,7 +288,7 @@ public abstract class DateUtils {
 		if (date.getHours() == 0 && date.getMinutes() == 0 && date.getSeconds() == 0 && time % 1000 == 0) {
 			dateFormat = DateFormatType.DD;
 		} else if (time % (60 * 1000) == 0) {
-			dateFormat = DateFormatType.MM;
+			dateFormat = DateFormatType.MI;
 		} else if (time % 1000 == 0) {
 			dateFormat = DateFormatType.SS;
 		} else {
