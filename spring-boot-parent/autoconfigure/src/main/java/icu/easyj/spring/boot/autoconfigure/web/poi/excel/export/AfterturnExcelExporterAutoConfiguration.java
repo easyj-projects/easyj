@@ -27,6 +27,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 
+import static icu.easyj.spring.boot.autoconfigure.StarterConstant.WEB_POI_EXCEL_EXPORT_PREFIX;
+
 /**
  * Afterturn-EasyPOI-Excel自动装配类
  *
@@ -46,7 +48,7 @@ public class AfterturnExcelExporterAutoConfiguration {
 	 * @see cn.afterturn.easypoi.excel.ExcelExportUtil
 	 */
 	@Bean
-	@ConditionalOnProperty(name = "easyj.web.excel.export.type", havingValue = "afterturn", matchIfMissing = true)
+	@ConditionalOnProperty(prefix = WEB_POI_EXCEL_EXPORT_PREFIX, name = "type", havingValue = "afterturn", matchIfMissing = true)
 	@ConditionalOnMissingBean
 	public IExcelExporter afterturnExcelExporter() {
 		return new AfterturnExcelExporterImpl();

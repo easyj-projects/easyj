@@ -20,7 +20,7 @@ package icu.easyj.core.constant;
  *
  * @author wangliang181230
  */
-public interface EasyjConstants {
+public interface Constants {
 
 	String PREFIX = "easyj";
 

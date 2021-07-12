@@ -29,6 +29,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import static icu.easyj.spring.boot.autoconfigure.StarterConstant.WEB_POI_EXCEL_EXPORT_PREFIX;
+
 /**
  * EasyJ-POI-Excel自动装配类
  *
@@ -51,7 +53,7 @@ public class EasyjExcelExporterAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnClass(Excel.class)
-	@ConditionalOnProperty(name = "easyj.web.excel.export.type", havingValue = "easyj", matchIfMissing = true)
+	@ConditionalOnProperty(prefix = WEB_POI_EXCEL_EXPORT_PREFIX, name = "type", havingValue = "easyj", matchIfMissing = true)
 	@ConditionalOnMissingBean
 	public IExcelExporter defaultExcelExporter() {
 		return new DefaultExcelExporterImpl();

@@ -18,12 +18,14 @@ package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 import icu.easyj.web.poi.excel.IExcelExporter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static icu.easyj.spring.boot.autoconfigure.StarterConstant.WEB_POI_EXCEL_EXPORT_PREFIX;
+
 /**
  * Excel导出功能相关的配置
  *
  * @author wangliang181230
  */
-@ConfigurationProperties(prefix = "easyj.web.excel.export")
+@ConfigurationProperties(prefix = WEB_POI_EXCEL_EXPORT_PREFIX)
 public class ExcelExporterProperties {
 
 	/**

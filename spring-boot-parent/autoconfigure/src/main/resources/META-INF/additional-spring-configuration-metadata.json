@@ -5,7 +5,7 @@
 			"description": "EasyJ定义的全局配置组."
 		},
 		{
-			"name": "easyj.web.excel.export",
+			"name": "easyj.web.poi.excel.export",
 			"description": "Excel文件导出功能配置组."
 		}
 	],
@@ -51,18 +51,18 @@
 			"description": "其他全局配置的Map."
 		},
 		{
-			"name": "easyj.web.excel.export.list-field-name",
+			"name": "easyj.web.poi.excel.export.list-field-name",
 			"description": "全局配置列表属性名."
 		},
 		{
-			"name": "easyj.web.excel.export.type",
+			"name": "easyj.web.poi.excel.export.type",
 			"description": "Excel导出器类型：auto|afterturn|easyj，默认：auto.",
 			"defaultValue": "auto"
 		}
 	],
 	"hints": [
 		{
-			"name": "easyj.web.excel.export.type",
+			"name": "easyj.web.poi.excel.export.type",
 			"values": [
 				{
 					"value": "auto",

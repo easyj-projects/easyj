@@ -15,26 +15,34 @@
  */
 package icu.easyj.spring.boot.autoconfigure;
 
-import icu.easyj.core.constant.EasyjConstants;
+import icu.easyj.core.constant.Constants;
 
 /**
  * EasyJ-Starter相关的常量
  *
  * @author wangliang181230
  */
-public interface EasyjStarterConstant {
+public interface StarterConstant {
 
 	//region PREFIX
 
-	String EASYJ_PREFIX = EasyjConstants.PREFIX;
+	// Root
+	String PREFIX = Constants.PREFIX;
 
-	// POI
-	String EASYJ_POI_PREFIX = EASYJ_PREFIX + ".poi";
-	String EASYJ_POI_EXCEL_PREFIX = EASYJ_POI_PREFIX + ".excel";
+
+	// Global
+	String GLOBAL_PREFIX = PREFIX + ".global";
+
 
 	// Web
-	String EASYJ_WEB_PREFIX = EASYJ_PREFIX + ".web";
-	String EASYJ_WEB_CACHE304_PREFIX = EASYJ_WEB_PREFIX + ".cache304";
+	String WEB_PREFIX = PREFIX + ".web";
+	String WEB_CACHE304_PREFIX = WEB_PREFIX + ".cache304";
+
+	// Web POI
+	String WEB_POI_PREFIX = WEB_PREFIX + ".poi";
+	// Web POI Excel
+	String WEB_POI_EXCEL_PREFIX = WEB_POI_PREFIX + ".excel";
+	String WEB_POI_EXCEL_EXPORT_PREFIX = WEB_POI_PREFIX + ".excel";
 
 	//endregion
 

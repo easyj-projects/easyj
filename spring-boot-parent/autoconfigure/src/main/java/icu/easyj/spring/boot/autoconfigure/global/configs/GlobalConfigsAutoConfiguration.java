@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import static icu.easyj.spring.boot.autoconfigure.StarterConstant.GLOBAL_PREFIX;
+
 /**
  * 全局配置自动装配
  *
@@ -33,7 +35,7 @@ public class GlobalConfigsAutoConfiguration {
 	 * @return 全局配置
 	 */
 	@Bean
-	@ConfigurationProperties("easyj.global")
+	@ConfigurationProperties(GLOBAL_PREFIX)
 	public GlobalProperties globalProperties(@Value("${spring.profiles.active:}") String[] activeProfiles) {
 		GlobalProperties properties = new GlobalProperties();
 		if (activeProfiles != null && activeProfiles.length > 0) {
