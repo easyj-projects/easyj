@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import static icu.easyj.spring.boot.autoconfigure.StarterConstant.GLOBAL_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX;
 
 /**
  * 全局配置自动装配

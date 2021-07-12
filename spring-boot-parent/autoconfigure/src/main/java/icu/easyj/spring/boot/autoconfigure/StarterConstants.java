@@ -22,7 +22,7 @@ import icu.easyj.core.constant.Constants;
  *
  * @author wangliang181230
  */
-public interface StarterConstant {
+public interface StarterConstants {
 
 	//region PREFIX
 

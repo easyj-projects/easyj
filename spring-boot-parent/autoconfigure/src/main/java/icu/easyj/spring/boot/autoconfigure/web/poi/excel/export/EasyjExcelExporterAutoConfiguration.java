@@ -29,7 +29,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import static icu.easyj.spring.boot.autoconfigure.StarterConstant.WEB_POI_EXCEL_EXPORT_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL_EXPORT_PREFIX;
 
 /**
  * EasyJ-POI-Excel自动装配类
