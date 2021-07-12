@@ -16,23 +16,24 @@
 package icu.easyj.web.constant;
 
 /**
- * Http相关常量
+ * HTTP请求方法常量
  *
  * @author wangliang181230
  */
-public interface HttpConstants {
-
-	//region 文件下载相关常量
+public interface HttpMethodConstants {
 
 	/**
-	 * 执行导出的参数名
+	 * GET常量
 	 */
-	String DO_EXPORT_PARAM_NAME = "doExport";
+	String GET = "GET";
 
 	/**
-	 * 执行导出的匹配参数值
+	 * POST常量
 	 */
-	String DO_EXPORT_PARAM_VALUE = "true";
+	String POST = "POST";
 
-	//endregion
+	/**
+	 * OPTIONS常量
+	 */
+	String OPTIONS = "OPTIONS";
 }

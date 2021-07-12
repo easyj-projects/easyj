@@ -17,6 +17,7 @@ package icu.easyj.web.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,14 +30,16 @@ import icu.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import static icu.easyj.web.constant.HttpConstants.GET_METHOD;
-import static icu.easyj.web.constant.HttpConstants.POST_METHOD;
 import static icu.easyj.web.constant.HttpHeaderConstants.NO_CACHE;
 import static icu.easyj.web.constant.HttpHeaderConstants.NO_STORE;
+import static icu.easyj.web.constant.HttpMethodConstants.GET;
+import static icu.easyj.web.constant.HttpMethodConstants.OPTIONS;
+import static icu.easyj.web.constant.HttpMethodConstants.POST;
 
 /**
  * Http工具类
@@ -89,7 +92,50 @@ public abstract class HttpUtils {
 	//endregion
 
 
-	//region 校验请求信息
+	//region 获取请求、响应内容
+
+	/**
+	 * 获取二级目录
+	 *
+	 * @param context 上下文
+	 * @return contextPath 二级目录
+	 */
+	public static String getContextPath(@NonNull ServletContext context) {
+		String contextPath = context.getContextPath();
+
+		if (contextPath == null || contextPath.isEmpty()) {
+			return StrPool.SLASH;
+		} else {
+			return contextPath;
+		}
+	}
+
+	/**
+	 * 获取没有二级目录的请求路径
+	 *
+	 * @param uri         完整请求路径
+	 * @param contextPath 二级目录
+	 * @return noContextPathUri 排除了二级目录的请求路径
+	 */
+	@NonNull
+	public static String getNoContextPathUri(String uri, @Nullable String contextPath) {
+		if (uri == null) {
+			return StrPool.SLASH;
+		}
+
+		if (contextPath == null || contextPath.isEmpty() || StrPool.SLASH.equals(contextPath)) {
+			return uri;
+		}
+		if (uri.startsWith(contextPath)) {
+			uri = uri.substring(contextPath.length());
+		}
+		return uri;
+	}
+
+	//endregion
+
+
+	//region 校验请求信息 start
 
 	/**
 	 * 判断是否GET请求
@@ -98,7 +144,7 @@ public abstract class HttpUtils {
 	 * @return isGetRequest 是否为GET请求
 	 */
 	public static boolean isGetRequest(HttpServletRequest request) {
-		return GET_METHOD.equalsIgnoreCase(request.getMethod());
+		return GET.equalsIgnoreCase(request.getMethod());
 	}
 
 	// 重载方法
@@ -128,7 +174,7 @@ public abstract class HttpUtils {
 	 * @return isPostRequest 是否为POST请求
 	 */
 	public static boolean isPostRequest(HttpServletRequest request) {
-		return POST_METHOD.equalsIgnoreCase(request.getMethod());
+		return POST.equalsIgnoreCase(request.getMethod());
 	}
 
 	// 重载方法
@@ -152,6 +198,36 @@ public abstract class HttpUtils {
 	}
 
 	/**
+	 * 判断是否OPTIONS请求
+	 *
+	 * @param request 请求实例
+	 * @return isGetRequest 是否为GET请求
+	 */
+	public static boolean isOptionsRequest(HttpServletRequest request) {
+		return OPTIONS.equalsIgnoreCase(request.getMethod());
+	}
+
+	// 重载方法
+	public static boolean isOptionsRequest() {
+		return isOptionsRequest(getRequest());
+	}
+
+	/**
+	 * 判断是否不是OPTIONS请求
+	 *
+	 * @param request 请求实例
+	 * @return isGetRequest 是否为GET请求
+	 */
+	public static boolean isNotOptionsRequest(HttpServletRequest request) {
+		return !isOptionsRequest(request);
+	}
+
+	// 重载方法
+	public static boolean isNotOptionsRequest() {
+		return !isOptionsRequest();
+	}
+
+	/**
 	 * 判断是否为无缓存请求
 	 *
 	 * @param request 请求实例
@@ -171,10 +247,39 @@ public abstract class HttpUtils {
 		return isNoCacheRequest(getRequest());
 	}
 
-	//endregion
+	//region 来自内部服务器的请求相关 start
+
+	private static final ThreadLocal<Boolean> INTERNAL_REQUEST_FLAG = new ThreadLocal<>();
+
+	/**
+	 * 判断是否来自内部服务器的请求
+	 *
+	 * @return isInternalRequest 是否来自内部服务器的请求
+	 */
+	public static boolean isInternalRequest() {
+		return Boolean.TRUE.equals(INTERNAL_REQUEST_FLAG.get());
+	}
+
+	/**
+	 * 设置当前请求为 来自内部服务器的请求
+	 */
+	public static void setInternalRequest() {
+		INTERNAL_REQUEST_FLAG.set(true);
+	}
+
+	/**
+	 * 清除`INTERNAL_REQUEST_FLAG`
+	 */
+	public static void clearInternalRequest() {
+		INTERNAL_REQUEST_FLAG.remove();
+	}
+
+	//endregion 来自内部服务器的请求相关 end
+
+	//endregion 校验请求信息 end
 
 
-	//region 设置响应信息
+	//region 设置响应信息 start
 
 	/**
 	 * 设置响应状态为304
@@ -200,11 +305,10 @@ public abstract class HttpUtils {
 		response.setDateHeader(HttpHeaders.EXPIRES, 0);
 	}
 
+	//endregion 设置响应信息end
 
-	//endregion
 
-
-	//region 文件下载相关
+	//region 文件下载相关 start
 
 	/**
 	 * 判断是否为导出文件请求
@@ -228,13 +332,14 @@ public abstract class HttpUtils {
 	 * @param fileSuffix  文件后续名
 	 * @return fileName 导出的文件名
 	 */
-	public static String buildExportFileName(String fileNamePre, String fileSuffix) {
+	public static String generateExportFileName(@NonNull String fileNamePre, String fileSuffix) {
 		if (!fileNamePre.endsWith(StrPool.UNDERLINE)) {
 			fileNamePre += StrPool.UNDERLINE;
 		}
+
 		SimpleDateFormat sdf = new SimpleDateFormat(DateFormatConstants.SSS_UNSIGNED);
 		return fileNamePre + sdf.format(new Date()) + (fileSuffix.charAt(0) != CharPool.DOT ? CharPool.DOT : "") + fileSuffix;
 	}
 
-	//endregion
+	//endregion 文件下载相关 end
 }

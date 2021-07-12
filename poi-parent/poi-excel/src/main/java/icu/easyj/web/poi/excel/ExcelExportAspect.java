@@ -150,7 +150,7 @@ public class ExcelExportAspect {
 			HttpServletResponse response = HttpUtils.getResponse();
 			List dataList = (List)data;
 			Class dataType = annotation.dataType();
-			String fileName = HttpUtils.buildExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
+			String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
 
 			// 转为excel并导出
 			excelExporter.toExcelAndExport(response, dataList, dataType, fileName);

@@ -13,26 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web.constant;
+package icu.easyj.web.filter;
+
+import java.util.List;
 
 /**
- * Http相关常量
+ * 过滤器配置基类
  *
  * @author wangliang181230
  */
-public interface HttpConstants {
-
-	//region 文件下载相关常量
+public interface IFilterProperties {
 
 	/**
-	 * 执行导出的参数名
+	 * @return 启用状态
 	 */
-	String DO_EXPORT_PARAM_NAME = "doExport";
+	boolean isEnable();
 
 	/**
-	 * 执行导出的匹配参数值
+	 * @param enable 启用状态
 	 */
-	String DO_EXPORT_PARAM_VALUE = "true";
+	void setEnable(boolean enable);
 
-	//endregion
+	/**
+	 * @return 需拦截的Url地址匹配列表
+	 */
+	List<String> getUrlPatterns();
+
+	/**
+	 * @param urlPatterns 需拦截的Url地址匹配列表
+	 */
+	void setUrlPatterns(List<String> urlPatterns);
+
+	/**
+	 * @return 无需拦截的Url地址匹配列表
+	 */
+	List<String> getExclusions();
+
+	/**
+	 * @param exclusions 无需拦截的Url地址匹配列表
+	 */
+	void setExclusions(List<String> exclusions);
 }

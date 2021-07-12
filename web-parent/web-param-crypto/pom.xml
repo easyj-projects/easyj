@@ -26,12 +26,5 @@
 			<artifactId>easyj-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-		<!-- Alibaba FastJSON -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<optional>true</optional><!--可选功能-->
-		</dependency>
 	</dependencies>
 </project>
