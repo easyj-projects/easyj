@@ -46,9 +46,9 @@ public class EasyjParamCryptoAutoConfiguration {
 	 * @return 参数加密解密过滤器配置
 	 */
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(IParamCryptoFilterProperties.class)
 	@ConfigurationProperties("easyj.web.param.crypto.filter")
-	public IParamCryptoFilterProperties defaultParamCryptoFilterProperties() {
+	public DefaultParamCryptoFilterPropertiesImpl defaultParamCryptoFilterProperties() {
 		return new DefaultParamCryptoFilterPropertiesImpl();
 	}
 
@@ -56,9 +56,9 @@ public class EasyjParamCryptoAutoConfiguration {
 	 * @return 参数加密解密处理器配置
 	 */
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(IParamCryptoHandlerProperties.class)
 	@ConfigurationProperties("easyj.web.param.crypto.handler")
-	public IParamCryptoHandlerProperties defaultParamCryptoHandlerProperties() {
+	public DefaultParamCryptoHandlerPropertiesImpl defaultParamCryptoHandlerProperties() {
 		return new DefaultParamCryptoHandlerPropertiesImpl();
 	}
 
