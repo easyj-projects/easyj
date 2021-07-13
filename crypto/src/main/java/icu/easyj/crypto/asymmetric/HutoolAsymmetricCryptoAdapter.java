@@ -39,6 +39,8 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	}
 
 
+	//region Override
+
 	@Override
 	public byte[] encrypt(byte[] data, KeyType keyType) {
 		return asymmetricCrypto.encrypt(data, keyType);
@@ -49,4 +51,6 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	public byte[] decrypt(byte[] bytes, KeyType keyType) {
 		return asymmetricCrypto.decrypt(bytes, keyType);
 	}
+
+	//endregion
 }

@@ -42,6 +42,8 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	}
 
 
+	//region Override
+
 	@Override
 	public byte[] encrypt(byte[] data) {
 		return symmetricCrypto.encrypt(data);
@@ -51,7 +53,6 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	public void encrypt(InputStream data, OutputStream out, boolean isClose) throws IORuntimeException {
 		symmetricCrypto.encrypt(data, out, isClose);
 	}
-
 
 	@Override
 	public byte[] decrypt(byte[] bytes) {

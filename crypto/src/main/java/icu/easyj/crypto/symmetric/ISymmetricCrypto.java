@@ -262,6 +262,27 @@ public interface ISymmetricCrypto {
 	}
 
 	/**
+	 * 解密，使用UTF-8编码
+	 *
+	 * @param data 被解密的字符串
+	 * @return 解密后的String
+	 */
+	default String decryptBase64(String data) {
+		return decryptStr(Base64.decode(data));
+	}
+
+	/**
+	 * 解密
+	 *
+	 * @param data    被解密的字符串
+	 * @param charset 解密后的charset
+	 * @return 解密后的String
+	 */
+	default String decryptBase64(String data, Charset charset) {
+		return decryptStr(Base64.decode(data), charset);
+	}
+
+	/**
 	 * 解密Hex（16进制）或Base64表示的字符串
 	 *
 	 * @param data    被解密的String
