@@ -69,10 +69,10 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	 */
 	private void checkProperties(IParamCryptoHandlerProperties properties) {
 		if (!StringUtils.hasText(properties.getAlgorithm())) {
-			throw new ConfigurationException("出入参加密解密算法未配置，无法正常创建加密实例");
+			throw new ConfigurationException("出入参加密解密算法未配置，无法创建对称加密算法实例");
 		}
 		if (!StringUtils.hasText(properties.getKey())) {
-			throw new ConfigurationException("出入参加密解密密钥未配置，无法正常创建加密实例");
+			throw new ConfigurationException("出入参加密解密密钥未配置，无法创建对称加密算法实例");
 		}
 	}
 
