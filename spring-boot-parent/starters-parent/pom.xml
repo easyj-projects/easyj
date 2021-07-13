@@ -24,5 +24,6 @@
 
 		<!-- Web -->
 		<module>spring-boot-starter-web-cache304</module>
+		<module>spring-boot-starter-web-param-crypto</module>
 	</modules>
 </project>

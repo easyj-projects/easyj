@@ -36,6 +36,11 @@ public class BaseFilterProperties implements IFilterProperties {
 	protected volatile boolean disabled = false;
 
 	/**
+	 * 过滤器执行顺序
+	 */
+	protected Integer order;
+
+	/**
 	 * 过滤器需要过滤的请求，默认：全部都过滤
 	 */
 	protected List<String> urlPatterns = null;
@@ -66,6 +71,16 @@ public class BaseFilterProperties implements IFilterProperties {
 	@Override
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+
+	@Override
+	public Integer getOrder() {
+		return order;
+	}
+
+	@Override
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 	@Override

@@ -59,6 +59,18 @@ public interface IFilterProperties {
 	void setDisabled(boolean disabled);
 
 	/**
+	 * @return 过滤器执行顺序
+	 */
+	Integer getOrder();
+
+	/**
+	 * 设置执行顺序
+	 *
+	 * @param order 执行顺序
+	 */
+	void setOrder(int order);
+
+	/**
 	 * @return 需拦截的Url地址匹配列表
 	 */
 	List<String> getUrlPatterns();
