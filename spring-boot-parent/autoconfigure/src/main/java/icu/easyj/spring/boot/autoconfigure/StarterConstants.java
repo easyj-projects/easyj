@@ -42,7 +42,7 @@ public interface StarterConstants {
 	String WEB_POI_PREFIX = WEB_PREFIX + ".poi";
 	// Web POI Excel
 	String WEB_POI_EXCEL_PREFIX = WEB_POI_PREFIX + ".excel";
-	String WEB_POI_EXCEL_EXPORT_PREFIX = WEB_POI_PREFIX + ".excel";
+	String WEB_POI_EXCEL_EXPORT_PREFIX = WEB_POI_EXCEL_PREFIX + ".export";
 
 	//endregion
 
