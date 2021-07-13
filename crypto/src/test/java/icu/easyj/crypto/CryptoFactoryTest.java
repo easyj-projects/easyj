@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.crypto.symmetric;
+package icu.easyj.crypto;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * {@link SymmetricCryptoFactory} 测试类
+ * {@link CryptoFactory} 测试类
  *
  * @author wangliang181230
  */
-class SymmetricCryptoFactoryTest {
+class CryptoFactoryTest {
 
 	@Test
 	void testGetSymmetricCrypto() {
@@ -35,7 +36,7 @@ class SymmetricCryptoFactoryTest {
 		String iv = "1234567890123456";
 		Charset charset = StandardCharsets.UTF_8;
 
-		ISymmetricCrypto symmetricCrypto = SymmetricCryptoFactory.getSymmetricCrypto(algorithmStr, key, iv, charset);
+		ISymmetricCrypto symmetricCrypto = CryptoFactory.getSymmetricCrypto(algorithmStr, key, iv, charset);
 
 		String data = "111222333";
 		String base64 = symmetricCrypto.encryptBase64(data, charset);
