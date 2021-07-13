@@ -25,7 +25,8 @@ import java.util.List;
 public class BaseFilterProperties implements IFilterProperties {
 
 	/**
-	 * 过滤器是否启用，默认：启用
+	 * 过滤器是否启用，默认：启用<br>
+	 * volatile关键字是必须的
 	 */
 	protected volatile boolean enable = true;
 
