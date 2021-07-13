@@ -17,11 +17,18 @@ package icu.easyj.web.param.crypto.impls;
 
 import java.nio.charset.StandardCharsets;
 
+import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.web.param.crypto.IParamCryptoHandler;
 import icu.easyj.web.param.crypto.IParamCryptoHandlerProperties;
+import org.springframework.util.StringUtils;
 
+/**
+ * 默认的参数加密解密处理器实现类
+ *
+ * @author wangliang181230
+ */
 public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 
 	/**
@@ -40,6 +47,9 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	 * @param properties 处理器配置
 	 */
 	public DefaultParamCryptoHandlerImpl(IParamCryptoHandlerProperties properties) {
+		// 校验配置
+		this.checkProperties(properties);
+		// 设置配置
 		this.properties = properties;
 
 		// 如果编码为空，则默认为 UTF-8
@@ -47,9 +57,23 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 			properties.setCharset(StandardCharsets.UTF_8);
 		}
 
-		//
+		// 使用工厂类，根据配置动态创建对称加密算法实例
 		symmetricCrypto = CryptoFactory.getSymmetricCrypto(properties.getAlgorithm(), properties.getKey(),
 				properties.getIv(), properties.getCharset());
+	}
+
+	/**
+	 * 校验配置
+	 *
+	 * @param properties 配置
+	 */
+	private void checkProperties(IParamCryptoHandlerProperties properties) {
+		if (!StringUtils.hasText(properties.getAlgorithm())) {
+			throw new ConfigurationException("出入参加密解密算法未配置，无法正常创建加密实例");
+		}
+		if (!StringUtils.hasText(properties.getKey())) {
+			throw new ConfigurationException("出入参加密解密密钥未配置，无法正常创建加密实例");
+		}
 	}
 
 

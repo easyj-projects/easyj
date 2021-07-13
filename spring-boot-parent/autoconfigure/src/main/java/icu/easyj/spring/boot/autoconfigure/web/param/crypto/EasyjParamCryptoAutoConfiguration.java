@@ -39,7 +39,7 @@ import org.springframework.context.annotation.Bean;
  */
 @ConditionalOnClass({ParamCryptoFilter.class})
 @ConditionalOnWebApplication
-@ConditionalOnProperty("easyj.web.param.crypto.filter.enable")
+@ConditionalOnProperty(value = "easyj.web.param.crypto.filter.enable", matchIfMissing = true)
 public class EasyjParamCryptoAutoConfiguration {
 
 	/**

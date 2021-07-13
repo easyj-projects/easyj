@@ -95,14 +95,14 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	}
 
 	/**
-	 * 解密QueryString
+	 * 解密queryString
 	 *
 	 * @param request 请求实例
 	 * @return 返回原request或包装后的request
 	 */
 	private HttpServletRequest decryptQueryString(HttpServletRequest request) {
-		// 待解密的参数
-		String encryptedData;
+		// 待解密的queryString
+		String encryptedQueryString;
 		if (StringUtils.hasLength(super.filterProperties.getParameterName())) {
 			// 判断是否有参数未加密
 			if (request.getParameterMap().size() > 1) {
@@ -110,31 +110,31 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 				parameterNames.remove(super.filterProperties.getParameterName());
 				throw new ParamNotEncryptedException("存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames));
 			}
-			encryptedData = request.getParameter(super.filterProperties.getParameterName());
+			encryptedQueryString = request.getParameter(super.filterProperties.getParameterName());
 		} else {
-			encryptedData = request.getQueryString();
+			encryptedQueryString = request.getQueryString();
 		}
 
 		// 如果不为空，才需要解密
-		if (StringUtils.hasText(encryptedData)) {
+		if (StringUtils.hasText(encryptedQueryString)) {
 			// 解密后，正常的queryString
 			String queryString;
 
 			// 判断：是否强制要求加密 或 入参就是base64加密串，则进行解密操作
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() && cryptoHandler.isNeedDecrypt(encryptedData)) {
+			if (cryptoHandlerProperties.isNeedEncryptInputParam() && cryptoHandler.isNeedDecrypt(encryptedQueryString)) {
 				try {
 					// 将空格转换为加号
-					if (encryptedData.contains(" ")) {
-						encryptedData = encryptedData.replace(" ", "+");
+					if (encryptedQueryString.contains(" ")) {
+						encryptedQueryString = encryptedQueryString.replace(" ", "+");
 					}
 
 					// 解密
-					queryString = cryptoHandler.decrypt(encryptedData);
+					queryString = cryptoHandler.decrypt(encryptedQueryString);
 
 					// 包装Request
 					return new QueryStringHttpServletRequestWrapper(request, queryString);
 				} catch (Exception e) {
-					throw new ParamDecryptException("QueryString入参格式有误，解密失败", e);
+					throw new ParamDecryptException("queryString入参格式有误，解密失败", e);
 				}
 			}
 		}
