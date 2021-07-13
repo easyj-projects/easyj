@@ -39,14 +39,16 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。如已引用了easyj-all，则无需再引用此依赖。-->
+			<optional>true</optional>
 		</dependency>
 
 		<!-- Aspect -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<optional>true</optional><!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

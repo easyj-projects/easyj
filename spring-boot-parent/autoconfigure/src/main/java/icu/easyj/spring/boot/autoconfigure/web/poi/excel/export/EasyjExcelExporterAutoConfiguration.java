@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.web.poi.excel.DefaultExcelExporterImpl;
+import icu.easyj.web.poi.excel.ExcelExport;
 import icu.easyj.web.poi.excel.ExcelExportAspect;
 import icu.easyj.web.poi.excel.ExcelExportConfig;
 import icu.easyj.web.poi.excel.IExcelExporter;
@@ -38,7 +39,7 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL
  * @see IExcelExporter
  * @see ExcelExportAspect
  */
-@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class})
+@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class, ExcelExport.class})
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(ExcelExporterProperties.class)
 public class EasyjExcelExporterAutoConfiguration {

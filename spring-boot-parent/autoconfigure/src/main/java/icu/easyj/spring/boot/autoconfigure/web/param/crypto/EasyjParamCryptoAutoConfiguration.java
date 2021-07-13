@@ -24,6 +24,7 @@ import icu.easyj.web.param.crypto.ParamCryptoFilter;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoFilterPropertiesImpl;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoHandlerImpl;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoHandlerPropertiesImpl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -36,6 +37,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author wangliang181230
  */
+@ConditionalOnClass({ParamCryptoFilter.class})
 @ConditionalOnWebApplication
 @ConditionalOnProperty("easyj.web.param.crypto.filter.enable")
 public class EasyjParamCryptoAutoConfiguration {

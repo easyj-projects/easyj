@@ -21,10 +21,14 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- spring-boot-aop -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web-cache304</artifactId>
 		</dependency>
 	</dependencies>
 </project>

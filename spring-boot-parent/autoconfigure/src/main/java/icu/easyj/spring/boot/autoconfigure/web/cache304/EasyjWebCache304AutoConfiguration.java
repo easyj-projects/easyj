@@ -16,6 +16,7 @@
 package icu.easyj.spring.boot.autoconfigure.web.cache304;
 
 import icu.easyj.web.cache304.Cache304Aspect;
+import icu.easyj.web.cache304.annotation.Cache304;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author wangliang181230
  */
-@ConditionalOnClass(ProceedingJoinPoint.class)
+@ConditionalOnClass({ProceedingJoinPoint.class, Cache304.class})
 @ConditionalOnWebApplication
 public class EasyjWebCache304AutoConfiguration {
 

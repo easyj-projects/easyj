@@ -22,7 +22,6 @@
 			<version>${project.version}</version>
 		</dependency>
 
-
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -31,20 +30,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional><!--只参与打包生成`spring-configuration-metadata.json`文件-->
+			<!-- 只参与打包生成`spring-configuration-metadata.json`文件 -->
+			<optional>true</optional>
 		</dependency>
 
 		<!-- spring-web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<optional>true</optional><!--可选功能-->
-		</dependency>
-
-		<!-- servlet -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 
@@ -55,25 +48,34 @@
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 
-		<!-- poi-excel所需依赖：Apache POI -->
+
+		<!-- 以下为各功能必须的依赖，引用了相关依赖，才会启用相应的功能，一般通过starter间接引用。 -->
+
+		<!-- 功能1：Web cache304 -->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web-cache304</artifactId>
 			<optional>true</optional><!--可选功能-->
 		</dependency>
+
+		<!-- 功能2：Excel文件导入导出（目前包含easyj、afterturn两种实现） -->
+		<!-- easyj-poi-excel -->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-poi-excel</artifactId>
 			<optional>true</optional><!--可选功能-->
 		</dependency>
-
-
-		<!-- 其他的POI实现 -->
-
 		<!-- afterturn-easypoi -->
 		<dependency>
 			<groupId>cn.afterturn</groupId>
 			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- 功能3：参数加密解密 -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web-param-crypto</artifactId>
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 	</dependencies>

@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.excelexporterimpl.AfterturnExcelExporterImpl;
+import icu.easyj.web.poi.excel.ExcelExport;
 import icu.easyj.web.poi.excel.IExcelExporter;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -34,7 +35,7 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL
  *
  * @author wangliang181230
  */
-@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class, Excel.class})
+@ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class, ExcelExport.class, Excel.class})
 @ConditionalOnWebApplication
 @AutoConfigureBefore(EasyjExcelExporterAutoConfiguration.class)
 public class AfterturnExcelExporterAutoConfiguration {

@@ -31,73 +31,28 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- All -->
+			<!-- All（注：easyj-all中未合并以下依赖，需单独引用） -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-all</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- Captcha -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-captcha</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Config -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-config</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Core -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Crypto -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-crypto</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Data -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-data</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- DB -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-db</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- POI -->
+			<!-- POI excel -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-poi-excel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- Web -->
+			<!-- Web cache304 -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-web-cache304</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>easyj-web-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+
+			<!-- Web param crypto -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>easyj-web-param-crypto</artifactId>

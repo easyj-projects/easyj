@@ -113,12 +113,12 @@
 		</dependency>
 
 		<!-- POI -->
+		<!--以下依赖不合并到easyj-all中
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-poi-excel</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
-				<!-- 引用all以后，如果要使用 ExcelUtils 的功能，则需自行引用以下依赖。 -->
 				<exclusion>
 					<groupId>org.apache.poi</groupId>
 					<artifactId>poi</artifactId>
@@ -128,9 +128,15 @@
 					<artifactId>poi-ooxml</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 
 		<!-- Web -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-web-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!--以下依赖不合并到easyj-all中
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-web-cache304</artifactId>
@@ -138,15 +144,19 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-web-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-web-param-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		-->
 
+		<!-- Test -->
+		<!--以下依赖不合并到easyj-all中
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-test</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		-->
 
 		<!-- 其他依赖 -->
 
@@ -168,6 +178,18 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- 加密 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+		</dependency>
+
+		<!-- servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 	</dependencies>
 
