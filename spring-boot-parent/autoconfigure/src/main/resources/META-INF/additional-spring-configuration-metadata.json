@@ -82,6 +82,36 @@
 					"name": "any"
 				}
 			]
+		},
+		{
+			"name": "easyj.web.param.crypto.handler.algorithm",
+			"values": [
+				{
+					"value": "AES/CBC/PKCS7Padding"
+				},
+				{
+					"value": "AES/ECB/PKCS5Padding"
+				},
+				{
+					"value": "DES/ECB/PKCS5Padding"
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.web.param.crypto.handler.charset",
+			"providers": [
+				{
+					"name": "handle-as",
+					"parameters": {
+						"target": "java.nio.charset.Charset"
+					}
+				}
+			]
 		}
 	]
 }
