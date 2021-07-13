@@ -27,7 +27,7 @@ public class BaseFilterProperties implements IFilterProperties {
 	/**
 	 * 过滤器启用状态，默认：生效<br>
 	 */
-	protected boolean enable = true;
+	protected boolean enabled = true;
 
 	/**
 	 * 过滤器使用状态，默认：启用<br>
@@ -54,13 +54,13 @@ public class BaseFilterProperties implements IFilterProperties {
 	//region Getter、Setter
 
 	@Override
-	public boolean isEnable() {
-		return enable;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	@Override
-	public void setEnable(boolean enable) {
-		this.enable = enable;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

@@ -30,16 +30,16 @@ public interface IFilterProperties {
 	 *
 	 * @return 过滤器启用状态
 	 */
-	default boolean isEnable() {
+	default boolean isEnabled() {
 		return true;
 	}
 
 	/**
 	 * 设置过滤器启用状态
 	 *
-	 * @param enable 启用状态
+	 * @param enabled 启用状态
 	 */
-	void setEnable(boolean enable);
+	void setEnabled(boolean enabled);
 
 	/**
 	 * 过滤器使用状态<br>

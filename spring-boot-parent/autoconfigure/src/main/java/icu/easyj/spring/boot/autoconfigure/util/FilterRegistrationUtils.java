@@ -40,7 +40,7 @@ public abstract class FilterRegistrationUtils {
 	 * @return registration 过滤器注册器
 	 */
 	public static <P extends IFilterProperties> FilterRegistrationBean register(Filter filter, P properties, Integer defaultOrder) {
-		if (!properties.isEnable()) {
+		if (!properties.isEnabled()) {
 			throw new ConfigurationException("当前过滤器已禁用，无法继续注册");
 		}
 

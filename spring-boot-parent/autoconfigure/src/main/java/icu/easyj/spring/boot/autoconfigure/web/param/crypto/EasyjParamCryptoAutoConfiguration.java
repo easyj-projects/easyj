@@ -32,6 +32,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_FILTER_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_HANDLER_PREFIX;
+
 /**
  * Web参数加密解密自动装配类
  *
@@ -39,7 +42,7 @@ import org.springframework.context.annotation.Bean;
  */
 @ConditionalOnClass({ParamCryptoFilter.class})
 @ConditionalOnWebApplication
-@ConditionalOnProperty(value = "easyj.web.param.crypto.filter.enable", matchIfMissing = true)
+@ConditionalOnProperty(prefix = WEB_PARAM_CRYPTO_FILTER_PREFIX, name = "enabled", matchIfMissing = true)
 public class EasyjParamCryptoAutoConfiguration {
 
 	/**
@@ -47,7 +50,7 @@ public class EasyjParamCryptoAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(IParamCryptoFilterProperties.class)
-	@ConfigurationProperties("easyj.web.param.crypto.filter")
+	@ConfigurationProperties(WEB_PARAM_CRYPTO_FILTER_PREFIX)
 	public DefaultParamCryptoFilterPropertiesImpl defaultParamCryptoFilterProperties() {
 		return new DefaultParamCryptoFilterPropertiesImpl();
 	}
@@ -57,7 +60,7 @@ public class EasyjParamCryptoAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(IParamCryptoHandlerProperties.class)
-	@ConfigurationProperties("easyj.web.param.crypto.handler")
+	@ConfigurationProperties(WEB_PARAM_CRYPTO_HANDLER_PREFIX)
 	public DefaultParamCryptoHandlerPropertiesImpl defaultParamCryptoHandlerProperties() {
 		return new DefaultParamCryptoHandlerPropertiesImpl();
 	}
