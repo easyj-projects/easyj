@@ -25,10 +25,15 @@ import java.util.List;
 public class BaseFilterProperties implements IFilterProperties {
 
 	/**
-	 * 过滤器是否启用，默认：启用<br>
+	 * 过滤器启用状态，默认：生效<br>
+	 */
+	protected boolean enable = true;
+
+	/**
+	 * 过滤器使用状态，默认：启用<br>
 	 * volatile关键字是必须的
 	 */
-	protected volatile boolean enable = true;
+	protected volatile boolean disabled = false;
 
 	/**
 	 * 过滤器需要过滤的请求，默认：全部都过滤
@@ -51,6 +56,16 @@ public class BaseFilterProperties implements IFilterProperties {
 	@Override
 	public void setEnable(boolean enable) {
 		this.enable = enable;
+	}
+
+	@Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	@Override

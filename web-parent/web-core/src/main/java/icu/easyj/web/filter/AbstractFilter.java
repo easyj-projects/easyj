@@ -162,8 +162,8 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 * @return isNeedDoFilter true=需要，false=不需要
 	 */
 	protected boolean isNeedDoFilter(HttpServletRequest request) {
-		// 过滤器未启用，不执行当前过滤器
-		if (!this.filterProperties.isEnable()) {
+		// 过滤器已禁用，不执行当前过滤器
+		if (this.filterProperties.isDisabled()) {
 			return false;
 		}
 
