@@ -47,7 +47,7 @@ public interface StarterConstants {
 	// Web Param Crypto
 	String WEB_PARAM_CRYPTO_PREFIX = WEB_PREFIX + ".param.crypto";
 	String WEB_PARAM_CRYPTO_FILTER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".filter";
-	String WEB_PARAM_CRYPTO_HANDLER_PREFIX = WEB_PREFIX + ".handler";
+	String WEB_PARAM_CRYPTO_HANDLER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".handler";
 
 	//endregion
 
