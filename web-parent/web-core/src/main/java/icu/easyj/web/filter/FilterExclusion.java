@@ -103,6 +103,11 @@ public class FilterExclusion {
 		return convert(CollectionUtil.toList(configArr));
 	}
 
+	// 重载方法
+	public static Map<String, List<String>> convert(String configStr) {
+		return convert(configStr.split(StrPool.COMMA));
+	}
+
 	/**
 	 * 将一个配置项添加到过滤器排除列表过滤器中
 	 *
@@ -110,7 +115,7 @@ public class FilterExclusion {
 	 * @param method  请求方法
 	 * @param pattern 请求地址匹配串
 	 */
-	public static void addPatternToListMap(Map<String, List<String>> listMap, String method, String pattern) {
+	private static void addPatternToListMap(Map<String, List<String>> listMap, String method, String pattern) {
 		if (!StringUtils.hasText(pattern)) {
 			return;
 		}

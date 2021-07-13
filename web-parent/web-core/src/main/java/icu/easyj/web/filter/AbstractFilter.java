@@ -15,6 +15,7 @@
  */
 package icu.easyj.web.filter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,14 +24,17 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.text.StrPool;
 import icu.easyj.web.util.HttpUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
 
-import static icu.easyj.web.constant.FilterConstants.DEFAULT_EXCLUSIONS;
-import static icu.easyj.web.constant.FilterConstants.EXCLUSIONS_PARAMETER_NAME;
+import static icu.easyj.web.constant.FilterConstants.GLOBAL_EXCLUSIONS;
 
 /**
  * Filter类的基类
@@ -42,14 +46,31 @@ import static icu.easyj.web.constant.FilterConstants.EXCLUSIONS_PARAMETER_NAME;
  *
  * @author wangliang181230
  */
-public abstract class AbstractFilter implements Filter {
+public abstract class AbstractFilter<P extends IFilterProperties> implements Filter {
+
+	/**
+	 * 全局过滤器需排除列表
+	 */
+	private static final List<String> GLOBAL_EXCLUSIONS_LIST =
+			CollectionUtil.toList(GLOBAL_EXCLUSIONS.split(StrPool.COMMA));
+
 
 	//region Fields
 
 	/**
-	 * 过滤器名称
+	 * 过滤器属性
+	 */
+	protected final P filterProperties;
+
+	/**
+	 * 过滤器配置
 	 */
 	protected FilterConfig filterConfig;
+
+	/**
+	 * 过滤器名称
+	 */
+	protected String filterName;
 
 	/**
 	 * 站点二级目录
@@ -59,12 +80,38 @@ public abstract class AbstractFilter implements Filter {
 	/**
 	 * 需排除的请求地址
 	 */
-	protected Map<String, List<String>> exclusions;
+	protected final Map<String, List<String>> exclusions;
 
 	/**
 	 * 匹配结果缓存
 	 */
 	protected final Map<String, Boolean> needDoFilterCaches = new ConcurrentHashMap<>();
+
+	//endregion
+
+
+	//region Constructor
+
+	/**
+	 * 构造函数
+	 *
+	 * @param filterProperties 过滤器配置
+	 */
+	public AbstractFilter(@NonNull P filterProperties) {
+		Assert.notNull(filterProperties, "filterProperties must be not null");
+
+		// 设置过滤器属性
+		this.filterProperties = filterProperties;
+
+		// 初始化需要排除的请求地址
+		List<String> exclusionsList = this.filterProperties.getExclusions();
+		if (exclusionsList == null) {
+			exclusionsList = new ArrayList<>(GLOBAL_EXCLUSIONS_LIST);
+		} else {
+			exclusionsList.addAll(GLOBAL_EXCLUSIONS_LIST);
+		}
+		this.exclusions = FilterExclusion.convert(exclusionsList);
+	}
 
 	//endregion
 
@@ -85,14 +132,12 @@ public abstract class AbstractFilter implements Filter {
 		// 初始化二级目录
 		this.contextPath = HttpUtils.getContextPath(filterConfig.getServletContext());
 
-		// 初始化需要排除的请求地址
-		String exclusionsStr = filterConfig.getInitParameter(EXCLUSIONS_PARAMETER_NAME);
-		if (StringUtils.hasText(exclusionsStr)) {
-			exclusionsStr = exclusionsStr.trim() + "," + DEFAULT_EXCLUSIONS;
-		} else {
-			exclusionsStr = DEFAULT_EXCLUSIONS;
+		// 初始化过滤器名称
+		String filterName = filterConfig.getFilterName();
+		if (!StringUtils.hasText(filterName)) {
+			filterName = this.getClass().getSimpleName();
 		}
-		this.exclusions = FilterExclusion.convert(exclusionsStr.split(","));
+		this.filterName = filterName;
 	}
 
 	@Override
@@ -101,7 +146,6 @@ public abstract class AbstractFilter implements Filter {
 		this.contextPath = null;
 		if (this.exclusions != null) {
 			this.exclusions.clear();
-			this.exclusions = null;
 		}
 		this.needDoFilterCaches.clear();
 	}
@@ -174,11 +218,10 @@ public abstract class AbstractFilter implements Filter {
 	//region Getter
 
 	/**
-	 * @return 过滤器名称
+	 * @return 过滤器属性
 	 */
-	@Nullable
-	public String getFilterName() {
-		return filterConfig != null ? filterConfig.getFilterName() : null;
+	public P getFilterProperties() {
+		return filterProperties;
 	}
 
 	/**
@@ -187,6 +230,14 @@ public abstract class AbstractFilter implements Filter {
 	@Nullable
 	public FilterConfig getFilterConfig() {
 		return filterConfig;
+	}
+
+	/**
+	 * @return 过滤器名称
+	 */
+	@Nullable
+	public String getFilterName() {
+		return filterName;
 	}
 
 	//endregion

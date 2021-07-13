@@ -28,9 +28,9 @@ public interface FilterConstants {
 	String EXCLUSIONS_PARAMETER_NAME = "exclusions";
 
 	/**
-	 * 各过滤器默认需要排除的请求地址
+	 * 全局过滤器需要排除的请求地址
 	 */
-	String DEFAULT_EXCLUSIONS = "GET:/actuator*" // 健康诊断相关的请求，不过滤
+	String GLOBAL_EXCLUSIONS = "GET:/actuator*" // 健康诊断相关的请求，不过滤
 			+ ",GET:/swagger*,GET:/v2/api-docs,GET:/csrf" // swagger相关的请求，不过滤
 			+ ",GET:/" // 首页，不过滤
 			+ ",*:/error"; // error页，不过滤

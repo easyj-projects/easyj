@@ -27,7 +27,7 @@ public class BaseFilterProperties implements IFilterProperties {
 	/**
 	 * 过滤器是否启用，默认：启用
 	 */
-	protected boolean enable = true;
+	protected volatile boolean enable = true;
 
 	/**
 	 * 过滤器需要过滤的请求，默认：全部都过滤
