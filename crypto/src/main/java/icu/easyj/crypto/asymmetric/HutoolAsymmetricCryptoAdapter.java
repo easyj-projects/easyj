@@ -25,6 +25,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  */
 public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
+	private static final long serialVersionUID = 1L;
 
 	private final AbstractAsymmetricCrypto asymmetricCrypto;
 

@@ -16,6 +16,7 @@
 package icu.easyj.crypto.asymmetric;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import cn.hutool.core.codec.BCD;
@@ -34,7 +35,7 @@ import cn.hutool.crypto.asymmetric.KeyType;
  *
  * @author wangliang181230
  */
-public interface IAsymmetricCrypto {
+public interface IAsymmetricCrypto extends Serializable {
 
 	//region Encrypt
 

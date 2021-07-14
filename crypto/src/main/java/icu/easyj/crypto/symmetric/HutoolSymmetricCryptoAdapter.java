@@ -28,6 +28,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  */
 public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
+	private static final long serialVersionUID = 1L;
 
 	private final SymmetricCrypto symmetricCrypto;
 

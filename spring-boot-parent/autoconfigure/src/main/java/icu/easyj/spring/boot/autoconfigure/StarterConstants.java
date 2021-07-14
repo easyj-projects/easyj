@@ -45,7 +45,7 @@ public interface StarterConstants {
 	String WEB_POI_EXCEL_EXPORT_PREFIX = WEB_POI_EXCEL_PREFIX + ".export";
 
 	// Web Param Crypto
-	String WEB_PARAM_CRYPTO_PREFIX = WEB_PREFIX + ".param.crypto";
+	String WEB_PARAM_CRYPTO_PREFIX = WEB_PREFIX + ".param-crypto";
 	String WEB_PARAM_CRYPTO_FILTER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".filter";
 	String WEB_PARAM_CRYPTO_HANDLER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".handler";
 

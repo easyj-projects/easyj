@@ -17,6 +17,7 @@ package icu.easyj.crypto.symmetric;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import cn.hutool.core.codec.Base64;
@@ -32,7 +33,7 @@ import cn.hutool.crypto.SecureUtil;
  *
  * @author wangliang181230
  */
-public interface ISymmetricCrypto {
+public interface ISymmetricCrypto extends Serializable {
 
 	//region Encrypt
 

@@ -5,6 +5,14 @@
 			"description": "EasyJ定义的全局配置组."
 		},
 		{
+			"name": "easyj.web.param-crypto.filter",
+			"description": "EasyJ参数加密解密过滤器配置组."
+		},
+		{
+			"name": "easyj.web.param-crypto.handler",
+			"description": "EasyJ参数加密解密处理器配置组."
+		},
+		{
 			"name": "easyj.web.poi.excel.export",
 			"description": "Excel文件导出功能配置组."
 		}
@@ -84,7 +92,7 @@
 			]
 		},
 		{
-			"name": "easyj.web.param.crypto.handler.algorithm",
+			"name": "easyj.web.param-crypto.handler.algorithm",
 			"values": [
 				{
 					"value": "AES/CBC/PKCS7Padding"
@@ -103,7 +111,7 @@
 			]
 		},
 		{
-			"name": "easyj.web.param.crypto.handler.charset",
+			"name": "easyj.web.param-crypto.handler.charset",
 			"providers": [
 				{
 					"name": "handle-as",
