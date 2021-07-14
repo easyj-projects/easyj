@@ -24,6 +24,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import icu.easyj.core.util.Base64Utils;
 import icu.easyj.web.constant.FilterOrderConstants;
 import icu.easyj.web.filter.AbstractFilter;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
@@ -129,6 +130,11 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		if (StringUtils.hasLength(encryptedQueryString)) {
 			// 解密后，正常的queryString
 			String queryString;
+
+			// 处理特殊字符
+			if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
+				encryptedQueryString = Base64Utils.normalize(encryptedQueryString);
+			}
 
 			// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
 			if (cryptoHandlerProperties.isNeedEncryptInputParam()
