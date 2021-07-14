@@ -102,6 +102,15 @@
 				},
 				{
 					"value": "DES/ECB/PKCS5Padding"
+				},
+				{
+					"value": "DESede/CBC/PKCS5Padding"
+				},
+				{
+					"value": "DESede/ECB/PKCS5Padding"
+				},
+				{
+					"value": "SM4/ECB/PKCS5Padding"
 				}
 			],
 			"providers": [

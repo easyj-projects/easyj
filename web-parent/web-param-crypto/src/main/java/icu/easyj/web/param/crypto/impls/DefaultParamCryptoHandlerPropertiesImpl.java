@@ -38,7 +38,7 @@ public class DefaultParamCryptoHandlerPropertiesImpl implements IParamCryptoHand
 	private String key;
 
 	/**
-	 * 加盐
+	 * 偏移向量
 	 */
 	private String iv;
 

@@ -47,7 +47,7 @@ public abstract class CryptoFactory {
 	 *
 	 * @param algorithm 算法字符串，格式：{Algorithm}/{Mode}/{Padding}
 	 * @param key       密钥
-	 * @param iv        加盐
+	 * @param iv        偏移向量
 	 * @param charset   编码
 	 * @return symmetricCrypto 对称加密算法
 	 */
@@ -70,7 +70,7 @@ public abstract class CryptoFactory {
 	 *
 	 * @param algorithm 算法字符串，格式：{Algorithm}/{Mode}/{Padding}
 	 * @param key       密钥
-	 * @param iv        加盐
+	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
 	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv) {
@@ -82,7 +82,7 @@ public abstract class CryptoFactory {
 	 *
 	 * @param algorithm 算法字符串，格式：{Algorithm}/{Mode}/{Padding}
 	 * @param key       密钥
-	 * @param iv        加盐
+	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
 	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {

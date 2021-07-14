@@ -54,14 +54,14 @@ public interface IParamCryptoHandlerProperties {
 	void setKey(String key);
 
 	/**
-	 * @return iv 加盐
+	 * @return iv 偏移向量
 	 */
 	String getIv();
 
 	/**
-	 * 设置加盐串
+	 * 设置偏移向量
 	 *
-	 * @param iv 加盐串
+	 * @param iv 偏移向量
 	 */
 	void setIv(String iv);
 
