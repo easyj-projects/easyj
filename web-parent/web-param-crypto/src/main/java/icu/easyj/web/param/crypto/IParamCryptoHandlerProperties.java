@@ -80,14 +80,14 @@ public interface IParamCryptoHandlerProperties {
 	void setCharset(Charset charset);
 
 	/**
-	 * @return 入参是否需要解密
+	 * @return 是否强制要求入参解密
 	 */
 	boolean isNeedEncryptInputParam();
 
 	/**
-	 * 设置入参是否需要解密
+	 * 设置是否强制要求入参解密
 	 *
-	 * @param needEncryptInputParam 入参是否需要解密
+	 * @param needEncryptInputParam 是否强制要求入参解密
 	 */
 	void setNeedEncryptInputParam(boolean needEncryptInputParam);
 

@@ -30,6 +30,8 @@ import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamNotEncryptedException;
 import icu.easyj.web.util.HttpUtils;
 import icu.easyj.web.wrapper.QueryStringHttpServletRequestWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -41,6 +43,7 @@ import org.springframework.util.StringUtils;
  */
 @Order(FilterOrderConstants.PARAM_ENCRYPT)
 public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperties> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ParamCryptoFilter.class);
 
 	/**
 	 * 参数加密处理器配置
@@ -74,7 +77,6 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		// 转换类型
-		@SuppressWarnings("all")
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 
 		// 跳过内部请求 或 判断是否需要执行当前过滤器
@@ -108,34 +110,47 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 			if (request.getParameterMap().size() > 1) {
 				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
 				parameterNames.remove(super.filterProperties.getParameterName());
-				throw new ParamNotEncryptedException("存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames));
+
+				String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
+				if (LOGGER.isInfoEnabled()) {
+					LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
+				}
+				throw new ParamNotEncryptedException(errorMsg);
 			}
+
+			// 取指定参数名的参数值作为加密过的参数
 			encryptedQueryString = request.getParameter(super.filterProperties.getParameterName());
 		} else {
+			// 取整个queryString作为加密过的参数
 			encryptedQueryString = request.getQueryString();
 		}
 
 		// 如果不为空，才需要解密
-		if (StringUtils.hasText(encryptedQueryString)) {
+		if (StringUtils.hasLength(encryptedQueryString)) {
 			// 解密后，正常的queryString
 			String queryString;
 
-			// 判断：是否强制要求加密 或 入参就是base64加密串，则进行解密操作
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() && cryptoHandler.isNeedDecrypt(encryptedQueryString)) {
+			// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
+			if (cryptoHandlerProperties.isNeedEncryptInputParam()
+					|| cryptoHandler.isNeedDecrypt(encryptedQueryString = encryptedQueryString.replace(" ", "+"))) {
 				try {
-					// 将空格转换为加号
-					if (encryptedQueryString.contains(" ")) {
-						encryptedQueryString = encryptedQueryString.replace(" ", "+");
-					}
-
 					// 解密
 					queryString = cryptoHandler.decrypt(encryptedQueryString);
-
-					// 包装Request
-					return new QueryStringHttpServletRequestWrapper(request, queryString);
 				} catch (Exception e) {
-					throw new ParamDecryptException("queryString入参格式有误，解密失败", e);
+					if (LOGGER.isInfoEnabled()) {
+						LOGGER.info("入参未加密或格式有误，解密失败！\r\n queryString: {}\r\nerrorMessage: {}", request.getQueryString(), e.getMessage());
+					}
+
+					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
+					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
+						throw new ParamDecryptException("入参未加密或格式有误，解密失败", e);
+					} else {
+						return request;
+					}
 				}
+
+				// 包装Request
+				return new QueryStringHttpServletRequestWrapper(request, queryString);
 			}
 		}
 

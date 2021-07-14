@@ -50,12 +50,12 @@ public class DefaultParamCryptoHandlerPropertiesImpl implements IParamCryptoHand
 	/**
 	 * 入参是否需要加密解密
 	 */
-	private boolean needEncryptInputParam = true;
+	private volatile boolean needEncryptInputParam = true;
 
 	/**
 	 * 出参是否需要加密
 	 */
-	private boolean needEncryptOutputParam = true;
+	private volatile boolean needEncryptOutputParam = true;
 
 
 	//region Getter、Setter、Override
