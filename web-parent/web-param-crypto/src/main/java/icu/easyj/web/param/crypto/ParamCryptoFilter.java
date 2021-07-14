@@ -106,8 +106,8 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		// 待解密的queryString
 		String encryptedQueryString;
 		if (StringUtils.hasLength(super.filterProperties.getParameterName())) {
-			// 判断是否有参数未加密
-			if (request.getParameterMap().size() > 1) {
+			// 判断是否有参数未加密（如果强制要求入参加密）
+			if (cryptoHandlerProperties.isNeedEncryptInputParam() && request.getParameterMap().size() > 1) {
 				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
 				parameterNames.remove(super.filterProperties.getParameterName());
 
@@ -136,7 +136,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 				try {
 					// 解密
 					queryString = cryptoHandler.decrypt(encryptedQueryString);
-				} catch (Exception e) {
+				} catch (RuntimeException e) {
 					if (LOGGER.isInfoEnabled()) {
 						LOGGER.info("入参未加密或格式有误，解密失败！\r\n queryString: {}\r\nerrorMessage: {}", request.getQueryString(), e.getMessage());
 					}

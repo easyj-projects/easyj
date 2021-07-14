@@ -15,6 +15,9 @@
  */
 package icu.easyj.web.param.crypto;
 
+import icu.easyj.web.param.crypto.exception.ParamDecryptException;
+import icu.easyj.web.param.crypto.exception.ParamEncryptException;
+
 /**
  * 参数加密解密工具接口
  *
@@ -36,18 +39,18 @@ public interface IParamCryptoHandler {
 	/**
 	 * 加密
 	 *
-	 * @param param 待加密的内容
-	 * @return 加密后的内容
-	 * @throws Exception 加密异常
+	 * @param param 待加密的参数
+	 * @return 加密后的参数
+	 * @throws ParamEncryptException 加密异常
 	 */
-	String encrypt(String param) throws Exception;
+	String encrypt(String param) throws ParamEncryptException;
 
 	/**
 	 * 解密
 	 *
 	 * @param encryptedParam 已加密的内容
 	 * @return content 未加密的内容
-	 * @throws Exception 解密异常
+	 * @throws ParamDecryptException 解密异常
 	 */
-	String decrypt(String encryptedParam) throws Exception;
+	String decrypt(String encryptedParam) throws ParamDecryptException;
 }

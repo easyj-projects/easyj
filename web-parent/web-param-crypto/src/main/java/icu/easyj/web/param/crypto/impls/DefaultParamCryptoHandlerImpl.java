@@ -18,10 +18,13 @@ package icu.easyj.web.param.crypto.impls;
 import java.nio.charset.StandardCharsets;
 
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.PatternUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.web.param.crypto.IParamCryptoHandler;
 import icu.easyj.web.param.crypto.IParamCryptoHandlerProperties;
+import icu.easyj.web.param.crypto.exception.ParamDecryptException;
+import icu.easyj.web.param.crypto.exception.ParamEncryptException;
 import org.springframework.util.StringUtils;
 
 /**
@@ -80,12 +83,18 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	//region Override
 
 	@Override
-	public String encrypt(String param) throws Exception {
+	public boolean isNeedDecrypt(String encryptedParam) {
+		// 当前处理器加密后是base64，所以为base64时，就说明为加密过的参数，需要解密
+		return PatternUtils.isBase64Str(encryptedParam);
+	}
+
+	@Override
+	public String encrypt(String param) throws ParamEncryptException {
 		return symmetricCrypto.encryptBase64(param, properties.getCharset());
 	}
 
 	@Override
-	public String decrypt(String encryptedParam) throws Exception {
+	public String decrypt(String encryptedParam) throws ParamDecryptException {
 		return symmetricCrypto.decryptBase64(encryptedParam, properties.getCharset());
 	}
 
