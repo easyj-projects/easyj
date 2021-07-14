@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -100,6 +101,9 @@ public abstract class StringUtils {
 		}
 		if (obj instanceof CharSequence) {
 			return "\"" + obj + "\"";
+		}
+		if (obj instanceof Charset) {
+			return ((Charset)obj).name();
 		}
 		if (obj instanceof Number || obj instanceof Boolean) {
 			return obj.toString();
