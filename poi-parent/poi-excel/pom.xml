@@ -22,7 +22,8 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- excel -->
+		<!-- POI -->
+		<!-- apache-poi -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -30,6 +31,12 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+		<!-- afterturn-easypoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选功能-->
 		</dependency>
 
 
