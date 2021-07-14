@@ -18,7 +18,6 @@ package icu.easyj.core.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -96,17 +95,11 @@ public abstract class StringUtils {
 
 		//region Convert simple types to String directly
 
-		if (obj instanceof Character) {
-			return "'" + obj + "'";
-		}
 		if (obj instanceof CharSequence) {
 			return "\"" + obj + "\"";
 		}
-		if (obj instanceof Charset) {
-			return ((Charset)obj).name();
-		}
-		if (obj instanceof Number || obj instanceof Boolean) {
-			return obj.toString();
+		if (obj instanceof Character) {
+			return "'" + obj + "'";
 		}
 		if (obj instanceof Date) {
 			return DateUtils.toString((Date)obj);
@@ -129,7 +122,7 @@ public abstract class StringUtils {
 
 		//endregion
 
-		//region Convert the Collection, Array and Map
+		//region Convert the Collection and Map
 
 		if (obj instanceof Collection) {
 			return CollectionUtils.toString((Collection<?>)obj);
@@ -142,6 +135,11 @@ public abstract class StringUtils {
 		}
 
 		//endregion
+
+		//the jdk classes
+		if (obj.getClass().getClassLoader() == null) {
+			return obj.toString();
+		}
 
 		// 未知类型的对象转换为字符串
 		return unknownTypeObjectToString(obj);
@@ -156,7 +154,22 @@ public abstract class StringUtils {
 	private static String unknownTypeObjectToString(@NonNull Object obj) {
 		return CycleDependencyHandler.wrap(obj, o -> {
 			StringBuilder sb = new StringBuilder(32);
-			sb.append(obj.getClass().getSimpleName()).append("(");
+
+			// handle the anonymous class
+			String classSimpleName;
+			if (obj.getClass().isAnonymousClass()) {
+				if (!obj.getClass().getSuperclass().equals(Object.class)) {
+					classSimpleName = obj.getClass().getSuperclass().getSimpleName();
+				} else {
+					classSimpleName = obj.getClass().getInterfaces()[0].getSimpleName();
+				}
+				// Connect a '$', different from ordinary class
+				classSimpleName += "$";
+			} else {
+				classSimpleName = obj.getClass().getSimpleName();
+			}
+
+			sb.append(classSimpleName).append("(");
 			final int initialLength = sb.length();
 
 			// Gets all fields, excluding static or synthetic fields

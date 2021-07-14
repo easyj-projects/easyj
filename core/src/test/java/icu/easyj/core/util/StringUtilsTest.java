@@ -56,6 +56,8 @@ class StringUtilsTest {
 		assertEquals("'2'", StringUtils.toString('2'));
 		//case: Charset
 		assertEquals("UTF-8", StringUtils.toString(StandardCharsets.UTF_8));
+		//case: Thread
+		assertEquals("Thread[main,5,main]", StringUtils.toString(Thread.currentThread()));
 
 		//case: Date
 		Date date = new Date(2021 - 1900, 6 - 1, 15);
@@ -145,8 +147,30 @@ class StringUtilsTest {
 		a.setObj(b);
 		assertEquals("TestClass(obj=TestClass(obj=TestClass(obj=(ref TestClass), s=null), s=null), s=null)", StringUtils.toString(a));
 
-		//过程中没有触发过对象的toString方法
+		//case: anonymous class from an interface
+		Object anonymousObj = new TestInterface() {
+			private String a = "aaa";
+
+			@Override
+			public void test() {
+			}
+		};
+		assertEquals("TestInterface$(a=\"aaa\")", StringUtils.toString(anonymousObj));
+
+		//case: anonymous class from an abstract class
+		anonymousObj = new TestAbstractClass() {
+			private String a = "aaa";
+
+			@Override
+			public void test() {
+			}
+		};
+		assertEquals("TestAbstractClass$(a=\"aaa\")", StringUtils.toString(anonymousObj));
+
+		//final confirm: do not triggered the `toString` and `hashCode` methods
+		assertFalse(TestClass.hashCodeTriggered);
 		assertFalse(TestClass.toStringTriggered);
+		assertFalse(CycleDependency.hashCodeTriggered);
 		assertFalse(CycleDependency.toStringTriggered);
 	}
 
@@ -163,13 +187,33 @@ class StringUtilsTest {
 		boolean test() default false;
 	}
 
+	interface TestInterface {
+		void test();
+	}
+
+	abstract class TestAbstractClass {
+		abstract void test();
+	}
+
 	@TestAnnotation(test = true)
 	static class TestClass {
+		public static boolean hashCodeTriggered = false;
 		public static boolean toStringTriggered = false;
 
 		private TestClass obj;
 		private String s;
 
+		@Override
+		public int hashCode() {
+			hashCodeTriggered = true;
+			return super.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			toStringTriggered = true;
+			return StringUtils.toString(this);
+		}
 
 		public TestClass getObj() {
 			return obj;
@@ -178,18 +222,13 @@ class StringUtilsTest {
 		public void setObj(TestClass obj) {
 			this.obj = obj;
 		}
-
-		@Override
-		public String toString() {
-			toStringTriggered = true;
-			return StringUtils.toString(this);
-		}
 	}
 
 	static class CycleDependency {
+		public static boolean hashCodeTriggered = false;
 		public static boolean toStringTriggered = false;
 
-		private final String s;
+		private String s;
 		private CycleDependency obj;
 
 		private CycleDependency(String s) {
@@ -202,6 +241,12 @@ class StringUtilsTest {
 
 		public void setObj(CycleDependency obj) {
 			this.obj = obj;
+		}
+
+		@Override
+		public int hashCode() {
+			hashCodeTriggered = true;
+			return super.hashCode();
 		}
 
 		@Override
