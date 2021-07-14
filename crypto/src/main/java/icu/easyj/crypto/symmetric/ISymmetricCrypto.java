@@ -263,17 +263,7 @@ public interface ISymmetricCrypto extends Serializable {
 	}
 
 	/**
-	 * 解密，使用UTF-8编码
-	 *
-	 * @param data 被解密的字符串
-	 * @return 解密后的String
-	 */
-	default String decryptBase64(String data) {
-		return decryptStr(Base64.decode(data));
-	}
-
-	/**
-	 * 解密
+	 * 解密Base64表示的字符串
 	 *
 	 * @param data    被解密的字符串
 	 * @param charset 解密后的charset
@@ -281,6 +271,37 @@ public interface ISymmetricCrypto extends Serializable {
 	 */
 	default String decryptBase64(String data, Charset charset) {
 		return decryptStr(Base64.decode(data), charset);
+	}
+
+	/**
+	 * 解密Base64表示的字符串，使用UTF-8编码
+	 *
+	 * @param data 被解密的字符串
+	 * @return 解密后的String
+	 */
+	default String decryptBase64(String data) {
+		return decryptBase64(data, CharsetUtil.CHARSET_UTF_8);
+	}
+
+	/**
+	 * 解密Hex（16进制）
+	 *
+	 * @param data    被解密的字符串
+	 * @param charset 解密后的charset
+	 * @return 解密后的String
+	 */
+	default String decryptHex(String data, Charset charset) {
+		return decryptStr(HexUtil.decodeHex(data), charset);
+	}
+
+	/**
+	 * 解密Hex（16进制），使用UTF-8编码
+	 *
+	 * @param data 被解密的字符串
+	 * @return 解密后的String
+	 */
+	default String decryptHex(String data) {
+		return decryptHex(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
 	/**
