@@ -34,7 +34,7 @@ class CycleDependencyHandlerTest {
 
 		Assertions.assertDoesNotThrow(() -> {
 			long startNanoTime = System.nanoTime();
-			int count = 10 * 10000;
+			int count = 5 * 10000;
 			int i = count;
 			Object obj;
 			while (i-- > 0) {
