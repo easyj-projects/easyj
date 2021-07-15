@@ -1,0 +1,32 @@
+language: java
+
+sudo: false # faster builds
+
+install: true
+
+jdk:
+  - openjdk8
+  - openjdk11
+
+notifications:
+  email: false
+
+cache:
+  directories:
+    - '$HOME/.m2'
+
+before_script:
+  - if [ "$TRAVIS_JDK_VERSION" == "openjdk8" ]; then
+      export IMAGE_NAME="openjdk:8u212-jre-alpine";
+    fi
+  - if [ "$TRAVIS_JDK_VERSION" == "openjdk11" ]; then
+      export IMAGE_NAME="openjdk:11-jre-stretch";
+    fi
+
+script:
+  - export TZ=Asia/Shanghai
+  - mvn clean install -B -V -Pcheckstyle -DskipTests=true -Dmaven.javadoc.skip=true
+  - mvn cobertura:cobertura -Dcobertura.report.format=xml -Dmaven.javadoc.skip.true
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
