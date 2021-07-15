@@ -1,5 +1,5 @@
 codecov:
-  token: 46c1813f-5877-4714-86c6-1411a43d025f
+  token: ${{ secrets.CODECOV_TOKEN }}
   require_ci_to_pass: yes
 coverage:
   status:
@@ -10,7 +10,7 @@ coverage:
         if_not_found: success
     changes: no
   precision: 2
-  range: "50...100"
+  range: "40...100"
 ignore:
   - ".gitee/.*"
   - ".github/.*"
