@@ -35,6 +35,8 @@ import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
 import icu.easyj.web.util.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
@@ -52,6 +54,8 @@ import org.springframework.util.StringUtils;
  * @author wangliang181230
  */
 public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessageConverter {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(FastjsonParamCryptoHttpMessageConverter.class);
 
 	/**
 	 * 参数加密解密过滤器（需要使用到它的校验功能）
@@ -109,10 +113,15 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 				try {
 					// 解密，还原入参JSON串
 					bodyJsonStr = this.paramCryptoFilter.getCryptoHandler().decrypt(body);
-				} catch (ParamDecryptException e) {
-					throw e;
 				} catch (RuntimeException e) {
-					throw new ParamDecryptException("Body入参格式有误或未加密，无法进行解密操作", e);
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("Body入参未加密或格式有误，解密失败！\r\n==>\r\nBody: {}\r\nErrorMessage: {}\r\n<==", body, e.getMessage());
+					}
+					if (e instanceof ParamDecryptException) {
+						throw e;
+					} else {
+						throw new ParamDecryptException("Body入参未加密或格式有误，解密失败", e);
+					}
 				}
 			} else {
 				// 无需解密
@@ -234,7 +243,9 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 			//endregion
 
 
-			int len = JSON.writeJSONStringWithFastJsonConfig(outnew, //
+			//region @Override 响应内容及响应长度，按实际情况设置
+
+			int len = !isJsonp && isEncrypt ? value.toString().length() : JSON.writeJSONStringWithFastJsonConfig(outnew, //
 					fastJsonConfig.getCharset(), //
 					value, //
 					fastJsonConfig.getSerializeConfig(), //
@@ -246,13 +257,13 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 			if (isJsonp) {
 				headers.setContentType(APPLICATION_JAVASCRIPT);
-			}
-			//region @Override 响应内容类型，按实际情况设置
-			else if (isEncrypt) {
-				// 加密过后，不再是JSON数据，
-				headers.setContentType(MediaType.TEXT_PLAIN);
 			} else {
-				headers.setContentType(MediaType.APPLICATION_JSON);
+				if (isEncrypt) {
+					headers.setContentType(MediaType.TEXT_PLAIN);
+					outnew.write(value.toString().getBytes(fastJsonConfig.getCharset()));
+				} else {
+					headers.setContentType(MediaType.APPLICATION_JSON);
+				}
 			}
 			//endregion
 

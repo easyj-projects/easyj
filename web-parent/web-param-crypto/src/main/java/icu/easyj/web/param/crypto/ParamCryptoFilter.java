@@ -139,13 +139,13 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					// 解密
 					queryString = cryptoHandler.decrypt(encryptedQueryString);
 				} catch (RuntimeException e) {
-					if (LOGGER.isInfoEnabled()) {
-						LOGGER.info("入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
 					}
 
 					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
 					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
-						throw new ParamDecryptException("入参未加密或格式有误，解密失败", e);
+						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", e);
 					} else {
 						return request;
 					}
