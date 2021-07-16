@@ -31,5 +31,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
+
+		<!-- FastjsonParamCryptoHttpMessageConverter所需依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
 	</dependencies>
 </project>

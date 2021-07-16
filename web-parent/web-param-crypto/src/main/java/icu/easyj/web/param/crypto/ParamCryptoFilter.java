@@ -34,6 +34,7 @@ import icu.easyj.web.wrapper.QueryStringHttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -63,9 +64,9 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	 * @param cryptoHandlerProperties 参数加密处理器配置
 	 * @param cryptoHandler           参数加密处理器
 	 */
-	public ParamCryptoFilter(IParamCryptoFilterProperties filterProperties,
-							 IParamCryptoHandlerProperties cryptoHandlerProperties,
-							 IParamCryptoHandler cryptoHandler) {
+	public ParamCryptoFilter(@NonNull IParamCryptoFilterProperties filterProperties,
+							 @NonNull IParamCryptoHandlerProperties cryptoHandlerProperties,
+							 @NonNull IParamCryptoHandler cryptoHandler) {
 		super(filterProperties);
 
 		Assert.notNull(cryptoHandler, "'cryptoHandler' must be not null");
@@ -184,4 +185,17 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		// TODO: 待开发
 		return request;
 	}
+
+
+	//region Getter
+
+	public IParamCryptoHandlerProperties getCryptoHandlerProperties() {
+		return cryptoHandlerProperties;
+	}
+
+	public IParamCryptoHandler getCryptoHandler() {
+		return cryptoHandler;
+	}
+
+	//endregion
 }

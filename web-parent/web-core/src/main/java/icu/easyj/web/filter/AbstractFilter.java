@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.web.util.HttpConfigs;
 import icu.easyj.web.util.HttpUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -58,24 +59,14 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	//region Fields
 
 	/**
-	 * 过滤器属性
-	 */
-	protected final P filterProperties;
-
-	/**
 	 * 过滤器配置
 	 */
-	protected FilterConfig filterConfig;
+	protected final P filterProperties;
 
 	/**
 	 * 过滤器名称
 	 */
 	protected String filterName;
-
-	/**
-	 * 站点二级目录
-	 */
-	protected String contextPath;
 
 	/**
 	 * 需排除的请求地址
@@ -100,7 +91,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	public AbstractFilter(@NonNull P filterProperties) {
 		Assert.notNull(filterProperties, "filterProperties must be not null");
 
-		// 设置过滤器属性
+		// 设置过滤器配置
 		this.filterProperties = filterProperties;
 
 		// 初始化需要排除的请求地址
@@ -126,12 +117,6 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// 初始化过滤器配置
-		this.filterConfig = filterConfig;
-
-		// 初始化二级目录
-		this.contextPath = HttpUtils.getContextPath(filterConfig.getServletContext());
-
 		// 初始化过滤器名称
 		String filterName = filterConfig.getFilterName();
 		if (!StringUtils.hasText(filterName)) {
@@ -142,8 +127,6 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 
 	@Override
 	public void destroy() {
-		this.filterConfig = null;
-		this.contextPath = null;
 		if (this.exclusions != null) {
 			this.exclusions.clear();
 		}
@@ -161,7 +144,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 * @param request 当前请求
 	 * @return isNeedDoFilter true=需要，false=不需要
 	 */
-	protected boolean isNeedDoFilter(HttpServletRequest request) {
+	public boolean isNeedDoFilter(HttpServletRequest request) {
 		// 过滤器已禁用，不执行当前过滤器
 		if (this.filterProperties.isDisabled()) {
 			return false;
@@ -180,7 +163,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 		// 请求方法
 		String method = request.getMethod();
 		// 将请求路径移除掉contextPath
-		String uri = HttpUtils.getNoContextPathUri(request.getRequestURI(), contextPath);
+		String uri = HttpUtils.getNoContextPathUri(request.getRequestURI(), HttpConfigs.getContextPath());
 
 		// 先从缓存中获取判断结果
 		String cacheKey = method + ":" + uri;
@@ -223,18 +206,10 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	//region Getter
 
 	/**
-	 * @return 过滤器属性
+	 * @return 过滤器配置
 	 */
 	public P getFilterProperties() {
 		return filterProperties;
-	}
-
-	/**
-	 * @return 过滤器配置
-	 */
-	@Nullable
-	public FilterConfig getFilterConfig() {
-		return filterConfig;
 	}
 
 	/**

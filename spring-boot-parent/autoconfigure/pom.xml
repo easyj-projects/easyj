@@ -40,6 +40,11 @@
 			<artifactId>spring-web</artifactId>
 			<optional>true</optional><!--可选功能-->
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
 
 		<!-- 多个模块所需依赖：Aspect -->
 		<dependency>
@@ -77,6 +82,12 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-param-crypto</artifactId>
 			<optional>true</optional><!--可选功能-->
+		</dependency>
+		<!-- FastjsonParamCryptoHttpMessageConverter所需依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<optional>true</optional><!--可选依赖-->
 		</dependency>
 	</dependencies>
 </project>
