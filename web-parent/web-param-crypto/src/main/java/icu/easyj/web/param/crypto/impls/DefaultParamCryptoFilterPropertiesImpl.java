@@ -29,26 +29,28 @@ public class DefaultParamCryptoFilterPropertiesImpl extends BaseFilterProperties
 
 	/**
 	 * 加密参数名
-	 * 为空时，表示取整个QueryString
+	 * <p>
+	 * 为空时，表示取整个queryString作为加密参数值，即：{@code request.getQueryString()}<br>
+	 * 非时时，表示取该参数名的参数值作为加密参数值，即：{@code request.getParameter(String name)}
 	 */
-	private String parameterName;
+	private String queryStringName;
 
 
 	//region Getter、Setter
 
 	@Override
-	public String getParameterName() {
-		return parameterName;
+	public String getQueryStringName() {
+		return queryStringName;
 	}
 
 	@Override
-	public void setParameterName(String parameterName) {
-		if (StringUtils.hasText(parameterName)) {
-			parameterName = parameterName.trim();
+	public void setQueryStringName(String queryStringName) {
+		if (StringUtils.hasText(queryStringName)) {
+			queryStringName = queryStringName.trim();
 		} else {
-			parameterName = null;
+			queryStringName = null;
 		}
-		this.parameterName = parameterName;
+		this.queryStringName = queryStringName;
 	}
 
 	//endregion

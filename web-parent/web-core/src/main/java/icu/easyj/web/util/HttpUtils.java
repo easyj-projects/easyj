@@ -42,7 +42,7 @@ import static icu.easyj.web.constant.HttpMethodConstants.OPTIONS;
 import static icu.easyj.web.constant.HttpMethodConstants.POST;
 
 /**
- * Http工具类
+ * HTTP工具类
  *
  * @author wangliang181230
  */

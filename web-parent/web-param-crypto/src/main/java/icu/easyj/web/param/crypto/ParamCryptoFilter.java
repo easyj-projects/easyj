@@ -106,11 +106,11 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	private HttpServletRequest decryptQueryString(HttpServletRequest request) {
 		// 待解密的queryString
 		String encryptedQueryString;
-		if (StringUtils.hasLength(super.filterProperties.getParameterName())) {
+		if (StringUtils.hasLength(super.filterProperties.getQueryStringName())) {
 			// 判断是否有参数未加密（如果强制要求入参加密）
 			if (cryptoHandlerProperties.isNeedEncryptInputParam() && request.getParameterMap().size() > 1) {
 				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
-				parameterNames.remove(super.filterProperties.getParameterName());
+				parameterNames.remove(super.filterProperties.getQueryStringName());
 
 				String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
 				if (LOGGER.isInfoEnabled()) {
@@ -120,9 +120,9 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 			}
 
 			// 取指定参数名的参数值作为加密过的参数
-			encryptedQueryString = request.getParameter(super.filterProperties.getParameterName());
+			encryptedQueryString = request.getParameter(super.filterProperties.getQueryStringName());
 		} else {
-			// 取整个queryString作为加密过的参数
+			// 取整个queryString作为加密过的参数（推荐方案）
 			encryptedQueryString = request.getQueryString();
 		}
 

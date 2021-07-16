@@ -16,7 +16,7 @@
 package icu.easyj.web.constant;
 
 /**
- * Http头信息相关常量
+ * HTTP头信息相关常量
  *
  * @author wangliang181230
  */

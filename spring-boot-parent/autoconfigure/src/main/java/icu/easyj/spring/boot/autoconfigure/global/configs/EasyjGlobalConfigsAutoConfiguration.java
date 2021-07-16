@@ -25,8 +25,9 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX
  * 全局配置自动装配
  *
  * @author wangliang181230
+ * @see icu.easyj.config.GlobalConfigs
  */
-public class GlobalConfigsAutoConfiguration {
+public class EasyjGlobalConfigsAutoConfiguration {
 
 	/**
 	 * 创建全局配置bean

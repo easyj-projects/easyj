@@ -13,26 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web.constant;
+package icu.easyj.web.util;
 
 /**
- * HTTP相关常量
+ * HTTP相关配置持有者
  *
  * @author wangliang181230
  */
-public interface HttpConstants {
-
-	//region 文件下载相关常量
+public class HttpConfigs {
 
 	/**
-	 * 执行导出的参数名
+	 * 二级目录
 	 */
-	String DO_EXPORT_PARAM_NAME = "doExport";
+	private static String contextPath;
 
-	/**
-	 * 执行导出的匹配参数值
-	 */
-	String DO_EXPORT_PARAM_VALUE = "true";
+
+	//region Getter、Setter
+
+	public static String getContextPath() {
+		return contextPath;
+	}
+
+	//endregion
+
+	//region Setter
+
+	static void setContextPath(String contextPath) {
+		HttpConfigs.contextPath = contextPath;
+	}
 
 	//endregion
 }
