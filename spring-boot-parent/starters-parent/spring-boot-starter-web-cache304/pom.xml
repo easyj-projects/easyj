@@ -29,6 +29,12 @@
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-cache304</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>icu.easyj</groupId>
+					<artifactId>easyj-web-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

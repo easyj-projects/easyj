@@ -152,7 +152,7 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 		// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
 		return (this.paramCryptoFilter.getCryptoHandlerProperties().isNeedEncryptInputParam()
-				|| this.paramCryptoFilter.getCryptoHandler().isNeedDecrypt(body));
+				|| this.paramCryptoFilter.getCryptoHandler().checkFormat(body));
 	}
 
 	//endregion

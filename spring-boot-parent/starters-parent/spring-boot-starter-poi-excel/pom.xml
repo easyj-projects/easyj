@@ -25,6 +25,12 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-poi-excel</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>icu.easyj</groupId>
+					<artifactId>easyj-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
