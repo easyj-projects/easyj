@@ -130,9 +130,6 @@ public class CodeAnalysisUtils {
 			return null;
 		}
 
-		// 功能开发阶段，打印匹配信息出来观察一下
-		//PatternUtils.printMatcherGroups(m);
-
 		CodeAnalysisResult result = new CodeAnalysisResult();
 
 		// 获取变量名

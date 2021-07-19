@@ -132,6 +132,7 @@ public abstract class CryptoFactory {
 	 * @param algorithm  算法
 	 * @param publicKey  公钥
 	 * @param privateKey 私钥
+	 * @return asymmetricCrypto 非对称加密算法
 	 */
 	public static IAsymmetricCrypto getAsymmetricCrypto(String algorithm, byte[] publicKey, byte[] privateKey) {
 		return getGenerator().getAsymmetricCrypto(algorithm, publicKey, privateKey);
@@ -143,6 +144,7 @@ public abstract class CryptoFactory {
 	 * @param algorithm     算法
 	 * @param publicKeyStr  公钥Hex或Base64表示
 	 * @param privateKeyStr 私钥Hex或Base64表示
+	 * @return asymmetricCrypto 非对称加密算法
 	 */
 	public static IAsymmetricCrypto getAsymmetricCrypto(String algorithm, String publicKeyStr, String privateKeyStr) {
 		return getGenerator().getAsymmetricCrypto(algorithm, publicKeyStr, privateKeyStr);

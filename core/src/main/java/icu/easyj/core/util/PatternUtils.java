@@ -103,24 +103,6 @@ public abstract class PatternUtils {
 		return validate(p, str);
 	}
 
-//	/**
-//	 * 打印匹配组内容，方便观察
-//	 *
-//	 * @param m 匹配结果
-//	 */
-//	public static void printMatcherGroups(Matcher m) {
-//		if (m.matches()) {
-//			System.out.println("------------print start");
-//			System.out.println(m.pattern().pattern());
-//			for (int i = 0; i < m.groupCount(); ++i) {
-//				System.out.println((i < 10 ? " " : "") + i + " [" + m.group(i) + "]");
-//			}
-//			System.out.println("------------print end");
-//		} else {
-//			System.out.println("不匹配");
-//		}
-//	}
-
 	//endregion
 
 
