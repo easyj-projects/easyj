@@ -70,6 +70,24 @@ class Base64UtilsTest {
 		long t0, t1;
 		long costHutool, costEasyj;
 
+		//region 预热
+
+		t0 = System.nanoTime();
+		for (int i = count; i > 0; --i) {
+			Base64Utils.isBase64(base64);
+		}
+		t1 = System.nanoTime();
+
+		t0 = System.nanoTime();
+		for (int i = count; i > 0; --i) {
+			Base64.isBase64(base64);
+		}
+		t1 = System.nanoTime();
+
+		//endregion
+
+		//region 正式测试
+
 		t0 = System.nanoTime();
 		for (int i = count; i > 0; --i) {
 			Base64Utils.isBase64(base64);
@@ -83,6 +101,8 @@ class Base64UtilsTest {
 		}
 		t1 = System.nanoTime();
 		costHutool = t1 - t0;
+
+		//endregion
 
 		// case: 性能比Hutool高
 		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
