@@ -54,9 +54,12 @@ public abstract class Base64Utils {
 	 * @return 规范化后的Base64串
 	 */
 	public static String normalize(String base64Str) {
+		// 处理空白符
 		if (base64Str.contains(" ")) {
 			base64Str = base64Str.replace(" ", "+");
 		}
+
+		// 处理转义符
 		if (base64Str.contains("%")) {
 			if (base64Str.contains("%25")) {
 				base64Str = base64Str.replaceAll("%25", "%");
@@ -71,9 +74,12 @@ public abstract class Base64Utils {
 				base64Str = base64Str.replace("%3D", "=");
 			}
 		}
+
+		// 处理换行符
 		if (base64Str.contains("\n") || base64Str.contains("\r")) {
 			base64Str = P_CRLF.matcher(base64Str).replaceAll("");
 		}
+
 		return base64Str;
 	}
 
