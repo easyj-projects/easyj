@@ -36,7 +36,7 @@
 
 		<!-- Tool dependencies version -->
 		<commons-lang3.version>3.10</commons-lang3.version>
-		<hutool.version>5.7.3</hutool.version>
+		<hutool.version>5.7.5</hutool.version>
 
 		<!-- JSON dependencies version -->
 		<fastjson.version>1.2.76</fastjson.version>

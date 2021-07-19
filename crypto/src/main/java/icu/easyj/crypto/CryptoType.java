@@ -13,14 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.crypto.asymmetric;
+package icu.easyj.crypto;
 
-import icu.easyj.crypto.ICrypto;
+import icu.easyj.core.util.EnumUtils;
 
 /**
- * 非对称加密算法
+ * 加密算法类型
  *
  * @author wangliang181230
  */
-public interface IAsymmetricCrypto extends ICrypto {
+public enum CryptoType {
+
+	/**
+	 * 对称加密算法
+	 */
+	Symmetric,
+
+	/**
+	 * 非对称加密算法
+	 */
+	Asymmetric;
+
+	/**
+	 * 根据 `加密算法名` 获取 `加密算法枚举`
+	 *
+	 * @param name 加密算法名
+	 * @return enum 加密算法枚举
+	 */
+	public static CryptoType get(String name) {
+		return EnumUtils.fromName(CryptoType.class, name);
+	}
 }

@@ -27,14 +27,14 @@ import org.springframework.util.Assert;
 public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	private static final long serialVersionUID = 1L;
 
-	private final AbstractAsymmetricCrypto asymmetricCrypto;
+	private final AbstractAsymmetricCrypto<?> asymmetricCrypto;
 
 	/**
 	 * 构造函数
 	 *
 	 * @param asymmetricCrypto Hutool非对称加密
 	 */
-	public HutoolAsymmetricCryptoAdapter(AbstractAsymmetricCrypto asymmetricCrypto) {
+	public <T extends AbstractAsymmetricCrypto<T>> HutoolAsymmetricCryptoAdapter(T asymmetricCrypto) {
 		Assert.notNull(asymmetricCrypto, "asymmetricCrypto must be not null");
 		this.asymmetricCrypto = asymmetricCrypto;
 	}
@@ -43,14 +43,20 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	//region Override
 
 	@Override
-	public byte[] encrypt(byte[] data, KeyType keyType) {
-		return asymmetricCrypto.encrypt(data, keyType);
+	public byte[] encrypt(byte[] data) {
+		if (data == null) {
+			return null;
+		}
+		return asymmetricCrypto.encrypt(data, KeyType.PublicKey);
 	}
 
 
 	@Override
-	public byte[] decrypt(byte[] bytes, KeyType keyType) {
-		return asymmetricCrypto.decrypt(bytes, keyType);
+	public byte[] decrypt(byte[] bytes) {
+		if (bytes == null) {
+			return null;
+		}
+		return asymmetricCrypto.decrypt(bytes, KeyType.PrivateKey);
 	}
 
 	//endregion

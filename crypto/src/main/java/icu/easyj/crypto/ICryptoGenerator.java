@@ -16,45 +16,30 @@
 package icu.easyj.crypto;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.AlgorithmParameterSpec;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 
-import icu.easyj.core.loader.EnhancedServiceLoader;
+import cn.hutool.core.text.CharPool;
+import cn.hutool.crypto.KeyUtil;
+import cn.hutool.crypto.SecureUtil;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
- * 加密算法工厂类
+ * 加密算法实例生成器接口
  *
  * @author wangliang181230
- * @see ISymmetricCrypto 对称加密算法接口
- * @see cn.hutool.crypto.symmetric.SymmetricCrypto Hutool的对称加密算法实现
- * @see cn.hutool.crypto.asymmetric.AsymmetricCrypto Hutool的非对称加密算法实现
  */
-public abstract class CryptoFactory {
-
-	//region 加密算法生成器
-
-	/**
-	 * 加密算法生成器持有者
-	 */
-	private static class GeneratorHolder {
-		private static final ICryptoGenerator CRYPTO_GENERATOR = EnhancedServiceLoader.load(ICryptoGenerator.class);
-	}
-
-	/**
-	 * @return 加密算法生成器
-	 */
-	public static ICryptoGenerator getGenerator() {
-		return GeneratorHolder.CRYPTO_GENERATOR;
-	}
-
-	//endregion
-
+public interface ICryptoGenerator {
 
 	//region 生成对称加密算法
 
@@ -66,10 +51,8 @@ public abstract class CryptoFactory {
 	 * @param algorithmParameterSpec 算法参数
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull SecretKey secretKey,
-													  @Nullable AlgorithmParameterSpec algorithmParameterSpec) {
-		return getGenerator().getSymmetricCrypto(algorithm, secretKey, algorithmParameterSpec);
-	}
+	ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull SecretKey secretKey,
+										@Nullable AlgorithmParameterSpec algorithmParameterSpec);
 
 	/**
 	 * 生成对称加密算法
@@ -79,8 +62,20 @@ public abstract class CryptoFactory {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {
-		return getGenerator().getSymmetricCrypto(algorithm, key, iv);
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {
+		Assert.notNull(algorithm, "algorithmStr must be not null");
+		Assert.notNull(key, "key must be not null");
+
+		// 截取算法类型
+		String algorithmType = algorithm.substring(0, algorithm.indexOf(CharPool.SLASH));
+
+		// 生成密钥
+		SecretKey secretKey = SecureUtil.generateKey(algorithmType, key);
+		// 生成算法参数
+		AlgorithmParameterSpec parameterSpec = (ArrayUtils.isNotEmpty(iv) ? new IvParameterSpec(iv) : null);
+
+		// 生成加密算法实例
+		return getSymmetricCrypto(algorithm, secretKey, parameterSpec);
 	}
 
 	/**
@@ -91,8 +86,8 @@ public abstract class CryptoFactory {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, @Nullable String iv) {
-		return getGenerator().getSymmetricCrypto(algorithm, key, iv);
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, @Nullable String iv) {
+		return getSymmetricCrypto(algorithm, key, iv, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -104,8 +99,18 @@ public abstract class CryptoFactory {
 	 * @param charset   编码
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv, Charset charset) {
-		return getGenerator().getSymmetricCrypto(algorithm, key, iv, charset);
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv, Charset charset) {
+		Assert.notNull(algorithm, "algorithmStr must be not null");
+		Assert.notNull(key, "key must be not null");
+
+		if (charset == null) {
+			charset = StandardCharsets.UTF_8;
+		}
+
+		byte[] keyBytes = key.getBytes(charset);
+		byte[] ivBytes = (StringUtils.hasLength(iv) ? iv.getBytes(charset) : null);
+
+		return getSymmetricCrypto(algorithm, keyBytes, ivBytes);
 	}
 
 	//endregion
@@ -121,10 +126,8 @@ public abstract class CryptoFactory {
 	 * @param privateKey 私钥
 	 * @return asymmetricCrypto 非对称加密算法
 	 */
-	public IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
-												 @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey) {
-		return getGenerator().getAsymmetricCrypto(algorithm, publicKey, privateKey);
-	}
+	IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
+										  @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey);
 
 	/**
 	 * 生成非对称加密算法
@@ -133,8 +136,11 @@ public abstract class CryptoFactory {
 	 * @param publicKey  公钥
 	 * @param privateKey 私钥
 	 */
-	public static IAsymmetricCrypto getAsymmetricCrypto(String algorithm, byte[] publicKey, byte[] privateKey) {
-		return getGenerator().getAsymmetricCrypto(algorithm, publicKey, privateKey);
+	default IAsymmetricCrypto getAsymmetricCrypto(String algorithm, byte[] publicKey, byte[] privateKey) {
+		return getAsymmetricCrypto(algorithm,
+				KeyUtil.generatePublicKey(algorithm, publicKey),
+				KeyUtil.generatePrivateKey(algorithm, privateKey)
+		);
 	}
 
 	/**
@@ -144,8 +150,8 @@ public abstract class CryptoFactory {
 	 * @param publicKeyStr  公钥Hex或Base64表示
 	 * @param privateKeyStr 私钥Hex或Base64表示
 	 */
-	public static IAsymmetricCrypto getAsymmetricCrypto(String algorithm, String publicKeyStr, String privateKeyStr) {
-		return getGenerator().getAsymmetricCrypto(algorithm, publicKeyStr, privateKeyStr);
+	default IAsymmetricCrypto getAsymmetricCrypto(String algorithm, String publicKeyStr, String privateKeyStr) {
+		return getAsymmetricCrypto(algorithm, SecureUtil.decode(publicKeyStr), SecureUtil.decode(privateKeyStr));
 	}
 
 	//endregion

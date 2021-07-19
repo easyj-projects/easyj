@@ -47,6 +47,9 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 
 	@Override
 	public byte[] encrypt(byte[] data) {
+		if (data == null) {
+			return null;
+		}
 		return symmetricCrypto.encrypt(data);
 	}
 
@@ -57,6 +60,9 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 
 	@Override
 	public byte[] decrypt(byte[] bytes) {
+		if (bytes == null) {
+			return null;
+		}
 		return symmetricCrypto.decrypt(bytes);
 	}
 

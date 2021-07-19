@@ -19,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.Base64Utils;
-import icu.easyj.core.util.PatternUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.web.param.crypto.IParamCryptoHandler;
@@ -91,7 +90,7 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	@Override
 	public boolean checkFormat(String encryptedParam) {
 		// 当前处理器加密后是base64，所以为base64时，就说明为加密过的参数，需要解密
-		return PatternUtils.isBase64Str(encryptedParam);
+		return Base64Utils.isBase64(encryptedParam);
 	}
 
 	@Override
