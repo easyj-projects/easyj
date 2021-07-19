@@ -52,39 +52,39 @@
 					"description": "非对称加密算法."
 				},
 				{
-					"value": "RSA/ECB/PKCS1Padding",
+					"value": "RSA\/ECB\/PKCS1Padding",
 					"description": "非对称加密算法."
 				},
 				{
-					"value": "RSA/ECB/NoPadding",
+					"value": "RSA\/ECB\/NoPadding",
 					"description": "非对称加密算法."
 				},
 				{
-					"value": "RSA/None/NoPadding",
+					"value": "RSA\/None\/NoPadding",
 					"description": "非对称加密算法."
 				},
 				{
-					"value": "AES/CBC/PKCS7Padding",
+					"value": "AES\/CBC\/PKCS7Padding",
 					"description": "对称加密算法."
 				},
 				{
-					"value": "AES/ECB/PKCS5Padding",
+					"value": "AES\/ECB\/PKCS5Padding",
 					"description": "对称加密算法."
 				},
 				{
-					"value": "DES/ECB/PKCS5Padding",
+					"value": "DES\/ECB\/PKCS5Padding",
 					"description": "对称加密算法."
 				},
 				{
-					"value": "DESede/CBC/PKCS5Padding",
+					"value": "DESede\/CBC\/PKCS5Padding",
 					"description": "对称加密算法."
 				},
 				{
-					"value": "DESede/ECB/PKCS5Padding",
+					"value": "DESede\/ECB\/PKCS5Padding",
 					"description": "对称加密算法."
 				},
 				{
-					"value": "SM4/ECB/PKCS5Padding",
+					"value": "SM4\/ECB\/PKCS5Padding",
 					"description": "对称加密算法."
 				}
 			],
@@ -96,12 +96,14 @@
 		},
 		{
 			"name": "easyj.global.crypto.type",
-			"providers": [
+			"values": [
 				{
-					"name": "handle-as",
-					"parameters": {
-						"target": "icu.easyj.crypto.CryptoType"
-					}
+					"value": "Asymmetric",
+					"description": "非对称加密算法."
+				},
+				{
+					"value": "Symmetric",
+					"description": "对称加密算法."
 				}
 			]
 		}
