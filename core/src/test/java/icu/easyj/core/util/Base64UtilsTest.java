@@ -39,8 +39,8 @@ class Base64UtilsTest {
 		int n = 1000;
 		while (n-- > 0) {
 			String str = Base64.encode(RandomUtil.randomString(100));
-			if (str.contains("-") || str.contains("_")) {
-				throw new RuntimeException("base64校验失败");
+			if (!Base64Utils.isBase64(str)) {
+				throw new RuntimeException("Base64校验失败");
 			}
 		}
 
@@ -52,13 +52,14 @@ class Base64UtilsTest {
 		// case: false
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx=f"));
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx="));
-		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx="));
+		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx=="));
+		Assertions.assertFalse(Base64Utils.isBase64("aa_xxx=="));
 
-		// TODO: case: Hutool的校验不严格（添加该测试，确认Hutool是否修复了）
-		Assertions.assertTrue(Base64.isBase64("aaaxxx=f"));
+		// case: Hutool的Base64，支持URL安全的字符符
+		Assertions.assertTrue(Base64.isBase64("aaaxxx=f")); // TODO: 该行测试用例，确认hutool是否修复了该问题
 		Assertions.assertTrue(Base64.isBase64("aaaxxx="));
-		Assertions.assertTrue(Base64.isBase64("aa-xxx=")); // 有问题，Base64不存在字符‘-’
-		Assertions.assertTrue(Base64.isBase64("aa_xxx=")); // 有问题，Base64不存在字符‘_’
+		Assertions.assertTrue(Base64.isBase64("aa-xxx="));
+		Assertions.assertTrue(Base64.isBase64("aa_xxx=="));
 
 
 		//region case: 性能比Hutool高
@@ -67,33 +68,27 @@ class Base64UtilsTest {
 
 		int count = 10 * 10000;
 		long t0, t1;
-		long minCostHutool = Long.MAX_VALUE, minCostEasyj = Long.MAX_VALUE, cost;
+		long costHutool, costEasyj;
 
 		t0 = System.nanoTime();
 		for (int i = count; i > 0; --i) {
 			Base64Utils.isBase64(base64);
 		}
 		t1 = System.nanoTime();
-		cost = t1 - t0;
-		if (cost < minCostEasyj) {
-			minCostEasyj = cost;
-		}
+		costEasyj = t1 - t0;
 
 		t0 = System.nanoTime();
 		for (int i = count; i > 0; --i) {
 			Base64.isBase64(base64);
 		}
 		t1 = System.nanoTime();
-		cost = t1 - t0;
-		if (cost < minCostHutool) {
-			minCostHutool = cost;
-		}
+		costHutool = t1 - t0;
 
 		// case: 性能比Hutool高
 		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
-		System.out.println("cost  easyj: " + minCostEasyj);
-		System.out.println("cost hutool: " + minCostHutool);
-		Assertions.assertTrue(minCostEasyj < minCostHutool);
+		System.out.println("cost  easyj: " + costEasyj);
+		System.out.println("cost hutool: " + costHutool);
+		Assertions.assertTrue(costEasyj < costHutool);
 
 		//endregion
 	}
