@@ -27,6 +27,14 @@ import org.springframework.util.Assert;
 public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 加密算法，仅用于查看
+	 */
+	private final String algorithm;
+
+	/**
+	 * 非对称加密算法实例
+	 */
 	private final AbstractAsymmetricCrypto<?> asymmetricCrypto;
 
 	/**
@@ -34,13 +42,19 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	 *
 	 * @param asymmetricCrypto Hutool非对称加密
 	 */
-	public <T extends AbstractAsymmetricCrypto<T>> HutoolAsymmetricCryptoAdapter(T asymmetricCrypto) {
+	public <T extends AbstractAsymmetricCrypto<T>> HutoolAsymmetricCryptoAdapter(String algorithm, T asymmetricCrypto) {
 		Assert.notNull(asymmetricCrypto, "asymmetricCrypto must be not null");
+		this.algorithm = algorithm;
 		this.asymmetricCrypto = asymmetricCrypto;
 	}
 
 
 	//region Override
+
+	@Override
+	public String getAlgorithm() {
+		return algorithm;
+	}
 
 	@Override
 	public byte[] encrypt(byte[] data) {

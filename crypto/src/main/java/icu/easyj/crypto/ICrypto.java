@@ -36,6 +36,16 @@ import cn.hutool.crypto.SecureUtil;
  */
 public interface ICrypto extends Serializable {
 
+	//region Property
+
+	/**
+	 * @return 加密算法
+	 */
+	String getAlgorithm();
+
+	//endregion
+
+
 	//region Encrypt
 
 	//region 加密为byte[] start

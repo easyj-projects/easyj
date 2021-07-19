@@ -54,7 +54,7 @@ public class HutoolCryptoGenerator implements ICryptoGenerator {
 		// 实例化Hutool的对称加密实例
 		SymmetricCrypto symmetricCrypto = new SymmetricCrypto(algorithm, secretKey, algorithmParameterSpec);
 		// 创建适配器
-		return new HutoolSymmetricCryptoAdapter(symmetricCrypto);
+		return new HutoolSymmetricCryptoAdapter(algorithm, symmetricCrypto);
 	}
 
 
@@ -76,6 +76,6 @@ public class HutoolCryptoGenerator implements ICryptoGenerator {
 		// 实例化Hutool的对称加密实例
 		AsymmetricCrypto asymmetricCrypto = new AsymmetricCrypto(algorithm, privateKey, publicKey);
 		// 创建适配器
-		return new HutoolAsymmetricCryptoAdapter(asymmetricCrypto);
+		return new HutoolAsymmetricCryptoAdapter(algorithm, asymmetricCrypto);
 	}
 }

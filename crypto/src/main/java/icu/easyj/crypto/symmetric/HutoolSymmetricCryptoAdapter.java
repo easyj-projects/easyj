@@ -30,6 +30,14 @@ import org.springframework.util.Assert;
 public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 加密算法，仅用于查看
+	 */
+	private final String algorithm;
+
+	/**
+	 * 对称加密算法实例
+	 */
 	private final SymmetricCrypto symmetricCrypto;
 
 	/**
@@ -37,13 +45,19 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	 *
 	 * @param symmetricCrypto Hutool对称加密
 	 */
-	public HutoolSymmetricCryptoAdapter(SymmetricCrypto symmetricCrypto) {
+	public HutoolSymmetricCryptoAdapter(String algorithm, SymmetricCrypto symmetricCrypto) {
 		Assert.notNull(symmetricCrypto, "symmetricCrypto must be not null");
+		this.algorithm = algorithm;
 		this.symmetricCrypto = symmetricCrypto;
 	}
 
 
 	//region Override
+
+	@Override
+	public String getAlgorithm() {
+		return algorithm;
+	}
 
 	@Override
 	public byte[] encrypt(byte[] data) {
