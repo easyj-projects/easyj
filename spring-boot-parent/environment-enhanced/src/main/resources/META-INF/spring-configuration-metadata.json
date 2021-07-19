@@ -1,0 +1,109 @@
+{
+	"groups": [
+		{
+			"name": "easyj.global.crypto",
+			"description": "EasyJ定义的全局加密算法配置组."
+		}
+	],
+	"properties": [
+		{
+			"name": "easyj.global.crypto.type",
+			"type": "icu.easyj.crypto.CryptoType",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的加密算法类型."
+		},
+		{
+			"name": "easyj.global.crypto.algorithm",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的加密算法."
+		},
+		{
+			"name": "easyj.global.crypto.private-key",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的加密算法密钥."
+		},
+		{
+			"name": "easyj.global.crypto.public-key",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的非对称加密算法公钥."
+		},
+		{
+			"name": "easyj.global.crypto.iv",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的对称加密算法偏移向量."
+		},
+		{
+			"name": "easyj.global.crypto.charset",
+			"type": "java.nio.charset.Charset",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的对称加密算法编码."
+		}
+	],
+	"hints": [
+		{
+			"name": "easyj.global.crypto.algorithm",
+			"values": [
+				{
+					"value": "RSA",
+					"description": "非对称加密算法."
+				},
+				{
+					"value": "RSA/ECB/PKCS1Padding",
+					"description": "非对称加密算法."
+				},
+				{
+					"value": "RSA/ECB/NoPadding",
+					"description": "非对称加密算法."
+				},
+				{
+					"value": "RSA/None/NoPadding",
+					"description": "非对称加密算法."
+				},
+				{
+					"value": "AES/CBC/PKCS7Padding",
+					"description": "对称加密算法."
+				},
+				{
+					"value": "AES/ECB/PKCS5Padding",
+					"description": "对称加密算法."
+				},
+				{
+					"value": "DES/ECB/PKCS5Padding",
+					"description": "对称加密算法."
+				},
+				{
+					"value": "DESede/CBC/PKCS5Padding",
+					"description": "对称加密算法."
+				},
+				{
+					"value": "DESede/ECB/PKCS5Padding",
+					"description": "对称加密算法."
+				},
+				{
+					"value": "SM4/ECB/PKCS5Padding",
+					"description": "对称加密算法."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.global.crypto.type",
+			"providers": [
+				{
+					"name": "handle-as",
+					"parameters": {
+						"target": "icu.easyj.crypto.CryptoType"
+					}
+				}
+			]
+		}
+	]
+}

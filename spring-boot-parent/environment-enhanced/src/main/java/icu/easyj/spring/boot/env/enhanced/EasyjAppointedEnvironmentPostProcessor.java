@@ -16,24 +16,34 @@
 package icu.easyj.spring.boot.env.enhanced;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.hutool.core.io.IORuntimeException;
 import icu.easyj.core.util.ResourceUtils;
+import icu.easyj.crypto.CryptoFactory;
+import icu.easyj.crypto.CryptoType;
+import icu.easyj.crypto.GlobalCrypto;
+import icu.easyj.crypto.ICrypto;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_CRYPTO_PREFIX;
 
 /**
  * 加载 `EasyJ约定的目录下的配置文件` 的环境处理器
@@ -56,11 +66,11 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * 按优先级正序排序
 	 */
 	public static final String[] CONFIG_FILE_PATHS = new String[]{
-			// 项目配置文件，主要配置项目代码、项目名称或其他全局配置，相同配置会覆盖区域配置文件
+			// 项目配置文件，主要配置项目代码、项目名称或其他项目所需的配置，相同配置会覆盖区域配置文件
 			"config/project.yml",
 			"config/project.yaml",
 			"config/project.properties",
-			// 区域配置文件，主要配置区域代码、区域名称或其他全局配置
+			// 区域配置文件，主要配置区域代码、区域名称或其他区域所需的配置，相同配置会覆盖全局配置文件
 			"config/area.yml",
 			"config/area.yaml",
 			"config/area.properties",
@@ -176,6 +186,55 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				previousPropertySourceName = currentPropertySourceName;
 			}
 		}
+
+		// 加载全局加密算法配置，并生成加密算法实例
+		this.loadGlobalCrypto(environment);
+	}
+
+	/**
+	 * 加载全局加密算法配置，并生成加密算法实例
+	 *
+	 * @param environment 环境
+	 */
+	private void loadGlobalCrypto(Environment environment) {
+		// 读取配置：加密算法类型
+		CryptoType type = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".type", CryptoType.class);
+		if (type == null) {
+			return;
+		}
+
+		// 读取配置：加密算法
+		String algorithm = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".algorithm");
+		Assert.notNull(algorithm, "加密算法 '" + GLOBAL_CRYPTO_PREFIX + ".algorithm' 未配置，无法生成全局加密算法.");
+		// 读取配置：私钥
+		String privateKey = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".private-key");
+		Assert.notNull(privateKey, "加密私钥 '" + GLOBAL_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局加密算法.");
+
+		// 加密算法接口
+		ICrypto crypto;
+
+		// 非对称加密算法
+		if (type == CryptoType.Asymmetric) {
+			// 读取配置：公钥
+			String publicKey = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".public-key");
+			Assert.notNull(publicKey, "加密公钥 '" + GLOBAL_CRYPTO_PREFIX + ".public-key' 未配置，无法生成全局加密算法.");
+
+			// 生成非对称加密算法实例
+			crypto = CryptoFactory.getAsymmetricCrypto(algorithm, publicKey, privateKey);
+		}
+		// 对称加密算法
+		else {
+			// 读取配置：偏移向量
+			String iv = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".iv");
+			// 公钥、私钥编码
+			Charset charset = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".charset", Charset.class, StandardCharsets.UTF_8);
+
+			// 生成非对称加密算法实例
+			crypto = CryptoFactory.getSymmetricCrypto(algorithm, privateKey, iv, charset);
+		}
+
+		// 设置全局加密算法实例
+		GlobalCrypto.setCrypto(crypto);
 	}
 
 	/**

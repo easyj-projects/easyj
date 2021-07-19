@@ -24,19 +24,18 @@ import icu.easyj.core.constant.Constants;
  */
 public interface StarterConstants {
 
-	//region PREFIX
-
 	// Root
 	String PREFIX = Constants.PREFIX;
 
 
 	// Global
 	String GLOBAL_PREFIX = PREFIX + ".global";
+	String GLOBAL_CRYPTO_PREFIX = GLOBAL_PREFIX + ".crypto";
 
 
 	// Web
 	String WEB_PREFIX = PREFIX + ".web";
-	String WEB_CACHE304_PREFIX = WEB_PREFIX + ".cache304";
+	//String WEB_CACHE304_PREFIX = WEB_PREFIX + ".cache304";
 
 	// Web POI
 	String WEB_POI_PREFIX = WEB_PREFIX + ".poi";
@@ -48,7 +47,4 @@ public interface StarterConstants {
 	String WEB_PARAM_CRYPTO_PREFIX = WEB_PREFIX + ".param-crypto";
 	String WEB_PARAM_CRYPTO_FILTER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".filter";
 	String WEB_PARAM_CRYPTO_HANDLER_PREFIX = WEB_PARAM_CRYPTO_PREFIX + ".handler";
-
-	//endregion
-
 }

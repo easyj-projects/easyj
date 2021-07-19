@@ -20,5 +20,12 @@
 			<artifactId>easyj-spring-boot</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot-autoconfigure</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--仅使用其常量，不传递该依赖-->
+		</dependency>
 	</dependencies>
 </project>
