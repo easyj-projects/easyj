@@ -31,6 +31,8 @@ public abstract class PatternUtils {
 
 	//region 正则
 
+	//region Base64匹配
+
 	// BASE64串（严谨）
 	public static final String REGEX_BASE64 = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
 	public static final Pattern P_BASE64 = Pattern.compile(REGEX_BASE64);
@@ -38,6 +40,31 @@ public abstract class PatternUtils {
 	// BASE64串（不严谨）
 	public static final String REGEX_BASE64_2 = "^[A-Za-z0-9+/]+={0,2}$";
 	public static final Pattern P_BASE64_2 = Pattern.compile(REGEX_BASE64_2);
+
+	//endregion
+
+	//region 代码匹配
+
+	// 各类型数据值的匹配
+	public static final String REGEX_CODE_STRING1 = "'((?<=\\\\)'|[^'])*'"; // 单引号字符串
+	public static final String REGEX_CODE_STRING2 = "\"((?<=\\\\)\"|[^\"])*\""; // 双引号字符串
+	public static final String REGEX_CODE_STRING = "(" + REGEX_CODE_STRING1 + "|" + REGEX_CODE_STRING2 + ")"; // 单引号或双引号字符串
+	public static final String REGEX_CODE_NUMBER = "\\d+(\\.\\d*)?"; // 数字
+	public static final String REGEX_CODE_BOOLEAN = "(true|false)"; // 布尔类型
+	public static final String REGEX_CODE_NULL = "null"; // null
+	// 所有类型的数据值匹配
+	public static final String REGEX_CODE_VALUE = "(" + REGEX_CODE_STRING + "|" + REGEX_CODE_NUMBER + "|" + REGEX_CODE_BOOLEAN + "|" + REGEX_CODE_NULL + ")"; // 字符串（含单引号及双引号）、数字（含浮点数字）、布尔类型、null
+	public static final Pattern P_CODE_DATA_VALUE = Pattern.compile(REGEX_CODE_VALUE);
+
+	// 单行执行代码正则，不允许存在空格
+	public static final String REGEX_CODE_LINE = "^(\\w+)(\\.(\\w+)(\\((" + REGEX_CODE_VALUE + "(,\\s{0,1}" + REGEX_CODE_VALUE + ")*)?\\)(?=(;|$)))?)?;?$";
+	public static final Pattern P_CODE_LINE = Pattern.compile(REGEX_CODE_LINE);
+
+	// 单行执行代码正则，允许存在空格
+	public static final String REGEX_CODE_LINE2 = "^(\\w+)\\s*(\\.\\s*(\\w+)\\s*(\\(\\s*(" + REGEX_CODE_VALUE + "\\s*(,\\s*" + REGEX_CODE_VALUE + "\\s*)*)?\\)(?=(\\s|;|$)))?)?\\s*;?$";
+	public static final Pattern P_CODE_LINE2 = Pattern.compile(REGEX_CODE_LINE2);
+
+	//endregion
 
 	//endregion
 
@@ -75,6 +102,24 @@ public abstract class PatternUtils {
 		Pattern p = Pattern.compile(regex);
 		return validate(p, str);
 	}
+
+//	/**
+//	 * 打印匹配组内容，方便观察
+//	 *
+//	 * @param m 匹配结果
+//	 */
+//	public static void printMatcherGroups(Matcher m) {
+//		if (m.matches()) {
+//			System.out.println("------------print start");
+//			System.out.println(m.pattern().pattern());
+//			for (int i = 0; i < m.groupCount(); ++i) {
+//				System.out.println((i < 10 ? " " : "") + i + " [" + m.group(i) + "]");
+//			}
+//			System.out.println("------------print end");
+//		} else {
+//			System.out.println("不匹配");
+//		}
+//	}
 
 	//endregion
 
