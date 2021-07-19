@@ -131,9 +131,11 @@ public abstract class PatternUtils {
 	 *
 	 * @param c 字符
 	 * @return isMatch 是否匹配
+	 * @deprecated 请直接调用 {@link Base64Utils#isBase64Char(char)} 方法。
 	 */
+	@Deprecated
 	public static boolean isBase64Char(char c) {
-		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || '=' == c || '/' == c || '+' == c;
+		return Base64Utils.isBase64Char(c);
 	}
 
 	/**
@@ -141,21 +143,11 @@ public abstract class PatternUtils {
 	 *
 	 * @param str 字符串
 	 * @return isMatch 是否匹配
+	 * @deprecated 请直接调用 {@link Base64Utils#isBase64(CharSequence)} 方法。
 	 */
+	@Deprecated
 	public static boolean isBase64Str(CharSequence str) {
-		if (str == null || str.length() < 4) {
-			return false;
-		}
-
-		String s = str.toString();
-
-		// 先对最后一个字符判断一遍，防止性能损耗过大
-		char c = s.charAt(s.length() - 1);
-		if (!isBase64Char(c)) {
-			return false;
-		}
-
-		return validate(P_BASE64, s);
+		return Base64Utils.isBase64(str);
 	}
 
 	/**
@@ -173,7 +165,7 @@ public abstract class PatternUtils {
 
 		// 先对最后一个字符判断一遍，防止性能损耗过大
 		char c = s.charAt(s.length() - 1);
-		if (!isBase64Char(c)) {
+		if (!Base64Utils.isBase64Char(c)) {
 			return false;
 		}
 

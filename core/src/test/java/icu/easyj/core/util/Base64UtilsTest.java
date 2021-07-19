@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util;
 
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.RandomUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +31,70 @@ class Base64UtilsTest {
 	void testNormalize() {
 		String s = "123\r\n%252B";
 		Assertions.assertEquals("123+", Base64Utils.normalize(s));
+	}
+
+	@Test
+	void testIsBase64() {
+		// 尝试校验1000次生成的Base64串
+		int n = 1000;
+		while (n-- > 0) {
+			String str = Base64.encode(RandomUtil.randomString(100));
+			if (str.contains("-") || str.contains("_")) {
+				throw new RuntimeException("base64校验失败");
+			}
+		}
+
+		// case: true
+		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxff"));
+		Assertions.assertTrue(Base64Utils.isBase64("aaa/xxf="));
+		Assertions.assertTrue(Base64Utils.isBase64("aaa+/x=="));
+
+		// case: false
+		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx=f"));
+		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx="));
+		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx="));
+
+		// TODO: case: Hutool的校验不严格（添加该测试，确认Hutool是否修复了）
+		Assertions.assertTrue(Base64.isBase64("aaaxxx=f"));
+		Assertions.assertTrue(Base64.isBase64("aaaxxx="));
+		Assertions.assertTrue(Base64.isBase64("aa-xxx=")); // 有问题，Base64不存在字符‘-’
+		Assertions.assertTrue(Base64.isBase64("aa_xxx=")); // 有问题，Base64不存在字符‘_’
+
+
+		//region case: 性能比Hutool高
+
+		String base64 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
+
+		int count = 10 * 10000;
+		long t0, t1;
+		long minCostHutool = Long.MAX_VALUE, minCostEasyj = Long.MAX_VALUE, cost;
+
+		t0 = System.nanoTime();
+		for (int i = count; i > 0; --i) {
+			Base64Utils.isBase64(base64);
+		}
+		t1 = System.nanoTime();
+		cost = t1 - t0;
+		if (cost < minCostEasyj) {
+			minCostEasyj = cost;
+		}
+
+		t0 = System.nanoTime();
+		for (int i = count; i > 0; --i) {
+			Base64.isBase64(base64);
+		}
+		t1 = System.nanoTime();
+		cost = t1 - t0;
+		if (cost < minCostHutool) {
+			minCostHutool = cost;
+		}
+
+		// case: 性能比Hutool高
+		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
+		System.out.println("cost  easyj: " + minCostEasyj);
+		System.out.println("cost hutool: " + minCostHutool);
+		Assertions.assertTrue(minCostEasyj < minCostHutool);
+
+		//endregion
 	}
 }
