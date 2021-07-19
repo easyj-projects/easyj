@@ -52,6 +52,14 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	}
 
 
+	/**
+	 * @return 对称加密算法实例
+	 */
+	public SymmetricCrypto getCrypto() {
+		return symmetricCrypto;
+	}
+
+
 	//region Override
 
 	@Override

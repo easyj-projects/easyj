@@ -49,6 +49,14 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	}
 
 
+	/**
+	 * @return 非对称加密算法实例
+	 */
+	public AbstractAsymmetricCrypto<?> getCrypto() {
+		return asymmetricCrypto;
+	}
+
+
 	//region Override
 
 	@Override
