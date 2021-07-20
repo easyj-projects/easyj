@@ -71,10 +71,14 @@ public class CodeAnalysisUtils {
 				if (parameter.contains(".")) {
 					parameterList.add(Double.valueOf(parameter));
 				} else {
-					try {
-						parameterList.add(Integer.valueOf(parameter));
-					} catch (NumberFormatException e) {
-						parameterList.add(Long.valueOf(parameter));
+					if (parameter.toUpperCase().endsWith("L")) {
+						parameterList.add(Long.valueOf(parameter.substring(0, parameter.length() - 1)));
+					} else {
+						try {
+							parameterList.add(Integer.valueOf(parameter));
+						} catch (NumberFormatException e) {
+							parameterList.add(Long.valueOf(parameter));
+						}
 					}
 				}
 				continue;

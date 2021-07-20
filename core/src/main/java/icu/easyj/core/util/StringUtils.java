@@ -101,6 +101,9 @@ public abstract class StringUtils {
 		if (obj instanceof Character) {
 			return "'" + obj + "'";
 		}
+		if (obj instanceof Long) {
+			return obj + "L";
+		}
 		if (obj instanceof Date) {
 			return DateUtils.toString((Date)obj);
 		}

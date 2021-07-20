@@ -1,3 +1,4 @@
 # Environment Post Processors
 org.springframework.boot.env.EnvironmentPostProcessor=\
+icu.easyj.spring.boot.env.enhanced.EasyjFunctionPropertySourceEnvironmentPostProcessor,\
 icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor

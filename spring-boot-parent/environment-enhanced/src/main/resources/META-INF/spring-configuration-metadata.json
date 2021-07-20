@@ -41,6 +41,66 @@
 			"type": "java.nio.charset.Charset",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法编码."
+		},
+		{
+			"name": "easyj.crypto.decrypt",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils",
+			"description": "函数式配置：配置解密方法."
+		},
+		{
+			"name": "easyj.localIp.pattern",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils",
+			"description": "函数式配置：网卡IP匹配的方法."
+		},
+		{
+			"name": "easyj.random",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：同${easyj.random.uuid32}."
+		},
+		{
+			"name": "easyj.random.uuid32",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成32位UUID的方法."
+		},
+		{
+			"name": "easyj.random.uuid",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成完整UUID的方法."
+		},
+		{
+			"name": "easyj.random.port",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成未被占用的端口号的方法."
+		},
+		{
+			"name": "easyj.random.short",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成短整形数字的方法."
+		},
+		{
+			"name": "easyj.random.int",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成整形数字的方法."
+		},
+		{
+			"name": "easyj.random.long",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机生成长整形数字的方法."
+		},
+		{
+			"name": "easyj.random.choose",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
+			"description": "函数式配置：随机选取一个值的方法."
 		}
 	],
 	"hints": [

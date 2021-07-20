@@ -22,6 +22,8 @@ package icu.easyj.crypto;
  */
 public abstract class GlobalCrypto {
 
+	public static final String ERROR_MESSAGE = "全局加密算法为空，请先配置`easyj.global.crypto.*`中的必须配置项。";
+
 	private static ICrypto crypto;
 
 	public static ICrypto getCrypto() {

@@ -43,13 +43,25 @@ public abstract class PatternUtils {
 
 	//endregion
 
+	//region UUID匹配
+
+	// 32位UUID（即：不带'-'字符的UUID）
+	public static final String REGEX_UUID32 = "^[a-zA-Z0-9]{32}$";
+	public static final Pattern P_UUID32 = Pattern.compile(REGEX_UUID32);
+
+	// 36位UUID（即：带'-'字符的UUID）
+	public static final String REGEX_UUID = "^[a-zA-Z0-9]{8}(-[a-zA-Z0-9]{4}){3}-[a-zA-Z0-9]{12}$";
+	public static final Pattern P_UUID = Pattern.compile(REGEX_UUID);
+
+	//endregion
+
 	//region 代码匹配
 
 	// 各类型数据值的匹配
 	public static final String REGEX_CODE_STRING1 = "'((?<=\\\\)'|[^'])*'"; // 单引号字符串
 	public static final String REGEX_CODE_STRING2 = "\"((?<=\\\\)\"|[^\"])*\""; // 双引号字符串
 	public static final String REGEX_CODE_STRING = "(" + REGEX_CODE_STRING1 + "|" + REGEX_CODE_STRING2 + ")"; // 单引号或双引号字符串
-	public static final String REGEX_CODE_NUMBER = "\\d+(\\.\\d*)?"; // 数字
+	public static final String REGEX_CODE_NUMBER = "(\\d+((\\.\\d*)|[lL])?)"; // 数字
 	public static final String REGEX_CODE_BOOLEAN = "(true|false)"; // 布尔类型
 	public static final String REGEX_CODE_NULL = "null"; // null
 	// 所有类型的数据值匹配

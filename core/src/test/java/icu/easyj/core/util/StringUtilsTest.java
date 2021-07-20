@@ -50,6 +50,8 @@ class StringUtilsTest {
 		assertEquals("\"bbb\"", StringUtils.toString(new StringBuilder("bbb")));
 		//case: Number
 		assertEquals("1", StringUtils.toString(1));
+		//case: Number-Long
+		assertEquals("1L", StringUtils.toString(1L));
 		//case: Boolean
 		assertEquals("true", StringUtils.toString(true));
 		//case: Character

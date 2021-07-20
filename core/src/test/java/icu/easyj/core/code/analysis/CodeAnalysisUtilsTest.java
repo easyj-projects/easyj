@@ -28,7 +28,7 @@ class CodeAnalysisUtilsTest {
 
 	@Test
 	void testAnalysisCode() {
-		String code = "encrypt.dec(11, 'asdf\\'asdf', \"adsf\\\"fdsa124\", true, false, null, 'sadf');";
+		String code = "encrypt.dec(11, 22L, 'asdf\\'asdf', \"adsf\\\"fdsa124\", true, false, null, 'sadf', 11l);";
 
 		//case: 取0个参数
 		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(code, 0, true);
@@ -37,12 +37,12 @@ class CodeAnalysisUtilsTest {
 
 		//case: 取3个参数
 		result = CodeAnalysisUtils.analysisCode(code, 3, true);
-		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, \"asdf'asdf\", \"adsf\"fdsa124\"])",
+		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, 22L, \"asdf'asdf\"])",
 				StringUtils.toString(result));
 
 		//case: 取所有参数
 		result = CodeAnalysisUtils.analysisCode(code, true);
-		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, \"asdf'asdf\", \"adsf\"fdsa124\", true, false, null, \"sadf\"])",
+		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, 22L, \"asdf'asdf\", \"adsf\"fdsa124\", true, false, null, \"sadf\", 11L])",
 				StringUtils.toString(result));
 	}
 }
