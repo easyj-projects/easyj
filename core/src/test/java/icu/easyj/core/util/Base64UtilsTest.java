@@ -67,40 +67,37 @@ class Base64UtilsTest {
 		String base64 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
 
 		int count = 10 * 10000;
-		long t0, t1;
+		long t0;
 		long costHutool, costEasyj;
 
 		//region 预热
 
-		t0 = System.nanoTime();
+		//easyj
 		for (int i = count; i > 0; --i) {
 			Base64Utils.isBase64(base64);
 		}
-		t1 = System.nanoTime();
-
-		t0 = System.nanoTime();
+		//hutool
 		for (int i = count; i > 0; --i) {
 			Base64.isBase64(base64);
 		}
-		t1 = System.nanoTime();
 
 		//endregion
 
 		//region 正式测试
 
+		//easyj
 		t0 = System.nanoTime();
 		for (int i = count; i > 0; --i) {
 			Base64Utils.isBase64(base64);
 		}
-		t1 = System.nanoTime();
-		costEasyj = t1 - t0;
+		costEasyj = System.nanoTime() - t0;
 
+		//hutool
 		t0 = System.nanoTime();
 		for (int i = count; i > 0; --i) {
 			Base64.isBase64(base64);
 		}
-		t1 = System.nanoTime();
-		costHutool = t1 - t0;
+		costHutool = System.nanoTime() - t0;
 
 		//endregion
 
