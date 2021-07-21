@@ -34,11 +34,12 @@ public enum CryptoType {
 	 */
 	Asymmetric;
 
+
 	/**
-	 * 根据 `加密算法名` 获取 `加密算法枚举`
+	 * 根据枚举名获取枚举
 	 *
-	 * @param name 加密算法名
-	 * @return enum 加密算法枚举
+	 * @param name 枚举名
+	 * @return enum 枚举
 	 */
 	public static CryptoType get(String name) {
 		return EnumUtils.fromName(CryptoType.class, name);

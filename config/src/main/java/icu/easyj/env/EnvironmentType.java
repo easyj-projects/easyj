@@ -44,11 +44,12 @@ public enum EnvironmentType {
 	 */
 	DEV;
 
+
 	/**
-	 * 根据 `环境名` 获取 `环境类型枚举`
+	 * 根据枚举名获取枚举
 	 *
-	 * @param name 环境名
-	 * @return enum 环境类型枚举
+	 * @param name 枚举名
+	 * @return enum 枚举
 	 */
 	public static EnvironmentType get(String name) {
 		return EnumUtils.fromName(EnvironmentType.class, name);
