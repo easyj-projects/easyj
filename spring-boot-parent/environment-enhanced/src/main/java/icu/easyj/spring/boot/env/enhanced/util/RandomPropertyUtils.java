@@ -43,6 +43,7 @@ public abstract class RandomPropertyUtils {
 	/**
 	 * 根据配置命令解析结果获取配置值
 	 *
+	 * @param name   配置信息
 	 * @param result 配置命令解析结果
 	 * @return value 配置值
 	 */
@@ -133,7 +134,8 @@ public abstract class RandomPropertyUtils {
 	 * 随机获取未被占用的端口号
 	 *
 	 * @param range 范围
-	 * @return value
+	 * @param name  配置信息
+	 * @return port 随机端口
 	 */
 	public static int randomPort(Range<Integer> range, String name) {
 		int minPort = range.getMinimum();

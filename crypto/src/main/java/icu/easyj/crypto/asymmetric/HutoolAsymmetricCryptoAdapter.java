@@ -40,7 +40,9 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	/**
 	 * 构造函数
 	 *
+	 * @param algorithm        算法
 	 * @param asymmetricCrypto Hutool非对称加密
+	 * @param <T>              算法类型
 	 */
 	public <T extends AbstractAsymmetricCrypto<T>> HutoolAsymmetricCryptoAdapter(String algorithm, T asymmetricCrypto) {
 		Assert.notNull(asymmetricCrypto, "asymmetricCrypto must be not null");

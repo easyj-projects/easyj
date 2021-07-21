@@ -43,6 +43,7 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	/**
 	 * 构造函数
 	 *
+	 * @param algorithm       算法
 	 * @param symmetricCrypto Hutool对称加密
 	 */
 	public HutoolSymmetricCryptoAdapter(String algorithm, SymmetricCrypto symmetricCrypto) {
