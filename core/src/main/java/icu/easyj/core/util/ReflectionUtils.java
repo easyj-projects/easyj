@@ -115,14 +115,12 @@ public abstract class ReflectionUtils {
 	 *
 	 * @param accessible the accessible
 	 * @param <T>        the type of the accessible
-	 * @return the accessible itself
+	 * @throws SecurityException if the request is denied.
 	 */
-	@SuppressWarnings("all")
-	public static <T extends AccessibleObject> T setAccessible(T accessible) {
+	public static <T extends AccessibleObject> void setAccessible(T accessible) throws SecurityException {
 		if (!accessible.isAccessible()) {
 			accessible.setAccessible(true);
 		}
-		return accessible;
 	}
 
 	//endregion

@@ -147,6 +147,25 @@ class ReflectionUtilsTest {
 		Assertions.assertSame(EMPTY_FIELD_ARRAY, ReflectionUtils.getAllFields(Object.class));
 	}
 
+	private void testGetAllFieldsInternal(Class<?> clazz, String... fieldNames) {
+		Field[] fields = ReflectionUtils.getAllFields(clazz);
+		Assertions.assertEquals(fieldNames.length, fields.length);
+		Field[] fields2 = ReflectionUtils.getAllFields(clazz);
+		Assertions.assertSame(fields, fields2);
+
+		if (fieldNames.length == 0) {
+			return;
+		}
+
+		List<String> fieldNameList = Arrays.asList(fieldNames);
+		for (Field field : fields) {
+			Assertions.assertTrue(fieldNameList.contains(field.getName()));
+		}
+	}
+
+	//endregion
+
+
 	@Test
 	@SuppressWarnings("all")
 	void testGetSingleton() {
@@ -182,22 +201,4 @@ class ReflectionUtilsTest {
 			Assertions.assertEquals(NoSuchMethodException.class, e.getCause().getCause().getClass());
 		}
 	}
-
-	private void testGetAllFieldsInternal(Class<?> clazz, String... fieldNames) {
-		Field[] fields = ReflectionUtils.getAllFields(clazz);
-		Assertions.assertEquals(fieldNames.length, fields.length);
-		Field[] fields2 = ReflectionUtils.getAllFields(clazz);
-		Assertions.assertSame(fields, fields2);
-
-		if (fieldNames.length == 0) {
-			return;
-		}
-
-		List<String> fieldNameList = Arrays.asList(fieldNames);
-		for (Field field : fields) {
-			Assertions.assertTrue(fieldNameList.contains(field.getName()));
-		}
-	}
-
-	//endregion
 }
