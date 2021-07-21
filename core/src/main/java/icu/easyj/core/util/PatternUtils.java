@@ -43,18 +43,6 @@ public abstract class PatternUtils {
 
 	//endregion
 
-	//region UUID匹配
-
-	// 32位UUID（即：不带'-'字符的UUID）
-	public static final String REGEX_UUID32 = "^[a-zA-Z0-9]{32}$";
-	public static final Pattern P_UUID32 = Pattern.compile(REGEX_UUID32);
-
-	// 36位UUID（即：带'-'字符的UUID）
-	public static final String REGEX_UUID = "^[a-zA-Z0-9]{8}(-[a-zA-Z0-9]{4}){3}-[a-zA-Z0-9]{12}$";
-	public static final Pattern P_UUID = Pattern.compile(REGEX_UUID);
-
-	//endregion
-
 	//region 代码匹配
 
 	// 各类型数据值的匹配
