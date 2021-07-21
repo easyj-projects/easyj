@@ -178,8 +178,9 @@ public abstract class ExcelRowUtils {
 				continue;
 			}
 
-			if (value.toString().equals(em.getHeadName()) || value.toString().equals(mapping.getNumberCellHeadName()) || value.toString().equals("序号")) {
-				return true; // 匹配到一个单元格与映射中的头名称一致，表示这一行的确是头行
+			if ("序号".equals(value.toString()) || value.toString().equals(em.getHeadName()) || value.toString().equals(mapping.getNumberCellHeadName())) {
+				// 匹配到一个单元格与映射中的头名称一致，表示这一行的确是头行
+				return true;
 			}
 		}
 

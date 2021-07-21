@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 class ExcelUtilsTest {
 
 	@Test
+	@SuppressWarnings("deprecation")
 	void testToExcelAndToList() throws Exception {
 		// list to excel
 		List<TestClass> list = new ArrayList<>();
@@ -43,12 +44,11 @@ class ExcelUtilsTest {
 
 		List<TestClass> list2;
 		try (Workbook workbook = ExcelUtils.toExcel(list, TestClass.class)) {
-
 			// 如果想看一下导出的excel文件是什么样的，可以放开此注释。执行完测试方法后，去D盘根目录下，找到文件即可。
 			ExcelExportUtils.saveToFile(workbook, "D:\\ExcelUtilsTest_" + System.currentTimeMillis() + ".xlsx");
 
 			// excel to list
-			list2 = ExcelUtils.toList(workbook, TestClass.class, null, true);
+			list2 = ExcelUtils.toList(workbook, TestClass.class, null);
 		}
 
 		Assertions.assertEquals(list.size(), list2.size());

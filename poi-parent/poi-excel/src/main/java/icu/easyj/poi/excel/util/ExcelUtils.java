@@ -34,6 +34,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -52,12 +53,11 @@ public abstract class ExcelUtils {
 	 * @param book         Excel
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
-	 * @param hasHeadRow   Excel中是否含的头行，如果为true，则跳过头行，从第二行开始读取数据行。（注：如果此参数传入null，则系统会自动根据映射类的属性注解中的头信息去验证Excel第一行是否为头行。
 	 * @param <T>          泛型参数，即Excel文件映射的类
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
+	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		Sheet sheet = book.getSheetAt(0);
 
 		// 获取映射
@@ -72,19 +72,17 @@ public abstract class ExcelUtils {
 		if (rowStart > rowEnd) {
 			return new ArrayList<>(); // 没有数据了
 		}
-
-		// 如果hasHeadRow为空，则自动判断数据中的第一行是否为头行
-		if (hasHeadRow == null) { // 如果是否含有行号参数为空，则自动根据excel的首行内容来判断首行是否为头行
-			hasHeadRow = hasHeadRow(sheet, rowStart, mapping);
+		if (rowStart < 0) {
+			return new ArrayList<>(); // 没有数据，返回一个空
 		}
-		if (hasHeadRow) {
-			rowStart++; // 有头行，则数据读取行号加1
+
+		// 自动检索标题行号
+		Integer headRowNum = findHeadRowNum(sheet, rowStart, mapping);
+		if (headRowNum != null) {
+			rowStart = headRowNum + 1;
 			if (rowStart > rowEnd) {
 				return new ArrayList<>(); // 没有数据了
 			}
-		}
-		if (rowStart < 0) {
-			return new ArrayList<>(); // 没有数据，返回一个空
 		}
 
 		// 是否含有序号列
@@ -93,7 +91,7 @@ public abstract class ExcelUtils {
 		// 开始读取数据
 		List<T> result = new ArrayList<>(); // 需要返回的数据列表
 		Row row;
-		Row headRow = (hasHeadRow ? sheet.getRow(rowStart - 1) : null);
+		Row headRow = (headRowNum != null ? sheet.getRow(headRowNum) : null);
 		T t;
 		for (int i = rowStart; i <= rowEnd; i++) {
 			// 读取行
@@ -121,106 +119,45 @@ public abstract class ExcelUtils {
 	 * @param is           Excel文件流
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
-	 * @param hasHeadRow   Excel中是否含的头行，如果为true，则跳过头行，从第二行开始读取数据行。（注：如果此参数传入null，则系统会自动根据映射类的属性注解中的头信息去验证Excel第一行是否为头行。
 	 * @param <T>          泛型参数，即Excel文件映射的类
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
+	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		try (Workbook book = WorkbookFactory.create(is)) {
-			Sheet sheet = book.getSheetAt(0);
-
-			// 获取映射
-			ExcelMapping mapping = ExcelMapping.getMapping(clazz);
-
-			// 获取数据实际的起始行号
-			int rowStart = sheet.getFirstRowNum();
-			int rowEnd = sheet.getLastRowNum();
-			while (ExcelRowUtils.isEmptyRow(sheet.getRow(rowStart))) {
-				rowStart++; // 过滤起始的空行
-			}
-			if (rowStart > rowEnd) {
-				return new ArrayList<>(); // 没有数据了
-			}
-
-			// 如果hasHeadRow为空，则自动判断数据中的第一行是否为头行
-			if (hasHeadRow == null) { // 如果是否含有行号参数为空，则自动根据excel的首行内容来判断首行是否为头行
-				hasHeadRow = hasHeadRow(sheet, rowStart, mapping);
-			}
-			if (hasHeadRow) {
-				rowStart++; // 有头行，则数据读取行号加1
-				if (rowStart > rowEnd) {
-					return new ArrayList<>(); // 没有数据了
-				}
-			}
-			if (rowStart < 0) {
-				return new ArrayList<>(); // 没有数据，返回一个空
-			}
-
-			// 是否含有序号列
-			boolean hasNumberCell = getHasNumberCell(sheet, mapping);
-
-			// 开始读取数据
-			List<T> result = new ArrayList<>(); // 需要返回的数据列表
-			Row row;
-			Row headRow = (hasHeadRow ? sheet.getRow(rowStart - 1) : null);
-			T t;
-			for (int i = rowStart; i <= rowEnd; i++) {
-				// 读取行
-				row = sheet.getRow(i);
-				if (ExcelRowUtils.isEmptyRow(row)) {
-					continue; // 空行不读取
-				}
-
-				// 行转换为对象
-				t = ExcelRowUtils.rowToObject(row, hasNumberCell, headRow, clazz, mapping);
-
-				// 如果有数据有效性验证方法，则验证对象是否有效
-				if (validDataFun == null || validDataFun.test(t)) {
-					result.add(t);
-				}
-			}
-
-			// 返回结果
-			return result;
+			return toList(book, clazz, validDataFun);
 		}
+	}
+
+	/**
+	 * 加载Excel中的数据到List中
+	 *
+	 * @param filePath     Excel文件路径
+	 * @param clazz        Excel文件映射类的信息
+	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
+	 * @param <T>          泛型参数，即Excel文件映射的类
+	 * @return 返回映射类的集合
+	 * @throws Exception 异常
+	 */
+	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+		try (InputStream is = new FileInputStream(filePath)) {
+			return toList(is, clazz, validDataFun);
+		}
+	}
+
+	// 重载方法
+	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz) throws Exception {
+		return toList(book, clazz, null);
 	}
 
 	// 重载方法
 	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz) throws Exception {
-		return toList(is, clazz, null, null);
-	}
-
-	// 重载方法
-	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
-		return toList(is, clazz, validDataFun, null);
-	}
-
-	// 重载方法
-	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Boolean hasHeadRow) throws Exception {
-		return toList(is, clazz, null, hasHeadRow);
-	}
-
-	// 重载方法
-	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun, Boolean hasHeadRow) throws Exception {
-		try (InputStream is = new FileInputStream(filePath)) {
-			return toList(is, clazz, validDataFun, hasHeadRow);
-		}
+		return toList(is, clazz, null);
 	}
 
 	// 重载方法
 	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz) throws Exception {
-		return toList(filePath, clazz, null, null);
-	}
-
-	// 重载方法
-	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
-		return toList(filePath, clazz, validDataFun, null);
-	}
-
-	// 重载方法
-	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Boolean hasHeadRow) throws Exception {
-		return toList(filePath, clazz, null, hasHeadRow);
+		return toList(filePath, clazz, null);
 	}
 
 	/**
@@ -236,11 +173,15 @@ public abstract class ExcelUtils {
 		Object cellValue;
 		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 			row = sheet.getRow(i);
-			if (ExcelRowUtils.isEmptyRow(row)) continue;
+			if (ExcelRowUtils.isEmptyRow(row)) {
+				continue;
+			}
 			for (int j = 0; j < row.getLastCellNum(); j++) {
 				cell = row.getCell(j);
 				cellValue = ExcelCellUtils.getCellValue(cell);
-				if (cellValue == null) continue;
+				if (cellValue == null) {
+					continue;
+				}
 				if (cellValue.equals(mapping.getNumberCellHeadName()) || cellValue.equals("序号")) {
 					return true;
 				}
@@ -251,17 +192,24 @@ public abstract class ExcelUtils {
 	}
 
 	/**
-	 * 判断第一行是否为头行（Head）
+	 * 获取标题行号
 	 *
-	 * @param sheet
-	 * @param mapping
-	 * @return
+	 * @param sheet       表格
+	 * @param firstRowNum 起始行号
+	 * @param mapping     表格映射
+	 * @return 标题行号
 	 */
-	private static boolean hasHeadRow(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
-		Row row = sheet.getRow(firstRowNum);
-		if (row == null) return false;
+	private static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
+		int i = 0;
+		while (i < 5) {
+			Row row = sheet.getRow(firstRowNum);
+			if (row != null && ExcelRowUtils.isHeadRow(row, mapping)) {
+				return firstRowNum + i;
+			}
 
-		return ExcelRowUtils.isHeadRow(row, mapping);
+			i++;
+		}
+		return null;
 	}
 
 	//endregion
@@ -286,7 +234,7 @@ public abstract class ExcelUtils {
 		}
 
 		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
-		if (StringUtils.isEmpty(mapping.getCellMappingList())) {
+		if (CollectionUtils.isEmpty(mapping.getCellMappingList())) {
 			throw new RuntimeException("“" + clazz.getName() + "” 类中未使用@" + ExcelCell.class.getSimpleName() + "配置任何列信息");
 		}
 
@@ -296,7 +244,7 @@ public abstract class ExcelUtils {
 			book = new HSSFWorkbook();
 			// 创建表
 			Sheet sheet;
-			if (StringUtils.isEmpty(mapping.getSheetName())) {
+			if (!StringUtils.hasText(mapping.getSheetName())) {
 				sheet = book.createSheet();
 			} else {
 				sheet = book.createSheet(mapping.getSheetName());
@@ -311,7 +259,9 @@ public abstract class ExcelUtils {
 			ExcelCellUtils.setCellStyle(sheet, mapping, false);
 		} catch (Exception e) {
 			try {
-				if (book != null) book.close();
+				if (book != null) {
+					book.close();
+				}
 			} catch (IOException ignore) {
 			}
 			LOGGER.error("数据转换为excel失败：" + e.getMessage(), e);
