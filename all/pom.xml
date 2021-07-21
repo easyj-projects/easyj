@@ -224,8 +224,6 @@
 						</goals>
 						<configuration>
 							<createSourcesJar>true</createSourcesJar>
-							<promoteTransitiveDependencies>false</promoteTransitiveDependencies>
-							<keepDependenciesWithProvidedScope>false</keepDependenciesWithProvidedScope>
 							<createDependencyReducedPom>true</createDependencyReducedPom>
 							<artifactSet>
 								<includes>
