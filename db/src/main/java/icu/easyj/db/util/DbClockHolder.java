@@ -65,8 +65,6 @@ class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 	}
 
 	/**
-	 * 获取单例
-	 *
 	 * @return 单例
 	 */
 	public static DbClockHolder getInstance() {

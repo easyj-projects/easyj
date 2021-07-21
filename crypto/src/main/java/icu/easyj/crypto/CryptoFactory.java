@@ -37,7 +37,7 @@ import org.springframework.lang.Nullable;
  */
 public abstract class CryptoFactory {
 
-	//region 加密算法生成器
+	//region 加密算法生成器（单例模式-嵌套类）
 
 	/**
 	 * 加密算法生成器持有者
