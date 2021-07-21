@@ -74,7 +74,6 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 		return asymmetricCrypto.encrypt(data, KeyType.PublicKey);
 	}
 
-
 	@Override
 	public byte[] decrypt(byte[] bytes) {
 		if (bytes == null) {

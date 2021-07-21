@@ -25,9 +25,9 @@ import icu.easyj.core.code.analysis.CodeAnalysisUtils;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.spring.boot.autoconfigure.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
+import icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.StringUtils;
 
@@ -49,14 +49,11 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	public static final String PREFIX = StarterConstants.PREFIX + ".";
 
 	/**
-	 * 缓存
-	 */
-	private static final Map<String, Object> CACHE = new HashMap<>();
-
-	/**
 	 * 不使用缓存的配置值
 	 */
 	private static final String NO_CACHE_VALUE = "no-cache";
+
+	//region 函数相关常量
 
 	/**
 	 * 加密函数名
@@ -73,20 +70,19 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 */
 	private static final String RANDOM_FUN_NAME = "random";
 
+	//endregion
+
 	/**
-	 * 环境
+	 * 缓存
 	 */
-	private final ConfigurableEnvironment environment;
+	private static final Map<String, Object> CACHE = new HashMap<>();
 
 
 	/**
 	 * 构造函数
-	 *
-	 * @param environment 环境
 	 */
-	public EasyjFunctionPropertySource(ConfigurableEnvironment environment) {
+	public EasyjFunctionPropertySource() {
 		super(PROPERTY_SOURCE_NAME);
-		this.environment = environment;
 	}
 
 
@@ -132,15 +128,13 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	/**
 	 * 判断该配置是否为当前配置源的配置
 	 *
-	 * @param name 配置
+	 * @param name 配置键
 	 * @return 是否为当前配置源的配置
 	 */
 	private boolean isMatch(String name) {
 		if (!StringUtils.hasLength(name)) {
 			return false;
 		}
-
-		name = name.toLowerCase();
 
 		if (!name.startsWith(PREFIX)) {
 			return false;
@@ -149,7 +143,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		name = name.substring(PREFIX.length());
 
 		return StrUtil.startWithAny(name,
-				CRYPTO_FUN_NAME, /*LOCAL_IP_FUN_NAME,*/ RANDOM_FUN_NAME); // TODO:
+				CRYPTO_FUN_NAME, LOCAL_IP_FUN_NAME, RANDOM_FUN_NAME);
 	}
 
 	/**
@@ -163,9 +157,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 			case CRYPTO_FUN_NAME:
 				// 加密解密
 				return CryptoPropertyUtils.getProperty(name, result);
-//			case LOCAL_IP_FUN_NAME: // TODO:
-//				// 本地IP
-//				return LocalIpPropertyUtils.getProperty(name, result);
+			case LOCAL_IP_FUN_NAME:
+				// 本地IP
+				return LocalIpPropertyUtils.getProperty(name, result);
 			case RANDOM_FUN_NAME:
 				// 随机值
 				return RandomPropertyUtils.getProperty(name, result);

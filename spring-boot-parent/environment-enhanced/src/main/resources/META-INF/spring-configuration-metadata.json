@@ -46,61 +46,61 @@
 			"name": "easyj.crypto.decrypt",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils",
-			"description": "函数式配置：配置解密方法."
+			"description": "函数式配置${xxx}：配置解密方法，例：${easyj.crypto.decrypt('xxxxxx这里是一个加密串')}."
 		},
 		{
 			"name": "easyj.localIp.pattern",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils",
-			"description": "函数式配置：网卡IP匹配的方法."
+			"description": "函数式配置${xxx}：网卡IP匹配的方法，例：${easyj.localIp.pattern('10.10.10.*', '192.168.10.*')}."
 		},
 		{
 			"name": "easyj.random",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：同${easyj.random.uuid32}."
+			"description": "函数式配置${xxx}：同${easyj.random.uuid32}，唯一用法：${easyj.random}."
 		},
 		{
 			"name": "easyj.random.uuid32",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成32位UUID的方法."
+			"description": "函数式配置${xxx}：随机生成32位UUID的方法，唯一用法：${easyj.random.uuid32}."
 		},
 		{
 			"name": "easyj.random.uuid",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成完整UUID的方法."
+			"description": "函数式配置${xxx}：随机生成完整UUID的方法，唯一用法：${easyj.random.uuid}."
 		},
 		{
 			"name": "easyj.random.port",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成未被占用的端口号的方法."
+			"description": "函数式配置${xxx}：随机生成未被占用的端口号的方法，例：${easyj.random.port(2000, 3000)}."
 		},
 		{
 			"name": "easyj.random.short",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成短整形数字的方法."
+			"description": "函数式配置${xxx}：随机生成短整形数字的方法，例：${easyj.random.short(2000, 3000)}."
 		},
 		{
 			"name": "easyj.random.int",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成整形数字的方法."
+			"description": "函数式配置${xxx}：随机生成整形数字的方法，例：${easyj.random.int(2000, 3000)}."
 		},
 		{
 			"name": "easyj.random.long",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机生成长整形数字的方法."
+			"description": "函数式配置${xxx}：随机生成长整形数字的方法，例：${easyj.random.long(2000L, 3000L)}."
 		},
 		{
 			"name": "easyj.random.choose",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
-			"description": "函数式配置：随机选取一个值的方法."
+			"description": "函数式配置${xxx}：随机选取一个值的方法，例：${easyj.random.port('1', '2', '3', '4')}."
 		}
 	],
 	"hints": [
