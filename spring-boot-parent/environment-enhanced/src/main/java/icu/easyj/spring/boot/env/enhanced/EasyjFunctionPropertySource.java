@@ -105,7 +105,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		}
 
 		// 解析代码，目前限制最多只读取4个参数
-		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(name.substring(PREFIX.length()), 4);
+		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(name.substring(PREFIX.length()));
 		if (result == null) {
 			throw new ConfigurationException("配置信息格式有误：" + name);
 		}

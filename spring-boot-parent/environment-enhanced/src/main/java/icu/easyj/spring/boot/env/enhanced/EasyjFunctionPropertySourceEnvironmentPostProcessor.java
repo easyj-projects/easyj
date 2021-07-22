@@ -42,7 +42,7 @@ public class EasyjFunctionPropertySourceEnvironmentPostProcessor implements Envi
 		// 添加函数式配置源：${easyj.xxx}
 		// 目前包含：
 		// 1、配置加密：${easyj.crypto.decrypt('xxxxxxxxxxxx')}
-		// 2、获取本地IP：${easyj.localIp.xxx}
+		// 2、获取本地IP：${easyj.localIp.pattern('xxx.yyy.zzz.*', 'aaa.bbb.ccc.*')}
 		// 3、生成随机内容：${easyj.random.xxx}，支持：端口、数字、UUID
 		propertySources.addLast(new EasyjFunctionPropertySource());
 	}
