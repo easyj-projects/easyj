@@ -158,7 +158,7 @@ public abstract class EnvironmentUtils {
 	 */
 	@NonNull
 	public static String buildPropertySourceNameByPath(@NonNull String configFilePath) {
-		return "EasyJ loaded resource '" + configFilePath + "'";
+		return "[EasyJ] Config resource '" + configFilePath + "'";
 	}
 
 	/**

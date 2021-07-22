@@ -61,7 +61,7 @@ public abstract class CryptoPropertyUtils {
 
 						// 配置信息解密
 						String encryptedProperty = parameters[0].toString();
-						property = GlobalCrypto.getCrypto().decryptStr(encryptedProperty);
+						property = crypto.decryptStr(encryptedProperty);
 
 						// 返回解密后的配置信息
 						return property;
