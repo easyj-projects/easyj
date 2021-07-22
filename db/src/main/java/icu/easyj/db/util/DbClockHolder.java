@@ -26,7 +26,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * 数据库时钟持有者（单例模式）
+ * 数据库时钟持有者
  *
  * @author wangliang181230
  * @see IClock
@@ -37,8 +37,30 @@ import org.springframework.util.Assert;
  */
 class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 
+	//region 数据库时钟持有者（枚举实例单例）
+
 	private DbClockHolder() {
 	}
+
+	private enum SingletonHolder {
+		INSTANCE;
+
+		private final DbClockHolder dbClockHolder = new DbClockHolder();
+
+		public DbClockHolder getDbClockHolder() {
+			return dbClockHolder;
+		}
+	}
+
+	/**
+	 * @return 数据库时钟持有者
+	 */
+	public static DbClockHolder getInstance() {
+		return SingletonHolder.INSTANCE.getDbClockHolder();
+	}
+
+	//endregion
+
 
 	/**
 	 * 创建数据库时钟
@@ -53,23 +75,4 @@ class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 		// TODO: @wangliang181230 待开发，方言需支持不同数据库不同`获取数据库时间的SQL`的功能。
 		return null;
 	}
-
-
-	//region Singleton 单例模式-嵌套类
-
-	/**
-	 * 单例持有者嵌套类
-	 */
-	private static class SingletonHolder {
-		private static final DbClockHolder INSTANCE = new DbClockHolder();
-	}
-
-	/**
-	 * @return 单例
-	 */
-	public static DbClockHolder getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
-
-	//endregion
 }

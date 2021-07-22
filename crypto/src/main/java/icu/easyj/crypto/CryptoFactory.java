@@ -37,20 +37,23 @@ import org.springframework.lang.Nullable;
  */
 public abstract class CryptoFactory {
 
-	//region 加密算法生成器（单例模式-嵌套类）
+	//region 加密算法生成器持有者（枚举实例单例）
 
-	/**
-	 * 加密算法生成器持有者
-	 */
-	private static class GeneratorHolder {
-		private static final ICryptoGenerator CRYPTO_GENERATOR = EnhancedServiceLoader.load(ICryptoGenerator.class);
+	private enum CryptoGeneratorSingletonHolder {
+		INSTANCE;
+
+		private final ICryptoGenerator instance = EnhancedServiceLoader.load(ICryptoGenerator.class);
+
+		public ICryptoGenerator getInstance() {
+			return INSTANCE.instance;
+		}
 	}
 
 	/**
 	 * @return 加密算法生成器
 	 */
 	public static ICryptoGenerator getGenerator() {
-		return GeneratorHolder.CRYPTO_GENERATOR;
+		return CryptoGeneratorSingletonHolder.INSTANCE.getInstance();
 	}
 
 	//endregion

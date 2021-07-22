@@ -30,9 +30,6 @@ import icu.easyj.env.RunMode;
  */
 public class GlobalConfigs {
 
-	private GlobalConfigs() {
-	}
-
 	//region Fields
 
 	/**
@@ -96,14 +93,23 @@ public class GlobalConfigs {
 	//endregion
 
 
-	//region Singleton 单例模式-嵌套类
+	//region 全局配置持有者（枚举实例单例）
 
-	private static class SingletonHolder {
-		private static final GlobalConfigs INSTANCE = new GlobalConfigs();
+	private GlobalConfigs() {
 	}
 
-	static GlobalConfigs getInstance() {
-		return SingletonHolder.INSTANCE;
+	private enum SingletonHolder {
+		INSTANCE;
+
+		private final GlobalConfigs globalConfigs = new GlobalConfigs();
+
+		public GlobalConfigs getGlobalConfigs() {
+			return globalConfigs;
+		}
+	}
+
+	private static GlobalConfigs getInstance() {
+		return SingletonHolder.INSTANCE.getGlobalConfigs();
 	}
 
 	//endregion
