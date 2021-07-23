@@ -26,4 +26,20 @@
 		<module>spring-boot-starter-web-cache304</module>
 		<module>spring-boot-starter-web-param-crypto</module>
 	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Spring-Boot-Jar-Type>dependencies-starter</Spring-Boot-Jar-Type>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
