@@ -17,7 +17,6 @@ package icu.easyj.web.param.crypto;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +33,7 @@ import com.alibaba.fastjson.support.spring.MappingFastJsonValue;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
+import icu.easyj.web.util.BodyHolder;
 import icu.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,9 +103,14 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 		FastJsonConfig fastJsonConfig = super.getFastJsonConfig();
 
 		try {
-			// 获取输入流并转换为body字符串
-			InputStream in = inputMessage.getBody();
-			String body = StreamUtils.copyToString(in, fastJsonConfig.getCharset());
+			// 先从BodyHolder中获取，因为可能前面的步骤已经读取过body
+			String body = BodyHolder.getBody();
+
+			// 如果为null，说明没有读取过，继续读取body
+			if (body == null) {
+				// 获取输入流并转换为body字符串
+				body = StreamUtils.copyToString(inputMessage.getBody(), fastJsonConfig.getCharset());
+			}
 
 			// 判断是否需要解密
 			String bodyJsonStr;
