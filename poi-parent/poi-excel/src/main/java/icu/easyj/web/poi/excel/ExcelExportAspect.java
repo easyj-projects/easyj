@@ -30,8 +30,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
@@ -44,23 +42,6 @@ import org.springframework.util.Assert;
 @Aspect
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ExcelExportAspect {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelExportAspect.class);
-
-	//region 当前切面的启用状态
-
-	private static final ThreadLocal<Boolean> DISABLED_LOCAL = new ThreadLocal<>();
-
-	public static void disable() {
-		DISABLED_LOCAL.set(true);
-	}
-
-	public static void enable() {
-		DISABLED_LOCAL.remove();
-	}
-
-	//endregion
-
 
 	/**
 	 * Excel导出器
@@ -96,6 +77,9 @@ public class ExcelExportAspect {
 	}
 
 
+	/**
+	 * 切入点为注解
+	 */
 	@Pointcut("@annotation(icu.easyj.web.poi.excel.ExcelExport)")
 	private void pointcutExcelExport() {
 	}
@@ -111,49 +95,49 @@ public class ExcelExportAspect {
 	public Object doQueryAndExportExcel(ProceedingJoinPoint jp) throws Throwable {
 		Object result = jp.proceed();
 
-		if (Boolean.TRUE.equals(DISABLED_LOCAL.get())) {
-			enable();
-			return result;
-		}
-
 		if (HttpUtils.isDoExportRequest()) {
 			MethodSignature ms = (MethodSignature)jp.getSignature();
 			Method method = ms.getMethod();
 
-			Object data = result;
 			ExcelExport annotation = method.getAnnotation(ExcelExport.class);
 
 			// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
-			if (data != null && !(data instanceof List) && !data.getClass().equals(annotation.dataType())) {
+			if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
 				String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
 				if (org.springframework.util.StringUtils.hasLength(listFieldName)) {
 					try {
-						data = ReflectionUtils.getFieldValue(data, listFieldName);
+						result = ReflectionUtils.getFieldValue(result, listFieldName);
 					} catch (NoSuchFieldException e) {
 						throw new ExcelExportException("在返回数据中，未找到属性：" + listFieldName +
-								"，返回数据类型为：" + data.getClass().getName());
+								"，返回数据类型为：" + result.getClass().getName());
 					}
 				} else {
-					throw new ExcelExportException("返回数据不是列表数据，请在注解上设置或全局配置`listFieldName`，从数据的属性中获取列表数据。");
+					throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。");
 				}
 			}
 
-			if (data == null) {
+			if (result == null) {
 				// 如果数据为空，则设置为空列表，目的是为了输出一个没有数据，只有标题行的excel文件。
-				data = Collections.emptyList();
-			} else if (data.getClass().equals(annotation.dataType())) {
+				result = Collections.emptyList();
+			} else if (result.getClass().equals(annotation.dataType())) {
 				// 如果数据类型与注解中配置的类型一致，则将它包装成列表
-				data = Collections.singletonList(data);
+				result = Collections.singletonList(result);
 			}
 
 			// 准备参数
 			HttpServletResponse response = HttpUtils.getResponse();
-			List dataList = (List)data;
+			List dataList = (List)result;
 			Class dataType = annotation.dataType();
 			String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
 
 			// 转为excel并导出
 			excelExporter.toExcelAndExport(response, dataList, dataType, fileName);
+
+			// 设为null，方便GC回收
+			result = null;
+			dataList = null;
+			dataType = null;
+			fileName = null;
 
 			// 文件导出，无需返回值
 			return null;

@@ -86,12 +86,8 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 			return;
 		}
 
-		// 解密QueryString
+		// 解密queryString
 		request = this.decryptQueryString(request);
-		// 解密Body
-		request = this.decryptBody(request);
-		// 解密Form
-		request = this.decryptForm(request);
 
 		// 继续执行过滤器
 		filterChain.doFilter(request, servletResponse);
@@ -105,26 +101,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	 */
 	private HttpServletRequest decryptQueryString(HttpServletRequest request) {
 		// 待解密的queryString
-		String encryptedQueryString;
-		if (StringUtils.hasLength(super.filterProperties.getQueryStringName())) {
-			// 判断是否有参数未加密（如果强制要求入参加密）
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() && request.getParameterMap().size() > 1) {
-				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
-				parameterNames.remove(super.filterProperties.getQueryStringName());
-
-				String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
-				if (LOGGER.isInfoEnabled()) {
-					LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
-				}
-				throw new ParamNotEncryptedException(errorMsg);
-			}
-
-			// 取指定参数名的参数值作为加密过的参数
-			encryptedQueryString = request.getParameter(super.filterProperties.getQueryStringName());
-		} else {
-			// 取整个queryString作为加密过的参数（推荐方案）
-			encryptedQueryString = request.getQueryString();
-		}
+		String encryptedQueryString = this.getEncryptedQueryString(request);
 
 		// 如果不为空，才需要解密
 		if (StringUtils.hasLength(encryptedQueryString)) {
@@ -133,12 +110,23 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 
 			// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
 			if (cryptoHandlerProperties.isNeedEncryptInputParam() || cryptoHandler.checkFormat(encryptedQueryString)) {
-				// 解密后，正常的queryString
-				String queryString;
 				try {
 					// 解密
-					queryString = cryptoHandler.decrypt(encryptedQueryString);
+					String queryString = cryptoHandler.decrypt(encryptedQueryString);
+
+					if (LOGGER.isDebugEnabled()) {
+						LOGGER.debug("QueryString入参解密成功！\r\n==>\r\n解密前: {}\r\n解密后: {}\r\n<==", encryptedQueryString, queryString);
+					}
+
+					// 设为null，方便GC回收
+					encryptedQueryString = null;
+
+					// 包装Request
+					return new QueryStringHttpServletRequestWrapper(request, queryString);
 				} catch (RuntimeException e) {
+					// 设为null，方便GC回收
+					encryptedQueryString = null;
+
 					if (LOGGER.isDebugEnabled()) {
 						LOGGER.debug("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
 					}
@@ -146,13 +134,11 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
 					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
 						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", e);
-					} else {
-						return request;
 					}
-				}
 
-				// 包装Request
-				return new QueryStringHttpServletRequestWrapper(request, queryString);
+					// 不强制要求调用端加密，则忽略此异常，直接返回
+					return request;
+				}
 			}
 		}
 
@@ -160,25 +146,36 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	}
 
 	/**
-	 * 解密Body
+	 * 获取加密过的queryString
 	 *
 	 * @param request 请求实例
-	 * @return 返回原request或包装后的request
+	 * @return 加密过的queryString
 	 */
-	private HttpServletRequest decryptBody(HttpServletRequest request) {
-		// TODO: 待开发
-		return request;
-	}
+	private String getEncryptedQueryString(HttpServletRequest request) {
+		if (StringUtils.hasLength(super.filterProperties.getQueryStringName())) {
+			// 判断是否有参数未加密（如果强制要求入参加密）
+			if (cryptoHandlerProperties.isNeedEncryptInputParam() && request.getParameterMap().size() > 1) {
+				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
+				parameterNames.remove(super.filterProperties.getQueryStringName());
 
-	/**
-	 * 解密Form
-	 *
-	 * @param request 请求实例
-	 * @return 返回原request或包装后的request
-	 */
-	private HttpServletRequest decryptForm(HttpServletRequest request) {
-		// TODO: 待开发
-		return request;
+				String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
+
+				// 设为null，方便GC回收
+				parameterNames.clear();
+				parameterNames = null;
+
+				if (LOGGER.isInfoEnabled()) {
+					LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
+				}
+				throw new ParamNotEncryptedException(errorMsg);
+			}
+
+			// 取指定参数名的参数值作为加密过的参数
+			return request.getParameter(super.filterProperties.getQueryStringName());
+		} else {
+			// 取整个queryString作为加密过的参数（推荐方案）
+			return request.getQueryString();
+		}
 	}
 
 

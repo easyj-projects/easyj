@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.MapUtils;
 import icu.easyj.web.util.HttpConfigs;
 import icu.easyj.web.util.HttpUtils;
 import org.springframework.lang.NonNull;
@@ -165,15 +166,10 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 		// 将请求路径移除掉contextPath
 		String uri = HttpUtils.getNoContextPathUri(request.getRequestURI(), HttpConfigs.getContextPath());
 
-		// 先从缓存中获取判断结果
+		// 缓存键
 		String cacheKey = method + ":" + uri;
-		Boolean isNeedDoFilter = needDoFilterCaches.get(cacheKey);
-		if (isNeedDoFilter != null) {
-			// 存在缓存，直接返回结果
-			return isNeedDoFilter;
-		}
-
-		try {
+		// 如果缓存存在，直接返回，否则执行校验
+		return MapUtils.computeIfAbsent(needDoFilterCaches, cacheKey, key -> {
 			String[] methods = new String[]{method, "*"};
 			List<String> patterns;
 			for (String m : methods) {
@@ -183,21 +179,19 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 					for (String pattern : patterns) {
 						if (PatternMatchUtils.simpleMatch(pattern, uri)) {
 							// 匹配到了，不执行当前过滤器
-							isNeedDoFilter = false;
 							return false;
 						}
 					}
 				}
 			}
 
+			// 设为null，方便GC回收
+			methods = null;
+			patterns = null;
+
 			// 未匹配到，执行当前过滤器
-			isNeedDoFilter = true;
 			return true;
-		} finally {
-			if (isNeedDoFilter != null) {
-				needDoFilterCaches.put(cacheKey, isNeedDoFilter);
-			}
-		}
+		});
 	}
 
 	//endregion
