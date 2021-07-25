@@ -100,16 +100,16 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	 * @return 返回原request或包装后的request
 	 */
 	private HttpServletRequest decryptQueryString(HttpServletRequest request) {
-		// 待解密的queryString
+		// 获取`待解密的queryString`
 		String encryptedQueryString = this.getEncryptedQueryString(request);
 
-		// 如果不为空，才需要解密
+		// 如果`待解密的queryString`不为空，才需要解密
 		if (StringUtils.hasLength(encryptedQueryString)) {
 			// 处理被转义的字符
 			encryptedQueryString = cryptoHandler.handleEscapedChars(encryptedQueryString);
 
 			// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() || cryptoHandler.checkFormat(encryptedQueryString)) {
+			if (cryptoHandlerProperties.isNeedEncryptInputParam() || cryptoHandler.isEncryptedQueryString(encryptedQueryString)) {
 				try {
 					// 解密
 					String queryString = cryptoHandler.decrypt(encryptedQueryString);
@@ -134,10 +134,9 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
 					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
 						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", e);
+					} else {
+						return request;
 					}
-
-					// 不强制要求调用端加密，则忽略此异常，直接返回
-					return request;
 				}
 			}
 		}

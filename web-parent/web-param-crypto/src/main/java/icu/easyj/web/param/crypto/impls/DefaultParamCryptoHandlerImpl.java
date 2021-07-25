@@ -88,7 +88,7 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	}
 
 	@Override
-	public boolean checkFormat(String encryptedParam) {
+	public boolean isEncryptedQueryString(String encryptedParam) {
 		// 当前处理器加密后是base64，所以为base64时，就说明为加密过的参数，需要解密
 		return Base64Utils.isBase64(encryptedParam);
 	}

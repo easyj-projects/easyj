@@ -53,9 +53,9 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessageConverter {
+public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessageConverter {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(FastjsonParamCryptoHttpMessageConverter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FastJsonParamCryptoHttpMessageConverter.class);
 
 	/**
 	 * 参数加密解密过滤器（需要使用到它的校验功能）
@@ -67,7 +67,7 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 	 *
 	 * @param paramCryptoFilter 参数加密解密过滤器
 	 */
-	public FastjsonParamCryptoHttpMessageConverter(@NonNull ParamCryptoFilter paramCryptoFilter) {
+	public FastJsonParamCryptoHttpMessageConverter(@NonNull ParamCryptoFilter paramCryptoFilter) {
 		Assert.notNull(paramCryptoFilter, "'paramCryptoFilter' must be not null");
 		this.paramCryptoFilter = paramCryptoFilter;
 	}
@@ -110,6 +110,9 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 			if (body == null) {
 				// 获取输入流并转换为body字符串
 				body = StreamUtils.copyToString(inputMessage.getBody(), fastJsonConfig.getCharset());
+			} else {
+				// 这里主动释放掉
+				BodyHolder.removeBody();
 			}
 
 			// 判断是否需要解密
@@ -134,12 +137,18 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 			}
 
 			// JSON数据转换为指定入参类型的数据
-			return JSON.parseObject(bodyJsonStr,
+			Object result = JSON.parseObject(bodyJsonStr,
 					type,
 					fastJsonConfig.getParserConfig(),
 					fastJsonConfig.getParseProcess(),
 					JSON.DEFAULT_PARSER_FEATURE,
 					fastJsonConfig.getFeatures());
+
+			// 设为null，方便GC回收
+			body = null;
+			bodyJsonStr = null;
+
+			return result;
 		} catch (JSONException e) {
 			throw new HttpMessageNotReadableException("JSON parse error: " + e.getMessage(), e, inputMessage);
 		} catch (IOException e) {
@@ -166,7 +175,7 @@ public class FastjsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 		// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
 		return (this.paramCryptoFilter.getCryptoHandlerProperties().isNeedEncryptInputParam()
-				|| this.paramCryptoFilter.getCryptoHandler().checkFormat(body));
+				|| this.paramCryptoFilter.getCryptoHandler().isEncryptedQueryString(body));
 	}
 
 	//endregion

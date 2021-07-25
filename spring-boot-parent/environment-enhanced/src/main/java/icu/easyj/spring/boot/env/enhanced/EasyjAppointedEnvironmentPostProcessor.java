@@ -217,7 +217,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 		// 加载全局加密算法配置，并生成加密算法实例到`GlobalCrypto`类中
 		// 在这里就加载的原因：环境加载过程中，有个函数式配置需要用到`GlobalCrypto`：${easyj.crypto.decrypt('xxxxxxxxbase64')}
-		// 见：CryptoPropertyUtils
+		// @see CryptoPropertyUtils
 		this.loadGlobalCrypto(environment);
 	}
 

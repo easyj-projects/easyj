@@ -43,7 +43,7 @@ public interface IParamCryptoHandler {
 	 * @param encryptedParam 待解密参数
 	 * @return 是否需要解密
 	 */
-	default boolean checkFormat(String encryptedParam) {
+	default boolean isEncryptedQueryString(String encryptedParam) {
 		return true;
 	}
 

@@ -26,7 +26,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import icu.easyj.config.GlobalConfigs;
 import icu.easyj.spring.boot.autoconfigure.util.FilterRegistrationUtils;
 import icu.easyj.web.constant.FilterOrderConstants;
-import icu.easyj.web.param.crypto.FastjsonParamCryptoHttpMessageConverter;
+import icu.easyj.web.param.crypto.FastJsonParamCryptoHttpMessageConverter;
 import icu.easyj.web.param.crypto.IParamCryptoFilterProperties;
 import icu.easyj.web.param.crypto.IParamCryptoHandler;
 import icu.easyj.web.param.crypto.IParamCryptoHandlerProperties;
@@ -140,8 +140,8 @@ public class EasyjParamCryptoAutoConfiguration {
 		@Override
 		public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 			// 创建：JSON入参解密/出参加密 消息转换器
-			FastjsonParamCryptoHttpMessageConverter httpMessageConverter =
-					new FastjsonParamCryptoHttpMessageConverter(this.paramCryptoFilter);
+			FastJsonParamCryptoHttpMessageConverter httpMessageConverter =
+					new FastJsonParamCryptoHttpMessageConverter(this.paramCryptoFilter);
 			httpMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
 
 			// 创建：fastjson配置
