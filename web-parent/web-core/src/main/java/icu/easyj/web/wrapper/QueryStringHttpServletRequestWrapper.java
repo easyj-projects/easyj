@@ -54,6 +54,9 @@ public class QueryStringHttpServletRequestWrapper extends HttpServletRequestWrap
 		this.queryString = queryString == null ? "" : queryString;
 	}
 
+
+	//region Override
+
 	@NonNull
 	@Override
 	public String getQueryString() {
@@ -100,4 +103,6 @@ public class QueryStringHttpServletRequestWrapper extends HttpServletRequestWrap
 			return values[0];
 		}
 	}
+
+	//endregion
 }
