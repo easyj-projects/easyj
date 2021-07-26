@@ -53,6 +53,31 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-test</artifactId>
 		</dependency>
+
+
+		<!-- 其他依赖 -->
+
+		<!-- Hutool -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+		</dependency>
+
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
