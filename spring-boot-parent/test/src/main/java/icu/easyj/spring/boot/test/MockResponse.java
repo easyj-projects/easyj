@@ -23,6 +23,8 @@ import icu.easyj.spring.boot.test.result.ContentTypeResult;
 import icu.easyj.spring.boot.test.result.GenericContentResult;
 import icu.easyj.spring.boot.test.result.HeaderResult;
 import icu.easyj.spring.boot.test.result.StatusResult;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -34,13 +36,9 @@ import org.springframework.test.web.servlet.ResultActions;
  */
 public class MockResponse {
 
-	private final ResultActions resultActions;
-
 	private final MvcResult mvcResult;
 
-
 	public MockResponse(ResultActions resultActions) {
-		this.resultActions = resultActions;
 		this.mvcResult = resultActions.andReturn();
 	}
 
@@ -80,6 +78,21 @@ public class MockResponse {
 	 */
 	public ContentResult content() {
 		return new ContentResult(this, this.getContentAsString());
+	}
+
+	//endregion
+
+
+	//region 快捷校验响应结果的方法
+
+	/**
+	 * 请求成功，响应200
+	 *
+	 * @return self
+	 */
+	public MockResponse isOk() {
+		Assertions.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+		return this;
 	}
 
 	//endregion
