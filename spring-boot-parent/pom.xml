@@ -56,13 +56,13 @@
 		<module>dependencies</module>
 		<module>bom</module>
 
-		<module>core</module>
+		<module>boot-core</module>
 		<module>environment-enhanced</module>
 
 		<module>autoconfigure</module>
 		<module>starters-parent</module>
 
-		<module>test</module>
+		<module>boot-test</module>
 	</modules>
 
 	<scm>
