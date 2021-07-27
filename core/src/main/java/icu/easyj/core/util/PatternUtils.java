@@ -49,7 +49,7 @@ public abstract class PatternUtils {
 	public static final String REGEX_CODE_STRING1 = "'((?<=\\\\)'|[^'])*'"; // 单引号字符串
 	public static final String REGEX_CODE_STRING2 = "\"((?<=\\\\)\"|[^\"])*\""; // 双引号字符串
 	public static final String REGEX_CODE_STRING = "(" + REGEX_CODE_STRING1 + "|" + REGEX_CODE_STRING2 + ")"; // 单引号或双引号字符串
-	public static final String REGEX_CODE_NUMBER = "(\\d+((\\.\\d*)|[lL])?)"; // 数字
+	public static final String REGEX_CODE_NUMBER = "-?(\\d+((\\.\\d*)|[lL])?)"; // 数字
 	public static final String REGEX_CODE_BOOLEAN = "(true|false)"; // 布尔类型
 	public static final String REGEX_CODE_NULL = "null"; // null
 	// 所有类型的数据值匹配
