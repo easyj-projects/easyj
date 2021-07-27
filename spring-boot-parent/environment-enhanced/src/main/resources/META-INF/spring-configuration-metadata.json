@@ -111,7 +111,7 @@
 	],
 	"hints": [
 		{
-			"name": "easyj.global.crypto.algorithm",
+			"name": "easyj.global.asymmetric-crypto.algorithm",
 			"values": [
 				{
 					"value": "RSA",
@@ -132,7 +132,17 @@
 				{
 					"value": "ECIES",
 					"description": "非对称加密算法（集成加密方案，Elliptic Curve Integrate Encrypt Scheme）."
-				},
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.global.symmetric-crypto.algorithm",
+			"values": [
 				{
 					"value": "AES\/CBC\/PKCS7Padding",
 					"description": "对称加密算法."
@@ -161,19 +171,6 @@
 			"providers": [
 				{
 					"name": "any"
-				}
-			]
-		},
-		{
-			"name": "easyj.global.crypto.type",
-			"values": [
-				{
-					"value": "Asymmetric",
-					"description": "非对称加密算法."
-				},
-				{
-					"value": "Symmetric",
-					"description": "对称加密算法."
 				}
 			]
 		}
