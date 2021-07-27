@@ -12,7 +12,7 @@
 
 	<groupId>icu.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot-bom</artifactId>
-	<version>0.1.5-SNAPSHOT</version>
+	<version>0.1.5</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
