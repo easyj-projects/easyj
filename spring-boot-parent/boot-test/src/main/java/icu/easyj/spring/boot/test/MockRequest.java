@@ -194,6 +194,7 @@ public class MockRequest {
 	 * 发送模拟请求
 	 *
 	 * @return mockResponse 模拟响应
+	 * @throws Exception 异常
 	 */
 	public MockResponse send() throws Exception {
 		ResultActions resultActions = this.mockMvc.perform(builder);
