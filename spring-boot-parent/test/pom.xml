@@ -53,6 +53,10 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-test</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+		</dependency>
 
 
 		<!-- 其他依赖 -->

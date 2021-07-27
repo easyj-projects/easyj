@@ -30,7 +30,8 @@ public abstract class ThrowableUtils {
 	 * 从异常信息中查找对应的异常
 	 *
 	 * @param t          异常信息
-	 * @param causeClass 要查找的目标异常类型
+	 * @param causeClass 要查找的目标异常类
+	 * @param <T>        异常类型
 	 * @return cause 目标异常
 	 */
 	@Nullable
@@ -51,7 +52,7 @@ public abstract class ThrowableUtils {
 	 * 判断异常信息中是否包含指定的异常类型
 	 *
 	 * @param t          异常信息
-	 * @param causeClass 要查找的目标异常类型
+	 * @param causeClass 要查找的目标异常类
 	 * @return isContains 返回是否包含
 	 */
 	public static boolean containsCause(@NonNull Throwable t, @NonNull Class<? extends Throwable> causeClass) {
