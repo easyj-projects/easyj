@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.test.result;
 
 import java.util.function.Consumer;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Assertions;
  */
 public class ContentResult extends GenericContentResult<String, ContentResult> {
 
-	public ContentResult(EasyjMockResponse mockResponse, String content) {
+	public ContentResult(MockResponse mockResponse, String content) {
 		super(mockResponse, content);
 	}
 

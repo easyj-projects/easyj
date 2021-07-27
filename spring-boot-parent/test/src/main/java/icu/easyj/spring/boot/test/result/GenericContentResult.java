@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.test.result;
 
 import java.util.function.Consumer;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 
 /**
  * 泛型响应内容结果
@@ -34,7 +34,7 @@ public class GenericContentResult<T, R extends GenericContentResult<T, R>> exten
 	 * @param mockResponse 模拟响应
 	 * @param content      响应内容
 	 */
-	public GenericContentResult(EasyjMockResponse mockResponse, T content) {
+	public GenericContentResult(MockResponse mockResponse, T content) {
 		super(mockResponse);
 		this.content = content;
 	}

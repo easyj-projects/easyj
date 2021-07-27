@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -27,7 +27,7 @@ public class HeaderResult extends BaseResult {
 
 	private final MockHttpServletResponse response;
 
-	public HeaderResult(EasyjMockResponse mockResponse, MockHttpServletResponse response) {
+	public HeaderResult(MockResponse mockResponse, MockHttpServletResponse response) {
 		super(mockResponse);
 		this.response = response;
 	}

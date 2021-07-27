@@ -105,9 +105,9 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟GET请求
 	 */
-	protected EasyjMockRequest mockGet(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockGet(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(urlTemplate, uriVars);
-		return new EasyjMockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 
 	/**
@@ -117,9 +117,9 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟POST请求
 	 */
-	protected EasyjMockRequest mockPost(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockPost(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(urlTemplate, uriVars);
-		return new EasyjMockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 
 	/**
@@ -129,9 +129,9 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟PUT请求
 	 */
-	protected EasyjMockRequest mockPut(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockPut(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.put(urlTemplate, uriVars);
-		return new EasyjMockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 
 	/**
@@ -141,9 +141,9 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟PATCH请求
 	 */
-	protected EasyjMockRequest mockPatch(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockPatch(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.patch(urlTemplate, uriVars);
-		return new EasyjMockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 
 	/**
@@ -153,8 +153,8 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟DELETE请求
 	 */
-	protected EasyjMockRequest mockDelete(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockDelete(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(urlTemplate, uriVars);
-		return new EasyjMockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 }

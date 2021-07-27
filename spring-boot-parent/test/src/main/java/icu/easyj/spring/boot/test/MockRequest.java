@@ -31,13 +31,14 @@ import org.springframework.util.MultiValueMap;
  *
  * @author wangliang181230
  */
-public class EasyjMockRequest {
+public class MockRequest {
 
 	private final MockMvc mockMvc;
 
 	private final MockHttpServletRequestBuilder builder;
 
-	public EasyjMockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder) {
+
+	public MockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder) {
 		Assert.notNull(mockMvc, "'mockMvc' must be not null");
 		Assert.notNull(builder, "'builder' must be not null");
 
@@ -67,7 +68,7 @@ public class EasyjMockRequest {
 	 * @param contentType 内容类型枚举
 	 * @return self
 	 */
-	public EasyjMockRequest contentType(MediaType contentType) {
+	public MockRequest contentType(MediaType contentType) {
 		Assert.notNull(contentType, "'contentType' must not be null");
 		this.builder.contentType(contentType);
 		return this;
@@ -79,7 +80,7 @@ public class EasyjMockRequest {
 	 * @param contentType 内容类型
 	 * @return self
 	 */
-	public EasyjMockRequest contentType(String contentType) {
+	public MockRequest contentType(String contentType) {
 		Assert.notNull(contentType, "'contentType' must not be null");
 		this.builder.contentType(contentType);
 		return this;
@@ -96,7 +97,7 @@ public class EasyjMockRequest {
 	 * @param charset 字符编码枚举
 	 * @return self
 	 */
-	public EasyjMockRequest characterEncoding(Charset charset) {
+	public MockRequest characterEncoding(Charset charset) {
 		Assert.notNull(charset, "'charset' must not be null");
 		this.builder.characterEncoding(charset.name());
 		return this;
@@ -108,7 +109,7 @@ public class EasyjMockRequest {
 	 * @param charsetEncoding 字符编码
 	 * @return self
 	 */
-	public EasyjMockRequest characterEncoding(String charsetEncoding) {
+	public MockRequest characterEncoding(String charsetEncoding) {
 		Assert.notNull(charsetEncoding, "'encoding' must not be null");
 		this.builder.characterEncoding(charsetEncoding);
 		return this;
@@ -125,7 +126,7 @@ public class EasyjMockRequest {
 	 * @param content 内容
 	 * @return self
 	 */
-	public EasyjMockRequest content(byte[] content) {
+	public MockRequest content(byte[] content) {
 		this.builder.content(content);
 		return this;
 	}
@@ -136,7 +137,7 @@ public class EasyjMockRequest {
 	 * @param content 内容
 	 * @return self
 	 */
-	public EasyjMockRequest content(String content) {
+	public MockRequest content(String content) {
 		this.builder.content(content);
 		this.characterEncoding(StandardCharsets.UTF_8);
 		return this;
@@ -148,7 +149,7 @@ public class EasyjMockRequest {
 	 * @param content 内容对象
 	 * @return self
 	 */
-	public EasyjMockRequest content(Object content) {
+	public MockRequest content(Object content) {
 		String contentJson = JSONUtil.toJsonStr(content);
 		this.content(contentJson);
 		this.contentType(MediaType.APPLICATION_JSON);
@@ -168,7 +169,7 @@ public class EasyjMockRequest {
 	 * @param values 参数值
 	 * @return self
 	 */
-	public EasyjMockRequest queryParam(String name, String... values) {
+	public MockRequest queryParam(String name, String... values) {
 		this.builder.queryParam(name, values);
 		return this;
 	}
@@ -179,7 +180,7 @@ public class EasyjMockRequest {
 	 * @param params 参数集合
 	 * @return self
 	 */
-	public EasyjMockRequest queryParams(MultiValueMap<String, String> params) {
+	public MockRequest queryParams(MultiValueMap<String, String> params) {
 		this.builder.queryParams(params);
 		return this;
 	}
@@ -191,8 +192,8 @@ public class EasyjMockRequest {
 	 *
 	 * @return mockResponse 模拟响应
 	 */
-	public EasyjMockResponse send() throws Exception {
+	public MockResponse send() throws Exception {
 		ResultActions resultActions = this.mockMvc.perform(builder);
-		return new EasyjMockResponse(resultActions);
+		return new MockResponse(resultActions);
 	}
 }

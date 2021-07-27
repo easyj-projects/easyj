@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class StatusResult extends BaseResult {
 
 	private final HttpStatus status;
 
-	public StatusResult(EasyjMockResponse mockResponse, int status) {
+	public StatusResult(MockResponse mockResponse, int status) {
 		super(mockResponse);
 		this.status = HttpStatus.valueOf(status);
 	}
@@ -37,12 +37,12 @@ public class StatusResult extends BaseResult {
 
 	//region HttpStatus.value 响应状态值
 
-	public EasyjMockResponse is(int expectedStatusValue) {
+	public MockResponse is(int expectedStatusValue) {
 		Assertions.assertEquals(expectedStatusValue, this.status.value());
 		return super.end();
 	}
 
-	public EasyjMockResponse is(int... expectedStatusValueArr) {
+	public MockResponse is(int... expectedStatusValueArr) {
 		for (int expectedStatusValue : expectedStatusValueArr) {
 			if (expectedStatusValue == this.status.value()) {
 				return super.end();
@@ -51,12 +51,12 @@ public class StatusResult extends BaseResult {
 		throw new AssertionFailedError("响应状态不在预期。", expectedStatusValueArr, this.status.value());
 	}
 
-	public EasyjMockResponse is(HttpStatus expectedStatus) {
+	public MockResponse is(HttpStatus expectedStatus) {
 		Assertions.assertEquals(expectedStatus, this.status);
 		return super.end();
 	}
 
-	public EasyjMockResponse is(HttpStatus... expectedStatusArr) {
+	public MockResponse is(HttpStatus... expectedStatusArr) {
 		for (HttpStatus expectedStatus : expectedStatusArr) {
 			if (expectedStatus == this.status) {
 				return super.end();
@@ -65,7 +65,7 @@ public class StatusResult extends BaseResult {
 		throw new AssertionFailedError("响应状态不在预期。", expectedStatusArr, this.status.value());
 	}
 
-	public EasyjMockResponse isOk() {
+	public MockResponse isOk() {
 		return this.is(HttpStatus.OK);
 	}
 
@@ -80,7 +80,7 @@ public class StatusResult extends BaseResult {
 	 * @param expectedStatusSeries 预期系列
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isSeries(HttpStatus.Series expectedStatusSeries) {
+	public MockResponse isSeries(HttpStatus.Series expectedStatusSeries) {
 		Assertions.assertEquals(expectedStatusSeries, this.status.series());
 		return super.end();
 	}
@@ -91,7 +91,7 @@ public class StatusResult extends BaseResult {
 	 * @param expectedStatusSeriesArr 预期系列数组
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isSeries(HttpStatus.Series... expectedStatusSeriesArr) {
+	public MockResponse isSeries(HttpStatus.Series... expectedStatusSeriesArr) {
 		for (HttpStatus.Series expectedStatusSeries : expectedStatusSeriesArr) {
 			if (expectedStatusSeries == this.status.series()) {
 				return super.end();
@@ -105,7 +105,7 @@ public class StatusResult extends BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isInformationalSeries() {
+	public MockResponse isInformationalSeries() {
 		return isSeries(HttpStatus.Series.INFORMATIONAL);
 	}
 
@@ -114,7 +114,7 @@ public class StatusResult extends BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isSuccessfulSeries() {
+	public MockResponse isSuccessfulSeries() {
 		return isSeries(HttpStatus.Series.SUCCESSFUL);
 	}
 
@@ -123,7 +123,7 @@ public class StatusResult extends BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isRedirectionSeries() {
+	public MockResponse isRedirectionSeries() {
 		return isSeries(HttpStatus.Series.REDIRECTION);
 	}
 
@@ -132,7 +132,7 @@ public class StatusResult extends BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isClientErrorSeries() {
+	public MockResponse isClientErrorSeries() {
 		return isSeries(HttpStatus.Series.CLIENT_ERROR);
 	}
 
@@ -141,7 +141,7 @@ public class StatusResult extends BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse isServerErrorSeries() {
+	public MockResponse isServerErrorSeries() {
 		return isSeries(HttpStatus.Series.SERVER_ERROR);
 	}
 

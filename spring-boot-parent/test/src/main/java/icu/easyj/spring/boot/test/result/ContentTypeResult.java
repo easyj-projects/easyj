@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
 
@@ -28,7 +28,7 @@ public class ContentTypeResult extends BaseResult {
 
 	private final String contentType;
 
-	public ContentTypeResult(EasyjMockResponse mockResponse, String contentType) {
+	public ContentTypeResult(MockResponse mockResponse, String contentType) {
 		super(mockResponse);
 		this.contentType = contentType.toLowerCase();
 	}
@@ -36,7 +36,7 @@ public class ContentTypeResult extends BaseResult {
 
 	//region ContentType
 
-	public EasyjMockResponse is(String expectedContentType) {
+	public MockResponse is(String expectedContentType) {
 		Assertions.assertTrue(contentType.startsWith(expectedContentType));
 		return super.end();
 	}
@@ -46,11 +46,11 @@ public class ContentTypeResult extends BaseResult {
 
 	//region MediaType
 
-	public EasyjMockResponse is(String expectedMediaType, String expectedMediaSubtype) {
+	public MockResponse is(String expectedMediaType, String expectedMediaSubtype) {
 		return is(expectedMediaType + "/" + expectedMediaSubtype);
 	}
 
-	public EasyjMockResponse is(MediaType expectedMediaType) {
+	public MockResponse is(MediaType expectedMediaType) {
 		return is(expectedMediaType.getType(), expectedMediaType.getSubtype());
 	}
 

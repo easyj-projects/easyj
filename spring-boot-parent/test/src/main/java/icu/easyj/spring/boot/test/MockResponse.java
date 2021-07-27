@@ -32,14 +32,14 @@ import org.springframework.test.web.servlet.ResultActions;
  *
  * @author wangliang181230
  */
-public class EasyjMockResponse {
+public class MockResponse {
 
 	private final ResultActions resultActions;
 
 	private final MvcResult mvcResult;
 
 
-	public EasyjMockResponse(ResultActions resultActions) {
+	public MockResponse(ResultActions resultActions) {
 		this.resultActions = resultActions;
 		this.mvcResult = resultActions.andReturn();
 	}

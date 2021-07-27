@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import icu.easyj.spring.boot.test.EasyjMockResponse;
+import icu.easyj.spring.boot.test.MockResponse;
 
 /**
  * 响应结果基类
@@ -24,14 +24,14 @@ import icu.easyj.spring.boot.test.EasyjMockResponse;
  */
 public class BaseResult {
 
-	protected final EasyjMockResponse mockResponse;
+	protected final MockResponse mockResponse;
 
 	/**
 	 * 构造函数
 	 *
 	 * @param mockResponse 模拟响应
 	 */
-	public BaseResult(EasyjMockResponse mockResponse) {
+	public BaseResult(MockResponse mockResponse) {
 		this.mockResponse = mockResponse;
 	}
 
@@ -42,7 +42,7 @@ public class BaseResult {
 	 *
 	 * @return mockResponse
 	 */
-	public EasyjMockResponse end() {
+	public MockResponse end() {
 		return this.mockResponse;
 	}
 }
