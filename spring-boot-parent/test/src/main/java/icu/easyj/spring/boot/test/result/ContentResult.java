@@ -45,6 +45,11 @@ public class ContentResult extends GenericContentResult<String, ContentResult> {
 		return this;
 	}
 
+	//endregion
+
+
+	//region Override
+
 	/**
 	 * 可自定义验证方法
 	 *
@@ -53,8 +58,7 @@ public class ContentResult extends GenericContentResult<String, ContentResult> {
 	 */
 	@Override
 	public ContentResult is(Consumer<String> expectedValidateFun) {
-		expectedValidateFun.accept(super.content);
-		return this;
+		return (ContentResult)super.is(expectedValidateFun);
 	}
 
 	//endregion

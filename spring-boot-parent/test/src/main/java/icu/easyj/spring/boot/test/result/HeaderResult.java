@@ -16,6 +16,7 @@
 package icu.easyj.spring.boot.test.result;
 
 import icu.easyj.spring.boot.test.MockResponse;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -35,7 +36,18 @@ public class HeaderResult extends BaseResult {
 
 	//region 校验方法
 
-	// TODO: 校验方法待开发
+	/**
+	 * 判断响应头的值
+	 *
+	 * @param headerName          响应头键
+	 * @param expectedHeaderValue 响应头预期值
+	 * @return self
+	 */
+	public HeaderResult is(String headerName, Object expectedHeaderValue) {
+		Object headerValue = response.getHeaderValue(headerName);
+		Assertions.assertEquals(expectedHeaderValue, headerValue);
+		return this;
+	}
 
 	//endregion
 }
