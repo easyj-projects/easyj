@@ -18,7 +18,7 @@ package icu.easyj.spring.boot.env.enhanced.util;
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.crypto.GlobalCrypto;
-import icu.easyj.crypto.ICrypto;
+import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -53,10 +53,10 @@ public abstract class CryptoPropertyUtils {
 							return "";
 						}
 
-						// 获取全局加密算法，并判空
-						ICrypto crypto = GlobalCrypto.getCrypto();
+						// 获取全局非对称加密算法
+						IAsymmetricCrypto crypto = GlobalCrypto.getAsymmetricCrypto();
 						if (crypto == null) {
-							throw new ConfigurationException(GlobalCrypto.ERROR_MESSAGE);
+							throw new ConfigurationException(GlobalCrypto.ASYMMETRIC_ERROR_MESSAGE);
 						}
 
 						// 配置信息解密

@@ -24,9 +24,9 @@ import java.util.List;
 import cn.hutool.core.io.IORuntimeException;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.crypto.CryptoFactory;
-import icu.easyj.crypto.CryptoType;
 import icu.easyj.crypto.GlobalCrypto;
-import icu.easyj.crypto.ICrypto;
+import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
+import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
@@ -43,7 +43,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_CRYPTO_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_ASYMMETRIC_CRYPTO_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_SYMMETRIC_CRYPTO_PREFIX;
 
 /**
  * 加载 `EasyJ约定的目录下的配置文件` 的环境处理器
@@ -227,44 +228,49 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * @param environment 环境
 	 */
 	private void loadGlobalCrypto(Environment environment) {
-		// 读取配置：加密算法类型
-		CryptoType type = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".type", CryptoType.class);
-		if (type == null) {
-			return;
-		}
+		//region 加载全局的非对称加密算法
 
-		// 读取配置：加密算法
-		String algorithm = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".algorithm");
-		Assert.notNull(algorithm, "加密算法 '" + GLOBAL_CRYPTO_PREFIX + ".algorithm' 未配置，无法生成全局加密算法.");
-		// 读取配置：私钥
-		String privateKey = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".private-key");
-		Assert.notNull(privateKey, "加密私钥 '" + GLOBAL_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局加密算法.");
+		// 读取配置：非对称加密算法
+		String algorithm = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".algorithm");
+		if (StringUtils.hasLength(algorithm)) {
+			// 读取配置：私钥
+			String privateKey = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key");
+			Assert.notNull(privateKey, "非对称加密私钥 '" + GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局非对称加密算法.");
 
-		// 加密算法接口
-		ICrypto crypto;
-
-		// 非对称加密算法
-		if (type == CryptoType.Asymmetric) {
 			// 读取配置：公钥
-			String publicKey = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".public-key");
-			Assert.notNull(publicKey, "加密公钥 '" + GLOBAL_CRYPTO_PREFIX + ".public-key' 未配置，无法生成全局加密算法.");
+			String publicKey = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".public-key");
+			Assert.notNull(publicKey, "非对称加密公钥 '" + GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".public-key' 未配置，无法生成全局非对称加密算法.");
 
 			// 生成非对称加密算法实例
-			crypto = CryptoFactory.getAsymmetricCrypto(algorithm, publicKey, privateKey);
+			IAsymmetricCrypto asymmetricCrypto = CryptoFactory.getAsymmetricCrypto(algorithm, publicKey, privateKey);
+			// 设置全局非对称加密算法
+			GlobalCrypto.setAsymmetricCrypto(asymmetricCrypto);
 		}
-		// 对称加密算法
-		else {
+
+		//endregion
+
+
+		//region 加载全局的对称加密算法
+
+		// 读取配置：非对称加密算法
+		algorithm = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".algorithm");
+		if (StringUtils.hasLength(algorithm)) {
+			// 读取配置：密钥
+			String key = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key");
+			Assert.notNull(key, "对称加密密钥 '" + GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key' 未配置，无法生成全局对称加密算法.");
+
 			// 读取配置：偏移向量
-			String iv = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".iv");
-			// 公钥、私钥编码
-			Charset charset = environment.getProperty(GLOBAL_CRYPTO_PREFIX + ".charset", Charset.class, StandardCharsets.UTF_8);
+			String iv = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".iv");
+			// 读取配置：密钥编码
+			Charset charset = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".charset", Charset.class, StandardCharsets.UTF_8);
 
-			// 生成非对称加密算法实例
-			crypto = CryptoFactory.getSymmetricCrypto(algorithm, privateKey, iv, charset);
+			// 生成对称加密算法实例
+			ISymmetricCrypto symmetricCrypto = CryptoFactory.getSymmetricCrypto(algorithm, key, iv, charset);
+			// 设置全局对称加密算法
+			GlobalCrypto.setSymmetricCrypto(symmetricCrypto);
 		}
 
-		// 设置全局加密算法实例
-		GlobalCrypto.setCrypto(crypto);
+		//endregion
 	}
 
 	/**

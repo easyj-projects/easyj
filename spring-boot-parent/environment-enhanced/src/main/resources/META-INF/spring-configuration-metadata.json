@@ -7,37 +7,43 @@
 	],
 	"properties": [
 		{
-			"name": "easyj.global.crypto.type",
-			"type": "icu.easyj.crypto.CryptoType",
-			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
-			"description": "全局的加密算法类型."
-		},
-		{
-			"name": "easyj.global.crypto.algorithm",
+			"name": "easyj.global.asymmetric-crypto.algorithm",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
-			"description": "全局的加密算法."
+			"description": "全局的非对称加密算法."
 		},
 		{
-			"name": "easyj.global.crypto.private-key",
+			"name": "easyj.global.asymmetric-crypto.private-key",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
-			"description": "全局的加密算法密钥."
+			"description": "全局的非对称加密算法密钥."
 		},
 		{
-			"name": "easyj.global.crypto.public-key",
+			"name": "easyj.global.asymmetric-crypto.public-key",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的非对称加密算法公钥."
 		},
 		{
-			"name": "easyj.global.crypto.iv",
+			"name": "easyj.global.symmetric-crypto.algorithm",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的对称加密算法."
+		},
+		{
+			"name": "easyj.global.symmetric-crypto.key",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "全局的对称加密算法密钥."
+		},
+		{
+			"name": "easyj.global.symmetric-crypto.iv",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法偏移向量."
 		},
 		{
-			"name": "easyj.global.crypto.charset",
+			"name": "easyj.global.symmetric-crypto.charset",
 			"type": "java.nio.charset.Charset",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法编码."

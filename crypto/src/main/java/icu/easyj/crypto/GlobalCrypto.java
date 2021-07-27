@@ -15,6 +15,9 @@
  */
 package icu.easyj.crypto;
 
+import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
+import icu.easyj.crypto.symmetric.ISymmetricCrypto;
+
 /**
  * 全局加密算法
  *
@@ -22,15 +25,36 @@ package icu.easyj.crypto;
  */
 public abstract class GlobalCrypto {
 
-	public static final String ERROR_MESSAGE = "全局加密算法为空，请先配置`easyj.global.crypto.*`中的必须配置项。";
+	//region 非对称加密算法
 
-	private static ICrypto crypto;
+	public static final String ASYMMETRIC_ERROR_MESSAGE = "全局非加密算法为空，请先配置`easyj.global.asymmetric-crypto.*`中必须的配置项。";
 
-	public static ICrypto getCrypto() {
-		return crypto;
+	private static IAsymmetricCrypto asymmetricCrypto;
+
+	public static IAsymmetricCrypto getAsymmetricCrypto() {
+		return asymmetricCrypto;
 	}
 
-	public static void setCrypto(ICrypto crypto) {
-		GlobalCrypto.crypto = crypto;
+	public static void setAsymmetricCrypto(IAsymmetricCrypto asymmetricCrypto) {
+		GlobalCrypto.asymmetricCrypto = asymmetricCrypto;
 	}
+
+	//endregion
+
+
+	//region 对称加密算法
+
+	public static final String SYMMETRIC_ERROR_MESSAGE = "全局加密算法为空，请先配置`easyj.global.symmetric-crypto.*`中必须的配置项。";
+
+	private static ISymmetricCrypto symmetricCrypto;
+
+	public static ISymmetricCrypto getSymmetricCrypto() {
+		return symmetricCrypto;
+	}
+
+	public static void setSymmetricCrypto(ISymmetricCrypto symmetricCrypto) {
+		GlobalCrypto.symmetricCrypto = symmetricCrypto;
+	}
+
+	//endregion
 }

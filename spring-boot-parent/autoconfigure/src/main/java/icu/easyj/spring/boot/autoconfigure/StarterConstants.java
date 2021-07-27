@@ -30,7 +30,8 @@ public interface StarterConstants {
 
 	// Global
 	String GLOBAL_PREFIX = PREFIX + ".global";
-	String GLOBAL_CRYPTO_PREFIX = GLOBAL_PREFIX + ".crypto";
+	String GLOBAL_ASYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".asymmetric-crypto";
+	String GLOBAL_SYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".symmetric-crypto";
 
 
 	// Web
