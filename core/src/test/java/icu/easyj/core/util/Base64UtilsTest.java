@@ -55,11 +55,11 @@ class Base64UtilsTest {
 		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx=="));
 		Assertions.assertFalse(Base64Utils.isBase64("aa_xxx=="));
 
-		// case: Hutool的Base64，支持URL安全的字符符
-		Assertions.assertTrue(Base64.isBase64("aaaxxx=f")); // TODO: 该行测试用例，确认hutool是否修复了该问题
-		Assertions.assertTrue(Base64.isBase64("aaaxxx="));
-		Assertions.assertTrue(Base64.isBase64("aa-xxx="));
-		Assertions.assertTrue(Base64.isBase64("aa_xxx=="));
+		// case: Hutool的Base64，支持URL安全的字符
+		Assertions.assertFalse(Base64.isBase64("aaaxxx=f")); // hutool已支持对末尾=号的校验
+		Assertions.assertTrue(Base64.isBase64("aaaxxx=")); // hutool不校验长度，所以为true
+		Assertions.assertTrue(Base64.isBase64("aa-xxx=")); // hutool支持URL安全字符替换
+		Assertions.assertTrue(Base64.isBase64("aa_xxx==")); // hutool支持URL安全字符替换
 
 
 		//region case: 性能比Hutool高
@@ -70,7 +70,7 @@ class Base64UtilsTest {
 		long t0;
 		long costHutool, costEasyj;
 
-		//region 预热
+		//region 预热一下
 
 		//easyj
 		for (int i = count; i > 0; --i) {
