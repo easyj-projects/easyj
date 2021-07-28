@@ -17,6 +17,7 @@ package icu.easyj.web.param.crypto;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -153,20 +154,23 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	private String getEncryptedQueryString(HttpServletRequest request) {
 		if (StringUtils.hasLength(super.filterProperties.getQueryStringName())) {
 			// 判断是否有参数未加密（如果强制要求入参加密）
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() && request.getParameterMap().size() > 1) {
-				Set<String> parameterNames = new HashSet<>(request.getParameterMap().keySet());
-				parameterNames.remove(super.filterProperties.getQueryStringName());
+			if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
+				Map<String, String[]> parameterMap = request.getParameterMap();
+				if (parameterMap != null && parameterMap.size() > 1) {
+					Set<String> parameterNames = new HashSet<>(parameterMap.keySet());
+					parameterNames.remove(super.filterProperties.getQueryStringName());
 
-				String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
+					String errorMsg = "存在未加密的参数：" + icu.easyj.core.util.StringUtils.toString(parameterNames);
 
-				// 设为null，方便GC回收
-				parameterNames.clear();
-				parameterNames = null;
+					// 设为null，方便GC回收
+					parameterNames.clear();
+					parameterNames = null;
 
-				if (LOGGER.isInfoEnabled()) {
-					LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
+					if (LOGGER.isInfoEnabled()) {
+						LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
+					}
+					throw new ParamNotEncryptedException(errorMsg);
 				}
-				throw new ParamNotEncryptedException(errorMsg);
 			}
 
 			// 取指定参数名的参数值作为加密过的参数

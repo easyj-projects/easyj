@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
+import icu.easyj.core.util.NetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -95,7 +96,7 @@ public abstract class LocalIpPropertyUtils {
 	 * @return localIp
 	 */
 	public static String getFirstIp() {
-		List<String> ipList = TempNetUtils.getIpList();
+		List<String> ipList = NetUtils.getIpList();
 
 		if (CollectionUtils.isEmpty(ipList)) {
 			String ip = "127.0.0.1";
@@ -113,7 +114,7 @@ public abstract class LocalIpPropertyUtils {
 	 * @return localIp
 	 */
 	public static String getLocalIpByPattern(String[] patterns) {
-		List<String> ipList = TempNetUtils.getIpList();
+		List<String> ipList = NetUtils.getIpList();
 
 		String ip;
 		if (CollectionUtils.isEmpty(ipList)) {

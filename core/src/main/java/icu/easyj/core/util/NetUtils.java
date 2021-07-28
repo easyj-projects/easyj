@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.env.enhanced.util;
+package icu.easyj.core.util;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -30,10 +30,7 @@ import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
  *
  * @author wangliang181230
  */
-public abstract class TempNetUtils {
-
-	private static final String LOCALHOST = "127.0.0.1";
-	private static final String ANY_HOST = "0.0.0.0";
+public abstract class NetUtils {
 
 	//region IP
 
@@ -42,6 +39,8 @@ public abstract class TempNetUtils {
 	 */
 	public static List<String> getIpList() {
 		List<String> result = new ArrayList<>();
+
+		// 获取所有网卡，并依次获取IP
 		Enumeration<NetworkInterface> netInterfaces;
 		try {
 			netInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -60,6 +59,7 @@ public abstract class TempNetUtils {
 			// do nothing
 		}
 
+		// 如果没有获取到，则获取默认的IP
 		if (result.isEmpty()) {
 			String ip = getIp();
 			result.add(ip);
