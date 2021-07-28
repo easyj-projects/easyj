@@ -99,7 +99,8 @@ public abstract class ExcelExportUtils {
 	 * @throws IOException IO异常
 	 */
 	public static void saveToFile(Workbook book, String targetFilePath) throws IOException {
-		FileOutputStream fos = new FileOutputStream(targetFilePath);
-		book.write(fos);
+		try (FileOutputStream fos = new FileOutputStream(targetFilePath)) {
+			book.write(fos);
+		}
 	}
 }
