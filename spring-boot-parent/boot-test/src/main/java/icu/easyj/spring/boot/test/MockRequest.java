@@ -17,11 +17,13 @@ package icu.easyj.spring.boot.test;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.hutool.json.JSONUtil;
+import icu.easyj.core.util.ReflectionUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
@@ -31,20 +33,13 @@ import org.springframework.util.MultiValueMap;
  *
  * @author wangliang181230
  */
-public class MockRequest {
+public class MockRequest extends MockGetRequest {
 
-	private final MockMvc mockMvc;
-
-	private final MockHttpServletRequestBuilder builder;
+	private final Map<String, Object> contentMap = new HashMap<>();
 
 
 	public MockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder) {
-		Assert.notNull(mockMvc, "'mockMvc' must be not null");
-		Assert.notNull(builder, "'builder' must be not null");
-
-		this.mockMvc = mockMvc;
-		this.builder = builder;
-
+		super(mockMvc, builder);
 		this.init();
 	}
 
@@ -70,7 +65,7 @@ public class MockRequest {
 	 */
 	public MockRequest contentType(MediaType contentType) {
 		Assert.notNull(contentType, "'contentType' must not be null");
-		this.builder.contentType(contentType);
+		super.builder.contentType(contentType);
 		return this;
 	}
 
@@ -82,7 +77,7 @@ public class MockRequest {
 	 */
 	public MockRequest contentType(String contentType) {
 		Assert.notNull(contentType, "'contentType' must not be null");
-		this.builder.contentType(contentType);
+		super.builder.contentType(contentType);
 		return this;
 	}
 
@@ -99,7 +94,7 @@ public class MockRequest {
 	 */
 	public MockRequest characterEncoding(Charset charset) {
 		Assert.notNull(charset, "'charset' must not be null");
-		this.builder.characterEncoding(charset.name());
+		super.builder.characterEncoding(charset.name());
 		return this;
 	}
 
@@ -111,7 +106,7 @@ public class MockRequest {
 	 */
 	public MockRequest characterEncoding(String charsetEncoding) {
 		Assert.notNull(charsetEncoding, "'encoding' must not be null");
-		this.builder.characterEncoding(charsetEncoding);
+		super.builder.characterEncoding(charsetEncoding);
 		return this;
 	}
 
@@ -127,7 +122,10 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest content(byte[] content) {
-		this.builder.content(content);
+		if (!this.contentMap.isEmpty()) {
+			throw new RuntimeException("`MockRequest.content(byte[] content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+		}
+		super.builder.content(content);
 		return this;
 	}
 
@@ -138,7 +136,10 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest content(String content) {
-		this.builder.content(content);
+		if (!this.contentMap.isEmpty()) {
+			throw new RuntimeException("`MockRequest.content(String content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+		}
+		super.builder.content(content);
 		this.characterEncoding(StandardCharsets.UTF_8);
 		return this;
 	}
@@ -150,17 +151,38 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest content(Object content) {
-		String contentJson = JSONUtil.toJsonStr(content);
-		this.content(contentJson);
+		if (!this.contentMap.isEmpty()) {
+			throw new RuntimeException("`MockRequest.content(Object content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+		}
+		this.content(JSONUtil.toJsonStr(content));
 		this.contentType(MediaType.APPLICATION_JSON);
+		return this;
+	}
+
+	/**
+	 * 设置完整内容
+	 *
+	 * @param contentJsonKey   JSON参数键
+	 * @param contentJsonValue JSON参数值
+	 * @return self
+	 */
+	public MockRequest content(String contentJsonKey, Object contentJsonValue) {
+		try {
+			if (ReflectionUtils.getFieldValue(super.builder, "content") != null) {
+				throw new RuntimeException("`MockRequest.content(String, Object)`与其他几个重构方法不能混合使用");
+			}
+		} catch (NoSuchFieldException ignore) {
+		}
+		this.contentMap.put(contentJsonKey, contentJsonValue);
 		return this;
 	}
 
 	//endregion
 
 
-	//region Query String
+	//region Override start
 
+	//region Query String
 
 	/**
 	 * 设置查询参数
@@ -169,6 +191,7 @@ public class MockRequest {
 	 * @param values 参数值
 	 * @return self
 	 */
+	@Override
 	public MockRequest queryParam(String name, String... values) {
 		this.builder.queryParam(name, values);
 		return this;
@@ -180,6 +203,7 @@ public class MockRequest {
 	 * @param params 参数集合
 	 * @return self
 	 */
+	@Override
 	public MockRequest queryParams(MultiValueMap<String, String> params) {
 		this.builder.queryParams(params);
 		return this;
@@ -188,7 +212,7 @@ public class MockRequest {
 	//endregion
 
 
-	// region Send 发送请求
+	//region Send 发送请求
 
 	/**
 	 * 发送模拟请求
@@ -196,10 +220,18 @@ public class MockRequest {
 	 * @return mockResponse 模拟响应
 	 * @throws Exception 异常
 	 */
+	@Override
 	public MockResponse send() throws Exception {
-		ResultActions resultActions = this.mockMvc.perform(builder);
-		return new MockResponse(resultActions);
+		if (!this.contentMap.isEmpty()) {
+			Map<String, Object> content = new HashMap<>(this.contentMap);
+			this.contentMap.clear();
+			this.content(content);
+		}
+
+		return super.send();
 	}
 
 	//endregion
+
+	//endregion Override end
 }
