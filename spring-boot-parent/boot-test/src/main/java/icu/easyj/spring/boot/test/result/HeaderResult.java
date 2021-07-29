@@ -15,9 +15,13 @@
  */
 package icu.easyj.spring.boot.test.result;
 
+import java.util.regex.Pattern;
+
+import icu.easyj.core.util.PatternUtils;
 import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.util.PatternMatchUtils;
 
 /**
  * 响应头结果
@@ -46,6 +50,39 @@ public class HeaderResult extends BaseResult {
 	public HeaderResult is(String headerName, Object expectedHeaderValue) {
 		Object headerValue = response.getHeaderValue(headerName);
 		Assertions.assertEquals(expectedHeaderValue, headerValue);
+		return this;
+	}
+
+	/**
+	 * 根据匹配串判断响应头的值的格式
+	 *
+	 * @param headerName                 响应头键
+	 * @param expectedHeaderValuePattern 响应头预期格式串，可以是正则，也可以是简易匹配串
+	 * @return self
+	 */
+	public HeaderResult isMatch(String headerName, String expectedHeaderValuePattern) {
+		Object headerValue = response.getHeaderValue(headerName);
+		Assertions.assertNotNull(headerValue);
+		if (expectedHeaderValuePattern.startsWith("^")) {
+			Assertions.assertTrue(PatternUtils.validate(expectedHeaderValuePattern, headerValue.toString()));
+		} else {
+			Assertions.assertTrue(PatternMatchUtils.simpleMatch(expectedHeaderValuePattern, headerValue.toString()));
+		}
+
+		return this;
+	}
+
+	/**
+	 * 根据正则判断响应头的值的格式
+	 *
+	 * @param headerName                 响应头键
+	 * @param expectedHeaderValuePattern 响应头预期格式正则
+	 * @return self
+	 */
+	public HeaderResult isMatch(String headerName, Pattern expectedHeaderValuePattern) {
+		Object headerValue = response.getHeaderValue(headerName);
+		Assertions.assertNotNull(headerValue);
+		Assertions.assertTrue(PatternUtils.validate(expectedHeaderValuePattern, headerValue.toString()));
 		return this;
 	}
 

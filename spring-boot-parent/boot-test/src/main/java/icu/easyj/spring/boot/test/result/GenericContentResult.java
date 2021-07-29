@@ -24,7 +24,7 @@ import icu.easyj.spring.boot.test.MockResponse;
  *
  * @author wangliang181230
  */
-public class GenericContentResult<T, R extends GenericContentResult<T, R>> extends BaseResult {
+public class GenericContentResult<T> extends BaseResult {
 
 	protected final T content;
 
@@ -46,11 +46,11 @@ public class GenericContentResult<T, R extends GenericContentResult<T, R>> exten
 	 * 可自定义验证方法
 	 *
 	 * @param expectedValidateFun 预期值的验证函数
-	 * @return self
+	 * @return mockResponse
 	 */
-	public GenericContentResult<T, R> is(Consumer<T> expectedValidateFun) {
+	public MockResponse is(Consumer<T> expectedValidateFun) {
 		expectedValidateFun.accept(content);
-		return this;
+		return super.end();
 	}
 
 	//endregion

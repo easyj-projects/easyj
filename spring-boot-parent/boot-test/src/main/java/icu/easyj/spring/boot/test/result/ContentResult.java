@@ -15,17 +15,19 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
+import icu.easyj.core.util.PatternUtils;
 import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.util.PatternMatchUtils;
 
 /**
  * 响应头结果
  *
  * @author wangliang181230
  */
-public class ContentResult extends GenericContentResult<String, ContentResult> {
+public class ContentResult extends GenericContentResult<String> {
 
 	public ContentResult(MockResponse mockResponse, String content) {
 		super(mockResponse, content);
@@ -45,20 +47,30 @@ public class ContentResult extends GenericContentResult<String, ContentResult> {
 		return this;
 	}
 
-	//endregion
-
-
-	//region Override
-
 	/**
-	 * 可自定义验证方法
+	 * 根据匹配串，校验响应内容格式
 	 *
-	 * @param expectedValidateFun 预期值的验证函数
+	 * @param expectedContentPattern 预期响应内容格式，可以是正则，也可以是简易匹配串
 	 * @return self
 	 */
-	@Override
-	public ContentResult is(Consumer<String> expectedValidateFun) {
-		return (ContentResult)super.is(expectedValidateFun);
+	public ContentResult isMatch(String expectedContentPattern) {
+		if (expectedContentPattern.startsWith("^")) {
+			Assertions.assertTrue(PatternUtils.validate(expectedContentPattern, super.content));
+		} else {
+			Assertions.assertTrue(PatternMatchUtils.simpleMatch(expectedContentPattern, super.content));
+		}
+		return this;
+	}
+
+	/**
+	 * 根据正则，校验响应内容格式
+	 *
+	 * @param expectedContentPattern 预期响应内容格式正则
+	 * @return self
+	 */
+	public ContentResult isMatch(Pattern expectedContentPattern) {
+		Assertions.assertTrue(PatternUtils.validate(expectedContentPattern, super.content));
+		return this;
 	}
 
 	//endregion
