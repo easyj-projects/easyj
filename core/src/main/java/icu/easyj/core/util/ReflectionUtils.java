@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.exception.SkipCallbackWrapperException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -52,9 +53,20 @@ public abstract class ReflectionUtils {
 	//region Constant
 
 	/**
-	 * The cache CLASS_FIELDS_CACHE
+	 * The cache CLASS_FIELDS_CACHE: Class -> Field[]
+	 * Warning: This cache has no static or synthetic fields.
 	 */
 	private static final Map<Class<?>, Field[]> CLASS_FIELDS_CACHE = new ConcurrentHashMap<>();
+
+	/**
+	 * The cache FIELD_CACHE: Class -> fieldName -> Field
+	 */
+	private static final Map<Class<?>, Map<String, Field>> FIELD_CACHE = new ConcurrentHashMap<>();
+
+	/**
+	 * The cache METHOD_CACHE: Class -> methodName|paramClassName1,paramClassName2,...,paramClassNameN -> Method
+	 */
+	private static final Map<Class<?>, Map<String, Method>> METHOD_CACHE = new ConcurrentHashMap<>();
 
 	/**
 	 * The cache SINGLETON_CACHE
@@ -189,28 +201,49 @@ public abstract class ReflectionUtils {
 		Assert.notNull(clazz, "clazz must be not null");
 		Assert.notNull(fieldName, "fieldName must be not null");
 
-		if (fieldName.contains(StrPool.DOT)) {
-			String[] fieldNameArr = fieldName.split("\\.");
+		Map<String, Field> fieldMap = MapUtils.computeIfAbsent(FIELD_CACHE, clazz, k -> new ConcurrentHashMap<>());
 
-			Class<?> currentClass = clazz;
-			Field currentField = getField(clazz, fieldNameArr[0]);
-			for (int i = 1; i < fieldNameArr.length; ++i) {
-				currentField = getField(currentClass, fieldNameArr[i]);
-				currentClass = currentField.getType();
-			}
-			return currentField;
-		} else {
-			Class<?> cl = clazz;
-			while (cl != null && cl != Object.class && !cl.isInterface()) {
-				try {
-					return cl.getDeclaredField(fieldName);
-				} catch (NoSuchFieldException e) {
-					cl = cl.getSuperclass();
+		Field field;
+		try {
+			field = MapUtils.computeIfAbsent(fieldMap, fieldName, k -> {
+				if (fieldName.contains(StrPool.DOT)) {
+					String[] fieldNameArr = fieldName.split("\\.");
+					try {
+						Class<?> currentClass = clazz;
+						Field currentField = getField(clazz, fieldNameArr[0]);
+						for (int i = 1; i < fieldNameArr.length; ++i) {
+							currentField = getField(currentClass, fieldNameArr[i]);
+							currentClass = currentField.getType();
+						}
+						return currentField;
+					} catch (NoSuchFieldException e) {
+						throw new SkipCallbackWrapperException(e);
+					}
+				} else {
+					Class<?> cl = clazz;
+					while (cl != null && cl != Object.class && !cl.isInterface()) {
+						try {
+							return cl.getDeclaredField(fieldName);
+						} catch (NoSuchFieldException e) {
+							cl = cl.getSuperclass();
+						}
+					}
+
+					// 未找到Field
+					return null;
 				}
-			}
+			});
+		} catch (SkipCallbackWrapperException e) {
+			throw (NoSuchFieldException)e.getCause();
+		}
 
+		if (field == null) {
 			throw new NoSuchFieldException("field not found: " + clazz.getName() + ", field: " + fieldName);
 		}
+
+		setAccessible(field);
+
+		return field;
 	}
 
 	/**
@@ -420,16 +453,40 @@ public abstract class ReflectionUtils {
 			throws NoSuchMethodException, SecurityException {
 		Assert.notNull(clazz, "clazz must be not null");
 
-		Class<?> cl = clazz;
-		while (cl != null) {
-			try {
-				return cl.getDeclaredMethod(methodName, parameterTypes);
-			} catch (NoSuchMethodException e) {
-				cl = cl.getSuperclass();
+		Map<String, Method> methodMap = MapUtils.computeIfAbsent(METHOD_CACHE, clazz, k -> new ConcurrentHashMap<>());
+
+		String cacheKey = generateMethodCacheKey(methodName, parameterTypes);
+		Method method = MapUtils.computeIfAbsent(methodMap, cacheKey, k -> {
+			Class<?> cl = clazz;
+			while (cl != null) {
+				try {
+					return cl.getDeclaredMethod(methodName, parameterTypes);
+				} catch (NoSuchMethodException e) {
+					cl = cl.getSuperclass();
+				}
 			}
+			// 未找到Method
+			return null;
+		});
+
+		if (method == null) {
+			throw new NoSuchMethodException("method not found: " + methodToString(clazz, methodName, parameterTypes));
 		}
 
-		throw new NoSuchMethodException("method not found: " + methodToString(clazz, methodName, parameterTypes));
+		setAccessible(method);
+
+		return method;
+	}
+
+	private static String generateMethodCacheKey(String methodName, Class<?>[] parameterTypes) {
+		StringBuilder key = new StringBuilder(methodName);
+		if (parameterTypes != null && parameterTypes.length > 0) {
+			key.append("|");
+			for (Class<?> parameterType : parameterTypes) {
+				key.append(parameterType.getName()).append(",");
+			}
+		}
+		return key.toString();
 	}
 
 	/**
