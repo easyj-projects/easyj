@@ -33,7 +33,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.text.StrPool;
-import icu.easyj.core.exception.SkipCallbackWrapperException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -204,37 +203,35 @@ public abstract class ReflectionUtils {
 		Map<String, Field> fieldMap = MapUtils.computeIfAbsent(FIELD_CACHE, clazz, k -> new ConcurrentHashMap<>());
 
 		Field field;
-		try {
-			field = MapUtils.computeIfAbsent(fieldMap, fieldName, k -> {
-				if (fieldName.contains(StrPool.DOT)) {
-					String[] fieldNameArr = fieldName.split("\\.");
-					try {
-						Class<?> currentClass = clazz;
-						Field currentField = getField(clazz, fieldNameArr[0]);
-						for (int i = 1; i < fieldNameArr.length; ++i) {
-							currentField = getField(currentClass, fieldNameArr[i]);
-							currentClass = currentField.getType();
-						}
-						return currentField;
-					} catch (NoSuchFieldException e) {
-						throw new SkipCallbackWrapperException(e);
-					}
-				} else {
-					Class<?> cl = clazz;
-					while (cl != null && cl != Object.class && !cl.isInterface()) {
-						try {
-							return cl.getDeclaredField(fieldName);
-						} catch (NoSuchFieldException e) {
-							cl = cl.getSuperclass();
-						}
-					}
-
-					// 未找到Field
-					return null;
+		if (fieldName.contains(StrPool.DOT)) {
+			field = fieldMap.get(fieldName);
+			if (field == null) {
+				String[] fieldNameArr = fieldName.split("\\.");
+				Class<?> currentClass = clazz;
+				Field currentField = getField(clazz, fieldNameArr[0]);
+				for (int i = 1; i < fieldNameArr.length; ++i) {
+					currentField = getField(currentClass, fieldNameArr[i]);
+					currentClass = currentField.getType();
 				}
+				field = currentField;
+
+				// 设置缓存
+				fieldMap.put(fieldName, field);
+			}
+		} else {
+			field = MapUtils.computeIfAbsent(fieldMap, fieldName, k -> {
+				Class<?> cl = clazz;
+				while (cl != null && cl != Object.class && !cl.isInterface()) {
+					try {
+						return cl.getDeclaredField(fieldName);
+					} catch (NoSuchFieldException e) {
+						cl = cl.getSuperclass();
+					}
+				}
+
+				// 未找到Field
+				return null;
 			});
-		} catch (SkipCallbackWrapperException e) {
-			throw (NoSuchFieldException)e.getCause();
 		}
 
 		if (field == null) {
