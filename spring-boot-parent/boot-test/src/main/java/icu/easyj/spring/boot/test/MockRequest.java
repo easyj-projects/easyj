@@ -51,6 +51,23 @@ public class MockRequest {
 	}
 
 
+	//region Header
+
+	/**
+	 * 设置头信息
+	 *
+	 * @param name   头信息键
+	 * @param values 头信息值
+	 * @return self
+	 */
+	public MockRequest header(String name, Object... values) {
+		this.builder.header(name, values);
+		return this;
+	}
+
+	//endregion
+
+
 	//region Content-Type
 
 	/**
