@@ -89,22 +89,26 @@ public class HeaderResult extends BaseResult {
 	/**
 	 * 判断响应头是否存在
 	 *
-	 * @param headerName 响应头键
+	 * @param headerNames 响应头键数组
 	 * @return self
 	 */
-	public HeaderResult contains(String headerName) {
-		Assertions.assertTrue(response.containsHeader(headerName));
+	public HeaderResult contains(String... headerNames) {
+		for (String headerName : headerNames) {
+			Assertions.assertTrue(response.containsHeader(headerName));
+		}
 		return this;
 	}
 
 	/**
 	 * 判断响应头是否不存在
 	 *
-	 * @param headerName 响应头键
+	 * @param headerNames 响应头键数组
 	 * @return self
 	 */
-	public HeaderResult notContains(String headerName) {
-		Assertions.assertFalse(response.containsHeader(headerName));
+	public HeaderResult notContains(String... headerNames) {
+		for (String headerName : headerNames) {
+			Assertions.assertFalse(response.containsHeader(headerName));
+		}
 		return this;
 	}
 
