@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-poi-parent</artifactId>
+		<artifactId>poi-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
