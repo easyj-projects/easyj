@@ -105,9 +105,9 @@ public class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟GET请求
 	 */
-	protected MockGetRequest mockGet(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockGet(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(urlTemplate, uriVars);
-		return new MockGetRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder);
 	}
 
 	/**
