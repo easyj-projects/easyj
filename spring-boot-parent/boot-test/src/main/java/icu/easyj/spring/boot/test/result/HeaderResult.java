@@ -86,5 +86,27 @@ public class HeaderResult extends BaseResult {
 		return this;
 	}
 
+	/**
+	 * 判断响应头是否存在
+	 *
+	 * @param headerName 响应头键
+	 * @return self
+	 */
+	public HeaderResult contains(String headerName) {
+		Assertions.assertTrue(response.containsHeader(headerName));
+		return this;
+	}
+
+	/**
+	 * 判断响应头是否不存在
+	 *
+	 * @param headerName 响应头键
+	 * @return self
+	 */
+	public HeaderResult notContains(String headerName) {
+		Assertions.assertFalse(response.containsHeader(headerName));
+		return this;
+	}
+
 	//endregion
 }
