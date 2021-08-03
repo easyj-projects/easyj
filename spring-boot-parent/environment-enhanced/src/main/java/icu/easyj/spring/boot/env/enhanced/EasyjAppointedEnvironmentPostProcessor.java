@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.hutool.core.io.IORuntimeException;
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.GlobalCrypto;
@@ -31,6 +32,7 @@ import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
+import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
@@ -183,6 +185,9 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				continue;
 			}
 
+			// 先加载所有配置源过滤器
+			List<IPropertySourceFilter> filters = EnhancedServiceLoader.loadAll(IPropertySourceFilter.class);
+
 			// 读取配置文件，并添加配置源
 			// 根据文件名倒序加载。文件名越靠前，配置优先级越高
 			String path;
@@ -196,9 +201,15 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				}
 
 				// 加载配置文件为配置源
-				PropertySource<?> propertySource = EnvironmentUtils.buildPropertySource(path, true);
+				OriginTrackedMapPropertySource propertySource = EnvironmentUtils.buildPropertySource(path, true);
 				if (propertySource == null) {
 					// 配置文件不存在或为空
+					continue;
+				}
+
+				// 执行配置源过滤器，用于过滤部分无需加载的配置源
+				if (this.doFilters(propertySource, filters)) {
+					// 过滤掉当前配置源
 					continue;
 				}
 
@@ -220,6 +231,24 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		// 在这里就加载的原因：环境加载过程中，有个函数式配置需要用到`GlobalCrypto`：${easyj.crypto.decrypt('xxxxxxxxbase64')}
 		// @see CryptoPropertyUtils
 		this.loadGlobalCrypto(environment);
+	}
+
+	/**
+	 * 执行过滤器
+	 *
+	 * @param propertySource 配置源
+	 * @param filters        过滤器列表
+	 * @return 是否需要过滤，true=过滤掉|false=不过滤
+	 */
+	private boolean doFilters(OriginTrackedMapPropertySource propertySource, List<IPropertySourceFilter> filters) {
+		if (!CollectionUtils.isEmpty(filters)) {
+			for (IPropertySourceFilter filter : filters) {
+				if (filter.doFilter(propertySource)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

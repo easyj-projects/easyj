@@ -7,6 +7,12 @@
 	],
 	"properties": [
 		{
+			"name": "easyj.config.activate.on-class",
+			"type": "java.lang.Class<?>",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnClassPropertySourceFilter",
+			"description": "配置源过滤器接口实现：基于OnClass条件判断."
+		},
+		{
 			"name": "easyj.global.asymmetric-crypto.algorithm",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",

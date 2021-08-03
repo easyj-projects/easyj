@@ -169,7 +169,7 @@ public abstract class EnvironmentUtils {
 	 * @return propertySource 配置源
 	 */
 	@Nullable
-	public static PropertySource<?> buildPropertySource(@NonNull String configFilePath, boolean immutable) {
+	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
 		// 加载配置文件
 		Properties properties = buildProperties(configFilePath);
 		if (properties == null || properties.isEmpty()) {
