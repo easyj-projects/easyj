@@ -16,17 +16,21 @@
 package icu.easyj.spring.boot.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
+import cn.hutool.core.text.StrPool;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.DefaultPropertiesPropertySource;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
@@ -237,13 +241,79 @@ public abstract class EnvironmentUtils {
 	public static String getEnv(@NonNull ConfigurableEnvironment environment) {
 		String env = environment.getProperty(ENV_KEY);
 		if (!StringUtils.hasText(env)) {
-			env = environment.getProperty("spring.profiles.active");
+			env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
 			if (!StringUtils.hasText(env)) {
-				env = environment.getProperty("spring.profiles.active[0]");
+				env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME + "[0]");
 			}
 		}
 
 		return env;
+	}
+
+	/**
+	 * 获取配置列表
+	 *
+	 * @param environment 环境
+	 * @return propertyList 配置值列表
+	 */
+	@NonNull
+	public static List<String> getPropertyList(@NonNull ConfigurableEnvironment environment, String propertyName) {
+		List<String> propertyList = new ArrayList<>();
+		String property = environment.getProperty(propertyName);
+		if (property != null) {
+			propertyList.add(property);
+		} else {
+			int i = 0;
+			while ((property = environment.getProperty(propertyName + "[" + i + "]")) != null) {
+				propertyList.add(property);
+				i++;
+			}
+		}
+		return propertyList;
+	}
+
+	/**
+	 * 获取配置列表
+	 *
+	 * @param propertySource 配置源
+	 * @return propertyList 配置值列表
+	 */
+	@NonNull
+	public static List<String> getPropertyList(@NonNull PropertySource<?> propertySource, String propertyName) {
+		List<String> propertyList = new ArrayList<>();
+		String property = getPropertyStr(propertySource, propertyName);
+		if (property != null) {
+			if (property.contains(StrPool.COMMA)) {
+				String[] propertyArr = property.split(StrPool.COMMA);
+				for (String pro : propertyArr) {
+					if (StringUtils.hasText(pro)) {
+						propertyList.add(pro.trim());
+					}
+				}
+			} else {
+				if (StringUtils.hasText(property)) {
+					propertyList.add(property.trim());
+				}
+			}
+		} else {
+			int i = 0;
+			while ((property = getPropertyStr(propertySource, propertyName + "[" + i + "]")) != null) {
+				if (StringUtils.hasText(property)) {
+					propertyList.add(property.trim());
+				}
+				i++;
+			}
+		}
+		return propertyList;
+	}
+
+	private static String getPropertyStr(@NonNull PropertySource<?> propertySource, String propertyName) {
+		Object propertyObj = propertySource.getProperty(propertyName);
+		if (propertyObj == null) {
+			return null;
+		} else {
+			return String.valueOf(propertyObj);
+		}
 	}
 
 	//endregion

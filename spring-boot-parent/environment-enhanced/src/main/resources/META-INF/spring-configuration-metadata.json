@@ -8,7 +8,7 @@
 	"properties": [
 		{
 			"name": "easyj.config.activate.on-class",
-			"type": "java.lang.Class<?>",
+			"type": "java.util.List<java.lang.Class>",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnClassPropertySourceFilter",
 			"description": "配置源过滤器接口实现：基于OnClass条件判断."
 		},
@@ -52,7 +52,8 @@
 			"name": "easyj.global.symmetric-crypto.charset",
 			"type": "java.nio.charset.Charset",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
-			"description": "全局的对称加密算法编码."
+			"description": "全局的对称加密算法编码.",
+			"defaultValue": "UTF-8"
 		},
 		{
 			"name": "easyj.crypto.decrypt",

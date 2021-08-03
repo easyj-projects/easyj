@@ -15,7 +15,8 @@
  */
 package icu.easyj.spring.boot.env.enhanced.impls;
 
-import cn.hutool.core.text.StrPool;
+import java.util.List;
+
 import icu.easyj.core.loader.LoadLevel;
 import org.springframework.util.StringUtils;
 
@@ -37,19 +38,13 @@ public class OnClassPropertySourceFilter extends AbstractConditionPropertySource
 	//region Override
 
 	@Override
-	public boolean doConditionFilter(String conditionPropertyValue) {
+	public boolean doConditionFilter(List<String> conditionPropertyList) {
 		try {
-			if (conditionPropertyValue.contains(StrPool.COMMA)) {
-				String[] propertyArr = conditionPropertyValue.split(StrPool.COMMA);
-				for (String property : propertyArr) {
-					if (StringUtils.hasText(property)) {
-						// 尝试加载类
-						this.loadClass(property);
-					}
+			for (String property : conditionPropertyList) {
+				if (StringUtils.hasLength(property)) {
+					// 尝试加载类
+					this.loadClass(property);
 				}
-			} else {
-				// 尝试加载类
-				this.loadClass(conditionPropertyValue);
 			}
 			// 类存在，不过滤
 			return false;
@@ -69,6 +64,6 @@ public class OnClassPropertySourceFilter extends AbstractConditionPropertySource
 	 * @throws ClassNotFoundException 类未找到的异常
 	 */
 	private void loadClass(String className) throws ClassNotFoundException {
-		Class.forName(className.trim(), false, Thread.currentThread().getContextClassLoader());
+		Class.forName(className, false, Thread.currentThread().getContextClassLoader());
 	}
 }

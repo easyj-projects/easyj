@@ -15,9 +15,11 @@
  */
 package icu.easyj.spring.boot.env.enhanced.impls;
 
+import java.util.List;
+
 import icu.easyj.spring.boot.env.enhanced.IPropertySourceFilter;
+import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
-import org.springframework.util.StringUtils;
 
 /**
  * 配置源条件过滤器
@@ -34,26 +36,20 @@ public abstract class AbstractConditionPropertySourceFilter implements IProperty
 
 	@Override
 	public boolean doFilter(OriginTrackedMapPropertySource propertySource) {
-		Object propertyObj = propertySource.getProperty(propertyName);
-		if (propertyObj == null) {
+		List<String> propertyList = EnvironmentUtils.getPropertyList(propertySource, propertyName);
+		if (propertyList.isEmpty()) {
 			// 配置不存在，不过滤
 			return false;
 		}
 
-		String propertyStr = propertyObj.toString();
-		if (!StringUtils.hasLength(propertyStr)) {
-			// 配置为空，不过滤
-			return false;
-		}
-
-		return doConditionFilter(propertyStr);
+		return doConditionFilter(propertyList);
 	}
 
 	/**
 	 * 执行条件过滤
 	 *
-	 * @param conditionPropertyValue 条件配置值
+	 * @param conditionPropertyList 条件配置列表
 	 * @return 是否需要过滤，true=过滤掉|false=不过滤
 	 */
-	abstract boolean doConditionFilter(String conditionPropertyValue);
+	abstract boolean doConditionFilter(List<String> conditionPropertyList);
 }
