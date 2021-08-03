@@ -25,6 +25,7 @@ import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.util.ExcelUtils;
 import icu.easyj.spring.boot.test.MockResponse;
 import icu.easyj.test.exception.TestException;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**
@@ -52,6 +53,17 @@ public class FileExportResult extends BaseResult {
 
 
 	//region 自定义校验方法
+
+	/**
+	 * 判断文件byte数组的长度
+	 *
+	 * @param expectedLength 预期长度
+	 * @return self
+	 */
+	public FileExportResult is(int expectedLength) {
+		Assertions.assertEquals(expectedLength, fileBytes.length);
+		return this;
+	}
 
 	/**
 	 * 如果文件是excel，则通过excel工具类，解析为列表数据
