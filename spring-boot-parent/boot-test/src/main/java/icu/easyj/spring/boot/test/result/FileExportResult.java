@@ -33,10 +33,7 @@ import org.springframework.test.web.servlet.ResultActions;
  *
  * @author wangliang181230
  */
-public class FileExportResult extends BaseResult {
-
-	protected final ResultActions resultActions;
-	protected final byte[] fileBytes;
+public class FileExportResult extends GenericContentResult<byte[]> {
 
 	/**
 	 * 构造函数
@@ -46,9 +43,7 @@ public class FileExportResult extends BaseResult {
 	 * @param fileBytes     文件byte数组
 	 */
 	public FileExportResult(MockResponse mockResponse, ResultActions resultActions, byte[] fileBytes) {
-		super(mockResponse);
-		this.resultActions = resultActions;
-		this.fileBytes = fileBytes;
+		super(mockResponse, resultActions, fileBytes);
 	}
 
 
@@ -61,7 +56,7 @@ public class FileExportResult extends BaseResult {
 	 * @return self
 	 */
 	public FileExportResult is(int expectedLength) {
-		Assertions.assertEquals(expectedLength, fileBytes.length);
+		Assertions.assertEquals(expectedLength, content.length);
 		return this;
 	}
 
@@ -76,9 +71,9 @@ public class FileExportResult extends BaseResult {
 		List<T> list;
 		try {
 			if (ClassUtils.isExist("icu.easyj.poi.excel.annotation.Excel") && expectedClass.getAnnotation(Excel.class) != null) {
-				list = ExcelUtils.toList(new ByteArrayInputStream(this.fileBytes), expectedClass, null);
+				list = ExcelUtils.toList(new ByteArrayInputStream(this.content), expectedClass, null);
 			} else if (ClassUtils.isExist("cn.afterturn.easypoi.excel.ExcelImportUtil")) {
-				list = ExcelImportUtil.importExcel(new ByteArrayInputStream(this.fileBytes), expectedClass, new ImportParams());
+				list = ExcelImportUtil.importExcel(new ByteArrayInputStream(this.content), expectedClass, new ImportParams());
 			} else {
 				throw new TestException("当前未找到适合`" + expectedClass.getName() + "`类的Excel解析工具，请确定引用了相关依赖。");
 			}
