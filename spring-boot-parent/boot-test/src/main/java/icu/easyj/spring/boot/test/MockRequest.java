@@ -15,7 +15,6 @@
  */
 package icu.easyj.spring.boot.test;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -24,6 +23,8 @@ import java.util.Map;
 
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.ResourceUtils;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -212,7 +213,11 @@ public class MockRequest {
 	 */
 	public MockRequest file(String multipartParamName, String filePath) {
 		try {
-			this.multipartBuilder.file(new MockMultipartFile(multipartParamName, "", "", new FileInputStream(filePath)));
+			Resource[] resource = ResourceUtils.getResources(filePath);
+			if (resource == null || resource.length == 0) {
+				throw new AssertionError("文件不存在：" + filePath);
+			}
+			this.multipartBuilder.file(new MockMultipartFile(multipartParamName, "", "", resource[0].getInputStream()));
 		} catch (IOException e) {
 			throw new AssertionError("设置文件参数时，出现IO异常", e);
 		}

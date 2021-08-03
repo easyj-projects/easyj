@@ -33,8 +33,9 @@ public class GenericContentResult<T> extends BaseResult {
 	/**
 	 * 构造函数
 	 *
-	 * @param mockResponse 模拟响应
-	 * @param content      响应内容
+	 * @param mockResponse  模拟响应
+	 * @param resultActions 模拟返回操作
+	 * @param content       响应内容
 	 */
 	public GenericContentResult(MockResponse mockResponse, ResultActions resultActions, T content) {
 		super(mockResponse);

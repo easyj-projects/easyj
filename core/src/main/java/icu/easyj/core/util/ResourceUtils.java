@@ -41,7 +41,7 @@ public abstract class ResourceUtils {
 	public static Resource[] getResources(String locationPattern) {
 		try {
 			return RESOURCE_RESOLVER.getResources(locationPattern);
-		} catch (IOException var3) {
+		} catch (IOException e) {
 			return new Resource[0];
 		}
 	}
