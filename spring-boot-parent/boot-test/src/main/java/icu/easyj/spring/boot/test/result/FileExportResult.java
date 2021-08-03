@@ -52,7 +52,9 @@ public class FileExportResult extends BaseResult {
 	/**
 	 * 如果文件是excel，则通过excel工具类，解析为列表数据
 	 *
-	 * @return mockResponse
+	 * @param expectedClass 数据数据类
+	 * @param <T>           列表数据类型
+	 * @return listContent 列表响应内容
 	 */
 	public <T> ListContentResult<T> excelToList(Class<T> expectedClass) {
 		List<T> list;
