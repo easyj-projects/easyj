@@ -212,6 +212,10 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest file(String multipartParamName, String filePath) {
+		if (this.multipartBuilder == null) {
+			throw new AssertionError("模拟的POST请求不正确，无法使用file方法。请使用`super.mockPostMultipart(...)`方法来创建模拟请求，而不是`super.mockPost(...)`");
+		}
+
 		try {
 			Resource[] resource = ResourceUtils.getResources(filePath);
 			if (resource == null || resource.length == 0) {

@@ -124,13 +124,13 @@ public class BaseSpringBootMockMvcTest {
 	}
 
 	/**
-	 * 创建模拟POST请求，上传文件接口专用
+	 * 创建模拟POST请求，可上传文件
 	 *
 	 * @param urlTemplate 地址模板
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟DELETE请求
 	 */
-	protected MockRequest mockMultipart(String urlTemplate, Object... uriVars) {
+	protected MockRequest mockPostMultipart(String urlTemplate, Object... uriVars) {
 		MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
 		return new MockRequest(this.mockMvc, builder);
 	}
