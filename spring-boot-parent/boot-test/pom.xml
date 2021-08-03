@@ -57,9 +57,42 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-all</artifactId>
 		</dependency>
+
+
+		<!-- 可选依赖 -->
+
+		<!-- EasyJ Poi Excel -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-poi-excel</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+		<!-- AfterTurn EasyPoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>cn.afterturn</groupId>
+					<artifactId>easypoi-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>cn.afterturn</groupId>
+					<artifactId>easypoi-wps</artifactId>
+				</exclusion>
+			</exclusions>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<optional>true</optional><!--可选依赖-->
 		</dependency>
 
 
