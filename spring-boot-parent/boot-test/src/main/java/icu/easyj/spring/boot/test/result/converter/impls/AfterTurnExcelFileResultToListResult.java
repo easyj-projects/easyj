@@ -23,7 +23,6 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.util.ClassUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
 
@@ -32,15 +31,11 @@ import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "afterturn", order = 2)
+@LoadLevel(name = "afterturn", order = 2, dependOnClasses = {Excel.class, ExcelImportUtil.class})
 public class AfterTurnExcelFileResultToListResult implements IExcelFileResultToListResult {
 
 	@Override
 	public boolean isMatch(Class<?> clazz) {
-		if (!ClassUtils.isExist("cn.afterturn.easypoi.excel.ExcelImportUtil")) {
-			return false;
-		}
-
 		Field[] fields = ReflectionUtils.getAllFields(clazz);
 		for (Field field : fields) {
 			if (field.getAnnotation(Excel.class) != null) {

@@ -19,7 +19,6 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.util.ClassUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.util.ExcelUtils;
 import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
@@ -29,13 +28,12 @@ import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "easyj", order = 1)
+@LoadLevel(name = "easyj", order = 1, dependOnClasses = {Excel.class})
 public class EasyjExcelFileResultToListResult implements IExcelFileResultToListResult {
 
 	@Override
 	public boolean isMatch(Class<?> clazz) {
-		return ClassUtils.isExist("icu.easyj.poi.excel.annotation.Excel")
-				&& clazz.getAnnotation(Excel.class) != null;
+		return clazz.getAnnotation(Excel.class) != null;
 	}
 
 	@Override
