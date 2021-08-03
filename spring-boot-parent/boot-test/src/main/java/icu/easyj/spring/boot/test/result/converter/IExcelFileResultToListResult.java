@@ -42,6 +42,7 @@ public interface IExcelFileResultToListResult {
 	 * @param clazz     数据类
 	 * @param <T>       数据类型
 	 * @return list 列表数据
+	 * @throws Exception 转换失败异常
 	 */
 	<T> List<T> convert(byte[] fileBytes, Class<T> clazz) throws Exception;
 }
