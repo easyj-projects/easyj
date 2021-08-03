@@ -68,11 +68,11 @@ public class ContentResult extends GenericContentResult<String> {
 	/**
 	 * 如果响应内容为列表数据，则校验数据量
 	 *
-	 * @param size 列表数据数量
+	 * @param expectedSize 预期的列表数据数量
 	 * @return self
 	 */
-	public ContentResult is(int size) {
-		return is("$.length()", String.valueOf(size));
+	public ContentResult is(int expectedSize) {
+		return is("$.length()", String.valueOf(expectedSize));
 	}
 
 	/**
