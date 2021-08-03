@@ -70,13 +70,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- Captcha -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-captcha</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
 		<!-- Config -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>

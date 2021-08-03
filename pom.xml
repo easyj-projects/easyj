@@ -64,7 +64,6 @@
 		<module>all</module>
 		<module>bom</module>
 
-		<module>captcha</module>
 		<module>config</module>
 		<module>core</module>
 		<module>crypto</module>
