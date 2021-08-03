@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
 import icu.easyj.core.util.PatternUtils;
 import icu.easyj.spring.boot.test.MockResponse;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.PatternMatchUtils;
 
 /**
@@ -29,8 +31,8 @@ import org.springframework.util.PatternMatchUtils;
  */
 public class ContentResult extends GenericContentResult<String> {
 
-	public ContentResult(MockResponse mockResponse, String content) {
-		super(mockResponse, content);
+	public ContentResult(MockResponse mockResponse, ResultActions resultActions, String content) {
+		super(mockResponse, resultActions, content);
 	}
 
 
@@ -45,6 +47,32 @@ public class ContentResult extends GenericContentResult<String> {
 	public ContentResult is(String expectedContent) {
 		Assertions.assertEquals(expectedContent, super.content);
 		return this;
+	}
+
+	/**
+	 * 校验表达式对应的值
+	 *
+	 * @param jsonPathExpression JSON路径表达式
+	 * @param expectedValue      预期值
+	 * @return self
+	 */
+	public ContentResult is(String jsonPathExpression, Object expectedValue) {
+		try {
+			resultActions.andExpect(MockMvcResultMatchers.jsonPath(jsonPathExpression).value(expectedValue));
+			return this;
+		} catch (Exception e) {
+			throw new AssertionError("校验不通过！", e);
+		}
+	}
+
+	/**
+	 * 如果响应内容为列表数据，则校验数据量
+	 *
+	 * @param size 列表数据数量
+	 * @return self
+	 */
+	public ContentResult is(int size) {
+		return is("$.length()", String.valueOf(size));
 	}
 
 	/**

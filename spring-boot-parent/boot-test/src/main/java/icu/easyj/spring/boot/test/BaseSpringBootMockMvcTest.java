@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -119,6 +120,18 @@ public class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockPost(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(urlTemplate, uriVars);
+		return new MockRequest(this.mockMvc, builder);
+	}
+
+	/**
+	 * 创建模拟POST请求，上传文件接口专用
+	 *
+	 * @param urlTemplate 地址模板
+	 * @param uriVars     参数
+	 * @return mockRequest 模拟DELETE请求
+	 */
+	protected MockRequest mockMultipart(String urlTemplate, Object... uriVars) {
+		MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
 		return new MockRequest(this.mockMvc, builder);
 	}
 

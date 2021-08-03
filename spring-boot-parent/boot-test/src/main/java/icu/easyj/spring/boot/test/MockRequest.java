@@ -15,6 +15,8 @@
  */
 package icu.easyj.spring.boot.test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -23,9 +25,11 @@ import java.util.Map;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.util.ReflectionUtils;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
 
@@ -38,6 +42,7 @@ public class MockRequest {
 
 	protected final MockMvc mockMvc;
 	protected final MockHttpServletRequestBuilder builder;
+	protected final MockMultipartHttpServletRequestBuilder multipartBuilder;
 
 	private final Map<String, Object> contentMap = new HashMap<>();
 
@@ -48,6 +53,12 @@ public class MockRequest {
 
 		this.mockMvc = mockMvc;
 		this.builder = builder;
+
+		if (builder instanceof MockMultipartHttpServletRequestBuilder) {
+			this.multipartBuilder = (MockMultipartHttpServletRequestBuilder)builder;
+		} else {
+			this.multipartBuilder = null;
+		}
 	}
 
 
@@ -189,6 +200,26 @@ public class MockRequest {
 		this.contentMap.put(contentJsonKey, contentJsonValue);
 		return this;
 	}
+
+	//region File
+
+	/**
+	 * 设置要上传的文件
+	 *
+	 * @param multipartParamName multipart参数名
+	 * @param filePath           文件路径
+	 * @return self
+	 */
+	public MockRequest file(String multipartParamName, String filePath) {
+		try {
+			this.multipartBuilder.file(new MockMultipartFile(multipartParamName, "", "", new FileInputStream(filePath)));
+		} catch (IOException e) {
+			throw new AssertionError("设置文件参数时，出现IO异常", e);
+		}
+		return this;
+	}
+
+	//endregion
 
 	//endregion
 

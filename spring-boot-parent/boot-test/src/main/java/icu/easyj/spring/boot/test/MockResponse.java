@@ -36,9 +36,11 @@ import org.springframework.test.web.servlet.ResultActions;
  */
 public class MockResponse {
 
+	private final ResultActions resultActions;
 	private final MvcResult mvcResult;
 
 	public MockResponse(ResultActions resultActions) {
+		this.resultActions = resultActions;
 		this.mvcResult = resultActions.andReturn();
 	}
 
@@ -74,14 +76,14 @@ public class MockResponse {
 	 * @return 泛型响应内容结果
 	 */
 	public <T> GenericContentResult<T> content(Class<T> contentClass) {
-		return new GenericContentResult<>(this, this.getContent(contentClass));
+		return new GenericContentResult<>(this, this.resultActions, this.getContent(contentClass));
 	}
 
 	/**
 	 * @return 响应内容结果
 	 */
 	public ContentResult content() {
-		return new ContentResult(this, this.getContentAsString());
+		return new ContentResult(this, this.resultActions, this.getContentAsString());
 	}
 
 	//endregion
