@@ -15,15 +15,10 @@
  */
 package icu.easyj.spring.boot.test.result;
 
-import java.io.ByteArrayInputStream;
 import java.util.List;
 
-import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ImportParams;
-import icu.easyj.core.util.ClassUtils;
-import icu.easyj.poi.excel.annotation.Excel;
-import icu.easyj.poi.excel.util.ExcelUtils;
 import icu.easyj.spring.boot.test.MockResponse;
+import icu.easyj.spring.boot.test.result.converter.ExcelFileResultToListResultUtils;
 import icu.easyj.test.exception.TestException;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.test.web.servlet.ResultActions;
@@ -70,17 +65,11 @@ public class FileExportResult extends GenericContentResult<byte[]> {
 	public <T> ListContentResult<T> excelToList(Class<T> expectedClass) {
 		List<T> list;
 		try {
-			if (ClassUtils.isExist("icu.easyj.poi.excel.annotation.Excel") && expectedClass.getAnnotation(Excel.class) != null) {
-				list = ExcelUtils.toList(new ByteArrayInputStream(this.content), expectedClass, null);
-			} else if (ClassUtils.isExist("cn.afterturn.easypoi.excel.ExcelImportUtil")) {
-				list = ExcelImportUtil.importExcel(new ByteArrayInputStream(this.content), expectedClass, new ImportParams());
-			} else {
-				throw new TestException("当前未找到适合`" + expectedClass.getName() + "`类的Excel解析工具，请确定引用了相关依赖。");
-			}
+			list = ExcelFileResultToListResultUtils.toList(this.content, expectedClass);
 		} catch (TestException e) {
 			throw e;
 		} catch (Exception e) {
-			throw new TestException("文件转列表失败！", e);
+			throw new TestException("Excel文件转为列表数据失败！", e);
 		}
 		return new ListContentResult<>(super.mockResponse, resultActions, list);
 	}
