@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.PatternMatchUtils;
 
 /**
- * 响应头结果
+ * 响应内容结果
  *
  * @author wangliang181230
  */

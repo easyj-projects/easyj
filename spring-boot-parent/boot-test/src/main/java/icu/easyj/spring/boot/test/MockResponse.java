@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.spring.boot.test.result.ContentResult;
 import icu.easyj.spring.boot.test.result.ContentTypeResult;
+import icu.easyj.spring.boot.test.result.FileExportResult;
 import icu.easyj.spring.boot.test.result.GenericContentResult;
 import icu.easyj.spring.boot.test.result.HeaderResult;
 import icu.easyj.spring.boot.test.result.StatusResult;
@@ -84,6 +85,13 @@ public class MockResponse {
 	 */
 	public ContentResult content() {
 		return new ContentResult(this, this.resultActions, this.getContentAsString());
+	}
+
+	/**
+	 * @return 文件导出结果
+	 */
+	public FileExportResult file() {
+		return new FileExportResult(this, this.resultActions, mvcResult.getResponse().getContentAsByteArray());
 	}
 
 	//endregion

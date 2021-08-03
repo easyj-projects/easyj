@@ -57,6 +57,10 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-all</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-poi-excel</artifactId>
+		</dependency>
 
 
 		<!-- 其他依赖 -->
