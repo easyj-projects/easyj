@@ -15,6 +15,7 @@
  */
 package icu.easyj.spring.boot.env.enhanced.impls;
 
+import cn.hutool.core.text.StrPool;
 import icu.easyj.core.loader.LoadLevel;
 import org.springframework.util.StringUtils;
 
@@ -38,8 +39,8 @@ public class OnClassPropertySourceFilter extends AbstractConditionPropertySource
 	@Override
 	public boolean doConditionFilter(String conditionPropertyValue) {
 		try {
-			if (conditionPropertyValue.contains(",")) {
-				String[] propertyArr = conditionPropertyValue.split(",");
+			if (conditionPropertyValue.contains(StrPool.COMMA)) {
+				String[] propertyArr = conditionPropertyValue.split(StrPool.COMMA);
 				for (String property : propertyArr) {
 					if (StringUtils.hasText(property)) {
 						// 尝试加载类
