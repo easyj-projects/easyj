@@ -242,6 +242,14 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 忽略插件：Source -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<skipSource>true</skipSource>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
