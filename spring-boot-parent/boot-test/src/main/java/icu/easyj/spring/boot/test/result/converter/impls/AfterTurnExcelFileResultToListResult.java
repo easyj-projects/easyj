@@ -32,7 +32,7 @@ import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "afterturn", order = 1)
+@LoadLevel(name = "afterturn", order = 2)
 public class AfterTurnExcelFileResultToListResult implements IExcelFileResultToListResult {
 
 	@Override
