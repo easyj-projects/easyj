@@ -253,7 +253,8 @@ public abstract class EnvironmentUtils {
 	/**
 	 * 获取配置列表
 	 *
-	 * @param environment 环境
+	 * @param environment  环境
+	 * @param propertyName 配置名
 	 * @return propertyList 配置值列表
 	 */
 	@NonNull
@@ -276,6 +277,7 @@ public abstract class EnvironmentUtils {
 	 * 获取配置列表
 	 *
 	 * @param propertySource 配置源
+	 * @param propertyName   配置名
 	 * @return propertyList 配置值列表
 	 */
 	@NonNull
