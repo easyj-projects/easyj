@@ -24,6 +24,7 @@ import java.util.Map;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
+import icu.easyj.test.exception.TestException;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -213,17 +214,17 @@ public class MockRequest {
 	 */
 	public MockRequest file(String multipartParamName, String filePath) {
 		if (this.multipartBuilder == null) {
-			throw new AssertionError("模拟的POST请求不正确，无法使用file方法。请使用`super.mockPostMultipart(...)`方法来创建模拟请求，而不是`super.mockPost(...)`");
+			throw new TestException("模拟请求类型不正确，无法使用`file(...)`。请使用`mockPostMultipart(...)`来创建模拟请求，而不是`mockPost(...)`！");
 		}
 
 		try {
 			Resource[] resource = ResourceUtils.getResources(filePath);
 			if (resource == null || resource.length == 0) {
-				throw new AssertionError("文件不存在：" + filePath);
+				throw new TestException("文件不存在：" + filePath);
 			}
 			this.multipartBuilder.file(new MockMultipartFile(multipartParamName, "", "", resource[0].getInputStream()));
 		} catch (IOException e) {
-			throw new AssertionError("设置文件参数时，出现IO异常", e);
+			throw new TestException("设置文件参数时，出现IO异常", e);
 		}
 		return this;
 	}

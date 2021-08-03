@@ -16,8 +16,8 @@
 package icu.easyj.spring.boot.test.result;
 
 import icu.easyj.spring.boot.test.MockResponse;
+import icu.easyj.spring.boot.test.util.AssertionUtils;
 import org.junit.jupiter.api.Assertions;
-import org.opentest4j.AssertionFailedError;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -48,7 +48,7 @@ public class StatusResult extends BaseResult {
 				return super.end();
 			}
 		}
-		throw new AssertionFailedError("响应状态不在预期。", expectedStatusValueArr, this.status.value());
+		throw AssertionUtils.error("响应状态不正确。", expectedStatusValueArr, this.status.value());
 	}
 
 	public MockResponse is(HttpStatus expectedStatus) {
@@ -62,7 +62,7 @@ public class StatusResult extends BaseResult {
 				return super.end();
 			}
 		}
-		throw new AssertionFailedError("响应状态不在预期。", expectedStatusArr, this.status.value());
+		throw AssertionUtils.error("响应状态不正确。", expectedStatusArr, this.status.value());
 	}
 
 	public MockResponse isOk() {
@@ -97,7 +97,7 @@ public class StatusResult extends BaseResult {
 				return super.end();
 			}
 		}
-		throw new AssertionFailedError("响应状态系列不在预期。", expectedStatusSeriesArr, this.status.series());
+		throw AssertionUtils.error("响应状态系列不正确。", expectedStatusSeriesArr, this.status.series());
 	}
 
 	/**
