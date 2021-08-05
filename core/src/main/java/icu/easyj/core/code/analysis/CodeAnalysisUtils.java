@@ -37,7 +37,8 @@ public class CodeAnalysisUtils {
 	/**
 	 * 解析参数列表
 	 *
-	 * @param parametersStr 含所有参数的串（不要包含其他代码内容）
+	 * @param parametersStr      含所有参数的串（不要包含其他代码内容）
+	 * @param limitParameterSize 限制获取参数数量
 	 * @return parameters 返回参数列表
 	 */
 	@NonNull
