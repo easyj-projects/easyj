@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.test.model;
+package icu.easyj.core.modelfortest;
 
 /**
- * 测试用的空类
+ * 测试用的空接口
  *
  * @author wangliang181230
  */
-public class EmptyTestClass {
+public interface EmptyTestInterface {
 }

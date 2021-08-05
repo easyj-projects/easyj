@@ -21,11 +21,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
-import icu.easyj.test.model.EmptyTestClass;
-import icu.easyj.test.model.EmptyTestInterface;
-import icu.easyj.test.model.NotExistsNoArgsConstructorTestClass;
-import icu.easyj.test.model.TestClass;
-import icu.easyj.test.model.TestSuperClass;
+import icu.easyj.core.modelfortest.EmptyTestClass;
+import icu.easyj.core.modelfortest.EmptyTestInterface;
+import icu.easyj.core.modelfortest.NotExistsNoArgsConstructorTestClass;
+import icu.easyj.core.modelfortest.TestClass;
+import icu.easyj.core.modelfortest.TestSuperClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

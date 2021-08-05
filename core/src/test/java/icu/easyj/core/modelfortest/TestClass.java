@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.test.model;
+package icu.easyj.core.modelfortest;
 
 /**
  * 测试用的类
