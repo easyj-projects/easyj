@@ -28,6 +28,7 @@ import icu.easyj.web.constant.HttpConstants;
 import icu.easyj.web.constant.HttpHeaderConstants;
 import icu.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -37,9 +38,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static icu.easyj.web.constant.HttpHeaderConstants.NO_CACHE;
 import static icu.easyj.web.constant.HttpHeaderConstants.NO_STORE;
-import static icu.easyj.web.constant.HttpMethodConstants.GET;
-import static icu.easyj.web.constant.HttpMethodConstants.OPTIONS;
-import static icu.easyj.web.constant.HttpMethodConstants.POST;
 
 /**
  * HTTP工具类
@@ -144,7 +142,7 @@ public abstract class HttpUtils {
 	 * @return isGetRequest 是否为GET请求
 	 */
 	public static boolean isGetRequest(HttpServletRequest request) {
-		return GET.equalsIgnoreCase(request.getMethod());
+		return HttpMethod.GET.name().equalsIgnoreCase(request.getMethod());
 	}
 
 	// 重载方法
@@ -174,7 +172,7 @@ public abstract class HttpUtils {
 	 * @return isPostRequest 是否为POST请求
 	 */
 	public static boolean isPostRequest(HttpServletRequest request) {
-		return POST.equalsIgnoreCase(request.getMethod());
+		return HttpMethod.POST.name().equalsIgnoreCase(request.getMethod());
 	}
 
 	// 重载方法
@@ -204,7 +202,7 @@ public abstract class HttpUtils {
 	 * @return isGetRequest 是否为GET请求
 	 */
 	public static boolean isOptionsRequest(HttpServletRequest request) {
-		return OPTIONS.equalsIgnoreCase(request.getMethod());
+		return HttpMethod.OPTIONS.name().equalsIgnoreCase(request.getMethod());
 	}
 
 	// 重载方法
