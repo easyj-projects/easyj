@@ -30,7 +30,7 @@ public abstract class AbstractConditionPropertySourceFilter implements IProperty
 
 	private final String propertyName;
 
-	public AbstractConditionPropertySourceFilter(String propertyName) {
+	protected AbstractConditionPropertySourceFilter(String propertyName) {
 		this.propertyName = propertyName;
 	}
 

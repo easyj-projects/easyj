@@ -24,7 +24,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.web.util.HttpConfigs;
@@ -54,7 +54,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 * 全局过滤器需排除列表
 	 */
 	private static final List<String> GLOBAL_EXCLUSIONS_LIST =
-			CollectionUtil.toList(GLOBAL_EXCLUSIONS.split(StrPool.COMMA));
+			ListUtil.toList(GLOBAL_EXCLUSIONS.split(StrPool.COMMA));
 
 
 	//region Fields
@@ -89,7 +89,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 *
 	 * @param filterProperties 过滤器配置
 	 */
-	public AbstractFilter(@NonNull P filterProperties) {
+	protected AbstractFilter(@NonNull P filterProperties) {
 		Assert.notNull(filterProperties, "filterProperties must be not null");
 
 		// 设置过滤器配置
@@ -119,11 +119,11 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 初始化过滤器名称
-		String filterName = filterConfig.getFilterName();
-		if (!StringUtils.hasText(filterName)) {
-			filterName = this.getClass().getSimpleName();
+		String filterName0 = filterConfig.getFilterName();
+		if (!StringUtils.hasText(filterName0)) {
+			filterName0 = this.getClass().getSimpleName();
 		}
-		this.filterName = filterName;
+		this.filterName = filterName0;
 	}
 
 	@Override

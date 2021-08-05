@@ -41,7 +41,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	/**
 	 * 无参构造函数
 	 */
-	public AbstractRemotingClockHolder() {
+	protected AbstractRemotingClockHolder() {
 		this.remotingClockMap = new ConcurrentHashMap<>(2);
 	}
 
@@ -50,7 +50,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	public AbstractRemotingClockHolder(Map<T, IClock> remotingClockMap) {
+	protected AbstractRemotingClockHolder(Map<T, IClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
 

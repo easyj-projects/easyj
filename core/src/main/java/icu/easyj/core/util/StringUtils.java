@@ -187,7 +187,7 @@ public abstract class StringUtils {
 
 				try {
 					fieldValue = ReflectionUtils.getFieldValue(obj, field);
-				} catch (Exception ignore) {
+				} catch (RuntimeException ignore) {
 					continue;
 				}
 

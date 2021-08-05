@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import icu.easyj.core.constant.PageConstants;
+import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -62,6 +63,7 @@ public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageab
 	 * @param list the list
 	 * @return the list after sort
 	 */
+	@NonNull
 	@Override
 	public <D extends T> List<D> doSort(List<D> list) {
 		if (CollectionUtils.isEmpty(list)) {
