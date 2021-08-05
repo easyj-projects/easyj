@@ -28,21 +28,25 @@ class CodeAnalysisUtilsTest {
 
 	@Test
 	void testAnalysisCode() {
-		String code = "encrypt.dec(11, 22L, 'asdf\\'asdf', \"adsf\\\"fdsa124\", true, false, null, 'sadf', 11l);";
+		String expectedPrefix = "CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", ";
+
+		String code = "encrypt.dec(0, 1l, 2L, 3.1f, 3.2F, 4.1d, 4.2D, 4.3, '', \"\", ' ', \" \"" +
+				", true, false, null, 'sadf', \" asdfasdf0u123 \", 'asdf\\'asdf', \"adsf\\\"fdsa124\");";
 
 		//case: 取0个参数
 		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(code, 0, true);
-		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=null)",
+		Assertions.assertEquals(expectedPrefix + "parameters=[])",
 				StringUtils.toString(result));
 
 		//case: 取3个参数
 		result = CodeAnalysisUtils.analysisCode(code, 3, true);
-		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, 22L, \"asdf'asdf\"])",
+		Assertions.assertEquals(expectedPrefix + "parameters=[0, 1L, 2L])",
 				StringUtils.toString(result));
 
 		//case: 取所有参数
 		result = CodeAnalysisUtils.analysisCode(code, true);
-		Assertions.assertEquals("CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", parameters=[11, 22L, \"asdf'asdf\", \"adsf\"fdsa124\", true, false, null, \"sadf\", 11L])",
+		Assertions.assertEquals(expectedPrefix + "parameters=[0, 1L, 2L, 3.1, 3.2, 4.1, 4.2, 4.3, \"\", \"\", \" \", \" \"" +
+						", true, false, null, \"sadf\", \" asdfasdf0u123 \", \"asdf'asdf\", \"adsf\"fdsa124\"])",
 				StringUtils.toString(result));
 	}
 }

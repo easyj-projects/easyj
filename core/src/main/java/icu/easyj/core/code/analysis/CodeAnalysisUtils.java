@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import icu.easyj.core.util.PatternUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
@@ -35,23 +37,24 @@ public class CodeAnalysisUtils {
 	/**
 	 * 解析参数列表
 	 *
-	 * @param parametersStr      含所有参数的串（不要包含其他代码内容）
-	 * @param limitParameterSize 限制获取参数数量
+	 * @param parametersStr 含所有参数的串（不要包含其他代码内容）
 	 * @return parameters 返回参数列表
 	 */
-	@Nullable
+	@NonNull
 	public static Object[] analysisParameters(String parametersStr, int limitParameterSize) {
-		if (!StringUtils.hasLength(parametersStr) || limitParameterSize <= 0) {
-			return null;
+		if (!StringUtils.hasText(parametersStr) || limitParameterSize <= 0) {
+			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		}
 
 		Matcher mParameter = PatternUtils.P_CODE_DATA_VALUE.matcher(parametersStr);
 		List<Object> parameterList = new ArrayList<>();
 		String parameter;
 		while (parameterList.size() < limitParameterSize && mParameter.find()) {
+			// 获取下一个值
 			parameter = mParameter.group();
 
-			/*----- 获取 null、boolean 的值 -----*/
+			//region 获取 null、boolean 的值
+
 			switch (parameter) {
 				case "null":
 					parameterList.add(null);
@@ -66,12 +69,22 @@ public class CodeAnalysisUtils {
 					break;
 			}
 
-			/*----- 获取 数字 的值 -----*/
-			if (!parameter.startsWith("'") && !parameter.startsWith("\"")) {
+			//endregion
+
+
+			//region 获取 数字 的值
+
+			char firstChar = parameter.charAt(0);
+			if (firstChar != '\'' && firstChar != '\"') {
+				char lastChar = parameter.charAt(parameter.length() - 1);
 				if (parameter.contains(".")) {
-					parameterList.add(Double.valueOf(parameter));
+					if (lastChar == 'F' || lastChar == 'f') {
+						parameterList.add(Float.valueOf(parameter));
+					} else {
+						parameterList.add(Double.valueOf(parameter));
+					}
 				} else {
-					if (parameter.toUpperCase().endsWith("L")) {
+					if (lastChar == 'L' || lastChar == 'l') {
 						parameterList.add(Long.valueOf(parameter.substring(0, parameter.length() - 1)));
 					} else {
 						try {
@@ -84,27 +97,34 @@ public class CodeAnalysisUtils {
 				continue;
 			}
 
-			/*----- 获取 字符串 的值 -----*/
+			//endregion
+
+
+			//region 获取 字符串 的值
+
 			// 将前后两个单引号去除掉
-			String c = String.valueOf(parameter.charAt(0));
+			String c = String.valueOf(firstChar);
 			parameter = parameter.substring(1, parameter.length() - 1);
 			// 字符串内前面带有反斜杠的引号，把前面的反斜杠去掉
-			if (parameter.contains("\\" + c)) {
-				parameter = parameter.replace("\\" + c, c);
+			String specialStr = "\\" + c;
+			if (parameter.contains(specialStr)) {
+				parameter = parameter.replace(specialStr, c);
 			}
 			parameterList.add(parameter);
+
+			//endregion
 		}
 
 		// 列表转换为数组
 		if (parameterList.isEmpty()) {
-			return null;
+			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		} else {
 			return parameterList.toArray(new Object[0]);
 		}
 	}
 
 	// 重载方法
-	@Nullable
+	@NonNull
 	public static Object[] analysisParameters(String parametersStr) {
 		return analysisParameters(parametersStr, Integer.MAX_VALUE);
 	}

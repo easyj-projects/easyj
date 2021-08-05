@@ -100,7 +100,8 @@ public abstract class RandomPropertyUtils {
 					}
 					int length = result.getParameters().length;
 					int index = ThreadLocalRandom.current().nextInt(length);
-					return result.getParameters()[index];
+					value = result.getParameters()[index];
+					break;
 
 				// 未知
 				default:
