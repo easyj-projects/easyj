@@ -24,7 +24,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import icu.easyj.config.GlobalConfigs;
-import icu.easyj.spring.boot.autoconfigure.util.FilterRegistrationUtils;
+import icu.easyj.spring.boot.util.FilterRegistrationUtils;
 import icu.easyj.web.constant.FilterOrderConstants;
 import icu.easyj.web.param.crypto.FastJsonParamCryptoHttpMessageConverter;
 import icu.easyj.web.param.crypto.IParamCryptoFilterProperties;

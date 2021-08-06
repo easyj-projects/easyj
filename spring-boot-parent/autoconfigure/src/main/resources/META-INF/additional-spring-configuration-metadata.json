@@ -38,7 +38,7 @@
 		{
 			"name": "easyj.global.env",
 			"description": "环境代码.",
-			"defaultValue": "${spring.profiles.active[0]}"
+			"defaultValue": "${spring.profiles.active[0]:prod}"
 		},
 		{
 			"name": "easyj.global.env-name",
@@ -77,12 +77,12 @@
 					"description": "default-自动选择优先级最高的`IExcelExporter（Excel导出器）`实现."
 				},
 				{
-					"value": "afterturn",
-					"description": "基于`cn.afterturn:easypoi`开发的`IExcelExporter（Excel导出器）`实现."
-				},
-				{
 					"value": "easyj",
 					"description": "基于`icu.easyj:easyj-poi-excel`开发的`IExcelExporter（Excel导出器）`实现."
+				},
+				{
+					"value": "afterturn",
+					"description": "基于`cn.afterturn:easypoi`开发的`IExcelExporter（Excel导出器）`实现."
 				}
 			],
 			"providers": [

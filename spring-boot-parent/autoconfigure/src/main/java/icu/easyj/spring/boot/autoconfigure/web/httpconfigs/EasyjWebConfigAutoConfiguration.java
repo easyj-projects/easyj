@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.web.config;
+package icu.easyj.spring.boot.autoconfigure.web.httpconfigs;
 
 import icu.easyj.web.util.HttpConfigSetter;
 import icu.easyj.web.util.HttpConfigs;
