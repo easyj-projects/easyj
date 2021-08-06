@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.test;
 import java.io.UnsupportedEncodingException;
 
 import cn.hutool.json.JSONUtil;
+import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;
 import icu.easyj.spring.boot.test.result.ContentTypeResult;
 import icu.easyj.spring.boot.test.result.FileExportResult;
@@ -67,6 +68,13 @@ public class MockResponse {
 	 */
 	public ContentTypeResult contentType() {
 		return new ContentTypeResult(this, this.getContentType());
+	}
+
+	/**
+	 * @return 响应内容编码结果
+	 */
+	public CharacterEncodingResult characterEncoding() {
+		return new CharacterEncodingResult(this, this.getCharacterEncoding());
 	}
 
 	/**
@@ -133,6 +141,13 @@ public class MockResponse {
 	 */
 	private String getContentType() {
 		return this.getResponse().getContentType();
+	}
+
+	/**
+	 * @return 响应内容编码
+	 */
+	private String getCharacterEncoding() {
+		return this.getResponse().getCharacterEncoding();
 	}
 
 	/**

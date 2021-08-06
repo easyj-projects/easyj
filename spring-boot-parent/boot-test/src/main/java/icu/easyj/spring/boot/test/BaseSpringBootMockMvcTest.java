@@ -33,7 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author wangliang181230
  */
-public class BaseSpringBootMockMvcTest {
+public abstract class BaseSpringBootMockMvcTest {
 
 	@Autowired
 	protected WebApplicationContext wac;
@@ -50,12 +50,18 @@ public class BaseSpringBootMockMvcTest {
 	 *
 	 * @param filters 过滤器数组
 	 */
-	public BaseSpringBootMockMvcTest(Filter... filters) {
+	protected BaseSpringBootMockMvcTest(Filter... filters) {
 		this.filters = filters;
 	}
 
+
+	//region 初始化mockMvc的方法
+
+	/**
+	 * 测试前的初始化方法
+	 */
 	@BeforeEach
-	public void beforeEach() {
+	public void initMockMvcBeforeEachTestMethod() {
 		this.initMockMvc(this.filters);
 	}
 
@@ -98,6 +104,11 @@ public class BaseSpringBootMockMvcTest {
 
 		mockMvc = builder.build();
 	}
+
+	//endregion
+
+
+	//region 模拟各种类型的请求
 
 	/**
 	 * 创建模拟GET请求
@@ -170,4 +181,6 @@ public class BaseSpringBootMockMvcTest {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(urlTemplate, uriVars);
 		return new MockRequest(this.mockMvc, builder);
 	}
+
+	//endregion
 }
