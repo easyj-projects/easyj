@@ -119,7 +119,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockGet(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	/**
@@ -131,7 +131,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockPost(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockPostMultipart(String urlTemplate, Object... uriVars) {
 		MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockPut(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.put(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockPatch(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.patch(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	/**
@@ -179,7 +179,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	protected MockRequest mockDelete(String urlTemplate, Object... uriVars) {
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder);
+		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
 	}
 
 	//endregion

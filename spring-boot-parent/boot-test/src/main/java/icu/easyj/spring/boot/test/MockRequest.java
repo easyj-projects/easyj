@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
 
@@ -42,16 +43,22 @@ import org.springframework.util.MultiValueMap;
  */
 public class MockRequest {
 
+	protected final String urlTemplate;
+	protected final Object[] uriVars;
+
 	protected final MockMvc mockMvc;
-	protected final MockHttpServletRequestBuilder builder;
-	protected final MockMultipartHttpServletRequestBuilder multipartBuilder;
+	protected MockHttpServletRequestBuilder builder;
+	protected MockMultipartHttpServletRequestBuilder multipartBuilder;
 
 	private final Map<String, Object> contentMap = new HashMap<>();
 
 
-	public MockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder) {
+	public MockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder, String urlTemplate, Object[] uriVars) {
 		Assert.notNull(mockMvc, "'mockMvc' must be not null");
 		Assert.notNull(builder, "'builder' must be not null");
+
+		this.urlTemplate = urlTemplate;
+		this.uriVars = uriVars;
 
 		this.mockMvc = mockMvc;
 		this.builder = builder;
@@ -214,7 +221,10 @@ public class MockRequest {
 	 */
 	public MockRequest file(String multipartParamName, String filePath) {
 		if (this.multipartBuilder == null) {
-			throw new TestException("模拟请求类型不正确，无法使用`file(...)`。请使用`mockPostMultipart(...)`来创建模拟请求，而不是`mockPost(...)`！");
+			MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
+			newMultipartBuilder.merge(this.builder);
+			this.multipartBuilder = newMultipartBuilder;
+			this.builder = newMultipartBuilder;
 		}
 
 		try {
