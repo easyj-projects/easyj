@@ -27,6 +27,9 @@ public class ExcelExportConfig {
 	 */
 	private String listFieldName;
 
+
+	//region Getter、Setter
+
 	public String getListFieldName() {
 		return listFieldName;
 	}
@@ -34,4 +37,6 @@ public class ExcelExportConfig {
 	public void setListFieldName(String listFieldName) {
 		this.listFieldName = listFieldName;
 	}
+
+	//endregion
 }

@@ -17,8 +17,8 @@ package icu.easyj.spring.boot.test.result;
 
 import java.util.List;
 
+import icu.easyj.poi.excel.converter.ExcelConverterUtils;
 import icu.easyj.spring.boot.test.MockResponse;
-import icu.easyj.spring.boot.test.result.converter.ExcelFileResultToListResultUtils;
 import icu.easyj.test.exception.TestException;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.test.web.servlet.ResultActions;
@@ -65,7 +65,7 @@ public class FileExportResult extends GenericContentResult<byte[]> {
 	public <T> ListContentResult<T> excelToList(Class<T> expectedClass) {
 		List<T> list;
 		try {
-			list = ExcelFileResultToListResultUtils.toList(this.content, expectedClass);
+			list = ExcelConverterUtils.toList(this.content, expectedClass);
 		} catch (TestException e) {
 			throw e;
 		} catch (Exception e) {

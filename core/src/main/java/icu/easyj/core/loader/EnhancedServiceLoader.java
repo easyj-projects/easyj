@@ -34,6 +34,7 @@ import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.util.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -135,6 +136,7 @@ public class EnhancedServiceLoader {
 	 * @param <S>          the type of the service
 	 * @return list the service list
 	 */
+	@NonNull
 	public static <S> List<S> loadAll(Class<S> serviceClass) {
 		return InnerEnhancedServiceLoader.getServiceLoader(serviceClass).loadAll(findClassLoader());
 	}
@@ -348,6 +350,7 @@ public class EnhancedServiceLoader {
 		 * @param loader the class loader
 		 * @return list list
 		 */
+		@NonNull
 		private List<S> loadAll(ClassLoader loader) {
 			return loadAll(null, null, loader);
 		}
@@ -359,6 +362,7 @@ public class EnhancedServiceLoader {
 		 * @param args     the args
 		 * @return list list
 		 */
+		@NonNull
 		private List<S> loadAll(Class<?>[] argsType, Object[] args, ClassLoader loader) {
 			List<S> allInstances = new ArrayList<>();
 			List<Class<?>> allClazzs = getAllExtensionClass(loader);

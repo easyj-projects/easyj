@@ -13,23 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.test.result.converter.impls;
+package icu.easyj.poi.excel.converter.impls;
 
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.poi.excel.annotation.Excel;
+import icu.easyj.poi.excel.converter.IExcelConverter;
 import icu.easyj.poi.excel.util.ExcelUtils;
-import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * 基于EasyJ的 {@link IExcelFileResultToListResult} 实现
+ * 基于EasyJ的 {@link IExcelConverter} 实现
  *
  * @author wangliang181230
  */
 @LoadLevel(name = "easyj", order = 1, dependOnClasses = {Excel.class})
-public class EasyjExcelFileResultToListResult implements IExcelFileResultToListResult {
+public class EasyjExcelConverter implements IExcelConverter {
 
 	@Override
 	public boolean isMatch(Class<?> clazz) {
@@ -37,7 +38,12 @@ public class EasyjExcelFileResultToListResult implements IExcelFileResultToListR
 	}
 
 	@Override
-	public <T> List<T> convert(byte[] fileBytes, Class<T> clazz) throws Exception {
-		return ExcelUtils.toList(new ByteArrayInputStream(fileBytes), clazz, null);
+	public <T> List<T> toList(InputStream inputStream, Class<T> clazz) throws Exception {
+		return ExcelUtils.toList(inputStream, clazz, null);
+	}
+
+	@Override
+	public <T> Workbook toExcel(List<T> list, Class<T> clazz) throws Exception {
+		return ExcelUtils.toExcel(list, clazz);
 	}
 }

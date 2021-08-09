@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 
-import icu.easyj.web.poi.excel.IExcelExporter;
+import icu.easyj.web.poi.excel.ExcelExportConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL_EXPORT_PREFIX;
@@ -26,42 +26,5 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL
  * @author wangliang181230
  */
 @ConfigurationProperties(prefix = WEB_POI_EXCEL_EXPORT_PREFIX)
-public class ExcelExporterProperties {
-
-	/**
-	 * Excel导出器类型，可选值：auto（default）、afterturn、easyj
-	 *
-	 * @see EasyjExcelExporterAutoConfiguration#defaultExcelExporter()
-	 * @see AfterturnExcelExporterAutoConfiguration#afterturnExcelExporter()
-	 */
-	private String type = "auto";
-
-	/**
-	 * 全局配置列表属性名
-	 *
-	 * @see icu.easyj.web.poi.excel.ExcelExportConfig#setListFieldName(String)
-	 * @see EasyjExcelExporterAutoConfiguration#excelExportAspect(IExcelExporter, ExcelExporterProperties)
-	 */
-	private String listFieldName;
-
-
-	//region Getter、Setter
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getListFieldName() {
-		return listFieldName;
-	}
-
-	public void setListFieldName(String listFieldName) {
-		this.listFieldName = listFieldName;
-	}
-
-	//endregion
+public class ExcelExporterProperties extends ExcelExportConfig {
 }

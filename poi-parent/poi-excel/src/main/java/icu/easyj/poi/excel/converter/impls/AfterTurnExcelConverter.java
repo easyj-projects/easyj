@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.test.result.converter.impls;
+package icu.easyj.poi.excel.converter.impls;
 
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.ReflectionUtils;
-import icu.easyj.spring.boot.test.result.converter.IExcelFileResultToListResult;
+import icu.easyj.poi.excel.converter.IExcelConverter;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * 基于AfterTurn的 {@link IExcelFileResultToListResult} 实现
+ * 基于AfterTurn的 {@link IExcelConverter} 实现
  *
  * @author wangliang181230
  */
 @LoadLevel(name = "afterturn", order = 2, dependOnClasses = {Excel.class, ExcelImportUtil.class})
-public class AfterTurnExcelFileResultToListResult implements IExcelFileResultToListResult {
+public class AfterTurnExcelConverter implements IExcelConverter {
 
 	@Override
 	public boolean isMatch(Class<?> clazz) {
@@ -47,7 +50,12 @@ public class AfterTurnExcelFileResultToListResult implements IExcelFileResultToL
 	}
 
 	@Override
-	public <T> List<T> convert(byte[] fileBytes, Class<T> clazz) throws Exception {
-		return ExcelImportUtil.importExcel(new ByteArrayInputStream(fileBytes), clazz, new ImportParams());
+	public <T> List<T> toList(InputStream inputStream, Class<T> clazz) throws Exception {
+		return ExcelImportUtil.importExcel(inputStream, clazz, new ImportParams());
+	}
+
+	@Override
+	public <T> Workbook toExcel(List<T> list, Class<T> clazz) throws Exception {
+		return ExcelExportUtil.exportExcel(new ExportParams(), clazz, list);
 	}
 }

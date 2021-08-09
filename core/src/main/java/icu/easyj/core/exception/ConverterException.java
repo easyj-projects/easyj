@@ -13,24 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web.poi.excel.impls;
-
-import java.io.IOException;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import icu.easyj.web.poi.excel.ExcelExportUtils;
-import icu.easyj.web.poi.excel.IExcelExporter;
+package icu.easyj.core.exception;
 
 /**
- * 默认的 Excel导出器 实现类
+ * 转换失败的异常
  *
  * @author wangliang181230
  */
-public class DefaultExcelExporterImpl implements IExcelExporter {
+public class ConverterException extends RuntimeException {
 
-	@Override
-	public <T> void toExcelAndExport(HttpServletResponse response, List<T> dataList, Class<T> clazz, String fileName) throws IOException {
-		ExcelExportUtils.toExcelAndExport(response, dataList, clazz, fileName);
+	public ConverterException() {
+		super();
+	}
+
+	public ConverterException(String message) {
+		super(message);
+	}
+
+	public ConverterException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ConverterException(Throwable cause) {
+		super(cause);
+	}
+
+	public ConverterException(String fromType, String toType) {
+		super("`" + fromType + "`转换为`" + toType + "`失败");
+	}
+
+	public ConverterException(Class<?> fromType, Class<?> toType) {
+		this(fromType.getName(), toType.getName());
 	}
 }

@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import icu.easyj.core.constant.FileTypeConstants;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.poi.excel.converter.ExcelConverterUtils;
 import icu.easyj.web.poi.excel.exception.ExcelExportException;
 import icu.easyj.web.util.HttpUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -44,11 +46,6 @@ import org.springframework.util.Assert;
 public class ExcelExportAspect {
 
 	/**
-	 * Excel导出器
-	 */
-	private final IExcelExporter excelExporter;
-
-	/**
 	 * Excel导出功能配置
 	 */
 	private final ExcelExportConfig config;
@@ -56,24 +53,12 @@ public class ExcelExportAspect {
 	/**
 	 * 构造函数
 	 *
-	 * @param excelExporter     Excel导出器
 	 * @param excelExportConfig Excel导出功能配置
 	 */
-	public ExcelExportAspect(IExcelExporter excelExporter, ExcelExportConfig excelExportConfig) {
-		Assert.notNull(excelExporter, "excelExporter must be not null");
+	public ExcelExportAspect(ExcelExportConfig excelExportConfig) {
 		Assert.notNull(excelExportConfig, "excelExportConfig must be not null");
 
-		this.excelExporter = excelExporter;
 		this.config = excelExportConfig;
-	}
-
-	/**
-	 * 构造函数
-	 *
-	 * @param excelExporter Excel导出器
-	 */
-	public ExcelExportAspect(IExcelExporter excelExporter) {
-		this(excelExporter, new ExcelExportConfig());
 	}
 
 
@@ -124,14 +109,15 @@ public class ExcelExportAspect {
 				result = Collections.singletonList(result);
 			}
 
-			// 准备参数
-			HttpServletResponse response = HttpUtils.getResponse();
+			// 数据转换为excel工作薄
 			List dataList = (List)result;
 			Class dataType = annotation.dataType();
-			String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
+			Workbook workbook = ExcelConverterUtils.toExcel(dataList, dataType);
 
-			// 转为excel并导出
-			excelExporter.toExcelAndExport(response, dataList, dataType, fileName);
+			// 设置响应头及响应流
+			HttpServletResponse response = HttpUtils.getResponse();
+			String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
+			ExcelExportUtils.exportExcel(response, workbook, fileName);
 
 			// 设为null，方便GC回收
 			result = null;

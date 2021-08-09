@@ -61,36 +61,9 @@
 		{
 			"name": "easyj.web.poi.excel.export.list-field-name",
 			"description": "全局配置列表属性名."
-		},
-		{
-			"name": "easyj.web.poi.excel.export.type",
-			"description": "Excel导出器类型：auto|afterturn|easyj，默认：auto.",
-			"defaultValue": "auto"
 		}
 	],
 	"hints": [
-		{
-			"name": "easyj.web.poi.excel.export.type",
-			"values": [
-				{
-					"value": "auto",
-					"description": "default-自动选择优先级最高的`IExcelExporter（Excel导出器）`实现."
-				},
-				{
-					"value": "easyj",
-					"description": "基于`icu.easyj:easyj-poi-excel`开发的`IExcelExporter（Excel导出器）`实现."
-				},
-				{
-					"value": "afterturn",
-					"description": "基于`cn.afterturn:easypoi`开发的`IExcelExporter（Excel导出器）`实现."
-				}
-			],
-			"providers": [
-				{
-					"name": "any"
-				}
-			]
-		},
 		{
 			"name": "easyj.web.param-crypto.handler.algorithm",
 			"values": [
