@@ -34,7 +34,7 @@ import org.springframework.util.CollectionUtils;
  *
  * @author wangliang181230
  */
-public class ExcelConverterUtils {
+public abstract class ExcelConverterUtils {
 
 	/**
 	 * 所有转换器

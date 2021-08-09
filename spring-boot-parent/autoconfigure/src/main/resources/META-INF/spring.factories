@@ -4,5 +4,4 @@ icu.easyj.spring.boot.autoconfigure.global.configs.EasyjGlobalConfigsAutoConfigu
 icu.easyj.spring.boot.autoconfigure.web.httpconfigs.EasyjWebConfigAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.cache304.EasyjWebCache304AutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjParamCryptoAutoConfiguration,\
-icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.EasyjExcelExporterAutoConfiguration,\
-icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.AfterturnExcelExporterAutoConfiguration
+icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.EasyjExcelExporterAutoConfiguration
