@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj.boot</groupId>
-		<artifactId>starters-parent</artifactId>
+		<artifactId>boot-starters-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-spring-boot-starter-web-param-crypto</artifactId>
+	<artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ Web参数加密解密功能的starter</description>
+	<description>EasyJ POI Excel导入导出功能的starter</description>
 
 	<dependencies>
 		<dependency>
@@ -23,17 +23,24 @@
 
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-web-param-crypto</artifactId>
+			<artifactId>easyj-poi-excel</artifactId>
+			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>icu.easyj</groupId>
-					<artifactId>easyj-web-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>icu.easyj</groupId>
-					<artifactId>easyj-crypto</artifactId>
+					<artifactId>easyj-core</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 	</dependencies>
 </project>

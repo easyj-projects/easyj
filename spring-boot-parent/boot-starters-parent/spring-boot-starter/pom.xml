@@ -5,42 +5,33 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj.boot</groupId>
-		<artifactId>starters-parent</artifactId>
+		<artifactId>boot-starters-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
+	<artifactId>easyj-spring-boot-starter</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ POI Excel导入导出功能的starter</description>
+	<description>EasyJ的基础starter</description>
 
 	<dependencies>
+		<!-- EasyJ Spring Boot Autoconfigure：自动装配 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-spring-boot-starter</artifactId>
+			<artifactId>easyj-spring-boot-autoconfigure</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- EasyJ Spring Boot Environment Enhanced：环境增强 -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-poi-excel</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>icu.easyj</groupId>
-					<artifactId>easyj-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
-
+		<!-- Spring Boot Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 	</dependencies>
 </project>

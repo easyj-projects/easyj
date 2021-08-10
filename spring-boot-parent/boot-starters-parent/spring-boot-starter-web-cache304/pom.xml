@@ -5,33 +5,36 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj.boot</groupId>
-		<artifactId>starters-parent</artifactId>
+		<artifactId>boot-starters-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-spring-boot-starter</artifactId>
+	<artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ的基础starter</description>
+	<description>EasyJ 304缓存功能的starter</description>
 
 	<dependencies>
-		<!-- EasyJ Spring Boot Autoconfigure：自动装配 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-spring-boot-autoconfigure</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!-- EasyJ Spring Boot Environment Enhanced：环境增强 -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
+			<artifactId>easyj-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Spring Boot Starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web-cache304</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>icu.easyj</groupId>
+					<artifactId>easyj-web-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
