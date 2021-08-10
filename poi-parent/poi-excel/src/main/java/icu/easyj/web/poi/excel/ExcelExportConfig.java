@@ -25,7 +25,7 @@ public class ExcelExportConfig {
 	/**
 	 * 列表属性配置
 	 */
-	private String listFieldName;
+	private String listFieldName = "list";
 
 
 	//region Getter、Setter
