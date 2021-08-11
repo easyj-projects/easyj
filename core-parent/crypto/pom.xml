@@ -5,20 +5,30 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-parent</artifactId>
+		<artifactId>core-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-config</artifactId>
+	<artifactId>easyj-crypto</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ 配置功能的封装，具有可扩展、可定制、多环境配置集成、可订阅配置变更等特性。</description>
+	<description>EasyJ 加密解密封装，提供对称加密算法、非对称加密算法等等的功能</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
 	</dependencies>
 </project>

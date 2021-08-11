@@ -5,30 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-parent</artifactId>
+		<artifactId>core-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-crypto</artifactId>
+	<artifactId>easyj-db</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ 加密解密封装，提供对称加密算法、非对称加密算法等等的功能</description>
+	<description>EasyJ DB封装，简化对数据库的操作</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -64,17 +64,10 @@
 		<module>all</module>
 		<module>bom</module>
 
-		<module>config</module>
-		<module>core</module>
-		<module>crypto</module>
-		<module>data</module>
-		<module>db</module>
-		<module>poi-parent</module>
+		<module>core-parent</module>
 		<module>web-parent</module>
 
 		<module>spring-boot-parent</module>
-
-		<module>test</module>
 	</modules>
 
 	<properties>

@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-parent</artifactId>
+		<artifactId>core-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-data</artifactId>
+	<artifactId>easyj-config</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ Data封装，提供数据查询、数据处理的功能</description>
+	<description>EasyJ 配置功能的封装，具有可扩展、可定制、多环境配置集成、可订阅配置变更等特性。</description>
 
 	<dependencies>
 		<dependency>

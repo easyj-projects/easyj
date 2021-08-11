@@ -9,13 +9,20 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>poi-parent</artifactId>
+	<artifactId>core-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ POI封装，简化对MS Office的操作</description>
+	<description>EasyJ核心</description>
 
 	<modules>
-		<module>poi-excel</module>
+		<module>config</module>
+		<module>core</module>
+		<module>crypto</module>
+		<module>data</module>
+		<module>db</module>
+		<module>poi-parent</module>
+
+		<module>test</module>
 	</modules>
 </project>

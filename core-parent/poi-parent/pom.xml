@@ -5,20 +5,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-parent</artifactId>
+		<artifactId>core-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-db</artifactId>
+	<artifactId>poi-parent</artifactId>
+	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ DB封装，简化对数据库的操作</description>
+	<description>EasyJ POI封装，简化对MS Office的操作</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>easyj-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>poi-excel</module>
+	</modules>
 </project>
