@@ -55,6 +55,11 @@
 			"defaultValue": "release"
 		},
 		{
+			"name": "easyj.global.in-unit-test",
+			"description": "是否单元测试中.",
+			"defaultValue": false
+		},
+		{
 			"name": "easyj.global.configs",
 			"description": "其他全局配置的Map."
 		},

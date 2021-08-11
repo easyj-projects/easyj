@@ -89,12 +89,17 @@ public class GlobalProperties implements InitializingBean {
 	private RunMode runMode;
 
 	/**
+	 * 是否单元测试中
+	 */
+	private Boolean inUnitTest;
+
+	/**
 	 * 其他全局配置Map
 	 */
 	private Map<Object, Object> configs;
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		if (StringUtils.hasText(area)) {
 			GlobalConfigSetter.setArea(area.trim());
 		}
@@ -123,24 +128,23 @@ public class GlobalProperties implements InitializingBean {
 			GlobalConfigSetter.setEnvType(envType);
 		} else {
 			String env = GlobalConfigs.getEnv();
+			// 如果环境类型为空，则根据环境名前缀名与类型名是否匹配，来判断环境类型
 			if (StringUtils.hasText(env)) {
-				env = env.toLowerCase();
-				if (env.startsWith("prod")) {
-					GlobalConfigSetter.setEnvType(EnvironmentType.PROD);
-				}
-				if (env.startsWith("sandbox")) {
-					GlobalConfigSetter.setEnvType(EnvironmentType.SANDBOX);
-				}
-				if (env.startsWith("test")) {
-					GlobalConfigSetter.setEnvType(EnvironmentType.TEST);
-				}
-				if (env.startsWith("dev")) {
-					GlobalConfigSetter.setEnvType(EnvironmentType.DEV);
+				// 转换为大写，与枚举一样
+				env = env.toUpperCase();
+				for (EnvironmentType type : EnvironmentType.values()) {
+					if (env.startsWith(type.name())) {
+						GlobalConfigSetter.setEnvType(type);
+						break;
+					}
 				}
 			}
 		}
 		if (runMode != null) {
 			GlobalConfigSetter.setRunMode(runMode);
+		}
+		if (inUnitTest != null) {
+			GlobalConfigSetter.setInUnitTest(inUnitTest);
 		}
 		if (!CollectionUtils.isEmpty(configs)) {
 			GlobalConfigSetter.addConfigs(configs);
@@ -227,6 +231,14 @@ public class GlobalProperties implements InitializingBean {
 
 	public void setRunMode(RunMode runMode) {
 		this.runMode = runMode;
+	}
+
+	public Boolean getInUnitTest() {
+		return inUnitTest;
+	}
+
+	public void setInUnitTest(Boolean inUnitTest) {
+		this.inUnitTest = inUnitTest;
 	}
 
 	public Map<Object, Object> getConfigs() {

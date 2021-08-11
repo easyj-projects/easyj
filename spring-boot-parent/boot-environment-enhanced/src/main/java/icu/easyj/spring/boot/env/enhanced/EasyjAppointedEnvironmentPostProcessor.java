@@ -15,6 +15,7 @@
  */
 package icu.easyj.spring.boot.env.enhanced;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -89,21 +90,21 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 */
 	public static final String[] CONFIG_DIRECTORY_PATHS = new String[]{
 			// 全局默认配置
-			"config/default",
+			"config/default/",
 			// 区域默认配置
-			"config/${area}/default",
+			"config/${area}/default/",
 			// 项目默认配置
-			"config/${project}/default",
+			"config/${project}/default/",
 			// 区域项目默认配置
-			"config/${area}/${project}/default",
+			"config/${area}/${project}/default/",
 			// 环境配置
-			"config/${env}",
+			"config/${env}/",
 			// 区域环境配置
-			"config/${area}/${env}",
+			"config/${area}/${env}/",
 			// 项目环境配置
-			"config/${project}/${env}",
+			"config/${project}/${env}/",
 			// 区域项目环境配置
-			"config/${area}/${project}/${env}"
+			"config/${area}/${project}/${env}/"
 	};
 
 	@Override
@@ -180,7 +181,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 
 			// 加载目录下的所有配置文件
-			List<String> configFilePathList = loadConfigFilePathList(dirPath);
+			List<String> configFilePathList = loadConfigFilePathList("classpath*:/" + dirPath);
 			if (CollectionUtils.isEmpty(configFilePathList)) {
 				continue;
 			}
@@ -321,7 +322,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				if (!resource.exists()) {
 					continue;
 				}
-				for (String fileName : resource.getFile().list()) {
+
+				File file = resource.getFile();
+				if (file == null) {
+					continue;
+				}
+
+				for (String fileName : file.list()) {
 					if (fileName.endsWith(".yml") || fileName.endsWith(".yaml") || fileName.endsWith(".properties")) {
 						filePathList.add(dirPath + "/" + fileName);
 					}

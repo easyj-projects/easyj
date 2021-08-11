@@ -86,6 +86,11 @@ public class GlobalConfigs {
 	private RunMode runMode = RunMode.RELEASE;
 
 	/**
+	 * 是否单元测试中
+	 */
+	private boolean inUnitTest = false;
+
+	/**
 	 * 其他全局配置Map
 	 */
 	private final Map<Object, Object> configs = new HashMap<>(4);
@@ -99,6 +104,7 @@ public class GlobalConfigs {
 	}
 
 	private enum SingletonHolder {
+		// 单例
 		INSTANCE;
 
 		private final GlobalConfigs globalConfigs = new GlobalConfigs();
@@ -265,6 +271,13 @@ public class GlobalConfigs {
 		return RunMode.DEBUG == getRunMode();
 	}
 
+	/**
+	 * @return 是否单元测试中
+	 */
+	public static boolean isInUnitTest() {
+		return getInstance().inUnitTest;
+	}
+
 	//endregion 运行模式 end
 
 
@@ -383,6 +396,15 @@ public class GlobalConfigs {
 	 */
 	static void setRunMode(RunMode runMode) {
 		getInstance().runMode = runMode;
+	}
+
+	/**
+	 * 设置当前是否单元测试中
+	 *
+	 * @param inUnitTest 是否单元测试中
+	 */
+	static void setInUnitTest(boolean inUnitTest) {
+		getInstance().inUnitTest = inUnitTest;
 	}
 
 	/**

@@ -118,6 +118,15 @@ public abstract class GlobalConfigSetter {
 	}
 
 	/**
+	 * 设置当前是否单元测试中
+	 *
+	 * @param inUnitTest 是否单元测试中
+	 */
+	public static void setInUnitTest(boolean inUnitTest) {
+		GlobalConfigs.setInUnitTest(inUnitTest);
+	}
+
+	/**
 	 * 添加配置
 	 *
 	 * @param key   配置键

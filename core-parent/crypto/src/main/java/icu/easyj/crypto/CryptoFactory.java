@@ -40,6 +40,7 @@ public abstract class CryptoFactory {
 	//region 加密算法生成器持有者（枚举实例单例）
 
 	private enum CryptoGeneratorSingletonHolder {
+		// 单例
 		INSTANCE;
 
 		private final ICryptoGenerator instance = EnhancedServiceLoader.load(ICryptoGenerator.class);

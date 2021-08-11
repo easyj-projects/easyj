@@ -43,6 +43,7 @@ class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 	}
 
 	private enum SingletonHolder {
+		// 单例
 		INSTANCE;
 
 		private final DbClockHolder dbClockHolder = new DbClockHolder();
