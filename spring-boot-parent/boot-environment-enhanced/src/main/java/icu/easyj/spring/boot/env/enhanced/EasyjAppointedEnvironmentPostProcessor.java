@@ -15,14 +15,11 @@
  */
 package icu.easyj.spring.boot.env.enhanced;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hutool.core.io.IORuntimeException;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.crypto.CryptoFactory;
@@ -30,6 +27,7 @@ import icu.easyj.crypto.GlobalCrypto;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
@@ -181,7 +179,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 
 			// 加载目录下的所有配置文件
-			List<String> configFilePathList = loadConfigFilePathList("classpath*:/" + dirPath);
+			List<String> configFilePathList = loadConfigFilePathList(dirPath);
 			if (CollectionUtils.isEmpty(configFilePathList)) {
 				continue;
 			}
@@ -311,30 +309,18 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 */
 	@Nullable
 	private List<String> loadConfigFilePathList(@NonNull String dirPath) {
-		Resource[] resources = ResourceUtils.getResources(dirPath);
-		if (resources == null || resources.length == 0) {
+		Resource[] resources = ResourceUtils.getResources(
+				"classpath*:/" + dirPath + "*.yml",
+				"classpath*:/" + dirPath + "*.yaml",
+				"classpath*:/" + dirPath + "*.properties");
+		if (ArrayUtils.isEmpty(resources)) {
 			return null;
 		}
 
 		List<String> filePathList = new ArrayList<>();
 		for (Resource resource : resources) {
-			try {
-				if (!resource.exists()) {
-					continue;
-				}
-
-				File file = resource.getFile();
-				if (file == null) {
-					continue;
-				}
-
-				for (String fileName : file.list()) {
-					if (fileName.endsWith(".yml") || fileName.endsWith(".yaml") || fileName.endsWith(".properties")) {
-						filePathList.add(dirPath + "/" + fileName);
-					}
-				}
-			} catch (IOException e) {
-				throw new IORuntimeException("加载配置文件失败", e);
+			if (resource.exists()) {
+				filePathList.add(dirPath + resource.getFilename());
 			}
 		}
 		return filePathList;

@@ -52,7 +52,7 @@ public abstract class ResourceUtils {
 	 * @param locationPatternArr 要解析的位置数组
 	 * @return resources 资源数组
 	 */
-	public static Resource[] getResources(String[] locationPatternArr) {
+	public static Resource[] getResources(String... locationPatternArr) {
 		return Stream
 				.of(Optional.ofNullable(locationPatternArr).orElse(new String[0]))
 				.flatMap(locationPattern -> Stream.of(getResources(locationPattern)))
