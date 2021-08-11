@@ -19,9 +19,11 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import cn.hutool.core.io.IORuntimeException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.lang.NonNull;
 
 /**
  * 资源工具类
@@ -57,5 +59,19 @@ public abstract class ResourceUtils {
 				.of(Optional.ofNullable(locationPatternArr).orElse(new String[0]))
 				.flatMap(locationPattern -> Stream.of(getResources(locationPattern)))
 				.toArray(Resource[]::new);
+	}
+
+	/**
+	 * 获取资源路径
+	 *
+	 * @param resource 目录或文件资源
+	 * @return 资源路径
+	 */
+	public static String getResourceUri(@NonNull Resource resource) {
+		try {
+			return resource.getURI().toString();
+		} catch (IOException e) {
+			throw new IORuntimeException("获取资源路径失败", e);
+		}
 	}
 }

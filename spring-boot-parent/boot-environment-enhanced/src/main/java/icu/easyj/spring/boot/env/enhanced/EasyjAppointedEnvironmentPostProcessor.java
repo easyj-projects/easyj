@@ -17,7 +17,6 @@ package icu.easyj.spring.boot.env.enhanced;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
@@ -115,17 +114,24 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 		//region 优先加载的配置文件
 
+		// 倒序加载
 		String filePath;
+		Resource[] resources;
 		for (int i = CONFIG_FILE_PATHS.length - 1; i >= 0; --i) {
 			filePath = CONFIG_FILE_PATHS[i];
 
-			currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(filePath);
-			if (propertySources.contains(currentPropertySourceName)) {
-				continue;
-			}
-			PropertySource<?> propertySource = EnvironmentUtils.addPropertySourceToLast(filePath, true, environment);
-			if (propertySource != null && previousPropertySourceName == null) {
-				previousPropertySourceName = currentPropertySourceName;
+			// 加载所有jar包中的所有同名配置文件
+			resources = ResourceUtils.getResources("classpath*:/" + filePath);
+
+			for (Resource resource : resources) {
+				currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(resource);
+				if (propertySources.contains(currentPropertySourceName)) {
+					continue;
+				}
+				PropertySource<?> propertySource = EnvironmentUtils.addPropertySourceToLast(resource, true, environment);
+				if (propertySource != null && previousPropertySourceName == null) {
+					previousPropertySourceName = currentPropertySourceName;
+				}
 			}
 		}
 
@@ -179,8 +185,8 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 
 			// 加载目录下的所有配置文件
-			List<String> configFilePathList = loadConfigFilePathList(dirPath);
-			if (CollectionUtils.isEmpty(configFilePathList)) {
+			Resource[] configFileResources = loadConfigFileResources(dirPath);
+			if (ArrayUtils.isEmpty(configFileResources)) {
 				continue;
 			}
 
@@ -189,18 +195,18 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 			// 读取配置文件，并添加配置源
 			// 根据文件名倒序加载。文件名越靠前，配置优先级越高
-			String path;
-			for (int i = configFilePathList.size() - 1; i >= 0; --i) {
-				path = configFilePathList.get(i);
+			Resource resource;
+			for (int i = configFileResources.length - 1; i >= 0; --i) {
+				resource = configFileResources[i];
 
 				// 判断相同文件是否已经添加过
-				currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(path);
+				currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(resource);
 				if (environment.getPropertySources().contains(currentPropertySourceName)) {
 					continue;
 				}
 
 				// 加载配置文件为配置源
-				OriginTrackedMapPropertySource propertySource = EnvironmentUtils.buildPropertySource(path, true);
+				OriginTrackedMapPropertySource propertySource = EnvironmentUtils.buildPropertySource(resource, true);
 				if (propertySource == null) {
 					// 配置文件不存在或为空
 					continue;
@@ -308,22 +314,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * @return configFilePaths 配置文件路径数组
 	 */
 	@Nullable
-	private List<String> loadConfigFilePathList(@NonNull String dirPath) {
-		Resource[] resources = ResourceUtils.getResources(
+	private Resource[] loadConfigFileResources(@NonNull String dirPath) {
+		String[] configFileLocationPatternArr = new String[]{
 				"classpath*:/" + dirPath + "*.yml",
 				"classpath*:/" + dirPath + "*.yaml",
-				"classpath*:/" + dirPath + "*.properties");
-		if (ArrayUtils.isEmpty(resources)) {
-			return null;
-		}
-
-		List<String> filePathList = new ArrayList<>();
-		for (Resource resource : resources) {
-			if (resource.exists()) {
-				filePathList.add(dirPath + resource.getFilename());
-			}
-		}
-		return filePathList;
+				"classpath*:/" + dirPath + "*.properties"
+		};
+		return ResourceUtils.getResources(configFileLocationPatternArr);
 	}
 
 	@Override

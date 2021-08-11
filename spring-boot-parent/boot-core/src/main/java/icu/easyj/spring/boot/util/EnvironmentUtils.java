@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -36,6 +37,7 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
@@ -117,27 +119,22 @@ public abstract class EnvironmentUtils {
 	/**
 	 * 加载配置文件，并创建配置集合
 	 *
-	 * @param configFilePath 配置文件相对地址
+	 * @param configFileResource 配置文件资源
 	 * @return properties 配置集合
 	 */
 	@Nullable
-	public static Properties buildProperties(@NonNull String configFilePath) {
-		// 创建资源对象
-		ClassPathResource configFileResource = new ClassPathResource(configFilePath);
-		if (!configFileResource.exists()) {
-			// 配置文件不存在
-			return null;
-		}
+	public static Properties buildProperties(@NonNull Resource configFileResource) {
+		String fileName = configFileResource.getFilename();
 
 		// 不同文件类型，采用不同的加载方式
 		Properties properties;
-		if (configFilePath.endsWith(".yml") || configFilePath.endsWith(".yaml")) {
+		if (fileName.endsWith(".yml") || fileName.endsWith(".yaml")) {
 			// 创建配置文件工厂对象
 			YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 			yaml.setResources(configFileResource);
 			// 创建配置源对象
 			properties = yaml.getObject();
-		} else if (configFilePath.endsWith(".properties")) {
+		} else if (fileName.endsWith(".properties")) {
 			// 创建配置文件工厂对象
 			PropertiesFactoryBean pro = new PropertiesFactoryBean();
 			pro.setSingleton(false);
@@ -146,18 +143,36 @@ public abstract class EnvironmentUtils {
 			try {
 				properties = pro.getObject();
 			} catch (IOException e) {
-				throw new IORuntimeException("配置文件加载失败：" + configFilePath, e);
+				throw new IORuntimeException("配置文件加载失败：" + fileName, e);
 			}
 		} else {
-			throw new NotSupportedConfigFileException("暂不支持该配置文件的解析：" + configFilePath);
+			throw new NotSupportedConfigFileException("暂不支持该配置文件的解析：" + fileName);
 		}
 		return properties;
 	}
 
 	/**
-	 * 根据配置文件相对地址，创建配置源名称
+	 * 加载配置文件，并创建配置集合
 	 *
-	 * @param configFilePath 配置文件相对地址
+	 * @param configFilePath 配置文件路径
+	 * @return properties 配置集合
+	 */
+	@Nullable
+	public static Properties buildProperties(@NonNull String configFilePath) {
+		// 创建资源对象
+		Resource configFileResource = new ClassPathResource(configFilePath);
+		if (!configFileResource.exists()) {
+			// 配置文件不存在
+			return null;
+		}
+
+		return buildProperties(configFileResource);
+	}
+
+	/**
+	 * 根据配置文件路径，创建配置源名称
+	 *
+	 * @param configFilePath 配置文件路径
 	 * @return propertySourceName 配置源名称
 	 */
 	@NonNull
@@ -166,23 +181,35 @@ public abstract class EnvironmentUtils {
 	}
 
 	/**
+	 * 根据配置文件路径，创建配置源名称
+	 *
+	 * @param configFileResource 配置文件资源
+	 * @return propertySourceName 配置源名称
+	 */
+	@NonNull
+	public static String buildPropertySourceNameByPath(@NonNull Resource configFileResource) {
+		String configFilePath = ResourceUtils.getResourceUri(configFileResource);
+		return buildPropertySourceNameByPath(configFilePath);
+	}
+
+	/**
 	 * 创建配置文件为配置源
 	 *
-	 * @param configFilePath 配置文件相对地址
-	 * @param immutable      配置源是否不会更改
+	 * @param configFileResource 配置文件资源
+	 * @param immutable          配置源是否不会更改
 	 * @return propertySource 配置源
 	 */
 	@Nullable
-	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
+	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull Resource configFileResource, boolean immutable) {
 		// 加载配置文件
-		Properties properties = buildProperties(configFilePath);
+		Properties properties = buildProperties(configFileResource);
 		if (properties == null || properties.isEmpty()) {
 			// 配置文件不存在或为空
 			return null;
 		}
 
-		// 根据配置文件相对地址，生成配置源名称
-		String propertySourceName = buildPropertySourceNameByPath(configFilePath);
+		// 根据配置文件路径，生成配置源名称
+		String propertySourceName = buildPropertySourceNameByPath(configFileResource);
 
 		// 创建配置源
 		Map<?, ?> source = immutable ? Collections.unmodifiableMap(properties) : properties;
@@ -190,17 +217,36 @@ public abstract class EnvironmentUtils {
 	}
 
 	/**
-	 * 加载配置文件到环境中的最后位置
+	 * 创建配置文件为配置源
 	 *
-	 * @param configFilePath 配置文件相对地址
+	 * @param configFilePath 配置文件路径
 	 * @param immutable      配置源是否不会更改
-	 * @param environment    环境实例
 	 * @return propertySource 配置源
 	 */
 	@Nullable
-	public static PropertySource<?> addPropertySourceToLast(@NonNull String configFilePath, boolean immutable, @NonNull ConfigurableEnvironment environment) {
+	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
+		// 创建资源对象
+		Resource configFileResource = new ClassPathResource(configFilePath);
+		if (!configFileResource.exists()) {
+			// 配置文件不存在
+			return null;
+		}
+
+		return buildPropertySource(configFileResource, immutable);
+	}
+
+	/**
+	 * 加载配置文件到环境中的最后位置
+	 *
+	 * @param configFileResource 配置文件资源
+	 * @param immutable          配置源是否不会更改
+	 * @param environment        环境实例
+	 * @return propertySource 配置源
+	 */
+	@Nullable
+	public static PropertySource<?> addPropertySourceToLast(@NonNull Resource configFileResource, boolean immutable, @NonNull ConfigurableEnvironment environment) {
 		// 加载配置文件为配置源
-		PropertySource<?> propertySource = buildPropertySource(configFilePath, immutable);
+		PropertySource<?> propertySource = buildPropertySource(configFileResource, immutable);
 		if (propertySource != null) {
 			// 添加配置源到末尾，优先级最低
 			addLastButBeforeDefault(propertySource, environment);
@@ -209,6 +255,26 @@ public abstract class EnvironmentUtils {
 			// 配置文件不存在或为空
 			return null;
 		}
+	}
+
+	/**
+	 * 加载配置文件到环境中的最后位置
+	 *
+	 * @param configFilePath 配置文件路径
+	 * @param immutable      配置源是否不会更改
+	 * @param environment    环境实例
+	 * @return propertySource 配置源
+	 */
+	@Nullable
+	public static PropertySource<?> addPropertySourceToLast(@NonNull String configFilePath, boolean immutable, @NonNull ConfigurableEnvironment environment) {
+		// 创建资源对象
+		Resource configFileResource = new ClassPathResource(configFilePath);
+		if (!configFileResource.exists()) {
+			// 配置文件不存在
+			return null;
+		}
+
+		return addPropertySourceToLast(configFileResource, immutable, environment);
 	}
 
 	/**
