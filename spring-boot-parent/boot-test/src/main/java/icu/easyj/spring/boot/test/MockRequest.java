@@ -25,6 +25,7 @@ import cn.hutool.json.JSONUtil;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.test.exception.TestException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -35,6 +36,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestPart;
 
 /**
  * 模拟Request
@@ -215,8 +217,8 @@ public class MockRequest {
 	/**
 	 * 设置要上传的文件
 	 *
-	 * @param multipartParamName multipart参数名
-	 * @param filePath           文件路径
+	 * @param multipartParamName multipart参数名：对应controller参数注解 {@link RequestPart#name()} 的值
+	 * @param filePath           文件路径，可以是相对于`/src/test/resources`目录的路径
 	 * @return self
 	 */
 	public MockRequest file(String multipartParamName, String filePath) {
@@ -229,7 +231,7 @@ public class MockRequest {
 
 		try {
 			Resource[] resource = ResourceUtils.getResources(filePath);
-			if (resource == null || resource.length == 0) {
+			if (ArrayUtils.isEmpty(resource)) {
 				throw new TestException("文件不存在：" + filePath);
 			}
 			this.multipartBuilder.file(new MockMultipartFile(multipartParamName, "", "", resource[0].getInputStream()));

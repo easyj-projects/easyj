@@ -38,7 +38,6 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -313,7 +312,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * @param dirPath 目录路径
 	 * @return configFilePaths 配置文件路径数组
 	 */
-	@Nullable
+	@NonNull
 	private Resource[] loadConfigFileResources(@NonNull String dirPath) {
 		String[] configFileLocationPatternArr = new String[]{
 				"classpath*:/" + dirPath + "*.yml",
