@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>3rd-party-sdk-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ第三方服务SDK模块，提供方便调用第三方服务的SDK包，如：阿里云、腾讯云、百度云等等。</description>
+
+	<modules>
+		<module>alibaba-cloud-sdk-parent</module>
+		<module>tencent-cloud-sdk-parent</module>
+	</modules>
+</project>

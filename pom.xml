@@ -61,15 +61,17 @@
 	<modules>
 		<module>dependencies</module>
 
-		<module>all</module>
 		<module>bom</module>
 
+		<module>all</module>
 		<module>core-parent</module>
 		<module>web-parent</module>
 
-		<module>spring-boot-parent</module>
-
 		<module>middleware-parent</module>
+
+		<module>3rd-party-sdk-parent</module>
+
+		<module>spring-boot-parent</module>
 	</modules>
 
 	<properties>
