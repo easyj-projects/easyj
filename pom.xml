@@ -68,6 +68,8 @@
 		<module>web-parent</module>
 
 		<module>spring-boot-parent</module>
+
+		<module>middleware-parent</module>
 	</modules>
 
 	<properties>
