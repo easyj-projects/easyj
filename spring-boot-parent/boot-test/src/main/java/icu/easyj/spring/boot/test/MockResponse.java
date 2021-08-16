@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.test;
 import java.io.UnsupportedEncodingException;
 
 import cn.hutool.json.JSONUtil;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;
 import icu.easyj.spring.boot.test.result.ContentTypeResult;
@@ -38,8 +39,11 @@ import org.springframework.test.web.servlet.ResultActions;
  */
 public class MockResponse {
 
+	private static final String CHARSET_PREFIX = "charset=";
+
 	private final ResultActions resultActions;
 	private final MvcResult mvcResult;
+	private MockHttpServletResponse response;
 
 	public MockResponse(ResultActions resultActions) {
 		this.resultActions = resultActions;
@@ -126,7 +130,22 @@ public class MockResponse {
 	 * @return 响应
 	 */
 	private MockHttpServletResponse getResponse() {
-		return mvcResult.getResponse();
+		if (response == null) {
+			MockHttpServletResponse response = mvcResult.getResponse();
+
+			// 默认的编码方式修改为UTF-8
+			if (response.getContentType() == null || !response.getContentType().contains(CHARSET_PREFIX)) {
+				// 不使用set方法，因为它会影响`contentType`的值
+				try {
+					ReflectionUtils.setFieldValue(response, "characterEncoding", "UTF-8");
+				} catch (NoSuchFieldException ignore) {
+				}
+			}
+
+			this.response = response;
+		}
+
+		return response;
 	}
 
 	/**
