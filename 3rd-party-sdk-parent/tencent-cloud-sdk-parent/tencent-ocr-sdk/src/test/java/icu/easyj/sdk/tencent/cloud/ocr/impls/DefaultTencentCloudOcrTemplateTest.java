@@ -16,9 +16,8 @@
 package icu.easyj.sdk.tencent.cloud.ocr.impls;
 
 import java.io.FileInputStream;
-import java.util.Base64;
 
-import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.codec.Base64;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.sdk.tencent.cloud.ocr.TencentCloudConfig;
@@ -58,8 +57,7 @@ class DefaultTencentCloudOcrTemplateTest {
 		// 实例化一个请求对象,每个接口都会对应一个request对象
 		IDCardOCRRequest req = new IDCardOCRRequest();
 		// 读取base64串
-		byte[] bytes = IoUtil.readBytes(new FileInputStream(IDCardImageFilePath));
-		String base64 = Base64.getEncoder().encodeToString(bytes);
+		String base64 = Base64.encode(new FileInputStream(IDCardImageFilePath));
 		req.setImageBase64(base64);
 
 		// 返回的resp是一个IDCardOCRResponse的实例，与请求对象对应
