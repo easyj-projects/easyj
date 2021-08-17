@@ -65,6 +65,14 @@
 				<artifactId>easyj-test</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- 3rd Party SDK -->
+			<!-- 腾讯云 -->
+			<dependency>
+				<groupId>icu.easyj.sdk</groupId>
+				<artifactId>easyj-tencent-ocr-sdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
