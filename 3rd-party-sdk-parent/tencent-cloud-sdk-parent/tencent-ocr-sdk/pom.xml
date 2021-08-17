@@ -4,30 +4,28 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
-		<artifactId>web-parent</artifactId>
+		<groupId>icu.easyj.sdk</groupId>
+		<artifactId>tencent-cloud-sdk-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-web-cache304</artifactId>
+	<artifactId>easyj-tencent-ocr-sdk</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ Web对304缓存功能的封装</description>
+	<description>EasyJ腾讯云文字识别（OCR）服务SDK</description>
 
 	<dependencies>
 		<!-- 当前项目的依赖 -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-web-core</artifactId>
+			<artifactId>easyj-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- Aspect -->
+		<!-- tencent cloud SDK -->
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
-			<optional>true</optional>
+			<groupId>com.tencentcloudapi</groupId>
+			<artifactId>tencentcloud-sdk-java</artifactId>
 		</dependency>
 	</dependencies>
 </project>

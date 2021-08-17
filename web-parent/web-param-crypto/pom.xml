@@ -17,12 +17,12 @@
 	<dependencies>
 		<!-- 当前项目的依赖 -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>

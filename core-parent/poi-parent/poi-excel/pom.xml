@@ -17,7 +17,7 @@
 	<dependencies>
 		<!-- 当前项目的依赖 -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -43,7 +43,7 @@
 		<!-- 以下是 @ExcelExport 注解功能所需的依赖。如要使用该功能，请自行引用以下依赖。 -->
 		<!-- Web -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。如已引用了easyj-all，则无需再引用此依赖。-->

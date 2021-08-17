@@ -32,7 +32,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-dependencies</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>

@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>

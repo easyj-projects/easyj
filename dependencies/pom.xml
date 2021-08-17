@@ -60,6 +60,9 @@
 		<!-- XML dependencies version -->
 		<apache-xmlbeans.version>5.0.0</apache-xmlbeans.version>
 
+		<!-- 第三方服务SDK -->
+		<tencentcloud-sdk-java.version>3.1.99</tencentcloud-sdk-java.version>
+
 		<!-- Test dependencies version -->
 		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.11.2</mockito.version>
@@ -171,6 +174,13 @@
 				<version>${apache-xmlbeans.version}</version>
 			</dependency>
 
+			<!-- 依赖定义：第三方服务SDK -->
+			<dependency>
+				<groupId>com.tencentcloudapi</groupId>
+				<artifactId>tencentcloud-sdk-java</artifactId>
+				<version>${tencentcloud-sdk-java.version}</version>
+			</dependency>
+
 			<!-- 依赖定义：Tests -->
 			<!-- org.junit -->
 			<dependency>
@@ -215,11 +225,33 @@
 
 	<repositories>
 		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<id>central-nexus</id>
+			<name>central-nexus</name>
+			<url>https://repo1.maven.org/maven2/</url>
 			<releases>
 				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-releases</id>
+			<name>oss-nexus-releases</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-snapshots</id>
+			<name>oss-nexus-snapshots</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>

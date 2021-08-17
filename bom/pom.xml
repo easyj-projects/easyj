@@ -33,35 +33,35 @@
 		<dependencies>
 			<!-- All（注：easyj-all中未合并以下依赖，需单独引用） -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-all</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- POI excel -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-poi-excel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Web cache304 -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-web-cache304</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Web param crypto -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-web-param-crypto</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Test -->
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-test</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -83,11 +83,33 @@
 
 	<repositories>
 		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<id>central-nexus</id>
+			<name>central-nexus</name>
+			<url>https://repo1.maven.org/maven2/</url>
 			<releases>
 				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-releases</id>
+			<name>oss-nexus-releases</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-snapshots</id>
+			<name>oss-nexus-snapshots</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>

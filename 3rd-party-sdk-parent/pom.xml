@@ -9,6 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
+	<groupId>icu.easyj.sdk</groupId>
 	<artifactId>3rd-party-sdk-parent</artifactId>
 	<packaging>pom</packaging>
 

@@ -17,7 +17,7 @@
 	<dependencies>
 		<!-- EasyJ Spring Boot -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot</artifactId>
 			<version>${project.version}</version>
 		</dependency>

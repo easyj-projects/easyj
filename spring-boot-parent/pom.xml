@@ -91,7 +91,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-dependencies</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
@@ -110,7 +110,7 @@
 
 		<!-- 引用依赖：Tests -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-test</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
@@ -137,11 +137,33 @@
 
 	<repositories>
 		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<id>central-nexus</id>
+			<name>central-nexus</name>
+			<url>https://repo1.maven.org/maven2/</url>
 			<releases>
 				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-releases</id>
+			<name>oss-nexus-releases</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-snapshots</id>
+			<name>oss-nexus-snapshots</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>

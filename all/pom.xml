@@ -60,7 +60,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>${project.groupId}</groupId>
+				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-dependencies</artifactId>
 				<version>${project.version}</version>
 				<type>pom</type>
@@ -72,35 +72,35 @@
 	<dependencies>
 		<!-- Config -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Core -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Crypto -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Data -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-data</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- DB -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-db</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -108,7 +108,7 @@
 		<!-- POI -->
 		<!--以下依赖不合并到easyj-all中
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-poi-excel</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
@@ -125,18 +125,18 @@
 
 		<!-- Web -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!--以下依赖不合并到easyj-all中
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-cache304</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-param-crypto</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -145,7 +145,7 @@
 		<!-- Test -->
 		<!--以下依赖不合并到easyj-all中
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-test</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -248,11 +248,33 @@
 
 	<repositories>
 		<repository>
-			<id>kt-nexus</id>
-			<name>kt-nexus</name>
-			<url>http://www.kingtsoft.com:33084/nexus/content/groups/public/</url>
+			<id>central-nexus</id>
+			<name>central-nexus</name>
+			<url>https://repo1.maven.org/maven2/</url>
 			<releases>
 				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-releases</id>
+			<name>oss-nexus-releases</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss-nexus-snapshots</id>
+			<name>oss-nexus-snapshots</name>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
