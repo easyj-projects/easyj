@@ -32,7 +32,8 @@ public interface ITencentCloudOcrTemplate {
 	 * 身份证识别
 	 *
 	 * @param request 请求
-	 * @return 响应
+	 * @return response 响应
+	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 * @see <a href="https://cloud.tencent.com/document/api/866/33524">API文档</a>
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
@@ -43,7 +44,8 @@ public interface ITencentCloudOcrTemplate {
 	 *
 	 * @param request 请求
 	 * @param config  请求配置
-	 * @return 响应
+	 * @return response 响应
+	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 */
 	IDCardOCRResponse IDCardOCR(IDCardOCRRequest request, TencentCloudConfig config) throws TencentCloudSDKException;
 
