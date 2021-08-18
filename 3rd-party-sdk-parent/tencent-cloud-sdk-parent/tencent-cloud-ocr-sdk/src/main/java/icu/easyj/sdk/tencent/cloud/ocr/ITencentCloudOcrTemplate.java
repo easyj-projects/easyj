@@ -21,7 +21,7 @@ import cn.hutool.core.codec.Base64;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
-import icu.easyj.sdk.core.ocr.CardSide;
+import icu.easyj.sdk.ocr.CardSide;
 
 /**
  * 腾讯云 文字识别（OCR） 服务接口

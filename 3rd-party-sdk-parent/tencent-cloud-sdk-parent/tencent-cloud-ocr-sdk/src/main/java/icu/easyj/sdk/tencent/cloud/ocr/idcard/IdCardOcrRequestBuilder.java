@@ -19,7 +19,7 @@ import java.io.InputStream;
 
 import cn.hutool.core.codec.Base64;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
-import icu.easyj.sdk.core.ocr.CardSide;
+import icu.easyj.sdk.ocr.CardSide;
 import icu.easyj.sdk.tencent.cloud.ocr.ITencentCloudOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.ocr.IdCardOcrAdvancedConfig;
 
