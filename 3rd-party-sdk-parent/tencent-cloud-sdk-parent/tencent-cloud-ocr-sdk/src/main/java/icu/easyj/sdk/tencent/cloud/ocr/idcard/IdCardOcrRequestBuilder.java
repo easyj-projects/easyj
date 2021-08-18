@@ -206,9 +206,20 @@ public class IdCardOcrRequestBuilder {
 	 */
 	public IDCardOCRRequest build() {
 		if (this.config != null) {
+			this.optimizeConfigBeforeBuild();
 			this.request.setConfig(this.config.toJson());
 		}
 		return this.request;
+	}
+
+	/**
+	 * 优化配置，避免不必要的性能损耗
+	 */
+	private void optimizeConfigBeforeBuild() {
+		// 反面没有人像照片，无需启用CropPortrait
+		if (this.config.getCropPortrait() != null && CardSide.BACK.name().equals(this.request.getCardSide())) {
+			this.config.setCropPortrait(null);
+		}
 	}
 
 	private IdCardOcrAdvancedConfig getConfig() {

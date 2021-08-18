@@ -165,9 +165,7 @@ class DefaultTencentCloudOcrTemplateTest {
 		if (advancedInfo.getIdCardBase64() != null) {
 			Assertions.assertTrue(Base64Utils.isBase64(advancedInfo.getIdCardBase64()));
 		}
-		if (advancedInfo.getPortraitBase64() != null) {
-			Assertions.assertEquals("", advancedInfo.getPortraitBase64()); // 反面没有人像照片
-		}
+		Assertions.assertNull(advancedInfo.getPortraitBase64()); // 反面没有人像照片
 		Assertions.assertTrue(advancedInfo.getQuality() >= 0 && advancedInfo.getQuality() <= 100);
 		Assertions.assertTrue(advancedInfo.getBorderCodeValue() >= 0 && advancedInfo.getBorderCodeValue() <= 100);
 
