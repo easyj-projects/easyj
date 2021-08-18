@@ -60,6 +60,7 @@ public class DefaultTencentCloudOcrTemplate implements ITencentCloudOcrTemplate 
 
 	public DefaultTencentCloudOcrTemplate(@NonNull TencentCloudConfig globalConfig) {
 		Assert.notNull(globalConfig, "'globalConfig' must be not null");
+
 		this.globalConfig = globalConfig;
 		this.globalClient = this.newOcrClient(globalConfig);
 	}
@@ -79,8 +80,11 @@ public class DefaultTencentCloudOcrTemplate implements ITencentCloudOcrTemplate 
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
 	@Override
-	public IDCardOCRResponse IDCardOCR(IDCardOCRRequest request, @NonNull TencentCloudConfig config) throws TencentCloudSDKException {
-		Assert.notNull(config, "'config' must be not null");
+	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudConfig config) throws TencentCloudSDKException {
+		if (config == null) {
+			Assert.notNull(this.globalConfig, "'this.globalConfig' must be not null");
+			config = this.globalConfig;
+		}
 
 		// 合并全局配置
 		this.mergeGlobalConfig(config);
@@ -125,18 +129,6 @@ public class DefaultTencentCloudOcrTemplate implements ITencentCloudOcrTemplate 
 				throw new RuntimeException("IDCardOCR 请求失败", e);
 			}
 		}
-	}
-
-	/**
-	 * 身份证识别
-	 *
-	 * @param request 请求
-	 * @return response 响应
-	 */
-	@Override
-	public IDCardOCRResponse IDCardOCR(IDCardOCRRequest request) throws TencentCloudSDKException {
-		Assert.notNull(this.globalConfig, "'this.globalConfig' must be not null");
-		return this.IDCardOCR(request, this.globalConfig);
 	}
 
 	//endregion 身份证识别 end

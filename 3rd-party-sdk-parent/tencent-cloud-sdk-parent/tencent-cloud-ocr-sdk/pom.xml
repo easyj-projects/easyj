@@ -9,7 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-tencent-ocr-sdk</artifactId>
+	<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ腾讯云文字识别（OCR）服务SDK</description>
@@ -19,6 +19,11 @@
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-all</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-sdk-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

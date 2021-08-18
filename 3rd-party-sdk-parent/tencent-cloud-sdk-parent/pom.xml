@@ -16,7 +16,7 @@
 	<description>EasyJ腾讯云服务SDK模块。</description>
 
 	<modules>
-		<module>tencent-ocr-sdk</module>
+		<module>tencent-cloud-ocr-sdk</module>
 	</modules>
 
 	<repositories>

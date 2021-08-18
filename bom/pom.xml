@@ -67,10 +67,15 @@
 			</dependency>
 
 			<!-- 3rd Party SDK -->
-			<!-- 腾讯云 -->
 			<dependency>
 				<groupId>icu.easyj.sdk</groupId>
-				<artifactId>easyj-tencent-ocr-sdk</artifactId>
+				<artifactId>easyj-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- 腾讯云：文字识别（OCR）的SDK -->
+			<dependency>
+				<groupId>icu.easyj.sdk</groupId>
+				<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
