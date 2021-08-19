@@ -23,7 +23,14 @@
 
 		<dependency>
 			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-ocr-sdk-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
 			<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
+			<!--仅参与打包及运行，不参与编译（即无法引用到该JAR中的类，但打包后可正常调用到该JAR中的类）-->
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

@@ -47,8 +47,8 @@ class DefaultTencentCloudIdCardOcrTemplateTest {
 	void testIDCardOCR() throws Exception {
 		// 设置密钥对
 		// 请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对
-		String secretId = "AKIDRtxlKhSGCxbpqL6ooX8YEooa7cw38C2d"; // 密钥对中的ID
-		String secretKey = "Rggmrjz3wbCNHWWGkMtAuDVw71U1Zt7r"; // 密钥对中的Key
+		String secretId = "xxx"; // 密钥对中的ID
+		String secretKey = "xxx"; // 密钥对中的Key
 
 		// 地域
 		String region = "ap-shanghai";

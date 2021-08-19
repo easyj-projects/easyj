@@ -149,13 +149,8 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 		builder.enableMultiCardDetect(); // 多卡检测
 
 		if (ArrayUtils.isNotEmpty(advancedArr)) {
-			boolean isAll = false;
 			for (IdCardOcrAdvanced advanced : advancedArr) {
 				switch (advanced) {
-					case ALL:
-						builder.enableAllAdvanced(); // 全部
-						isAll = true;
-						break;
 					case CROP_ID_CARD:
 						builder.enableCropIdCard();
 						break;
@@ -181,14 +176,6 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 					default:
 						break;
 				}
-				if (isAll) {
-					break;
-				}
-			}
-
-			// 防止高级功能未使用，做如下测试
-			if (LOGGER.isWarnEnabled() && IdCardOcrAdvanced.values().length > 8) {
-				LOGGER.warn("当前`switch`代码段未包含{}枚举的所有值，请联系开发人员完善代码！", IdCardOcrAdvanced.class.getSimpleName());
 			}
 		}
 	}

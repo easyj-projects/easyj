@@ -24,11 +24,6 @@ package icu.easyj.sdk.ocr.idcardocr;
 public enum IdCardOcrAdvanced {
 
 	/**
-	 * 启用所有高级功能
-	 */
-	ALL,
-
-	/**
 	 * 裁剪身份证图片，去掉边框外的内容，并自动矫正拍摄角度
 	 */
 	CROP_ID_CARD,
@@ -76,4 +71,27 @@ public enum IdCardOcrAdvanced {
 	 * @see IdCardOcrWarn#FAKE
 	 */
 	DETECT_FAKE;
+
+
+	/**
+	 * 包含所有枚举的数组
+	 */
+	public final static IdCardOcrAdvanced[] ALL = IdCardOcrAdvanced.values();
+
+	/**
+	 * 包含所有裁剪的枚举的数组
+	 */
+	public final static IdCardOcrAdvanced[] ALL_CROP = new IdCardOcrAdvanced[]{
+			CROP_ID_CARD,
+			CROP_PORTRAIT};
+
+	/**
+	 * 包含所有检查枚举的数组
+	 */
+	public final static IdCardOcrAdvanced[] ALL_DETECT = new IdCardOcrAdvanced[]{
+			DETECT_INVALID,
+			DETECT_INCOMPLETE,
+			DETECT_COPY,
+			DETECT_TEMP,
+			DETECT_FAKE};
 }
