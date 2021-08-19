@@ -118,7 +118,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 
 			return response;
 		} catch (TencentCloudSDKException | RuntimeException e) {
-			LOGGER.error("IDCardOCR 请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {}",
+			LOGGER.error("IDCardOCR 请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {} ms",
 					e,
 					icu.easyj.core.util.StringUtils.toString(request),
 					icu.easyj.core.util.StringUtils.toString(config),
