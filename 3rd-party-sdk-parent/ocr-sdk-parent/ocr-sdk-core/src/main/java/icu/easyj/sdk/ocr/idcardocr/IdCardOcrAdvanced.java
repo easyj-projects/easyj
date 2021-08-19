@@ -74,6 +74,11 @@ public enum IdCardOcrAdvanced {
 
 
 	/**
+	 * 不含任何枚举的数组
+	 */
+	public final static IdCardOcrAdvanced[] EMPTY = new IdCardOcrAdvanced[0];
+
+	/**
 	 * 包含所有枚举的数组
 	 */
 	public final static IdCardOcrAdvanced[] ALL = IdCardOcrAdvanced.values();

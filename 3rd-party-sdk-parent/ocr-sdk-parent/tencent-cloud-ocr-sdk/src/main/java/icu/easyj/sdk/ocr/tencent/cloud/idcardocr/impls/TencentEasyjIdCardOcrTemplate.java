@@ -150,6 +150,9 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 
 		if (ArrayUtils.isNotEmpty(advancedArr)) {
 			for (IdCardOcrAdvanced advanced : advancedArr) {
+				if (advanced == null) {
+					continue;
+				}
 				switch (advanced) {
 					case CROP_ID_CARD:
 						builder.enableCropIdCard();

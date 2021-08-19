@@ -24,17 +24,22 @@ package icu.easyj.sdk.ocr.idcardocr;
 public enum IdCardOcrAdvancedGroup {
 
 	/**
-	 * 所有枚举的数组
+	 * 不包含任何枚举的数组
+	 */
+	EMPTY(IdCardOcrAdvanced.EMPTY),
+
+	/**
+	 * 包含所有枚举的数组
 	 */
 	ALL(IdCardOcrAdvanced.ALL),
 
 	/**
-	 * 所有裁剪的枚举的数组
+	 * 包含所有裁剪类枚举的数组
 	 */
 	ALL_COPE(IdCardOcrAdvanced.ALL_CROP),
 
 	/**
-	 * 所有检查枚举的数组
+	 * 包含所有检查类枚举的数组
 	 */
 	ALL_DETECT(IdCardOcrAdvanced.ALL_DETECT);
 
