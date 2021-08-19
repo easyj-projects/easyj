@@ -20,29 +20,25 @@ package icu.easyj.core.exception;
  *
  * @author wangliang181230
  */
-public class ConverterNotFoundException extends RuntimeException {
-
-	public ConverterNotFoundException() {
-		super();
-	}
+public class ConverterNotFoundException extends BaseRuntimeException {
 
 	public ConverterNotFoundException(String message) {
 		super(message);
+	}
+
+	public ConverterNotFoundException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public ConverterNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ConverterNotFoundException(Throwable cause) {
-		super(cause);
-	}
-
-	public ConverterNotFoundException(String fromType, String toType) {
-		super("未找到`" + fromType + "`转换为`" + toType + "`的转换器");
+	public ConverterNotFoundException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 
 	public ConverterNotFoundException(Class<?> fromType, Class<?> toType) {
-		this(fromType.getName(), toType.getName());
+		this("未找到`" + fromType.getName() + "`转换为`" + toType.getName() + "`的转换器");
 	}
 }

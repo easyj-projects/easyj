@@ -20,29 +20,21 @@ package icu.easyj.core.exception;
  *
  * @author wangliang181230
  */
-public class ConverterException extends RuntimeException {
-
-	public ConverterException() {
-		super();
-	}
+public class ConverterException extends BaseRuntimeException {
 
 	public ConverterException(String message) {
 		super(message);
+	}
+
+	public ConverterException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public ConverterException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ConverterException(Throwable cause) {
-		super(cause);
-	}
-
-	public ConverterException(String fromType, String toType) {
-		super("`" + fromType + "`转换为`" + toType + "`失败");
-	}
-
-	public ConverterException(Class<?> fromType, Class<?> toType) {
-		this(fromType.getName(), toType.getName());
+	public ConverterException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }

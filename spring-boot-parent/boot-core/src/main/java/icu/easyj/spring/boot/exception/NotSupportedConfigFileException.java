@@ -24,19 +24,19 @@ import icu.easyj.core.exception.NotSupportedFileException;
  */
 public class NotSupportedConfigFileException extends NotSupportedFileException {
 
-	public NotSupportedConfigFileException() {
-		super();
-	}
-
 	public NotSupportedConfigFileException(String message) {
 		super(message);
+	}
+
+	public NotSupportedConfigFileException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public NotSupportedConfigFileException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public NotSupportedConfigFileException(Throwable cause) {
-		super(cause);
+	public NotSupportedConfigFileException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }

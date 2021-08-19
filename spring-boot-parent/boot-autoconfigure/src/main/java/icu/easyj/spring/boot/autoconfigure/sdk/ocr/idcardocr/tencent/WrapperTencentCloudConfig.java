@@ -16,7 +16,7 @@
 package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 
 import com.tencentcloudapi.common.profile.Language;
-import icu.easyj.sdk.tencent.cloud.ocr.TencentCloudConfig;
+import icu.easyj.sdk.ocr.tencent.cloud.TencentCloudConfig;
 
 /**
  * @author wangliang181230

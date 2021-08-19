@@ -90,13 +90,7 @@
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
 
-
-		<!-- 其他功能：SDK -->
-		<dependency>
-			<groupId>icu.easyj.sdk</groupId>
-			<artifactId>easyj-sdk-core</artifactId>
-			<optional>true</optional><!--可选依赖-->
-		</dependency>
+		<!-- 功能4：OCR -->
 		<dependency>
 			<groupId>icu.easyj.sdk</groupId>
 			<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>

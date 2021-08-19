@@ -20,22 +20,21 @@ package icu.easyj.core.exception;
  *
  * @author wangliang181230
  */
-public class NotSupportedFileException extends RuntimeException {
-
-	public NotSupportedFileException() {
-		super();
-	}
+public class NotSupportedFileException extends BaseRuntimeException {
 
 	public NotSupportedFileException(String message) {
 		super(message);
+	}
+
+	public NotSupportedFileException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public NotSupportedFileException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public NotSupportedFileException(Throwable cause) {
-		super(cause);
+	public NotSupportedFileException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
-
 }

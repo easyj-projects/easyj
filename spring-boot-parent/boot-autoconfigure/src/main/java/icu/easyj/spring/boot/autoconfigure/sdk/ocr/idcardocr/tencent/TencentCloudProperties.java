@@ -15,6 +15,7 @@
  */
 package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 
+import icu.easyj.sdk.tencent.cloud.core.TencentCloudSecretConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -23,36 +24,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author wangliang181230
  */
 @ConfigurationProperties("easyj.sdk.tencent")
-public class TencentCloudProperties {
-
-	/**
-	 * API密钥对中的ID
-	 */
-	private String secretId;
-
-	/**
-	 * API密钥对中的Key
-	 */
-	private String secretKey;
-
-
-	//region Getter、Setter
-
-	public String getSecretId() {
-		return secretId;
-	}
-
-	public void setSecretId(String secretId) {
-		this.secretId = secretId;
-	}
-
-	public String getSecretKey() {
-		return secretKey;
-	}
-
-	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
-	}
-
-	//endregion
+public class TencentCloudProperties extends TencentCloudSecretConfig {
 }

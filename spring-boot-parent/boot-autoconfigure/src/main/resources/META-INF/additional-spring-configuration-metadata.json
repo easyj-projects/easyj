@@ -127,11 +127,6 @@
 					"value": "na-toronto",
 					"description": "北美地区(多伦多)."
 				}
-			],
-			"providers": [
-				{
-					"name": "any"
-				}
 			]
 		},
 		{

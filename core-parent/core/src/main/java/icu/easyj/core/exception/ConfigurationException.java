@@ -20,21 +20,21 @@ package icu.easyj.core.exception;
  *
  * @author wangliang181230
  */
-public class ConfigurationException extends RuntimeException {
-
-	public ConfigurationException() {
-		super();
-	}
+public class ConfigurationException extends BaseRuntimeException {
 
 	public ConfigurationException(String message) {
 		super(message);
+	}
+
+	public ConfigurationException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public ConfigurationException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ConfigurationException(Throwable cause) {
-		super(cause);
+	public ConfigurationException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }
