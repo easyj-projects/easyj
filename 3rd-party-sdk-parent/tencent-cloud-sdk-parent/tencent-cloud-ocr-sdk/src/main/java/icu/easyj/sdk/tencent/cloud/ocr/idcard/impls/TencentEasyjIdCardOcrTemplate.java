@@ -49,15 +49,15 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class TencentEasyJIdCardOcrTemplate implements IIdCardOcrTemplate {
+public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TencentEasyJIdCardOcrTemplate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TencentEasyjIdCardOcrTemplate.class);
 
 
 	private final ITencentCloudIdCardOcrTemplate idCardOcrTemplate;
 
 
-	public TencentEasyJIdCardOcrTemplate(ITencentCloudIdCardOcrTemplate idCardOcrTemplate) {
+	public TencentEasyjIdCardOcrTemplate(ITencentCloudIdCardOcrTemplate idCardOcrTemplate) {
 		Assert.notNull(idCardOcrTemplate, "'idCardOcrTemplate' must be not null");
 		this.idCardOcrTemplate = idCardOcrTemplate;
 	}

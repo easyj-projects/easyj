@@ -191,7 +191,7 @@ class DefaultTencentCloudIdCardOcrTemplateTest {
 
 		//region case5: 测试 Easyj 的 IOcrTemplate 接口
 
-		IOcrTemplate ocrTemplate = new WrapperOcrTemplate(new TencentEasyJIdCardOcrTemplate(template));
+		IOcrTemplate ocrTemplate = new WrapperOcrTemplate(new TencentEasyjIdCardOcrTemplate(template));
 
 		//region case5.1: 正面
 		{

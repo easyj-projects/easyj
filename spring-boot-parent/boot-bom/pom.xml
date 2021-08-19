@@ -96,6 +96,14 @@
 				<artifactId>easyj-spring-boot-starter-web-param-crypto</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- SDK -->
+			<!-- 基于腾讯云实现的文字识别（OCR）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-ocr-tencent</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

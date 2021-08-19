@@ -13,35 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.ocr;
+package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 
+import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.common.profile.Language;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 腾讯云相关配置
+ * 腾讯云身份证识别相关配置
  *
  * @author wangliang181230
  */
-public class TencentCloudConfig {
-
-	//region 安全相关配置
-
-	/**
-	 * 密钥对中的ID
-	 *
-	 * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
-	 */
-	private String secretId;
-
-	/**
-	 * 密钥对中的Key
-	 *
-	 * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
-	 */
-	private String secretKey;
-
-	//endregion
-
+@ConfigurationProperties("easyj.sdk.tencent.ocr.idcard-ocr")
+public class TencentCloudIdCardOcrProperties {
 
 	//region 地域配置
 
@@ -60,7 +44,7 @@ public class TencentCloudConfig {
 	/**
 	 * Connect timeout in seconds
 	 */
-	private Integer connTimeout;
+	private Integer connTimeout = HttpProfile.TM_MINUTE;
 
 	/**
 	 * Write timeout in seconds
@@ -75,33 +59,17 @@ public class TencentCloudConfig {
 	/**
 	 * 语言，默认：简体中文
 	 */
-	private Language language;
+	private Language language = Language.ZH_CN;
 
 	/**
 	 * 是否调试
 	 */
-	private Boolean debug;
+	private Boolean debug = false;
 
 	//endregion
 
 
 	//region Getter、Setter
-
-	public String getSecretId() {
-		return secretId;
-	}
-
-	public void setSecretId(String secretId) {
-		this.secretId = secretId;
-	}
-
-	public String getSecretKey() {
-		return secretKey;
-	}
-
-	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
-	}
 
 	public String getRegion() {
 		return region;
@@ -152,4 +120,5 @@ public class TencentCloudConfig {
 	}
 
 	//endregion
+
 }

@@ -64,12 +64,76 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.sdk.tencent.ocr.idcard-ocr.conn-timeout",
+			"defaultValue": 60
+		},
+		{
+			"name": "easyj.sdk.tencent.ocr.idcard-ocr.debug",
+			"defaultValue": false
+		},
+		{
+			"name": "easyj.sdk.tencent.ocr.idcard-ocr.language",
+			"defaultValue": "zh_cn"
+		},
+		{
 			"name": "easyj.web.poi.excel.export.list-field-name",
 			"description": "全局配置列表属性名.",
 			"defaultValue": "list"
 		}
 	],
 	"hints": [
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.type",
+			"values": [
+				{
+					"value": "tencent",
+					"description": "基于腾讯云实现的身份证识别功能."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.tencent.ocr.idcard-ocr.region",
+			"values": [
+				{
+					"value": "ap-beijing",
+					"description": "华北地区(北京)."
+				},
+				{
+					"value": "ap-guangzhou",
+					"description": "华南地区(广州) ."
+				},
+				{
+					"value": "ap-hongkong",
+					"description": "港澳台地区(中国香港)."
+				},
+				{
+					"value": "ap-seoul",
+					"description": "亚太东北(首尔)."
+				},
+				{
+					"value": "ap-shanghai",
+					"description": "华东地区(上海)."
+				},
+				{
+					"value": "ap-singapore",
+					"description": "亚太东南(新加坡)."
+				},
+				{
+					"value": "na-toronto",
+					"description": "北美地区(多伦多)."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
 		{
 			"name": "easyj.web.param-crypto.handler.algorithm",
 			"values": [
