@@ -212,7 +212,7 @@ class DefaultTencentCloudIdCardOcrTemplateTest {
 		{
 			IdCardOcrResponse response = ocrTemplate.idCardOcr(frontIdCardBase64, backIdCardBase64, IdCardOcrAdvanced.ALL);
 			System.out.println("正反面照一起的响应（EasyJ）：\r\n" + StringUtils.toString(response));
-			Assertions.assertEquals(CardSide.DOUBLE, response.getCardSide());
+			Assertions.assertEquals(CardSide.BOTH, response.getCardSide());
 
 			IdCardOcrResponse response2 = ocrTemplate.idCardOcr(backIdCardBase64, frontIdCardBase64, IdCardOcrAdvanced.ALL);
 			System.out.println("正反面照一起的响应（EasyJ）：\r\n" + StringUtils.toString(response2));

@@ -67,8 +67,8 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 	public IdCardOcrResponse idCardOcr(@NonNull String image, @Nullable CardSide cardSide, IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		Assert.notNull(image, "'image' must be not null");
 
-		// 为两面时，
-		if (CardSide.DOUBLE == cardSide) {
+		// 为两面时，重置为null
+		if (CardSide.BOTH == cardSide) {
 			cardSide = null;
 		}
 

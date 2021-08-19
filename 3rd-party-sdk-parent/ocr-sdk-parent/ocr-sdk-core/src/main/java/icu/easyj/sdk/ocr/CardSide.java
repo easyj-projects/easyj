@@ -25,7 +25,7 @@ public enum CardSide {
 	/**
 	 * 正反两面都有
 	 */
-	DOUBLE("两面"),
+	BOTH("两面"),
 
 	/**
 	 * 正面

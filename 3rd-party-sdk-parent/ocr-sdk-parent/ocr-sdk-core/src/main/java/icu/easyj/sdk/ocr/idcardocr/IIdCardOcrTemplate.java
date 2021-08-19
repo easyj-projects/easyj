@@ -98,8 +98,8 @@ public interface IIdCardOcrTemplate {
 
 		//region 合并两个响应的内容
 
-		// 设置为两面
-		doubleResponse.setCardSide(CardSide.DOUBLE);
+		// 设置为正反面都有
+		doubleResponse.setCardSide(CardSide.BOTH);
 
 		// 反面信息
 		doubleResponse.setAuthority(backResponse.getAuthority());
