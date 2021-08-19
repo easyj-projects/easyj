@@ -15,37 +15,14 @@
  */
 package icu.easyj.sdk.ocr;
 
+import icu.easyj.sdk.ocr.idcard.IIdCardOcrTemplate;
+
 /**
- * 卡证的正反面枚举
+ * 所有 文字识别（OCR） 接口
+ * 目前包含：
+ * -- 身份证识别（IDCardOCR）
  *
- * @author wangliang
+ * @author wangliang181230
  */
-public enum CardSide {
-
-	/**
-	 * 正反两面都有
-	 */
-	DOUBLE("两面"),
-
-	/**
-	 * 正面
-	 * 如：身份证有照片的一面（人像面）
-	 */
-	FRONT("正面"),
-
-	/**
-	 * 反面
-	 * 如：身份证有国徽的一面（国徽面）
-	 */
-	BACK("反面");
-
-	private final String sideName;
-
-	CardSide(String sideName) {
-		this.sideName = sideName;
-	}
-
-	public String sideName() {
-		return sideName;
-	}
+public interface IOcrTemplate extends IIdCardOcrTemplate {
 }

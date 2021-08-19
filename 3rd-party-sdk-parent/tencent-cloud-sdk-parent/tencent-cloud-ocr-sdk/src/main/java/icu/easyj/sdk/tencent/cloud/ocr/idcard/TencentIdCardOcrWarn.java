@@ -22,7 +22,7 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-public enum IdCardOcrWarn {
+public enum TencentIdCardOcrWarn {
 
 	/**
 	 * 有效日期不合法
@@ -37,7 +37,7 @@ public enum IdCardOcrWarn {
 	/**
 	 * 框内部分被遮挡
 	 */
-	IN_FRAME_COVERED(-9105, "身份证框内部分被遮挡", 2),
+	IN_FRAME_COVERED(-9105, "身份证边框内部分被遮挡", 2),
 
 	/**
 	 * 为复印件
@@ -52,12 +52,12 @@ public enum IdCardOcrWarn {
 	/**
 	 * 为临时身份证
 	 */
-	TEMP_ID(-9104, "为临时身份证", 4),
+	TEMP(-9104, "为临时身份证", 4),
 
 	/**
 	 * 为PS过的身份证
 	 */
-	DETECT_PS(-9106, "为PS过的身份证", 5);
+	PS(-9106, "为PS过的身份证", 5);
 
 	/**
 	 * 告警码
@@ -74,21 +74,21 @@ public enum IdCardOcrWarn {
 	 */
 	private final int type;
 
-	IdCardOcrWarn(int code, String msg, int type) {
+	TencentIdCardOcrWarn(int code, String msg, int type) {
 		this.code = code;
 		this.msg = msg;
 		this.type = type;
 	}
 
-	public int getCode() {
+	public int code() {
 		return code;
 	}
 
-	public String getMsg() {
+	public String msg() {
 		return msg;
 	}
 
-	public int getType() {
+	public int type() {
 		return type;
 	}
 
@@ -99,9 +99,9 @@ public enum IdCardOcrWarn {
 	 * @return warnEnum 告警枚举
 	 */
 	@Nullable
-	public static IdCardOcrWarn get(int warnCode) {
-		for (IdCardOcrWarn warn : IdCardOcrWarn.values()) {
-			if (warnCode == warn.getCode()) {
+	public static TencentIdCardOcrWarn get(int warnCode) {
+		for (TencentIdCardOcrWarn warn : TencentIdCardOcrWarn.values()) {
+			if (warnCode == warn.code()) {
 				return warn;
 			}
 		}

@@ -19,9 +19,8 @@ import java.io.InputStream;
 
 import cn.hutool.core.codec.Base64;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
+import icu.easyj.core.constant.UrlConstants;
 import icu.easyj.sdk.ocr.CardSide;
-import icu.easyj.sdk.tencent.cloud.ocr.ITencentCloudOcrTemplate;
-import icu.easyj.sdk.tencent.cloud.ocr.IdCardOcrAdvancedConfig;
 
 /**
  * 身份证识别请求构建者
@@ -41,33 +40,71 @@ public class IdCardOcrRequestBuilder {
 	private IdCardOcrAdvancedConfig config;
 
 
-	public IdCardOcrRequestBuilder image(String imageBase64) {
-		request.setImageBase64(imageBase64);
+	/**
+	 * 设置图片Base64串或Url地址
+	 *
+	 * @param image 图片Base64串或Url地址
+	 * @return self
+	 */
+	public IdCardOcrRequestBuilder image(String image) {
+		if (image.startsWith(UrlConstants.HTTP_PRE) || image.startsWith(UrlConstants.HTTPS_PRE)) {
+			request.setImageUrl(image);
+		} else {
+			request.setImageBase64(image);
+		}
 		return this;
 	}
 
+	/**
+	 * 设置图片输入流
+	 *
+	 * @param imageInputStream 图片输入流
+	 * @return self
+	 */
 	public IdCardOcrRequestBuilder image(InputStream imageInputStream) {
-		return this.image(Base64.encode(imageInputStream));
-	}
-
-	public IdCardOcrRequestBuilder imageUrl(String imageUrl) {
-		request.setImageUrl(imageUrl);
+		request.setImageBase64(Base64.encode(imageInputStream));
 		return this;
 	}
 
+	/**
+	 * 设置卡证正反面
+	 *
+	 * @param cardSide 卡证正反面
+	 * @return self
+	 */
 	public IdCardOcrRequestBuilder cardSide(String cardSide) {
 		request.setCardSide(cardSide);
 		return this;
 	}
 
+	/**
+	 * 设置卡证正反面枚举
+	 *
+	 * @param cardSide 卡证正反面枚举
+	 * @return self
+	 */
 	public IdCardOcrRequestBuilder cardSide(CardSide cardSide) {
+		if (cardSide == null) {
+			// 为空时，不设置
+			return this;
+		}
 		return cardSide(cardSide.name());
 	}
 
+	/**
+	 * 设置为正面
+	 *
+	 * @return self
+	 */
 	public IdCardOcrRequestBuilder frontCardSide() {
 		return this.cardSide(CardSide.FRONT);
 	}
 
+	/**
+	 * 设置为反面
+	 *
+	 * @return self
+	 */
 	public IdCardOcrRequestBuilder backCardSide() {
 		return this.cardSide(CardSide.BACK);
 	}
@@ -104,7 +141,7 @@ public class IdCardOcrRequestBuilder {
 
 	/**
 	 * 高级功能：开启 多卡证检测
-	 * 存在多张卡时，{@link ITencentCloudOcrTemplate#doIdCardOcr} 方法将直接抛出异常
+	 * 存在多张卡时，{@link ITencentCloudIdCardOcrTemplate#doIdCardOcr} 方法将直接抛出异常
 	 *
 	 * @return self
 	 */

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.ocr.impls;
+package icu.easyj.sdk.tencent.cloud.ocr.idcard.impls;
 
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
@@ -23,8 +23,8 @@ import com.tencentcloudapi.common.profile.Language;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
-import icu.easyj.sdk.tencent.cloud.ocr.ITencentCloudOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.ocr.TencentCloudConfig;
+import icu.easyj.sdk.tencent.cloud.ocr.idcard.ITencentCloudIdCardOcrTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +33,13 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * 腾讯云 文字识别（OCR） 服务接口 默认实现
+ * 腾讯云 身份证识别（IdCardOCR） 服务接口 默认实现
  *
  * @author wangliang181230
  */
-public class DefaultTencentCloudOcrTemplate implements ITencentCloudOcrTemplate {
+public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCardOcrTemplate {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTencentCloudOcrTemplate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTencentCloudIdCardOcrTemplate.class);
 
 	private static final String ENDPOINT = "ocr.tencentcloudapi.com";
 
@@ -53,12 +53,12 @@ public class DefaultTencentCloudOcrTemplate implements ITencentCloudOcrTemplate 
 	private final OcrClient globalClient;
 
 
-	public DefaultTencentCloudOcrTemplate() {
+	public DefaultTencentCloudIdCardOcrTemplate() {
 		this.globalConfig = null;
 		this.globalClient = null;
 	}
 
-	public DefaultTencentCloudOcrTemplate(@NonNull TencentCloudConfig globalConfig) {
+	public DefaultTencentCloudIdCardOcrTemplate(@NonNull TencentCloudConfig globalConfig) {
 		Assert.notNull(globalConfig, "'globalConfig' must be not null");
 
 		this.globalConfig = globalConfig;

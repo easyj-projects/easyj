@@ -13,39 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr;
+package icu.easyj.sdk.ocr.idcard;
+
+import icu.easyj.sdk.exception.SdkException;
 
 /**
- * 卡证的正反面枚举
+ * 身份证识别（IdCardOCR）相关异常
  *
- * @author wangliang
+ * @author wangliang181230
  */
-public enum CardSide {
+public class IdCardOcrSdkException extends SdkException {
 
-	/**
-	 * 正反两面都有
-	 */
-	DOUBLE("两面"),
-
-	/**
-	 * 正面
-	 * 如：身份证有照片的一面（人像面）
-	 */
-	FRONT("正面"),
-
-	/**
-	 * 反面
-	 * 如：身份证有国徽的一面（国徽面）
-	 */
-	BACK("反面");
-
-	private final String sideName;
-
-	CardSide(String sideName) {
-		this.sideName = sideName;
+	public IdCardOcrSdkException(String message) {
+		super(message);
 	}
 
-	public String sideName() {
-		return sideName;
+	public IdCardOcrSdkException(String message, String errorCode) {
+		super(message, errorCode);
+	}
+
+	public IdCardOcrSdkException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public IdCardOcrSdkException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }

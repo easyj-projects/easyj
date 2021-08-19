@@ -15,11 +15,13 @@
  */
 package icu.easyj.sdk.tencent.cloud.ocr.idcard;
 
+import java.util.Set;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.Nullable;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -72,23 +74,23 @@ public class IdCardOcrAdvancedInfo {
 	 */
 	@SerializedName("WarnInfos")
 	@Expose
-	private int[] warnInfos;
+	private Set<Integer> warnInfos;
 
 
 	//region 判断告警信息
 
 	/**
-	 * @return 是否包含任意告警
-	 */
-	public boolean hasAnyWarn() {
-		return ArrayUtils.isNotEmpty(warnInfos);
-	}
-
-	/**
 	 * @return 是否不含任意告警
 	 */
 	public boolean hasNoWarn() {
-		return ArrayUtils.isEmpty(warnInfos);
+		return CollectionUtils.isEmpty(warnInfos);
+	}
+
+	/**
+	 * @return 是否包含任意告警
+	 */
+	public boolean hasAnyWarn() {
+		return !hasNoWarn();
 	}
 
 	/**
@@ -101,12 +103,7 @@ public class IdCardOcrAdvancedInfo {
 		if (this.hasNoWarn()) {
 			return false;
 		}
-		for (int warn : warnInfos) {
-			if (warn == warnCode) {
-				return true;
-			}
-		}
-		return false;
+		return warnInfos.contains(warnCode);
 	}
 
 	/**
@@ -214,11 +211,11 @@ public class IdCardOcrAdvancedInfo {
 		this.borderCodeValue = borderCodeValue;
 	}
 
-	public int[] getWarnInfos() {
+	public Set<Integer> getWarnInfos() {
 		return warnInfos;
 	}
 
-	public void setWarnInfos(int[] warnInfos) {
+	public void setWarnInfos(Set<Integer> warnInfos) {
 		this.warnInfos = warnInfos;
 	}
 

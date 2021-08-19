@@ -37,6 +37,9 @@ public enum DateFormatType {
 	SS2(DateFormatConstants.SS2), // 精确到秒，长度：19
 	SSS2(DateFormatConstants.SSS2), // 完整格式，精确到毫秒，长度：23
 
+	MM3(DateFormatConstants.MM3), // 精确到月，长度：7
+	DD3(DateFormatConstants.DD3), // 精确到日，长度：10
+
 	MM_UNSIGNED(DateFormatConstants.MM_UNSIGNED), // 精确到月，长度：6
 	DD_UNSIGNED(DateFormatConstants.DD_UNSIGNED), // 精确到日，长度：8
 	MI_UNSIGNED(DateFormatConstants.MI_UNSIGNED), // 精确到分，长度：12

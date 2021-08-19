@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.ocr;
+package icu.easyj.sdk.tencent.cloud.ocr.idcard;
 
 import java.io.InputStream;
 
@@ -22,15 +22,14 @@ import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.sdk.ocr.CardSide;
+import icu.easyj.sdk.tencent.cloud.ocr.TencentCloudConfig;
 
 /**
- * 腾讯云 文字识别（OCR） 服务接口
+ * 腾讯云 身份证识别（IDCardOCR） 服务接口
  *
  * @author wangliang181230
  */
-public interface ITencentCloudOcrTemplate {
-
-	//region 身份证识别
+public interface ITencentCloudIdCardOcrTemplate {
 
 	/**
 	 * 执行身份证识别
@@ -106,6 +105,4 @@ public interface ITencentCloudOcrTemplate {
 	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide) throws TencentCloudSDKException {
 		return this.doIdCardOcr(idCardImageBytes, cardSide, null);
 	}
-
-	//endregion
 }

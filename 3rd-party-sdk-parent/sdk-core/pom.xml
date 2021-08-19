@@ -13,4 +13,12 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ第三方SDK核心。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

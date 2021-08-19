@@ -142,6 +142,17 @@ public abstract class DateUtils {
 
 
 	@NonNull
+	public static Date parseMonth3(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.MM3);
+	}
+
+	@NonNull
+	public static Date parseDate3(@NonNull String str) throws ParseException {
+		return parse(str, DateFormatType.DD3);
+	}
+
+
+	@NonNull
 	public static Date parseMonthUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MM_UNSIGNED);
 	}
@@ -181,14 +192,18 @@ public abstract class DateUtils {
 				case 7:
 					if (timeStr.contains("-")) {
 						return parseMonth(timeStr);
-					} else {
+					} else if (timeStr.contains("/")) {
 						return parseMonth2(timeStr);
+					} else {
+						return parseMonth3(timeStr);
 					}
 				case 10:
 					if (timeStr.contains("-")) {
 						return parseDate(timeStr);
-					} else {
+					} else if (timeStr.contains("/")) {
 						return parseDate2(timeStr);
+					} else {
+						return parseDate3(timeStr);
 					}
 				case 16:
 					if (timeStr.contains("-")) {

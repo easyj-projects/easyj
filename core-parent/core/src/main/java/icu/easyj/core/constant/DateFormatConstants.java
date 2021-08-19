@@ -34,6 +34,9 @@ public interface DateFormatConstants {
 	String SS2 = "yyyy/MM/dd HH:mm:ss"; // 精确到秒，长度：19
 	String SSS2 = "yyyy/MM/dd HH:mm:ss.SSS"; // 完整格式，精确到毫秒，长度：23
 
+	String MM3 = "yyyy.MM"; // 精确到月，长度：7
+	String DD3 = "yyyy.MM.dd"; // 精确到日，长度：10
+
 	String MM_UNSIGNED = "yyyyMM"; // 精确到月，长度：6
 	String DD_UNSIGNED = "yyyyMMdd"; // 精确到日，长度：8
 	String MI_UNSIGNED = "yyyyMMddHHmm"; // 精确到分，长度：12

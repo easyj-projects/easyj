@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.ocr;
+package icu.easyj.sdk.tencent.cloud.ocr.idcard;
 
 import org.springframework.lang.Nullable;
 
@@ -56,8 +56,8 @@ public class IdCardOcrAdvancedConfig {
 
 	/**
 	 * 边框和框内遮挡告警
-	 * 警告码：-9101
-	 * 警告码：-9105
+	 * 警告码：-9101：边框不完整，或边框有遮挡
+	 * 警告码：-9105：框内有遮挡
 	 */
 	private Boolean borderCheckWarn;
 
