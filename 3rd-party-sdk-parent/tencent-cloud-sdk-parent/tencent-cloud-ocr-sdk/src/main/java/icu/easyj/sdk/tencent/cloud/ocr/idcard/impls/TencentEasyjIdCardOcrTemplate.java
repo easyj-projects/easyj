@@ -187,8 +187,8 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 			}
 
 			// 防止高级功能未使用，做如下测试
-			if (LOGGER.isWarnEnabled() && IdCardOcrAdvanced.values().length > 4) {
-				LOGGER.warn("当前`switch`代码段未包含{}枚举的所有值", IdCardOcrAdvanced.class.getSimpleName());
+			if (LOGGER.isWarnEnabled() && IdCardOcrAdvanced.values().length > 8) {
+				LOGGER.warn("当前`switch`代码段未包含{}枚举的所有值，请联系开发人员完善代码！", IdCardOcrAdvanced.class.getSimpleName());
 			}
 		}
 	}
