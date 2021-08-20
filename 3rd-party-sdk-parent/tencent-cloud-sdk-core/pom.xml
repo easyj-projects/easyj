@@ -12,15 +12,9 @@
 	<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>腾讯云SDK核心模块。</description>
+	<description>EasyJ 腾讯云SDK核心模块。</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>icu.easyj.sdk</groupId>
-			<artifactId>easyj-ocr-sdk-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
 		<!-- tencent cloud SDK -->
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>

@@ -38,6 +38,7 @@
 				<configuration>
 					<archive>
 						<manifestEntries>
+							<!-- 在`MANIFEST.MF`文件中，标记该jar为依赖引用，`spring-boot`插件打包时不将该jar打包进去。 -->
 							<Spring-Boot-Jar-Type>dependencies-starter</Spring-Boot-Jar-Type>
 						</manifestEntries>
 					</archive>
