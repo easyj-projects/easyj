@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.idcardocr.impls;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -30,12 +30,12 @@ import icu.easyj.sdk.ocr.idcardocr.IdCardOcrAdvanced;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
-import icu.easyj.sdk.ocr.tencent.cloud.OcrRequestBuilder;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.ITencentCloudIdCardOcrTemplate;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.IdCardOcrAdvancedInfo;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.IdCardOcrRequestBuilder;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.TencentIdCardOcrWarn;
-import icu.easyj.sdk.ocr.tencent.cloud.util.TencentCloudSDKExceptionUtils;
+import icu.easyj.sdk.tencent.cloud.ocr.OcrRequestBuilder;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrAdvancedInfo;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrRequestBuilder;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentIdCardOcrWarn;
+import icu.easyj.sdk.tencent.cloud.ocr.util.TencentCloudSDKExceptionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.idcardocr.impls;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls;
 
 import java.io.FileInputStream;
 
@@ -27,10 +27,10 @@ import icu.easyj.sdk.ocr.IOcrTemplate;
 import icu.easyj.sdk.ocr.WrapperOcrTemplate;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrAdvanced;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
-import icu.easyj.sdk.ocr.tencent.cloud.OcrRequestBuilder;
-import icu.easyj.sdk.ocr.tencent.cloud.TencentCloudConfig;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.ITencentCloudIdCardOcrTemplate;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.IdCardOcrAdvancedInfo;
+import icu.easyj.sdk.tencent.cloud.ocr.OcrRequestBuilder;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrAdvancedInfo;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class DefaultTencentCloudIdCardOcrTemplateTest {
 		}
 
 		// 实例化配置对象
-		TencentCloudConfig globalConfig = new TencentCloudConfig();
+		TencentCloudIdCardOcrConfig globalConfig = new TencentCloudIdCardOcrConfig();
 		globalConfig.setSecretId(secretId);
 		globalConfig.setSecretKey(secretKey);
 		globalConfig.setRegion(region);

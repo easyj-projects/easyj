@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.util;
+package icu.easyj.sdk.tencent.cloud.ocr.util;
 
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import icu.easyj.core.util.ReflectionUtils;

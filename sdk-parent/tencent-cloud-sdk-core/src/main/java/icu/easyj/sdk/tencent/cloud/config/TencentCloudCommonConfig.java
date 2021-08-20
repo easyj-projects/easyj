@@ -13,24 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud;
+package icu.easyj.sdk.tencent.cloud.config;
 
 import com.tencentcloudapi.common.profile.Language;
-import icu.easyj.sdk.tencent.cloud.core.TencentCloudSecretConfig;
 
 /**
- * 腾讯云相关配置
+ * 腾讯云通用配置
  *
  * @author wangliang181230
  */
-public class TencentCloudConfig extends TencentCloudSecretConfig {
+public class TencentCloudCommonConfig {
+
+	//region 密钥对
+
+	/**
+	 * 密钥对中的ID
+	 *
+	 * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
+	 */
+	protected String secretId;
+
+	/**
+	 * 密钥对中的Key
+	 *
+	 * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
+	 */
+	protected String secretKey;
+
+	//endregion
+
 
 	//region 地域配置
 
 	/**
 	 * 地域代码
-	 * <p>
-	 * 不同云服务的可选地域可能不同
 	 */
 	private String region;
 

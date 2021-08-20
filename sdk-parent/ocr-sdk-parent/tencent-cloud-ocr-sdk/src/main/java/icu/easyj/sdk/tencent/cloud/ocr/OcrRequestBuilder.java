@@ -13,33 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr;
+package icu.easyj.sdk.tencent.cloud.ocr;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrRequestBuilder;
 
 /**
- * 身份证识别相关配置
+ * OCR请求对象构建者
  *
  * @author wangliang181230
  */
-@ConfigurationProperties("easyj.sdk.ocr.idcard-ocr")
-public class IdCardOcrProperties {
+public abstract class OcrRequestBuilder {
 
 	/**
-	 * 身份证识别接口实现类型，可选值：tencent-cloud(默认)。后续有需要再扩展百度云或阿里云等
+	 * @return 身份证识别（IDCardOCR）请求构建者
 	 */
-	private String type = "tencent-cloud";
-
-
-	//region Getter、Setter
-
-	public String getType() {
-		return type;
+	public static IdCardOcrRequestBuilder idCardOcrRequestBuilder() {
+		return new IdCardOcrRequestBuilder();
 	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	//endregion
 }

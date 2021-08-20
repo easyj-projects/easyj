@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.IdCardOcrRequestBuilder;
+import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
 
 /**
- * OCR请求对象构建者
+ * 腾讯云身份证识别（IDCardOCR）相关配置
  *
  * @author wangliang181230
  */
-public abstract class OcrRequestBuilder {
-
-	/**
-	 * @return 身份证识别（IDCardOCR）请求构建者
-	 */
-	public static IdCardOcrRequestBuilder idCardOcrRequestBuilder() {
-		return new IdCardOcrRequestBuilder();
-	}
+public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
 }

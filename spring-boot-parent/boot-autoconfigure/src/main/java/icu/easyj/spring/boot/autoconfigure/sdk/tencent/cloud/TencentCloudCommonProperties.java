@@ -13,51 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.core;
+package icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 腾讯云安全相关配置
+ * 腾讯云全局通用配置
  *
  * @author wangliang181230
  * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
  */
-public class TencentCloudSecretConfig {
-
-	/**
-	 * 密钥对中的ID
-	 */
-	@SerializedName("SecretId")
-	@Expose
-	protected String secretId;
-
-	/**
-	 * 密钥对中的Key
-	 */
-	@SerializedName("SecretKey")
-	@Expose
-	protected String secretKey;
-
-
-	//region Getter、Setter
-
-	public String getSecretId() {
-		return secretId;
-	}
-
-	public void setSecretId(String secretId) {
-		this.secretId = secretId;
-	}
-
-	public String getSecretKey() {
-		return secretKey;
-	}
-
-	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
-	}
-
-	//endregion
+@ConfigurationProperties("easyj.sdk.tencent-cloud.common")
+public class TencentCloudCommonProperties extends TencentCloudCommonConfig {
 }

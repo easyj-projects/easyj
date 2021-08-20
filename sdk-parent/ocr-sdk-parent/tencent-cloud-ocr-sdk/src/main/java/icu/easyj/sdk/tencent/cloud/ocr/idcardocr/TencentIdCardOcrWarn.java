@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.idcardocr;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
 import org.springframework.lang.Nullable;
 

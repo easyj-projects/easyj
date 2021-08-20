@@ -13,33 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr;
+package icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
- * 身份证识别相关配置
+ * 腾讯云自动装配
  *
  * @author wangliang181230
  */
-@ConfigurationProperties("easyj.sdk.ocr.idcard-ocr")
-public class IdCardOcrProperties {
-
-	/**
-	 * 身份证识别接口实现类型，可选值：tencent-cloud(默认)。后续有需要再扩展百度云或阿里云等
-	 */
-	private String type = "tencent-cloud";
-
-
-	//region Getter、Setter
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	//endregion
+@ConditionalOnClass(IDCardOCRRequest.class)
+@EnableConfigurationProperties(TencentCloudCommonProperties.class)
+public class EasyjTencentCloudAutoConfiguration {
 }

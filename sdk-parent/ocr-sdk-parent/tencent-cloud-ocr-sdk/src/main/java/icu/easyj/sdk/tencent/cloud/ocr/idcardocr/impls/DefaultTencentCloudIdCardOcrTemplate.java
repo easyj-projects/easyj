@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.idcardocr.impls;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls;
 
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
@@ -23,8 +23,8 @@ import com.tencentcloudapi.common.profile.Language;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
-import icu.easyj.sdk.ocr.tencent.cloud.TencentCloudConfig;
-import icu.easyj.sdk.ocr.tencent.cloud.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +44,10 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	private static final String ENDPOINT = "ocr.tencentcloudapi.com";
 
 	/**
-	 * 全局配置
+	 * 全局的身份证识别配置
 	 */
 	@Nullable
-	private final TencentCloudConfig globalConfig;
+	private final TencentCloudIdCardOcrConfig globalConfig;
 
 	@Nullable
 	private final OcrClient globalClient;
@@ -58,7 +58,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 		this.globalClient = null;
 	}
 
-	public DefaultTencentCloudIdCardOcrTemplate(@NonNull TencentCloudConfig globalConfig) {
+	public DefaultTencentCloudIdCardOcrTemplate(@NonNull TencentCloudIdCardOcrConfig globalConfig) {
 		Assert.notNull(globalConfig, "'globalConfig' must be not null");
 
 		this.globalConfig = globalConfig;
@@ -80,7 +80,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
 	@Override
-	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudConfig config) throws TencentCloudSDKException {
+	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		if (config == null) {
 			Assert.notNull(this.globalConfig, "'this.globalConfig' must be not null");
 			config = this.globalConfig;
@@ -138,7 +138,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 
 	//region Private
 
-	private void mergeGlobalConfig(@NonNull TencentCloudConfig config) {
+	private void mergeGlobalConfig(@NonNull TencentCloudIdCardOcrConfig config) {
 		if (config != this.globalConfig && this.globalConfig != null) {
 			if (StringUtils.isBlank(config.getSecretId())) {
 				config.setSecretId(this.globalConfig.getSecretId());
@@ -168,7 +168,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	}
 
 	@Nullable
-	private Credential newCredential(TencentCloudConfig config) {
+	private Credential newCredential(TencentCloudIdCardOcrConfig config) {
 		if (StringUtils.isNotBlank(config.getSecretId()) && StringUtils.isNotBlank(config.getSecretKey())) {
 			return new Credential(config.getSecretId(), config.getSecretKey());
 		} else {
@@ -177,7 +177,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	}
 
 	@NonNull
-	private HttpProfile newHttpProfile(TencentCloudConfig config) {
+	private HttpProfile newHttpProfile(TencentCloudIdCardOcrConfig config) {
 		HttpProfile httpProfile = new HttpProfile();
 		httpProfile.setEndpoint(ENDPOINT);
 		if (config.getConnTimeout() != null && config.getConnTimeout() > 0) {
@@ -192,7 +192,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 		return httpProfile;
 	}
 
-	private ClientProfile newClientProfile(HttpProfile httpProfile, TencentCloudConfig config) {
+	private ClientProfile newClientProfile(HttpProfile httpProfile, TencentCloudIdCardOcrConfig config) {
 		ClientProfile clientProfile = new ClientProfile();
 		clientProfile.setHttpProfile(httpProfile);
 		clientProfile.setLanguage(config.getLanguage() == null ? Language.ZH_CN : config.getLanguage());
@@ -200,7 +200,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 		return clientProfile;
 	}
 
-	private OcrClient newOcrClient(TencentCloudConfig config) {
+	private OcrClient newOcrClient(TencentCloudIdCardOcrConfig config) {
 		// 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
 		// 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
 		Credential cred = this.newCredential(config);
@@ -221,7 +221,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	//region Getter
 
 	@Nullable
-	public TencentCloudConfig getGlobalConfig() {
+	public TencentCloudIdCardOcrConfig getGlobalConfig() {
 		return globalConfig;
 	}
 

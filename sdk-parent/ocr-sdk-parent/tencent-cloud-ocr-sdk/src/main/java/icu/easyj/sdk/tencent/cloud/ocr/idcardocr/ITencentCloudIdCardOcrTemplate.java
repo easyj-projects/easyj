@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.tencent.cloud.idcardocr;
+package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
 import java.io.InputStream;
 
@@ -22,7 +22,6 @@ import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.sdk.ocr.CardSide;
-import icu.easyj.sdk.ocr.tencent.cloud.TencentCloudConfig;
 
 /**
  * 腾讯云 身份证识别（IDCardOCR） 服务接口
@@ -41,7 +40,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	 * @see <a href="https://cloud.tencent.com/document/api/866/33524">API文档</a>
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
-	IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, TencentCloudConfig config) throws TencentCloudSDKException;
+	IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException;
 
 	/**
 	 * 执行身份证识别
@@ -63,7 +62,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 */
-	default IDCardOCRResponse doIdCardOcr(InputStream idCardImageInputStream, CardSide cardSide, TencentCloudConfig config) throws TencentCloudSDKException {
+	default IDCardOCRResponse doIdCardOcr(InputStream idCardImageInputStream, CardSide cardSide, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		IDCardOCRRequest request = new IDCardOCRRequest();
 		request.setImageBase64(Base64.encode(idCardImageInputStream));
 		request.setCardSide(cardSide.name());
@@ -89,7 +88,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 */
-	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide, TencentCloudConfig config) throws TencentCloudSDKException {
+	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		IDCardOCRRequest request = new IDCardOCRRequest();
 		request.setImageBase64(Base64.encode(idCardImageBytes));
 		request.setCardSide(cardSide.name());
