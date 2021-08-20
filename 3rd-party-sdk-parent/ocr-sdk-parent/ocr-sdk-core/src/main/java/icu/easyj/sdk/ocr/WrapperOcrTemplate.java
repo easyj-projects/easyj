@@ -39,6 +39,7 @@ public class WrapperOcrTemplate implements IOcrTemplate {
 
 	//region Override 身份证识别
 
+	@NonNull
 	@Override
 	public IdCardOcrResponse idCardOcr(@NonNull String image, @Nullable CardSide cardSide,
 									   IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
