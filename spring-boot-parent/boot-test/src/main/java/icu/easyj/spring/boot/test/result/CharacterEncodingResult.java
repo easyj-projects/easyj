@@ -31,14 +31,14 @@ public class CharacterEncodingResult extends BaseResult {
 
 	public CharacterEncodingResult(MockResponse mockResponse, String characterEncoding) {
 		super(mockResponse);
-		this.characterEncoding = characterEncoding.toLowerCase();
+		this.characterEncoding = this.toUpperCase(characterEncoding);
 	}
 
 
 	//region CharacterEncoding
 
 	public MockResponse is(String expectedCharacterEncoding) {
-		Assertions.assertEquals(expectedCharacterEncoding, characterEncoding);
+		Assertions.assertEquals(this.toUpperCase(expectedCharacterEncoding), characterEncoding);
 		return super.end();
 	}
 
@@ -47,4 +47,9 @@ public class CharacterEncodingResult extends BaseResult {
 	}
 
 	//endregion
+
+
+	private String toUpperCase(String str) {
+		return str == null ? null : str.toUpperCase();
+	}
 }
