@@ -32,6 +32,11 @@ import org.springframework.lang.Nullable;
  */
 public abstract class StringUtils {
 
+	/**
+	 * 中文字符范围
+	 */
+	public final static String CHINESE_CHAR_RANGE = "[\u4e00-\u9fa5]";
+
 	//region 字符串长度相关方法
 
 	/**
@@ -46,10 +51,9 @@ public abstract class StringUtils {
 		}
 
 		int valueLength = str.length();
-		String chinese = "[\u4e00-\u9fa5]";
 		for (int i = 0; i < str.length(); i++) {
 			String temp = str.substring(i, i + 1);
-			if (temp.matches(chinese)) {
+			if (temp.matches(CHINESE_CHAR_RANGE)) {
 				valueLength++;
 			}
 		}
@@ -88,6 +92,7 @@ public abstract class StringUtils {
 	 * @param obj 任意类型的对象
 	 * @return str 转换后的字符串
 	 */
+	@NonNull
 	public static String toString(final Object obj) {
 		if (obj == null) {
 			return "null";
@@ -154,6 +159,7 @@ public abstract class StringUtils {
 	 * @param obj 未知类型的对象
 	 * @return str 转换后的字符串
 	 */
+	@NonNull
 	private static String unknownTypeObjectToString(@NonNull Object obj) {
 		return CycleDependencyHandler.wrap(obj, o -> {
 			StringBuilder sb = new StringBuilder(32);

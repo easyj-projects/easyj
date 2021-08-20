@@ -92,7 +92,7 @@
 
 		<!-- 功能4：OCR -->
 		<dependency>
-			<groupId>icu.easyj.sdk</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>

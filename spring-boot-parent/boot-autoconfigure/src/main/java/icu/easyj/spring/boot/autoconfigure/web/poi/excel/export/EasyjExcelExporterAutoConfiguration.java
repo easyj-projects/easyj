@@ -17,12 +17,15 @@ package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 
 import icu.easyj.web.poi.excel.ExcelExport;
 import icu.easyj.web.poi.excel.ExcelExportAspect;
+import icu.easyj.web.poi.excel.ExcelExportConfig;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL_EXPORT_PREFIX;
 
 /**
  * EasyJ-POI-Excel自动装配类
@@ -32,17 +35,25 @@ import org.springframework.context.annotation.Bean;
  */
 @ConditionalOnClass({Workbook.class, ProceedingJoinPoint.class, ExcelExport.class})
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(ExcelExporterProperties.class)
 public class EasyjExcelExporterAutoConfiguration {
+
+	/**
+	 * @return Excel导出配置
+	 */
+	@Bean
+	@ConfigurationProperties(prefix = WEB_POI_EXCEL_EXPORT_PREFIX)
+	public ExcelExportConfig excelExportConfig() {
+		return new ExcelExportConfig();
+	}
 
 	/**
 	 * Excel导出切面Bean
 	 *
-	 * @param properties Excel导出配置
+	 * @param excelExportConfig Excel导出配置
 	 * @return excelExportAspect Excel导出切面
 	 */
 	@Bean
-	public ExcelExportAspect excelExportAspect(ExcelExporterProperties properties) {
-		return new ExcelExportAspect(properties);
+	public ExcelExportAspect excelExportAspect(ExcelExportConfig excelExportConfig) {
+		return new ExcelExportAspect(excelExportConfig);
 	}
 }

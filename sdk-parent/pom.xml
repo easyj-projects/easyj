@@ -4,19 +4,22 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj.sdk</groupId>
-		<artifactId>3rd-party-sdk-parent</artifactId>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>ocr-sdk-parent</artifactId>
+	<artifactId>sdk-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ文字识别（OCR）SDK模块，提供身份证识别等等。</description>
+	<description>EasyJ依赖于第三方API服务的模块，提供方便调用第三方服务的SDK包，如：阿里云、腾讯云、百度云等等。</description>
 
 	<modules>
-		<module>ocr-sdk-core</module>
-		<module>tencent-cloud-ocr-sdk</module>
+		<!-- core -->
+		<module>tencent-cloud-sdk-core</module>
+
+		<!--各功能SDK的Parent-->
+		<module>ocr-sdk-parent</module>
 	</modules>
 </project>

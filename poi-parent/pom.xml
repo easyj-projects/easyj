@@ -9,18 +9,13 @@
 		<version>${revision}</version>
 	</parent>
 
-	<groupId>icu.easyj.sdk</groupId>
-	<artifactId>3rd-party-sdk-parent</artifactId>
+	<artifactId>poi-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ依赖于第三方API服务的模块，提供方便调用第三方服务的SDK包，如：阿里云、腾讯云、百度云等等。</description>
+	<description>EasyJ POI封装，简化对MS Office的操作</description>
 
 	<modules>
-		<!-- core -->
-		<module>tencent-cloud-sdk-core</module>
-
-		<!--各功能SDK的Parent-->
-		<module>ocr-sdk-parent</module>
+		<module>poi-excel</module>
 	</modules>
 </project>

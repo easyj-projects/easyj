@@ -31,17 +31,37 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- All（注：easyj-all中未合并以下依赖，需单独引用） -->
+			<!-- All（注：`easyj-all`中只合并了`core-parent`中的模块，其他依赖需单独引用） -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-all</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- POI -->
 			<!-- POI excel -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-poi-excel</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- SDK -->
+			<!-- 腾讯云 SDK Core-->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- 文字识别（OCR） -->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-ocr-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -63,26 +83,6 @@
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-test</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-
-			<!-- 3rd-party SDK -->
-			<!-- SDK Core -->
-			<dependency>
-				<groupId>icu.easyj.sdk</groupId>
-				<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- 文字识别（OCR） -->
-			<dependency>
-				<groupId>icu.easyj.sdk</groupId>
-				<artifactId>easyj-ocr-sdk-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>icu.easyj.sdk</groupId>
-				<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

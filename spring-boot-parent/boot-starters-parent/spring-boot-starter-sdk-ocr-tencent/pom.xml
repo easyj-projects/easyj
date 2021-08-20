@@ -22,14 +22,17 @@
 		</dependency>
 
 		<dependency>
-			<groupId>icu.easyj.sdk</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-ocr-sdk-core</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>icu.easyj.sdk</groupId>
+			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
-			<!--仅参与打包及运行，不参与编译（即无法引用到该JAR中的类，但打包后可正常调用到该JAR中的类）-->
+			<!--
+			仅参与打包及运行，不参与编译（即无法引用到该JAR中的类，但打包后可正常调用到该JAR中的类）
+			因为腾讯云的OCR只是实现方式之一，理论上其他模块中不应该直接使用该依赖中的任何类，避免以后更换实现时出现问题。
+			-->
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>

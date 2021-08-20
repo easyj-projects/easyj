@@ -105,51 +105,13 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- POI -->
-		<!--以下依赖不合并到easyj-all中
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-poi-excel</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.poi</groupId>
-					<artifactId>poi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.poi</groupId>
-					<artifactId>poi-ooxml</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
-
 		<!-- Web -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-web-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!--以下依赖不合并到easyj-all中
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-web-cache304</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-web-param-crypto</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		-->
 
-		<!-- Test -->
-		<!--以下依赖不合并到easyj-all中
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-test</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		-->
 
 		<!-- 其他依赖 -->
 

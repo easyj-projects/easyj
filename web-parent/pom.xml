@@ -17,7 +17,6 @@
 
 	<modules>
 		<module>web-cache304</module>
-		<module>web-core</module>
 		<module>web-param-crypto</module>
 	</modules>
 </project>

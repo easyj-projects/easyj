@@ -5,17 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>core-parent</artifactId>
+		<artifactId>sdk-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>poi-parent</artifactId>
+	<artifactId>ocr-sdk-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ POI封装，简化对MS Office的操作</description>
+	<description>EasyJ文字识别（OCR）SDK模块，提供身份证识别等等。</description>
 
 	<modules>
-		<module>poi-excel</module>
+		<module>ocr-sdk-core</module>
+		<module>tencent-cloud-ocr-sdk</module>
 	</modules>
 </project>

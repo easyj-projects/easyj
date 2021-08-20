@@ -17,39 +17,44 @@ package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 
 import com.tencentcloudapi.common.profile.Language;
 import icu.easyj.sdk.ocr.tencent.cloud.TencentCloudConfig;
+import icu.easyj.sdk.tencent.cloud.core.TencentCloudSecretConfig;
+import org.springframework.util.Assert;
 
 /**
  * @author wangliang181230
  */
 public class WrapperTencentCloudConfig extends TencentCloudConfig {
 
-	private final TencentCloudProperties cloudProperties;
+	private final TencentCloudSecretConfig secretConfig;
 	private final TencentCloudIdCardOcrProperties idCardOcrProperties;
 
-	public WrapperTencentCloudConfig(TencentCloudProperties cloudProperties,
+	public WrapperTencentCloudConfig(TencentCloudSecretConfig secretConfig,
 									 TencentCloudIdCardOcrProperties idCardOcrProperties) {
-		this.cloudProperties = cloudProperties;
+		Assert.notNull(secretConfig, "'secretConfig' must be not null");
+		Assert.notNull(idCardOcrProperties, "'idCardOcrProperties' must be not null");
+
+		this.secretConfig = secretConfig;
 		this.idCardOcrProperties = idCardOcrProperties;
 	}
 
 	@Override
 	public String getSecretId() {
-		return cloudProperties.getSecretId();
+		return secretConfig.getSecretId();
 	}
 
 	@Override
 	public void setSecretId(String secretId) {
-		cloudProperties.setSecretId(secretId);
+		secretConfig.setSecretId(secretId);
 	}
 
 	@Override
 	public String getSecretKey() {
-		return cloudProperties.getSecretKey();
+		return secretConfig.getSecretKey();
 	}
 
 	@Override
 	public void setSecretKey(String secretKey) {
-		cloudProperties.setSecretKey(secretKey);
+		secretConfig.setSecretKey(secretKey);
 	}
 
 	@Override
