@@ -50,6 +50,14 @@ public enum IdCardOcrAdvanced {
 	DETECT_INCOMPLETE,
 
 	/**
+	 * 检查图片是否清晰（如：模糊的、有反光的）
+	 *
+	 * @see IdCardOcrWarn#VAGUE
+	 * @see IdCardOcrWarn#REFLECT
+	 */
+	DETECT_DEFINITION,
+
+	/**
 	 * 检查是否为身份证的副本（如：复印件、翻拍照片等）
 	 *
 	 * @see IdCardOcrWarn#COPY
@@ -96,6 +104,7 @@ public enum IdCardOcrAdvanced {
 	public final static IdCardOcrAdvanced[] ALL_DETECT = new IdCardOcrAdvanced[]{
 			DETECT_INVALID,
 			DETECT_INCOMPLETE,
+			DETECT_DEFINITION,
 			DETECT_COPY,
 			DETECT_TEMP,
 			DETECT_FAKE};

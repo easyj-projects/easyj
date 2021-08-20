@@ -62,6 +62,12 @@ public class IdCardOcrAdvancedConfig {
 	private Boolean borderCheckWarn;
 
 	/**
+	 * 是否开启反光检测
+	 * 警告码：-9107：有反光的
+	 */
+	private Boolean reflectWarn;
+
+	/**
 	 * 复印件告警
 	 * 警告码：-9102
 	 */
@@ -111,6 +117,9 @@ public class IdCardOcrAdvancedConfig {
 		}
 		if (Boolean.TRUE.equals(borderCheckWarn)) {
 			sb.append("\"BorderCheckWarn\":true,");
+		}
+		if (Boolean.TRUE.equals(reflectWarn)) {
+			sb.append("\"ReflectWarn\":true,");
 		}
 		if (Boolean.TRUE.equals(copyWarn)) {
 			sb.append("\"CopyWarn\":true,");
@@ -182,6 +191,14 @@ public class IdCardOcrAdvancedConfig {
 
 	public void setBorderCheckWarn(Boolean borderCheckWarn) {
 		this.borderCheckWarn = borderCheckWarn;
+	}
+
+	public Boolean getReflectWarn() {
+		return reflectWarn;
+	}
+
+	public void setReflectWarn(Boolean reflectWarn) {
+		this.reflectWarn = reflectWarn;
 	}
 
 	public Boolean getCopyWarn() {

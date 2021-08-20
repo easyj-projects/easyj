@@ -171,6 +171,16 @@ public class IdCardOcrRequestBuilder {
 	}
 
 	/**
+	 * 高级功能：开启 是否开启反光检测，警告码：-9107 身份证反光告警。
+	 *
+	 * @return self
+	 */
+	public IdCardOcrRequestBuilder enableReflectWarn() {
+		this.getConfig().setReflectWarn(true);
+		return this;
+	}
+
+	/**
 	 * 高级功能：开启 复印件告警，警告码：-9102
 	 *
 	 * @return self
@@ -229,6 +239,7 @@ public class IdCardOcrRequestBuilder {
 		// 各种告警功能
 		this.enableInvalidDateWarn(); // 开启 身份证有效日期不合法告警
 		this.enableBorderCheckWarn(); // 开启 边框和框内遮挡告警
+		this.enableReflectWarn(); // 开启 反光检测
 		this.enableCopyWarn(); // 开启 复印件告警
 		this.enableReshootWarn(); // 开启 翻拍告警
 		this.enableTempIdWarn(); // 开启 临时身份证告警

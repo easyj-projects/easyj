@@ -170,6 +170,10 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 					case DETECT_INCOMPLETE:
 						builder.enableBorderCheckWarn();
 						break;
+					case DETECT_DEFINITION:
+						builder.enableQuality()
+								.enableReflectWarn();
+						break;
 					case DETECT_COPY:
 						builder.enableCopyWarn() // 复印件
 								.enableReshootWarn(); // 翻拍照片
