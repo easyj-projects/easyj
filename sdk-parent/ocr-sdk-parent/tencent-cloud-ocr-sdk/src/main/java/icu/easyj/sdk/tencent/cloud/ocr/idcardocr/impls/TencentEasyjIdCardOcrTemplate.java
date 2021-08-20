@@ -53,6 +53,11 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TencentEasyjIdCardOcrTemplate.class);
 
+	/**
+	 * 最小清晰度临界值，低于该临界值将产生不清晰告警 {@link IdCardOcrWarn#VAGUE}
+	 */
+	public static final int MIN_QUALITY = 50;
+
 
 	private final ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate;
 
@@ -73,6 +78,8 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 			cardSide = null;
 		}
 
+		//region 构建请求
+
 		// 创建request builder
 		IdCardOcrRequestBuilder builder = OcrRequestBuilder.idCardOcrRequestBuilder()
 				.image(image) // 图片
@@ -82,7 +89,11 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 		// 构建request
 		IDCardOCRRequest request = builder.build();
 
-		// 发送请求，返回响应
+		//endregion
+
+
+		//region 发送请求，返回响应
+
 		IDCardOCRResponse resp;
 		try {
 			resp = tencentCloudIdCardOcrTemplate.doIdCardOcr(request);
@@ -95,6 +106,8 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 		} catch (RuntimeException e) {
 			throw new IdCardOcrSdkException("身份证识别出现异常", e);
 		}
+
+		//endregion
 
 
 		//region 读取响应信息
@@ -262,6 +275,10 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 					}
 				}
 			}
+		}
+		// 如果清晰度低于临界值，将产生不清晰告警
+		if (advancedInfo.getQuality() != null && advancedInfo.getQuality() < MIN_QUALITY) {
+			response.getWarns().add(IdCardOcrWarn.VAGUE);
 		}
 	}
 
