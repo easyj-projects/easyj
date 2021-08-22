@@ -133,22 +133,11 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>oss-nexus-releases</id>
-			<name>oss-nexus-releases</name>
-			<url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+			<id>oss-nexus</id>
+			<name>oss-nexus</name>
+			<url>https://s01.oss.sonatype.org/content/groups/public/</url>
 			<releases>
 				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>oss-nexus-snapshots</id>
-			<name>oss-nexus-snapshots</name>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
