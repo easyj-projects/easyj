@@ -187,11 +187,6 @@
 					"value": "na-toronto",
 					"description": "北美地区(多伦多)."
 				}
-			],
-			"providers": [
-				{
-					"name": "any"
-				}
 			]
 		},
 		{
@@ -202,28 +197,8 @@
 					"description": "华东地区(上海)."
 				},
 				{
-					"value": "ap-shanghai-fsi",
-					"description": "华东地区(上海金融)."
-				},
-				{
-					"value": "ap-nanjing",
-					"description": "华东地区(南京)."
-				},
-				{
 					"value": "ap-guangzhou",
 					"description": "华南地区(广州)."
-				},
-				{
-					"value": "ap-shenzhen-fsi",
-					"description": "华南地区(深圳金融)."
-				},
-				{
-					"value": "ap-chengdu",
-					"description": "西南地区(成都)."
-				},
-				{
-					"value": "ap-chongqing",
-					"description": "西南地区(重庆)."
 				},
 				{
 					"value": "ap-beijing",
@@ -234,49 +209,8 @@
 					"description": "港澳台地区(中国香港)."
 				},
 				{
-					"value": "ap-seoul",
-					"description": "亚太地区(首尔)."
-				},
-				{
-					"value": "ap-bangkok",
-					"description": "亚太地区(曼谷)."
-				},
-				{
-					"value": "ap-mumbai",
-					"description": "亚太地区(孟买)."
-				},
-				{
-					"value": "ap-tokyo",
-					"description": "亚太地区(东京)."
-				},
-				{
-					"value": "ap-singapore",
-					"description": "东南亚地区(新加坡)."
-				},
-				{
-					"value": "eu-frankfurt",
-					"description": "欧洲地区(法兰克福)."
-				},
-				{
-					"value": "eu-moscow",
-					"description": "欧洲地区(莫斯科)."
-				},
-				{
-					"value": "na-ashburn",
-					"description": "美国东部(弗吉尼亚)."
-				},
-				{
-					"value": "na-siliconvalley",
-					"description": "美国西部(硅谷)."
-				},
-				{
 					"value": "na-toronto",
 					"description": "北美地区(多伦多)."
-				}
-			],
-			"providers": [
-				{
-					"name": "any"
 				}
 			]
 		},

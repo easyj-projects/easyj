@@ -43,14 +43,18 @@ import org.junit.jupiter.api.Test;
 class DefaultTencentCloudIdCardOcrTemplateTest {
 
 	@Test
-	@Disabled("请自行将二代身份证图片放在指定目录，并设置好密钥对后，再手动执行该测试用例")
+	@Disabled("由于身份证件为敏感信息，所以请自行将二代身份证图片放到指定目录中，并设置好密钥对后，再手动执行该测试用例")
 	void testIDCardOCR() throws Exception {
 		// 设置密钥对
-		// 请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对
-		String secretId = "xxx"; // 密钥对中的ID
-		String secretKey = "xxx"; // 密钥对中的Key
+		// 获取方式：请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对
+		// 特别说明：以下是测试用的腾讯云账号的密钥对，由于文字识别接口免费额度有限，请大家尽量少执行测试。
+		//         如果免费额度用完导致测试用例执行失败，请大家自行注册腾讯云账号，开通文字识别服务，并设置自己的密钥对，再进行测试。
+		// 注意：请不要将生产环境使用的密钥对提交到代码库中，以免泄露。如已泄露，请重新生成一个密钥对，将生产环境的配置远的掉。
+		String secretId = "AKIDb1B6mCMFrDJ8hz0kDQN3SgeKjriJdgSx"; // 密钥对中的ID
+		String secretKey = "FEyRe05uSjjSv60dz3qMbaIkwrUqwmKb"; // 密钥对中的Key
 
-		// 地域
+		// 地域代码
+		// IdCardOCR接口仅支持：ap-beijing、ap-guangzhou、ap-hongkong、ap-shanghai、na-toronto
 		String region = "ap-shanghai";
 
 		// 身份证图片存放路径（因为为敏感信息，不方便在源码中存放身份证图片文件，请自行放入指定目录进行测试）

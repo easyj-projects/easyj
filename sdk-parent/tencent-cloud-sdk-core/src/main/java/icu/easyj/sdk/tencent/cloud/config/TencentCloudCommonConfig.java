@@ -47,6 +47,7 @@ public class TencentCloudCommonConfig {
 
 	/**
 	 * 地域代码
+	 * 注意：不同接口支持的地域不同，如果通用配置的值某个接口不支持，请在接口指定的配置项中进行个性配置。
 	 */
 	private String region;
 
