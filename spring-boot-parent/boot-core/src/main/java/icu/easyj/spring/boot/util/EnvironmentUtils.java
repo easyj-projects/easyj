@@ -124,17 +124,17 @@ public abstract class EnvironmentUtils {
 	 */
 	@Nullable
 	public static Properties buildProperties(@NonNull Resource configFileResource) {
-		String fileName = configFileResource.getFilename();
+		String configFileName = configFileResource.getFilename();
 
 		// 不同文件类型，采用不同的加载方式
 		Properties properties;
-		if (fileName.endsWith(".yml") || fileName.endsWith(".yaml")) {
+		if (configFileName.endsWith(".yml") || configFileName.endsWith(".yaml")) {
 			// 创建配置文件工厂对象
 			YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 			yaml.setResources(configFileResource);
 			// 创建配置源对象
 			properties = yaml.getObject();
-		} else if (fileName.endsWith(".properties")) {
+		} else if (configFileName.endsWith(".properties")) {
 			// 创建配置文件工厂对象
 			PropertiesFactoryBean pro = new PropertiesFactoryBean();
 			pro.setSingleton(false);
@@ -143,10 +143,10 @@ public abstract class EnvironmentUtils {
 			try {
 				properties = pro.getObject();
 			} catch (IOException e) {
-				throw new IORuntimeException("配置文件加载失败：" + fileName, e);
+				throw new IORuntimeException("配置文件加载失败：" + configFileName, e);
 			}
 		} else {
-			throw new NotSupportedConfigFileException("暂不支持该配置文件的解析：" + fileName);
+			throw new NotSupportedConfigFileException("暂不支持该配置文件的解析：" + configFileName);
 		}
 		return properties;
 	}
