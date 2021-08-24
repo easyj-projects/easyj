@@ -18,7 +18,7 @@ package icu.easyj.sdk.ocr;
 /**
  * 卡证的正反面枚举
  *
- * @author wangliang
+ * @author wangliang181230
  */
 public enum CardSide {
 
