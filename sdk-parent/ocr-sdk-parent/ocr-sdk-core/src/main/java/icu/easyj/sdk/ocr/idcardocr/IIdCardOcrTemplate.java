@@ -53,7 +53,7 @@ public interface IIdCardOcrTemplate {
 	@NonNull
 	default IdCardOcrResponse idCardOcr(@NonNull String image,
 										@Nullable CardSide cardSide,
-										Map<String, Object> config,
+										Map<String, String> config,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return idCardOcr(new IdCardOcrRequest(image, cardSide, null, advancedArr, config));
 	}
@@ -186,7 +186,7 @@ public interface IIdCardOcrTemplate {
 	 */
 	@NonNull
 	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
-										Map<String, Object> config,
+										Map<String, String> config,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return this.idCardOcr(image1, image2, returnIfHasWarn, new SimpleIdCardOcrRequest(null, advancedArr, config));
 	}

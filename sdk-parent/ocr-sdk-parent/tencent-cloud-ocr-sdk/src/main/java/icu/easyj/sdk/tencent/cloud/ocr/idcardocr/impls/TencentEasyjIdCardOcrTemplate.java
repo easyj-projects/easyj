@@ -80,7 +80,7 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 		CardSide cardSide = request.getCardSide();
 		Integer minQuality = request.getMinQuality();
 		IdCardOcrAdvanced[] advancedArr = request.getAdvancedArr();
-		Map<String, Object> config = request.getConfig();
+		Map<String, String> config = request.getConfig();
 
 		// 校验参数
 		Assert.notNull(request.getImage(), "'image' must be not null");

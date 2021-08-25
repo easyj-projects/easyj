@@ -36,9 +36,9 @@ public class SimpleIdCardOcrRequest {
 
 	/**
 	 * 动态传入最终实现类的配置信息
-	 * 可以做到可配置化
+	 * 可以做到动态可配置化
 	 */
-	private Map<String, Object> config;
+	private Map<String, String> config;
 
 
 	//region Constructor
@@ -50,7 +50,7 @@ public class SimpleIdCardOcrRequest {
 		this.advancedArr = advancedArr;
 	}
 
-	public SimpleIdCardOcrRequest(Integer minQuality, IdCardOcrAdvanced[] advancedArr, Map<String, Object> config) {
+	public SimpleIdCardOcrRequest(Integer minQuality, IdCardOcrAdvanced[] advancedArr, Map<String, String> config) {
 		this.minQuality = minQuality;
 		this.advancedArr = advancedArr;
 		this.config = config;
@@ -77,11 +77,11 @@ public class SimpleIdCardOcrRequest {
 		this.advancedArr = advancedArr;
 	}
 
-	public Map<String, Object> getConfig() {
+	public Map<String, String> getConfig() {
 		return config;
 	}
 
-	public void setConfig(Map<String, Object> config) {
+	public void setConfig(Map<String, String> config) {
 		this.config = config;
 	}
 

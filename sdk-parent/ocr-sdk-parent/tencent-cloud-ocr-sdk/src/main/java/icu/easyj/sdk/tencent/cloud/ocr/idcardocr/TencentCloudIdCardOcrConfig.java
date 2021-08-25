@@ -17,8 +17,10 @@ package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
 import java.util.Map;
 
+import com.tencentcloudapi.common.profile.Language;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
 import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.lang.Nullable;
 
 /**
@@ -38,8 +40,21 @@ public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
 	//region Static
 
 	@Nullable
-	public static TencentCloudIdCardOcrConfig fromMap(Map<String, Object> configMap) {
+	public static TencentCloudIdCardOcrConfig fromMap(@Nullable Map<String, String> configMap) {
+		if (configMap == null || configMap.isEmpty()) {
+			return null;
+		}
+
 		TencentCloudIdCardOcrConfig config = new TencentCloudIdCardOcrConfig();
+
+		config.setSecretId(configMap.get("secretId"));
+		config.setSecretId(configMap.get("secretKey"));
+		config.setSecretId(configMap.get("region"));
+		config.setSecretId(configMap.get("connTimeout"));
+		config.setSecretId(configMap.get("writeTimeout"));
+		config.setSecretId(configMap.get("readTimeout"));
+		config.setLanguage(EnumUtils.getEnum(Language.class, configMap.get("language"), null));
+		config.setDebug(configMap.get("debug") == null ? null : "true".equalsIgnoreCase(configMap.get("debug")));
 
 		return config;
 	}
