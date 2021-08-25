@@ -16,11 +16,10 @@
 package icu.easyj.sdk.ocr;
 
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
-import icu.easyj.sdk.ocr.idcardocr.IdCardOcrAdvanced;
+import icu.easyj.sdk.ocr.idcardocr.IdCardOcrRequest;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 /**
  * 文字识别（OCR）接口包装实现
@@ -41,9 +40,8 @@ public class WrapperOcrTemplate implements IOcrTemplate {
 
 	@NonNull
 	@Override
-	public IdCardOcrResponse idCardOcr(@NonNull String image, @Nullable CardSide cardSide,
-									   IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
-		return idCardOcrTemplate.idCardOcr(image, cardSide, advancedArr);
+	public IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException {
+		return idCardOcrTemplate.idCardOcr(request);
 	}
 
 	//endregion

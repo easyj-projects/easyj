@@ -221,6 +221,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	//region Getter
 
 	@Nullable
+	@Override
 	public TencentCloudIdCardOcrConfig getGlobalConfig() {
 		return globalConfig;
 	}

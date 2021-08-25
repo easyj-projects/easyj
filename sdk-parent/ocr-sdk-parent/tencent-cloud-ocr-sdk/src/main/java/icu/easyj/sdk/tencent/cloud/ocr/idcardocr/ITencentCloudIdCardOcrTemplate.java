@@ -43,7 +43,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException;
 
 	/**
-	 * 执行身份证识别
+	 * 重载方法：执行身份证识别
 	 *
 	 * @param request 请求
 	 * @return response 响应
@@ -54,7 +54,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	}
 
 	/**
-	 * 执行身份证识别
+	 * 重载方法：执行身份证识别
 	 *
 	 * @param idCardImageInputStream 身份证图片输入流
 	 * @param cardSide               身份证正反面枚举
@@ -70,6 +70,8 @@ public interface ITencentCloudIdCardOcrTemplate {
 	}
 
 	/**
+	 * 重载方法：执行身份证识别
+	 *
 	 * @param idCardImageInputStream 身份证图片输入流
 	 * @param cardSide               身份证正反面枚举
 	 * @return response 响应
@@ -80,7 +82,7 @@ public interface ITencentCloudIdCardOcrTemplate {
 	}
 
 	/**
-	 * 执行身份证识别
+	 * 重载方法：执行身份证识别
 	 *
 	 * @param idCardImageBytes 身份证图片byte数组
 	 * @param cardSide         身份证正反面枚举
@@ -96,6 +98,8 @@ public interface ITencentCloudIdCardOcrTemplate {
 	}
 
 	/**
+	 * 重载方法：执行身份证识别
+	 *
 	 * @param idCardImageBytes 身份证图片byte数组
 	 * @param cardSide         身份证正反面枚举
 	 * @return response 响应
@@ -104,4 +108,9 @@ public interface ITencentCloudIdCardOcrTemplate {
 	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide) throws TencentCloudSDKException {
 		return this.doIdCardOcr(idCardImageBytes, cardSide, null);
 	}
+
+	/**
+	 * @return 全局配置
+	 */
+	TencentCloudIdCardOcrConfig getGlobalConfig();
 }

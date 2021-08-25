@@ -24,7 +24,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.StringUtils;
 
 /**
- * 简易的身份证识别响应内容
+ * 身份证识别响应内容
  *
  * @author wangliang181230
  */

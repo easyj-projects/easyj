@@ -15,7 +15,11 @@
  */
 package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
+import java.util.Map;
+
+import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
 import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
+import org.springframework.lang.Nullable;
 
 /**
  * 腾讯云身份证识别（IDCardOCR）相关配置
@@ -23,4 +27,34 @@ import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
  * @author wangliang181230
  */
 public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
+
+	/**
+	 * 最小身份证图片质量分数
+	 * 低于此清晰度时，将报出 {@link IdCardOcrWarn#VAGUE} 告警
+	 */
+	private Integer minQuality;
+
+
+	//region Static
+
+	@Nullable
+	public static TencentCloudIdCardOcrConfig fromMap(Map<String, Object> configMap) {
+		TencentCloudIdCardOcrConfig config = new TencentCloudIdCardOcrConfig();
+
+		return config;
+	}
+
+	//endregion
+
+	//region Getter、Setter
+
+	public Integer getMinQuality() {
+		return minQuality;
+	}
+
+	public void setMinQuality(Integer minQuality) {
+		this.minQuality = minQuality;
+	}
+
+	//endregion
 }

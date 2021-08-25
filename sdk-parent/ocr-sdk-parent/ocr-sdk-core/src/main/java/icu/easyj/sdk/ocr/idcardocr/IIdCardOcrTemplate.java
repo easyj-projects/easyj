@@ -15,6 +15,8 @@
  */
 package icu.easyj.sdk.ocr.idcardocr;
 
+import java.util.Map;
+
 import icu.easyj.sdk.ocr.CardSide;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -26,8 +28,38 @@ import org.springframework.lang.Nullable;
  */
 public interface IIdCardOcrTemplate {
 
+	//region 单面识别
+
 	/**
 	 * 身份证识别
+	 *
+	 * @param request 身份证识别请求信息
+	 * @return response 响应
+	 * @throws IdCardOcrSdkException 身份证识别异常
+	 */
+	@NonNull
+	IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException;
+
+	/**
+	 * 重载方法：身份证识别
+	 *
+	 * @param image       身份证图片的Base64串或URL地址
+	 * @param cardSide    正反面枚举（为空时，将自动解析正反而；不为空时，如果传入图片与该参数不符，将抛出异常）
+	 * @param config      动态传入最终实现类的配置信息
+	 * @param advancedArr 高级功能数组
+	 * @return response 响应
+	 * @throws IdCardOcrSdkException 身份证识别异常
+	 */
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image,
+										@Nullable CardSide cardSide,
+										Map<String, Object> config,
+										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
+		return idCardOcr(new IdCardOcrRequest(image, cardSide, null, advancedArr, config));
+	}
+
+	/**
+	 * 重载方法：身份证识别
 	 *
 	 * @param image       身份证图片的Base64串或URL地址
 	 * @param cardSide    正反面枚举（为空时，将自动解析正反而；不为空时，如果传入图片与该参数不符，将抛出异常）
@@ -36,8 +68,11 @@ public interface IIdCardOcrTemplate {
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
 	@NonNull
-	IdCardOcrResponse idCardOcr(@NonNull String image, @Nullable CardSide cardSide,
-								IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException;
+	default IdCardOcrResponse idCardOcr(@NonNull String image,
+										@Nullable CardSide cardSide,
+										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
+		return idCardOcr(image, cardSide, null, advancedArr);
+	}
 
 	/**
 	 * 重载方法：身份证识别（自动识别正反面）
@@ -53,21 +88,29 @@ public interface IIdCardOcrTemplate {
 		return this.idCardOcr(image, (CardSide)null, advancedArr);
 	}
 
+	//endregion
+
+
+	//region 双面一起识别
+
 	/**
-	 * 重载方法：身份证识别（两面一起发送识别）
+	 * 身份证识别（两面一起发送识别）
 	 *
 	 * @param image1          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
 	 * @param image2          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
 	 * @param returnIfHasWarn 如果第一张图片存在告警信息，则不再继续识别第二张图片了
-	 * @param advancedArr     高级功能数组
+	 * @param simpleRequest   少量的身份证识别请求信息
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
 	@NonNull
 	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
-										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
+										SimpleIdCardOcrRequest simpleRequest) throws IdCardOcrSdkException {
+		IdCardOcrRequest request = new IdCardOcrRequest(simpleRequest);
+
 		// 请求识别第一张图片
-		IdCardOcrResponse response = this.idCardOcr(image1, advancedArr);
+		request.setImage(image1);
+		IdCardOcrResponse response = this.idCardOcr(request);
 
 		// 如果`returnIfHasWarn=true`，且存在告警信息，则直接返回
 		if (returnIfHasWarn && !response.getWarns().isEmpty()) {
@@ -81,7 +124,9 @@ public interface IIdCardOcrTemplate {
 		}
 
 		// 请求识别第二张图片
-		IdCardOcrResponse response2 = this.idCardOcr(image2, cardSide2, advancedArr);
+		request.setImage(image2); // 覆盖图片参数
+		request.setCardSide(cardSide2); // 设置正反面参数
+		IdCardOcrResponse response2 = this.idCardOcr(request);
 		if (response2.getCardSide() == response.getCardSide()) {
 			throw new IdCardOcrSdkException("两张图片的正反面属性相同", "SAME_CARD_SIDE");
 		}
@@ -118,6 +163,40 @@ public interface IIdCardOcrTemplate {
 	/**
 	 * 重载方法：身份证识别（两面一起发送识别）
 	 *
+	 * @param image1          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
+	 * @param image2          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
+	 * @param returnIfHasWarn 如果第一张图片存在告警信息，则不再继续识别第二张图片了
+	 * @param config          动态传入最终实现类的配置信息
+	 * @param advancedArr     高级功能数组
+	 * @return response 响应
+	 * @throws IdCardOcrSdkException 身份证识别异常
+	 */
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
+										Map<String, Object> config,
+										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
+		return this.idCardOcr(image1, image2, returnIfHasWarn, new SimpleIdCardOcrRequest(null, advancedArr, config));
+	}
+
+	/**
+	 * 重载方法：身份证识别（两面一起发送识别）
+	 *
+	 * @param image1          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
+	 * @param image2          身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
+	 * @param returnIfHasWarn 如果第一张图片存在告警信息，则不再继续识别第二张图片了
+	 * @param advancedArr     高级功能数组
+	 * @return response 响应
+	 * @throws IdCardOcrSdkException 身份证识别异常
+	 */
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
+										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
+		return this.idCardOcr(image1, image2, returnIfHasWarn, null, advancedArr);
+	}
+
+	/**
+	 * 重载方法：身份证识别（两面一起发送识别）
+	 *
 	 * @param image1      身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
 	 * @param image2      身份证正面或反面图片的Base64串或URL地址，两张图片入参顺序不做要求，但必须是不同的两面图片
 	 * @param advancedArr 高级功能数组
@@ -126,6 +205,8 @@ public interface IIdCardOcrTemplate {
 	 */
 	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
-		return idCardOcr(image1, image2, false, advancedArr);
+		return idCardOcr(image1, image2, false, null, advancedArr);
 	}
+
+	//endregion
 }
