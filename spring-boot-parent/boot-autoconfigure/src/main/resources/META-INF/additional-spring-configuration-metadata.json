@@ -76,6 +76,10 @@
 			"defaultValue": false
 		},
 		{
+			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.min-quality",
+			"defaultValue": 50
+		},
+		{
 			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.conn-timeout",
 			"defaultValue": "${easyj.sdk.tencent-cloud.common.conn-timeout:60}"
 		},
