@@ -104,8 +104,8 @@ public class IdCardOcrResponse {
 	private String idCardBase64;
 
 	/**
-	 * 备用属性，同时解析两张图片，并且启用了CROP_ID_CARD功能时，此属性才会有值。
-	 * 注：此属性的get方法特殊处理过，可以放心获取此属性的有效值 {@link this#getBackIdCardBase64()}
+	 * 备用属性，同时解析正反面两张图片，并且启用了CROP_ID_CARD功能时，此属性才会有值。
+	 * 注：此属性的get方法特殊处理过，可以放心获取此属性的有效值：{@link this#getBackIdCardBase64()}
 	 */
 	private String backIdCardBase64;
 

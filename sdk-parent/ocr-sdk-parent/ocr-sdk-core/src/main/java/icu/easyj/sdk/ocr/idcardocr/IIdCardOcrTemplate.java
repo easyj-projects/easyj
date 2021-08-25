@@ -108,18 +108,25 @@ public interface IIdCardOcrTemplate {
 										SimpleIdCardOcrRequest simpleRequest) throws IdCardOcrSdkException {
 		IdCardOcrRequest request = new IdCardOcrRequest(simpleRequest);
 
-		// 请求识别第一张图片
+
+		//region 请求识别第一张图片，获取response1
+
 		request.setImage(image1);
-		IdCardOcrResponse response = this.idCardOcr(request);
+		IdCardOcrResponse response1 = this.idCardOcr(request);
 
 		// 如果`returnIfHasWarn=true`，且存在告警信息，则直接返回
-		if (returnIfHasWarn && !response.getWarns().isEmpty()) {
-			return response;
+		if (returnIfHasWarn && !response1.getWarns().isEmpty()) {
+			return response1;
 		}
+
+		//endregion
+
+
+		//region 请求识别第二张图片，获取response2
 
 		// 根据第一张图片的解析结果，设置第二张图片的卡片正反面参数
 		CardSide cardSide2 = CardSide.FRONT;
-		if (response.getCardSide() == CardSide.FRONT) {
+		if (CardSide.FRONT == response1.getCardSide()) {
 			cardSide2 = CardSide.BACK;
 		}
 
@@ -127,26 +134,31 @@ public interface IIdCardOcrTemplate {
 		request.setImage(image2); // 覆盖图片参数
 		request.setCardSide(cardSide2); // 设置正反面参数
 		IdCardOcrResponse response2 = this.idCardOcr(request);
-		if (response2.getCardSide() == response.getCardSide()) {
+
+		// 如果两张图片属于同一面，则抛出异常
+		if (response2.getCardSide() == response1.getCardSide()) {
 			throw new IdCardOcrSdkException("两张图片的正反面属性相同", "SAME_CARD_SIDE");
 		}
 
-		// 确定正反面响应
-		IdCardOcrResponse doubleResponse, backResponse;
-		if (response.getCardSide() == CardSide.FRONT) {
-			doubleResponse = response;
+		//endregion
+
+
+		//region 合并两张图片的响应内容，使响应信息包含身份证正反两面的信息
+
+		// 先确定正反面响应
+		IdCardOcrResponse doubleResponse; // 双面响应，先将正面赋值给它
+		IdCardOcrResponse backResponse; // 反面响应
+		if (CardSide.FRONT == response1.getCardSide()) {
+			doubleResponse = response1;
 			backResponse = response2;
 		} else {
 			doubleResponse = response2;
-			backResponse = response;
+			backResponse = response1;
 		}
-
-		//region 合并两个响应的内容
-
 		// 设置为正反面都有
 		doubleResponse.setCardSide(CardSide.BOTH);
 
-		// 反面信息
+		//region 将反面信息合并到双面响应中
 		doubleResponse.setAuthority(backResponse.getAuthority());
 		doubleResponse.setValidDateStart(backResponse.getValidDateStart());
 		doubleResponse.setValidDateEnd(backResponse.getValidDateEnd());
@@ -154,8 +166,9 @@ public interface IIdCardOcrTemplate {
 		doubleResponse.setBackIdCardBase64(backResponse.getIdCardBase64());
 		// 告警信息
 		doubleResponse.getWarns().addAll(backResponse.getWarns());
-
 		//endregion
+
+		//endregion 合并 end
 
 		return doubleResponse;
 	}
