@@ -15,10 +15,10 @@
  */
 package icu.easyj.poi.excel.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import icu.easyj.core.util.MapUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import org.springframework.util.StringUtils;
 
@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
  */
 public class ExcelMapping {
 
-	//******************************** fields *********************************/
+	//region Fields
 
 	// 映射类
 	private Class<?> clazz;
@@ -54,12 +54,27 @@ public class ExcelMapping {
 
 	private boolean needFilter = true; // 是否需要列筛选功能
 
+	/**
+	 * 列信息列表
+	 */
+	private List<ExcelCellMapping> cellMappingList;
 
-	// 列信息
-	private List<ExcelCellMapping> cellMappingList; // 列表
+	//endregion
 
 
-	//******************************** getter and setter *********************************/
+	//region Constructor
+
+	public ExcelMapping() {
+	}
+
+	public ExcelMapping(Class<?> clazz) {
+		this.clazz = clazz;
+	}
+
+	//endregion
+
+
+	//region Getter、Setter
 
 	public Class<?> getClazz() {
 		return clazz;
@@ -176,10 +191,12 @@ public class ExcelMapping {
 		this.cellMappingList = cellMappingList;
 	}
 
+	//endregion
 
-	//******************************** static *********************************/
 
-	private static final Map<Class<?>, ExcelMapping> CACHE_MAP = new HashMap<>();
+	//region Static
+
+	private static final ConcurrentHashMap<Class<?>, ExcelMapping> EXCEL_MAPPING_CACHE = new ConcurrentHashMap<>();
 
 	/**
 	 * 获取属性与表格的映射关系
@@ -188,38 +205,33 @@ public class ExcelMapping {
 	 * @return excelMapping excel表映射映射
 	 */
 	public static ExcelMapping getMapping(Class<?> clazz) {
-		ExcelMapping mapping = CACHE_MAP.get(clazz);
-		if (mapping != null) {
+		return MapUtils.computeIfAbsent(EXCEL_MAPPING_CACHE, clazz, key -> {
+			ExcelMapping mapping = new ExcelMapping(clazz);
+
+			Excel anno = clazz.getAnnotation(Excel.class);
+			if (anno != null) {
+				// 注解信息
+				mapping.setAnno(anno);
+				// 解析注解信息
+				mapping.setSheetName(anno.sheetName()); // 表名
+				mapping.setNeedBorder(anno.needBorder()); // 是否需要边框
+				mapping.setDefaultWidth(anno.defaultWidth()); // 默认列宽
+				mapping.setWidthAutoSize(anno.widthAutoSize()); // 列宽自适应
+				mapping.setNeedHeadRow(anno.needHeadRow()); // 是否需要头名称行
+				mapping.setFreezeHeadRow(anno.needHeadRow() && anno.freezeHeadRow()); // 是否冻结头行，如果没有头行，则肯定不冻结
+				mapping.setNeedNumberCell(anno.needNumberCell()); // 是否需要序号列
+				mapping.setNumberCellHeadName(anno.numberCellHeadName()); // 序号列的列头
+				mapping.setFreezeNumberCell(anno.needNumberCell() && anno.freezeNumberCell()); // 是否冻结序号列，如果没有序号列，则肯定不冻结
+				mapping.setFreezeDataCells(anno.freezeDataCells()); // 冻结的数据列的数量，不包含序号列
+				mapping.setNeedFilter(anno.needFilter()); // 是否需要列筛选功能
+			}
+			// 读取列信息列表
+			List<ExcelCellMapping> cellMappingList = ExcelCellMapping.getCellMappingList(clazz, mapping);
+			mapping.setCellMappingList(cellMappingList);
+
 			return mapping;
-		}
-
-		mapping = new ExcelMapping();
-		// 类信息
-		mapping.setClazz(clazz);
-
-		Excel anno = clazz.getAnnotation(Excel.class);
-		if (anno != null) {
-			// 注解信息
-			mapping.setAnno(anno);
-			// 解析注解信息
-			mapping.setSheetName(anno.sheetName()); // 表名
-			mapping.setNeedBorder(anno.needBorder()); // 是否需要边框
-			mapping.setDefaultWidth(anno.defaultWidth()); // 默认列宽
-			mapping.setWidthAutoSize(anno.widthAutoSize()); // 列宽自适应
-			mapping.setNeedHeadRow(anno.needHeadRow()); // 是否需要头名称行
-			mapping.setFreezeHeadRow(anno.needHeadRow() && anno.freezeHeadRow()); // 是否冻结头行，如果没有头行，则肯定不冻结
-			mapping.setNeedNumberCell(anno.needNumberCell()); // 是否需要序号列
-			mapping.setNumberCellHeadName(anno.numberCellHeadName()); // 序号列的列头
-			mapping.setFreezeNumberCell(anno.needNumberCell() && anno.freezeNumberCell()); // 是否冻结序号列，如果没有序号列，则肯定不冻结
-			mapping.setFreezeDataCells(anno.freezeDataCells()); // 冻结的数据列的数量，不包含序号列
-			mapping.setNeedFilter(anno.needFilter()); // 是否需要列筛选功能
-		}
-		// 读取列信息列表
-		List<ExcelCellMapping> cellMappingList = ExcelCellMapping.getCellMappingList(clazz, mapping);
-		mapping.setCellMappingList(cellMappingList);
-
-		CACHE_MAP.put(clazz, mapping);
-
-		return mapping;
+		});
 	}
+
+	//endregion
 }

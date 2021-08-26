@@ -16,10 +16,13 @@
 package icu.easyj.poi.excel.converter.impls;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.poi.excel.annotation.Excel;
+import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.converter.IExcelConverter;
 import icu.easyj.poi.excel.util.ExcelUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -34,7 +37,20 @@ public class EasyjExcelConverter implements IExcelConverter {
 
 	@Override
 	public boolean isMatch(Class<?> clazz) {
-		return clazz.getAnnotation(Excel.class) != null;
+		// 如果类上有`@Excel`注解，则匹配成功
+		if (clazz.getAnnotation(Excel.class) != null) {
+			return true;
+		}
+
+		// 如果存在一个属性有`@ExcelCell`注解，则匹配成功
+		Field[] fields = ReflectionUtils.getAllFields(clazz);
+		for (Field field : fields) {
+			if (field.getAnnotation(ExcelCell.class) != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
