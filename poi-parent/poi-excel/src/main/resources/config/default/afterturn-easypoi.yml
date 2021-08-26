@@ -1,0 +1,6 @@
+easyj.config.activate.on-class:
+  - cn.afterturn.easypoi.excel.annotation.Excel
+  - cn.afterturn.easypoi.excel.ExcelImportUtil
+
+logging.level:
+  org.apache.xmlbeans.impl.common.SAXHelper: ERROR
