@@ -37,7 +37,7 @@ import org.springframework.lang.Nullable;
  */
 public abstract class CryptoFactory {
 
-	//region 加密算法生成器持有者（枚举实例单例）
+	//region 加密算法生成器持有者（枚举实现单例）
 
 	private enum CryptoGeneratorSingletonHolder {
 		// 单例

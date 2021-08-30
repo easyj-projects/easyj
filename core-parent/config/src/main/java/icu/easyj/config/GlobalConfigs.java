@@ -98,7 +98,7 @@ public class GlobalConfigs {
 	//endregion
 
 
-	//region 全局配置持有者（枚举实例单例）
+	//region 全局配置持有者（枚举实现单例）
 
 	private GlobalConfigs() {
 	}

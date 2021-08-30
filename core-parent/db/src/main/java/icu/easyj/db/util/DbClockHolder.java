@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
  */
 class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 
-	//region 数据库时钟持有者（枚举实例单例）
+	//region 数据库时钟持有者（枚举实现单例）
 
 	private DbClockHolder() {
 	}
