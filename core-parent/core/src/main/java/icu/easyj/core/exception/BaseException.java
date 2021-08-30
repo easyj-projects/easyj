@@ -32,7 +32,7 @@ public class BaseException extends Exception {
 
 
 	public BaseException(String message) {
-		this(message, "");
+		this(message, (String)null);
 	}
 
 	public BaseException(String message, String errorCode) {
@@ -41,7 +41,7 @@ public class BaseException extends Exception {
 	}
 
 	public BaseException(String message, Throwable cause) {
-		this(message, "", cause);
+		this(message, null, cause);
 	}
 
 	public BaseException(String message, String errorCode, Throwable cause) {

@@ -15,8 +15,11 @@
  */
 package icu.easyj.core.exception;
 
+import org.springframework.util.Assert;
+
 /**
  * Skip Callback Wrapper Exception.
+ * 仅仅是为了跳过函数的异常类型限制而使用，必须在函数外捕获该异常并抛出cause
  *
  * @author wangliang181230
  */
@@ -24,9 +27,11 @@ public class SkipCallbackWrapperException extends WrapperException {
 
 	public SkipCallbackWrapperException(String message, Throwable cause) {
 		super(message, cause);
+		Assert.notNull(cause, "'cause' must be not null");
 	}
 
 	public SkipCallbackWrapperException(Throwable cause) {
 		super(cause);
+		Assert.notNull(cause, "'cause' must be not null");
 	}
 }

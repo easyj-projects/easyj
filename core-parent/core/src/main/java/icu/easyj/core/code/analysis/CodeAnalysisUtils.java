@@ -180,16 +180,19 @@ public class CodeAnalysisUtils {
 	}
 
 	// 重载方法
+	@Nullable
 	public static CodeAnalysisResult analysisCode(String code, boolean isRigorous) {
 		return analysisCode(code, Integer.MAX_VALUE, isRigorous);
 	}
 
 	// 重载方法
+	@Nullable
 	public static CodeAnalysisResult analysisCode(String code, int limitParameterSize) {
 		return analysisCode(code, limitParameterSize, false);
 	}
 
 	// 重载方法
+	@Nullable
 	public static CodeAnalysisResult analysisCode(String code) {
 		return analysisCode(code, Integer.MAX_VALUE, false);
 	}

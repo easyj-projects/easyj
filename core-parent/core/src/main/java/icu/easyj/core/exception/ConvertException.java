@@ -16,25 +16,25 @@
 package icu.easyj.core.exception;
 
 /**
- * 转换失败的异常
+ * 转换异常
  *
  * @author wangliang181230
  */
-public class ConverterException extends BaseRuntimeException {
+public class ConvertException extends BaseRuntimeException {
 
-	public ConverterException(String message) {
+	public ConvertException(String message) {
 		super(message);
 	}
 
-	public ConverterException(String message, String errorCode) {
+	public ConvertException(String message, String errorCode) {
 		super(message, errorCode);
 	}
 
-	public ConverterException(String message, Throwable cause) {
+	public ConvertException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ConverterException(String message, String errorCode, Throwable cause) {
+	public ConvertException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 	}
 }

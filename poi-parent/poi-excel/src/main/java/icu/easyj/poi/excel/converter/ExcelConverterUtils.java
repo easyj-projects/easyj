@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import icu.easyj.core.exception.ConverterException;
+import icu.easyj.core.exception.ConvertException;
 import icu.easyj.core.exception.ConverterNotFoundException;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.MapUtils;
@@ -86,9 +86,9 @@ public abstract class ExcelConverterUtils {
 	 * @param <T>         数据类型
 	 * @return list 列表数据
 	 * @throws ConverterNotFoundException 转换器不存在 或 未匹配到合适的转换器
-	 * @throws ConverterException         转换失败的异常
+	 * @throws ConvertException           转换失败的异常
 	 */
-	public static <T> List<T> toList(InputStream inputStream, Class<T> clazz) throws ConverterException, ConverterNotFoundException {
+	public static <T> List<T> toList(InputStream inputStream, Class<T> clazz) throws ConvertException, ConverterNotFoundException {
 		IExcelConverter converter = getConverter(clazz);
 		return toList(converter, inputStream, clazz);
 	}
@@ -101,9 +101,9 @@ public abstract class ExcelConverterUtils {
 	 * @param <T>            数据类型
 	 * @return list 列表数据
 	 * @throws ConverterNotFoundException 转换器不存在 或 未匹配到合适的转换器
-	 * @throws ConverterException         转换失败的异常
+	 * @throws ConvertException           转换失败的异常
 	 */
-	public static <T> List<T> toList(byte[] excelFileBytes, Class<T> clazz) throws ConverterException, ConverterNotFoundException {
+	public static <T> List<T> toList(byte[] excelFileBytes, Class<T> clazz) throws ConvertException, ConverterNotFoundException {
 		IExcelConverter converter = getConverter(clazz);
 		return toList(converter, new ByteArrayInputStream(excelFileBytes), clazz);
 	}
@@ -112,7 +112,7 @@ public abstract class ExcelConverterUtils {
 		try {
 			return converter.toList(inputStream, clazz);
 		} catch (Exception e) {
-			throw new ConverterException("excel转换为数据列表失败", e);
+			throw new ConvertException("excel转换为数据列表失败", e);
 		}
 	}
 
@@ -124,15 +124,15 @@ public abstract class ExcelConverterUtils {
 	 * @param <T>   数据类型
 	 * @return excel的workbook实例
 	 * @throws ConverterNotFoundException 转换器不存在 或 未匹配到合适的转换器
-	 * @throws ConverterException         转换失败的异常
+	 * @throws ConvertException           转换失败的异常
 	 */
-	public static <T> Workbook toExcel(List<T> list, Class<T> clazz) throws ConverterException, ConverterNotFoundException {
+	public static <T> Workbook toExcel(List<T> list, Class<T> clazz) throws ConvertException, ConverterNotFoundException {
 		IExcelConverter converter = getConverter(clazz);
 
 		try {
 			return converter.toExcel(list, clazz);
 		} catch (Exception e) {
-			throw new ConverterException("excel转换为数据列表失败", e);
+			throw new ConvertException("excel转换为数据列表失败", e);
 		}
 	}
 
