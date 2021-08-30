@@ -426,7 +426,7 @@ public class GlobalConfigs {
 	 * @param <K>     配置键类型
 	 * @param <V>     配置值类型
 	 */
-	static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
+	static synchronized <K, V> void addConfigs(Map<K, V> configs) {
 		if (configs != null && !configs.isEmpty()) {
 			getInstance().configs.putAll(configs);
 		}

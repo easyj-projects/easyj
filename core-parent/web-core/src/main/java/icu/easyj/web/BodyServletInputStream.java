@@ -47,7 +47,7 @@ public class BodyServletInputStream extends ServletInputStream {
 
 	@Override
 	public void setReadListener(ReadListener readListener) {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("'" + this.getClass().getName() + "'不支持`setReadListener`方法.");
 	}
 
 	@Override

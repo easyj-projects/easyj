@@ -143,7 +143,7 @@ public abstract class GlobalConfigSetter {
 	 * @param <K>     配置键类型
 	 * @param <V>     配置值类型
 	 */
-	public static synchronized <K extends Object, V extends Object> void addConfigs(Map<K, V> configs) {
+	public static synchronized <K, V> void addConfigs(Map<K, V> configs) {
 		GlobalConfigs.addConfigs(configs);
 	}
 }

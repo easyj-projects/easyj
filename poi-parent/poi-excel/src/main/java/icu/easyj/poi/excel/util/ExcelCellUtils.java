@@ -54,11 +54,15 @@ public abstract class ExcelCellUtils {
 	 */
 	private static final Map<Class<?>, Map<Class<?>, Function<Object, Object>>> FUN_MAP;
 
+	/**
+	 * 无需转换时的转换器
+	 */
+	private static final Function<Object, Object> UN_CONVERTER = o -> o;
+
 	static {
 		FUN_MAP = new HashMap<>();
 
 		// excel返回String的情况
-		addChangeFun(String.class, String.class, f -> f);
 		addChangeFun(String.class, Character.class, ExcelCellValueChangeFuns::StringToCharacter);
 		addChangeFun(String.class, char.class, ExcelCellValueChangeFuns::StringToCharacter);
 		addChangeFun(String.class, BigDecimal.class, ExcelCellValueChangeFuns::StringToBigDecimal);
@@ -86,7 +90,6 @@ public abstract class ExcelCellUtils {
 		addChangeFun(Double.class, String.class, ExcelCellValueChangeFuns::doubleToString);
 		addChangeFun(Double.class, BigDecimal.class, ExcelCellValueChangeFuns::doubleToBigDecimal);
 		addChangeFun(Double.class, BigInteger.class, ExcelCellValueChangeFuns::doubleToBigInteger);
-		addChangeFun(Double.class, Double.class, f -> f);
 		addChangeFun(Double.class, double.class, f -> f);
 		addChangeFun(Double.class, Float.class, ExcelCellValueChangeFuns::doubleToFloat);
 		addChangeFun(Double.class, float.class, ExcelCellValueChangeFuns::doubleToFloat);
@@ -114,7 +117,6 @@ public abstract class ExcelCellUtils {
 		addChangeFun(Boolean.class, int.class, ExcelCellValueChangeFuns::booleanToInteger);
 		addChangeFun(Boolean.class, Short.class, ExcelCellValueChangeFuns::booleanToShort);
 		addChangeFun(Boolean.class, short.class, ExcelCellValueChangeFuns::booleanToShort);
-		addChangeFun(Boolean.class, Boolean.class, f -> f);
 		addChangeFun(Boolean.class, boolean.class, f -> f);
 		addChangeFun(Boolean.class, Byte.class, ExcelCellValueChangeFuns::booleanToByte);
 		addChangeFun(Boolean.class, byte.class, ExcelCellValueChangeFuns::booleanToByte);
@@ -143,6 +145,10 @@ public abstract class ExcelCellUtils {
 	 * @return fun 转换函数
 	 */
 	private static Function<Object, Object> getChangeFun(Class<?> classFrom, Class<?> classTo) {
+		if (classFrom == classTo || classTo.isAssignableFrom(classFrom)) {
+			return UN_CONVERTER;
+		}
+
 		Map<Class<?>, Function<Object, Object>> map = FUN_MAP.get(classFrom);
 		if (map == null) {
 			return null;

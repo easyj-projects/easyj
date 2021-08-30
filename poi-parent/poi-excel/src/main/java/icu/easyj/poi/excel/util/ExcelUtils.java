@@ -57,7 +57,7 @@ public abstract class ExcelUtils {
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+	public static <T> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		Sheet sheet = book.getSheetAt(0);
 
 		// 获取映射
@@ -123,7 +123,7 @@ public abstract class ExcelUtils {
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+	public static <T> List<T> toList(InputStream is, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		try (Workbook book = WorkbookFactory.create(is)) {
 			return toList(book, clazz, validDataFun);
 		}
@@ -139,24 +139,24 @@ public abstract class ExcelUtils {
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
-	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
+	public static <T> List<T> toList(String filePath, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		try (InputStream is = new FileInputStream(filePath)) {
 			return toList(is, clazz, validDataFun);
 		}
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> toList(Workbook book, Class<T> clazz) throws Exception {
+	public static <T> List<T> toList(Workbook book, Class<T> clazz) throws Exception {
 		return toList(book, clazz, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> toList(InputStream is, Class<T> clazz) throws Exception {
+	public static <T> List<T> toList(InputStream is, Class<T> clazz) throws Exception {
 		return toList(is, clazz, null);
 	}
 
 	// 重载方法
-	public static <T extends Object> List<T> toList(String filePath, Class<T> clazz) throws Exception {
+	public static <T> List<T> toList(String filePath, Class<T> clazz) throws Exception {
 		return toList(filePath, clazz, null);
 	}
 
@@ -225,7 +225,7 @@ public abstract class ExcelUtils {
 	 * @param <T>      数据类型
 	 * @return wbk 返回excel文件流
 	 */
-	public static <T extends Object> Workbook toExcel(List<T> dataList, Class<T> clazz) {
+	public static <T> Workbook toExcel(List<T> dataList, Class<T> clazz) {
 		if (clazz == null) {
 			if (StringUtils.isEmpty(dataList)) {
 				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
@@ -280,7 +280,7 @@ public abstract class ExcelUtils {
 	 * @param <T>      数据类型
 	 * @throws IOException IO异常
 	 */
-	public static <T extends Object> void saveToExcelFile(List<T> dataList, Class<T> clazz, String filePath) throws IOException {
+	public static <T> void saveToExcelFile(List<T> dataList, Class<T> clazz, String filePath) throws IOException {
 		try (Workbook book = toExcel(dataList, clazz)) {
 			// 将excel工作薄对象保存到文件中
 			File file = new File(filePath);

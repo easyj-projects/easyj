@@ -296,7 +296,7 @@ public abstract class ExcelRowUtils {
 	 * @param dataList 数据列表
 	 * @param mapping  表格映射
 	 */
-	public static void createDataRows(Sheet sheet, List<? extends Object> dataList, ExcelMapping mapping) {
+	public static void createDataRows(Sheet sheet, List<?> dataList, ExcelMapping mapping) {
 		int rowNum = (mapping.isNeedHeadRow() ? 1 : 0); // 开始行号
 		int cellNum; // 当前列号
 		int number = 1; // 序号
