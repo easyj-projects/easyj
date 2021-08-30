@@ -15,6 +15,7 @@
  */
 package icu.easyj.poi.excel.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,7 +28,8 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class ExcelMapping {
+public class ExcelMapping implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	//region Fields
 

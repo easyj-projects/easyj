@@ -16,6 +16,7 @@
 package icu.easyj.poi.excel.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ import org.springframework.util.StringUtils;
  * @author wangliang181230
  */
 @SuppressWarnings("deprecation")
-public class ExcelCellMapping {
+public class ExcelCellMapping implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	//******************************** fields *********************************/
 

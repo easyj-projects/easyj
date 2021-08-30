@@ -15,6 +15,8 @@
  */
 package icu.easyj.web.cache304.config;
 
+import java.io.Serializable;
+
 import icu.easyj.web.cache304.Cache304Constants;
 import icu.easyj.web.cache304.annotation.Cache304;
 
@@ -25,7 +27,8 @@ import icu.easyj.web.cache304.annotation.Cache304;
  * @see Cache304
  * @see icu.easyj.web.cache304.annotation.Cache304AnnotationParser#parse(Cache304)
  */
-public class Cache304Config {
+public class Cache304Config implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 缓存秒数
