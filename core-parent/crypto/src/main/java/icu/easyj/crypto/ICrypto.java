@@ -28,6 +28,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import org.springframework.lang.Nullable;
 
 /**
  * 非对称加密算法
@@ -54,9 +55,10 @@ public interface ICrypto extends Serializable {
 	 * 加密
 	 *
 	 * @param data 被加密的bytes
-	 * @return 加密后的bytes
+	 * @return 加密后的bytes 或 {@code null}
 	 */
-	byte[] encrypt(byte[] data);
+	@Nullable
+	byte[] encrypt(@Nullable byte[] data);
 
 	/**
 	 * 加密，使用UTF-8编码
@@ -287,7 +289,8 @@ public interface ICrypto extends Serializable {
 	 * @param bytes 被解密的bytes
 	 * @return 解密后的bytes
 	 */
-	byte[] decrypt(byte[] bytes);
+	@Nullable
+	byte[] decrypt(@Nullable byte[] bytes);
 
 	/**
 	 * 从Hex或Base64字符串解密，编码为UTF-8格式

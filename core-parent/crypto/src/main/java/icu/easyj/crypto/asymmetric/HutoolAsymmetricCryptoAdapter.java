@@ -17,6 +17,7 @@ package icu.easyj.crypto.asymmetric;
 
 import cn.hutool.crypto.asymmetric.AbstractAsymmetricCrypto;
 import cn.hutool.crypto.asymmetric.KeyType;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -67,7 +68,8 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	}
 
 	@Override
-	public byte[] encrypt(byte[] data) {
+	@Nullable
+	public byte[] encrypt(@Nullable byte[] data) {
 		if (data == null) {
 			return null;
 		}
@@ -75,7 +77,8 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	}
 
 	@Override
-	public byte[] decrypt(byte[] bytes) {
+	@Nullable
+	public byte[] decrypt(@Nullable byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}
