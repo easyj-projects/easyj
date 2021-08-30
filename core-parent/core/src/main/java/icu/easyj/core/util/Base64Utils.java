@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 /**
@@ -48,50 +49,70 @@ public abstract class Base64Utils {
 	public static final char PADDING_CHAR = '=';
 
 	/**
-	 * 规范化Base64串
+	 * 规范化Base64串.
+	 * 说明：代码从 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了修改。
 	 *
 	 * @param base64Str Base64字符串
 	 * @return 规范化后的Base64串
+	 * @throws IllegalArgumentException 编码有误
 	 */
-	public static String normalize(String base64Str) {
-		// 处理空白符
-		if (base64Str.contains(" ")) {
-			base64Str = base64Str.replace(" ", "+");
+	public static String normalize(String base64Str) throws IllegalArgumentException {
+		boolean needToChange = false;
+		int numChars = base64Str.length();
+		StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
+		int i = 0;
+
+		char c;
+		byte[] bytes = null;
+		String hex;
+		while (i < numChars) {
+			c = base64Str.charAt(i);
+			switch (c) {
+				case ' ':
+					sb.append('+');
+				case '\r':
+				case '\n':
+					i++;
+					needToChange = true;
+					break;
+				case '%':
+					try {
+						if (bytes == null) {
+							bytes = new byte[(numChars - i) / 3];
+						}
+
+						int pos = 0;
+						while (c == '%' && i + 2 < numChars) {
+							hex = base64Str.substring(i + 1, i + 3);
+							int v = Integer.parseInt(hex, 16);
+							if (v < 0) {
+								throw new IllegalArgumentException("转义(%xx)时存在非法十六进制字符-负值: %" + hex);
+							}
+							bytes[pos++] = (byte)v;
+							i += 3;
+							if (i < numChars) {
+								c = base64Str.charAt(i);
+							}
+						}
+
+						if (i < numChars && c == '%') {
+							throw new IllegalArgumentException("Incomplete trailing escape (%) pattern");
+						}
+
+						sb.append(new String(bytes, 0, pos, StandardCharsets.UTF_8));
+					} catch (NumberFormatException e) {
+						throw new IllegalArgumentException("Illegal hex characters in escape (%) pattern - " + e.getMessage());
+					}
+					needToChange = true;
+					break;
+				default:
+					sb.append(c);
+					i++;
+					break;
+			}
 		}
 
-		// 处理转义符
-		if (base64Str.contains("%")) {
-			base64Str = urlDecode(base64Str);
-		}
-
-		// 处理换行符
-		if (base64Str.contains("\n") || base64Str.contains("\r")) {
-			base64Str = P_CRLF.matcher(base64Str).replaceAll("");
-		}
-
-		return base64Str;
-	}
-
-	/**
-	 * 将Base64串中的URL转义符解码掉
-	 *
-	 * @param base64Str Base64字符串
-	 * @return URL解码后的base64Str
-	 */
-	public static String urlDecode(String base64Str) {
-		if (base64Str.contains("%25")) {
-			base64Str = base64Str.replaceAll("%25", "%");
-		}
-		if (base64Str.contains("%2B")) {
-			base64Str = base64Str.replace("%2B", "+");
-		}
-		if (base64Str.contains("%2F")) {
-			base64Str = base64Str.replace("%2F", "/");
-		}
-		if (base64Str.endsWith("%3D")) {
-			base64Str = base64Str.replace("%3D", "=");
-		}
-		return base64Str;
+		return (needToChange ? sb.toString() : base64Str);
 	}
 
 	/**

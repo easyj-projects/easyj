@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util;
 
+import java.io.UnsupportedEncodingException;
+
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
 import org.junit.jupiter.api.Assertions;
@@ -28,9 +30,12 @@ import org.junit.jupiter.api.Test;
 class Base64UtilsTest {
 
 	@Test
-	void testNormalize() {
-		String s = "123\r\n%252B";
-		Assertions.assertEquals("123+", Base64Utils.normalize(s));
+	void testNormalize() throws UnsupportedEncodingException {
+		String s = "123\r\n%252B%2B";
+		Assertions.assertEquals("123%2B+", Base64Utils.normalize(s));
+
+		Assertions.assertEquals("123+", Base64Utils.normalize("123\r\n "));
+		Assertions.assertEquals("123+", Base64Utils.normalize("123 "));
 	}
 
 	@Test
