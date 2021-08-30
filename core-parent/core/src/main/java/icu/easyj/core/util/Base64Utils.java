@@ -16,7 +16,6 @@
 package icu.easyj.core.util;
 
 import java.nio.charset.StandardCharsets;
-import java.util.regex.Pattern;
 
 /**
  * Base64工具类
@@ -25,13 +24,11 @@ import java.util.regex.Pattern;
  */
 public abstract class Base64Utils {
 
-	public static final String REGEX_CRLF = "[\\r\\n]";
-	public static final Pattern P_CRLF = Pattern.compile(REGEX_CRLF + "+");
-
 	/**
 	 * Base64字符在Assic码
 	 */
-	private static final byte[] BASE64_CHAR_TABLE = {
+	@SuppressWarnings("all")
+	public static final byte[] BASE64_CHAR_TABLE = {
 			// 0 1 2 3 4 5 6 7 8 9 A B C D E F
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0F
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 10-1F
@@ -40,8 +37,7 @@ public abstract class Base64Utils {
 			-1, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, // 40-4F（含：大写A~大写O）
 			80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, -1, -1, -1, -1, -1, // 50-5F（含：大写P~大写Z）
 			-1, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, // 60-6F（含：小写a~小写o）
-			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122 // 70-7A（含：小写p-小写z）
-	};
+			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122}; // 70-7A（含：小写p-小写z）
 
 	/**
 	 * 补位字符
@@ -68,13 +64,19 @@ public abstract class Base64Utils {
 		while (i < numChars) {
 			c = base64Str.charAt(i);
 			switch (c) {
+				// 空格 -> `+`
 				case ' ':
 					sb.append('+');
+					i++;
+					needToChange = true;
+					break;
+				// 移除回车符和换行符
 				case '\r':
 				case '\n':
 					i++;
 					needToChange = true;
 					break;
+				// URL编码16进制字符转换
 				case '%':
 					try {
 						if (bytes == null) {
@@ -95,7 +97,7 @@ public abstract class Base64Utils {
 							}
 						}
 
-						if (i < numChars && c == '%') {
+						if (c == '%' && i < numChars) {
 							throw new IllegalArgumentException("Incomplete trailing escape (%) pattern");
 						}
 
