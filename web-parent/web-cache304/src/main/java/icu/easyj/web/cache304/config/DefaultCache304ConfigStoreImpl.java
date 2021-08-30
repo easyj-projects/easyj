@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
  *
  * @author wangliang181230
  */
-public class DefaultCache304ConfigStorageImpl implements ICache304ConfigStorage {
+public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 
 	/**
 	 * path → config
@@ -39,7 +39,7 @@ public class DefaultCache304ConfigStorageImpl implements ICache304ConfigStorage 
 	/**
 	 * 默认构造函数
 	 */
-	public DefaultCache304ConfigStorageImpl() {
+	public DefaultCache304ConfigStoreImpl() {
 		cache304ConfigMap = new ConcurrentHashMap<>(4);
 	}
 
@@ -48,7 +48,7 @@ public class DefaultCache304ConfigStorageImpl implements ICache304ConfigStorage 
 	 *
 	 * @param cache304ConfigMap 保存配置的map
 	 */
-	public DefaultCache304ConfigStorageImpl(Map<String, Cache304Config> cache304ConfigMap) {
+	public DefaultCache304ConfigStoreImpl(Map<String, Cache304Config> cache304ConfigMap) {
 		this.cache304ConfigMap = cache304ConfigMap;
 	}
 

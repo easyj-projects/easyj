@@ -24,8 +24,8 @@ import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.web.cache304.annotation.Cache304;
 import icu.easyj.web.cache304.annotation.Cache304AnnotationParser;
 import icu.easyj.web.cache304.config.Cache304Config;
-import icu.easyj.web.cache304.config.Cache304ConfigStorageFactory;
-import icu.easyj.web.cache304.config.ICache304ConfigStorage;
+import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
+import icu.easyj.web.cache304.config.ICache304ConfigStore;
 import icu.easyj.web.util.HttpUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -89,7 +89,7 @@ public class Cache304Aspect {
 		}
 
 		// 解析Cache304注解
-		ICache304ConfigStorage configStorage = Cache304ConfigStorageFactory.getStorage();
+		ICache304ConfigStore configStorage = Cache304ConfigStoreFactory.getStorage();
 		Cache304Config config = configStorage.getConfig(request);
 		if (config == null) {
 			Cache304 anno = method.getAnnotation(Cache304.class);

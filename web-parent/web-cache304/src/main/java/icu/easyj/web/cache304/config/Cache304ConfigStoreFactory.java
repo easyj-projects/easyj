@@ -20,23 +20,23 @@ package icu.easyj.web.cache304.config;
  *
  * @author wangliang181230
  */
-public class Cache304ConfigStorageFactory {
+public class Cache304ConfigStoreFactory {
 
 	/**
 	 * 配置存储器
 	 */
-	private static ICache304ConfigStorage configStorage;
+	private static ICache304ConfigStore configStorage;
 
 	/**
 	 * 获取配置存储器
 	 *
 	 * @return storage 配置存储器
 	 */
-	public static ICache304ConfigStorage getStorage() {
+	public static ICache304ConfigStore getStorage() {
 		if (configStorage == null) {
-			synchronized (Cache304ConfigStorageFactory.class) {
+			synchronized (Cache304ConfigStoreFactory.class) {
 				if (configStorage == null) {
-					configStorage = new DefaultCache304ConfigStorageImpl();
+					configStorage = new DefaultCache304ConfigStoreImpl();
 				}
 			}
 		}
@@ -48,7 +48,7 @@ public class Cache304ConfigStorageFactory {
 	 *
 	 * @param storage 配置存储器
 	 */
-	public static void setStorage(ICache304ConfigStorage storage) {
+	public static void setStorage(ICache304ConfigStore storage) {
 		configStorage = storage;
 	}
 }

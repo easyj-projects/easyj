@@ -26,7 +26,7 @@ import org.springframework.util.CollectionUtils;
  *
  * @author wangliang181230
  */
-public interface ICache304ConfigStorage {
+public interface ICache304ConfigStore {
 
 	/**
 	 * 添加配置

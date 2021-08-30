@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.exception.SkipCallbackWrapperException;
 import icu.easyj.web.cache304.config.Cache304Config;
-import icu.easyj.web.cache304.config.Cache304ConfigStorageFactory;
+import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
 import icu.easyj.web.util.HttpUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -51,7 +51,7 @@ public class Cache304Filter implements Filter {
 		}
 
 		// 获取当前请求的配置
-		Cache304Config config = Cache304ConfigStorageFactory.getStorage().getConfig(httpRequest);
+		Cache304Config config = Cache304ConfigStoreFactory.getStorage().getConfig(httpRequest);
 		if (config != null) {
 			Cache304Aspect.disable();
 		}
