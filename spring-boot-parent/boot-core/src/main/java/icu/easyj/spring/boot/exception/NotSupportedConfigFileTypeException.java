@@ -18,26 +18,26 @@ package icu.easyj.spring.boot.exception;
 import icu.easyj.core.exception.NotSupportedFileException;
 
 /**
- * 不支持的配置文件类型
+ * 不支持的配置文件类型异常
  *
  * @author wangliang181230
  */
-public class NotSupportedConfigFileException extends NotSupportedFileException {
+public class NotSupportedConfigFileTypeException extends NotSupportedFileException {
 	private static final long serialVersionUID = 1L;
 
-	public NotSupportedConfigFileException(String message) {
+	public NotSupportedConfigFileTypeException(String message) {
 		super(message);
 	}
 
-	public NotSupportedConfigFileException(String message, String errorCode) {
+	public NotSupportedConfigFileTypeException(String message, String errorCode) {
 		super(message, errorCode);
 	}
 
-	public NotSupportedConfigFileException(String message, Throwable cause) {
+	public NotSupportedConfigFileTypeException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public NotSupportedConfigFileException(String message, String errorCode, Throwable cause) {
+	public NotSupportedConfigFileTypeException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 	}
 }

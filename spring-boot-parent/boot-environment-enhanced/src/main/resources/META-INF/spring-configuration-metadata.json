@@ -9,7 +9,7 @@
 		{
 			"name": "easyj.config.activate.on-class",
 			"type": "java.util.List<java.lang.Class>",
-			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnClassPropertySourceFilter",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnClassConditionPropertySourceFilter",
 			"description": "配置源过滤器接口实现：基于OnClass条件判断."
 		},
 		{

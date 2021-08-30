@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.env.enhanced.impls;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.spring.boot.env.enhanced.AbstractConditionPropertySourceFilter;
 import org.springframework.util.StringUtils;
 
 /**
@@ -26,11 +27,11 @@ import org.springframework.util.StringUtils;
  * @author wangliang181230
  */
 @LoadLevel(name = "on-class", order = 1)
-public class OnClassPropertySourceFilter extends AbstractConditionPropertySourceFilter {
+public class OnClassConditionPropertySourceFilter extends AbstractConditionPropertySourceFilter {
 
 	public static final String PROPERTY_NAME = "easyj.config.activate.on-class";
 
-	public OnClassPropertySourceFilter() {
+	public OnClassConditionPropertySourceFilter() {
 		super(PROPERTY_NAME);
 	}
 

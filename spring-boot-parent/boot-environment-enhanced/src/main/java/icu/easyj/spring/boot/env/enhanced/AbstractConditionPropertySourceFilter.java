@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.env.enhanced.impls;
+package icu.easyj.spring.boot.env.enhanced;
 
 import java.util.List;
 
-import icu.easyj.spring.boot.env.enhanced.IPropertySourceFilter;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 
@@ -51,5 +50,5 @@ public abstract class AbstractConditionPropertySourceFilter implements IProperty
 	 * @param conditionPropertyList 条件配置列表
 	 * @return 是否需要过滤，true=过滤掉|false=不过滤
 	 */
-	abstract boolean doConditionFilter(List<String> conditionPropertyList);
+	protected abstract boolean doConditionFilter(List<String> conditionPropertyList);
 }

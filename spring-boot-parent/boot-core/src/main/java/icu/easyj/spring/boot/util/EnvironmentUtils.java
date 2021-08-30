@@ -26,7 +26,7 @@ import java.util.Properties;
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.util.ResourceUtils;
-import icu.easyj.spring.boot.exception.NotSupportedConfigFileException;
+import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.DefaultPropertiesPropertySource;
@@ -146,7 +146,7 @@ public abstract class EnvironmentUtils {
 				throw new IORuntimeException("配置文件加载失败：" + configFileName, e);
 			}
 		} else {
-			throw new NotSupportedConfigFileException("暂不支持该配置文件的解析：" + configFileName);
+			throw new NotSupportedConfigFileTypeException("暂不支持该配置文件的解析：" + configFileName);
 		}
 		return properties;
 	}
