@@ -21,6 +21,7 @@ package icu.easyj.core.exception;
  * @author wangliang181230
  */
 public class SdkException extends BaseException {
+	private static final long serialVersionUID = 1L;
 
 	public SdkException(String message) {
 		super(message);

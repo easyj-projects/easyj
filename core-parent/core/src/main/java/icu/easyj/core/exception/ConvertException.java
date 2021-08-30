@@ -21,6 +21,7 @@ package icu.easyj.core.exception;
  * @author wangliang181230
  */
 public class ConvertException extends BaseRuntimeException {
+	private static final long serialVersionUID = 1L;
 
 	public ConvertException(String message) {
 		super(message);

@@ -23,6 +23,7 @@ import icu.easyj.core.exception.SdkException;
  * @author wangliang181230
  */
 public class OcrSdkException extends SdkException {
+	private static final long serialVersionUID = 1L;
 
 	public OcrSdkException(String message) {
 		super(message);

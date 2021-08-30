@@ -21,6 +21,7 @@ package icu.easyj.core.exception;
  * @author wangliang181230
  */
 public class WrapperException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
 
 	public WrapperException(String message, Throwable cause) {
 		super(message, cause);

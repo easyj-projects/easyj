@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  */
 public class SkipCallbackWrapperException extends WrapperException {
+	private static final long serialVersionUID = 1L;
 
 	public SkipCallbackWrapperException(String message, Throwable cause) {
 		super(message, cause);

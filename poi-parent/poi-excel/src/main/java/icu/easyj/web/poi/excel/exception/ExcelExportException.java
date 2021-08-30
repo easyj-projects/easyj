@@ -21,6 +21,7 @@ package icu.easyj.web.poi.excel.exception;
  * @author wangliang181230
  */
 public class ExcelExportException extends Exception {
+	private static final long serialVersionUID = 1L;
 
 	public ExcelExportException(String message) {
 		super(message);

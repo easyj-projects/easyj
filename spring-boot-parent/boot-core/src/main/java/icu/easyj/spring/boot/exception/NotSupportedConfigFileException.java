@@ -23,6 +23,7 @@ import icu.easyj.core.exception.NotSupportedFileException;
  * @author wangliang181230
  */
 public class NotSupportedConfigFileException extends NotSupportedFileException {
+	private static final long serialVersionUID = 1L;
 
 	public NotSupportedConfigFileException(String message) {
 		super(message);

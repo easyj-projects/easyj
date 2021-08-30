@@ -23,6 +23,7 @@ import icu.easyj.core.exception.BaseRuntimeException;
  * @author wangliang181230
  */
 public class IdCardOcrSdkException extends BaseRuntimeException {
+	private static final long serialVersionUID = 1L;
 
 	public IdCardOcrSdkException(String message) {
 		super(message);

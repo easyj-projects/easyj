@@ -21,6 +21,7 @@ package icu.easyj.web.exception;
  * @author wangliang181230
  */
 public class RequestContextNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
 
 	public RequestContextNotFoundException() {
 		super("HTTP请求上下文未找到");

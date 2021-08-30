@@ -21,6 +21,7 @@ package icu.easyj.web.param.crypto.exception;
  * @author wangliang181230
  */
 public class ParamCryptoException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
 
 	public ParamCryptoException() {
 		super();
