@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.clock;
+package icu.easyj.core.clock.holder;
 
 import java.util.Date;
 
+import icu.easyj.core.clock.IClock;
+import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
 
 /**
@@ -36,7 +39,7 @@ public interface IRemotingClockHolder<T> {
 	 * @return 时钟
 	 */
 	@NonNull
-	IClock createClock(T remotingKey);
+	ITickClock createClock(T remotingKey);
 
 	/**
 	 * 获取远端时钟
@@ -45,7 +48,7 @@ public interface IRemotingClockHolder<T> {
 	 * @return 时钟
 	 */
 	@NonNull
-	IClock getClock(T remotingKey);
+	ITickClock getClock(T remotingKey);
 
 	/**
 	 * 刷新远端时钟并返回新时钟
@@ -54,7 +57,7 @@ public interface IRemotingClockHolder<T> {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	IClock refreshClock(T remotingKey);
+	ITickClock refreshClock(T remotingKey);
 
 	/**
 	 * 远端的当前时间
@@ -89,7 +92,7 @@ public interface IRemotingClockHolder<T> {
 
 	/**
 	 * 远端的当前纳秒数<br>
-	 * 注意：值格式与`System.nanoTime()`并不相同
+	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param remotingKey 远端键值
 	 * @return timeNanos 纳秒数

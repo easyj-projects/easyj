@@ -13,36 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.clock;
+package icu.easyj.core.clock;
+
+import java.util.Date;
 
 /**
- * 记号时钟接口
+ * 时钟接口
  *
  * @author wangliang181230
  */
-public interface ITickClock extends IClock {
+public interface IClock {
 
 	/**
-	 * 获取基准微秒数
+	 * 当前时间
 	 *
-	 * @return baseEpochMicros 基准微秒数
+	 * @return now 当前时间
 	 */
-	long getBaseEpochMicros();
-
-	/**
-	 * 获取基准记号纳秒数
-	 *
-	 * @return baseTickNanos 基准记号纳秒数
-	 */
-	long getBaseTickNanos();
-
-	/**
-	 * 获取已经过的纳秒数
-	 * 说明：以baseTickNanos为基准，经过的纳秒数
-	 *
-	 * @return passedNanos 已经过的纳秒数
-	 */
-	default long getPassedNanos() {
-		return System.nanoTime() - getBaseTickNanos();
+	default Date now() {
+		return new Date(currentTimeMillis());
 	}
+
+	/**
+	 * 当前毫秒数
+	 *
+	 * @return timeMillis 毫秒数
+	 */
+	default long currentTimeMillis() {
+		return currentTimeNanos() / 1000000;
+	}
+
+	/**
+	 * 当前微秒数
+	 *
+	 * @return timeMicros 微秒数
+	 */
+	default long currentTimeMicros() {
+		return currentTimeNanos() / 1000;
+	}
+
+	/**
+	 * 当前纳秒数
+	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
+	 *
+	 * @return timeNanos 纳秒数
+	 */
+	long currentTimeNanos();
 }

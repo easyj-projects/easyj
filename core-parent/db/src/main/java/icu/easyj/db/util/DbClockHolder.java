@@ -17,11 +17,11 @@ package icu.easyj.db.util;
 
 import javax.sql.DataSource;
 
-import icu.easyj.core.util.clock.AbstractRemotingClockHolder;
-import icu.easyj.core.util.clock.IClock;
-import icu.easyj.core.util.clock.IRemotingClockHolder;
-import icu.easyj.core.util.clock.ITickClock;
-import icu.easyj.core.util.clock.TickClock;
+import icu.easyj.core.clock.IClock;
+import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.TickClock;
+import icu.easyj.core.clock.holder.AbstractRemotingClockHolder;
+import icu.easyj.core.clock.holder.IRemotingClockHolder;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  * @see AbstractRemotingClockHolder
  * @see IRemotingClockHolder
  */
-class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
+final class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 
 	//region 数据库时钟持有者（设计模式-创建型模式-单例模式-枚举实现单例）
 
@@ -71,7 +71,7 @@ class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
 	 */
 	@Override
 	@NonNull
-	public IClock createClock(DataSource dataSource) {
+	public ITickClock createClock(DataSource dataSource) {
 		Assert.notNull(dataSource, "dataSource must be not null");
 		// TODO: @wangliang181230 待开发，方言需支持不同数据库不同`获取数据库时间的SQL`的功能。
 		return null;

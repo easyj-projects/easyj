@@ -29,7 +29,7 @@ import static icu.easyj.web.cache304.Cache304Constants.CRITICAL_TIME;
  *
  * @author wangliang181230
  */
-class CacheTimeComputer {
+abstract class CacheTimeComputer {
 
 	/**
 	 * 计算缓存有效时间，单位：毫秒

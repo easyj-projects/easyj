@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.clock;
+package icu.easyj.core.clock;
 
 /**
  * 记号时钟
@@ -22,12 +22,13 @@ package icu.easyj.core.util.clock;
  */
 public class TickClock implements ITickClock {
 
-	//region 基准时间
+	//region 基准时间，为了获取指定单位的时间少一次计算，保存三个基准时间。
 
 	/**
 	 * 基准时间毫秒数
 	 */
 	private final long baseEpochMillis;
+
 	/**
 	 * 基准时间毫秒数
 	 */
@@ -35,7 +36,7 @@ public class TickClock implements ITickClock {
 
 	/**
 	 * 基准时间毫秒数
-	 * 注意：值格式与`System.nanoTime()`并不相同
+	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 */
 	private final long baseEpochNanos;
 
@@ -53,10 +54,11 @@ public class TickClock implements ITickClock {
 	 * @param baseTickNanos   基准记号纳秒数
 	 */
 	public TickClock(long baseEpochMicros, long baseTickNanos) {
+		// 设置基准时间
 		this.baseEpochMillis = baseEpochMicros / 1000;
 		this.baseEpochMicros = baseEpochMicros;
 		this.baseEpochNanos = baseEpochMicros * 1000;
-
+		// 设置记号纳秒数
 		this.baseTickNanos = baseTickNanos;
 	}
 
@@ -71,6 +73,8 @@ public class TickClock implements ITickClock {
 
 
 	//region Override
+
+	//region Override IClock
 
 	@Override
 	public long currentTimeMillis() {
@@ -87,6 +91,10 @@ public class TickClock implements ITickClock {
 		return getPassedNanos() + baseEpochNanos;
 	}
 
+	//endregion
+
+	//region Override ITickClock
+
 	@Override
 	public long getBaseEpochMicros() {
 		return this.baseEpochMicros;
@@ -96,6 +104,8 @@ public class TickClock implements ITickClock {
 	public long getBaseTickNanos() {
 		return this.baseTickNanos;
 	}
+
+	//endregion
 
 	//endregion
 }

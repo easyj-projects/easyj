@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.clock;
+package icu.easyj.core.clock.holder;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.TickClock;
 import icu.easyj.core.util.MapUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
@@ -26,7 +28,6 @@ import org.springframework.util.Assert;
  * 抽象远端时钟持有者
  *
  * @author wangliang181230
- * @see IClock
  * @see ITickClock
  * @see TickClock
  * @see IRemotingClockHolder
@@ -36,13 +37,13 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	/**
 	 * 远端时钟Map
 	 */
-	private final Map<T, IClock> remotingClockMap;
+	private final Map<T, ITickClock> remotingClockMap;
 
 	/**
 	 * 无参构造函数
 	 */
 	protected AbstractRemotingClockHolder() {
-		this.remotingClockMap = new ConcurrentHashMap<>(2);
+		this(new ConcurrentHashMap<>(2));
 	}
 
 	/**
@@ -50,9 +51,12 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	protected AbstractRemotingClockHolder(Map<T, IClock> remotingClockMap) {
+	protected AbstractRemotingClockHolder(Map<T, ITickClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
+
+
+	//region Override IRemotingClockHolder
 
 	/**
 	 * 获取远端时钟
@@ -62,7 +66,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	 */
 	@Override
 	@NonNull
-	public IClock getClock(T remotingKey) {
+	public ITickClock getClock(T remotingKey) {
 		Assert.notNull(remotingKey, "remotingKey must be not null");
 		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, ds -> createClock(remotingKey));
 	}
@@ -75,11 +79,13 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	 */
 	@Override
 	@NonNull
-	public IClock refreshClock(T remotingKey) {
+	public ITickClock refreshClock(T remotingKey) {
 		Assert.notNull(remotingKey, "remotingKey must be not null");
 
-		IClock newClock = createClock(remotingKey);
+		ITickClock newClock = createClock(remotingKey);
 		remotingClockMap.put(remotingKey, newClock);
 		return newClock;
 	}
+
+	//endregion
 }

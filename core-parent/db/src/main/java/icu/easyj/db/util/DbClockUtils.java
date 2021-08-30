@@ -18,7 +18,9 @@ package icu.easyj.db.util;
 import java.util.Date;
 import javax.sql.DataSource;
 
-import icu.easyj.core.util.clock.IClock;
+import icu.easyj.core.clock.IClock;
+import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -27,9 +29,9 @@ import org.springframework.util.Assert;
  * 数据库时钟工具类
  *
  * @author wangliang181230
- * @see icu.easyj.core.util.clock.IClock
- * @see icu.easyj.core.util.clock.ITickClock
- * @see icu.easyj.core.util.clock.TickClock
+ * @see IClock
+ * @see ITickClock
+ * @see TickClock
  */
 public abstract class DbClockUtils {
 
@@ -127,7 +129,7 @@ public abstract class DbClockUtils {
 
 	/**
 	 * 主要数据源当前纳秒数<br>
-	 * 注意：值格式与`System.nanoTime()`并不相同
+	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param dataSource 数据源
 	 * @return timeNanos 纳秒数
@@ -240,7 +242,7 @@ public abstract class DbClockUtils {
 
 	/**
 	 * 主要数据源的当前纳秒数<br>
-	 * 注意：值格式与`System.nanoTime()`并不相同
+	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @return timeNanos 纳秒数
 	 * @throws NullPointerException 如果`primaryClock`为空，将抛出该异常
