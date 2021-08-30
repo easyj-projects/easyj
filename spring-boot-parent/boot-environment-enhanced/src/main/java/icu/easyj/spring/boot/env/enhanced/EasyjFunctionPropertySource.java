@@ -38,6 +38,8 @@ import org.springframework.util.StringUtils;
  */
 public class EasyjFunctionPropertySource extends PropertySource<Object> {
 
+	//region Constants
+
 	/**
 	 * 配置源名
 	 */
@@ -53,7 +55,8 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 */
 	private static final String NO_CACHE_VALUE = "no-cache";
 
-	//region 函数相关常量
+
+	//region 各函数名的常量
 
 	/**
 	 * 加密函数名
@@ -72,10 +75,13 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 
 	//endregion
 
+
 	/**
 	 * 缓存
 	 */
 	private static final Map<String, Object> CACHE = new HashMap<>();
+
+	//endregion Constants end
 
 
 	/**
@@ -124,6 +130,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		// 返回配置值
 		return value;
 	}
+
+
+	//region Private
 
 	/**
 	 * 判断该配置是否为当前配置源的配置
@@ -191,4 +200,6 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 			return true;
 		}
 	}
+
+	//endregion
 }
