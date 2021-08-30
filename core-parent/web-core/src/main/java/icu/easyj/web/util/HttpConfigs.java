@@ -20,7 +20,7 @@ package icu.easyj.web.util;
  *
  * @author wangliang181230
  */
-public class HttpConfigs {
+public abstract class HttpConfigs {
 
 	/**
 	 * 二级目录
