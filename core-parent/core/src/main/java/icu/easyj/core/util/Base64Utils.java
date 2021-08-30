@@ -61,18 +61,7 @@ public abstract class Base64Utils {
 
 		// 处理转义符
 		if (base64Str.contains("%")) {
-			if (base64Str.contains("%25")) {
-				base64Str = base64Str.replaceAll("%25", "%");
-			}
-			if (base64Str.contains("%2B")) {
-				base64Str = base64Str.replace("%2B", "+");
-			}
-			if (base64Str.contains("%2F")) {
-				base64Str = base64Str.replace("%2F", "/");
-			}
-			if (base64Str.endsWith("%3D")) {
-				base64Str = base64Str.replace("%3D", "=");
-			}
+			base64Str = urlDecode(base64Str);
 		}
 
 		// 处理换行符
@@ -80,6 +69,28 @@ public abstract class Base64Utils {
 			base64Str = P_CRLF.matcher(base64Str).replaceAll("");
 		}
 
+		return base64Str;
+	}
+
+	/**
+	 * 将Base64串中的URL转义符解码掉
+	 *
+	 * @param base64Str Base64字符串
+	 * @return URL解码后的base64Str
+	 */
+	public static String urlDecode(String base64Str) {
+		if (base64Str.contains("%25")) {
+			base64Str = base64Str.replaceAll("%25", "%");
+		}
+		if (base64Str.contains("%2B")) {
+			base64Str = base64Str.replace("%2B", "+");
+		}
+		if (base64Str.contains("%2F")) {
+			base64Str = base64Str.replace("%2F", "/");
+		}
+		if (base64Str.endsWith("%3D")) {
+			base64Str = base64Str.replace("%3D", "=");
+		}
 		return base64Str;
 	}
 
