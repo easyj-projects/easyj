@@ -74,7 +74,7 @@ public abstract class CollectionUtils {
 	 */
 	@Nullable
 	public static <T> T getLast(List<T> list) {
-		if (list == null) {
+		if (list == null || list.isEmpty()) {
 			return null;
 		}
 

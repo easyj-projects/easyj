@@ -90,7 +90,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 * @param filterProperties 过滤器配置
 	 */
 	protected AbstractFilter(@NonNull P filterProperties) {
-		Assert.notNull(filterProperties, "filterProperties must be not null");
+		Assert.notNull(filterProperties, "'filterProperties' must be not null");
 
 		// 设置过滤器配置
 		this.filterProperties = filterProperties;

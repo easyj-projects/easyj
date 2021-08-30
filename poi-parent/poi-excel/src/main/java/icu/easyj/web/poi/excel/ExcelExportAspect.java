@@ -56,7 +56,7 @@ public class ExcelExportAspect {
 	 * @param excelExportConfig Excel导出功能配置
 	 */
 	public ExcelExportAspect(ExcelExportConfig excelExportConfig) {
-		Assert.notNull(excelExportConfig, "excelExportConfig must be not null");
+		Assert.notNull(excelExportConfig, "'excelExportConfig' must be not null");
 
 		this.config = excelExportConfig;
 	}

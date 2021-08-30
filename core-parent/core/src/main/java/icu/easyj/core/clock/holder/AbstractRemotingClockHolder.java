@@ -67,7 +67,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	@Override
 	@NonNull
 	public ITickClock getClock(T remotingKey) {
-		Assert.notNull(remotingKey, "remotingKey must be not null");
+		Assert.notNull(remotingKey, "'remotingKey' must be not null");
 		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, ds -> createClock(remotingKey));
 	}
 
@@ -80,7 +80,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	@Override
 	@NonNull
 	public ITickClock refreshClock(T remotingKey) {
-		Assert.notNull(remotingKey, "remotingKey must be not null");
+		Assert.notNull(remotingKey, "'remotingKey' must be not null");
 
 		ITickClock newClock = createClock(remotingKey);
 		remotingClockMap.put(remotingKey, newClock);

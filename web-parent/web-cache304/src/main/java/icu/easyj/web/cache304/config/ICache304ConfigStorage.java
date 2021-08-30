@@ -54,7 +54,7 @@ public interface ICache304ConfigStorage {
 	 * @param config  缓存配置
 	 */
 	default void putConfig(HttpServletRequest request, Cache304Config config) {
-		Assert.notNull(request, "request must be not null");
+		Assert.notNull(request, "'request' must be not null");
 		this.putConfig(request.getRequestURI(), config);
 	}
 
@@ -76,7 +76,7 @@ public interface ICache304ConfigStorage {
 	 * @return config Cache304配置
 	 */
 	default Cache304Config getConfig(HttpServletRequest request) {
-		Assert.notNull(request, "request must be not null");
+		Assert.notNull(request, "'request' must be not null");
 		return this.getConfig(request.getRequestURI());
 	}
 

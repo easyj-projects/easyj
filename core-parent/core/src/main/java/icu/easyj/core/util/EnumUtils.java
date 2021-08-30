@@ -33,8 +33,8 @@ public abstract class EnumUtils {
 	 * @return enum 枚举
 	 */
 	public static <E extends Enum<?>> E fromName(Class<E> enumClass, String enumName) {
-		Assert.notNull(enumClass, "enumClass must be not null");
-		Assert.notNull(enumName, "enumName must be not null");
+		Assert.notNull(enumClass, "'enumClass' must be not null");
+		Assert.notNull(enumName, "'enumName' must be not null");
 
 		E[] enums = enumClass.getEnumConstants();
 		for (E e : enums) {

@@ -44,7 +44,7 @@ public abstract class UrlUtils {
 	 * @return path 标准化后的路径
 	 */
 	public static String normalizePath(String path) {
-		Assert.notNull(path, "path must be not null");
+		Assert.notNull(path, "'path' must be not null");
 
 		path = path.trim();
 

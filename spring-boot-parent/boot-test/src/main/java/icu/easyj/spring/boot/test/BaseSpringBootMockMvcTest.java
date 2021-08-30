@@ -81,7 +81,7 @@ public abstract class BaseSpringBootMockMvcTest {
 			// 再添加入参中的过滤器（不与构造函数中的过滤器重复添加）
 			if (filters != null && filters.length > 0) {
 				for (Filter f : filters) {
-					Assert.notNull(f, "filters cannot contain null values");
+					Assert.notNull(f, "'filters' cannot contain null values");
 
 					// 判断是否已添加过过滤器
 					boolean isAdded = false;

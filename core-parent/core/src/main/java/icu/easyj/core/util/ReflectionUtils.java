@@ -197,8 +197,8 @@ public abstract class ReflectionUtils {
 	 */
 	@NonNull
 	public static Field getField(final Class<?> clazz, final String fieldName) throws NoSuchFieldException, SecurityException {
-		Assert.notNull(clazz, "clazz must be not null");
-		Assert.notNull(fieldName, "fieldName must be not null");
+		Assert.notNull(clazz, "'clazz' must be not null");
+		Assert.notNull(fieldName, "'fieldName' must be not null");
 
 		Map<String, Field> fieldMap = MapUtils.computeIfAbsent(FIELD_CACHE, clazz, k -> new ConcurrentHashMap<>());
 
@@ -257,7 +257,7 @@ public abstract class ReflectionUtils {
 	@Nullable
 	public static <T> T getFieldValue(Object target, Field field)
 			throws IllegalArgumentException, SecurityException {
-		Assert.notNull(target, "target must be not null");
+		Assert.notNull(target, "'target' must be not null");
 
 		while (true) {
 			setAccessible(field);
@@ -284,8 +284,8 @@ public abstract class ReflectionUtils {
 	@Nullable
 	public static <T> T getFieldValue(Object target, String fieldName)
 			throws IllegalArgumentException, NoSuchFieldException, SecurityException {
-		Assert.notNull(target, "target must be not null");
-		Assert.notNull(fieldName, "fieldName must be not null");
+		Assert.notNull(target, "'target' must be not null");
+		Assert.notNull(fieldName, "'fieldName' must be not null");
 
 		if (target instanceof Annotation) {
 			return getAnnotationValue((Annotation)target, fieldName);
@@ -320,7 +320,7 @@ public abstract class ReflectionUtils {
 	 */
 	public static void setFieldValue(Object target, Field field, Object fieldValue)
 			throws IllegalArgumentException, SecurityException {
-		Assert.notNull(target, "target must be not null");
+		Assert.notNull(target, "'target' must be not null");
 
 		while (true) {
 			setAccessible(field);
@@ -345,8 +345,8 @@ public abstract class ReflectionUtils {
 	 */
 	public static void setFieldValue(Object target, String fieldName, final Object fieldValue)
 			throws IllegalArgumentException, NoSuchFieldException, SecurityException {
-		Assert.notNull(target, "target must be not null");
-		Assert.notNull(fieldName, "fieldName must be not null");
+		Assert.notNull(target, "'target' must be not null");
+		Assert.notNull(fieldName, "'fieldName' must be not null");
 
 		if (fieldName.contains(StrPool.DOT)) {
 			String[] fieldNameArr = fieldName.split("\\.");
@@ -386,7 +386,7 @@ public abstract class ReflectionUtils {
 	 */
 	public static void setStaticFinalFieldValue(Field staticField, Object newValue)
 			throws NoSuchFieldException, IllegalAccessException {
-		Assert.notNull(staticField, "staticField must be not null");
+		Assert.notNull(staticField, "'staticField' must be not null");
 
 		// check is static field
 		if (!Modifier.isStatic(staticField.getModifiers())) {
@@ -418,8 +418,8 @@ public abstract class ReflectionUtils {
 	 */
 	public static void setStaticFinalFieldValue(Class<?> targetClass, String staticFieldName, Object newValue)
 			throws NoSuchFieldException, IllegalAccessException {
-		Assert.notNull(targetClass, "targetClass must be not null");
-		Assert.notNull(staticFieldName, "staticFieldName must be not null");
+		Assert.notNull(targetClass, "'targetClass' must be not null");
+		Assert.notNull(staticFieldName, "'staticFieldName' must be not null");
 
 		// get field
 		Field field = targetClass.getDeclaredField(staticFieldName);
@@ -448,7 +448,7 @@ public abstract class ReflectionUtils {
 	@NonNull
 	public static Method getMethod(final Class<?> clazz, final String methodName, final Class<?>... parameterTypes)
 			throws NoSuchMethodException, SecurityException {
-		Assert.notNull(clazz, "clazz must be not null");
+		Assert.notNull(clazz, "'clazz' must be not null");
 
 		Map<String, Method> methodMap = MapUtils.computeIfAbsent(METHOD_CACHE, clazz, k -> new ConcurrentHashMap<>());
 
@@ -557,7 +557,7 @@ public abstract class ReflectionUtils {
 	 */
 	public static Object invokeMethod(Object target, String methodName, Class<?>[] parameterTypes, Object... args)
 			throws NoSuchMethodException, InvocationTargetException, IllegalArgumentException, SecurityException {
-		Assert.notNull(target, "target must be not null");
+		Assert.notNull(target, "'target' must be not null");
 
 		// get method
 		Method method = getMethod(target.getClass(), methodName, parameterTypes);
@@ -594,7 +594,7 @@ public abstract class ReflectionUtils {
 	 */
 	public static Object invokeStaticMethod(Method staticMethod, Object... args)
 			throws IllegalArgumentException, InvocationTargetException, SecurityException {
-		Assert.notNull(staticMethod, "staticMethod must be not null");
+		Assert.notNull(staticMethod, "'staticMethod' must be not null");
 
 		if (!Modifier.isStatic(staticMethod.getModifiers())) {
 			throw new IllegalArgumentException("`" + methodToString(staticMethod) + "` is not a static method");
@@ -634,7 +634,7 @@ public abstract class ReflectionUtils {
 	public static Object invokeStaticMethod(Class<?> targetClass, String staticMethodName,
 											Class<?>[] parameterTypes, Object... args)
 			throws IllegalArgumentException, NoSuchMethodException, InvocationTargetException, SecurityException {
-		Assert.notNull(targetClass, "targetClass must be not null");
+		Assert.notNull(targetClass, "'targetClass' must be not null");
 
 		// get method
 		Method staticMethod = getMethod(targetClass, staticMethodName, parameterTypes);
@@ -795,7 +795,7 @@ public abstract class ReflectionUtils {
 	 */
 	@NonNull
 	public static Map<String, Object> getAnnotationValues(Annotation annotation) throws NoSuchFieldException {
-		Assert.notNull(annotation, "annotation must be not null");
+		Assert.notNull(annotation, "'annotation' must be not null");
 
 		InvocationHandler h = Proxy.getInvocationHandler(annotation);
 		return getFieldValue(h, "memberValues");
@@ -813,7 +813,7 @@ public abstract class ReflectionUtils {
 	 */
 	@NonNull
 	public static <T> T getAnnotationValue(Annotation annotation, String fieldName) throws NoSuchFieldException {
-		Assert.notNull(fieldName, "fieldName must be not null");
+		Assert.notNull(fieldName, "'fieldName' must be not null");
 		Map<String, Object> annotationValues = getAnnotationValues(annotation);
 		return (T)annotationValues.get(fieldName);
 	}
@@ -833,10 +833,10 @@ public abstract class ReflectionUtils {
 	 */
 	@NonNull
 	public static <T> T getSingleton(Class<T> clazz) {
-		Assert.notNull(clazz, "clazz must be not null");
+		Assert.notNull(clazz, "'clazz' must be not null");
 
 		if (clazz.isInterface()) {
-			throw new IllegalArgumentException("clazz must be not an interface: " + clazz);
+			throw new IllegalArgumentException("'clazz' must be not an interface: " + clazz);
 		}
 
 		return (T)MapUtils.computeIfAbsent(SINGLETON_CACHE, clazz, key -> {

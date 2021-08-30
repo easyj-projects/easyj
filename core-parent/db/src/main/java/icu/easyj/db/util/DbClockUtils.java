@@ -70,7 +70,7 @@ public abstract class DbClockUtils {
 	 */
 	@NonNull
 	public static IClock getClock(DataSource dataSource) {
-		Assert.notNull(dataSource, "dataSource must be not null");
+		Assert.notNull(dataSource, "'dataSource' must be not null");
 
 		if (dataSource == primaryDataSource) {
 			return primaryClock;
@@ -87,7 +87,7 @@ public abstract class DbClockUtils {
 	 */
 	@NonNull
 	public static IClock refreshClock(DataSource dataSource) {
-		Assert.notNull(dataSource, "dataSource must be not null");
+		Assert.notNull(dataSource, "'dataSource' must be not null");
 
 		if (dataSource == primaryDataSource) {
 			return setPrimaryDataSource(dataSource);

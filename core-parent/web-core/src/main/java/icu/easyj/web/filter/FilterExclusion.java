@@ -51,7 +51,7 @@ public class FilterExclusion {
 	 * @param configStr 配置串，格式如：*:/data/get、POST:/data/save
 	 */
 	public FilterExclusion(@NonNull String configStr) {
-		Assert.notNull(configStr, "configStr must be not null");
+		Assert.notNull(configStr, "'configStr' must be not null");
 
 		if (configStr.contains(StrPool.COLON)) {
 			String[] arr = configStr.split(StrPool.COLON);

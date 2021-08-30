@@ -47,7 +47,7 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	 * @param symmetricCrypto Hutool对称加密
 	 */
 	public HutoolSymmetricCryptoAdapter(String algorithm, SymmetricCrypto symmetricCrypto) {
-		Assert.notNull(symmetricCrypto, "symmetricCrypto must be not null");
+		Assert.notNull(symmetricCrypto, "'symmetricCrypto' must be not null");
 		this.algorithm = algorithm;
 		this.symmetricCrypto = symmetricCrypto;
 	}

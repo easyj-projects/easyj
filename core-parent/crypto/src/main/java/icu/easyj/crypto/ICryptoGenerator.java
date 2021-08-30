@@ -63,8 +63,8 @@ public interface ICryptoGenerator {
 	 * @return symmetricCrypto 对称加密算法
 	 */
 	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {
-		Assert.notNull(algorithm, "algorithmStr must be not null");
-		Assert.notNull(key, "key must be not null");
+		Assert.notNull(algorithm, "'algorithmStr' must be not null");
+		Assert.notNull(key, "'key' must be not null");
 
 		// 截取算法类型
 		String algorithmType = algorithm.substring(0, algorithm.indexOf(CharPool.SLASH));
@@ -100,8 +100,8 @@ public interface ICryptoGenerator {
 	 * @return symmetricCrypto 对称加密算法
 	 */
 	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv, Charset charset) {
-		Assert.notNull(algorithm, "algorithmStr must be not null");
-		Assert.notNull(key, "key must be not null");
+		Assert.notNull(algorithm, "'algorithmStr' must be not null");
+		Assert.notNull(key, "'key' must be not null");
 
 		if (charset == null) {
 			charset = StandardCharsets.UTF_8;
