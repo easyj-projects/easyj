@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import cn.hutool.core.io.IORuntimeException;
+
 import static org.springframework.util.SocketUtils.PORT_RANGE_MAX;
 import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
 
@@ -75,13 +77,12 @@ public abstract class NetUtils {
 	 * @return 本机IP
 	 */
 	public static String getIp() {
-		InetAddress addr;
 		try {
-			addr = InetAddress.getLocalHost();
+			InetAddress addr = InetAddress.getLocalHost();
+			return addr.getHostAddress();
 		} catch (UnknownHostException e) {
-			throw new RuntimeException("getLocalHost失败", e);
+			throw new IORuntimeException("获取本机IP失败", e);
 		}
-		return addr.getHostAddress();
 	}
 
 	//endregion

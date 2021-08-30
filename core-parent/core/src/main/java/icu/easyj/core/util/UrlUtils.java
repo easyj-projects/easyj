@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.URLUtil;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 import static icu.easyj.core.constant.UrlConstants.HTTPS_PRE;
@@ -43,6 +44,7 @@ public abstract class UrlUtils {
 	 * @param path 路径
 	 * @return path 标准化后的路径
 	 */
+	@NonNull
 	public static String normalizePath(String path) {
 		Assert.notNull(path, "'path' must be not null");
 

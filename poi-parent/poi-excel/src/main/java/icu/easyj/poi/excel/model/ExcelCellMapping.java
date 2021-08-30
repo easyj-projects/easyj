@@ -434,7 +434,7 @@ public class ExcelCellMapping {
 	 * @return
 	 */
 	private static int getCellWidthByText(String text, int size, boolean isBold) {
-		int textLength = icu.easyj.core.util.StringUtils.getStrLength(text);
+		int textLength = icu.easyj.core.util.StringUtils.chineseLength(text);
 		return (int)(textLength * (isBold ? 7.2 : 6.8) * (size / 10)) + 10;
 	}
 

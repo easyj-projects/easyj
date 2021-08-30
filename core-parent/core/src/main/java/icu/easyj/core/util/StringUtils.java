@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -32,12 +33,17 @@ import org.springframework.lang.Nullable;
  */
 public abstract class StringUtils {
 
-	/**
-	 * 中文字符范围
-	 */
-	public final static String CHINESE_CHAR_RANGE = "[\u4e00-\u9fa5]";
+	//region 中文相关方法
 
-	//region 字符串长度相关方法
+	/**
+	 * 判断是否为中文字符
+	 *
+	 * @param c 字符
+	 * @return 是否为中文字符
+	 */
+	public static boolean isChinese(char c) {
+		return c >= 0x4E00 && c <= 0x9FA5;
+	}
 
 	/**
 	 * 计算字符串长度，中文计2个字符
@@ -45,40 +51,62 @@ public abstract class StringUtils {
 	 * @param str 字符串
 	 * @return strLength 字符串
 	 */
-	public static int getStrLength(String str) {
+	public static int chineseLength(String str) {
 		if (str == null || str.isEmpty()) {
 			return 0;
 		}
 
-		int valueLength = str.length();
-		for (int i = 0; i < str.length(); i++) {
-			String temp = str.substring(i, i + 1);
-			if (temp.matches(CHINESE_CHAR_RANGE)) {
-				valueLength++;
+		int length = str.length();
+		for (char c : str.toCharArray()) {
+			if (isChinese(c)) {
+				++length;
 			}
 		}
-		return valueLength;
+		return length;
 	}
 
 	//endregion
 
 
-	//region 查找数据
+	//region 查找不为空的数据
 
 	/**
-	 * 查找一个不为空的字符串
+	 * 根据匹配函数，查找数据
 	 *
-	 * @param strArr 字符串数组
-	 * @return 返回找到的字符串，当所有字符串都为空时，返回 {@code null}
+	 * @param strArr  字符串数组
+	 * @param matcher 匹配函数
+	 * @return 返回找到的字符串 或 {@code null}
 	 */
 	@Nullable
-	public static String findNotEmptyOne(String... strArr) {
+	public static String find(String[] strArr, Predicate<String> matcher) {
 		for (String str : strArr) {
-			if (org.springframework.util.StringUtils.hasLength(str)) {
+			if (matcher.test(str)) {
 				return str;
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 查找一个不为null或空字符串的字符串
+	 *
+	 * @param strArr 字符串数组
+	 * @return 返回找到的字符串 或 {@code null}
+	 */
+	@Nullable
+	public static String findNotEmptyOne(String... strArr) {
+		return find(strArr, org.springframework.util.StringUtils::hasLength);
+	}
+
+	/**
+	 * 查找一个不为null或空白字符串的字符串
+	 *
+	 * @param strArr 字符串数组
+	 * @return 返回找到的字符串 或 {@code null}
+	 */
+	@Nullable
+	public static String findNotBlankOne(String... strArr) {
+		return find(strArr, org.springframework.util.StringUtils::hasText);
 	}
 
 	//endregion

@@ -31,19 +31,12 @@ public abstract class PatternUtils {
 
 	//region 正则
 
-	//region Base64匹配
+	/**
+	 * 中文字符正则
+	 */
+	public final static String REGEX_CHINESE_CHAR = "[\u4E00-\u9FA5]";
 
-	// BASE64串（严谨）
-	public static final String REGEX_BASE64 = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
-	public static final Pattern P_BASE64 = Pattern.compile(REGEX_BASE64);
-
-	// BASE64串（不严谨）
-	public static final String REGEX_BASE64_2 = "^[A-Za-z0-9+/]+={0,2}$";
-	public static final Pattern P_BASE64_2 = Pattern.compile(REGEX_BASE64_2);
-
-	//endregion
-
-	//region 代码匹配
+	//region 代码匹配的正则
 
 	// 各类型数据值的匹配
 	public static final String REGEX_CODE_STRING1 = "'((?<=\\\\)'|[^'])*'"; // 单引号字符串
@@ -101,57 +94,6 @@ public abstract class PatternUtils {
 		Assert.notNull(regex, "'regex' must be not null");
 		Pattern p = Pattern.compile(regex);
 		return validate(p, str);
-	}
-
-	//endregion
-
-
-	//region base64串
-
-	/**
-	 * 判断是否为Base64的有效字符
-	 *
-	 * @param c 字符
-	 * @return isMatch 是否匹配
-	 * @deprecated 请直接调用 {@link Base64Utils#isBase64Char(char)} 方法。
-	 */
-	@Deprecated
-	public static boolean isBase64Char(char c) {
-		return Base64Utils.isBase64Char(c);
-	}
-
-	/**
-	 * 验证：base64串（严格匹配）
-	 *
-	 * @param str 字符串
-	 * @return isMatch 是否匹配
-	 * @deprecated 请直接调用 {@link Base64Utils#isBase64(CharSequence)} 方法。
-	 */
-	@Deprecated
-	public static boolean isBase64Str(CharSequence str) {
-		return Base64Utils.isBase64(str);
-	}
-
-	/**
-	 * 验证：base64串（不严格匹配）
-	 *
-	 * @param str 字符串
-	 * @return isMatch 是否匹配
-	 */
-	public static boolean isBase64Str2(CharSequence str) {
-		if (str == null || str.length() < 4) {
-			return false;
-		}
-
-		String s = str.toString();
-
-		// 先对最后一个字符判断一遍，防止性能损耗过大
-		char c = s.charAt(s.length() - 1);
-		if (!Base64Utils.isBase64Char(c)) {
-			return false;
-		}
-
-		return validate(P_BASE64_2, s);
 	}
 
 	//endregion
