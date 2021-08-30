@@ -17,8 +17,8 @@ package icu.easyj.config;
 
 import java.util.Map;
 
-import icu.easyj.env.EnvironmentType;
-import icu.easyj.env.RunMode;
+import icu.easyj.core.env.EnvironmentType;
+import icu.easyj.core.env.RunMode;
 
 /**
  * 全局配置设置器

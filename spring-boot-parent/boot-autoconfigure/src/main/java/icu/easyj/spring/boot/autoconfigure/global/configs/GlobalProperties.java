@@ -19,8 +19,8 @@ import java.util.Map;
 
 import icu.easyj.config.GlobalConfigSetter;
 import icu.easyj.config.GlobalConfigs;
-import icu.easyj.env.EnvironmentType;
-import icu.easyj.env.RunMode;
+import icu.easyj.core.env.EnvironmentType;
+import icu.easyj.core.env.RunMode;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
