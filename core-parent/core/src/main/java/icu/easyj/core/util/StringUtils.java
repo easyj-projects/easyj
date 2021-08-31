@@ -68,7 +68,7 @@ public abstract class StringUtils {
 	//endregion
 
 
-	//region 查找不为空的数据
+	//region 查找数据
 
 	/**
 	 * 根据匹配函数，查找数据
@@ -86,6 +86,8 @@ public abstract class StringUtils {
 		}
 		return null;
 	}
+
+	//region 查找第一个不为空的字符串
 
 	/**
 	 * 查找一个不为null或空字符串的字符串
@@ -108,6 +110,8 @@ public abstract class StringUtils {
 	public static String findNotBlankOne(String... strArr) {
 		return find(strArr, org.springframework.util.StringUtils::hasText);
 	}
+
+	//endregion
 
 	//endregion
 

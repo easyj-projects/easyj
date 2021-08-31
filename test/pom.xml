@@ -42,6 +42,12 @@
 
 	<!-- 引用依赖：Tests -->
 	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- org.junit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

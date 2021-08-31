@@ -32,6 +32,8 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- ************************* Base ************************* -->
+
 			<!-- EasyJ BOM -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
@@ -40,6 +42,9 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+
+			<!-- ************************* Spring Boot ************************* -->
 
 			<!-- EasyJ Spring Boot -->
 			<dependency>
@@ -55,13 +60,6 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- EasyJ Spring Boot Test -->
-			<dependency>
-				<groupId>icu.easyj.boot</groupId>
-				<artifactId>easyj-spring-boot-test</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
 			<!-- EasyJ Spring Boot Autoconfigure -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
@@ -74,34 +72,58 @@
 				<artifactId>easyj-spring-boot-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<!-- POI -->
+
+
+			<!-- ************************* POI ************************* -->
+
+			<!-- Starter: POI excel -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- Starter: POI excel by afterturn -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<!-- Web -->
+
+
+			<!-- ************************* SDK ************************* -->
+
+			<!-- Starter: 基于腾讯云实现的文字识别（OCR）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-ocr-tencent</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* Web ************************* -->
+
+			<!-- Starter: Web cache304 -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- Starter: Web param crypto -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-starter-web-param-crypto</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- SDK -->
-			<!-- 基于腾讯云实现的文字识别（OCR）SDK -->
+
+			<!-- ************************* Test ************************* -->
+
+			<!-- EasyJ Spring Boot Test -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
-				<artifactId>easyj-spring-boot-starter-sdk-ocr-tencent</artifactId>
+				<artifactId>easyj-spring-boot-test</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
