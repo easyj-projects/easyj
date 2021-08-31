@@ -15,10 +15,10 @@
  */
 package icu.easyj.spring.boot.test;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
@@ -35,7 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 public abstract class BaseSpringBootMockMvcTest {
 
-	@Autowired
+	@Resource
 	protected WebApplicationContext wac;
 
 	protected MockMvc mockMvc;
