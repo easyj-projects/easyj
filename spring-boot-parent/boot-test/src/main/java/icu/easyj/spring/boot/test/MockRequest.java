@@ -158,7 +158,7 @@ public class MockRequest {
 	 */
 	public MockRequest content(byte[] content) {
 		if (!this.contentMap.isEmpty()) {
-			throw new RuntimeException("`MockRequest.content(byte[] content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+			throw new TestException("`MockRequest.content(byte[] content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
 		}
 		this.builder.content(content);
 		return this;
@@ -172,7 +172,7 @@ public class MockRequest {
 	 */
 	public MockRequest content(String content) {
 		if (!this.contentMap.isEmpty()) {
-			throw new RuntimeException("`MockRequest.content(String content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+			throw new TestException("`MockRequest.content(String content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
 		}
 		this.builder.content(content);
 		this.characterEncoding(StandardCharsets.UTF_8);
@@ -187,7 +187,7 @@ public class MockRequest {
 	 */
 	public MockRequest content(Object content) {
 		if (!this.contentMap.isEmpty()) {
-			throw new RuntimeException("`MockRequest.content(Object content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
+			throw new TestException("`MockRequest.content(Object content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
 		}
 		this.content(JSONUtil.toJsonStr(content));
 		this.contentType(MediaType.APPLICATION_JSON);
@@ -204,7 +204,7 @@ public class MockRequest {
 	public MockRequest content(String contentJsonKey, Object contentJsonValue) {
 		try {
 			if (ReflectionUtils.getFieldValue(this.builder, "content") != null) {
-				throw new RuntimeException("`MockRequest.content(String, Object)`与其他几个重构方法不能混合使用");
+				throw new TestException("`MockRequest.content(String, Object)`与其他几个重构方法不能混合使用");
 			}
 		} catch (NoSuchFieldException ignore) {
 		}

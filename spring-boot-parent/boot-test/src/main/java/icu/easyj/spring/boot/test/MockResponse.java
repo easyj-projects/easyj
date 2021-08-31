@@ -26,6 +26,7 @@ import icu.easyj.spring.boot.test.result.FileExportResult;
 import icu.easyj.spring.boot.test.result.GenericContentResult;
 import icu.easyj.spring.boot.test.result.HeaderResult;
 import icu.easyj.spring.boot.test.result.StatusResult;
+import icu.easyj.test.exception.TestException;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -176,7 +177,7 @@ public class MockResponse {
 		try {
 			return this.getResponse().getContentAsString();
 		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("不支持的编码", e);
+			throw new TestException("不支持的编码", e);
 		}
 	}
 

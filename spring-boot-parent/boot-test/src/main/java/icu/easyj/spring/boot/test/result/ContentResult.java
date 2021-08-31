@@ -52,7 +52,7 @@ public class ContentResult extends GenericContentResult<String> {
 	/**
 	 * 校验表达式对应的值
 	 *
-	 * @param jsonPathExpression JSON路径表达式
+	 * @param jsonPathExpression JSON路径表达式，详情见开源项目：<a href="https://github.com/jayway/JsonPath">JsonPath</a>
 	 * @param expectedValue      预期值
 	 * @return self
 	 */
