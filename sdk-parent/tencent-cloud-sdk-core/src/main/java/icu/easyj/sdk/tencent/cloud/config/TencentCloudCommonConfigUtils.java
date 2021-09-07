@@ -16,7 +16,7 @@
 package icu.easyj.sdk.tencent.cloud.config;
 
 /**
- * 通用配置工具类
+ * 腾讯云通用配置工具类
  *
  * @author wangliang181230
  */
