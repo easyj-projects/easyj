@@ -113,7 +113,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		// 解析代码，目前限制最多只读取4个参数
 		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(name.substring(PREFIX.length()));
 		if (result == null) {
-			throw new ConfigurationException("配置信息格式有误：" + name);
+			throw new ConfigurationException("配置信息格式有误：" + name, "CONFIG_FORMAT_ERROR");
 		}
 
 		// 判断是否需要缓存此次生成的配置值

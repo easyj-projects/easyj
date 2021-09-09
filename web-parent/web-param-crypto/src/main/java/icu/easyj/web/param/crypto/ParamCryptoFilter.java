@@ -122,7 +122,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					// 设为null，方便GC回收
 					encryptedQueryString = null;
 
-					// 包装Request
+					// 包装Request：将解密后的`QueryString`重新注入到request中
 					return new QueryStringHttpServletRequestWrapper(request, queryString);
 				} catch (RuntimeException e) {
 					// 设为null，方便GC回收
@@ -134,7 +134,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 
 					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
 					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
-						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", e);
+						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", "DECRYPT_FAILED", e);
 					} else {
 						return request;
 					}
@@ -169,7 +169,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					if (LOGGER.isInfoEnabled()) {
 						LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
 					}
-					throw new ParamNotEncryptedException(errorMsg);
+					throw new ParamNotEncryptedException(errorMsg, "HAS_UN_ENCRYPTED_QUERY_STRING");
 				}
 			}
 

@@ -23,19 +23,19 @@ package icu.easyj.web.param.crypto.exception;
 public class ParamEncryptException extends ParamCryptoException {
 	private static final long serialVersionUID = 1L;
 
-	public ParamEncryptException() {
-		super();
-	}
-
 	public ParamEncryptException(String message) {
 		super(message);
+	}
+
+	public ParamEncryptException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public ParamEncryptException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ParamEncryptException(Throwable cause) {
-		super(cause);
+	public ParamEncryptException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }

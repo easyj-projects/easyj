@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.util;
 
 import javax.servlet.Filter;
 
-import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.web.exception.FilterDisabledException;
 import icu.easyj.web.filter.IFilterProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.core.Ordered;
@@ -41,7 +41,7 @@ public abstract class FilterRegistrationUtils {
 	 */
 	public static <P extends IFilterProperties> FilterRegistrationBean register(Filter filter, P properties, Integer defaultOrder) {
 		if (!properties.isEnabled()) {
-			throw new ConfigurationException("当前过滤器已禁用，无法继续注册");
+			throw new FilterDisabledException("当前过滤器已禁用，无法继续注册");
 		}
 
 		// 过滤器注册器

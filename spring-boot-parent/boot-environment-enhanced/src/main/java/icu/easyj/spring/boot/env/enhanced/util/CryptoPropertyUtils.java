@@ -69,8 +69,8 @@ public abstract class CryptoPropertyUtils {
 						throw new ConfigurationException("配置信息解密失败：" + name, e);
 					}
 				default:
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("不支持的函数`${" + name + "}`");
+					if (LOGGER.isWarnEnabled()) {
+						LOGGER.warn("不支持的函数`${" + name + "}`");
 					}
 					return null;
 			}

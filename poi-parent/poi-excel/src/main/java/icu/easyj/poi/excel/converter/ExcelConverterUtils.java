@@ -111,8 +111,10 @@ public abstract class ExcelConverterUtils {
 	private static <T> List<T> toList(IExcelConverter converter, InputStream inputStream, Class<T> clazz) {
 		try {
 			return converter.toList(inputStream, clazz);
+		} catch (ConvertException e) {
+			throw e;
 		} catch (Exception e) {
-			throw new ConvertException("excel转换为数据列表失败", e);
+			throw new ConvertException("excel转换为数据列表失败", "EXCEL_TO_LIST_FAILED", e);
 		}
 	}
 
@@ -131,8 +133,10 @@ public abstract class ExcelConverterUtils {
 
 		try {
 			return converter.toExcel(list, clazz);
+		} catch (ConvertException e) {
+			throw e;
 		} catch (Exception e) {
-			throw new ConvertException("excel转换为数据列表失败", e);
+			throw new ConvertException("excel转换为数据列表失败", "EXCEL_TO_LIST_FAILED", e);
 		}
 	}
 

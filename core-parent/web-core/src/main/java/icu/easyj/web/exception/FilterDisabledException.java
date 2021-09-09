@@ -13,33 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.exception;
+package icu.easyj.web.exception;
 
 /**
- * 转换器未找到的异常
+ * 过滤器禁用的异常
  *
  * @author wangliang181230
  */
-public class ConverterNotFoundException extends BaseRuntimeException {
+public class FilterDisabledException extends FilterInvalidException {
 	private static final long serialVersionUID = 1L;
 
-	public ConverterNotFoundException(String message) {
-		super(message, "CONVERTER_NOT_FOUND");
+	public FilterDisabledException(String message) {
+		super(message);
 	}
 
-	public ConverterNotFoundException(String message, String errorCode) {
-		super(message, errorCode);
-	}
-
-	public ConverterNotFoundException(String message, Throwable cause) {
+	public FilterDisabledException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ConverterNotFoundException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
+	public FilterDisabledException(Throwable cause) {
+		super(cause);
 	}
 
-	public ConverterNotFoundException(Class<?> fromType, Class<?> toType) {
-		this("未找到`" + fromType.getName() + "`转换为`" + toType.getName() + "`的转换器");
+	public FilterDisabledException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }

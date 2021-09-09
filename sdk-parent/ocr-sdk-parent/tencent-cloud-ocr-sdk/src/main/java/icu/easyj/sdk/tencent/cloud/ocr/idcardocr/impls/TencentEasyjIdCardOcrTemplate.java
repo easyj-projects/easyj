@@ -24,6 +24,7 @@ import cn.hutool.core.text.StrPool;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
+import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.DateUtils;
 import icu.easyj.sdk.ocr.CardSide;
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
@@ -117,7 +118,7 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 		} catch (IdCardOcrSdkException e) {
 			throw e;
 		} catch (RuntimeException e) {
-			throw new IdCardOcrSdkException("身份证识别出现异常", e);
+			throw new IdCardOcrSdkException("身份证识别出现异常", ErrorCodeConstants.UNKNOWN, e);
 		}
 
 		//endregion

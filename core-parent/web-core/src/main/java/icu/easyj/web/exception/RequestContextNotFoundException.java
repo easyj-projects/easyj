@@ -15,27 +15,25 @@
  */
 package icu.easyj.web.exception;
 
+import icu.easyj.core.exception.BaseRuntimeException;
+
 /**
  * HTTP请求上下文未找到的异常
  *
  * @author wangliang181230
  */
-public class RequestContextNotFoundException extends RuntimeException {
+public class RequestContextNotFoundException extends BaseRuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public RequestContextNotFoundException() {
-		super("HTTP请求上下文未找到");
+		this("HTTP请求上下文未找到");
 	}
 
 	public RequestContextNotFoundException(String message) {
-		super(message);
+		super(message, "CONTEXT_NOT_FOUND");
 	}
 
 	public RequestContextNotFoundException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public RequestContextNotFoundException(Throwable cause) {
-		super(cause);
+		super(message, "CONTEXT_NOT_FOUND", cause);
 	}
 }

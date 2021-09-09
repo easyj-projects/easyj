@@ -128,7 +128,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 					if (e instanceof ParamDecryptException) {
 						throw e;
 					} else {
-						throw new ParamDecryptException("Body入参未加密或格式有误，解密失败", e);
+						throw new ParamDecryptException("Body入参未加密或格式有误，解密失败", "DECRYPT_FAILED", e);
 					}
 				}
 			} else {
@@ -247,7 +247,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 				} catch (ParamEncryptException e) {
 					throw e;
 				} catch (RuntimeException e) {
-					throw new ParamEncryptException("出参加密失败", e);
+					throw new ParamEncryptException("出参加密失败", "ENCRYPT_FAILED", e);
 				}
 
 				// 标记为已加密，后面设置响应内容类型时使用

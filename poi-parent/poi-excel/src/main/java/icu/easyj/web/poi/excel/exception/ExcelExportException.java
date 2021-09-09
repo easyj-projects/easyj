@@ -15,19 +15,29 @@
  */
 package icu.easyj.web.poi.excel.exception;
 
+import icu.easyj.core.exception.BaseRuntimeException;
+
 /**
  * Excel导出异常
  *
  * @author wangliang181230
  */
-public class ExcelExportException extends Exception {
+public class ExcelExportException extends BaseRuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public ExcelExportException(String message) {
 		super(message);
 	}
 
+	public ExcelExportException(String message, String errorCode) {
+		super(message, errorCode);
+	}
+
 	public ExcelExportException(String message, Throwable cause) {
 		super(message, cause);
+	}
+
+	public ExcelExportException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }

@@ -180,7 +180,6 @@ public class EnhancedServiceLoader {
 	 * @param activateName the activate name
 	 */
 	public static <S> void unload(Class<S> service, String activateName) {
-
 		if (activateName == null) {
 			throw new IllegalArgumentException("activateName is null");
 		}
@@ -366,17 +365,19 @@ public class EnhancedServiceLoader {
 		@NonNull
 		private List<S> loadAll(Class<?>[] argsType, Object[] args, ClassLoader loader) {
 			List<S> allInstances = new ArrayList<>();
-			List<Class<?>> allClazzs = getAllExtensionClass(loader);
-			if (CollectionUtils.isEmpty(allClazzs)) {
+			List<Class<?>> allClasses = getAllExtensionClass(loader);
+			if (CollectionUtils.isEmpty(allClasses)) {
 				return allInstances;
 			}
 			try {
-				for (Class<?> clazz : allClazzs) {
+				for (Class<?> clazz : allClasses) {
 					ExtensionDefinition definition = classToDefinitionMap.get(clazz);
 					allInstances.add(getExtensionInstance(definition, loader, argsType, args));
 				}
-			} catch (Throwable t) {
-				throw new EnhancedServiceNotFoundException(t);
+			} catch (EnhancedServiceNotFoundException e) {
+				throw e;
+			} catch (RuntimeException e) {
+				throw new EnhancedServiceNotFoundException("get extension instance failed", e);
 			}
 			return allInstances;
 		}
@@ -396,12 +397,10 @@ public class EnhancedServiceLoader {
 				loadAllExtensionClass(loader);
 				ExtensionDefinition defaultExtensionDefinition = getDefaultExtensionDefinition();
 				return getExtensionInstance(defaultExtensionDefinition, loader, argTypes, args);
-			} catch (Throwable e) {
-				if (e instanceof EnhancedServiceNotFoundException) {
-					throw (EnhancedServiceNotFoundException)e;
-				} else {
-					throw new EnhancedServiceNotFoundException("not found service provider for: " + type.getName(), e);
-				}
+			} catch (EnhancedServiceNotFoundException e) {
+				throw e;
+			} catch (RuntimeException e) {
+				throw new EnhancedServiceNotFoundException("not found service provider for: " + type.getName(), e);
 			}
 		}
 
@@ -415,12 +414,10 @@ public class EnhancedServiceLoader {
 				loadAllExtensionClass(loader);
 				ExtensionDefinition cachedExtensionDefinition = getCachedExtensionDefinition(activateName);
 				return getExtensionInstance(cachedExtensionDefinition, loader, argTypes, args);
-			} catch (Throwable e) {
-				if (e instanceof EnhancedServiceNotFoundException) {
-					throw (EnhancedServiceNotFoundException)e;
-				} else {
-					throw new EnhancedServiceNotFoundException("not found service provider for: " + type.getName(), e);
-				}
+			} catch (EnhancedServiceNotFoundException e) {
+				throw e;
+			} catch (RuntimeException e) {
+				throw new EnhancedServiceNotFoundException("not found service provider for: " + type.getName(), e);
 			}
 		}
 
@@ -453,9 +450,9 @@ public class EnhancedServiceLoader {
 			try {
 				S newInstance = (S)initInstance(clazz, argTypes, args);
 				return newInstance;
-			} catch (Throwable t) {
+			} catch (Exception e) {
 				throw new IllegalStateException("Extension instance(definition: " + definition + ", class: " +
-						type + ")  could not be instantiated: " + t.getMessage(), t);
+						type + ")  could not be instantiated: " + e.getMessage(), e);
 			}
 		}
 

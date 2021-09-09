@@ -93,16 +93,17 @@ public class ExcelExportAspect {
 					try {
 						result = ReflectionUtils.getFieldValue(result, listFieldName);
 					} catch (NoSuchFieldException e) {
-						throw new ExcelExportException("在返回数据中，未找到属性：" + listFieldName +
-								"，返回数据类型为：" + result.getClass().getName());
+						String errorMsg = "在返回数据的类型中，未找到属性：" + listFieldName + "，返回数据类型为：" + result.getClass().getName();
+						throw new ExcelExportException(errorMsg, "NO_SUCH_FIELD");
 					}
 				} else {
-					throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。");
+					throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。",
+							"NO_CONFIG");
 				}
 			}
 
 			if (result == null) {
-				// 如果数据为空，则设置为空列表，目的是为了输出一个没有数据，只有标题行的excel文件。
+				// 如果数据为空，则设置为空列表，目的是为了输出一个没有数据，只有标题行的excel文件。可作为导出模板功能使用。
 				result = Collections.emptyList();
 			} else if (result.getClass().equals(annotation.dataType())) {
 				// 如果数据类型与注解中配置的类型一致，则将它包装成列表

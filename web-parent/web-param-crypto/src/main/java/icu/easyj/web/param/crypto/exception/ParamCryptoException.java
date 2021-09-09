@@ -15,27 +15,29 @@
  */
 package icu.easyj.web.param.crypto.exception;
 
+import icu.easyj.core.exception.BaseRuntimeException;
+
 /**
  * 参数加密解密的异常
  *
  * @author wangliang181230
  */
-public class ParamCryptoException extends RuntimeException {
+public class ParamCryptoException extends BaseRuntimeException {
 	private static final long serialVersionUID = 1L;
-
-	public ParamCryptoException() {
-		super();
-	}
 
 	public ParamCryptoException(String message) {
 		super(message);
+	}
+
+	public ParamCryptoException(String message, String errorCode) {
+		super(message, errorCode);
 	}
 
 	public ParamCryptoException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public ParamCryptoException(Throwable cause) {
-		super(cause);
+	public ParamCryptoException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
 	}
 }
