@@ -46,7 +46,6 @@ public abstract class Base64Utils {
 
 	/**
 	 * 规范化Base64串.
-	 * 说明：代码从 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了修改。
 	 *
 	 * @param base64Str Base64字符串
 	 * @return 规范化后的Base64串
@@ -54,14 +53,16 @@ public abstract class Base64Utils {
 	 */
 	public static String normalize(String base64Str) throws IllegalArgumentException {
 		boolean needToChange = false;
-		int numChars = base64Str.length();
-		StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
-		int i = 0;
 
+		int base64Length = base64Str.length();
+		StringBuilder sb = new StringBuilder(base64Length > 500 ? base64Length / 2 : base64Length);
+
+		int i = 0;
 		char c;
 		byte[] bytes = null;
+		int pos;
 		String hex;
-		while (i < numChars) {
+		while (i < base64Length) {
 			c = base64Str.charAt(i);
 			switch (c) {
 				// 空格 -> `+`
@@ -80,30 +81,30 @@ public abstract class Base64Utils {
 				case '%':
 					try {
 						if (bytes == null) {
-							bytes = new byte[(numChars - i) / 3];
+							bytes = new byte[(base64Length - i) / 3];
 						}
 
-						int pos = 0;
-						while (c == '%' && i + 2 < numChars) {
+						pos = 0;
+						while (c == '%' && i + 2 < base64Length) {
 							hex = base64Str.substring(i + 1, i + 3);
 							int v = Integer.parseInt(hex, 16);
 							if (v < 0) {
-								throw new IllegalArgumentException("转义(%xx)时存在非法十六进制字符-负值: %" + hex);
+								throw new IllegalArgumentException("转义（%）模式时存在非法十六进制字符-负值: %" + hex + " -> " + v);
 							}
 							bytes[pos++] = (byte)v;
 							i += 3;
-							if (i < numChars) {
+							if (i < base64Length) {
 								c = base64Str.charAt(i);
 							}
 						}
 
-						if (c == '%' && i < numChars) {
-							throw new IllegalArgumentException("Incomplete trailing escape (%) pattern");
+						if (c == '%' && i < base64Length) {
+							throw new IllegalArgumentException("不完整的转义（%）模式");
 						}
 
 						sb.append(new String(bytes, 0, pos, StandardCharsets.UTF_8));
 					} catch (NumberFormatException e) {
-						throw new IllegalArgumentException("Illegal hex characters in escape (%) pattern - " + e.getMessage());
+						throw new IllegalArgumentException("转义（%）模式中的非法十六进制字符 - " + e.getMessage());
 					}
 					needToChange = true;
 					break;
