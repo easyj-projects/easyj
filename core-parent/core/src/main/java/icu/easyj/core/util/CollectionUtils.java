@@ -64,7 +64,7 @@ public abstract class CollectionUtils {
 	/**
 	 * 获取列表的最后一项，并保证线程安全。
 	 * <p>
-	 * 存在线程安全问题的原因：`list.size()` 和 `list.get(size - 1)` 两个方法不是原子操作。<br/>
+	 * 存在线程安全问题的原因：`list.size()` 和 `list.get(size - 1)` 两个方法不是原子操作。<br>
 	 * <p>
 	 * 注意：即使 `List` 本身是线程安全的，也会存在该问题。
 	 *

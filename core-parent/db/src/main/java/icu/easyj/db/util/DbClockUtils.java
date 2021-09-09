@@ -126,7 +126,7 @@ public abstract class DbClockUtils {
 	}
 
 	/**
-	 * 主要数据源当前纳秒数<br/>
+	 * 主要数据源当前纳秒数<br>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param dataSource 数据源
@@ -239,7 +239,7 @@ public abstract class DbClockUtils {
 	}
 
 	/**
-	 * 主要数据源的当前纳秒数<br/>
+	 * 主要数据源的当前纳秒数<br>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @return timeNanos 纳秒数

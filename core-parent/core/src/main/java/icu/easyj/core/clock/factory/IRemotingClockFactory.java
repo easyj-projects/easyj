@@ -92,7 +92,7 @@ public interface IRemotingClockFactory<K> {
 	}
 
 	/**
-	 * 远端的当前纳秒数<br/>
+	 * 远端的当前纳秒数<br>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param remotingKey 远端键值

@@ -18,8 +18,8 @@ package icu.easyj.core.exception;
 import org.springframework.util.Assert;
 
 /**
- * Skip Callback Wrapper Exception.<br/>
- * 跳过回调函数的包装异常。<br/>
+ * Skip Callback Wrapper Exception.<br>
+ * 跳过回调函数的包装异常。<br>
  * 注意：仅仅是为了跳过函数的异常类型限制而使用，必须在函数外捕获该异常并抛出cause
  *
  * @author wangliang181230

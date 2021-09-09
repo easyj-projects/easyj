@@ -30,9 +30,9 @@ import org.junit.jupiter.api.Test;
 class Base64UtilsTest {
 
 	@Test
-	void testNormalize() throws UnsupportedEncodingException {
-		String s = "123\r\n%252B%2B";
-		Assertions.assertEquals("123%2B+", Base64Utils.normalize(s));
+	void testNormalize() {
+		String s = "123\r\n%2B%2B";
+		Assertions.assertEquals("123++", Base64Utils.normalize(s));
 
 		Assertions.assertEquals("123+", Base64Utils.normalize("123\r\n "));
 		Assertions.assertEquals("123+", Base64Utils.normalize("123 "));
@@ -67,7 +67,7 @@ class Base64UtilsTest {
 		Assertions.assertTrue(Base64.isBase64("aa_xxx==")); // hutool支持URL安全字符替换
 
 
-		//region case: 性能比Hutool高
+		//region case: 与Hutool比较性能高低
 
 		String base64 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
 

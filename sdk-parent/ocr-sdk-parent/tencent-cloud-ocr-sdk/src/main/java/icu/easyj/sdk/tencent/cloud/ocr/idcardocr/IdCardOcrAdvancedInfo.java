@@ -31,7 +31,7 @@ import org.springframework.util.StringUtils;
 public class IdCardOcrAdvancedInfo {
 
 	/**
-	 * 裁剪后的身份证照片Base64串（注：去掉证件外多余的边缘、自动矫正拍摄角度）<br/>
+	 * 裁剪后的身份证照片Base64串（注：去掉证件外多余的边缘、自动矫正拍摄角度）<br>
 	 * `CropIdCard=true`时，才会返回。
 	 */
 	@SerializedName("IdCard")
@@ -39,7 +39,7 @@ public class IdCardOcrAdvancedInfo {
 	private String idCardBase64;
 
 	/**
-	 * 裁剪出的人像照片Base64串（抠取身份证头像区域）<br/>
+	 * 裁剪出的人像照片Base64串（抠取身份证头像区域）<br>
 	 * `CropPortrait=true`时，才会返回。
 	 */
 	@SerializedName("Portrait")
@@ -47,7 +47,7 @@ public class IdCardOcrAdvancedInfo {
 	private String portraitBase64;
 
 	/**
-	 * 图片质量分数，请求 Config.Quality 时返回（取值范围：0~100，分数越低越模糊，建议阈值≥50）;<br/>
+	 * 图片质量分数，请求 Config.Quality 时返回（取值范围：0~100，分数越低越模糊，建议阈值≥50）;<br>
 	 * `Quality=true`时，才会返回。
 	 */
 	@SerializedName("Quality")
@@ -55,7 +55,7 @@ public class IdCardOcrAdvancedInfo {
 	private Integer quality;
 
 	/**
-	 * 身份证边框不完整告警阈值分数，请求 Config.BorderCheckWarn时返回（取值范围：0~100，分数越低边框遮挡可能性越低，建议阈值≥50）;<br/>
+	 * 身份证边框不完整告警阈值分数，请求 Config.BorderCheckWarn时返回（取值范围：0~100，分数越低边框遮挡可能性越低，建议阈值≥50）;<br>
 	 * `BorderCheckWarn=true`时，才会返回。
 	 */
 	@SerializedName("BorderCodeValue")
