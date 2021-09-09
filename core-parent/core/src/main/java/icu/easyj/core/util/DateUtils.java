@@ -72,7 +72,7 @@ public abstract class DateUtils {
 	 */
 	@NonNull
 	public static Date parse(@NonNull String str, @NonNull DateFormatType format) throws ParseException {
-		SimpleDateFormat sdf = LocalDateFormatHolder.get(format);
+		SimpleDateFormat sdf = DateFormatFactory.get(format);
 		return sdf.parse(str);
 	}
 
@@ -86,7 +86,7 @@ public abstract class DateUtils {
 	 */
 	@NonNull
 	public static Date parse(@NonNull String str, @NonNull String format) throws ParseException {
-		SimpleDateFormat sdf = LocalDateFormatHolder.get(format);
+		SimpleDateFormat sdf = DateFormatFactory.get(format);
 		return sdf.parse(str);
 	}
 
@@ -241,7 +241,7 @@ public abstract class DateUtils {
 		} catch (ParseException ignore) {
 		}
 
-		// 如果上面的方式都失败，则直接使用 new Date(String timeStr); 的方式转换
+		// 如果上面的方式不匹配或解析失败了，则使用下面的方式直接构建实例
 		return new Date(timeStr);
 	}
 
@@ -262,7 +262,7 @@ public abstract class DateUtils {
 		Assert.notNull(dateFormat, "'dateFormat' must be not null");
 		Assert.notNull(date, "'date' must be not null");
 
-		return LocalDateFormatHolder.get(dateFormat).format(date);
+		return DateFormatFactory.get(dateFormat).format(date);
 	}
 
 	/**
@@ -277,7 +277,7 @@ public abstract class DateUtils {
 		Assert.notNull(dateFormat, "'dateFormat' must be not null");
 		Assert.notNull(date, "'date' must be not null");
 
-		return LocalDateFormatHolder.get(dateFormat).format(date);
+		return DateFormatFactory.get(dateFormat).format(date);
 	}
 
 	//endregion

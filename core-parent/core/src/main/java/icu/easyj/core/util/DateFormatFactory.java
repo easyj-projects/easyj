@@ -29,7 +29,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-public abstract class LocalDateFormatHolder {
+public abstract class DateFormatFactory {
 
 	//region 非 常用日期格式
 

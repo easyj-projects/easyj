@@ -43,6 +43,6 @@ public abstract class EnumUtils {
 			}
 		}
 
-		throw new IllegalArgumentException("unknown enum name '" + enumName + "' for the enum '" + enumClass.getName() + "'.");
+		throw new IllegalArgumentException("unknown enum name '" + enumName + "' for the enum `" + enumClass.getName() + "`.");
 	}
 }
