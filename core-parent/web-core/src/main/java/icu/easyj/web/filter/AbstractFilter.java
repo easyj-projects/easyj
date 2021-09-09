@@ -53,8 +53,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	/**
 	 * 全局过滤器需排除列表
 	 */
-	private static final List<String> GLOBAL_EXCLUSIONS_LIST =
-			ListUtil.toList(GLOBAL_EXCLUSIONS.split(StrPool.COMMA));
+	private static final List<String> GLOBAL_EXCLUSIONS_LIST = ListUtil.toList(GLOBAL_EXCLUSIONS.split(StrPool.COMMA));
 
 
 	//region Fields
@@ -119,11 +118,11 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 初始化过滤器名称
-		String filterName0 = filterConfig.getFilterName();
-		if (!StringUtils.hasText(filterName0)) {
-			filterName0 = this.getClass().getSimpleName();
+		String filterName = filterConfig.getFilterName();
+		if (!StringUtils.hasText(filterName)) {
+			filterName = this.getClass().getSimpleName();
 		}
-		this.filterName = filterName0;
+		this.filterName = filterName;
 	}
 
 	@Override

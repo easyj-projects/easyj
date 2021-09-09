@@ -306,7 +306,7 @@ public abstract class HttpUtils {
 	//endregion 设置响应信息end
 
 
-	//region 文件下载相关 start
+	//region 文件导出相关 start
 
 	/**
 	 * 判断是否为导出文件请求
@@ -339,5 +339,5 @@ public abstract class HttpUtils {
 		return fileNamePre + sdf.format(new Date()) + (fileSuffix.charAt(0) != CharPool.DOT ? CharPool.DOT : "") + fileSuffix;
 	}
 
-	//endregion 文件下载相关 end
+	//endregion 文件导出相关 end
 }

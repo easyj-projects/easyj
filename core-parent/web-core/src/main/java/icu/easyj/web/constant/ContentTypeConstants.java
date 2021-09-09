@@ -16,23 +16,14 @@
 package icu.easyj.web.constant;
 
 /**
- * HTTP相关常量
+ * HTTP响应内容类型常量
  *
  * @author wangliang181230
  */
-public interface HttpConstants {
-
-	//region 文件导出相关常量
+public interface ContentTypeConstants {
 
 	/**
-	 * 执行导出的参数名
+	 * 微软Excel文件
 	 */
-	String DO_EXPORT_PARAM_NAME = "doExport";
-
-	/**
-	 * 执行导出的参数值
-	 */
-	String DO_EXPORT_PARAM_VALUE = "true";
-
-	//endregion
+	String MS_EXCEL = "application/vnd.ms-excel";
 }

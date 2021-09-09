@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletResponse;
 
+import icu.easyj.web.constant.ContentTypeConstants;
 import icu.easyj.web.util.HttpUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +33,7 @@ import org.springframework.http.HttpHeaders;
 public abstract class ExcelExportUtils {
 
 	/**
-	 * 下载Excel文件
+	 * 导出Excel文件
 	 *
 	 * @param response 响应对象
 	 * @param book     the workbook
@@ -46,8 +47,9 @@ public abstract class ExcelExportUtils {
 		// 设置文件流到输出流中
 		book.write(response.getOutputStream());
 
-		// 关闭流
+		// 输出响应流
 		response.getOutputStream().flush();
+		// 关闭响应流
 		response.getOutputStream().close();
 	}
 
@@ -61,10 +63,10 @@ public abstract class ExcelExportUtils {
 	public static void setExcelExportResponse(HttpServletResponse response, String fileName) throws IOException {
 		String fileNameForHeader = new String(fileName.getBytes("gb2312"), "ISO8859-1");
 
-		// 内容配置
-		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileNameForHeader + "\"");  // 设置文件头编码格式
-		// 内容类型：微软excel文件
-		response.setContentType("application/vnd.ms-excel");
+		// 设置响应内容配置：设为文件并设置文件名
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileNameForHeader + "\"");  // 设置文件名
+		// 设置响应内容类型：设置为微软excel文件
+		response.setContentType(ContentTypeConstants.MS_EXCEL);
 		// 字符编码
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
