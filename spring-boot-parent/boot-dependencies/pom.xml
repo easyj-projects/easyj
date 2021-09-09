@@ -40,7 +40,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- 依赖定义：Easyj Dependencies -->
+			<!-- 依赖引入：Easyj Dependencies -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-dependencies</artifactId>
@@ -49,7 +49,7 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- 依赖定义：EasyJ BOM -->
+			<!-- 依赖引入：EasyJ BOM -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-bom</artifactId>
@@ -58,7 +58,7 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- 依赖定义：SpringBoot BOM -->
+			<!-- 依赖引入：SpringBoot BOM -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>

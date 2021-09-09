@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * The interface Load level.
+ * 注：从阿里的seata项目中复制过来的，并扩展了`dependOnClasses`属性。
  *
  * @author slievrly
  */

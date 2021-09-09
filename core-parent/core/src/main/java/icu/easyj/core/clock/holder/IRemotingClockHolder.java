@@ -51,7 +51,7 @@ public interface IRemotingClockHolder<T> {
 	ITickClock getClock(T remotingKey);
 
 	/**
-	 * 刷新远端时钟并返回新时钟
+	 * 刷新远端时钟并返回新时钟（新时钟实例可以与原来时钟的实例相同，也可以不同）
 	 *
 	 * @param remotingKey 远端键值
 	 * @return newClock 时钟

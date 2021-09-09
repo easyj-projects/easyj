@@ -104,7 +104,7 @@
 				<version>${fastjson.version}</version>
 			</dependency>
 
-			<!-- 依赖定义：Spring -->
+			<!-- 依赖引入：Spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>

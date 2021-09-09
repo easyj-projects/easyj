@@ -17,6 +17,7 @@ package icu.easyj.core.exception;
 
 /**
  * Wrapper Exception.
+ * 包装异常。
  *
  * @author wangliang181230
  */

@@ -40,6 +40,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * The type Enhanced service loader.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author slievrly
  */

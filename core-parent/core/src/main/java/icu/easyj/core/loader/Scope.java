@@ -17,6 +17,7 @@ package icu.easyj.core.loader;
 
 /**
  * the scope of the extension
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author haozhibei
  */

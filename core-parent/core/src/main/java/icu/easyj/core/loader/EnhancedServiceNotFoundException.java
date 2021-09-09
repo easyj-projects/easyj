@@ -17,6 +17,7 @@ package icu.easyj.core.loader;
 
 /**
  * The type Enhanced service not found exception.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author slievrly
  */

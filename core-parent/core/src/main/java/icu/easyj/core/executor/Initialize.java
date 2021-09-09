@@ -17,6 +17,7 @@ package icu.easyj.core.executor;
 
 /**
  * The interface Initialize.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author zhangsen
  */

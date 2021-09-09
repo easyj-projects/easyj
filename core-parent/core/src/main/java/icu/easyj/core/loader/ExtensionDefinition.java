@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * The type ExtensionDefinition
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author haozhibei
  */
