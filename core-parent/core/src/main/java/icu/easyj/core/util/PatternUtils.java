@@ -36,7 +36,8 @@ public abstract class PatternUtils {
 	 */
 	public final static String REGEX_CHINESE_CHAR = "[\u4E00-\u9FA5]";
 
-	//region 代码匹配的正则
+
+	//region 代码匹配的正则 start
 
 	// 各类型数据值的匹配
 	public static final String REGEX_CODE_STRING1 = "'((?<=\\\\)'|[^'])*'"; // 单引号字符串
@@ -57,7 +58,7 @@ public abstract class PatternUtils {
 	public static final String REGEX_CODE_LINE2 = "^(\\w+)\\s*(\\.\\s*(\\w+)\\s*(\\(\\s*(" + REGEX_CODE_VALUE + "\\s*(,\\s*" + REGEX_CODE_VALUE + "\\s*)*)?\\)(?=(\\s|;|$)))?)?\\s*;?$";
 	public static final Pattern P_CODE_LINE2 = Pattern.compile(REGEX_CODE_LINE2);
 
-	//endregion
+	//endregion 代码匹配的正则 end
 
 	//endregion
 

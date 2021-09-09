@@ -99,7 +99,7 @@ public interface IIdCardOcrTemplate {
 			return response1;
 		}
 
-		//endregion
+		//endregion 请求第一张 end
 
 
 		//region 请求识别第二张图片，获取response2
@@ -120,7 +120,7 @@ public interface IIdCardOcrTemplate {
 			throw new IdCardOcrSdkException("两张图片的正反面属性相同", "SAME_CARD_SIDE");
 		}
 
-		//endregion
+		//endregion 请求第二张 end
 
 
 		//region 合并两张图片的响应内容，使响应信息包含身份证正反两面的信息

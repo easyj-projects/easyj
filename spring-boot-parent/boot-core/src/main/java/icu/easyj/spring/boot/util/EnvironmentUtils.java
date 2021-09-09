@@ -146,7 +146,7 @@ public abstract class EnvironmentUtils {
 				throw new IORuntimeException("配置文件加载失败：" + configFileName, e);
 			}
 		} else {
-			throw new NotSupportedConfigFileTypeException("暂不支持该配置文件的解析：" + configFileName);
+			throw new NotSupportedConfigFileTypeException("暂不支持该类型的配置文件解析，文件名：" + configFileName);
 		}
 		return properties;
 	}

@@ -22,6 +22,7 @@ import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
 import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 
 /**
  * 腾讯云身份证识别（IDCardOCR）相关配置
@@ -48,11 +49,17 @@ public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
 		TencentCloudIdCardOcrConfig config = new TencentCloudIdCardOcrConfig();
 
 		config.setSecretId(configMap.get("secretId"));
-		config.setSecretId(configMap.get("secretKey"));
-		config.setSecretId(configMap.get("region"));
-		config.setSecretId(configMap.get("connTimeout"));
-		config.setSecretId(configMap.get("writeTimeout"));
-		config.setSecretId(configMap.get("readTimeout"));
+		config.setSecretKey(configMap.get("secretKey"));
+		config.setRegion(configMap.get("region"));
+		if (StringUtils.hasText(configMap.get("connTimeout"))) {
+			config.setConnTimeout(Integer.parseInt(configMap.get("connTimeout")));
+		}
+		if (StringUtils.hasText(configMap.get("writeTimeout"))) {
+			config.setWriteTimeout(Integer.parseInt(configMap.get("writeTimeout")));
+		}
+		if (StringUtils.hasText(configMap.get("readTimeout"))) {
+			config.setReadTimeout(Integer.parseInt(configMap.get("readTimeout")));
+		}
 		config.setLanguage(EnumUtils.getEnum(Language.class, configMap.get("language"), null));
 		config.setDebug(configMap.get("debug") == null ? null : "true".equalsIgnoreCase(configMap.get("debug")));
 
