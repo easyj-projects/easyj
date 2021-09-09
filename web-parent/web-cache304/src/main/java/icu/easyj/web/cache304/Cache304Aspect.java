@@ -89,13 +89,13 @@ public class Cache304Aspect {
 		}
 
 		// 解析Cache304注解
-		ICache304ConfigStore configStorage = Cache304ConfigStoreFactory.getStorage();
-		Cache304Config config = configStorage.getConfig(request);
+		ICache304ConfigStore configStore = Cache304ConfigStoreFactory.getStore();
+		Cache304Config config = configStore.getConfig(request);
 		if (config == null) {
 			Cache304 anno = method.getAnnotation(Cache304.class);
 			config = Cache304AnnotationParser.parse(anno);
 			// 放入存储器，使`Cache304Filter`中 能够直接拦截下请求。
-			configStorage.putConfig(request, config);
+			configStore.putConfig(request, config);
 		}
 
 		// 执行304缓存方法

@@ -96,7 +96,7 @@ public abstract class Cache304Utils {
 	//region `doCache`重载方法
 
 	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Supplier<Object> callback) {
-		Cache304Config config = Cache304ConfigStoreFactory.getStorage().getConfig(request);
+		Cache304Config config = Cache304ConfigStoreFactory.getStore().getConfig(request);
 		return doCache(request, response, config, callback);
 	}
 
@@ -108,7 +108,7 @@ public abstract class Cache304Utils {
 	}
 
 	public static void doCache(HttpServletRequest request, HttpServletResponse response, Runnable runnable) {
-		Cache304Config config = Cache304ConfigStoreFactory.getStorage().getConfig(request);
+		Cache304Config config = Cache304ConfigStoreFactory.getStore().getConfig(request);
 		doCache(request, response, config, runnable);
 	}
 

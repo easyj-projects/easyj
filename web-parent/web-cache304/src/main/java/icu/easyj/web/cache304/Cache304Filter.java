@@ -51,7 +51,7 @@ public class Cache304Filter implements Filter {
 		}
 
 		// 获取当前请求的配置
-		Cache304Config config = Cache304ConfigStoreFactory.getStorage().getConfig(httpRequest);
+		Cache304Config config = Cache304ConfigStoreFactory.getStore().getConfig(httpRequest);
 		if (config != null) {
 			Cache304Aspect.disable();
 		}
