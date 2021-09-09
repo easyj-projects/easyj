@@ -26,8 +26,8 @@ import java.nio.charset.StandardCharsets;
 public interface IParamCryptoHandlerProperties {
 
 	/**
-	 * 对称加密算法<br>
-	 * 格式如：{对称加密算法}/{模式}/{补码方式}<br>
+	 * 对称加密算法<br/>
+	 * 格式如：{对称加密算法}/{模式}/{补码方式}<br/>
 	 * 举例：AES/CBC/PKCS7Padding
 	 *
 	 * @return algorithm 对称加密算法

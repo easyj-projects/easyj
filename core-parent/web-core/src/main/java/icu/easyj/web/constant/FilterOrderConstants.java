@@ -15,7 +15,6 @@
  */
 package icu.easyj.web.constant;
 
-
 /**
  * 各Filter的Order值
  * 值越大越晚执行
@@ -27,7 +26,7 @@ public interface FilterOrderConstants {
 	/**
 	 * SpringMVC将Request存入ThreadLocal的过滤器的Order值。
 	 * 自定义的Filter如果需要用到框架中的HttpUtil获取信息的话，则需要比此Order值要大，
-	 * 否则RequestContextHolder.getRequestAttributes().getRequest()为空导致获取不到请求信息。
+	 * 否则 `RequestContextHolder.getRequestAttributes().getRequest()` 为空导致获取不到请求信息。
 	 */
 	int SPRING_MVC_REQUEST_SET_TO_THREAD_LOCAL = -105;
 

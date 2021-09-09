@@ -48,7 +48,7 @@ public @interface ExcelExport {
 	/**
 	 * 列表属性在返回数据中的属性名。
 	 * <p>
-	 * 说明：当方法返回的数据不是`List`，而是一个分页包装对象时，需要设置该参数。<br>
+	 * 说明：当方法返回的数据不是`List`，而是一个分页包装对象时，需要设置该参数。<br/>
 	 * 也可以通过{@link ExcelExportAspect}的构造函数注入{@link ExcelExportConfig}配置参数，来全局配置`listFieldName`。
 	 *
 	 * @return listFieldName 列表属性名

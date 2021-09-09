@@ -27,17 +27,18 @@ import org.springframework.util.Assert;
 /**
  * 抽象远端时钟工厂
  *
+ * @param <K> 远端键类型
  * @author wangliang181230
  * @see ITickClock
  * @see TickClock
  * @see IRemotingClockFactory
  */
-public abstract class AbstractRemotingClockFactory<T> implements IRemotingClockFactory<T> {
+public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockFactory<K> {
 
 	/**
 	 * 远端时钟Map
 	 */
-	private final Map<T, ITickClock> remotingClockMap;
+	private final Map<K, ITickClock> remotingClockMap;
 
 	/**
 	 * 无参构造函数
@@ -51,7 +52,7 @@ public abstract class AbstractRemotingClockFactory<T> implements IRemotingClockF
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	protected AbstractRemotingClockFactory(Map<T, ITickClock> remotingClockMap) {
+	protected AbstractRemotingClockFactory(Map<K, ITickClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
 
@@ -66,7 +67,7 @@ public abstract class AbstractRemotingClockFactory<T> implements IRemotingClockF
 	 */
 	@Override
 	@NonNull
-	public ITickClock getClock(@NonNull T remotingKey) {
+	public ITickClock getClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must be not null");
 		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, ds -> createClock(remotingKey));
 	}
@@ -79,7 +80,7 @@ public abstract class AbstractRemotingClockFactory<T> implements IRemotingClockF
 	 */
 	@Override
 	@NonNull
-	public ITickClock refreshClock(@NonNull T remotingKey) {
+	public ITickClock refreshClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must be not null");
 
 		ITickClock newClock = createClock(remotingKey);

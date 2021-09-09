@@ -18,7 +18,6 @@ package icu.easyj.db.util;
 import java.util.Date;
 import javax.sql.DataSource;
 
-import icu.easyj.core.clock.IClock;
 import icu.easyj.core.clock.ITickClock;
 import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
@@ -29,13 +28,12 @@ import org.springframework.util.Assert;
  * 数据库时钟工具类
  *
  * @author wangliang181230
- * @see IClock
  * @see ITickClock
  * @see TickClock
  */
 public abstract class DbClockUtils {
 
-	//region 私有方法
+	//region 私有方法（Private Methods）
 
 	/**
 	 * 获取数据库时钟工厂
@@ -53,7 +51,7 @@ public abstract class DbClockUtils {
 	 * @return 时钟
 	 */
 	@NonNull
-	private static IClock createClock(DataSource dataSource) {
+	private static ITickClock createClock(DataSource dataSource) {
 		return getFactory().createClock(dataSource);
 	}
 
@@ -69,7 +67,7 @@ public abstract class DbClockUtils {
 	 * @return 时钟
 	 */
 	@NonNull
-	public static IClock getClock(DataSource dataSource) {
+	public static ITickClock getClock(DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must be not null");
 
 		if (dataSource == primaryDataSource) {
@@ -86,7 +84,7 @@ public abstract class DbClockUtils {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	public static IClock refreshClock(DataSource dataSource) {
+	public static ITickClock refreshClock(DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must be not null");
 
 		if (dataSource == primaryDataSource) {
@@ -128,7 +126,7 @@ public abstract class DbClockUtils {
 	}
 
 	/**
-	 * 主要数据源当前纳秒数<br>
+	 * 主要数据源当前纳秒数<br/>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param dataSource 数据源
@@ -151,7 +149,7 @@ public abstract class DbClockUtils {
 	/**
 	 * 主要数据库时钟
 	 */
-	private static IClock primaryClock;
+	private static ITickClock primaryClock;
 
 	/**
 	 * 设置主要数据源及其时钟（线程安全的）
@@ -159,21 +157,9 @@ public abstract class DbClockUtils {
 	 * @param primaryDataSource 主要数据源
 	 * @param primaryClock      主要数据库时钟
 	 */
-	private static synchronized void setPrimaryDataSourceClock(DataSource primaryDataSource, IClock primaryClock) {
+	private static synchronized void setPrimaryDataSourceClock(DataSource primaryDataSource, ITickClock primaryClock) {
 		DbClockUtils.primaryDataSource = primaryDataSource;
 		DbClockUtils.primaryClock = primaryClock;
-	}
-
-	/**
-	 * 设置主要数据源及其时钟
-	 *
-	 * @param primaryDataSource 主要数据源
-	 * @return primaryClock 主要数据库时钟
-	 */
-	public static IClock setPrimaryDataSource(DataSource primaryDataSource) {
-		IClock primaryClock = createClock(primaryDataSource);
-		setPrimaryDataSourceClock(primaryDataSource, primaryClock);
-		return primaryClock;
 	}
 
 	/**
@@ -187,12 +173,24 @@ public abstract class DbClockUtils {
 	}
 
 	/**
+	 * 设置主要数据源及其时钟
+	 *
+	 * @param primaryDataSource 主要数据源
+	 * @return primaryClock 主要数据库时钟
+	 */
+	public static ITickClock setPrimaryDataSource(DataSource primaryDataSource) {
+		ITickClock primaryClock = createClock(primaryDataSource);
+		setPrimaryDataSourceClock(primaryDataSource, primaryClock);
+		return primaryClock;
+	}
+
+	/**
 	 * 获取主要数据库时钟
 	 *
 	 * @return primaryClock 主要数据库时钟
 	 */
 	@Nullable
-	public static IClock getPrimaryDataSourceClock() {
+	public static ITickClock getClock() {
 		return primaryClock;
 	}
 
@@ -203,9 +201,9 @@ public abstract class DbClockUtils {
 	 * @throws RuntimeException 当primaryDataSource从未设置过时，会抛出该异常
 	 */
 	@NonNull
-	public static synchronized IClock refreshPrimaryClock() {
+	public static synchronized ITickClock refreshClock() {
 		if (primaryDataSource == null) {
-			throw new RuntimeException("primaryDataSource未设置，请先设置！");
+			throw new RuntimeException("`primaryDataSource`未设置，请先设置！");
 		}
 		return setPrimaryDataSource(primaryDataSource);
 	}
@@ -241,7 +239,7 @@ public abstract class DbClockUtils {
 	}
 
 	/**
-	 * 主要数据源的当前纳秒数<br>
+	 * 主要数据源的当前纳秒数<br/>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @return timeNanos 纳秒数
@@ -250,4 +248,6 @@ public abstract class DbClockUtils {
 	public static long currentTimeNanos() {
 		return primaryClock.currentTimeNanos();
 	}
+
+	//endregion
 }

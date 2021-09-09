@@ -27,7 +27,7 @@ public interface IParamCryptoFilterProperties extends IFilterProperties {
 	/**
 	 * 加密参数名
 	 * <p>
-	 * 为空时，表示取整个queryString作为加密参数值，即：{@code request.getQueryString()}<br>
+	 * 为空时，表示取整个queryString作为加密参数值，即：{@code request.getQueryString()}<br/>
 	 * 非时时，表示取该参数名的参数值作为加密参数值，即：{@code request.getParameter(String name)}
 	 *
 	 * @return 加密参数名

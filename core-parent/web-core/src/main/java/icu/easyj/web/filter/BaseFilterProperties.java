@@ -25,12 +25,12 @@ import java.util.List;
 public class BaseFilterProperties implements IFilterProperties {
 
 	/**
-	 * 过滤器启用状态，默认：生效<br>
+	 * 过滤器启用状态，默认：生效<br/>
 	 */
 	protected boolean enabled = true;
 
 	/**
-	 * 过滤器使用状态，默认：启用<br>
+	 * 过滤器使用状态，默认：启用<br/>
 	 * volatile关键字是必须的
 	 */
 	protected volatile boolean disabled = false;

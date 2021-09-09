@@ -25,12 +25,13 @@ import org.springframework.lang.NonNull;
 /**
  * 远端时钟工厂接口
  *
+ * @param <K> 远端键类型
  * @author wangliang181230
  * @see IClock
  * @see ITickClock
  * @see TickClock
  */
-public interface IRemotingClockFactory<T> {
+public interface IRemotingClockFactory<K> {
 
 	/**
 	 * 创建远端时钟
@@ -39,7 +40,7 @@ public interface IRemotingClockFactory<T> {
 	 * @return 时钟
 	 */
 	@NonNull
-	ITickClock createClock(T remotingKey);
+	ITickClock createClock(K remotingKey);
 
 	/**
 	 * 获取远端时钟
@@ -48,7 +49,7 @@ public interface IRemotingClockFactory<T> {
 	 * @return 时钟
 	 */
 	@NonNull
-	ITickClock getClock(T remotingKey);
+	ITickClock getClock(K remotingKey);
 
 	/**
 	 * 刷新远端时钟并返回新时钟（新时钟实例可以与原来时钟的实例相同，也可以不同）
@@ -57,7 +58,7 @@ public interface IRemotingClockFactory<T> {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	ITickClock refreshClock(T remotingKey);
+	ITickClock refreshClock(K remotingKey);
 
 	/**
 	 * 远端的当前时间
@@ -66,7 +67,7 @@ public interface IRemotingClockFactory<T> {
 	 * @return now 当前时间
 	 */
 	@NonNull
-	default Date now(T remotingKey) {
+	default Date now(K remotingKey) {
 		return getClock(remotingKey).now();
 	}
 
@@ -76,7 +77,7 @@ public interface IRemotingClockFactory<T> {
 	 * @param remotingKey 远端键值
 	 * @return timeMillis 毫秒数
 	 */
-	default long currentTimeMillis(T remotingKey) {
+	default long currentTimeMillis(K remotingKey) {
 		return getClock(remotingKey).currentTimeMillis();
 	}
 
@@ -86,18 +87,18 @@ public interface IRemotingClockFactory<T> {
 	 * @param remotingKey 远端键值
 	 * @return timeMicros 微秒数
 	 */
-	default long currentTimeMicros(T remotingKey) {
+	default long currentTimeMicros(K remotingKey) {
 		return getClock(remotingKey).currentTimeMicros();
 	}
 
 	/**
-	 * 远端的当前纳秒数<br>
+	 * 远端的当前纳秒数<br/>
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @param remotingKey 远端键值
 	 * @return timeNanos 纳秒数
 	 */
-	default long currentTimeNanos(T remotingKey) {
+	default long currentTimeNanos(K remotingKey) {
 		return getClock(remotingKey).currentTimeNanos();
 	}
 }

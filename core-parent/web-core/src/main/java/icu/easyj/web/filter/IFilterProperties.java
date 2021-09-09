@@ -25,7 +25,7 @@ import java.util.List;
 public interface IFilterProperties {
 
 	/**
-	 * 过滤器启用状态<br>
+	 * 过滤器启用状态<br/>
 	 * 用于判断该过滤器是否启用，该状态一旦服务启动，就无法动态变更。
 	 *
 	 * @return 过滤器启用状态
@@ -42,7 +42,7 @@ public interface IFilterProperties {
 	void setEnabled(boolean enabled);
 
 	/**
-	 * 过滤器使用状态<br>
+	 * 过滤器使用状态<br/>
 	 * 用于判断该过滤器是否禁用，该状态在服务运行期间，可动态变更
 	 *
 	 * @return 过滤器使用状态，true=禁用|false=启用(默认)
