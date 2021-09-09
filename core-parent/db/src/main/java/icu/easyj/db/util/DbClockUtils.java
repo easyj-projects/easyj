@@ -38,12 +38,12 @@ public abstract class DbClockUtils {
 	//region 私有方法
 
 	/**
-	 * 获取数据库时钟持有者
+	 * 获取数据库时钟工厂
 	 *
-	 * @return dbClockHolder 数据库时钟持有者
+	 * @return dbClockFactory 数据库时钟工厂
 	 */
-	private static DbClockHolder getHolder() {
-		return DbClockHolder.getInstance();
+	private static DbClockFactory getFactory() {
+		return DbClockFactory.getInstance();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public abstract class DbClockUtils {
 	 */
 	@NonNull
 	private static IClock createClock(DataSource dataSource) {
-		return getHolder().createClock(dataSource);
+		return getFactory().createClock(dataSource);
 	}
 
 	//endregion
@@ -75,7 +75,7 @@ public abstract class DbClockUtils {
 		if (dataSource == primaryDataSource) {
 			return primaryClock;
 		} else {
-			return getHolder().getClock(dataSource);
+			return getFactory().getClock(dataSource);
 		}
 	}
 
@@ -92,7 +92,7 @@ public abstract class DbClockUtils {
 		if (dataSource == primaryDataSource) {
 			return setPrimaryDataSource(dataSource);
 		} else {
-			return getHolder().getClock(dataSource);
+			return getFactory().getClock(dataSource);
 		}
 	}
 

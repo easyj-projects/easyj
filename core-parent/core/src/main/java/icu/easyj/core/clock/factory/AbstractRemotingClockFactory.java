@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.clock.holder;
+package icu.easyj.core.clock.factory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,14 +25,14 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * 抽象远端时钟持有者
+ * 抽象远端时钟工厂
  *
  * @author wangliang181230
  * @see ITickClock
  * @see TickClock
- * @see IRemotingClockHolder
+ * @see IRemotingClockFactory
  */
-public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHolder<T> {
+public abstract class AbstractRemotingClockFactory<T> implements IRemotingClockFactory<T> {
 
 	/**
 	 * 远端时钟Map
@@ -42,7 +42,7 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	/**
 	 * 无参构造函数
 	 */
-	protected AbstractRemotingClockHolder() {
+	protected AbstractRemotingClockFactory() {
 		this(new ConcurrentHashMap<>(2));
 	}
 
@@ -51,12 +51,12 @@ public abstract class AbstractRemotingClockHolder<T> implements IRemotingClockHo
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	protected AbstractRemotingClockHolder(Map<T, ITickClock> remotingClockMap) {
+	protected AbstractRemotingClockFactory(Map<T, ITickClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
 
 
-	//region Override IRemotingClockHolder
+	//region Override IRemotingClockFactory
 
 	/**
 	 * 获取远端时钟

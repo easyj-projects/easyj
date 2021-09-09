@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.clock.holder;
+package icu.easyj.core.clock.factory;
 
 import java.util.Date;
 
@@ -23,14 +23,14 @@ import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
 
 /**
- * 远端时钟持有者接口
+ * 远端时钟工厂接口
  *
  * @author wangliang181230
  * @see IClock
  * @see ITickClock
  * @see TickClock
  */
-public interface IRemotingClockHolder<T> {
+public interface IRemotingClockFactory<T> {
 
 	/**
 	 * 创建远端时钟

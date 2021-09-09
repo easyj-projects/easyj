@@ -20,44 +20,44 @@ import javax.sql.DataSource;
 import icu.easyj.core.clock.IClock;
 import icu.easyj.core.clock.ITickClock;
 import icu.easyj.core.clock.TickClock;
-import icu.easyj.core.clock.holder.AbstractRemotingClockHolder;
-import icu.easyj.core.clock.holder.IRemotingClockHolder;
+import icu.easyj.core.clock.factory.AbstractRemotingClockFactory;
+import icu.easyj.core.clock.factory.IRemotingClockFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * 数据库时钟持有者
+ * 数据库时钟工厂
  *
  * @author wangliang181230
  * @see IClock
  * @see ITickClock
  * @see TickClock
- * @see AbstractRemotingClockHolder
- * @see IRemotingClockHolder
+ * @see AbstractRemotingClockFactory
+ * @see IRemotingClockFactory
  */
-final class DbClockHolder extends AbstractRemotingClockHolder<DataSource> {
+final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 
-	//region 数据库时钟持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 数据库时钟工厂单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
 
-	private DbClockHolder() {
+	private DbClockFactory() {
 	}
 
 	private enum SingletonHolder {
 		// 单例
 		INSTANCE;
 
-		private final DbClockHolder dbClockHolder = new DbClockHolder();
+		private final DbClockFactory dbClockFactory = new DbClockFactory();
 
-		public DbClockHolder getDbClockHolder() {
-			return dbClockHolder;
+		public DbClockFactory getDbClockFactory() {
+			return dbClockFactory;
 		}
 	}
 
 	/**
-	 * @return 数据库时钟持有者
+	 * @return 数据库时钟工厂
 	 */
-	public static DbClockHolder getInstance() {
-		return SingletonHolder.INSTANCE.getDbClockHolder();
+	public static DbClockFactory getInstance() {
+		return SingletonHolder.INSTANCE.getDbClockFactory();
 	}
 
 	//endregion

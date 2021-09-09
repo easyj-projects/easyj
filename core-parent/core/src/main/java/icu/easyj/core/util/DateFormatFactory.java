@@ -25,7 +25,7 @@ import icu.easyj.core.enums.DateFormatType;
 import org.springframework.lang.NonNull;
 
 /**
- * 日期格式化实例持有者
+ * 日期格式化实例工厂
  *
  * @author wangliang181230
  */
