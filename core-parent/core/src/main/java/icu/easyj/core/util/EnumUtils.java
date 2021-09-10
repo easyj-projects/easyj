@@ -15,6 +15,10 @@
  */
 package icu.easyj.core.util;
 
+import java.util.function.Predicate;
+
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -32,17 +36,38 @@ public abstract class EnumUtils {
 	 * @param <E>       枚举类型
 	 * @return enum 枚举
 	 */
+	@NonNull
 	public static <E extends Enum<?>> E fromName(Class<E> enumClass, String enumName) {
-		Assert.notNull(enumClass, "'enumClass' must be not null");
 		Assert.notNull(enumName, "'enumName' must be not null");
+
+		E e = match(enumClass, e1 -> e1.name().equalsIgnoreCase(enumName));
+		if (e == null) {
+			throw new IllegalArgumentException("unknown enum name '" + enumName + "' for the enum `" + enumClass.getName() + "`.");
+		}
+
+		return e;
+	}
+
+	/**
+	 * 根据匹配函数，获取枚举
+	 *
+	 * @param enumClass 枚举类
+	 * @param matcher   匹配函数
+	 * @param <E>       枚举类型
+	 * @return enum 枚举
+	 */
+	@Nullable
+	public static <E extends Enum<?>> E match(Class<E> enumClass, Predicate<E> matcher) {
+		Assert.notNull(enumClass, "'enumClass' must be not null");
+		Assert.notNull(matcher, "'matcher' must be not null");
 
 		E[] enums = enumClass.getEnumConstants();
 		for (E e : enums) {
-			if (e.name().equalsIgnoreCase(enumName)) {
+			if (matcher.test(e)) {
 				return e;
 			}
 		}
 
-		throw new IllegalArgumentException("unknown enum name '" + enumName + "' for the enum `" + enumClass.getName() + "`.");
+		return null;
 	}
 }

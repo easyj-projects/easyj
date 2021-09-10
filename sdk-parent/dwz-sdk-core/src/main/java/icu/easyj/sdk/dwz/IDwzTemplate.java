@@ -29,16 +29,18 @@ public interface IDwzTemplate {
 	 *
 	 * @param request 请求
 	 * @return response 响应
+	 * @throws DwzSdkException SDK异常
 	 */
-	DwzResponse createShortUrl(DwzRequest request);
+	DwzResponse createShortUrl(DwzRequest request) throws DwzSdkException;
 
 	/**
 	 * 生成短链接
 	 *
 	 * @param longUrl 长链接
 	 * @return response 响应
+	 * @throws DwzSdkException SDK异常
 	 */
-	default DwzResponse createShortUrl(String longUrl) {
+	default DwzResponse createShortUrl(String longUrl) throws DwzSdkException {
 		return createShortUrl(new DwzRequest(longUrl));
 	}
 
@@ -48,8 +50,9 @@ public interface IDwzTemplate {
 	 * @param longUrl 长链接
 	 * @param config  可配置参数（主要为了考虑多种实现的不同入参需求）
 	 * @return response 响应
+	 * @throws DwzSdkException SDK异常
 	 */
-	default DwzResponse createShortUrl(String longUrl, Map<String, String> config) {
+	default DwzResponse createShortUrl(String longUrl, Map<String, String> config) throws DwzSdkException {
 		return createShortUrl(new DwzRequest(longUrl, config));
 	}
 }

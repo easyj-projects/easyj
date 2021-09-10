@@ -91,6 +91,19 @@
 		</dependency>
 
 		<!-- 功能4：各种SDK -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-ocr-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
 		<!-- 腾讯云SDK：IDCardOCR -->
 		<dependency>
 			<groupId>icu.easyj</groupId>

@@ -64,6 +64,26 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.sdk.dwz.type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration",
+			"description": "短链接服务实现类型.",
+			"defaultValue": "s3"
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.service-url",
+			"description": "S-3短链接服务地址.",
+			"defaultValue": "https://s-3.cn/api/v2/shorten/create"
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.client-id",
+			"description": "S-3短链接服务-客户端ID."
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.client-secret",
+			"description": "S-3短链接服务-客户端密钥."
+		},
+		{
 			"name": "easyj.sdk.tencent-cloud.common.conn-timeout",
 			"defaultValue": 60
 		},
@@ -98,6 +118,20 @@
 		}
 	],
 	"hints": [
+		{
+			"name": "easyj.sdk.dwz.type",
+			"values": [
+				{
+					"value": "s3",
+					"description": "(默认)基于S-3实现的短链接功能."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
 		{
 			"name": "easyj.sdk.ocr.idcard-ocr.type",
 			"values": [

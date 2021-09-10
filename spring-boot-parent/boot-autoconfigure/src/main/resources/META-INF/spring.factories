@@ -2,6 +2,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 icu.easyj.spring.boot.autoconfigure.global.configs.EasyjGlobalConfigsAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent.EasyjTencentIdCardOcrAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.httpconfigs.EasyjWebConfigAutoConfiguration,\

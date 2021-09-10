@@ -28,6 +28,7 @@
 
 		<!-- SDK -->
 		<module>spring-boot-starter-sdk-ocr-tencent</module>
+		<module>spring-boot-starter-sdk-dwz-s3</module>
 	</modules>
 
 	<build>

@@ -24,5 +24,12 @@
 			<artifactId>easyj-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>
