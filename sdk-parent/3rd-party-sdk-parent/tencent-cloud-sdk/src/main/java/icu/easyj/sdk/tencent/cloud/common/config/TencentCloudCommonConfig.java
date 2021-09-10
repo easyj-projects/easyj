@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.tencent.cloud.config;
+package icu.easyj.sdk.tencent.cloud.common.config;
 
 import com.tencentcloudapi.common.profile.Language;
 

@@ -5,20 +5,32 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>sdk-parent</artifactId>
+		<artifactId>3rd-party-sdk-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
+	<artifactId>easyj-tencent-cloud-sdk</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ 腾讯云SDK核心模块。</description>
+	<description>
+		EasyJ 腾讯云SDK模块。
+		目前包括：
+		1、OCR -> IDCardOCR（文字识别 -> 身份证识别）: https://console.cloud.tencent.com/ocr
+	</description>
 
 	<dependencies>
 		<!-- tencent cloud SDK -->
 		<dependency>
 			<groupId>com.tencentcloudapi</groupId>
 			<artifactId>tencentcloud-sdk-java</artifactId>
+		</dependency>
+
+		<!-- OCR SDK核心模块 -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-ocr-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
 		</dependency>
 	</dependencies>
 </project>

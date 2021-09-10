@@ -5,25 +5,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>ocr-sdk-parent</artifactId>
+		<artifactId>sdk-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
+	<artifactId>easyj-dwz-sdk-core</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ腾讯云文字识别（OCR）服务SDK封装</description>
+	<description>EasyJ 短链接服务（DWZ）核心模块。</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-ocr-sdk-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
+			<artifactId>easyj-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud;
 
-import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
+import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

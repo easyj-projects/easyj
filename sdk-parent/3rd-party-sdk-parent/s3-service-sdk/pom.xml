@@ -5,14 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>ocr-sdk-parent</artifactId>
+		<artifactId>3rd-party-sdk-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-ocr-sdk-core</artifactId>
+	<artifactId>easyj-s3-service-sdk</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ 文字识别（OCR）核心模块。</description>
+	<description>
+		EasyJ S3服务SDK模块。
+		目前包括：
+		1、DWZ（短链接服务）（目前免费）: http://dwz.doc.s-3.cn
+	</description>
 
 	<dependencies>
 		<dependency>

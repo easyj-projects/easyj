@@ -9,14 +9,18 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>ocr-sdk-parent</artifactId>
+	<artifactId>3rd-party-sdk-parent</artifactId>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ文字识别（OCR）SDK模块，提供身份证识别等等。</description>
+	<description>EasyJ封装第三方SDK的模块。</description>
 
 	<modules>
-		<module>ocr-sdk-core</module>
-		<module>tencent-cloud-ocr-sdk</module>
+		<!-- 大厂云服务 -->
+		<module>tencent-cloud-sdk</module>
+		<module>baidu-cloud-sdk</module>
+
+		<!-- 其他服务 -->
+		<module>s3-service-sdk</module><!--该服务商，目前只提供免费DWZ服务（短链接服务）-->
 	</modules>
 </project>

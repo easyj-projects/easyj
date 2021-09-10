@@ -19,7 +19,7 @@ import java.util.Map;
 
 import com.tencentcloudapi.common.profile.Language;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
-import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfig;
+import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfig;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;

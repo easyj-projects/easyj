@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>sdk-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-ocr-sdk-core</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ 文字识别（OCR）核心模块。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

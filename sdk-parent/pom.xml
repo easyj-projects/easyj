@@ -16,10 +16,11 @@
 	<description>EasyJ依赖于第三方API服务的模块，提供方便调用第三方服务的SDK包，如：阿里云、腾讯云、百度云等等。</description>
 
 	<modules>
-		<!-- core -->
-		<module>tencent-cloud-sdk-core</module>
+		<!-- 各种第三方SDK模块 -->
+		<module>3rd-party-sdk-parent</module>
 
-		<!--各功能SDK的Parent-->
-		<module>ocr-sdk-parent</module>
+		<!--各SDK的核心模块-->
+		<module>ocr-sdk-core</module>
+		<module>dwz-sdk-core</module>
 	</modules>
 </project>

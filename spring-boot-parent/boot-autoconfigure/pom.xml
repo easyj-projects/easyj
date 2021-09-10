@@ -90,10 +90,23 @@
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
 
-		<!-- 功能4：OCR -->
+		<!-- 功能4：各种SDK -->
+		<!-- 腾讯云SDK：IDCardOCR -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
+			<artifactId>easyj-tencent-cloud-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<!-- 百度云SDK：DWZ -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-baidu-cloud-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<!-- S-3服务SDK：DWZ -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-s3-service-sdk</artifactId>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
 	</dependencies>

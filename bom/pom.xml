@@ -53,10 +53,22 @@
 
 			<!-- ************************* SDK ************************* -->
 
-			<!-- 腾讯云 SDK Core-->
+			<!-- 腾讯云 SDK -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-tencent-cloud-sdk-core</artifactId>
+				<artifactId>easyj-tencent-cloud-sdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- 百度云 SDK -->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-baidu-cloud-sdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- S-3服务 SDK -->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-s3-service-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -66,9 +78,10 @@
 				<artifactId>easyj-ocr-sdk-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<!-- 短链接服务（DWZ） -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-tencent-cloud-ocr-sdk</artifactId>
+				<artifactId>easyj-dwz-sdk-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

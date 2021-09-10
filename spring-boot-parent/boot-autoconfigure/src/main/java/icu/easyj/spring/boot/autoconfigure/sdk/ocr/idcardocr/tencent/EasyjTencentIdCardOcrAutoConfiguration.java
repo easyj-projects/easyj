@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
-import icu.easyj.sdk.tencent.cloud.config.TencentCloudCommonConfigUtils;
+import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfigUtils;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.DefaultTencentCloudIdCardOcrTemplate;
