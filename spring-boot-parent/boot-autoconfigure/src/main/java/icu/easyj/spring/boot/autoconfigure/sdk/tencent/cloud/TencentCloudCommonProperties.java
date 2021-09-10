@@ -24,6 +24,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author wangliang181230
  * @see <a href="https://console.cloud.tencent.com/cam/capi">腾讯云密钥对管理页面</a>
  */
-@ConfigurationProperties("easyj.sdk.tencent-cloud.common")
+@ConfigurationProperties("easyj.sdk.tencent.common")
 public class TencentCloudCommonProperties extends TencentCloudCommonConfig {
 }

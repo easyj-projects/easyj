@@ -26,9 +26,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class IdCardOcrProperties {
 
 	/**
-	 * 身份证识别接口实现类型，可选值：tencent-cloud(默认)。后续有需要再扩展百度云或阿里云等
+	 * 身份证识别接口实现类型，可选值：tencent(默认)。后续有需要再扩展百度云或阿里云等
 	 */
-	private String type = "tencent-cloud";
+	private String type = "tencent";
 
 
 	//region Getter、Setter

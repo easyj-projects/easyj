@@ -18,7 +18,6 @@ package icu.easyj.spring.boot.autoconfigure.sdk.dwz;
 import icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig;
 import icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzTemplateImpl;
 import icu.easyj.sdk.dwz.IDwzTemplate;
-import icu.easyj.sdk.s3.dwz.S3DwzTemplateImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -34,8 +33,8 @@ import org.springframework.context.annotation.Bean;
  * @see <a href="https://console.bce.baidu.com/dwz">百度云短链接服务控制台</a>
  * @see <a href="https://dwz.cn/console/apidoc/v3">百度云短链接服务API文档</a>
  */
-@ConditionalOnClass({IDwzTemplate.class, S3DwzTemplateImpl.class})
-@ConditionalOnProperty(value = "easyj.sdk.dwz.type", havingValue = "baidu-cloud", matchIfMissing = true)
+@ConditionalOnClass({IDwzTemplate.class, BaiduDwzTemplateImpl.class})
+@ConditionalOnProperty(value = "easyj.sdk.dwz.type", havingValue = "baidu")
 public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 
 	/**
@@ -43,7 +42,7 @@ public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	@ConfigurationProperties("easyj.sdk.baidu-cloud.dwz")
+	@ConfigurationProperties("easyj.sdk.dwz.baidu")
 	public BaiduDwzConfig baiduCloudDwzConfig() {
 		return new BaiduDwzConfig();
 	}

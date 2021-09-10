@@ -84,53 +84,53 @@
 			"description": "S-3短链接服务-客户端密钥."
 		},
 		{
-			"name": "easyj.sdk.baidu-cloud.dwz.service-url",
+			"name": "easyj.sdk.dwz.baidu.service-url",
 			"description": "百度云DWZ服务地址.",
 			"defaultValue": "https://dwz.cn/api/v3/short-urls"
 		},
 		{
-			"name": "easyj.sdk.baidu-cloud.dwz.default-term-of-validity",
+			"name": "easyj.sdk.dwz.baidu.default-term-of-validity",
 			"description": "默认的短网址有效期.",
 			"defaultValue": "1-year"
 		},
 		{
-			"name": "easyj.sdk.baidu-cloud.dwz.response-language",
+			"name": "easyj.sdk.dwz.baidu.response-language",
 			"description": "返回错误语言.",
 			"defaultValue": "zh"
 		},
 		{
-			"name": "easyj.sdk.baidu-cloud.dwz.token",
+			"name": "easyj.sdk.dwz.baidu.token",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig",
 			"description": "百度云DWZ接口Token."
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.common.conn-timeout",
+			"name": "easyj.sdk.tencent.common.conn-timeout",
 			"defaultValue": 60
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.common.language",
+			"name": "easyj.sdk.tencent.common.language",
 			"defaultValue": "zh_cn"
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.common.debug",
+			"name": "easyj.sdk.tencent.common.debug",
 			"defaultValue": false
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.min-quality",
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.min-quality",
 			"defaultValue": 50
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.conn-timeout",
-			"defaultValue": "${easyj.sdk.tencent-cloud.common.conn-timeout:60}"
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.conn-timeout",
+			"defaultValue": "${easyj.sdk.tencent.common.conn-timeout:60}"
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.language",
-			"defaultValue": "${easyj.sdk.tencent-cloud.common.language:zh_cn}"
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.language",
+			"defaultValue": "${easyj.sdk.tencent.common.language:zh_cn}"
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.debug",
-			"defaultValue": "${easyj.sdk.tencent-cloud.common.debug:false}"
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.debug",
+			"defaultValue": "${easyj.sdk.tencent.common.debug:false}"
 		},
 		{
 			"name": "easyj.web.poi.excel.export.list-field-name",
@@ -147,7 +147,7 @@
 					"description": "(默认)基于S-3的DWZ实现的短链接功能."
 				},
 				{
-					"value": "baidu-cloud",
+					"value": "baidu",
 					"description": "基于百度云DWZ实现的短链接功能."
 				}
 			],
@@ -158,7 +158,7 @@
 			]
 		},
 		{
-			"name": "easyj.sdk.baidu-cloud.dwz.default-term-of-validity",
+			"name": "easyj.sdk.dwz.baidu.default-term-of-validity",
 			"values": [
 				{
 					"value": "1-year",
@@ -174,7 +174,7 @@
 			"name": "easyj.sdk.ocr.idcard-ocr.type",
 			"values": [
 				{
-					"value": "tencent-cloud",
+					"value": "tencent",
 					"description": "(默认)基于腾讯云实现的身份证识别功能."
 				}
 			],
@@ -185,7 +185,7 @@
 			]
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.common.region",
+			"name": "easyj.sdk.tencent.common.region",
 			"values": [
 				{
 					"value": "ap-shanghai",
@@ -266,7 +266,7 @@
 			]
 		},
 		{
-			"name": "easyj.sdk.tencent-cloud.ocr.idcard-ocr.region",
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.region",
 			"values": [
 				{
 					"value": "ap-shanghai",
