@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.s3.dwz;
+package icu.easyj.sdk.baidu.cloud.dwz;
 
-import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
- * {@link S3DwzTemplateImpl} 测试类
+ * {@link BaiduDwzTemplateImpl} 测试类
  *
  * @author wangliang181230
  */
-class S3DwzTemplateImplTest {
+class BaiduDwzTemplateImplTest {
 
 	/**
-	 * 测试S-3短链接服务
+	 * 测试百度云短链接服务
 	 */
 	@Test
+	@Disabled("由于免费额度有限，不执行该测试用例")
 	void testCreateShortUrl() {
-		S3DwzConfig config = new S3DwzConfig("108104", "d49ca510520b0f02004e03ddc2de7c49");
-		S3DwzTemplateImpl template = new S3DwzTemplateImpl(config);
+		BaiduDwzConfig config = new BaiduDwzConfig("14b303c38c494cb0bfe36fd80c8b8a69");
+		BaiduDwzTemplateImpl template = new BaiduDwzTemplateImpl(config);
 
-		String longUrl = "https://wx.nbgzjk.cn/register";
+		String longUrl = "https://baidu.com";
 		DwzResponse response = template.createShortUrl(new DwzRequest(longUrl));
-		Assertions.assertTrue(response.getShortUrl().startsWith("https://s-3.cn/"));
+		Assertions.assertTrue(response.getShortUrl().startsWith("https://dwz.cn/"));
 	}
-
 }

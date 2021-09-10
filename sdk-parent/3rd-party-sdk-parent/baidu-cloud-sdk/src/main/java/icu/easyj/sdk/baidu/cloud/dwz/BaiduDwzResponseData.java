@@ -13,46 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.dwz;
+package icu.easyj.sdk.baidu.cloud.dwz;
 
-import java.util.Map;
+import cn.hutool.core.annotation.Alias;
 
 /**
- * 短链接服务 请求参数
+ * 百度云DWZ响应数据
  *
  * @author wangliang181230
  */
-public class DwzRequest {
+public class BaiduDwzResponseData {
 
 	/**
-	 * 长链接
+	 * 短链接
 	 */
+	@Alias("ShortUrl")
+	private String shortUrl;
+
+	/**
+	 * 对应的长连接
+	 */
+	@Alias("LongUrl")
 	private String longUrl;
 
 	/**
-	 * 可配置参数（主要为了考虑多种实现）
+	 * 错误信息
 	 */
-	private Map<String, String> config;
-
-
-	//region Constructor
-
-	public DwzRequest() {
-	}
-
-	public DwzRequest(String longUrl) {
-		this.longUrl = longUrl;
-	}
-
-	public DwzRequest(String longUrl, Map<String, String> config) {
-		this.longUrl = longUrl;
-		this.config = config;
-	}
-
-	//endregion
+	@Alias("ErrMsg")
+	private String errMsg;
 
 
 	//region Getter、Setter
+
+	public String getShortUrl() {
+		return shortUrl;
+	}
+
+	public void setShortUrl(String shortUrl) {
+		this.shortUrl = shortUrl;
+	}
 
 	public String getLongUrl() {
 		return longUrl;
@@ -62,20 +61,12 @@ public class DwzRequest {
 		this.longUrl = longUrl;
 	}
 
-	public Map<String, String> getConfig() {
-		return config;
+	public String getErrMsg() {
+		return errMsg;
 	}
 
-	public void setConfig(Map<String, String> config) {
-		this.config = config;
-	}
-
-	public String getConfig(String key) {
-		if (config != null) {
-			return config.get(key);
-		} else {
-			return null;
-		}
+	public void setErrMsg(String errMsg) {
+		this.errMsg = errMsg;
 	}
 
 	//endregion

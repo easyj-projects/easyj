@@ -25,6 +25,12 @@
 			<artifactId>tencentcloud-sdk-java</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- OCR SDK核心模块 -->
 		<dependency>
 			<groupId>icu.easyj</groupId>

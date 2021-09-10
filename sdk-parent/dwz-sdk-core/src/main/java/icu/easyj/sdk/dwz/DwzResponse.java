@@ -35,7 +35,8 @@ public class DwzResponse {
 	private Date createTime;
 
 	/**
-	 * 到期时效，单位：毫秒
+	 * 到期时效，单位：毫秒。<br>
+	 * 空或0表示长期有效。
 	 */
 	private Long expireIn;
 

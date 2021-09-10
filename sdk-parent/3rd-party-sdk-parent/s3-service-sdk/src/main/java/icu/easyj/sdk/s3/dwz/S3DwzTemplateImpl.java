@@ -24,7 +24,6 @@ import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
-import icu.easyj.sdk.s3.dwz.config.S3DwzConfig;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -51,7 +50,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		Assert.notNull(config, "'config' must be not null");
 		this.config = config;
 
-		restTemplate = new RestTemplate();
+		this.restTemplate = new RestTemplate();
 	}
 
 
@@ -80,17 +79,21 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			S3DwzResponse resp = JSONUtil.toBean(respStr, S3DwzResponse.class);
 			if (!resp.isSuccess()) {
 				S3DwzErrorType errorType = resp.getErrorType();
-				String errorMsg = resp.getErrorMessage(errorType);
 
-				throw new DwzSdkException("请求S-3短链接服务失败：" + errorMsg, errorType != null ? errorType.name() : resp.getCode());
+				String errorMsg = resp.getErrorMessage(errorType);
+				String errorCode = errorType != null ? errorType.name() : resp.getCode();
+
+				throw new DwzSdkException("请求S-3短链接服务失败：" + errorMsg, errorCode);
 			} else if (resp.getData() == null) {
 				throw new DwzSdkException("请求S-3短链接服务的响应中无数据", "NO_DATA");
 			}
 
 			// 转换响应类型，并返回
 			return this.convert(resp);
-		} catch (RuntimeException/* | UnsupportedEncodingException*/ e) {
-			throw new SdkException("S-3短链接服务未知异常", e);
+		} catch (DwzSdkException e) {
+			throw e;
+		} catch (RuntimeException e) {
+			throw new DwzSdkException("S-3短链接服务未知异常", e);
 		}
 	}
 

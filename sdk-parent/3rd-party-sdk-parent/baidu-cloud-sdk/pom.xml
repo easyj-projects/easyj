@@ -24,5 +24,13 @@
 			<artifactId>easyj-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- DWZ SDK核心模块 -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
 	</dependencies>
 </project>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.s3.dwz.config;
+package icu.easyj.sdk.s3.dwz;
 
 /**
  * S-3的DWZ服务配置

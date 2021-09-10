@@ -16,8 +16,8 @@
 package icu.easyj.spring.boot.autoconfigure.sdk.dwz;
 
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import icu.easyj.sdk.s3.dwz.S3DwzConfig;
 import icu.easyj.sdk.s3.dwz.S3DwzTemplateImpl;
-import icu.easyj.sdk.s3.dwz.config.S3DwzConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

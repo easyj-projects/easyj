@@ -13,40 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.dwz;
+package icu.easyj.sdk.baidu.cloud.dwz;
 
-import java.util.Map;
+import cn.hutool.core.annotation.Alias;
 
 /**
- * 短链接服务 请求参数
+ * 百度云DWZ请求参数
  *
  * @author wangliang181230
  */
-public class DwzRequest {
+public class BaiduDwzRequest {
 
 	/**
 	 * 长链接
 	 */
+	@Alias("LongUrl")
 	private String longUrl;
 
 	/**
-	 * 可配置参数（主要为了考虑多种实现）
+	 * 短网址有效期<br>
+	 * 值域：
+	 * <ul>
+	 *     <li>long-term：长期</li>
+	 *     <li>1-year：1年</li>
+	 * </ul>
 	 */
-	private Map<String, String> config;
+	@Alias("TermOfValidity")
+	private String termOfValidity;
 
 
 	//region Constructor
 
-	public DwzRequest() {
+	public BaiduDwzRequest() {
 	}
 
-	public DwzRequest(String longUrl) {
+	public BaiduDwzRequest(String longUrl) {
 		this.longUrl = longUrl;
 	}
 
-	public DwzRequest(String longUrl, Map<String, String> config) {
+	public BaiduDwzRequest(String longUrl, String termOfValidity) {
 		this.longUrl = longUrl;
-		this.config = config;
+		this.termOfValidity = termOfValidity;
 	}
 
 	//endregion
@@ -62,20 +69,12 @@ public class DwzRequest {
 		this.longUrl = longUrl;
 	}
 
-	public Map<String, String> getConfig() {
-		return config;
+	public String getTermOfValidity() {
+		return termOfValidity;
 	}
 
-	public void setConfig(Map<String, String> config) {
-		this.config = config;
-	}
-
-	public String getConfig(String key) {
-		if (config != null) {
-			return config.get(key);
-		} else {
-			return null;
-		}
+	public void setTermOfValidity(String termOfValidity) {
+		this.termOfValidity = termOfValidity;
 	}
 
 	//endregion
