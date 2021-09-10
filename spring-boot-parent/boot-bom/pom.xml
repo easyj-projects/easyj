@@ -93,12 +93,21 @@
 
 			<!-- ************************* SDK ************************* -->
 
+			<!-- DWZ SDK-->
 			<!-- Starter: 基于S-3实现的短链接服务（DWZ）SDK -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-starter-sdk-dwz-s3</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<!-- Starter: 基于百度云实现的短链接服务（DWZ）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-dwz-baidu</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- OCR SDK -->
 			<!-- Starter: 基于腾讯云实现的文字识别（OCR）SDK -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
