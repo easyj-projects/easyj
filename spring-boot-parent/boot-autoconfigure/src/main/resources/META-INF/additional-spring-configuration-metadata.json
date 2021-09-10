@@ -84,6 +84,27 @@
 			"description": "S-3短链接服务-客户端密钥."
 		},
 		{
+			"name": "easyj.sdk.baidu-cloud.dwz.service-url",
+			"description": "百度云DWZ服务地址.",
+			"defaultValue": "https://dwz.cn/api/v3/short-urls"
+		},
+		{
+			"name": "easyj.sdk.baidu-cloud.dwz.default-term-of-validity",
+			"description": "默认的短网址有效期.",
+			"defaultValue": "1-year"
+		},
+		{
+			"name": "easyj.sdk.baidu-cloud.dwz.response-language",
+			"description": "返回错误语言.",
+			"defaultValue": "zh"
+		},
+		{
+			"name": "easyj.sdk.baidu-cloud.dwz.token",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig",
+			"description": "百度云DWZ接口Token."
+		},
+		{
 			"name": "easyj.sdk.tencent-cloud.common.conn-timeout",
 			"defaultValue": 60
 		},
@@ -123,12 +144,29 @@
 			"values": [
 				{
 					"value": "s3",
-					"description": "(默认)基于S-3实现的短链接功能."
+					"description": "(默认)基于S-3的DWZ实现的短链接功能."
+				},
+				{
+					"value": "baidu-cloud",
+					"description": "基于百度云DWZ实现的短链接功能."
 				}
 			],
 			"providers": [
 				{
 					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.baidu-cloud.dwz.default-term-of-validity",
+			"values": [
+				{
+					"value": "1-year",
+					"description": "(默认)1年有效."
+				},
+				{
+					"value": "long-term",
+					"description": "长期有效."
 				}
 			]
 		},

@@ -42,7 +42,7 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "easyj.sdk.ocr.idcard-ocr.type", havingValue = "tencent-cloud", matchIfMissing = true)
 @AutoConfigureAfter(EasyjTencentCloudAutoConfiguration.class)
 @AutoConfigureBefore(EasyjOcrTemplateAutoConfiguration.class)
-public class EasyjTencentIdCardOcrAutoConfiguration {
+public class EasyjTencentCloudIdCardOcrAutoConfiguration {
 
 	@Bean
 	@ConfigurationProperties("easyj.sdk.tencent-cloud.ocr.idcard-ocr")
