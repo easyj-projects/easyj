@@ -15,12 +15,10 @@
  */
 package icu.easyj.web.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import icu.easyj.core.util.UrlUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -62,11 +60,8 @@ public abstract class QueryStringUtils {
 				key = idx == 0 ? "" : param.substring(0, idx);
 				value = param.substring(idx + 1);
 
-				try {
-					value = URLDecoder.decode(value, StandardCharsets.UTF_8.name());
-				} catch (UnsupportedEncodingException ignore) {
-					// do nothing
-				}
+				// 进行URL解码
+				value = UrlUtils.decode(value);
 
 				if (parameterMap.containsKey(key)) {
 					values = ArrayUtils.addAll(parameterMap.get(key), value);

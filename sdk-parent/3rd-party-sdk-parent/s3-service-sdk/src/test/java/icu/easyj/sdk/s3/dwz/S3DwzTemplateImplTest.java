@@ -36,7 +36,7 @@ class S3DwzTemplateImplTest {
 		S3DwzConfig config = new S3DwzConfig("108104", "d49ca510520b0f02004e03ddc2de7c49");
 		S3DwzTemplateImpl template = new S3DwzTemplateImpl(config);
 
-		String longUrl = "https://wx.nbgzjk.cn/register";
+		String longUrl = "https://www.nbgzjk.cn/index?a=1&b=2";
 		DwzResponse response = template.createShortUrl(new DwzRequest(longUrl));
 		System.out.println(StringUtils.toString(response));
 		Assertions.assertTrue(response.getShortUrl().startsWith("https://s-3.cn/"));

@@ -19,6 +19,7 @@ import java.util.Date;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
+import icu.easyj.core.util.UrlUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkException;
@@ -26,6 +27,7 @@ import icu.easyj.sdk.dwz.IDwzTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * 短链接服务接口 实现
@@ -54,6 +56,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		this.config = config;
 
 		this.restTemplate = new RestTemplate();
+		((DefaultUriBuilderFactory)this.restTemplate.getUriTemplateHandler()).setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
 	}
 
 
@@ -71,11 +74,11 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		String respStr = null;
 		Throwable t = null;
 		try {
-			// 组装参数
-			url = config.getServiceUrl() + "?client_id=" + config.getClientId() +
-					"&client_secret=" + config.getClientSecret() +
-					"&url=" + request.getLongUrl();
-//					"&url=" + URLEncoder.encode(request.getLongUrl(), StandardCharsets.UTF_8.name());
+			// 组装URL
+			url = config.getServiceUrl()
+					+ "?client_id=" + config.getClientId()
+					+ "&client_secret=" + config.getClientSecret()
+					+ "&url=" + UrlUtils.encode(request.getLongUrl());
 
 			// 发送请求，接收响应
 			respStr = restTemplate.getForObject(url, String.class);

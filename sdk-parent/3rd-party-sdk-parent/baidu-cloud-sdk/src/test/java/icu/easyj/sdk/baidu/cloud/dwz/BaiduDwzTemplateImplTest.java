@@ -38,7 +38,7 @@ class BaiduDwzTemplateImplTest {
 		BaiduDwzConfig config = new BaiduDwzConfig("14b303c38c494cb0bfe36fd80c8b8a69");
 		BaiduDwzTemplateImpl template = new BaiduDwzTemplateImpl(config);
 
-		String longUrl = "https://baidu.com";
+		String longUrl = "https://www.baidu.com/?a=1&b=2";
 		DwzResponse response = template.createShortUrl(new DwzRequest(longUrl));
 		System.out.println(StringUtils.toString(response));
 		Assertions.assertTrue(response.getShortUrl().startsWith("https://dwz.cn/"));

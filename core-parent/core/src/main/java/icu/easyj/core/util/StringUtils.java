@@ -33,6 +33,11 @@ import org.springframework.lang.Nullable;
  */
 public abstract class StringUtils {
 
+	/**
+	 * 大小写字符的差值
+	 */
+	public static final int CASE_DIFF = ('a' - 'A');
+
 	//region 中文相关方法
 
 	/**

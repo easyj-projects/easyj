@@ -35,6 +35,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * 基于百度云DWZ实现的 {@link IDwzTemplate} 接口
@@ -66,6 +67,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		this.config = config;
 
 		this.restTemplate = new RestTemplate();
+		((DefaultUriBuilderFactory)this.restTemplate.getUriTemplateHandler()).setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
 	}
 
 
@@ -86,12 +88,13 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			BaiduDwzRequest req1 = this.buildRequest(request.getLongUrl(), request.getConfig("termOfValidity"));
 			reqList.add(req1);
 			body = JSONUtil.toJsonStr(reqList);
-			// 准备Header
+			// 准备Headers
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Dwz-Token", config.getToken());
 			//headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 			headers.add(HttpHeaders.CONTENT_LANGUAGE, config.getResponseLanguage());
-			// 创建参数
+
+			// 创建HTTP请求体
 			HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
 			// 发送请求，接收响应
