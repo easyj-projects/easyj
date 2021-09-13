@@ -23,6 +23,8 @@ import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -33,6 +35,8 @@ import org.springframework.web.client.RestTemplate;
  * @see S3DwzConfig
  */
 public class S3DwzTemplateImpl implements IDwzTemplate {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(S3DwzTemplateImpl.class);
 
 	/**
 	 * 配置信息
@@ -60,15 +64,21 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		Assert.notNull(request, "'request' must be not null");
 		Assert.notNull(request.getLongUrl(), "'longUrl' must be not null");
 
+		// 调用开始时间
+		long startTime = System.nanoTime();
+
+		String url = null;
+		String respStr = null;
+		Throwable t = null;
 		try {
 			// 组装参数
-			String url = config.getServiceUrl() + "?client_id=" + config.getClientId() +
+			url = config.getServiceUrl() + "?client_id=" + config.getClientId() +
 					"&client_secret=" + config.getClientSecret() +
 					"&url=" + request.getLongUrl();
-//			        "&url=" + URLEncoder.encode(request.getLongUrl(), StandardCharsets.UTF_8.name());
+//					"&url=" + URLEncoder.encode(request.getLongUrl(), StandardCharsets.UTF_8.name());
 
 			// 发送请求，接收响应
-			String respStr = restTemplate.getForObject(url, String.class);
+			respStr = restTemplate.getForObject(url, String.class);
 			// 判空
 			if (respStr == null) {
 				throw new DwzSdkException("请求S-3短链接服务无响应", "NO_RESPONSE");
@@ -82,24 +92,44 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 				String errorMsg = resp.getErrorMessage(errorType);
 				String errorCode = errorType != null ? errorType.name() : resp.getCode();
 
-				throw new DwzSdkException("请求S-3短链接服务失败：" + errorMsg, errorCode);
+				throw new DwzSdkException("请求S-3短链接服务失败：[" + resp.getCode() + "]" + errorMsg, errorCode);
 			} else if (resp.getData() == null) {
 				throw new DwzSdkException("请求S-3短链接服务的响应中无数据", "NO_DATA");
 			}
 
 			// 转换响应类型，并返回
-			return this.convert(resp);
+			return this.convertToStandard(resp);
 		} catch (DwzSdkException e) {
+			t = e;
 			throw e;
 		} catch (RuntimeException e) {
+			t = e;
 			throw new DwzSdkException("S-3短链接服务未知异常", e);
+		} finally {
+			if (t == null) {
+				if (LOGGER.isInfoEnabled()) {
+					LOGGER.info("S-3短链接服务调用成功：\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms",
+							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+				}
+			} else {
+				if (LOGGER.isErrorEnabled()) {
+					LOGGER.error("S-3短链接服务调用失败：{}\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms",
+							t.getMessage(),
+							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+				}
+			}
 		}
 	}
 
 	//endregion
 
-
-	private DwzResponse convert(S3DwzResponse resp) {
+	/**
+	 * 转换为 {@link IDwzTemplate} 接口标准响应
+	 *
+	 * @param resp 第三方SDK响应
+	 * @return 标准响应
+	 */
+	private DwzResponse convertToStandard(S3DwzResponse resp) {
 		DwzResponse response = new DwzResponse();
 
 		S3DwzResponseData data = resp.getData();
