@@ -21,7 +21,7 @@ import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfigUtils;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.DefaultTencentCloudIdCardOcrTemplate;
-import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.TencentEasyjIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.TencentEasyjIdCardOcrTemplateImpl;
 import icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration;
 import icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration;
 import icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.TencentCloudCommonProperties;
@@ -74,6 +74,6 @@ public class EasyjTencentCloudIdCardOcrAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public IIdCardOcrTemplate tencentIdCardOcrTemplate(ITencentCloudIdCardOcrTemplate template) {
-		return new TencentEasyjIdCardOcrTemplate(template);
+		return new TencentEasyjIdCardOcrTemplateImpl(template);
 	}
 }

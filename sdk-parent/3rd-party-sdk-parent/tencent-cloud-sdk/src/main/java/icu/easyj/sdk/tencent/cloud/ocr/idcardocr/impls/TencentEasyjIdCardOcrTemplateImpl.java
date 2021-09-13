@@ -52,9 +52,9 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
+public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TencentEasyjIdCardOcrTemplate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TencentEasyjIdCardOcrTemplateImpl.class);
 
 	/**
 	 * 最小清晰度临界值，低于该临界值将产生不清晰告警 {@link IdCardOcrWarn#VAGUE}
@@ -65,7 +65,7 @@ public class TencentEasyjIdCardOcrTemplate implements IIdCardOcrTemplate {
 	private final ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate;
 
 
-	public TencentEasyjIdCardOcrTemplate(ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate) {
+	public TencentEasyjIdCardOcrTemplateImpl(ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate) {
 		Assert.notNull(tencentCloudIdCardOcrTemplate, "'tencentCloudIdCardOcrTemplate' must be not null");
 		this.tencentCloudIdCardOcrTemplate = tencentCloudIdCardOcrTemplate;
 	}
