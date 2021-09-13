@@ -15,6 +15,7 @@
  */
 package icu.easyj.sdk.baidu.cloud.dwz;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.junit.jupiter.api.Assertions;
@@ -39,6 +40,7 @@ class BaiduDwzTemplateImplTest {
 
 		String longUrl = "https://baidu.com";
 		DwzResponse response = template.createShortUrl(new DwzRequest(longUrl));
+		System.out.println(StringUtils.toString(response));
 		Assertions.assertTrue(response.getShortUrl().startsWith("https://dwz.cn/"));
 	}
 }

@@ -38,6 +38,7 @@ class S3DwzTemplateImplTest {
 
 		String longUrl = "https://wx.nbgzjk.cn/register";
 		DwzResponse response = template.createShortUrl(new DwzRequest(longUrl));
+		System.out.println(StringUtils.toString(response));
 		Assertions.assertTrue(response.getShortUrl().startsWith("https://s-3.cn/"));
 	}
 
