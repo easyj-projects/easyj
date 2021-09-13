@@ -38,30 +38,29 @@ public abstract class UrlUtils {
 
 	//region 这段代码从UrlEncoder中复制过来的，用于encode方法。
 
-	static final BitSet DONT_NEED_ENCODING;
+	/**
+	 * 无需进行URL编码转义的字符集合.
+	 * 参照：RFC 2396
+	 */
+	static final BitSet DONT_NEED_URL_ENCODE;
 
 	static {
-		DONT_NEED_ENCODING = new BitSet(256);
+		DONT_NEED_URL_ENCODE = new BitSet(256);
 		int i;
 		for (i = 'a'; i <= 'z'; i++) {
-			DONT_NEED_ENCODING.set(i);
+			DONT_NEED_URL_ENCODE.set(i);
 		}
 		for (i = 'A'; i <= 'Z'; i++) {
-			DONT_NEED_ENCODING.set(i);
+			DONT_NEED_URL_ENCODE.set(i);
 		}
 		for (i = '0'; i <= '9'; i++) {
-			DONT_NEED_ENCODING.set(i);
+			DONT_NEED_URL_ENCODE.set(i);
 		}
-		DONT_NEED_ENCODING.set(' ');
-		DONT_NEED_ENCODING.set('-');
-		DONT_NEED_ENCODING.set('_');
-		DONT_NEED_ENCODING.set('.');
-		DONT_NEED_ENCODING.set('*');
-
-		// 以下三个字符为Easyj添加的，不转义
-		DONT_NEED_ENCODING.set(':');
-		DONT_NEED_ENCODING.set('/');
-		DONT_NEED_ENCODING.set('?');
+		DONT_NEED_URL_ENCODE.set(' ');
+		DONT_NEED_URL_ENCODE.set('-');
+		DONT_NEED_URL_ENCODE.set('_');
+		DONT_NEED_URL_ENCODE.set('.');
+		DONT_NEED_URL_ENCODE.set('*');
 	}
 
 	//endregion
@@ -130,7 +129,7 @@ public abstract class UrlUtils {
 
 		for (int i = 0; i < s.length(); ) {
 			int c = (int)s.charAt(i);
-			if (DONT_NEED_ENCODING.get(c)) {
+			if (DONT_NEED_URL_ENCODE.get(c)) {
 				if (c == ' ') {
 					c = '+';
 					needToChange = true;
@@ -150,7 +149,7 @@ public abstract class UrlUtils {
 						}
 					}
 					i++;
-				} while (i < s.length() && !DONT_NEED_ENCODING.get((c = (int)s.charAt(i))));
+				} while (i < s.length() && !DONT_NEED_URL_ENCODE.get((c = (int)s.charAt(i))));
 
 				charArrayWriter.flush();
 				String str = new String(charArrayWriter.toCharArray());
