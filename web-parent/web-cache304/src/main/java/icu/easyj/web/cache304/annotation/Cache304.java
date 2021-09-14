@@ -89,4 +89,11 @@ public @interface Cache304 {
 	 * @return limitMaxAge maxAge上限值
 	 */
 	long limitMaxAge() default Cache304Constants.DEFAULT_LIMIT_MAX_AGE; // 默认值为-1，表示不启用该功能
+
+	/**
+	 * 为true时：如果controller出现异常，但客户端存在缓存，则响应304，让客户端继续使用缓存。
+	 *
+	 * @return useCacheIfException 异常时是否响应304
+	 */
+	boolean useCacheIfException() default false;
 }

@@ -37,6 +37,7 @@ public class Cache304AnnotationParser {
 		config.setCacheDays(annotation.cacheDays());
 		config.setUseMaxAge(annotation.useMaxAge());
 		config.setLimitMaxAge(annotation.limitMaxAge());
+		config.setUseCacheIfException(annotation.useCacheIfException());
 
 		return config;
 	}

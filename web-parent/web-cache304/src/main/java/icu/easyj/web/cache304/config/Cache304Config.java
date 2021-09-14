@@ -59,6 +59,15 @@ public class Cache304Config implements Serializable {
 	 */
 	private long limitMaxAge = Cache304Constants.DEFAULT_LIMIT_MAX_AGE;
 
+	/**
+	 * 如果controller出现异常，但客户端存在缓存，则响应304使客户端继续使用缓存
+	 *
+	 * @see Cache304#useCacheIfException()
+	 */
+	private boolean useCacheIfException = Cache304Constants.DEFAULT_USE_CACHE_IF_EXCEPTION;
+
+
+	//region Getter、Setter
 
 	public long getCacheSeconds() {
 		return cacheSeconds;
@@ -91,4 +100,14 @@ public class Cache304Config implements Serializable {
 	public void setLimitMaxAge(long limitMaxAge) {
 		this.limitMaxAge = limitMaxAge;
 	}
+
+	public boolean isUseCacheIfException() {
+		return useCacheIfException;
+	}
+
+	public void setUseCacheIfException(boolean useCacheIfException) {
+		this.useCacheIfException = useCacheIfException;
+	}
+
+	//endregion
 }

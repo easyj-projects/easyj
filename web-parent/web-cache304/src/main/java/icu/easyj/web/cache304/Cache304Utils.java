@@ -50,7 +50,7 @@ public abstract class Cache304Utils {
 	 */
 	@Nullable
 	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Cache304Config config, Supplier<Object> callback) {
-		// 配置为空时，不执行
+		// 配置为空时，不执行304缓存逻辑
 		if (config == null) {
 			return callback.get();
 		}
@@ -89,7 +89,17 @@ public abstract class Cache304Utils {
 			return null;
 		} else {
 			// 缓存存在但已过期，执行业务并设置缓存响应头
-			return doCallbackAndSetCache304Header(callback, response, config, cacheTime);
+			try {
+				return doCallbackAndSetCache304Header(callback, response, config, cacheTime);
+			} catch (RuntimeException e) {
+				// 出现异常时，允许客户端继续使用缓存，响应304，不抛出异常
+				if (config.isUseCacheIfException()) {
+					HttpUtils.setResponseStatus304(response);
+					return null;
+				} else {
+					throw e;
+				}
+			}
 		}
 	}
 

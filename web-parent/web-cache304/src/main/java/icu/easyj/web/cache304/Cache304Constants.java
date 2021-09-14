@@ -30,6 +30,8 @@ public interface Cache304Constants {
 
 	long DEFAULT_LIMIT_MAX_AGE = -1;
 
+	boolean DEFAULT_USE_CACHE_IF_EXCEPTION = false;
+
 	/**
 	 * 临界误差时间：10分钟
 	 * 用于解决：以天来计算缓存秒数时，避免客户端与服务器端的时间差导致缓存多存了一天
