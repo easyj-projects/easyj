@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.exception;
 
+import org.springframework.util.Assert;
+
 /**
  * Wrapper Exception.
  * 包装异常。
@@ -26,10 +28,12 @@ public class WrapperException extends RuntimeException {
 
 	public WrapperException(String message, Throwable cause) {
 		super(message, cause);
+		Assert.notNull(cause, "'cause' must be not null");
 	}
 
 	public WrapperException(Throwable cause) {
 		super(cause);
+		Assert.notNull(cause, "'cause' must be not null");
 	}
 
 	@Override

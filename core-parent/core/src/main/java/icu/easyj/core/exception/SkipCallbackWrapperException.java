@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.exception;
 
-import org.springframework.util.Assert;
-
 /**
  * Skip Callback Wrapper Exception.<br>
  * 跳过回调函数的包装异常。<br>
@@ -29,11 +27,9 @@ public class SkipCallbackWrapperException extends WrapperException {
 
 	public SkipCallbackWrapperException(String message, Throwable cause) {
 		super(message, cause);
-		Assert.notNull(cause, "'cause' must be not null");
 	}
 
 	public SkipCallbackWrapperException(Throwable cause) {
 		super(cause);
-		Assert.notNull(cause, "'cause' must be not null");
 	}
 }
