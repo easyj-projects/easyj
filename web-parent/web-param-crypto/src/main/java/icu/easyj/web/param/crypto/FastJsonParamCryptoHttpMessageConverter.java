@@ -206,7 +206,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 			boolean isJsonp = false;
 
-			//不知道为什么会有这行代码， 但是为了保持和原来的行为一致，还是保留下来
+			//不知道为什么会有这行代码，但是为了保持和原来的行为一致，还是保留下来
 			Object value = strangeCodeForJackson(object);
 
 			if (value instanceof FastJsonContainer) {
@@ -291,11 +291,6 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 			throw new HttpMessageNotWritableException("Could not write JSON: " + jsonException.getMessage(), jsonException);
 		}
 	}
-
-	//endregion
-
-
-	//region Override
 
 	//endregion
 
