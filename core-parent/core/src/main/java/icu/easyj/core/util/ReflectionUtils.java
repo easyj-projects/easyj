@@ -287,7 +287,9 @@ public abstract class ReflectionUtils {
 		Assert.notNull(target, "'target' must be not null");
 		Assert.notNull(fieldName, "'fieldName' must be not null");
 
-		if (target instanceof Annotation) {
+		if (target instanceof Map) {
+			return (T)((Map<?, ?>)target).get(fieldName);
+		} else if (target instanceof Annotation) {
 			return getAnnotationValue((Annotation)target, fieldName);
 		} else {
 			if (fieldName.contains(StrPool.DOT)) {
@@ -368,10 +370,14 @@ public abstract class ReflectionUtils {
 			}
 			setFieldValue(currentTarget, fieldNameArr[fieldNameArr.length - 1], fieldValue);
 		} else {
-			// get field
-			Field field = getField(target.getClass(), fieldName);
-			// set new value
-			setFieldValue(target, field, fieldValue);
+			if (target instanceof Map) {
+				((Map)target).put(fieldName, fieldValue);
+			} else {
+				// get field
+				Field field = getField(target.getClass(), fieldName);
+				// set new value
+				setFieldValue(target, field, fieldValue);
+			}
 		}
 	}
 
