@@ -18,8 +18,7 @@ package icu.easyj.core.exception;
 /**
  * Skip Callback Wrapper Exception.<br>
  * 跳过回调函数的包装异常。<br>
- * 注意：仅仅是为了跳过函数的异常类型限制而使用，必须在函数外捕获该异常并抛出cause<br>
- * 使用方法见父类上的说明：{@link WrapperException}
+ * 注意：仅仅是为了跳过函数的异常类型限制而使用，必须在函数外捕获该异常并抛出cause
  *
  * @author wangliang181230
  */
