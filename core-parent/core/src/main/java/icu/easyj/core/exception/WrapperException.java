@@ -18,8 +18,31 @@ package icu.easyj.core.exception;
 import org.springframework.util.Assert;
 
 /**
- * Wrapper Exception.
- * 包装异常。
+ * Wrapper Exception.<br>
+ * 包装异常，该异常类必须在一定范围内捕获并抛出cause。由于是比较特殊的异常类，请谨慎使用。<br>
+ * <p>
+ * 使用举例：<br>
+ * <pre>
+ * void doSomething(Runnable runnable) {
+ *   runnable.run();
+ * }
+ *
+ * abstract void do() throws Throwable;
+ *
+ * try {
+ *   doSomething(() -> {
+ *     try {
+ *       // 由于该方法会throws Throwable，而doSomething方法不允许抛出Throwable，所以需要包装一下异常，间接的抛出异常
+ *       do();
+ *     } catch(Throwable t) {
+ *       // 包装一下异常，即可抛出该异常
+ *       throw new WrapperException(t);
+ *     }
+ *   });
+ * } catch (WrapperException e) { // 方法外必须捕获该异常，并抛出cause
+ *   throw e.getCause();
+ * }
+ * </pre>
  *
  * @author wangliang181230
  */

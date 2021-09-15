@@ -20,8 +20,8 @@ import java.util.function.Supplier;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import icu.easyj.core.exception.WrapperException;
 import icu.easyj.core.util.DateUtils;
+import icu.easyj.core.util.ThrowableUtils;
 import icu.easyj.web.cache304.config.Cache304Config;
 import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
 import icu.easyj.web.util.HttpUtils;
@@ -97,7 +97,8 @@ public abstract class Cache304Utils {
 				if (config.isUseCacheIfException()) {
 					// 记录异常日志
 					if (LOGGER.isErrorEnabled()) {
-						Throwable th = t instanceof WrapperException ? t.getCause() : t;
+						// 因为callback方法可能会抛出包装异常，所以需要拆包装后，再记录异常日志。
+						Throwable th = ThrowableUtils.unwrap(t);
 						LOGGER.error("当前请求出现异常，但允许客户端继续使用缓存，返回304响应状态！不抛出异常，仅记录异常日志：", th);
 					}
 
