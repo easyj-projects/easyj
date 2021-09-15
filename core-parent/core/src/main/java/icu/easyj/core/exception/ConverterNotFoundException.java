@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.exception;
 
+import org.springframework.lang.Nullable;
+
 /**
  * 转换器未找到的异常
  *
@@ -22,6 +24,17 @@ package icu.easyj.core.exception;
  */
 public class ConverterNotFoundException extends BaseRuntimeException {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 源类型
+	 */
+	private Class<?> sourceType;
+
+	/**
+	 * 目标类型
+	 */
+	private Class<?> targetType;
+
 
 	public ConverterNotFoundException(String message) {
 		super(message, "CONVERTER_NOT_FOUND");
@@ -39,7 +52,28 @@ public class ConverterNotFoundException extends BaseRuntimeException {
 		super(message, errorCode, cause);
 	}
 
-	public ConverterNotFoundException(Class<?> fromType, Class<?> toType) {
-		this("未找到`" + fromType.getName() + "`转换为`" + toType.getName() + "`的转换器");
+	public ConverterNotFoundException(String message, Class<?> sourceType, Class<?> targetType) {
+		this(message);
+		this.sourceType = sourceType;
+		this.targetType = targetType;
 	}
+
+	public ConverterNotFoundException(Class<?> sourceType, Class<?> targetType) {
+		this("未找到 `" + sourceType.getName() + "` 转换为 `" + targetType.getName() + "` 的转换器", sourceType, targetType);
+	}
+
+
+	//region Getter
+
+	@Nullable
+	public Class<?> getSourceType() {
+		return sourceType;
+	}
+
+	@Nullable
+	public Class<?> getTargetType() {
+		return targetType;
+	}
+
+	//endregion
 }
