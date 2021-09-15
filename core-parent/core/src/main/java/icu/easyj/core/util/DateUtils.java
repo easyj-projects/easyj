@@ -42,6 +42,7 @@ public abstract class DateUtils {
 	 * @param time 时间
 	 * @return date 日期
 	 */
+	@NonNull
 	public static Date getDate(Date time) {
 		return new Date(time.getYear(), time.getMonth(), time.getDate());
 	}
