@@ -39,7 +39,6 @@ import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrAdvancedInfo;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrRequestBuilder;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentIdCardOcrWarn;
-import icu.easyj.sdk.tencent.cloud.ocr.util.TencentCloudSDKExceptionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +111,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 			TencentCloudIdCardOcrConfig tencentCloudIdCardOcrConfig = TencentCloudIdCardOcrConfig.fromMap(config);
 			resp = tencentCloudIdCardOcrTemplate.doIdCardOcr(req, tencentCloudIdCardOcrConfig);
 		} catch (TencentCloudSDKException e) {
-			String errorCode = TencentCloudSDKExceptionUtils.getErrorCode(e);
+			String errorCode = e.getErrorCode();
 			String errorMsg = "身份证识别失败" + (StringUtils.hasText(errorCode) ? "：" + errorCode : "");
 			throw new IdCardOcrSdkException(errorMsg, errorCode, e);
 		} catch (IdCardOcrSdkException e) {

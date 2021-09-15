@@ -30,7 +30,7 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-tencent-cloud-sdk</artifactId>
 			<!--
-			仅参与打包及运行，不参与编译（即无法引用到该JAR中的类，但打包后可正常调用到该JAR中的类）
+			runtime: 仅参与打包、测试和运行，不参与src/main的编译（即无法引用到该JAR中的类，但打包后可正常调用到该JAR中的类）
 			因为腾讯云的OCR只是实现方式之一，理论上其他模块中不应该直接使用该依赖中的任何类，避免以后更换实现时出现问题。
 			-->
 			<scope>runtime</scope>
