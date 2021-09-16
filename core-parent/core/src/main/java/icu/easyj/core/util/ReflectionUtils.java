@@ -186,6 +186,22 @@ public abstract class ReflectionUtils {
 	}
 
 	/**
+	 * has Field
+	 *
+	 * @param clazz     the class
+	 * @param fieldName the field name
+	 * @return the boolean
+	 */
+	public static boolean hasField(Class<?> clazz, String fieldName) {
+		try {
+			getField(clazz, fieldName);
+			return true;
+		} catch (NoSuchFieldException e) {
+			return false;
+		}
+	}
+
+	/**
 	 * get Field
 	 *
 	 * @param clazz     the class
@@ -295,8 +311,8 @@ public abstract class ReflectionUtils {
 			if (fieldName.contains(StrPool.DOT)) {
 				String[] fieldNameArr = fieldName.split("\\.");
 				Object currentFieldValue = target;
-				for (int i = 0; i < fieldNameArr.length; ++i) {
-					currentFieldValue = getFieldValue(currentFieldValue, fieldNameArr[i]);
+				for (String fn : fieldNameArr) {
+					currentFieldValue = getFieldValue(currentFieldValue, fn);
 					if (currentFieldValue == null) {
 						return null;
 					}
@@ -800,6 +816,7 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchFieldException     the no such field exception
 	 */
 	@NonNull
+	@SuppressWarnings("all")
 	public static Map<String, Object> getAnnotationValues(Annotation annotation) throws NoSuchFieldException {
 		Assert.notNull(annotation, "'annotation' must be not null");
 
@@ -817,7 +834,7 @@ public abstract class ReflectionUtils {
 	 * @throws IllegalArgumentException if {@code annotation} or {@code fieldName} is {@code null}
 	 * @throws NoSuchFieldException     the no such field exception
 	 */
-	@NonNull
+	@Nullable
 	public static <T> T getAnnotationValue(Annotation annotation, String fieldName) throws NoSuchFieldException {
 		Assert.notNull(fieldName, "'fieldName' must be not null");
 		Map<String, Object> annotationValues = getAnnotationValues(annotation);

@@ -43,7 +43,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	/**
 	 * 配置源名
 	 */
-	public static final String PROPERTY_SOURCE_NAME = "easyjPropertySource";
+	public static final String PROPERTY_SOURCE_NAME = "easyjFunctionPropertySource";
 
 	/**
 	 * 配置前缀

@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -213,7 +214,12 @@ public abstract class EnvironmentUtils {
 
 		// 创建配置源
 		Map<?, ?> source = immutable ? Collections.unmodifiableMap(properties) : properties;
-		return new OriginTrackedMapPropertySource(propertySourceName, source, immutable);
+		// 低版本的springboot中，OriginTrackedMapPropertySource类是没有immutable属性的，特殊处理一下
+		if (ReflectionUtils.hasField(OriginTrackedMapPropertySource.class, "immutable")) {
+			return new OriginTrackedMapPropertySource(propertySourceName, source, immutable);
+		} else {
+			return new OriginTrackedMapPropertySource(propertySourceName, source);
+		}
 	}
 
 	/**
