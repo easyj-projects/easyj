@@ -18,6 +18,7 @@ package icu.easyj.web.cache304.config;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.UrlUtils;
 import org.springframework.util.Assert;
 
@@ -26,6 +27,7 @@ import org.springframework.util.Assert;
  *
  * @author wangliang181230
  */
+@LoadLevel(name = "memory-map", order = 100)
 public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 
 	/**

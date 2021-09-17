@@ -15,40 +15,34 @@
  */
 package icu.easyj.web.cache304.config;
 
+import icu.easyj.core.loader.EnhancedServiceLoader;
+
 /**
  * Cache304配置存储器 工厂类
  *
  * @author wangliang181230
  */
-public class Cache304ConfigStoreFactory {
+public abstract class Cache304ConfigStoreFactory {
+
+	//region 配置存储器单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+
+	private enum Cache304ConfigStoreSingletonHolder {
+		// 单例
+		INSTANCE;
+
+		private final ICache304ConfigStore instance = EnhancedServiceLoader.load(ICache304ConfigStore.class);
+
+		public ICache304ConfigStore getInstance() {
+			return INSTANCE.instance;
+		}
+	}
 
 	/**
-	 * 配置存储器
-	 */
-	private static ICache304ConfigStore configStore;
-
-	/**
-	 * 获取配置存储器
-	 *
-	 * @return store 配置存储器
+	 * @return 加密算法生成器
 	 */
 	public static ICache304ConfigStore getStore() {
-		if (configStore == null) {
-			synchronized (Cache304ConfigStoreFactory.class) {
-				if (configStore == null) {
-					configStore = new DefaultCache304ConfigStoreImpl();
-				}
-			}
-		}
-		return configStore;
+		return Cache304ConfigStoreSingletonHolder.INSTANCE.getInstance();
 	}
 
-	/**
-	 * 设置配置存储器
-	 *
-	 * @param store 配置存储器
-	 */
-	public static void setStore(ICache304ConfigStore store) {
-		Cache304ConfigStoreFactory.configStore = store;
-	}
+	//endregion
 }
