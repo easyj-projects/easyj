@@ -81,12 +81,25 @@ public abstract class ReflectionUtils {
 	 * Gets class by name.
 	 *
 	 * @param className the class name
+	 * @param loader    the class loader
+	 * @return the class by name
+	 * @throws ClassNotFoundException the class not found exception
+	 */
+	@NonNull
+	public static Class<?> getClassByName(String className, ClassLoader loader) throws ClassNotFoundException {
+		return Class.forName(className, true, loader);
+	}
+
+	/**
+	 * Gets class by name.
+	 *
+	 * @param className the class name
 	 * @return the class by name
 	 * @throws ClassNotFoundException the class not found exception
 	 */
 	@NonNull
 	public static Class<?> getClassByName(String className) throws ClassNotFoundException {
-		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
+		return getClassByName(className, Thread.currentThread().getContextClassLoader());
 	}
 
 	//endregion
