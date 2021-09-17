@@ -57,6 +57,9 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FastJsonParamCryptoHttpMessageConverter.class);
 
+	public static final SerializeFilter[] EMPTY_FILTER_ARRAY = new SerializeFilter[0];
+
+
 	/**
 	 * 参数加密解密过滤器（需要使用到它的校验功能）
 	 */
@@ -237,7 +240,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 					&& this.paramCryptoFilter.getCryptoHandlerProperties().isNeedEncryptOutputParam()) {
 				String jsonStr = JSON.toJSONString(value,
 						fastJsonConfig.getSerializeConfig(),
-						allFilters.toArray(new SerializeFilter[0]),
+						allFilters.toArray(EMPTY_FILTER_ARRAY),
 						fastJsonConfig.getDateFormat(),
 						JSON.DEFAULT_GENERATE_FEATURE,
 						fastJsonConfig.getSerializerFeatures());
@@ -264,7 +267,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 					value, //
 					fastJsonConfig.getSerializeConfig(), //
 					//fastJsonConfig.getSerializeFilters(), //
-					allFilters.toArray(new SerializeFilter[0]),
+					allFilters.toArray(EMPTY_FILTER_ARRAY),
 					fastJsonConfig.getDateFormat(), //
 					JSON.DEFAULT_GENERATE_FEATURE, //
 					fastJsonConfig.getSerializerFeatures());

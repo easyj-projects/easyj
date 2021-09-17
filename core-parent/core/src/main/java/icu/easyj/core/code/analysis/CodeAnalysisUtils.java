@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  *
  * @author wangliang181230
  */
-public class CodeAnalysisUtils {
+public abstract class CodeAnalysisUtils {
 
 	//region 解析参数列表
 
@@ -120,7 +120,7 @@ public class CodeAnalysisUtils {
 		if (parameterList.isEmpty()) {
 			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		} else {
-			return parameterList.toArray(new Object[0]);
+			return parameterList.toArray(ArrayUtils.EMPTY_OBJECT_ARRAY);
 		}
 	}
 

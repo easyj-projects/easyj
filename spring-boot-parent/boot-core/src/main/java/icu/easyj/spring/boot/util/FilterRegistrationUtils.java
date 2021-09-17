@@ -19,6 +19,7 @@ import javax.servlet.Filter;
 
 import icu.easyj.web.exception.FilterDisabledException;
 import icu.easyj.web.filter.IFilterProperties;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.core.Ordered;
 import org.springframework.util.CollectionUtils;
@@ -61,7 +62,7 @@ public abstract class FilterRegistrationUtils {
 		if (CollectionUtils.isEmpty(properties.getUrlPatterns())) {
 			urlPatterns = new String[]{"/*"};
 		} else {
-			urlPatterns = properties.getUrlPatterns().toArray(new String[0]);
+			urlPatterns = properties.getUrlPatterns().toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 		}
 		registration.addUrlPatterns(urlPatterns);
 

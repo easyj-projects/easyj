@@ -173,7 +173,7 @@ public abstract class ReflectionUtils {
 		// list to array
 		Field[] resultFields;
 		if (!fieldList.isEmpty()) {
-			resultFields = fieldList.toArray(new Field[0]);
+			resultFields = fieldList.toArray(EMPTY_FIELD_ARRAY);
 		} else {
 			// reuse the EMPTY_FIELD_ARRAY
 			resultFields = EMPTY_FIELD_ARRAY;

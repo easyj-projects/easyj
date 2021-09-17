@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import cn.hutool.core.io.IORuntimeException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -32,7 +33,10 @@ import org.springframework.lang.NonNull;
  */
 public abstract class ResourceUtils {
 
+	private static final Resource[] EMPTY_RESOURCE_ARRAY = new Resource[0];
+
 	private static final ResourcePatternResolver RESOURCE_RESOLVER = new PathMatchingResourcePatternResolver();
+
 
 	/**
 	 * 获取位置下的所有文件资源
@@ -45,7 +49,7 @@ public abstract class ResourceUtils {
 		try {
 			return RESOURCE_RESOLVER.getResources(locationPattern);
 		} catch (IOException e) {
-			return new Resource[0];
+			return EMPTY_RESOURCE_ARRAY;
 		}
 	}
 
@@ -58,7 +62,7 @@ public abstract class ResourceUtils {
 	@NonNull
 	public static Resource[] getResources(String... locationPatternArr) {
 		return Stream
-				.of(Optional.ofNullable(locationPatternArr).orElse(new String[0]))
+				.of(Optional.ofNullable(locationPatternArr).orElse(ArrayUtils.EMPTY_STRING_ARRAY))
 				.flatMap(locationPattern -> Stream.of(getResources(locationPattern)))
 				.toArray(Resource[]::new);
 	}
