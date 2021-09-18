@@ -26,22 +26,22 @@ public enum IdCardOcrAdvancedGroup {
 	/**
 	 * 不包含任何枚举的数组
 	 */
-	EMPTY(IdCardOcrAdvanced.EMPTY),
+	EMPTY(IdCardOcrAdvanced.EMPTY_ARRAY),
 
 	/**
 	 * 包含所有枚举的数组
 	 */
-	ALL(IdCardOcrAdvanced.ALL),
+	ALL(IdCardOcrAdvanced.ALL_ARRAY),
 
 	/**
 	 * 包含所有裁剪类枚举的数组
 	 */
-	ALL_COPE(IdCardOcrAdvanced.ALL_CROP),
+	ALL_COPE(IdCardOcrAdvanced.ALL_CROP_ARRAY),
 
 	/**
 	 * 包含所有检查类枚举的数组
 	 */
-	ALL_DETECT(IdCardOcrAdvanced.ALL_DETECT);
+	ALL_DETECT(IdCardOcrAdvanced.ALL_DETECT_ARRAY);
 
 
 	private final IdCardOcrAdvanced[] advancedArr;

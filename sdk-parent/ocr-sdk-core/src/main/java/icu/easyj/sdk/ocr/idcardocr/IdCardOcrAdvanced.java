@@ -84,24 +84,24 @@ public enum IdCardOcrAdvanced {
 	/**
 	 * 不含任何枚举的数组
 	 */
-	public final static IdCardOcrAdvanced[] EMPTY = new IdCardOcrAdvanced[0];
+	public final static IdCardOcrAdvanced[] EMPTY_ARRAY = new IdCardOcrAdvanced[0];
 
 	/**
 	 * 包含所有枚举的数组
 	 */
-	public final static IdCardOcrAdvanced[] ALL = IdCardOcrAdvanced.values();
+	public final static IdCardOcrAdvanced[] ALL_ARRAY = IdCardOcrAdvanced.values();
 
 	/**
 	 * 包含所有裁剪的枚举的数组
 	 */
-	public final static IdCardOcrAdvanced[] ALL_CROP = new IdCardOcrAdvanced[]{
+	public final static IdCardOcrAdvanced[] ALL_CROP_ARRAY = new IdCardOcrAdvanced[]{
 			CROP_ID_CARD,
 			CROP_PORTRAIT};
 
 	/**
 	 * 包含所有检查枚举的数组
 	 */
-	public final static IdCardOcrAdvanced[] ALL_DETECT = new IdCardOcrAdvanced[]{
+	public final static IdCardOcrAdvanced[] ALL_DETECT_ARRAY = new IdCardOcrAdvanced[]{
 			DETECT_INVALID,
 			DETECT_INCOMPLETE,
 			DETECT_DEFINITION,
