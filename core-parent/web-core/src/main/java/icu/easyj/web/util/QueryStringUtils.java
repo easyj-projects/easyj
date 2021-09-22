@@ -18,11 +18,11 @@ package icu.easyj.web.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.UrlUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 /**
  * 查询参数串工具类
@@ -40,7 +40,7 @@ public abstract class QueryStringUtils {
 	@NonNull
 	public static Map<String, String[]> parse(@Nullable String queryString) {
 		// 如果为空，则返回空的Map
-		if (!StringUtils.hasLength(queryString)) {
+		if (StringUtils.isEmpty(queryString)) {
 			return new HashMap<>(0);
 		}
 
@@ -51,7 +51,7 @@ public abstract class QueryStringUtils {
 		String key, value;
 		String[] values;
 		for (String param : paramArr) {
-			if (!StringUtils.hasText(param)) {
+			if (StringUtils.isBlank(param)) {
 				continue;
 			}
 

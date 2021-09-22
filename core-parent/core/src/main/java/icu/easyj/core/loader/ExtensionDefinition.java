@@ -15,7 +15,7 @@
  */
 package icu.easyj.core.loader;
 
-import org.apache.commons.lang3.StringUtils;
+import icu.easyj.core.util.StringUtils;
 
 /**
  * The type ExtensionDefinition

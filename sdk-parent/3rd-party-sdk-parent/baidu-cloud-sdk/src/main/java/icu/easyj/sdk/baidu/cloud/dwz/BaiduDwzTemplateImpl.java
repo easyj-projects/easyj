@@ -22,6 +22,8 @@ import java.util.List;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.DateConstants;
+import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkException;
@@ -31,8 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -151,7 +151,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 
 	private BaiduDwzRequest buildRequest(String longUrl, String termOfValidity) {
 		BaiduDwzRequest req = new BaiduDwzRequest(longUrl, termOfValidity);
-		if (!StringUtils.hasText(req.getTermOfValidity())) {
+		if (StringUtils.isBlank(req.getTermOfValidity())) {
 			req.setTermOfValidity(config.getDefaultTermOfValidity());
 		}
 		return req;

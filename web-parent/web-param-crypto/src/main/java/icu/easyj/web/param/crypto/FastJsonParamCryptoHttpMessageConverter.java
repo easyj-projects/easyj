@@ -31,6 +31,7 @@ import com.alibaba.fastjson.support.spring.FastJsonContainer;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.alibaba.fastjson.support.spring.MappingFastJsonValue;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
 import icu.easyj.web.util.BodyHolder;
@@ -46,7 +47,6 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * JSON入参解密/出参加密 消息转换器

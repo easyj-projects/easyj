@@ -22,11 +22,11 @@ import java.util.Map;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * 过滤器排除项信息类
@@ -86,7 +86,7 @@ public class FilterExclusion {
 		FilterExclusion info;
 		String method, pattern;
 		for (String configStr : configList) {
-			if (!StringUtils.hasText(configStr)) {
+			if (StringUtils.isBlank(configStr)) {
 				continue;
 			}
 			info = new FilterExclusion(configStr);
@@ -116,7 +116,7 @@ public class FilterExclusion {
 	 * @param pattern 请求地址匹配串
 	 */
 	private static void addPatternToListMap(Map<String, List<String>> listMap, String method, String pattern) {
-		if (!StringUtils.hasText(pattern)) {
+		if (StringUtils.isBlank(pattern)) {
 			return;
 		}
 		MapUtils.computeIfAbsent(listMap, method, k -> new ArrayList<>())

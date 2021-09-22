@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.util.DateUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.ThrowableUtils;
 import icu.easyj.web.cache304.config.Cache304Config;
 import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
@@ -29,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 /**
  * Cache304工具类

@@ -20,7 +20,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.ResourceUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.GlobalCrypto;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
@@ -39,8 +41,6 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_ASYMMETRIC_CRYPTO_PREFIX;
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_SYMMETRIC_CRYPTO_PREFIX;
@@ -159,21 +159,21 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			//region 替换目录中的表达式
 
 			if (dirPath.contains("${area}")) {
-				if (StringUtils.hasLength(area)) {
+				if (StringUtils.isNotEmpty(area)) {
 					dirPath = dirPath.replace("${area}", area);
 				} else {
 					continue;
 				}
 			}
 			if (dirPath.contains("${project}")) {
-				if (StringUtils.hasLength(project)) {
+				if (StringUtils.isNotEmpty(project)) {
 					dirPath = dirPath.replace("${project}", project);
 				} else {
 					continue;
 				}
 			}
 			if (dirPath.contains("${env}")) {
-				if (StringUtils.hasLength(env)) {
+				if (StringUtils.isNotEmpty(env)) {
 					dirPath = dirPath.replace("${env}", env);
 				} else {
 					continue;
@@ -265,7 +265,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 		// 读取配置：非对称加密算法
 		String algorithm = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".algorithm");
-		if (StringUtils.hasLength(algorithm)) {
+		if (StringUtils.isNotEmpty(algorithm)) {
 			// 读取配置：私钥
 			String privateKey = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key");
 			Assert.notNull(privateKey, "非对称加密私钥 '" + GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局非对称加密算法.");
@@ -287,7 +287,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 		// 读取配置：非对称加密算法
 		algorithm = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".algorithm");
-		if (StringUtils.hasLength(algorithm)) {
+		if (StringUtils.isNotEmpty(algorithm)) {
 			// 读取配置：密钥
 			String key = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key");
 			Assert.notNull(key, "对称加密密钥 '" + GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key' 未配置，无法生成全局对称加密算法.");

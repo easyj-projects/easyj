@@ -89,7 +89,7 @@ public class ExcelExportAspect {
 			// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
 			if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
 				String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
-				if (org.springframework.util.StringUtils.hasLength(listFieldName)) {
+				if (StringUtils.isNotEmpty(listFieldName)) {
 					try {
 						result = ReflectionUtils.getFieldValue(result, listFieldName);
 					} catch (NoSuchFieldException e) {

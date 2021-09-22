@@ -21,10 +21,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.util.QueryStringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 /**
  * 查询参数串 HttpServletRequest包装类
@@ -96,7 +96,7 @@ public class QueryStringHttpServletRequestWrapper extends HttpServletRequestWrap
 			return values[0];
 		} else {
 			for (String value : values) {
-				if (StringUtils.hasText(value)) {
+				if (StringUtils.isNotBlank(value)) {
 					return value;
 				}
 			}

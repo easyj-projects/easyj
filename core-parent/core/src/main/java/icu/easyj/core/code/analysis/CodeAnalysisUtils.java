@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import icu.easyj.core.util.PatternUtils;
+import icu.easyj.core.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 /**
  * 代码解析类
@@ -43,7 +43,7 @@ public abstract class CodeAnalysisUtils {
 	 */
 	@NonNull
 	public static Object[] analysisParameters(String parametersStr, int limitParameterSize) {
-		if (!StringUtils.hasText(parametersStr) || limitParameterSize <= 0) {
+		if (StringUtils.isBlank(parametersStr) || limitParameterSize <= 0) {
 			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		}
 

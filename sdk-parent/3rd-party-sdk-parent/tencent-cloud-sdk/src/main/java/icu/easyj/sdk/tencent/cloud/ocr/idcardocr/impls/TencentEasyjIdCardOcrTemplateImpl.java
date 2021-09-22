@@ -25,7 +25,9 @@ import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.DateUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.ocr.CardSide;
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrAdvanced;
@@ -43,8 +45,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * 腾讯云IdCardOCR实现的 {@link IIdCardOcrTemplate} 接口
@@ -112,7 +112,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 			resp = tencentCloudIdCardOcrTemplate.doIdCardOcr(req, tencentCloudIdCardOcrConfig);
 		} catch (TencentCloudSDKException e) {
 			String errorCode = e.getErrorCode();
-			String errorMsg = "身份证识别失败" + (StringUtils.hasText(errorCode) ? "：" + errorCode : "");
+			String errorMsg = "身份证识别失败" + (StringUtils.isNotEmpty(errorCode) ? "：" + errorCode : "");
 			throw new IdCardOcrSdkException(errorMsg, errorCode, e);
 		} catch (IdCardOcrSdkException e) {
 			throw e;
@@ -129,9 +129,9 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		IdCardOcrResponse response = new IdCardOcrResponse();
 
 		// 设置正反面枚举
-		if (StringUtils.hasText(resp.getName())) {
+		if (StringUtils.isNotBlank(resp.getName())) {
 			response.setCardSide(CardSide.FRONT);
-		} else if (StringUtils.hasText(resp.getAuthority())) {
+		} else if (StringUtils.isNotBlank(resp.getAuthority())) {
 			response.setCardSide(CardSide.BACK);
 		} else {
 			throw new IdCardOcrSdkException("未知的身份证正反面信息", "UNKNOWN_CARD_SIDE");
@@ -272,10 +272,10 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 			return;
 		}
 
-		if (StringUtils.hasText(advancedInfo.getIdCardBase64())) {
+		if (StringUtils.isNotBlank(advancedInfo.getIdCardBase64())) {
 			response.setIdCardBase64(advancedInfo.getIdCardBase64());
 		}
-		if (StringUtils.hasText(advancedInfo.getPortraitBase64())) {
+		if (StringUtils.isNotBlank(advancedInfo.getPortraitBase64())) {
 			response.setPortraitBase64(advancedInfo.getPortraitBase64());
 		}
 

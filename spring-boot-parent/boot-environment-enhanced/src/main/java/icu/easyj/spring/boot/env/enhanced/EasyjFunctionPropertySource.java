@@ -23,13 +23,13 @@ import cn.hutool.core.util.StrUtil;
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.code.analysis.CodeAnalysisUtils;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.autoconfigure.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
-import org.springframework.util.StringUtils;
 
 /**
  * 函数式配置源
@@ -141,7 +141,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @return 是否为当前配置源的配置
 	 */
 	private boolean isMatch(String name) {
-		if (!StringUtils.hasLength(name)) {
+		if (StringUtils.isEmpty(name)) {
 			return false;
 		}
 

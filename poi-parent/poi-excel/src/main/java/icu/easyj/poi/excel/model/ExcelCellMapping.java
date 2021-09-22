@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.annotation.ExcelCells;
 import icu.easyj.poi.excel.style.ExcelFormats;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.springframework.util.StringUtils;
 
 /**
  * model中的属性和excel表格中的列的映射关系
@@ -307,7 +307,7 @@ public class ExcelCellMapping implements Serializable {
 
 		// 属性信息
 		cellMapping.setField(f);
-		if (StringUtils.hasText(anno.column()) && !anno.column().equals(f.getName())) {
+		if (StringUtils.isNotBlank(anno.column()) && !anno.column().equals(f.getName())) {
 			String column = anno.column();
 			// 拼接当前的字段名到column中
 			if (column.startsWith("#") || column.startsWith("$")) {
@@ -356,7 +356,7 @@ public class ExcelCellMapping implements Serializable {
 		cellMapping.setVerAlign(anno.verAlign().toLowerCase().trim()); // 竖直位置
 		cellMapping.setTrueText(anno.trueText().trim()); // boolean型数据为true时，显示的文字
 		cellMapping.setFalseText(anno.falseText().trim()); // boolean型数据为false时，显示的文字
-		if (StringUtils.hasText(anno.convert())) {
+		if (StringUtils.isNotBlank(anno.convert())) {
 			Map<String, String> convertMap = new HashMap<>();
 			Map<String, String> convertMap2 = new HashMap<>();
 

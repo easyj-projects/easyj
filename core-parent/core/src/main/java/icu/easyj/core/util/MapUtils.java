@@ -26,6 +26,26 @@ import java.util.function.Function;
 public abstract class MapUtils {
 
 	/**
+	 * 判断集合是否为空
+	 *
+	 * @param map 集合
+	 * @return 是否为空
+	 */
+	public static boolean isEmpty(Map<?, ?> map) {
+		return map == null || map.isEmpty();
+	}
+
+	/**
+	 * 判断集合是否不为空
+	 *
+	 * @param map 集合
+	 * @return 是否不为空
+	 */
+	public static boolean isNotEmpty(Map<?, ?> map) {
+		return !isEmpty(map);
+	}
+
+	/**
 	 * Map to string.
 	 *
 	 * @param map the map

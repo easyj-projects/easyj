@@ -25,6 +25,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.constant.FilterOrderConstants;
 import icu.easyj.web.filter.AbstractFilter;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
@@ -36,7 +37,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * 入参解密过滤器
@@ -105,7 +105,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		String encryptedQueryString = this.getEncryptedQueryString(request);
 
 		// 如果`待解密的queryString`不为空，才需要解密
-		if (StringUtils.hasLength(encryptedQueryString)) {
+		if (StringUtils.isNotEmpty(encryptedQueryString)) {
 			// 处理被转义的字符
 			encryptedQueryString = cryptoHandler.handleEscapedChars(encryptedQueryString);
 
@@ -152,7 +152,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 	 * @return 加密过的queryString
 	 */
 	private String getEncryptedQueryString(HttpServletRequest request) {
-		if (StringUtils.hasLength(super.filterProperties.getQueryStringName())) {
+		if (StringUtils.isNotEmpty(super.filterProperties.getQueryStringName())) {
 			// 判断是否有参数未加密（如果强制要求入参加密）
 			if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
 				Map<String, String[]> parameterMap = request.getParameterMap();

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -34,8 +36,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * Excel 工具类
@@ -227,7 +227,7 @@ public abstract class ExcelUtils {
 	 */
 	public static <T> Workbook toExcel(List<T> dataList, Class<T> clazz) {
 		if (clazz == null) {
-			if (StringUtils.isEmpty(dataList)) {
+			if (CollectionUtils.isEmpty(dataList)) {
 				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
 			}
 			clazz = (Class<T>)dataList.get(0).getClass();
@@ -244,7 +244,7 @@ public abstract class ExcelUtils {
 			book = new HSSFWorkbook();
 			// 创建表
 			Sheet sheet;
-			if (!StringUtils.hasText(mapping.getSheetName())) {
+			if (StringUtils.isBlank(mapping.getSheetName())) {
 				sheet = book.createSheet();
 			} else {
 				sheet = book.createSheet(mapping.getSheetName());

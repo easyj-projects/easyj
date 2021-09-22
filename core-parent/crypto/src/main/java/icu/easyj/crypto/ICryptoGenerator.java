@@ -26,13 +26,13 @@ import javax.crypto.spec.IvParameterSpec;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.crypto.KeyUtil;
 import cn.hutool.crypto.SecureUtil;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * 加密算法实例生成器接口
@@ -108,7 +108,7 @@ public interface ICryptoGenerator {
 		}
 
 		byte[] keyBytes = key.getBytes(charset);
-		byte[] ivBytes = (StringUtils.hasLength(iv) ? iv.getBytes(charset) : null);
+		byte[] ivBytes = (StringUtils.isNotEmpty(iv) ? iv.getBytes(charset) : null);
 
 		return getSymmetricCrypto(algorithm, keyBytes, ivBytes);
 	}

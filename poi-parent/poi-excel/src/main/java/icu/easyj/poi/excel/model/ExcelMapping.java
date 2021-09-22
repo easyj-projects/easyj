@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
-import org.springframework.util.StringUtils;
 
 /**
  * model中的属性和excel表格中的列的映射关系

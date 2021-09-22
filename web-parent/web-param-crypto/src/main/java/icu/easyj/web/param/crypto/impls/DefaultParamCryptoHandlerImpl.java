@@ -19,13 +19,13 @@ import java.nio.charset.StandardCharsets;
 
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.Base64Utils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.web.param.crypto.IParamCryptoHandler;
 import icu.easyj.web.param.crypto.IParamCryptoHandlerProperties;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
-import org.springframework.util.StringUtils;
 
 /**
  * 默认的参数加密解密处理器实现类
@@ -71,10 +71,10 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 	 * @param properties 配置
 	 */
 	private void checkProperties(IParamCryptoHandlerProperties properties) {
-		if (!StringUtils.hasText(properties.getAlgorithm())) {
+		if (StringUtils.isBlank(properties.getAlgorithm())) {
 			throw new ConfigurationException("出入参加密解密算法未配置，无法创建对称加密算法实例");
 		}
-		if (!StringUtils.hasText(properties.getKey())) {
+		if (StringUtils.isBlank(properties.getKey())) {
 			throw new ConfigurationException("出入参加密解密密钥未配置，无法创建对称加密算法实例");
 		}
 	}

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.constant.DateFormatConstants;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.constant.HttpConstants;
 import icu.easyj.web.constant.HttpHeaderConstants;
 import icu.easyj.web.exception.RequestContextNotFoundException;
@@ -32,7 +33,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -233,7 +233,7 @@ public abstract class HttpUtils {
 	 */
 	public static boolean isNoCacheRequest(HttpServletRequest request) {
 		String cacheControl = request.getHeader(HttpHeaders.CACHE_CONTROL);
-		if (StringUtils.hasLength(cacheControl)) {
+		if (StringUtils.isNotEmpty(cacheControl)) {
 			cacheControl = cacheControl.toLowerCase();
 			return cacheControl.contains(NO_CACHE) || cacheControl.contains(NO_STORE);
 		}

@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import icu.easyj.core.constant.PageConstants;
+import icu.easyj.core.util.CollectionUtils;
 import org.springframework.lang.NonNull;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author wangliang181230

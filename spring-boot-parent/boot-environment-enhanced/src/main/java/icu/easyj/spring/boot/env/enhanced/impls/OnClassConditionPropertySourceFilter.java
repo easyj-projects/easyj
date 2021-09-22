@@ -18,8 +18,8 @@ package icu.easyj.spring.boot.env.enhanced.impls;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.env.enhanced.AbstractConditionPropertySourceFilter;
-import org.springframework.util.StringUtils;
 
 /**
  * 如果类存在，则添加配置源；反之，则不添加。
@@ -42,7 +42,7 @@ public class OnClassConditionPropertySourceFilter extends AbstractConditionPrope
 	public boolean doConditionFilter(List<String> conditionPropertyList) {
 		try {
 			for (String property : conditionPropertyList) {
-				if (StringUtils.hasLength(property)) {
+				if (StringUtils.isNotEmpty(property)) {
 					// 尝试加载类
 					this.loadClass(property);
 				}

@@ -21,10 +21,10 @@ import icu.easyj.config.GlobalConfigSetter;
 import icu.easyj.config.GlobalConfigs;
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
+import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * EasyJ定义的全局配置
@@ -100,28 +100,28 @@ public class GlobalProperties implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		if (StringUtils.hasText(area)) {
+		if (StringUtils.isNotBlank(area)) {
 			GlobalConfigSetter.setArea(area.trim());
 		}
-		if (StringUtils.hasText(areaName)) {
+		if (StringUtils.isNotBlank(areaName)) {
 			GlobalConfigSetter.setAreaName(areaName.trim());
 		}
-		if (StringUtils.hasText(project)) {
+		if (StringUtils.isNotBlank(project)) {
 			GlobalConfigSetter.setProject(project.trim());
 		}
-		if (StringUtils.hasText(projectName)) {
+		if (StringUtils.isNotBlank(projectName)) {
 			GlobalConfigSetter.setProjectName(projectName.trim());
 		}
-		if (StringUtils.hasText(application)) {
+		if (StringUtils.isNotBlank(application)) {
 			GlobalConfigSetter.setApplication(application.trim());
 		}
-		if (StringUtils.hasText(applicationName)) {
+		if (StringUtils.isNotBlank(applicationName)) {
 			GlobalConfigSetter.setApplicationName(applicationName.trim());
 		}
-		if (StringUtils.hasText(env)) {
+		if (StringUtils.isNotBlank(env)) {
 			GlobalConfigSetter.setEnv(env.trim());
 		}
-		if (StringUtils.hasText(envName)) {
+		if (StringUtils.isNotBlank(envName)) {
 			GlobalConfigSetter.setEnvName(envName.trim());
 		}
 		if (envType != null) {
@@ -129,7 +129,7 @@ public class GlobalProperties implements InitializingBean {
 		} else {
 			String env = GlobalConfigs.getEnv();
 			// 如果环境类型为空，则根据环境名前缀名与类型名是否匹配，来判断环境类型
-			if (StringUtils.hasText(env)) {
+			if (StringUtils.isNotBlank(env)) {
 				// 转换为大写，与枚举一样
 				env = env.toUpperCase();
 				for (EnvironmentType type : EnvironmentType.values()) {

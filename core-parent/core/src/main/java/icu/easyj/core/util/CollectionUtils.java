@@ -17,6 +17,7 @@ package icu.easyj.core.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -91,5 +92,45 @@ public abstract class CollectionUtils {
 				// 捕获IndexOutOfBoundsException，并继续尝试获取最后一项
 			}
 		}
+	}
+
+	/**
+	 * 判断集合是否为空
+	 *
+	 * @param coll 集合
+	 * @return 是否为空
+	 */
+	public static boolean isEmpty(Collection<?> coll) {
+		return coll == null || coll.isEmpty();
+	}
+
+	/**
+	 * 判断集合是否不为空
+	 *
+	 * @param coll 集合
+	 * @return 是否不为空
+	 */
+	public static boolean isNotEmpty(Collection<?> coll) {
+		return !isEmpty(coll);
+	}
+
+	/**
+	 * 判断集合是否为空
+	 *
+	 * @param map 集合
+	 * @return 是否为空
+	 */
+	public static boolean isEmpty(Map<?, ?> map) {
+		return MapUtils.isEmpty(map);
+	}
+
+	/**
+	 * 判断集合是否不为空
+	 *
+	 * @param map 集合
+	 * @return 是否不为空
+	 */
+	public static boolean isNotEmpty(Map<?, ?> map) {
+		return MapUtils.isNotEmpty(map);
 	}
 }

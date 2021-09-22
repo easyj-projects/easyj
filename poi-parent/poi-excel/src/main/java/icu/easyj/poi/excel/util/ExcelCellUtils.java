@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.functions.ExcelCellValueChangeFuns;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
@@ -40,7 +41,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.util.StringUtils;
 
 /**
  * 获取单元格的值的 工具类
@@ -172,13 +172,13 @@ public abstract class ExcelCellUtils {
 			// 返回值为字符串的两种，需要验证值
 			case STRING: // 字符串
 				str = cell.getStringCellValue();
-				if (StringUtils.hasText(str)) {
+				if (StringUtils.isNotBlank(str)) {
 					return false;
 				}
 				break;
 			case FORMULA: // 公式
 				str = cell.getCellFormula();
-				if (StringUtils.hasText(str)) {
+				if (StringUtils.isNotBlank(str)) {
 					return false;
 				}
 				break;
@@ -245,7 +245,7 @@ public abstract class ExcelCellUtils {
 			// 如果配置了convert，则根据convert进行值的转换
 			if (cellMapping.getConvertMap2() != null) {
 				String convertValue = cellMapping.getConvertMap2().get(value.toString().trim());
-				if (StringUtils.hasText(convertValue)) {
+				if (StringUtils.isNotBlank(convertValue)) {
 					value = convertValue;
 				}
 			}
@@ -434,18 +434,18 @@ public abstract class ExcelCellUtils {
 				// 创建样式
 				cellStyle = book.createCellStyle();
 				// 创建样式：字体
-				if (StringUtils.hasText(cellMapping.getColor())) {
+				if (StringUtils.isNotBlank(cellMapping.getColor())) {
 					Font font = book.createFont();
 					font.setColor(cellMapping.getColorIndex());
 					cellStyle.setFont(font);
 				}
 				// 创建样式：格式化
-				if (StringUtils.hasText(cellMapping.getFormat())) {
+				if (StringUtils.isNotBlank(cellMapping.getFormat())) {
 					cellStyle.setDataFormat(book.createDataFormat().getFormat(cellMapping.getFormat()));
 				}
 				//// 创建样式：位置 ////
 				// 创建样式：水平位置
-				if (StringUtils.hasText(cellMapping.getAlign())) {
+				if (StringUtils.isNotBlank(cellMapping.getAlign())) {
 					switch (cellMapping.getAlign()) {
 						case "center":
 							cellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -461,7 +461,7 @@ public abstract class ExcelCellUtils {
 					}
 				}
 				// 创建样式：竖直位置
-				if (StringUtils.hasText(cellMapping.getVerAlign())) {
+				if (StringUtils.isNotBlank(cellMapping.getVerAlign())) {
 					switch (cellMapping.getVerAlign()) {
 						case "middle":
 						case "center":
@@ -481,7 +481,7 @@ public abstract class ExcelCellUtils {
 				// 是否允许自动换行
 				cellStyle.setWrapText(cellMapping.isWrapText());
 				// 创建样式：背景颜色
-				if (StringUtils.hasText(cellMapping.getBackgroundColor())) {
+				if (StringUtils.isNotBlank(cellMapping.getBackgroundColor())) {
 					cellStyle.setFillForegroundColor(cellMapping.getBackgroundColorIndex());
 					cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 				}

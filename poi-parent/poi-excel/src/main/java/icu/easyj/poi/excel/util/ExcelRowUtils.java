@@ -18,6 +18,7 @@ package icu.easyj.poi.excel.util;
 import java.util.List;
 
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -35,7 +36,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
-import org.springframework.util.StringUtils;
 
 /**
  * Excel行 工具类
@@ -280,7 +280,7 @@ public abstract class ExcelRowUtils {
 			cell.setCellStyle(cs);
 
 			// 添加注释
-			if (StringUtils.hasText(cm.getHeadComment())) {
+			if (StringUtils.isNotBlank(cm.getHeadComment())) {
 				Comment comment1 = drawing.createCellComment(anchor);
 				RichTextString str1 = factory.createRichTextString(cm.getHeadComment());
 				comment1.setString(str1);

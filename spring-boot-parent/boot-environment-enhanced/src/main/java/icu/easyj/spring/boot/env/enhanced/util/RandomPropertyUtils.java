@@ -22,11 +22,11 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.net.NetUtil;
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import static org.springframework.util.SocketUtils.PORT_RANGE_MAX;
 import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
@@ -57,7 +57,7 @@ public abstract class RandomPropertyUtils {
 			}
 
 			// 如果方法名不存在，则返回32位UUID
-			if (!StringUtils.hasLength(result.getMethodName())) {
+			if (StringUtils.isEmpty(result.getMethodName())) {
 				value = UUID.fastUUID().toString(true); // 32位 不带'-'字符 的UUID
 				return value;
 			}

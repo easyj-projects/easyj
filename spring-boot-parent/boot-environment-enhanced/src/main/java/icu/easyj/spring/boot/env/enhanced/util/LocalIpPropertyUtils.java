@@ -20,12 +20,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.NetUtils;
+import icu.easyj.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * 本地IP配置工具类
@@ -46,7 +46,7 @@ public abstract class LocalIpPropertyUtils {
 	 * @return value 配置值
 	 */
 	public static String getProperty(String name, CodeAnalysisResult result) {
-		if (!StringUtils.hasText(result.getMethodName())) {
+		if (StringUtils.isBlank(result.getMethodName())) {
 			String localIp = getFirstIp();
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("函数式配置`${" + name + "}`的值: " + localIp);
@@ -125,9 +125,9 @@ public abstract class LocalIpPropertyUtils {
 
 		// 先根据入参获取配置
 		for (String pattern : patterns) {
-			if (StringUtils.hasLength(pattern)) {
+			if (StringUtils.isNotEmpty(pattern)) {
 				ip = matchIp(ipList, pattern);
-				if (StringUtils.hasText(ip)) {
+				if (StringUtils.isNotBlank(ip)) {
 					return ip;
 				}
 			}
@@ -136,7 +136,7 @@ public abstract class LocalIpPropertyUtils {
 		// 使用 192.* 匹配
 		String pattern = "192.*";
 		ip = matchIp(ipList, pattern);
-		if (StringUtils.hasText(ip)) {
+		if (StringUtils.isNotBlank(ip)) {
 			if (LOGGER.isWarnEnabled()) {
 				LOGGER.warn("根据匹配串 {} 未匹配到任何网卡IP，现使用匹配串 [{}] 进行匹配，并匹配到了IP：{}",
 						icu.easyj.core.util.StringUtils.toString(patterns), pattern, ip);

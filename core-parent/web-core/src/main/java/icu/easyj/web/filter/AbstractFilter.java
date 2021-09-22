@@ -26,15 +26,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.util.HttpConfigs;
 import icu.easyj.web.util.HttpUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
-import org.springframework.util.StringUtils;
 
 import static icu.easyj.web.constant.FilterConstants.GLOBAL_EXCLUSIONS;
 
@@ -119,7 +119,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 初始化过滤器名称
 		String filterName = filterConfig.getFilterName();
-		if (!StringUtils.hasText(filterName)) {
+		if (StringUtils.isBlank(filterName)) {
 			filterName = this.getClass().getSimpleName();
 		}
 		this.filterName = filterName;

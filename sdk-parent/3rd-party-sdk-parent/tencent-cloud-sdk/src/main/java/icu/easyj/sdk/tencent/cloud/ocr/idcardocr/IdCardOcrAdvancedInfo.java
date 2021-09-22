@@ -20,9 +20,9 @@ import java.util.Set;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
+import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.Nullable;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * @author wangliang181230
@@ -168,7 +168,7 @@ public class IdCardOcrAdvancedInfo {
 	 */
 	@Nullable
 	public static IdCardOcrAdvancedInfo fromJsonString(String advanceInfoJson) {
-		if (!StringUtils.hasText(advanceInfoJson) || advanceInfoJson.length() == 2) { // length=2，即{}
+		if (StringUtils.isBlank(advanceInfoJson) || advanceInfoJson.length() == 2) { // length=2，即{}
 			return null;
 		}
 		return IDCardOCRResponse.fromJsonString(advanceInfoJson, IdCardOcrAdvancedInfo.class);

@@ -38,6 +38,95 @@ public abstract class StringUtils {
 	 */
 	public static final int CASE_DIFF = ('a' - 'A');
 
+
+	//region 判断方法
+
+	/**
+	 * 字符串是否为空
+	 *
+	 * @param cs 字符串
+	 * @return 是否为空
+	 */
+	public static boolean isEmpty(final CharSequence cs) {
+		return cs == null || cs.length() == 0;
+	}
+
+	/**
+	 * 字符串是否不为空
+	 *
+	 * @param cs 字符串
+	 * @return 是否不为空
+	 */
+	public static boolean isNotEmpty(final CharSequence cs) {
+		return !isEmpty(cs);
+	}
+
+	/**
+	 * 字符串是否为空白
+	 *
+	 * @param cs 字符串
+	 * @return 是否为空白
+	 */
+	public static boolean isBlank(final CharSequence cs) {
+		if (cs == null) {
+			return true;
+		}
+
+		final int length = cs.length();
+		if (length > 0) {
+			for (int i = 0; i < length; ++i) {
+				if (!Character.isWhitespace(cs.charAt(i))) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * 字符串是否不为空白
+	 *
+	 * @param cs 字符串
+	 * @return 是否不为空白
+	 */
+	public static boolean isNotBlank(final CharSequence cs) {
+		return !isBlank(cs);
+	}
+
+	/**
+	 * 判断字符串是否相等
+	 *
+	 * @param cs1 字符串1
+	 * @param cs2 字符串2
+	 * @return 是否相等
+	 */
+	public static boolean equals(final CharSequence cs1, final CharSequence cs2) {
+		if (cs1 == cs2) {
+			return true;
+		}
+		if (cs1 == null || cs2 == null) {
+			return false;
+		}
+		if (cs1.length() != cs2.length()) {
+			return false;
+		}
+		if (cs1 instanceof String && cs2 instanceof String) {
+			return cs1.equals(cs2);
+		}
+
+		final int length = cs1.length();
+		for (int i = 0; i < length; i++) {
+			if (cs1.charAt(i) != cs2.charAt(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//endregion
+
+
 	//region 中文相关方法
 
 	/**
@@ -46,28 +135,30 @@ public abstract class StringUtils {
 	 * @param c 字符
 	 * @return 是否为中文字符
 	 */
-	public static boolean isChinese(char c) {
+	public static boolean isChinese(final char c) {
 		return c >= 0x4E00 && c <= 0x9FA5;
 	}
 
 	/**
 	 * 计算字符串长度，中文计2个字符
 	 *
-	 * @param str 字符串
+	 * @param cs 字符串
 	 * @return strLength 字符串
 	 */
-	public static int chineseLength(String str) {
-		if (str == null || str.isEmpty()) {
+	public static int chineseLength(final CharSequence cs) {
+		if (isEmpty(cs)) {
 			return 0;
 		}
 
-		int length = str.length();
-		for (char c : str.toCharArray()) {
-			if (isChinese(c)) {
-				++length;
+		final int length = cs.length();
+		int resultLength = length; // 返回长度
+		for (int i = 0; i < length; ++i) {
+			if (isChinese(cs.charAt(i))) {
+				++resultLength;
 			}
 		}
-		return length;
+
+		return resultLength;
 	}
 
 	//endregion
@@ -83,8 +174,8 @@ public abstract class StringUtils {
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
 	@Nullable
-	public static String find(String[] strArr, Predicate<String> matcher) {
-		for (String str : strArr) {
+	public static String find(final String[] strArr, final Predicate<String> matcher) {
+		for (final String str : strArr) {
 			if (matcher.test(str)) {
 				return str;
 			}
@@ -101,8 +192,8 @@ public abstract class StringUtils {
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
 	@Nullable
-	public static String findNotEmptyOne(String... strArr) {
-		return find(strArr, org.springframework.util.StringUtils::hasLength);
+	public static String findNotEmptyOne(final String... strArr) {
+		return find(strArr, StringUtils::isNotEmpty);
 	}
 
 	/**
@@ -112,8 +203,8 @@ public abstract class StringUtils {
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
 	@Nullable
-	public static String findNotBlankOne(String... strArr) {
-		return find(strArr, org.springframework.util.StringUtils::hasText);
+	public static String findNotBlankOne(final String... strArr) {
+		return find(strArr, StringUtils::isNotBlank);
 	}
 
 	//endregion
@@ -197,9 +288,9 @@ public abstract class StringUtils {
 	 * @return str 转换后的字符串
 	 */
 	@NonNull
-	private static String unknownTypeObjectToString(@NonNull Object obj) {
+	private static String unknownTypeObjectToString(@NonNull final Object obj) {
 		return CycleDependencyHandler.wrap(obj, o -> {
-			StringBuilder sb = new StringBuilder(32);
+			final StringBuilder sb = new StringBuilder(32);
 
 			// handle the anonymous class
 			String classSimpleName;
@@ -216,10 +307,12 @@ public abstract class StringUtils {
 			}
 
 			sb.append(classSimpleName).append("(");
+
+			// the initial length
 			final int initialLength = sb.length();
 
 			// Gets all fields, excluding static or synthetic fields
-			Field[] fields = ReflectionUtils.getAllFields(obj.getClass());
+			final Field[] fields = ReflectionUtils.getAllFields(obj.getClass());
 			Object fieldValue;
 			for (Field field : fields) {
 				if (sb.length() > initialLength) {

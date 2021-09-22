@@ -18,8 +18,8 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 import java.util.List;
 
 import cn.hutool.core.annotation.Alias;
+import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 /**
  * 百度云DWZ响应参数
@@ -60,7 +60,7 @@ public class BaiduDwzResponse {
 		if (code != null) {
 			if (BaiduDwzErrorType.PART_LONG_URL_ERROR.getCode() == code && shortUrls != null) {
 				for (BaiduDwzResponseData data : shortUrls) {
-					if (StringUtils.hasText(data.getErrMsg())) {
+					if (StringUtils.isNotBlank(data.getErrMsg())) {
 						return "[" + this.code + "]" + data.getErrMsg();
 					}
 				}

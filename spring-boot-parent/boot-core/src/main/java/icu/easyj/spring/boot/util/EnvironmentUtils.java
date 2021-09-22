@@ -25,8 +25,10 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -41,8 +43,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * 环境工具类
@@ -312,9 +312,9 @@ public abstract class EnvironmentUtils {
 	@Nullable
 	public static String getEnv(@NonNull ConfigurableEnvironment environment) {
 		String env = environment.getProperty(ENV_KEY);
-		if (!StringUtils.hasText(env)) {
+		if (StringUtils.isBlank(env)) {
 			env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
-			if (!StringUtils.hasText(env)) {
+			if (StringUtils.isBlank(env)) {
 				env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME + "[0]");
 			}
 		}
@@ -360,19 +360,19 @@ public abstract class EnvironmentUtils {
 			if (property.contains(StrPool.COMMA)) {
 				String[] propertyArr = property.split(StrPool.COMMA);
 				for (String pro : propertyArr) {
-					if (StringUtils.hasText(pro)) {
+					if (StringUtils.isNotBlank(pro)) {
 						propertyList.add(pro.trim());
 					}
 				}
 			} else {
-				if (StringUtils.hasText(property)) {
+				if (StringUtils.isNotBlank(property)) {
 					propertyList.add(property.trim());
 				}
 			}
 		} else {
 			int i = 0;
 			while ((property = getPropertyStr(propertySource, propertyName + "[" + i + "]")) != null) {
-				if (StringUtils.hasText(property)) {
+				if (StringUtils.isNotBlank(property)) {
 					propertyList.add(property.trim());
 				}
 				i++;

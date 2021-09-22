@@ -18,8 +18,8 @@ package icu.easyj.web.cache304.config;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
+import icu.easyj.core.util.CollectionUtils;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 /**
  * Cache304配置存储器

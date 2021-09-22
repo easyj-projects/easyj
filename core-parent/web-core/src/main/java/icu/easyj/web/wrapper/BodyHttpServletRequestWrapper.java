@@ -24,10 +24,10 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.BodyServletInputStream;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * Body HttpServletRequest包装类
@@ -54,7 +54,7 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	 */
 	public BodyHttpServletRequestWrapper(HttpServletRequest request, String body) {
 		super(request);
-		Assert.isTrue(StringUtils.hasText(body), "'body' must be not null");
+		Assert.isTrue(StringUtils.isNotBlank(body), "'body' must be not null");
 		this.body = body;
 	}
 

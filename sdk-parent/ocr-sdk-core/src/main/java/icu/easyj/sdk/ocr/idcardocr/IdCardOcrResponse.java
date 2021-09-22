@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.ocr.CardSide;
 import org.springframework.lang.NonNull;
-import org.springframework.util.StringUtils;
 
 /**
  * 身份证识别响应内容
@@ -218,7 +218,7 @@ public class IdCardOcrResponse {
 	}
 
 	public String getBackIdCardBase64() {
-		if (!StringUtils.hasLength(backIdCardBase64) && cardSide == CardSide.BACK) {
+		if (StringUtils.isEmpty(backIdCardBase64) && cardSide == CardSide.BACK) {
 			return idCardBase64;
 		}
 		return backIdCardBase64;

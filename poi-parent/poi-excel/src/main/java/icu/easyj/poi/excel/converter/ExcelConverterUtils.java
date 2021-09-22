@@ -24,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import icu.easyj.core.exception.ConvertException;
 import icu.easyj.core.exception.ConverterNotFoundException;
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.lang.NonNull;
-import org.springframework.util.CollectionUtils;
 
 /**
  * Excel转换器工具类

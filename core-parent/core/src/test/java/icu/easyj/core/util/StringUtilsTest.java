@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,6 +40,34 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * @author wangliang181230
  */
 class StringUtilsTest {
+
+	@Test
+	void testIsEmptyAndIsBlank() {
+		// isEmpty
+		Assertions.assertTrue(StringUtils.isEmpty(null));
+		Assertions.assertTrue(StringUtils.isEmpty(""));
+		Assertions.assertFalse(StringUtils.isEmpty(" "));
+		Assertions.assertFalse(StringUtils.isEmpty(" 1 "));
+		// isNotEmpty
+		Assertions.assertFalse(StringUtils.isNotEmpty(null));
+		Assertions.assertFalse(StringUtils.isNotEmpty(""));
+		Assertions.assertTrue(StringUtils.isNotEmpty(" "));
+		Assertions.assertTrue(StringUtils.isNotEmpty(" 1 "));
+
+		// isBlank
+		Assertions.assertTrue(StringUtils.isBlank(null));
+		Assertions.assertTrue(StringUtils.isBlank(""));
+		Assertions.assertTrue(StringUtils.isBlank(" "));
+		Assertions.assertFalse(StringUtils.isBlank(" 1 "));
+		// isNotBlank
+		Assertions.assertFalse(StringUtils.isNotBlank(null));
+		Assertions.assertFalse(StringUtils.isNotBlank(""));
+		Assertions.assertFalse(StringUtils.isNotBlank(" "));
+		Assertions.assertTrue(StringUtils.isNotBlank(" 1 "));
+	}
+
+
+	//region 测试`StringUtils.toString()`方法和CycleDependency类
 
 	@Test
 	@SuppressWarnings("all")
@@ -176,7 +205,6 @@ class StringUtilsTest {
 		assertFalse(CycleDependency.toStringTriggered);
 	}
 
-
 	//region 辅助测试的类、注解、枚举等
 
 	enum TestEnum {
@@ -260,6 +288,8 @@ class StringUtilsTest {
 					')';
 		}
 	}
+
+	//endregion
 
 	//endregion
 }

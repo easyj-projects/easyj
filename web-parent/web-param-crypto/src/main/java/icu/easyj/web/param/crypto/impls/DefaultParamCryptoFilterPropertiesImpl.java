@@ -15,9 +15,9 @@
  */
 package icu.easyj.web.param.crypto.impls;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.filter.BaseFilterProperties;
 import icu.easyj.web.param.crypto.IParamCryptoFilterProperties;
-import org.springframework.util.StringUtils;
 
 /**
  * 请求参数加解密过滤器的配置
@@ -45,7 +45,7 @@ public class DefaultParamCryptoFilterPropertiesImpl extends BaseFilterProperties
 
 	@Override
 	public void setQueryStringName(String queryStringName) {
-		if (StringUtils.hasText(queryStringName)) {
+		if (StringUtils.isNotBlank(queryStringName)) {
 			queryStringName = queryStringName.trim();
 		} else {
 			queryStringName = null;
