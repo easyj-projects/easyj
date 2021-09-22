@@ -146,7 +146,7 @@ public abstract class CodeAnalysisUtils {
 	@Nullable
 	public static CodeAnalysisResult analysisCode(String code, int limitParameterSize, boolean isRigorous) {
 		if (code == null) {
-			throw new IllegalArgumentException("'code' must be not null");
+			throw new IllegalArgumentException("'code' must not be null");
 		}
 
 		Matcher m = (isRigorous ? PatternUtils.P_CODE_LINE : PatternUtils.P_CODE_LINE2).matcher(code.trim());

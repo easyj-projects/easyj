@@ -72,7 +72,7 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 	@Override
 	@NonNull
 	public ITickClock createClock(DataSource dataSource) {
-		Assert.notNull(dataSource, "'dataSource' must be not null");
+		Assert.notNull(dataSource, "'dataSource' must not be null");
 		// TODO: @wangliang181230 待开发，方言需支持不同数据库不同`获取数据库时间的SQL`的功能。
 		return null;
 	}

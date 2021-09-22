@@ -69,8 +69,8 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 							 @NonNull IParamCryptoHandler cryptoHandler) {
 		super(filterProperties);
 
-		Assert.notNull(cryptoHandler, "'cryptoHandler' must be not null");
-		Assert.notNull(cryptoHandlerProperties, "'cryptoHandlerProperties' must be not null");
+		Assert.notNull(cryptoHandler, "'cryptoHandler' must not be null");
+		Assert.notNull(cryptoHandlerProperties, "'cryptoHandlerProperties' must not be null");
 
 		this.cryptoHandlerProperties = cryptoHandlerProperties;
 		this.cryptoHandler = cryptoHandler;

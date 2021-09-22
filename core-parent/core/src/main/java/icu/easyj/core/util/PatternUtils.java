@@ -76,7 +76,7 @@ public abstract class PatternUtils {
 		if (str == null) {
 			return false;
 		}
-		Assert.notNull(pattern, "'pattern' must be not null");
+		Assert.notNull(pattern, "'pattern' must not be null");
 		Matcher matcher = pattern.matcher(str);
 		return matcher.matches();
 	}
@@ -92,7 +92,7 @@ public abstract class PatternUtils {
 		if (str == null) {
 			return false;
 		}
-		Assert.notNull(regex, "'regex' must be not null");
+		Assert.notNull(regex, "'regex' must not be null");
 		Pattern p = Pattern.compile(regex);
 		return validate(p, str);
 	}

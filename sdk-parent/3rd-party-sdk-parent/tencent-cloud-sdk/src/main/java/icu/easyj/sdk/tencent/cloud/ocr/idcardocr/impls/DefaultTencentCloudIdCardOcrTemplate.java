@@ -61,7 +61,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	}
 
 	public DefaultTencentCloudIdCardOcrTemplate(@NonNull TencentCloudIdCardOcrConfig globalConfig) {
-		Assert.notNull(globalConfig, "'globalConfig' must be not null");
+		Assert.notNull(globalConfig, "'globalConfig' must not be null");
 
 		this.globalConfig = globalConfig;
 		this.globalClient = this.newOcrClient(globalConfig);
@@ -84,16 +84,16 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	@Override
 	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		if (config == null) {
-			Assert.notNull(this.globalConfig, "'this.globalConfig' must be not null");
+			Assert.notNull(this.globalConfig, "'this.globalConfig' must not be null");
 			config = this.globalConfig;
 		}
 
 		// 合并全局配置
 		this.mergeGlobalConfig(config);
 
-		Assert.notNull(config.getSecretId(), "'secretId' must be not null");
-		Assert.notNull(config.getSecretKey(), "'secretKey' must be not null");
-		Assert.notNull(config.getRegion(), "'region' must be not null");
+		Assert.notNull(config.getSecretId(), "'secretId' must not be null");
+		Assert.notNull(config.getSecretKey(), "'secretKey' must not be null");
+		Assert.notNull(config.getRegion(), "'region' must not be null");
 
 		long startTime = System.nanoTime();
 		try {

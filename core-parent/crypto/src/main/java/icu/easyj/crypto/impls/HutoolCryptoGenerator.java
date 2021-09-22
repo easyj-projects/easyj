@@ -69,9 +69,9 @@ public class HutoolCryptoGenerator implements ICryptoGenerator {
 	@Override
 	public IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
 												 @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey) {
-		Assert.notNull(algorithm, "'algorithm' must be not null");
-		Assert.notNull(publicKey, "'publicKey' must be not null");
-		Assert.notNull(privateKey, "'privateKey' must be not null");
+		Assert.notNull(algorithm, "'algorithm' must not be null");
+		Assert.notNull(publicKey, "'publicKey' must not be null");
+		Assert.notNull(privateKey, "'privateKey' must not be null");
 
 		// 实例化Hutool的对称加密实例
 		AsymmetricCrypto asymmetricCrypto = new AsymmetricCrypto(algorithm, privateKey, publicKey);

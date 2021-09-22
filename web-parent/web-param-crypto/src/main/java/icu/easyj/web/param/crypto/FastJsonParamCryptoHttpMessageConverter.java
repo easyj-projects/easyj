@@ -71,7 +71,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 	 * @param paramCryptoFilter 参数加密解密过滤器
 	 */
 	public FastJsonParamCryptoHttpMessageConverter(@NonNull ParamCryptoFilter paramCryptoFilter) {
-		Assert.notNull(paramCryptoFilter, "'paramCryptoFilter' must be not null");
+		Assert.notNull(paramCryptoFilter, "'paramCryptoFilter' must not be null");
 		this.paramCryptoFilter = paramCryptoFilter;
 	}
 

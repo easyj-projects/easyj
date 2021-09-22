@@ -43,7 +43,7 @@ public abstract class DateFormatFactory {
 	 */
 	@NonNull
 	public static SimpleDateFormat get(@NonNull String dateFormat) {
-		Assert.notNull(dateFormat, "'dateFormat' must be not null");
+		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Map<String, SimpleDateFormat> dateFormatMap = DATE_FORMAT.get();
 		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, f -> new SimpleDateFormat(dateFormat));
 	}
@@ -64,7 +64,7 @@ public abstract class DateFormatFactory {
 	 */
 	@NonNull
 	public static SimpleDateFormat get(@NonNull DateFormatType dateFormat) {
-		Assert.notNull(dateFormat, "'dateFormat' must be not null");
+		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Map<DateFormatType, SimpleDateFormat> dateFormatMap = FREQUENTLY_USED_DATE_FORMAT.get();
 		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, f -> new SimpleDateFormat(dateFormat.getFormat()));
 	}

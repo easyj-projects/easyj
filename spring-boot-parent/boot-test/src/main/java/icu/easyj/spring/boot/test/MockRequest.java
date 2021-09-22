@@ -56,8 +56,8 @@ public class MockRequest {
 
 
 	public MockRequest(MockMvc mockMvc, MockHttpServletRequestBuilder builder, String urlTemplate, Object[] uriVars) {
-		Assert.notNull(mockMvc, "'mockMvc' must be not null");
-		Assert.notNull(builder, "'builder' must be not null");
+		Assert.notNull(mockMvc, "'mockMvc' must not be null");
+		Assert.notNull(builder, "'builder' must not be null");
 
 		this.urlTemplate = urlTemplate;
 		this.uriVars = uriVars;

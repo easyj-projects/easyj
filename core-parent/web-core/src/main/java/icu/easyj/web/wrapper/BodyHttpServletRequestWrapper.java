@@ -54,7 +54,7 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	 */
 	public BodyHttpServletRequestWrapper(HttpServletRequest request, String body) {
 		super(request);
-		Assert.isTrue(StringUtils.isNotBlank(body), "'body' must be not null");
+		Assert.isTrue(StringUtils.isNotBlank(body), "'body' must not be null");
 		this.body = body;
 	}
 

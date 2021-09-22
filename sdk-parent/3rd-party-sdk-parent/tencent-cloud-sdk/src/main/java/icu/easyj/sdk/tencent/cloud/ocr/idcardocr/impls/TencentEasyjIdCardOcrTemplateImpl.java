@@ -65,7 +65,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 
 
 	public TencentEasyjIdCardOcrTemplateImpl(ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate) {
-		Assert.notNull(tencentCloudIdCardOcrTemplate, "'tencentCloudIdCardOcrTemplate' must be not null");
+		Assert.notNull(tencentCloudIdCardOcrTemplate, "'tencentCloudIdCardOcrTemplate' must not be null");
 		this.tencentCloudIdCardOcrTemplate = tencentCloudIdCardOcrTemplate;
 	}
 
@@ -73,7 +73,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	@NonNull
 	@Override
 	public IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException {
-		Assert.notNull(request, "'request' must be not null");
+		Assert.notNull(request, "'request' must not be null");
 
 		// 提取参数
 		String image = request.getImage();
@@ -83,7 +83,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		Map<String, String> config = request.getConfig();
 
 		// 校验参数
-		Assert.notNull(request.getImage(), "'image' must be not null");
+		Assert.notNull(request.getImage(), "'image' must not be null");
 
 		// 为两面时，重置为null
 		if (CardSide.BOTH == cardSide) {

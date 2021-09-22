@@ -28,12 +28,12 @@ public class WrapperException extends RuntimeException {
 
 	public WrapperException(String message, Throwable cause) {
 		super(message, cause);
-		Assert.notNull(cause, "'cause' must be not null");
+		Assert.notNull(cause, "'cause' must not be null");
 	}
 
 	public WrapperException(Throwable cause) {
 		super(cause);
-		Assert.notNull(cause, "'cause' must be not null");
+		Assert.notNull(cause, "'cause' must not be null");
 	}
 
 	@Override

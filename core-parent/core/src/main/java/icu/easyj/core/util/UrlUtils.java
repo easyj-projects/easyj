@@ -80,7 +80,7 @@ public abstract class UrlUtils {
 	 */
 	@NonNull
 	public static String normalizePath(String path) {
-		Assert.notNull(path, "'path' must be not null");
+		Assert.notNull(path, "'path' must not be null");
 
 		path = path.trim();
 

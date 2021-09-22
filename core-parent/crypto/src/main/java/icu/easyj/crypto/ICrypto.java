@@ -461,7 +461,7 @@ public interface ICrypto extends Serializable {
 	 * @return 解密后的密文
 	 */
 	default byte[] decryptFromBcd(String data, Charset charset) {
-		Assert.notNull(data, "'data' must be not null");
+		Assert.notNull(data, "'data' must not be null");
 		final byte[] dataBytes = BCD.ascToBcd(StrUtil.bytes(data, charset));
 		return decrypt(dataBytes);
 	}

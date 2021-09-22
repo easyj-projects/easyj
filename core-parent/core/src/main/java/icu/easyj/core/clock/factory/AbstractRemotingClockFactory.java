@@ -68,7 +68,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	@Override
 	@NonNull
 	public ITickClock getClock(@NonNull K remotingKey) {
-		Assert.notNull(remotingKey, "'remotingKey' must be not null");
+		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, ds -> createClock(remotingKey));
 	}
 
@@ -81,7 +81,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	@Override
 	@NonNull
 	public ITickClock refreshClock(@NonNull K remotingKey) {
-		Assert.notNull(remotingKey, "'remotingKey' must be not null");
+		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 
 		ITickClock newClock = createClock(remotingKey);
 		remotingClockMap.put(remotingKey, newClock);

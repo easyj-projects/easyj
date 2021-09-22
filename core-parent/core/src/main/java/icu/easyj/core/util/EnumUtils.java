@@ -38,7 +38,7 @@ public abstract class EnumUtils {
 	 */
 	@NonNull
 	public static <E extends Enum<?>> E fromName(Class<E> enumClass, String enumName) {
-		Assert.notNull(enumName, "'enumName' must be not null");
+		Assert.notNull(enumName, "'enumName' must not be null");
 
 		E e = match(enumClass, e1 -> e1.name().equalsIgnoreCase(enumName));
 		if (e == null) {
@@ -58,8 +58,8 @@ public abstract class EnumUtils {
 	 */
 	@Nullable
 	public static <E extends Enum<?>> E match(Class<E> enumClass, Predicate<E> matcher) {
-		Assert.notNull(enumClass, "'enumClass' must be not null");
-		Assert.notNull(matcher, "'matcher' must be not null");
+		Assert.notNull(enumClass, "'enumClass' must not be null");
+		Assert.notNull(matcher, "'matcher' must not be null");
 
 		E[] enums = enumClass.getEnumConstants();
 		for (E e : enums) {

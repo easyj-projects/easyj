@@ -61,8 +61,8 @@ public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 
 	@Override
 	public void putConfig(String path, Cache304Config config) {
-		Assert.notNull(path, "'path' must be not null");
-		Assert.notNull(config, "'config' must be not null");
+		Assert.notNull(path, "'path' must not be null");
+		Assert.notNull(config, "'config' must not be null");
 
 		// 标准化路径
 		path = UrlUtils.normalizePath(path);
@@ -73,7 +73,7 @@ public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 
 	@Override
 	public Cache304Config getConfig(String path) {
-		Assert.notNull(path, "'path' must be not null");
+		Assert.notNull(path, "'path' must not be null");
 
 		// 标准化路径
 		path = UrlUtils.normalizePath(path);

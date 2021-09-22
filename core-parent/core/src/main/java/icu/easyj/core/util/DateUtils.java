@@ -186,7 +186,7 @@ public abstract class DateUtils {
 	 */
 	@NonNull
 	public static Date parseAll(@NonNull String timeStr) {
-		Assert.notNull(timeStr, "'timeStr' must be not null");
+		Assert.notNull(timeStr, "'timeStr' must not be null");
 
 		try {
 			switch (timeStr.length()) {
@@ -260,8 +260,8 @@ public abstract class DateUtils {
 	 */
 	@NonNull
 	public static String format(@NonNull String dateFormat, @NonNull Date date) {
-		Assert.notNull(dateFormat, "'dateFormat' must be not null");
-		Assert.notNull(date, "'date' must be not null");
+		Assert.notNull(dateFormat, "'dateFormat' must not be null");
+		Assert.notNull(date, "'date' must not be null");
 
 		return DateFormatFactory.get(dateFormat).format(date);
 	}
@@ -275,8 +275,8 @@ public abstract class DateUtils {
 	 */
 	@NonNull
 	public static String format(@NonNull DateFormatType dateFormat, @NonNull Date date) {
-		Assert.notNull(dateFormat, "'dateFormat' must be not null");
-		Assert.notNull(date, "'date' must be not null");
+		Assert.notNull(dateFormat, "'dateFormat' must not be null");
+		Assert.notNull(date, "'date' must not be null");
 
 		return DateFormatFactory.get(dateFormat).format(date);
 	}

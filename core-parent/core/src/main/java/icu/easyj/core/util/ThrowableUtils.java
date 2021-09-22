@@ -37,8 +37,8 @@ public abstract class ThrowableUtils {
 	 */
 	@Nullable
 	public static <T extends Throwable> T findCause(@NonNull Throwable t, @NonNull Class<T> causeClass) {
-		Assert.notNull(t, "'t' must be not null");
-		Assert.notNull(causeClass, "'causeClass' must be not null");
+		Assert.notNull(t, "'t' must not be null");
+		Assert.notNull(causeClass, "'causeClass' must not be null");
 
 		while (t != null) {
 			if (causeClass.isAssignableFrom(t.getClass())) {

@@ -45,7 +45,7 @@ public abstract class DataTypeUtils {
 	 */
 	@NonNull
 	public static Class<?> toClass(String dataType) throws ClassNotFoundException {
-		Assert.notNull(dataType, "'dataType' must be not null");
+		Assert.notNull(dataType, "'dataType' must not be null");
 
 		try {
 			return MapUtils.computeIfAbsent(CLASS_CACHE, dataType, key -> {

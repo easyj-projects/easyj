@@ -52,7 +52,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 
 
 	public S3DwzTemplateImpl(S3DwzConfig config) {
-		Assert.notNull(config, "'config' must be not null");
+		Assert.notNull(config, "'config' must not be null");
 		this.config = config;
 
 		this.restTemplate = new RestTemplate();
@@ -64,8 +64,8 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 
 	@Override
 	public DwzResponse createShortUrl(DwzRequest request) throws DwzSdkException {
-		Assert.notNull(request, "'request' must be not null");
-		Assert.notNull(request.getLongUrl(), "'longUrl' must be not null");
+		Assert.notNull(request, "'request' must not be null");
+		Assert.notNull(request.getLongUrl(), "'longUrl' must not be null");
 
 		// 调用开始时间
 		long startTime = System.nanoTime();

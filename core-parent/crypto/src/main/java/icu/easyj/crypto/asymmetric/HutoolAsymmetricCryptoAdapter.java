@@ -46,7 +46,7 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 	 * @param <T>              算法类型
 	 */
 	public <T extends AbstractAsymmetricCrypto<T>> HutoolAsymmetricCryptoAdapter(String algorithm, T asymmetricCrypto) {
-		Assert.notNull(asymmetricCrypto, "'asymmetricCrypto' must be not null");
+		Assert.notNull(asymmetricCrypto, "'asymmetricCrypto' must not be null");
 		this.algorithm = algorithm;
 		this.asymmetricCrypto = asymmetricCrypto;
 	}
