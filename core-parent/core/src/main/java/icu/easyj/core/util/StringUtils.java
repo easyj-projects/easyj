@@ -135,7 +135,7 @@ public abstract class StringUtils {
 	 *
 	 * @param cs           字符串
 	 * @param defaultValue 默认值
-	 * @param <T>          字符串类
+	 * @param <T>          字符串类型
 	 * @return 字符串或默认值
 	 */
 	public static <T extends CharSequence> T defaultIfEmpty(T cs, T defaultValue) {
@@ -151,6 +151,7 @@ public abstract class StringUtils {
 	 *
 	 * @param cs                   字符串
 	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  字符串类型
 	 * @return 入参字符串或生成的默认值
 	 */
 	public static <T extends CharSequence> T defaultIfEmpty(final T cs, Supplier<T> defaultValueSupplier) {
@@ -166,7 +167,7 @@ public abstract class StringUtils {
 	 *
 	 * @param cs           字符串
 	 * @param defaultValue 默认值
-	 * @param <T>          字符串类
+	 * @param <T>          字符串类型
 	 * @return 字符串或默认值
 	 */
 	public static <T extends CharSequence> T defaultIfBlank(T cs, T defaultValue) {
@@ -182,6 +183,7 @@ public abstract class StringUtils {
 	 *
 	 * @param cs                   字符串
 	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  字符串类型
 	 * @return 入参字符串或生成的默认值
 	 */
 	public static <T extends CharSequence> T defaultIfBlank(final T cs, Supplier<T> defaultValueSupplier) {

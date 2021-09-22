@@ -53,7 +53,7 @@ public abstract class ExcelUtils {
 	 * @param book         Excel
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
-	 * @param <T>          泛型参数，即Excel文件映射的类
+	 * @param <T>          泛型参数，即Excel文件映射的类型
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
@@ -119,7 +119,7 @@ public abstract class ExcelUtils {
 	 * @param is           Excel文件流
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
-	 * @param <T>          泛型参数，即Excel文件映射的类
+	 * @param <T>          泛型参数，即Excel文件映射的类型
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */
@@ -135,7 +135,7 @@ public abstract class ExcelUtils {
 	 * @param filePath     Excel文件路径
 	 * @param clazz        Excel文件映射类的信息
 	 * @param validDataFun 验证数据有效性的Predicate函数，如果验证结果为false，则不读取该行数据到List中。
-	 * @param <T>          泛型参数，即Excel文件映射的类
+	 * @param <T>          泛型参数，即Excel文件映射的类型
 	 * @return 返回映射类的集合
 	 * @throws Exception 异常
 	 */

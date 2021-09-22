@@ -69,6 +69,7 @@ public abstract class ArrayUtils {
 	 *
 	 * @param array                数组
 	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  数组数据类型
 	 * @return 入参数组或生成的默认值
 	 */
 	public static <T> T[] defaultIfEmpty(final T[] array, Supplier<T[]> defaultValueSupplier) {

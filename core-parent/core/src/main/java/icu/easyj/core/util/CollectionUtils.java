@@ -120,7 +120,7 @@ public abstract class CollectionUtils {
 	 *
 	 * @param coll         集合
 	 * @param defaultValue 默认值
-	 * @param <T>          集合类
+	 * @param <T>          集合类型
 	 * @return 入参集合或默认值
 	 */
 	public static <T extends Collection<?>> T defaultIfEmpty(T coll, T defaultValue) {
@@ -136,6 +136,7 @@ public abstract class CollectionUtils {
 	 *
 	 * @param coll                 集合
 	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  集合类型
 	 * @return 入参集合或生成的默认值
 	 */
 	public static <T extends Collection<?>> T defaultIfEmpty(final T coll, Supplier<T> defaultValueSupplier) {
@@ -171,7 +172,7 @@ public abstract class CollectionUtils {
 	 *
 	 * @param map          集合
 	 * @param defaultValue 默认值
-	 * @param <T>          集合类
+	 * @param <T>          集合类型
 	 * @return 入参集合或默认值
 	 */
 	public static <T extends Map<?, ?>> T defaultIfEmpty(T map, T defaultValue) {
@@ -183,6 +184,7 @@ public abstract class CollectionUtils {
 	 *
 	 * @param map                  集合
 	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  集合类型
 	 * @return 入参集合或生成的默认值
 	 */
 	public static <T extends Map<?, ?>> T defaultIfEmpty(final T map, Supplier<T> defaultValueSupplier) {
