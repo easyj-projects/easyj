@@ -115,6 +115,22 @@ public abstract class CollectionUtils {
 	}
 
 	/**
+	 * 如果为空集合，则取默认值
+	 *
+	 * @param coll         集合
+	 * @param defaultValue 默认值
+	 * @param <T>          集合类
+	 * @return 入参集合或默认值
+	 */
+	public static <T extends Collection<?>> T defaultIfEmpty(T coll, T defaultValue) {
+		if (isEmpty(coll)) {
+			return defaultValue;
+		} else {
+			return coll;
+		}
+	}
+
+	/**
 	 * 判断集合是否为空
 	 *
 	 * @param map 集合
@@ -132,5 +148,17 @@ public abstract class CollectionUtils {
 	 */
 	public static boolean isNotEmpty(Map<?, ?> map) {
 		return MapUtils.isNotEmpty(map);
+	}
+
+	/**
+	 * 如果为空集合，则取默认值
+	 *
+	 * @param map          集合
+	 * @param defaultValue 默认值
+	 * @param <T>          集合类
+	 * @return 入参集合或默认值
+	 */
+	public static <T extends Map<?, ?>> T defaultIfEmpty(T map, T defaultValue) {
+		return MapUtils.defaultIfEmpty(map, defaultValue);
 	}
 }

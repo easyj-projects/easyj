@@ -46,6 +46,22 @@ public abstract class MapUtils {
 	}
 
 	/**
+	 * 如果为空集合，则取默认值
+	 *
+	 * @param map          集合
+	 * @param defaultValue 默认值
+	 * @param <T>          集合类
+	 * @return 入参集合或默认值
+	 */
+	public static <T extends Map<?, ?>> T defaultIfEmpty(T map, T defaultValue) {
+		if (isEmpty(map)) {
+			return defaultValue;
+		} else {
+			return map;
+		}
+	}
+
+	/**
 	 * Map to string.
 	 *
 	 * @param map the map

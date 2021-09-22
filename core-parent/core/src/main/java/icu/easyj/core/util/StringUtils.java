@@ -127,6 +127,43 @@ public abstract class StringUtils {
 	//endregion
 
 
+	//region 如果为空则取默认值的方法
+
+	/**
+	 * 如果为空字符串，则取默认值
+	 *
+	 * @param cs           字符串
+	 * @param defaultValue 默认值
+	 * @param <T>          字符串类
+	 * @return 字符串或默认值
+	 */
+	public static <T extends CharSequence> T defaultIfEmpty(T cs, T defaultValue) {
+		if (isEmpty(cs)) {
+			return defaultValue;
+		} else {
+			return cs;
+		}
+	}
+
+	/**
+	 * 如果为空白字符串，则取默认值
+	 *
+	 * @param cs           字符串
+	 * @param defaultValue 默认值
+	 * @param <T>          字符串类
+	 * @return 字符串或默认值
+	 */
+	public static <T extends CharSequence> T defaultIfBlank(T cs, T defaultValue) {
+		if (isBlank(cs)) {
+			return defaultValue;
+		} else {
+			return cs;
+		}
+	}
+
+	//endregion
+
+
 	//region 中文相关方法
 
 	/**

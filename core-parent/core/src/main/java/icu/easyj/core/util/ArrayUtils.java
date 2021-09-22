@@ -25,6 +25,44 @@ import org.springframework.lang.NonNull;
 public abstract class ArrayUtils {
 
 	/**
+	 * 是否为空数组
+	 *
+	 * @param array 数组
+	 * @param <T>   数组数据类型
+	 * @return 是否为空数组
+	 */
+	public static <T> boolean isEmpty(final T[] array) {
+		return array == null || array.length == 0;
+	}
+
+	/**
+	 * 是否不为空数组
+	 *
+	 * @param array 数组
+	 * @param <T>   数组数据类型
+	 * @return 是否不为空数组
+	 */
+	public static <T> boolean isNotEmpty(final T[] array) {
+		return !isEmpty(array);
+	}
+
+	/**
+	 * 如果为空，则返回默认值
+	 *
+	 * @param array        数组
+	 * @param defaultValue 默认值
+	 * @param <T>          数组数据类型
+	 * @return 入参数组或默认值
+	 */
+	public static <T> T[] defaultIfEmpty(final T[] array, final T[] defaultValue) {
+		if (isEmpty(array)) {
+			return defaultValue;
+		} else {
+			return array;
+		}
+	}
+
+	/**
 	 * Array To String.
 	 *
 	 * @param objectArray 对象数组
