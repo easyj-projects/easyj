@@ -27,6 +27,8 @@ import org.springframework.util.Assert;
  */
 public abstract class ThrowableUtils {
 
+	public static final String WRAPPER_EXCEPTION_SUFFIX = "WrapperException";
+
 	/**
 	 * 从异常信息中查找对应的异常
 	 *
@@ -36,7 +38,9 @@ public abstract class ThrowableUtils {
 	 * @return cause 目标异常
 	 */
 	@Nullable
-	public static <T extends Throwable> T findCause(@NonNull Throwable t, @NonNull Class<T> causeClass) {
+	@SuppressWarnings("all")
+	public static <T extends Throwable> T findCause(@NonNull Throwable t,
+													@NonNull final Class<T> causeClass) {
 		Assert.notNull(t, "'t' must not be null");
 		Assert.notNull(causeClass, "'causeClass' must not be null");
 
@@ -66,16 +70,32 @@ public abstract class ThrowableUtils {
 	 * @param t 异常
 	 * @return 拆包后的异常
 	 */
-	public static Throwable unwrap(Throwable t) {
+	public static Throwable unwrap(@Nullable Throwable t) {
 		if (t == null) {
-			return t;
+			return null;
 		}
 
-		if (t instanceof WrapperException
-				|| (t.getClass().getName().endsWith("WrapperException") && t.getCause() != null)) {
+		if (t instanceof WrapperException) {
+			return t.getCause();
+		}
+		if (t.getClass().getName().endsWith(WRAPPER_EXCEPTION_SUFFIX) && t.getCause() != null) {
 			return t.getCause();
 		}
 
 		return t;
+	}
+
+	/**
+	 * 拆包异常
+	 *
+	 * @param t 包装异常
+	 * @return 拆包后的异常
+	 */
+	public static Throwable unwrap(@Nullable WrapperException t) {
+		if (t == null) {
+			return null;
+		}
+
+		return t.getCause();
 	}
 }
