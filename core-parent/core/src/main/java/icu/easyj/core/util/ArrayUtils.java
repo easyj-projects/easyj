@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util;
 
+import java.util.function.Supplier;
+
 import org.springframework.lang.NonNull;
 
 /**
@@ -57,9 +59,24 @@ public abstract class ArrayUtils {
 	public static <T> T[] defaultIfEmpty(final T[] array, final T[] defaultValue) {
 		if (isEmpty(array)) {
 			return defaultValue;
-		} else {
-			return array;
 		}
+
+		return array;
+	}
+
+	/**
+	 * 如果为空数组，则执行supplier生成新的值
+	 *
+	 * @param array                数组
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参数组或生成的默认值
+	 */
+	public static <T> T[] defaultIfEmpty(final T[] array, Supplier<T[]> defaultValueSupplier) {
+		if (isEmpty(array)) {
+			return defaultValueSupplier.get();
+		}
+
+		return array;
 	}
 
 	/**

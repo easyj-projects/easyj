@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -146,6 +147,21 @@ public abstract class StringUtils {
 	}
 
 	/**
+	 * 如果为空字符串，则执行supplier生成新的值
+	 *
+	 * @param cs                   字符串
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参字符串或生成的默认值
+	 */
+	public static <T extends CharSequence> T defaultIfEmpty(final T cs, Supplier<T> defaultValueSupplier) {
+		if (isEmpty(cs)) {
+			return defaultValueSupplier.get();
+		}
+
+		return cs;
+	}
+
+	/**
 	 * 如果为空白字符串，则取默认值
 	 *
 	 * @param cs           字符串
@@ -159,6 +175,21 @@ public abstract class StringUtils {
 		} else {
 			return cs;
 		}
+	}
+
+	/**
+	 * 如果为空白字符串，则执行supplier生成新的值
+	 *
+	 * @param cs                   字符串
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参字符串或生成的默认值
+	 */
+	public static <T extends CharSequence> T defaultIfBlank(final T cs, Supplier<T> defaultValueSupplier) {
+		if (isBlank(cs)) {
+			return defaultValueSupplier.get();
+		}
+
+		return cs;
 	}
 
 	//endregion

@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -125,9 +126,24 @@ public abstract class CollectionUtils {
 	public static <T extends Collection<?>> T defaultIfEmpty(T coll, T defaultValue) {
 		if (isEmpty(coll)) {
 			return defaultValue;
-		} else {
-			return coll;
 		}
+
+		return coll;
+	}
+
+	/**
+	 * 如果为空数组，则执行supplier生成新的值
+	 *
+	 * @param coll                 集合
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参集合或生成的默认值
+	 */
+	public static <T extends Collection<?>> T defaultIfEmpty(final T coll, Supplier<T> defaultValueSupplier) {
+		if (isEmpty(coll)) {
+			return defaultValueSupplier.get();
+		}
+
+		return coll;
 	}
 
 	/**
@@ -160,5 +176,16 @@ public abstract class CollectionUtils {
 	 */
 	public static <T extends Map<?, ?>> T defaultIfEmpty(T map, T defaultValue) {
 		return MapUtils.defaultIfEmpty(map, defaultValue);
+	}
+
+	/**
+	 * 如果为空数组，则执行supplier生成新的值
+	 *
+	 * @param map                  集合
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参集合或生成的默认值
+	 */
+	public static <T extends Map<?, ?>> T defaultIfEmpty(final T map, Supplier<T> defaultValueSupplier) {
+		return MapUtils.defaultIfEmpty(map, defaultValueSupplier);
 	}
 }

@@ -17,6 +17,7 @@ package icu.easyj.core.util;
 
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Map工具类
@@ -59,6 +60,21 @@ public abstract class MapUtils {
 		} else {
 			return map;
 		}
+	}
+
+	/**
+	 * 如果为空数组，则执行supplier生成新的值
+	 *
+	 * @param map                  集合
+	 * @param defaultValueSupplier 默认值提供者
+	 * @return 入参集合或生成的默认值
+	 */
+	public static <T extends Map<?, ?>> T defaultIfEmpty(final T map, Supplier<T> defaultValueSupplier) {
+		if (isEmpty(map)) {
+			return defaultValueSupplier.get();
+		}
+
+		return map;
 	}
 
 	/**

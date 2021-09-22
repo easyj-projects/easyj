@@ -15,8 +15,10 @@
  */
 package icu.easyj.core.util;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * 对象工具类
@@ -26,7 +28,7 @@ import java.util.Map;
 public abstract class ObjectUtils {
 
 	/**
-	 * 如果为空，则返回默认值
+	 * 如果为null，则返回默认值
 	 *
 	 * @param obj          对象
 	 * @param defaultValue 默认值
@@ -36,6 +38,22 @@ public abstract class ObjectUtils {
 	public static <T> T defaultIfNull(T obj, T defaultValue) {
 		if (obj == null) {
 			return defaultValue;
+		} else {
+			return obj;
+		}
+	}
+
+	/**
+	 * 如果为null，则执行supplier生成新的值
+	 *
+	 * @param obj                  对象
+	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  对象类型
+	 * @return 入参对象或生成的默认值
+	 */
+	public static <T> T defaultIfNull(T obj, Supplier<T> defaultValueSupplier) {
+		if (obj == null) {
+			return defaultValueSupplier.get();
 		} else {
 			return obj;
 		}
@@ -52,16 +70,34 @@ public abstract class ObjectUtils {
 	public static <T> T defaultIfEmpty(T obj, T defaultValue) {
 		if (obj == null) {
 			return defaultValue;
-		}
-
-		if (obj instanceof CharSequence) {
+		} else if (obj instanceof CharSequence) {
 			return (T)StringUtils.defaultIfEmpty((CharSequence)obj, (CharSequence)defaultValue);
 		} else if (obj instanceof Collection) {
 			return (T)CollectionUtils.defaultIfEmpty((Collection)obj, (Collection)defaultValue);
 		} else if (obj instanceof Map) {
 			return (T)MapUtils.defaultIfEmpty((Map<?, ?>)obj, (Map<?, ?>)defaultValue);
-		} else {
-			return obj;
 		}
+
+		return obj;
+	}
+
+	/**
+	 * 如果为空，则执行supplier生成新的值
+	 *
+	 * @param obj                  对象
+	 * @param defaultValueSupplier 默认值提供者
+	 * @param <T>                  对象类型
+	 * @return 入参对象或生成的默认值
+	 */
+	public static <T> T defaultIfEmpty(T obj, Supplier<T> defaultValueSupplier) {
+		if (obj == null
+				|| (obj instanceof CharSequence && StringUtils.isEmpty((CharSequence)obj))
+				|| (obj instanceof Collection && CollectionUtils.isEmpty((Collection)obj))
+				|| (obj instanceof Map && MapUtils.isEmpty((Map)obj))
+				|| (obj.getClass().isArray() && Array.getLength(obj) == 0)) {
+			return defaultValueSupplier.get();
+		}
+
+		return obj;
 	}
 }
