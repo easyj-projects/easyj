@@ -57,9 +57,9 @@ public abstract class MapUtils {
 	public static <T extends Map<?, ?>> T defaultIfEmpty(T map, T defaultValue) {
 		if (isEmpty(map)) {
 			return defaultValue;
-		} else {
-			return map;
 		}
+
+		return map;
 	}
 
 	/**

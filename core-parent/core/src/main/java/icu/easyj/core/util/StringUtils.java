@@ -141,9 +141,9 @@ public abstract class StringUtils {
 	public static <T extends CharSequence> T defaultIfEmpty(T cs, T defaultValue) {
 		if (isEmpty(cs)) {
 			return defaultValue;
-		} else {
-			return cs;
 		}
+
+		return cs;
 	}
 
 	/**
@@ -172,9 +172,9 @@ public abstract class StringUtils {
 	public static <T extends CharSequence> T defaultIfBlank(T cs, T defaultValue) {
 		if (isBlank(cs)) {
 			return defaultValue;
-		} else {
-			return cs;
 		}
+
+		return cs;
 	}
 
 	/**
