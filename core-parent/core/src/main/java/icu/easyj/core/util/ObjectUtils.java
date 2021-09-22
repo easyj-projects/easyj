@@ -38,9 +38,9 @@ public abstract class ObjectUtils {
 	public static <T> T defaultIfNull(T obj, T defaultValue) {
 		if (obj == null) {
 			return defaultValue;
-		} else {
-			return obj;
 		}
+
+		return obj;
 	}
 
 	/**
@@ -54,9 +54,9 @@ public abstract class ObjectUtils {
 	public static <T> T defaultIfNull(T obj, Supplier<T> defaultValueSupplier) {
 		if (obj == null) {
 			return defaultValueSupplier.get();
-		} else {
-			return obj;
 		}
+
+		return obj;
 	}
 
 	/**
@@ -76,6 +76,10 @@ public abstract class ObjectUtils {
 			return (T)CollectionUtils.defaultIfEmpty((Collection)obj, (Collection)defaultValue);
 		} else if (obj instanceof Map) {
 			return (T)MapUtils.defaultIfEmpty((Map<?, ?>)obj, (Map<?, ?>)defaultValue);
+		} else if (obj.getClass().isArray()) {
+			if (Array.getLength(obj) == 0) {
+				return defaultValue;
+			}
 		}
 
 		return obj;
