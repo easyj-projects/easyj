@@ -63,6 +63,7 @@
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 
+
 		<!-- 功能2：Excel文件导入导出（目前包含easyj、afterturn两种实现） -->
 		<!-- easyj-poi-excel -->
 		<dependency>
@@ -77,6 +78,7 @@
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 
+
 		<!-- 功能3：参数加密解密 -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
@@ -90,33 +92,37 @@
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
 
+
 		<!-- 功能4：各种SDK -->
+
+		<!-- 4.1：文字识别SDK（OCR）核心代码 -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-ocr-sdk-core</artifactId>
 			<version>${project.version}</version>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
+		<!-- 4.1.1：基于腾讯云实现的身份证识别SDK（OCR-IDCardOCR） -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-tencent-cloud-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+		<!-- 4.2：短链接服务SDK（DWZ）核心代码 -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-dwz-sdk-core</artifactId>
 			<version>${project.version}</version>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
-
-		<!-- 腾讯云SDK：IDCardOCR -->
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-tencent-cloud-sdk</artifactId>
-			<optional>true</optional><!--可选依赖-->
-		</dependency>
-		<!-- 百度云SDK：DWZ -->
+		<!-- 4.2.1：基于百度云实现的短链接服务SDK（DWZ） -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-baidu-cloud-sdk</artifactId>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
-		<!-- S-3服务SDK：DWZ -->
+		<!-- 4.2.2：基于S-3实现的短链接服务SDK（DWZ） -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-s3-service-sdk</artifactId>
