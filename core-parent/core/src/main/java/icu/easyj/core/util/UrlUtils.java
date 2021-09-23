@@ -124,11 +124,12 @@ public abstract class UrlUtils {
 	 */
 	public static String encode(String s, Charset charset) {
 		boolean needToChange = false;
-		StringBuilder sb = new StringBuilder(s.length());
-		CharArrayWriter charArrayWriter = new CharArrayWriter();
+		final StringBuilder sb = new StringBuilder(s.length());
+		final CharArrayWriter charArrayWriter = new CharArrayWriter();
 
+		int c;
 		for (int i = 0; i < s.length(); ) {
-			int c = (int)s.charAt(i);
+			c = (int)s.charAt(i);
 			if (DONT_NEED_URL_ENCODE.get(c)) {
 				if (c == ' ') {
 					c = '+';
@@ -196,13 +197,13 @@ public abstract class UrlUtils {
 	 * @return 解码后的字符串
 	 */
 	public static String decode(String s, Charset charset) {
-		boolean needToChange = false;
-		int numChars = s.length();
-		StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
-		int i = 0;
+		final int numChars = s.length();
+		final StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
 
+		boolean needToChange = false;
 		char c;
 		byte[] bytes = null;
+		int i = 0;
 		while (i < numChars) {
 			c = s.charAt(i);
 			switch (c) {

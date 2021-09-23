@@ -64,6 +64,18 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.sdk.tencent.common.conn-timeout",
+			"defaultValue": 60
+		},
+		{
+			"name": "easyj.sdk.tencent.common.language",
+			"defaultValue": "zh_cn"
+		},
+		{
+			"name": "easyj.sdk.tencent.common.debug",
+			"defaultValue": false
+		},
+		{
 			"name": "easyj.sdk.dwz.type",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration",
@@ -103,18 +115,6 @@
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig",
 			"description": "百度云DWZ接口Token."
-		},
-		{
-			"name": "easyj.sdk.tencent.common.conn-timeout",
-			"defaultValue": 60
-		},
-		{
-			"name": "easyj.sdk.tencent.common.language",
-			"defaultValue": "zh_cn"
-		},
-		{
-			"name": "easyj.sdk.tencent.common.debug",
-			"defaultValue": false
 		},
 		{
 			"name": "easyj.sdk.ocr.idcard-ocr.tencent.min-quality",

@@ -44,7 +44,7 @@ public abstract class DataTypeUtils {
 	 * @throws ClassNotFoundException 类未找到
 	 */
 	@NonNull
-	public static Class<?> toClass(String dataType) throws ClassNotFoundException {
+	public static Class<?> toClass(final String dataType) throws ClassNotFoundException {
 		Assert.notNull(dataType, "'dataType' must not be null");
 
 		try {
@@ -53,7 +53,7 @@ public abstract class DataTypeUtils {
 					if (dataType.contains(StrPool.DOT)) {
 						return ReflectionUtils.getClassByName(dataType);
 					} else {
-						DataType dataTypeEnum = DataType.getByType(dataType);
+						final DataType dataTypeEnum = DataType.getByType(dataType);
 						if (dataTypeEnum == null) {
 							throw new ClassNotFoundException("未知的类型：" + dataType);
 						}

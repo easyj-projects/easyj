@@ -29,7 +29,7 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-dwz-sdk-core</artifactId>
 			<version>${project.version}</version>
-			<optional>true</optional>
+			<optional>true</optional><!--可选功能，虽然目前S-3只支持该服务。-->
 		</dependency>
 	</dependencies>
 </project>

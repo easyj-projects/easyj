@@ -70,7 +70,7 @@ public abstract class CryptoPropertyUtils {
 					}
 				default:
 					if (LOGGER.isWarnEnabled()) {
-						LOGGER.warn("不支持的函数`${" + name + "}`");
+						LOGGER.warn("不支持的加密解密函数式配置：${" + name + "}");
 					}
 					return null;
 			}

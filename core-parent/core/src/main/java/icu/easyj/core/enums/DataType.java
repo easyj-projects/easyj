@@ -23,8 +23,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import icu.easyj.core.util.StringUtils;
+import org.springframework.lang.Nullable;
+
 /**
- * 数据类型（目前就一些常用的数据类型）
+ * 数据类型（目前就一些常用的数据类型，可以根据需要再添加一些）
  *
  * @author wangliang181230
  */
@@ -143,7 +146,8 @@ public enum DataType {
 	 * @param code 代码
 	 * @return 枚举
 	 */
-	public static DataType getByCode(int code) {
+	@Nullable
+	public static DataType getByCode(final int code) {
 		if (code <= 0) {
 			return null;
 		}
@@ -161,8 +165,9 @@ public enum DataType {
 	 * @param type 类型字符串
 	 * @return 枚举
 	 */
-	public static DataType getByType(String type) {
-		if (type == null) {
+	@Nullable
+	public static DataType getByType(final String type) {
+		if (StringUtils.isEmpty(type)) {
 			return null;
 		}
 		// 不忽略大小写时先查找一遍
@@ -188,7 +193,8 @@ public enum DataType {
 	 * @param clazz 数据类
 	 * @return 枚举
 	 */
-	public static DataType getByClass(Class<?> clazz) {
+	@Nullable
+	public static DataType getByClass(final Class<?> clazz) {
 		if (clazz == null) {
 			return null;
 		}
