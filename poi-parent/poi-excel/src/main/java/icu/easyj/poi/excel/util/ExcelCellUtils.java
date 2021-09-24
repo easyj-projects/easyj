@@ -156,7 +156,8 @@ public abstract class ExcelCellUtils {
 	 * 获取单元格的值
 	 *
 	 * @param cell        单元格
-	 * @param targetClass 目标类型
+	 * @param targetClass 目标类
+	 * @param <T>         目标类型
 	 * @return cellValue 单元格的值
 	 */
 	public static <T> T getCellValue(Cell cell, Class<T> targetClass) {
