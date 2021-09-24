@@ -188,42 +188,36 @@ public abstract class DateUtils {
 	public static Date parseAll(@NonNull String timeStr) {
 		Assert.notNull(timeStr, "'timeStr' must not be null");
 
+		RuntimeException e = null;
+		if (timeStr.contains("-")) {
+			timeStr = timeStr.replace('-', '/');
+			try {
+				return new Date(timeStr);
+			} catch (RuntimeException re) {
+				e = re;
+			}
+		}
+
 		try {
 			switch (timeStr.length()) {
 				case 7:
-					if (timeStr.contains("-")) {
-						return parseMonth(timeStr);
-					} else if (timeStr.contains("/")) {
+					if (timeStr.contains("/")) {
 						return parseMonth2(timeStr);
 					} else {
 						return parseMonth3(timeStr);
 					}
 				case 10:
-					if (timeStr.contains("-")) {
-						return parseDate(timeStr);
-					} else if (timeStr.contains("/")) {
+					if (timeStr.contains("/")) {
 						return parseDate2(timeStr);
 					} else {
 						return parseDate3(timeStr);
 					}
 				case 16:
-					if (timeStr.contains("-")) {
-						return parseMinutes(timeStr);
-					} else {
-						return parseSeconds2(timeStr);
-					}
+					return parseSeconds2(timeStr);
 				case 19:
-					if (timeStr.contains("-")) {
-						return parseSeconds(timeStr);
-					} else {
-						return parseMinutes2(timeStr);
-					}
+					return parseMinutes2(timeStr);
 				case 23:
-					if (timeStr.contains("-")) {
-						return parseMillisecond(timeStr);
-					} else {
-						return parseMillisecond2(timeStr);
-					}
+					return parseMillisecond2(timeStr);
 
 				case 6:
 					return parseMonthUnsigned(timeStr);
@@ -240,6 +234,10 @@ public abstract class DateUtils {
 					break;
 			}
 		} catch (ParseException ignore) {
+		}
+
+		if (e != null) {
+			throw e;
 		}
 
 		// 如果上面的方式不匹配或解析失败了，则使用下面的方式直接构建实例

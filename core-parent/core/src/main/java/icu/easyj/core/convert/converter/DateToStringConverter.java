@@ -13,29 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.exception;
+package icu.easyj.core.convert.converter;
+
+import java.util.Date;
+
+import icu.easyj.core.util.DateUtils;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 
 /**
- * 转换异常
+ * 时间转换为字符串的转换器
  *
  * @author wangliang181230
  */
-public class ConvertException extends BaseRuntimeException {
-	private static final long serialVersionUID = 1L;
+public class DateToStringConverter implements Converter<Date, String> {
 
-	public ConvertException(String message) {
-		super(message);
-	}
-
-	public ConvertException(String message, String errorCode) {
-		super(message, errorCode);
-	}
-
-	public ConvertException(String message, Throwable cause) {
-		super(message, "CONVERT_FAILED", cause);
-	}
-
-	public ConvertException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
+	@Nullable
+	@Override
+	public String convert(Date source) {
+		if (source != null) {
+			return DateUtils.toString(source);
+		} else {
+			return null;
+		}
 	}
 }
