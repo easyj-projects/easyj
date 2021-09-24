@@ -20,6 +20,7 @@ import icu.easyj.core.loader.Scope;
 
 /**
  * The type LatinHello
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author haozhibei
  */

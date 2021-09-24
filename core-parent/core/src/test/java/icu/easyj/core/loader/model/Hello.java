@@ -17,6 +17,7 @@ package icu.easyj.core.loader.model;
 
 /**
  * The interface Hello.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author Otis.z
  */

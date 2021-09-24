@@ -19,6 +19,7 @@ import icu.easyj.core.loader.LoadLevel;
 
 /**
  * The type Chinese hello.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author Otis.z
  */

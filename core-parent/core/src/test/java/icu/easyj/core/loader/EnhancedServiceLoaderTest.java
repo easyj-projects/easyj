@@ -32,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * The type Enhanced service loader test.
+ * 注：从阿里的seata项目中复制过来的。
  *
  * @author Otis.z
  */
