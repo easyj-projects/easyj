@@ -15,17 +15,12 @@
  */
 package icu.easyj.poi.excel.util;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
+import icu.easyj.core.convert.ConvertUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.poi.excel.functions.ExcelCellValueChangeFuns;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -48,113 +43,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
  * @author wangliang181230
  */
 public abstract class ExcelCellUtils {
-
-	/**
-	 * 值类型转换的函数集合
-	 */
-	private static final Map<Class<?>, Map<Class<?>, Function<Object, Object>>> FUN_MAP;
-
-	/**
-	 * 无需转换时的转换器
-	 */
-	private static final Function<Object, Object> UN_CONVERTER = o -> o;
-
-	static {
-		FUN_MAP = new HashMap<>();
-
-		// excel返回String的情况
-		addChangeFun(String.class, Character.class, ExcelCellValueChangeFuns::StringToCharacter);
-		addChangeFun(String.class, char.class, ExcelCellValueChangeFuns::StringToCharacter);
-		addChangeFun(String.class, BigDecimal.class, ExcelCellValueChangeFuns::StringToBigDecimal);
-		addChangeFun(String.class, BigInteger.class, ExcelCellValueChangeFuns::StringToBigInteger);
-		addChangeFun(String.class, Double.class, ExcelCellValueChangeFuns::StringToDouble);
-		addChangeFun(String.class, double.class, ExcelCellValueChangeFuns::StringToDouble);
-		addChangeFun(String.class, Float.class, ExcelCellValueChangeFuns::StringToFloat);
-		addChangeFun(String.class, float.class, ExcelCellValueChangeFuns::StringToFloat);
-		addChangeFun(String.class, Long.class, ExcelCellValueChangeFuns::StringToLong);
-		addChangeFun(String.class, long.class, ExcelCellValueChangeFuns::StringToLong);
-		addChangeFun(String.class, Integer.class, ExcelCellValueChangeFuns::StringToInteger);
-		addChangeFun(String.class, int.class, ExcelCellValueChangeFuns::StringToInteger);
-		addChangeFun(String.class, Short.class, ExcelCellValueChangeFuns::StringToShort);
-		addChangeFun(String.class, short.class, ExcelCellValueChangeFuns::StringToShort);
-		addChangeFun(String.class, Boolean.class, ExcelCellValueChangeFuns::StringToBoolean);
-		addChangeFun(String.class, boolean.class, ExcelCellValueChangeFuns::StringToBoolean);
-		addChangeFun(String.class, Byte.class, ExcelCellValueChangeFuns::StringToByte);
-		addChangeFun(String.class, byte.class, ExcelCellValueChangeFuns::StringToByte);
-		addChangeFun(String.class, Date.class, ExcelCellValueChangeFuns::StringToDate);
-		addChangeFun(String.class, java.sql.Date.class, ExcelCellValueChangeFuns::StringToSqlDate);
-		addChangeFun(String.class, java.sql.Time.class, ExcelCellValueChangeFuns::StringToSqlTime);
-		addChangeFun(String.class, java.sql.Timestamp.class, ExcelCellValueChangeFuns::StringToSqlTimestamp);
-
-		// excel返回Double的情况
-		addChangeFun(Double.class, String.class, ExcelCellValueChangeFuns::doubleToString);
-		addChangeFun(Double.class, BigDecimal.class, ExcelCellValueChangeFuns::doubleToBigDecimal);
-		addChangeFun(Double.class, BigInteger.class, ExcelCellValueChangeFuns::doubleToBigInteger);
-		addChangeFun(Double.class, double.class, f -> f);
-		addChangeFun(Double.class, Float.class, ExcelCellValueChangeFuns::doubleToFloat);
-		addChangeFun(Double.class, float.class, ExcelCellValueChangeFuns::doubleToFloat);
-		addChangeFun(Double.class, Long.class, ExcelCellValueChangeFuns::doubleToLong);
-		addChangeFun(Double.class, long.class, ExcelCellValueChangeFuns::doubleToLong);
-		addChangeFun(Double.class, Integer.class, ExcelCellValueChangeFuns::doubleToInteger);
-		addChangeFun(Double.class, int.class, ExcelCellValueChangeFuns::doubleToInteger);
-		addChangeFun(Double.class, Short.class, ExcelCellValueChangeFuns::doubleToShort);
-		addChangeFun(Double.class, short.class, ExcelCellValueChangeFuns::doubleToShort);
-		addChangeFun(Double.class, Boolean.class, ExcelCellValueChangeFuns::doubleToBoolean);
-		addChangeFun(Double.class, boolean.class, ExcelCellValueChangeFuns::doubleToBoolean);
-		addChangeFun(Double.class, Byte.class, ExcelCellValueChangeFuns::doubleToByte);
-		addChangeFun(Double.class, byte.class, ExcelCellValueChangeFuns::doubleToByte);
-		addChangeFun(Double.class, Date.class, ExcelCellValueChangeFuns::doubleToDate);
-
-		// excel返回Boolean的情况
-		addChangeFun(Boolean.class, String.class, ExcelCellValueChangeFuns::booleanToString);
-		addChangeFun(Boolean.class, Double.class, ExcelCellValueChangeFuns::booleanToDouble);
-		addChangeFun(Boolean.class, double.class, ExcelCellValueChangeFuns::booleanToDouble);
-		addChangeFun(Boolean.class, Float.class, ExcelCellValueChangeFuns::booleanToFloat);
-		addChangeFun(Boolean.class, float.class, ExcelCellValueChangeFuns::booleanToFloat);
-		addChangeFun(Boolean.class, Long.class, ExcelCellValueChangeFuns::booleanToLong);
-		addChangeFun(Boolean.class, long.class, ExcelCellValueChangeFuns::booleanToLong);
-		addChangeFun(Boolean.class, Integer.class, ExcelCellValueChangeFuns::booleanToInteger);
-		addChangeFun(Boolean.class, int.class, ExcelCellValueChangeFuns::booleanToInteger);
-		addChangeFun(Boolean.class, Short.class, ExcelCellValueChangeFuns::booleanToShort);
-		addChangeFun(Boolean.class, short.class, ExcelCellValueChangeFuns::booleanToShort);
-		addChangeFun(Boolean.class, boolean.class, f -> f);
-		addChangeFun(Boolean.class, Byte.class, ExcelCellValueChangeFuns::booleanToByte);
-		addChangeFun(Boolean.class, byte.class, ExcelCellValueChangeFuns::booleanToByte);
-	}
-
-	/**
-	 * 添加值类型转换的函数
-	 *
-	 * @param classFrom 原类型
-	 * @param classTo   目标类型
-	 * @param fun       函数
-	 */
-	public static void addChangeFun(Class<?> classFrom, Class<?> classTo, Function<Object, Object> fun) {
-		if (fun == null) {
-			return;
-		}
-		Map<Class<?>, Function<Object, Object>> map = FUN_MAP.computeIfAbsent(classFrom, k -> new HashMap<>());
-		map.put(classTo, fun);
-	}
-
-	/**
-	 * 获取值类型转换的函数
-	 *
-	 * @param classFrom 原类型
-	 * @param classTo   目标类型
-	 * @return fun 转换函数
-	 */
-	private static Function<Object, Object> getChangeFun(Class<?> classFrom, Class<?> classTo) {
-		if (classFrom == classTo || classTo.isAssignableFrom(classFrom)) {
-			return UN_CONVERTER;
-		}
-
-		Map<Class<?>, Function<Object, Object>> map = FUN_MAP.get(classFrom);
-		if (map == null) {
-			return null;
-		}
-		return map.get(classTo);
-	}
 
 	/**
 	 * 判断是否为空单元格
@@ -260,50 +148,29 @@ public abstract class ExcelCellUtils {
 			}
 		}
 
-		return changeValueType(value, cellMapping.getField());
+		// 转换类型
+		return ConvertUtils.convert(value, cellMapping.getField().getType());
 	}
-
-//	/**
-//	 * 获取单元格的值
-//	 *
-//	 * @param cell 单元格
-//	 * @return cellValue 单元格的值
-//	 */
-//	public static Object getCellValue(Cell cell, Field field) throws Exception {
-//		// 当属性类型为日期时，从cell中直接获取日期值
-//		try {
-//			if (field.getType().equals(Date.class)) return cell.getDateCellValue();
-//		} catch (Exception e) {
-//		}
-//
-//		Object value = getCellValue(cell);
-//		return changeValueType(value, field);
-//	}
 
 	/**
-	 * 将值的类型转换为与字段类型一致，保证数据set成功。
+	 * 获取单元格的值
 	 *
-	 * @param value 值
-	 * @param field 字段
-	 * @return newValue 转换类型后的值
+	 * @param cell        单元格
+	 * @param targetClass 目标类型
+	 * @return cellValue 单元格的值
 	 */
-	private static Object changeValueType(Object value, Field field) {
-		if (value == null || value.toString().isEmpty()) {
-			return null; // 后面的操作无需验证空值
-		}
-		if (value.getClass().equals(field.getType())) {
-			return value;
-		}
-
-		Function<Object, Object> fun = ExcelCellUtils.getChangeFun(value.getClass(), field.getType());
-		if (fun == null) {
-			throw new RuntimeException("缺失值类型转换函数，无法将" + value.getClass().getName() + "转换为" + field.getType().getName());
+	public static <T> T getCellValue(Cell cell, Class<T> targetClass) {
+		// 当属性类型为日期时，从cell中直接获取日期值
+		if (targetClass.equals(Date.class)) {
+			try {
+				return (T)cell.getDateCellValue();
+			} catch (RuntimeException ignore) {
+			}
 		}
 
-		// 执行对应的函数获取值
-		return fun.apply(value);
+		Object value = getCellValue(cell);
+		return ConvertUtils.convert(value, targetClass);
 	}
-
 
 	/**
 	 * 设置单元格的值

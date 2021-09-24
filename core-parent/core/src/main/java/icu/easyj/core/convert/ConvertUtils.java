@@ -90,7 +90,11 @@ public abstract class ConvertUtils {
 	 * @param <T>         目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, Class<T> targetClass) {
+	public static <T> T convert(Object source, Class<T> targetClass) {
+		if (source == null) {
+			return null;
+		}
+
 		try {
 			return getConversionService().convert(source, targetClass);
 		} catch (ConversionException | IllegalArgumentException e) {
@@ -107,7 +111,7 @@ public abstract class ConvertUtils {
 	 * @return 转换后的目标类对象列表
 	 */
 	@NonNull
-	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, Class<T> targetClass) {
+	public static <T> List<T> convertList(Collection<?> sourceList, Class<T> targetClass) {
 		List<T> list = new ArrayList<>();
 
 		if (sourceList != null) {
