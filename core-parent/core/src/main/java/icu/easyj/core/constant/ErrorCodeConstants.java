@@ -26,4 +26,9 @@ public interface ErrorCodeConstants {
 	 * 未知异常
 	 */
 	String UNKNOWN = "UNKNOWN_ERROR";
+
+	/**
+	 * 服务端异常
+	 */
+	String SERVER_ERROR = "SERVER_ERROR";
 }

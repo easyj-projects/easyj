@@ -19,10 +19,14 @@ import java.util.Date;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
+import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.UrlUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
+import icu.easyj.sdk.dwz.DwzSdkClientException;
 import icu.easyj.sdk.dwz.DwzSdkException;
+import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,10 +85,15 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 					+ "&url=" + UrlUtils.encode(request.getLongUrl());
 
 			// 发送请求，接收响应
-			respStr = restTemplate.getForObject(url, String.class);
-			// 判空
-			if (respStr == null) {
-				throw new DwzSdkException("请求S-3短链接服务无响应", "NO_RESPONSE");
+			try {
+				respStr = restTemplate.getForObject(url, String.class);
+			} catch (RuntimeException e) {
+				throw new DwzSdkServerException("请求S-3短链接服务异常", ErrorCodeConstants.SERVER_ERROR, e);
+			}
+
+			// 判断：响应内容是否为空
+			if (StringUtils.isEmpty(respStr)) {
+				throw new DwzSdkServerException("请求S-3短链接服务无响应内容", "EMPTY_RESPONSE");
 			}
 
 			// 解析响应JSON
@@ -95,9 +104,9 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 				String errorMsg = resp.getErrorMessage(errorType);
 				String errorCode = errorType != null ? errorType.name() : resp.getCode();
 
-				throw new DwzSdkException("请求S-3短链接服务失败：[" + resp.getCode() + "]" + errorMsg, errorCode);
+				throw new DwzSdkServerException("请求S-3短链接服务失败：[" + resp.getCode() + "]" + errorMsg, errorCode);
 			} else if (resp.getData() == null) {
-				throw new DwzSdkException("请求S-3短链接服务的响应中无数据", "NO_DATA");
+				throw new DwzSdkServerException("请求S-3短链接服务的响应中无数据", "NO_DATA");
 			}
 
 			// 转换响应类型，并返回
@@ -107,7 +116,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			throw e;
 		} catch (RuntimeException e) {
 			t = e;
-			throw new DwzSdkException("S-3短链接服务未知异常", e);
+			throw new DwzSdkClientException("S-3短链接服务未知异常", ErrorCodeConstants.UNKNOWN, e); // 该异常预计为客户端异常
 		} finally {
 			if (t == null) {
 				if (LOGGER.isInfoEnabled()) {

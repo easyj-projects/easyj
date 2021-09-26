@@ -33,7 +33,9 @@ import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrAdvanced;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrRequest;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
+import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkClientException;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
+import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkServerException;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
 import icu.easyj.sdk.tencent.cloud.ocr.OcrRequestBuilder;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
@@ -74,6 +76,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	@Override
 	public IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException {
 		Assert.notNull(request, "'request' must not be null");
+		Assert.isTrue(StringUtils.isNotBlank(request.getImage()), "'image' must not be null");
 
 		// 提取参数
 		String image = request.getImage();
@@ -81,9 +84,6 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		Integer minQuality = request.getMinQuality();
 		IdCardOcrAdvanced[] advancedArr = request.getAdvancedArr();
 		Map<String, String> config = request.getConfig();
-
-		// 校验参数
-		Assert.notNull(request.getImage(), "'image' must not be null");
 
 		// 为两面时，重置为null
 		if (CardSide.BOTH == cardSide) {
@@ -113,11 +113,11 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		} catch (TencentCloudSDKException e) {
 			String errorCode = e.getErrorCode();
 			String errorMsg = "身份证识别失败" + (StringUtils.isNotEmpty(errorCode) ? "：" + errorCode : "");
-			throw new IdCardOcrSdkException(errorMsg, errorCode, e);
+			throw new IdCardOcrSdkServerException(errorMsg, errorCode, e);
 		} catch (IdCardOcrSdkException e) {
 			throw e;
 		} catch (RuntimeException e) {
-			throw new IdCardOcrSdkException("身份证识别出现异常", ErrorCodeConstants.UNKNOWN, e);
+			throw new IdCardOcrSdkClientException("身份证识别出现未知异常", ErrorCodeConstants.UNKNOWN, e);
 		}
 
 		//endregion
@@ -134,11 +134,11 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		} else if (StringUtils.isNotBlank(resp.getAuthority())) {
 			response.setCardSide(CardSide.BACK);
 		} else {
-			throw new IdCardOcrSdkException("未知的身份证正反面信息", "UNKNOWN_CARD_SIDE");
+			throw new IdCardOcrSdkServerException("未知的身份证正反面信息", "UNKNOWN_CARD_SIDE");
 		}
 		// 校验是否与入参一致
 		if (cardSide != null && cardSide != response.getCardSide()) {
-			throw new IdCardOcrSdkException("当前身份证图片不是" + cardSide.sideName() + "照", "WRONG_CARD_SIDE");
+			throw new IdCardOcrSdkServerException("当前身份证图片不是" + cardSide.sideName() + "照", "WRONG_CARD_SIDE");
 		}
 
 		// 设置正面信息

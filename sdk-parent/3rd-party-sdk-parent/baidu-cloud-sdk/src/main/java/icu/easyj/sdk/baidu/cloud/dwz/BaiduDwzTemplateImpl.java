@@ -22,11 +22,14 @@ import java.util.List;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.DateConstants;
+import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
+import icu.easyj.sdk.dwz.DwzSdkClientException;
 import icu.easyj.sdk.dwz.DwzSdkException;
+import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,12 +108,13 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 				respStr = e.getResponseBodyAsString();
 				if (!respStr.startsWith("{")) {
 					// 不是JSON数据，直接抛出异常
-					throw new DwzSdkException("[" + e.getStatusCode().value() + "]" + e.getMessage(), e);
+					throw new DwzSdkServerException("[" + e.getStatusCode().value() + "]" + e.getMessage(), ErrorCodeConstants.UNKNOWN, e);
 				}
 			}
-			// 判空
-			if (respStr == null) {
-				throw new DwzSdkException("请求S-3短链接服务无响应", "NO_RESPONSE");
+
+			// 判断：响应内容是否为空
+			if (StringUtils.isEmpty(respStr)) {
+				throw new DwzSdkServerException("请求S-3短链接服务无响应", "EMPTY_RESPONSE");
 			}
 
 			// 解析响应JSON
@@ -120,9 +124,9 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 				String errorMsg = resp.getErrorMessage();
 				String errorCode = errorType != null ? errorType.name() : resp.getCode().toString();
 
-				throw new DwzSdkException("请求百度云短链接服务失败：" + errorMsg, errorCode);
+				throw new DwzSdkServerException("请求百度云短链接服务失败：" + errorMsg, errorCode);
 			} else if (CollectionUtils.isEmpty(resp.getShortUrls())) {
-				throw new DwzSdkException("请求百度云短链接服务的响应中无数据", "NO_DATA");
+				throw new DwzSdkServerException("请求百度云短链接服务的响应中无数据", "NO_DATA");
 			}
 
 			// 转换响应类型，并返回
@@ -132,7 +136,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			throw e;
 		} catch (RuntimeException e) {
 			t = e;
-			throw new DwzSdkException("百度云短链接服务未知异常", e);
+			throw new DwzSdkClientException("百度云短链接服务未知异常", ErrorCodeConstants.UNKNOWN, e);
 		} finally {
 			if (t == null) {
 				if (LOGGER.isInfoEnabled()) {

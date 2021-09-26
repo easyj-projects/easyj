@@ -23,9 +23,7 @@ import com.tencentcloudapi.common.profile.Language;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
-import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.slf4j.Logger;
@@ -121,15 +119,11 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 			return response;
 		} catch (TencentCloudSDKException | RuntimeException e) {
 			LOGGER.error("身份证识别服务请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {} ms",
-					e,
+					e.getMessage(),
 					icu.easyj.core.util.StringUtils.toString(request),
 					icu.easyj.core.util.StringUtils.toString(config),
 					(System.nanoTime() - startTime) / 1000000);
-			if (e instanceof TencentCloudSDKException) {
-				throw (TencentCloudSDKException)e;
-			} else {
-				throw new IdCardOcrSdkException("身份证识别服务请求失败", ErrorCodeConstants.UNKNOWN, e);
-			}
+			throw e;
 		}
 	}
 
