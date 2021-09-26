@@ -15,14 +15,14 @@
  */
 package icu.easyj.sdk.ocr;
 
-import icu.easyj.core.exception.SdkServerException;
+import icu.easyj.core.exception.ISdkServerException;
 
 /**
  * 文字识别（OCR）SDK服务端异常
  *
  * @author wangliang181230
  */
-public class OcrSdkServerException extends SdkServerException {
+public class OcrSdkServerException extends OcrSdkException implements ISdkServerException {
 	private static final long serialVersionUID = 1L;
 
 	public OcrSdkServerException(String message) {

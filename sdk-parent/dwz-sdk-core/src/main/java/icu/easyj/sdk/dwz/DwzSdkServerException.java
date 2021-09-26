@@ -15,14 +15,14 @@
  */
 package icu.easyj.sdk.dwz;
 
-import icu.easyj.core.exception.SdkServerException;
+import icu.easyj.core.exception.ISdkServerException;
 
 /**
  * 短链接服务（DWZ）SDK服务端异常
  *
  * @author wangliang181230
  */
-public class DwzSdkServerException extends SdkServerException {
+public class DwzSdkServerException extends DwzSdkException implements ISdkServerException {
 	private static final long serialVersionUID = 1L;
 
 	public DwzSdkServerException(String message) {

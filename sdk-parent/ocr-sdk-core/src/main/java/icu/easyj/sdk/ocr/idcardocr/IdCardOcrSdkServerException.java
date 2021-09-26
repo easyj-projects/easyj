@@ -15,14 +15,14 @@
  */
 package icu.easyj.sdk.ocr.idcardocr;
 
-import icu.easyj.sdk.ocr.OcrSdkServerException;
+import icu.easyj.core.exception.ISdkServerException;
 
 /**
  * 身份证识别（IdCardOCR）SDK服务端异常
  *
  * @author wangliang181230
  */
-public class IdCardOcrSdkServerException extends OcrSdkServerException {
+public class IdCardOcrSdkServerException extends IdCardOcrSdkException implements ISdkServerException {
 	private static final long serialVersionUID = 1L;
 
 	public IdCardOcrSdkServerException(String message) {

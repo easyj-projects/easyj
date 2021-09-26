@@ -16,26 +16,9 @@
 package icu.easyj.core.exception;
 
 /**
- * SDK服务端异常
+ * SDK客户端异常
  *
  * @author wangliang181230
  */
-public class SdkServerException extends SdkException {
-	private static final long serialVersionUID = 1L;
-
-	public SdkServerException(String message) {
-		super(message);
-	}
-
-	public SdkServerException(String message, String errorCode) {
-		super(message, errorCode);
-	}
-
-	public SdkServerException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public SdkServerException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
-	}
+public interface ISdkClientException extends ISdkException {
 }
