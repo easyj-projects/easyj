@@ -18,7 +18,7 @@ package icu.easyj.sdk.ocr;
 import icu.easyj.core.exception.SdkException;
 
 /**
- * 文字识别（OCR）相关异常
+ * 文字识别（OCR）SDK相关异常
  *
  * @author wangliang181230
  */

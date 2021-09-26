@@ -18,7 +18,7 @@ package icu.easyj.sdk.dwz;
 import icu.easyj.core.exception.SdkException;
 
 /**
- * 短链接服务（DWZ）相关异常
+ * 短链接服务（DWZ）SDK相关异常
  *
  * @author wangliang181230
  */

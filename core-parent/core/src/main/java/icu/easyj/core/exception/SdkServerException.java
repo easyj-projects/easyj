@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.sdk.ocr.idcardocr;
-
-import icu.easyj.sdk.ocr.OcrSdkException;
+package icu.easyj.core.exception;
 
 /**
- * 身份证识别（IdCardOCR）SDK相关异常
+ * SDK服务端异常
  *
  * @author wangliang181230
  */
-public class IdCardOcrSdkException extends OcrSdkException {
+public class SdkServerException extends SdkException {
 	private static final long serialVersionUID = 1L;
 
-	public IdCardOcrSdkException(String message) {
+	public SdkServerException(String message) {
 		super(message);
 	}
 
-	public IdCardOcrSdkException(String message, String errorCode) {
+	public SdkServerException(String message, String errorCode) {
 		super(message, errorCode);
 	}
 
-	public IdCardOcrSdkException(String message, Throwable cause) {
+	public SdkServerException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public IdCardOcrSdkException(String message, String errorCode, Throwable cause) {
+	public SdkServerException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 	}
 }
