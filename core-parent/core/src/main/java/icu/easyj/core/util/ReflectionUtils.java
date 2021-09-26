@@ -72,6 +72,37 @@ public abstract class ReflectionUtils {
 	 */
 	private static final Map<Class<?>, Object> SINGLETON_CACHE = new ConcurrentHashMap<>();
 
+
+	//region NULL_XXXX
+
+	/**
+	 * The NULL_FIELD
+	 */
+	public static final Field NULL_FIELD;
+
+	/**
+	 * The NULL_METHOD
+	 */
+	public static final Method NULL_METHOD;
+
+	private static class NullXxxxClass {
+		private String nullField;
+
+		public void nullMethod() {
+		}
+	}
+
+	static {
+		try {
+			NULL_FIELD = NullXxxxClass.class.getDeclaredField("nullField");
+			NULL_METHOD = NullXxxxClass.class.getDeclaredMethod("nullMethod");
+		} catch (NoSuchFieldException | NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	//endregion
+
 	//endregion
 
 
@@ -258,12 +289,12 @@ public abstract class ReflectionUtils {
 					}
 				}
 
-				// 未找到Field
-				return null;
+				// 未找到Field，返回NULL_FIELD常量，避免相同的fieldName重复执行当前函数
+				return NULL_FIELD;
 			});
 		}
 
-		if (field == null) {
+		if (field == NULL_FIELD) {
 			throw new NoSuchFieldException("field not found: " + clazz.getName() + ", field: " + fieldName);
 		}
 
@@ -497,11 +528,11 @@ public abstract class ReflectionUtils {
 					cl = cl.getSuperclass();
 				}
 			}
-			// 未找到Method
-			return null;
+			// 未找到Method，返回NULL_METHOD常量，避免相同的参数重复执行当前函数
+			return NULL_METHOD;
 		});
 
-		if (method == null) {
+		if (method == NULL_METHOD) {
 			throw new NoSuchMethodException("method not found: " + methodToString(clazz, methodName, parameterTypes));
 		}
 

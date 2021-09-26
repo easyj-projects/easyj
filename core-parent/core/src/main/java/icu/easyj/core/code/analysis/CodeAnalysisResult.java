@@ -15,7 +15,8 @@
  */
 package icu.easyj.core.code.analysis;
 
-import org.springframework.lang.Nullable;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * 代码解析结果
@@ -50,10 +51,10 @@ public class CodeAnalysisResult {
 	 * @param size 选取参数的数量
 	 * @return newParameters
 	 */
-	@Nullable
+	@NonNull
 	public Object[] chooseParameters(int size) {
 		if (parameters == null || parameters.length == 0) {
-			return null;
+			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		}
 		Object[] result = new Object[Math.max(size, this.parameters.length)];
 		System.arraycopy(this.parameters, 0, result, 0, result.length);

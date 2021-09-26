@@ -70,7 +70,7 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	}
 
 	@Override
-	public byte[] encrypt(byte[] data) {
+	public byte[] encrypt(@Nullable byte[] data) {
 		if (data == null) {
 			return null;
 		}

@@ -225,7 +225,10 @@ public abstract class EnvironmentUtils {
 	 * @param immutable          配置源是否不会更改
 	 * @return 配置源
 	 */
-	public static OriginTrackedMapPropertySource newMapPropertySource(String propertySourceName, Map<?, ?> source, boolean immutable) {
+	@NonNull
+	public static OriginTrackedMapPropertySource newMapPropertySource(@NonNull String propertySourceName,
+																	  @NonNull Map<?, ?> source,
+																	  boolean immutable) {
 		// 低版本的springboot中，OriginTrackedMapPropertySource类是没有immutable属性的，特殊处理一下
 		if (ReflectionUtils.hasField(OriginTrackedMapPropertySource.class, "immutable")) {
 			return new OriginTrackedMapPropertySource(propertySourceName, source, immutable);
@@ -393,6 +396,7 @@ public abstract class EnvironmentUtils {
 		return propertyList;
 	}
 
+	@Nullable
 	private static String getPropertyStr(@NonNull PropertySource<?> propertySource, String propertyName) {
 		Object propertyObj = propertySource.getProperty(propertyName);
 		if (propertyObj == null) {

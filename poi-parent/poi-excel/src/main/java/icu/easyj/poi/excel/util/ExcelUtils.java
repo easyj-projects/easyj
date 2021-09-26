@@ -36,6 +36,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 
 /**
  * Excel 工具类
@@ -199,6 +200,7 @@ public abstract class ExcelUtils {
 	 * @param mapping     表格映射
 	 * @return 标题行号
 	 */
+	@Nullable
 	private static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
 		int i = 0;
 		while (i < 5) {

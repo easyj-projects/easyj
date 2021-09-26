@@ -22,6 +22,7 @@ import java.util.Map;
 import cn.hutool.core.util.StrUtil;
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.code.analysis.CodeAnalysisUtils;
+import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.autoconfigure.StarterConstants;
@@ -30,6 +31,7 @@ import icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
+import org.springframework.lang.Nullable;
 
 /**
  * 函数式配置源
@@ -98,6 +100,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @param name 配置键
 	 * @return 配置值
 	 */
+	@Nullable
 	@Override
 	public Object getProperty(String name) {
 		// 判断该配置是否为当前配置源的配置
@@ -111,9 +114,11 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		}
 
 		// 解析代码，目前限制最多只读取4个参数
-		CodeAnalysisResult result = CodeAnalysisUtils.analysisCode(name.substring(PREFIX.length()));
-		if (result == null) {
-			throw new ConfigurationException("配置信息格式有误：" + name, "CONFIG_FORMAT_ERROR");
+		CodeAnalysisResult result;
+		try {
+			result = CodeAnalysisUtils.analysisCode(name.substring(PREFIX.length()));
+		} catch (AnalysisException e) {
+			throw new ConfigurationException("配置信息格式有误：" + name, "CONFIG_FORMAT_ERROR", e);
 		}
 
 		// 判断是否需要缓存此次生成的配置值
@@ -161,6 +166,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @param result 配置代码解析结果
 	 * @return 配置值
 	 */
+	@Nullable
 	private Object computeProperty(CodeAnalysisResult result) {
 		switch (result.getVariableName()) {
 			case CRYPTO_FUN_NAME:
