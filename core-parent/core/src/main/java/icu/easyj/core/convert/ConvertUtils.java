@@ -22,8 +22,10 @@ import java.util.List;
 import cn.hutool.core.lang.Assert;
 import icu.easyj.core.convert.converter.CharSequenceToDateConverter;
 import icu.easyj.core.convert.converter.DateToStringConverter;
+import icu.easyj.core.enums.DataType;
 import icu.easyj.core.exception.ConvertException;
 import org.springframework.core.convert.ConversionException;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.lang.NonNull;
@@ -61,7 +63,7 @@ public abstract class ConvertUtils {
 	 *
 	 * @param converter 转换器
 	 */
-	public static void addConvert(Converter<?, ?> converter) {
+	public static void addConvert(@NonNull Converter<?, ?> converter) {
 		Assert.notNull(converter, "'converter' must not be null");
 		CONVERSION_SERVICE.addConverter(converter);
 	}
@@ -83,6 +85,33 @@ public abstract class ConvertUtils {
 	}
 
 	/**
+	 * 判断是否可以转换
+	 *
+	 * @param sourceType 源类型
+	 * @param targetType 目标类型
+	 * @return 是否可以转换
+	 */
+	public static boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType) {
+		return getConversionService().canConvert(sourceType, targetType);
+	}
+
+	/**
+	 * 判断是否可以转换
+	 *
+	 * @param sourceType 源类型
+	 * @param targetType 目标类型
+	 * @return 是否可以转换
+	 */
+	public static boolean canConvert(@Nullable DataType sourceType, DataType targetType) {
+		if (sourceType == null) {
+			return true;
+		} else {
+			Assert.notNull(targetType, "'targetType' must not be null");
+			return canConvert(sourceType.getTypeDesc(), targetType.getTypeDesc());
+		}
+	}
+
+	/**
 	 * 转换
 	 *
 	 * @param source      源对象
@@ -90,7 +119,7 @@ public abstract class ConvertUtils {
 	 * @param <T>         目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(Object source, Class<T> targetClass) {
+	public static <T> T convert(@Nullable Object source, Class<T> targetClass) {
 		if (source == null) {
 			return null;
 		}
@@ -103,6 +132,103 @@ public abstract class ConvertUtils {
 	}
 
 	/**
+	 * 转换
+	 *
+	 * @param source     源对象
+	 * @param targetType 目标类描述
+	 * @param <T>        目标类型
+	 * @return 转换后的目标类对象
+	 */
+	public static <T> T convert(@Nullable Object source, TypeDescriptor targetType) {
+		if (source == null) {
+			return null;
+		}
+
+		try {
+			return (T)getConversionService().convert(source, targetType);
+		} catch (ConversionException | IllegalArgumentException e) {
+			throw new ConvertException("数据转换失败", e);
+		}
+	}
+
+	/**
+	 * 转换
+	 *
+	 * @param source     源对象
+	 * @param targetType 目标类描述
+	 * @param <T>        目标类型
+	 * @return 转换后的目标类对象
+	 */
+	public static <T> T convert(@Nullable Object source, DataType targetType) {
+		if (source == null) {
+			return null;
+		} else {
+			Assert.notNull(targetType, "'targetType' must not be null");
+			return convert(source, targetType.getTypeDesc());
+		}
+	}
+
+	/**
+	 * 转换
+	 *
+	 * @param source       源对象
+	 * @param targetClass  目标类
+	 * @param defaultValue 转换失败时，返回的默认值
+	 * @param <T>          目标类型
+	 * @return 转换后的目标类对象
+	 */
+	public static <T> T convert(@Nullable Object source, Class<T> targetClass, @Nullable T defaultValue) {
+		if (source == null) {
+			return defaultValue;
+		}
+
+		try {
+			return convert(source, targetClass);
+		} catch (ConvertException e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * 转换
+	 *
+	 * @param source       源对象
+	 * @param targetType   目标类描述
+	 * @param defaultValue 转换失败时，返回的默认值
+	 * @param <T>          目标类型
+	 * @return 转换后的目标类对象
+	 */
+	public static <T> T convert(@Nullable Object source, TypeDescriptor targetType, @Nullable T defaultValue) {
+		if (source == null) {
+			return defaultValue;
+		}
+
+		try {
+			return convert(source, targetType);
+		} catch (ConvertException e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * 转换
+	 *
+	 * @param source       源对象
+	 * @param targetType   目标类描述
+	 * @param defaultValue 转换失败时，返回的默认值
+	 * @param <T>          目标类型
+	 * @return 转换后的目标类对象
+	 */
+	public static <T> T convert(@Nullable Object source, DataType targetType, @Nullable T defaultValue) {
+		if (source == null) {
+			return defaultValue;
+		} else {
+			Assert.notNull(targetType, "'targetType' must not be null");
+			return convert(source, targetType.getTypeDesc(), defaultValue);
+		}
+	}
+
+	/**
 	 * 转换列表数据
 	 *
 	 * @param sourceList  源对象列表
@@ -111,7 +237,7 @@ public abstract class ConvertUtils {
 	 * @return 转换后的目标类对象列表
 	 */
 	@NonNull
-	public static <T> List<T> convertList(Collection<?> sourceList, Class<T> targetClass) {
+	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, Class<T> targetClass) {
 		List<T> list = new ArrayList<>();
 
 		if (sourceList != null) {
@@ -124,19 +250,41 @@ public abstract class ConvertUtils {
 	}
 
 	/**
-	 * 转换
+	 * 转换列表数据
 	 *
-	 * @param source       源对象
-	 * @param targetClass  目标类
-	 * @param defaultValue 转换失败时，返回的默认值
-	 * @param <T>          目标类型
-	 * @return 转换后的目标类对象
+	 * @param sourceList 源对象列表
+	 * @param targetType 目标类描述
+	 * @param <T>        目标类型
+	 * @return 转换后的目标类对象列表
 	 */
-	public static <T> T convert(@Nullable Object source, Class<T> targetClass, T defaultValue) {
-		try {
-			return convert(source, targetClass);
-		} catch (ConvertException e) {
-			return defaultValue;
+	@NonNull
+	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, TypeDescriptor targetType) {
+		List<T> list = new ArrayList<>();
+
+		if (sourceList != null) {
+			for (Object source : sourceList) {
+				list.add(convert(source, targetType));
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * 转换列表数据
+	 *
+	 * @param sourceList 源对象列表
+	 * @param targetType 目标类描述
+	 * @param <T>        目标类型
+	 * @return 转换后的目标类对象列表
+	 */
+	@NonNull
+	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, DataType targetType) {
+		if (sourceList == null) {
+			return new ArrayList<>();
+		} else {
+			Assert.notNull(targetType, "'targetType' must not be null");
+			return convertList(sourceList, targetType.getTypeDesc());
 		}
 	}
 

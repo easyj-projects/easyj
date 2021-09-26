@@ -52,7 +52,7 @@ public class CodeAnalysisResult {
 	 */
 	@Nullable
 	public Object[] chooseParameters(int size) {
-		if (parameters == null) {
+		if (parameters == null || parameters.length == 0) {
 			return null;
 		}
 		Object[] result = new Object[Math.max(size, this.parameters.length)];

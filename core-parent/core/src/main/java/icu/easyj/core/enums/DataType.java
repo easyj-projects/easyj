@@ -16,6 +16,7 @@
 package icu.easyj.core.enums;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import icu.easyj.core.util.StringUtils;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.lang.Nullable;
 
 /**
@@ -35,7 +37,7 @@ public enum DataType {
 
 	//region 字符型
 
-	STRING(11, String.class, "string"),
+	STRING(11, String.class, "String"),
 	CHAR_PRIMITIVE(12, char.class, "char"),
 	CHARACTER(13, Character.class, "Character", "Char"),
 
@@ -47,9 +49,10 @@ public enum DataType {
 	SHORT_PRIMITIVE(21, short.class, "short"),
 	SHORT(22, Short.class, "Short"),
 	INT_PRIMITIVE(23, int.class, "int"),
-	INTEGER(24, Integer.class, "Integer"),
+	INTEGER(24, Integer.class, "Integer", "Int"),
 	LONG_PRIMITIVE(25, long.class, "long"),
 	LONG(26, Long.class, "Long"),
+	BIG_INTEGER(27, BigInteger.class, "BigInteger"),
 
 	//endregion
 
@@ -104,6 +107,11 @@ public enum DataType {
 	private final Class<?> clazz;
 
 	/**
+	 * 数据类型描述
+	 */
+	private final TypeDescriptor typeDesc;
+
+	/**
 	 * 类型字符串
 	 */
 	private final Set<String> types;
@@ -113,6 +121,7 @@ public enum DataType {
 	DataType(int code, Class<?> clazz, String... types) {
 		this.code = code;
 		this.clazz = clazz;
+		this.typeDesc = TypeDescriptor.valueOf(clazz);
 		this.types = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(types)));
 	}
 
@@ -123,12 +132,12 @@ public enum DataType {
 		return code;
 	}
 
-	public Set<String> getTypes() {
-		return types;
-	}
-
 	public Class<?> getClazz() {
 		return clazz;
+	}
+
+	public TypeDescriptor getTypeDesc() {
+		return typeDesc;
 	}
 
 	public boolean isPrimitive() {
@@ -170,13 +179,14 @@ public enum DataType {
 		if (StringUtils.isEmpty(type)) {
 			return null;
 		}
-		// 不忽略大小写时先查找一遍
+		// 先整体查找一遍
 		for (DataType dataType : DataType.values()) {
-			if (dataType.types.contains(type)) {
+			if (dataType.clazz.getName().equals(type)
+					|| dataType.types.contains(type)) {
 				return dataType;
 			}
 		}
-		// 忽略大小写再查找一遍
+		// 忽略大小写，从types中查找一遍
 		for (DataType dataType : DataType.values()) {
 			for (String tp : dataType.types) {
 				if (tp.equalsIgnoreCase(type)) {

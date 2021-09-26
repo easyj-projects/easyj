@@ -17,6 +17,8 @@ package icu.easyj.core.clock;
 
 import java.util.Date;
 
+import org.springframework.lang.NonNull;
+
 /**
  * 时钟接口
  *
@@ -29,6 +31,7 @@ public interface IClock {
 	 *
 	 * @return now 当前时间
 	 */
+	@NonNull
 	default Date now() {
 		return new Date(currentTimeMillis());
 	}
