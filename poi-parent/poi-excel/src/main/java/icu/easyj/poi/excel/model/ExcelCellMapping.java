@@ -40,7 +40,6 @@ import org.apache.poi.hssf.util.HSSFColor;
  *
  * @author wangliang181230
  */
-@SuppressWarnings("deprecation")
 public class ExcelCellMapping implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -297,12 +296,13 @@ public class ExcelCellMapping implements Serializable {
 	/**
 	 * 注解转换为映射类对象
 	 *
-	 * @param anno
-	 * @param clazz
-	 * @param f
-	 * @return
+	 * @param anno    列注解
+	 * @param clazz   数据类型
+	 * @param f       字段
+	 * @param mapping 表映射
+	 * @return 列映射
 	 */
-	private static ExcelCellMapping toMapping(ExcelCell anno, Class<?> clazz, Field f, ExcelMapping mapping) {
+	public static ExcelCellMapping toMapping(ExcelCell anno, Class<?> clazz, Field f, ExcelMapping mapping) {
 		ExcelCellMapping cellMapping = new ExcelCellMapping();
 
 		// 属性信息
@@ -357,8 +357,8 @@ public class ExcelCellMapping implements Serializable {
 		cellMapping.setTrueText(anno.trueText().trim()); // boolean型数据为true时，显示的文字
 		cellMapping.setFalseText(anno.falseText().trim()); // boolean型数据为false时，显示的文字
 		if (StringUtils.isNotBlank(anno.convert())) {
-			Map<String, String> convertMap = new HashMap<>();
-			Map<String, String> convertMap2 = new HashMap<>();
+			Map<String, String> convertMap = new HashMap<>(4);
+			Map<String, String> convertMap2 = new HashMap<>(4);
 
 			String splitRegex = (anno.convert().contains("|") ? "\\|" : ",");
 
@@ -430,12 +430,12 @@ public class ExcelCellMapping implements Serializable {
 	 * 根据文本获取列宽
 	 * 中文算两个长度
 	 *
-	 * @param text
+	 * @param text   文本内容
 	 * @param size   字体大小
 	 * @param isBold 是否为粗体
-	 * @return
+	 * @return 列宽
 	 */
-	private static int getCellWidthByText(String text, int size, boolean isBold) {
+	public static int getCellWidthByText(String text, int size, boolean isBold) {
 		int textLength = icu.easyj.core.util.StringUtils.chineseLength(text);
 		return (int)(textLength * (isBold ? 7.2 : 6.8) * (size / 10)) + 10;
 	}
@@ -477,7 +477,7 @@ public class ExcelCellMapping implements Serializable {
 					continue;
 				}
 				if (awtColor.getRed() == triplet[0] && awtColor.getGreen() == triplet[1] && awtColor.getBlue() == triplet[2]) {
-					colorIndexRet = Short.valueOf(colorIndex.toString());
+					colorIndexRet = Short.parseShort(colorIndex.toString());
 					break;
 				}
 			}

@@ -40,13 +40,13 @@ public abstract class FilterRegistrationUtils {
 	 * @param <P>          配置类型
 	 * @return registration 过滤器注册器
 	 */
-	public static <P extends IFilterProperties> FilterRegistrationBean register(Filter filter, P properties, Integer defaultOrder) {
+	public static <P extends IFilterProperties, F extends Filter> FilterRegistrationBean<F> register(F filter, P properties, Integer defaultOrder) {
 		if (!properties.isEnabled()) {
 			throw new FilterDisabledException("当前过滤器已禁用，无法继续注册");
 		}
 
 		// 过滤器注册器
-		FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+		FilterRegistrationBean<F> registration = new FilterRegistrationBean<>(filter);
 
 		// 设置过滤器 名称
 		registration.setName(filter.getClass().getSimpleName());

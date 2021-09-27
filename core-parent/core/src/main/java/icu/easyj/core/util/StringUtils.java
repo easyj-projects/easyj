@@ -311,7 +311,7 @@ public abstract class StringUtils {
 			return DateUtils.toString((Date)obj);
 		}
 		if (obj instanceof Enum) {
-			return obj.getClass().getSimpleName() + "." + ((Enum)obj).name();
+			return obj.getClass().getSimpleName() + "." + ((Enum<?>)obj).name();
 		}
 		if (obj instanceof Class) {
 			return ReflectionUtils.classToString((Class<?>)obj);

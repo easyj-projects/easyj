@@ -70,7 +70,7 @@ public abstract class EnvironmentUtils {
 	 */
 	public static void addOrMergeDefaultProperties(@Nullable Map<String, Object> source, @NonNull MutablePropertySources allSources) {
 		if (!CollectionUtils.isEmpty(source)) {
-			Map<String, Object> resultingSource = new HashMap<>();
+			Map<String, Object> resultingSource = new HashMap<>(source.size());
 			MapPropertySource defaultPropertySource = new MapPropertySource(DEFAULT_PROPERTY_SOURCE_NAME, resultingSource);
 			if (allSources.contains(DEFAULT_PROPERTY_SOURCE_NAME)) {
 				mergeIfPossible(source, allSources, resultingSource);
@@ -126,6 +126,9 @@ public abstract class EnvironmentUtils {
 	@Nullable
 	public static Properties buildProperties(@NonNull Resource configFileResource) {
 		String configFileName = configFileResource.getFilename();
+		if (configFileName == null) {
+			return null;
+		}
 
 		// 不同文件类型，采用不同的加载方式
 		Properties properties;

@@ -129,7 +129,7 @@ class ConvertUtilsTest {
 		// String -> BigDecimal
 		{
 			BigDecimal bd = ConvertUtils.convert(source, BigDecimal.class);
-			Assertions.assertEquals(BigDecimal.valueOf(Double.valueOf(source)), bd);
+			Assertions.assertEquals(BigDecimal.valueOf(Double.parseDouble(source)), bd);
 		}
 
 		//endregion

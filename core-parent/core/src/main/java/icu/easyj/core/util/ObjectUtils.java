@@ -73,7 +73,7 @@ public abstract class ObjectUtils {
 		} else if (obj instanceof CharSequence) {
 			return (T)StringUtils.defaultIfEmpty((CharSequence)obj, (CharSequence)defaultValue);
 		} else if (obj instanceof Collection) {
-			return (T)CollectionUtils.defaultIfEmpty((Collection)obj, (Collection)defaultValue);
+			return (T)CollectionUtils.defaultIfEmpty((Collection<?>)obj, (Collection<?>)defaultValue);
 		} else if (obj instanceof Map) {
 			return (T)MapUtils.defaultIfEmpty((Map<?, ?>)obj, (Map<?, ?>)defaultValue);
 		} else if (obj.getClass().isArray()) {
@@ -96,8 +96,8 @@ public abstract class ObjectUtils {
 	public static <T> T defaultIfEmpty(T obj, Supplier<T> defaultValueSupplier) {
 		if (obj == null
 				|| (obj instanceof CharSequence && StringUtils.isEmpty((CharSequence)obj))
-				|| (obj instanceof Collection && CollectionUtils.isEmpty((Collection)obj))
-				|| (obj instanceof Map && MapUtils.isEmpty((Map)obj))
+				|| (obj instanceof Collection && CollectionUtils.isEmpty((Collection<?>)obj))
+				|| (obj instanceof Map && MapUtils.isEmpty((Map<?, ?>)obj))
 				|| (obj.getClass().isArray() && Array.getLength(obj) == 0)) {
 			return defaultValueSupplier.get();
 		}

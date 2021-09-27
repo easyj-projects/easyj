@@ -115,7 +115,7 @@ public class EasyjParamCryptoAutoConfiguration {
 	 * @return filterRegistrationBean 参数加密解密过滤器注册
 	 */
 	@Bean
-	public FilterRegistrationBean paramEncryptFilterRegistration(ParamCryptoFilter paramCryptoFilter) {
+	public FilterRegistrationBean<ParamCryptoFilter> paramEncryptFilterRegistration(ParamCryptoFilter paramCryptoFilter) {
 		return FilterRegistrationUtils.register(paramCryptoFilter, paramCryptoFilter.getFilterProperties(), FilterOrderConstants.PARAM_ENCRYPT);
 	}
 
@@ -127,8 +127,7 @@ public class EasyjParamCryptoAutoConfiguration {
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass({com.alibaba.fastjson.JSON.class})
-	// 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
-	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = "fastjson")
+	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = "fastjson") // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
 	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration implements WebMvcConfigurer {
 
 		private final ParamCryptoFilter paramCryptoFilter;
@@ -164,7 +163,6 @@ public class EasyjParamCryptoAutoConfiguration {
 			List<MediaType> mediaTypes = new ArrayList<>();
 			mediaTypes.add(MediaType.TEXT_PLAIN);
 			mediaTypes.add(MediaType.APPLICATION_JSON);
-			mediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
 			mediaTypes.add(MediaType.valueOf("application/*+json"));
 			// 添加媒体类型到转换器中
 			httpMessageConverter.setSupportedMediaTypes(mediaTypes);

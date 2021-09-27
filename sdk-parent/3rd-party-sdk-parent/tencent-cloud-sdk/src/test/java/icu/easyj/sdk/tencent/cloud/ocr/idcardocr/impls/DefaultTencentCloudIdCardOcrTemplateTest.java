@@ -49,7 +49,7 @@ class DefaultTencentCloudIdCardOcrTemplateTest {
 		// 获取方式：请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对
 		// 特别说明：以下是测试用的腾讯云账号的密钥对，由于文字识别接口免费额度有限，请大家尽量少执行测试。
 		//         如果免费额度用完导致测试用例执行失败，请大家自行注册腾讯云账号，开通文字识别服务，并设置自己的密钥对，再进行测试。
-		// 注意：请不要将生产环境使用的密钥对提交到代码库中，以免泄露。如已泄露，请重新生成一个密钥对，将生产环境的配置远的掉。
+		// 注意：请不要将生产环境使用的密钥对提交到代码库中，以免泄露。如已泄露，请重新生成一个密钥对，将生产环境的配置替换掉。
 		String secretId = "AKIDb1B6mCMFrDJ8hz0kDQN3SgeKjriJdgSx"; // 密钥对中的ID
 		String secretKey = "FEyRe05uSjjSv60dz3qMbaIkwrUqwmKb"; // 密钥对中的Key
 

@@ -183,7 +183,7 @@ public abstract class ExcelUtils {
 				if (cellValue == null) {
 					continue;
 				}
-				if (cellValue.equals(mapping.getNumberCellHeadName()) || cellValue.equals("序号")) {
+				if (cellValue.equals(mapping.getNumberCellHeadName()) || "序号".equals(cellValue)) {
 					return true;
 				}
 			}

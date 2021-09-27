@@ -51,7 +51,7 @@ public abstract class PatternUtils {
 	public static final Pattern P_CODE_DATA_VALUE = Pattern.compile(REGEX_CODE_VALUE);
 
 	// 单行执行代码正则，不允许存在空格
-	public static final String REGEX_CODE_LINE = "^(\\w+)(\\.(\\w+)(\\((" + REGEX_CODE_VALUE + "(,\\s{0,1}" + REGEX_CODE_VALUE + ")*)?\\)(?=(;|$)))?)?;?$";
+	public static final String REGEX_CODE_LINE = "^(\\w+)(\\.(\\w+)(\\((" + REGEX_CODE_VALUE + "(,\\s?" + REGEX_CODE_VALUE + ")*)?\\)(?=(;|$)))?)?;?$";
 	public static final Pattern P_CODE_LINE = Pattern.compile(REGEX_CODE_LINE);
 
 	// 单行执行代码正则，允许存在空格

@@ -258,7 +258,7 @@ class StringUtilsTest {
 		public static boolean hashCodeTriggered = false;
 		public static boolean toStringTriggered = false;
 
-		private String s;
+		private final String s;
 		private CycleDependency obj;
 
 		private CycleDependency(String s) {

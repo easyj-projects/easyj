@@ -42,7 +42,6 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@SuppressWarnings("deprecation")
 public abstract class ExcelRowUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelRowUtils.class);
 
@@ -208,7 +207,7 @@ public abstract class ExcelRowUtils {
 				if (!ExcelCellUtils.isEmptyCell(cell)) { // 判断单元格是否为空
 					return false; // 单元格不为空，行就不为空
 				}
-			} catch (Exception e) {
+			} catch (Exception ignore) {
 			}
 		}
 
@@ -255,7 +254,7 @@ public abstract class ExcelRowUtils {
 		// 得到一个POI的工具类
 		CreationHelper factory = sheet.getWorkbook().getCreationHelper();
 		// 得到一个换图的对象
-		Drawing drawing = sheet.createDrawingPatriarch();
+		Drawing<?> drawing = sheet.createDrawingPatriarch();
 		// ClientAnchor是附属在WorkSheet上的一个对象，  其固定在一个单元格的左上角和右下角.
 		ClientAnchor anchor = factory.createClientAnchor();
 

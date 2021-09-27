@@ -288,7 +288,7 @@ public class EnhancedServiceLoader {
 		 * Specify classLoader to load the service provider
 		 *
 		 * @param loader the loader
-		 * @return s s
+		 * @return s
 		 * @throws EnhancedServiceNotFoundException the enhanced service not found exception
 		 */
 		private S load(ClassLoader loader) throws EnhancedServiceNotFoundException {
@@ -300,7 +300,7 @@ public class EnhancedServiceLoader {
 		 *
 		 * @param activateName the activate name
 		 * @param loader       the loader
-		 * @return s s
+		 * @return s
 		 * @throws EnhancedServiceNotFoundException the enhanced service not found exception
 		 */
 		private S load(String activateName, ClassLoader loader)
@@ -348,7 +348,7 @@ public class EnhancedServiceLoader {
 		 * get all implements
 		 *
 		 * @param loader the class loader
-		 * @return list list
+		 * @return list
 		 */
 		@NonNull
 		private List<S> loadAll(ClassLoader loader) {
@@ -360,7 +360,7 @@ public class EnhancedServiceLoader {
 		 *
 		 * @param argsType the args type
 		 * @param args     the args
-		 * @return list list
+		 * @return list
 		 */
 		@NonNull
 		private List<S> loadAll(Class<?>[] argsType, Object[] args, ClassLoader loader) {
@@ -404,7 +404,6 @@ public class EnhancedServiceLoader {
 			}
 		}
 
-		@SuppressWarnings("deprecation")
 		private S loadExtension(String activateName, ClassLoader loader, Class<?>[] argTypes,
 								Object[] args) {
 			if (StringUtils.isEmpty(activateName)) {
@@ -597,7 +596,7 @@ public class EnhancedServiceLoader {
 		 * @param implClazz the impl clazz
 		 * @param argTypes  the arg types
 		 * @param args      the args
-		 * @return s s
+		 * @return s
 		 * @throws IllegalAccessException    the illegal access exception
 		 * @throws InstantiationException    the instantiation exception
 		 * @throws NoSuchMethodException     the no such method exception

@@ -260,7 +260,7 @@ public abstract class ReflectionUtils {
 		Assert.notNull(clazz, "'clazz' must not be null");
 		Assert.notNull(fieldName, "'fieldName' must not be null");
 
-		Map<String, Field> fieldMap = MapUtils.computeIfAbsent(FIELD_CACHE, clazz, k -> new ConcurrentHashMap<>());
+		Map<String, Field> fieldMap = MapUtils.computeIfAbsent(FIELD_CACHE, clazz, k -> new ConcurrentHashMap<>(4));
 
 		Field field;
 		if (fieldName.contains(StrPool.DOT)) {
@@ -431,7 +431,7 @@ public abstract class ReflectionUtils {
 			setFieldValue(currentTarget, fieldNameArr[fieldNameArr.length - 1], fieldValue);
 		} else {
 			if (target instanceof Map) {
-				((Map)target).put(fieldName, fieldValue);
+				((Map<String, Object>)target).put(fieldName, fieldValue);
 			} else {
 				// get field
 				Field field = getField(target.getClass(), fieldName);
@@ -516,7 +516,7 @@ public abstract class ReflectionUtils {
 			throws NoSuchMethodException, SecurityException {
 		Assert.notNull(clazz, "'clazz' must not be null");
 
-		Map<String, Method> methodMap = MapUtils.computeIfAbsent(METHOD_CACHE, clazz, k -> new ConcurrentHashMap<>());
+		Map<String, Method> methodMap = MapUtils.computeIfAbsent(METHOD_CACHE, clazz, k -> new ConcurrentHashMap<>(4));
 
 		String cacheKey = generateMethodCacheKey(methodName, parameterTypes);
 		Method method = MapUtils.computeIfAbsent(methodMap, cacheKey, k -> {
