@@ -37,10 +37,11 @@ public abstract class FilterRegistrationUtils {
 	 * @param filter       过滤器
 	 * @param properties   过滤器配置
 	 * @param defaultOrder 默认的执行顺序
+	 * @param <F>          过滤器类型
 	 * @param <P>          配置类型
 	 * @return registration 过滤器注册器
 	 */
-	public static <P extends IFilterProperties, F extends Filter> FilterRegistrationBean<F> register(F filter, P properties, Integer defaultOrder) {
+	public static <F extends Filter, P extends IFilterProperties> FilterRegistrationBean<F> register(F filter, P properties, Integer defaultOrder) {
 		if (!properties.isEnabled()) {
 			throw new FilterDisabledException("当前过滤器已禁用，无法继续注册");
 		}
