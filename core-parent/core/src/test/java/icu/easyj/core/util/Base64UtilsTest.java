@@ -72,6 +72,7 @@ class Base64UtilsTest {
 		String str = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
 
 		// 运行次数参数
+		int sets = 3;
 		int times = 100 * 10000;
 		// easyj函数
 		Supplier<String> easyjSupplier = () -> {
@@ -86,7 +87,7 @@ class Base64UtilsTest {
 
 		// 运行测试，并获取每个函数的耗时
 		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
-		long[] costs = PerformanceTestUtils.execute(times, easyjSupplier, hutoolSupplier);
+		long[] costs = PerformanceTestUtils.execute(sets, times, easyjSupplier, hutoolSupplier);
 
 		// case: 性能比Hutool高
 		long costEasyj = costs[0];
