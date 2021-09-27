@@ -15,7 +15,7 @@
  */
 package icu.easyj.core.util;
 
-import java.io.UnsupportedEncodingException;
+import java.util.function.Supplier;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
@@ -69,47 +69,28 @@ class Base64UtilsTest {
 
 		//region case: 与Hutool比较性能高低
 
-		String base64 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
+		String str = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
 
-		int count = 10 * 10000;
-		long t0;
-		long costHutool, costEasyj;
+		// 运行次数参数
+		int times = 100 * 10000;
+		// easyj函数
+		Supplier<String> easyjSupplier = () -> {
+			Base64Utils.isBase64(str);
+			return "easyj";
+		};
+		// hutool函数
+		Supplier<String> hutoolSupplier = () -> {
+			Base64.isBase64(str);
+			return "hutool";
+		};
 
-		//region 预热一下
-
-		//easyj
-		for (int i = count; i > 0; --i) {
-			Base64Utils.isBase64(base64);
-		}
-		//hutool
-		for (int i = count; i > 0; --i) {
-			Base64.isBase64(base64);
-		}
-
-		//endregion
-
-		//region 正式测试
-
-		//easyj
-		t0 = System.nanoTime();
-		for (int i = count; i > 0; --i) {
-			Base64Utils.isBase64(base64);
-		}
-		costEasyj = System.nanoTime() - t0;
-
-		//hutool
-		t0 = System.nanoTime();
-		for (int i = count; i > 0; --i) {
-			Base64.isBase64(base64);
-		}
-		costHutool = System.nanoTime() - t0;
-
-		//endregion
+		// 运行测试，并获取每个函数的耗时
+		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
+		long[] costs = PerformanceTestUtils.execute(times, easyjSupplier, hutoolSupplier);
 
 		// case: 性能比Hutool高
-		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
-		System.out.println("cost  easyj: " + costEasyj);
-		System.out.println("cost hutool: " + costHutool);
+		long costEasyj = costs[0];
+		long costHutool = costs[1];
 		if (costEasyj > costHutool) {
 			try {
 				throw new RuntimeException("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
