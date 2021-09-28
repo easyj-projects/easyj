@@ -17,6 +17,9 @@ package icu.easyj.core.util;
 
 import java.nio.charset.StandardCharsets;
 
+import cn.hutool.core.lang.Assert;
+import org.springframework.lang.NonNull;
+
 /**
  * Base64工具类
  *
@@ -51,7 +54,10 @@ public abstract class Base64Utils {
 	 * @return 规范化后的Base64串
 	 * @throws IllegalArgumentException 编码有误
 	 */
-	public static String normalize(String base64Str) throws IllegalArgumentException {
+	@NonNull
+	public static String normalize(@NonNull String base64Str) throws IllegalArgumentException {
+		Assert.notNull(base64Str, "'base64Str' must not be null");
+
 		boolean needToChange = false;
 
 		int base64Length = base64Str.length();
@@ -71,9 +77,10 @@ public abstract class Base64Utils {
 					i++;
 					needToChange = true;
 					break;
-				// 移除回车符和换行符
+				// 移除回车符、换行符、双引号（部分前端方法经常会生效带双引号的Base64串）
 				case '\r':
 				case '\n':
+				case '\"':
 					i++;
 					needToChange = true;
 					break;
@@ -119,17 +126,33 @@ public abstract class Base64Utils {
 	}
 
 	/**
+	 * 判断是否为Base64字符（除'='号外）
+	 *
+	 * @param c 字符
+	 * @return 是否为Base64字符
+	 */
+	private static boolean isBase64CharInner(char c) {
+		return c < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[c] != -1;
+	}
+
+	/**
 	 * 判断是否为Base64字符
 	 *
 	 * @param c 字符
 	 * @return 是否为Base64字符
 	 */
 	public static boolean isBase64Char(char c) {
-//		return (c >= 'a' && c <= 'z')
-//				|| (c >= 'A' && c <= 'Z')
-//				|| (c >= '0' && c <= '9')
-//				|| c == '/' || c == '+';
-		return c < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[c] != -1;
+		return c == PADDING_CHAR || isBase64CharInner(c);
+	}
+
+	/**
+	 * 判断是否为Base64字节
+	 *
+	 * @param b 字节
+	 * @return 是否为Base64字节
+	 */
+	public static boolean isBase64Code(byte b) {
+		return b == PADDING_CHAR || (b >= 0 && b < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[b] != -1);
 	}
 
 	/**
@@ -148,6 +171,7 @@ public abstract class Base64Utils {
 		// 计算需校验字符的长度
 		int length = charArr.length;
 		if (charArr[length - 1] == PADDING_CHAR) {
+			// 存在补位字符时，长度必须为4的倍数
 			if (str.length() % 4 != 0) {
 				return false;
 			}
@@ -163,7 +187,7 @@ public abstract class Base64Utils {
 		char c;
 		for (int i = 0; i < length; ++i) {
 			c = charArr[i];
-			if (!isBase64Char(c)) {
+			if (!isBase64CharInner(c)) {
 				return false;
 			}
 		}
