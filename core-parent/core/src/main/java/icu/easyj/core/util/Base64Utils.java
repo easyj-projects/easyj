@@ -17,8 +17,8 @@ package icu.easyj.core.util;
 
 import java.nio.charset.StandardCharsets;
 
-import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * Base64工具类
