@@ -30,6 +30,7 @@ import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
@@ -87,6 +88,9 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			// 发送请求，接收响应
 			try {
 				respStr = restTemplate.getForObject(url, String.class);
+			} catch (RestClientResponseException e) {
+				respStr = "[" + e.getRawStatusCode() + "]" + e.getResponseBodyAsString();
+				throw new DwzSdkServerException("请求S-3短链接服务异常：" + respStr, ErrorCodeConstants.SERVER_ERROR, e);
 			} catch (RuntimeException e) {
 				throw new DwzSdkServerException("请求S-3短链接服务异常", ErrorCodeConstants.SERVER_ERROR, e);
 			}

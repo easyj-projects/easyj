@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
@@ -104,17 +104,20 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			try {
 				ResponseEntity<String> respEntity = restTemplate.postForEntity(config.getServiceUrl(), httpEntity, String.class);
 				respStr = respEntity.getBody();
-			} catch (HttpClientErrorException.Forbidden e) {
+			} catch (RestClientResponseException e) {
 				respStr = e.getResponseBodyAsString();
 				if (!respStr.startsWith("{")) {
+					respStr = "[" + e.getRawStatusCode() + "]" + respStr;
 					// 不是JSON数据，直接抛出异常
-					throw new DwzSdkServerException("[" + e.getStatusCode().value() + "]" + e.getMessage(), ErrorCodeConstants.UNKNOWN, e);
+					throw new DwzSdkServerException("请求百度云短链接服务失败：[" + e.getRawStatusCode() + "]" + e.getMessage(), ErrorCodeConstants.SERVER_ERROR, e);
 				}
+			} catch (RuntimeException e) {
+				throw new DwzSdkServerException("请求百度云短链接服务失败", ErrorCodeConstants.SERVER_ERROR, e);
 			}
 
 			// 判断：响应内容是否为空
 			if (StringUtils.isEmpty(respStr)) {
-				throw new DwzSdkServerException("请求S-3短链接服务无响应", "EMPTY_RESPONSE");
+				throw new DwzSdkServerException("请求百度云短链接服务无响应", "EMPTY_RESPONSE");
 			}
 
 			// 解析响应JSON
