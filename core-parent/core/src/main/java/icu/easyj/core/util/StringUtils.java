@@ -39,6 +39,44 @@ public abstract class StringUtils {
 	 */
 	public static final int CASE_DIFF = ('a' - 'A');
 
+	/**
+	 * 字符串的value属性
+	 */
+	private static final Field STRING_VALUE_FIELD;
+
+	static {
+		try {
+			STRING_VALUE_FIELD = String.class.getDeclaredField("value");
+			STRING_VALUE_FIELD.setAccessible(true);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+	//region 获取字符串的value属性
+
+	/**
+	 * 直接获取String的value属性。
+	 * <p>
+	 * 部分场景下，我们获取字符串的char数组，只是为了校验字符串，并没有任何修改、删除操作。<br>
+	 * 但由于 {@link String#toCharArray()} 方法会复制一次字符数组，导致无谓的性能损耗。<br>
+	 * 所以，开发了此方法用于提升性能。
+	 *
+	 * @param str 字符串
+	 * @return 字符数组
+	 * @see String#toCharArray()
+	 */
+	public static char[] toCharArrayWithoutCopy(CharSequence str) {
+		try {
+			return (char[])STRING_VALUE_FIELD.get(str.toString());
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("获取字符串的value失败", e);
+		}
+	}
+
+	//endregion
+
 
 	//region 判断方法
 

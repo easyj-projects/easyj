@@ -68,6 +68,7 @@ public abstract class Base64Utils {
 		byte[] bytes = null;
 		int pos;
 		String hex;
+		int v;
 		while (i < base64Length) {
 			c = base64Str.charAt(i);
 			switch (c) {
@@ -94,7 +95,7 @@ public abstract class Base64Utils {
 						pos = 0;
 						while (c == '%' && i + 2 < base64Length) {
 							hex = base64Str.substring(i + 1, i + 3);
-							int v = Integer.parseInt(hex, 16);
+							v = Integer.parseInt(hex, 16);
 							if (v < 0) {
 								throw new IllegalArgumentException("转义（%）模式时存在非法十六进制字符-负值: %" + hex + " -> " + v);
 							}
@@ -161,12 +162,12 @@ public abstract class Base64Utils {
 	 * @param str 字符串
 	 * @return 是否为Base64字符串
 	 */
-	public static boolean isBase64(CharSequence str) {
+	public static boolean isBase64(final CharSequence str) {
 		if (str == null || str.length() < 2) {
 			return false;
 		}
 
-		char[] charArr = str.toString().toCharArray();
+		final char[] charArr = StringUtils.toCharArrayWithoutCopy(str);
 
 		// 计算需校验字符的长度
 		int length = charArr.length;

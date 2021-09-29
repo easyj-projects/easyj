@@ -73,7 +73,7 @@ class Base64UtilsTest {
 
 		// 运行次数参数
 		int sets = 3;
-		int times = 100 * 10000;
+		int times = 500 * 10000;
 		// easyj函数
 		Supplier<String> easyjSupplier = () -> {
 			Base64Utils.isBase64(str);
@@ -93,11 +93,7 @@ class Base64UtilsTest {
 		long costEasyj = costs[0];
 		long costHutool = costs[1];
 		if (costEasyj > costHutool) {
-			try {
-				throw new RuntimeException("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
-			} catch (RuntimeException e) {
-				e.printStackTrace();
-			}
+			throw new RuntimeException("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
 		}
 
 		//endregion
