@@ -139,6 +139,9 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 				bodyJsonStr = body;
 			}
 
+			// 设为null，方便GC回收
+			body = null;
+
 			// JSON数据转换为指定入参类型的数据
 			Object result = JSON.parseObject(bodyJsonStr,
 					type,
@@ -148,7 +151,6 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 					fastJsonConfig.getFeatures());
 
 			// 设为null，方便GC回收
-			body = null;
 			bodyJsonStr = null;
 
 			return result;

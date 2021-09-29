@@ -17,6 +17,7 @@ package icu.easyj.web.param.crypto;
 
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
+import org.springframework.lang.NonNull;
 
 /**
  * 参数加密解密工具接口
@@ -31,7 +32,8 @@ public interface IParamCryptoHandler {
 	 * @param encryptedParam 待解密参数
 	 * @return 处理后的字符串
 	 */
-	default String handleEscapedChars(String encryptedParam) {
+	@NonNull
+	default String handleEscapedChars(@NonNull String encryptedParam) {
 		return encryptedParam;
 	}
 
