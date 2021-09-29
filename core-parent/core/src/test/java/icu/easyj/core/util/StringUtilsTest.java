@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.system.JavaInfo;
+import cn.hutool.system.SystemUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -64,6 +66,43 @@ class StringUtilsTest {
 		Assertions.assertFalse(StringUtils.isNotBlank(""));
 		Assertions.assertFalse(StringUtils.isNotBlank(" "));
 		Assertions.assertTrue(StringUtils.isNotBlank(" 1 "));
+	}
+
+	@Test
+	void testGetValue() {
+		String s1 = "aaabbbccc";
+		String s2 = "aaabbbccc啊";
+
+		JavaInfo javaInfo = SystemUtil.getJavaInfo();
+		System.out.println("java version: " + javaInfo.getVersionFloat());
+		if (javaInfo.getVersionFloat() < 9) {
+			char[] chars = (char[])StringUtils.getValue(s1);
+			Assertions.assertEquals(chars.length, s1.length());
+
+			chars = (char[])StringUtils.getValue(s2);
+			Assertions.assertEquals(chars.length, s2.length());
+		} else {
+			byte[] bytes = (byte[])StringUtils.getValue(s1);
+			Assertions.assertEquals(bytes.length, s1.length());
+
+			bytes = (byte[])StringUtils.getValue(s2);
+			Assertions.assertEquals(bytes.length, s2.length() * 2);
+		}
+	}
+
+	@Test
+	void testGetCoder() {
+		JavaInfo javaInfo = SystemUtil.getJavaInfo();
+		System.out.println("java version: " + javaInfo.getVersionFloat());
+		if (javaInfo.getVersionFloat() < 9) {
+			Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc"));
+			Assertions.assertEquals(0, StringUtils.getCoder("啊啊啊哦哦哦呃呃呃"));
+		} else {
+			Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc=="));
+			Assertions.assertEquals(1, StringUtils.getCoder("1啊啊啊哦哦哦呃呃呃"));
+			Assertions.assertEquals(1, StringUtils.getCoder("2啊啊啊哦哦哦呃呃呃="));
+			Assertions.assertEquals(1, StringUtils.getCoder("3啊啊啊哦哦哦呃呃呃=="));
+		}
 	}
 
 

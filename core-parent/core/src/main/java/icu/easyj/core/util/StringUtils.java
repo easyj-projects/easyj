@@ -57,7 +57,7 @@ public abstract class StringUtils {
 		// Field: String.value
 		try {
 			field = String.class.getDeclaredField("value");
-			field.setAccessible(true);
+			field.setAccessible(true); // TODO: 控制台会出现WARNING警告信息，该操作是否存在风险，有没有大佬知道的？
 		} catch (NoSuchFieldException e) {
 			throw new RuntimeException(e);
 		}

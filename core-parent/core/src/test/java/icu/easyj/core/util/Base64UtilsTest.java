@@ -19,6 +19,8 @@ import java.util.function.Supplier;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.SystemUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -41,23 +43,46 @@ class Base64UtilsTest {
 		Assertions.assertEquals("123+", Base64Utils.normalize("123 "));
 	}
 
+	@Test
+	void testIsBase64Bytes() {
+		// 尝试校验20000次生成的Base64串
+		int n = 20000;
+		while (n-- > 0) {
+			String base64Str = RandomUtil.randomString(20);
+			byte[] bytes = Base64.encode(StrUtil.utf8Bytes(base64Str), false);
+			// 测试isBase64方法
+			if (!Base64Utils.isBase64Bytes(bytes)) {
+				throw new RuntimeException("Base64校验失败：" + base64Str);
+			}
+		}
+	}
+
+	//region test isBase64
+
 	/**
 	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */
 	@Test
 	void testIsBase64() {
-		// 尝试校验1000次生成的Base64串
-		int n = 2000;
+		// 尝试校验20000次生成的Base64串
+		int n = 20000;
 		while (n-- > 0) {
-			String str = Base64.encode(RandomUtil.randomString(50));
-			if (!Base64Utils.isBase64(str)) {
-				throw new RuntimeException("Base64校验失败：" + str);
+			String base64Str = Base64.encode(RandomUtil.randomString(20));
+			// java版本为9及以上时，校验String.coder值，肯定为0
+			if (SystemUtil.getJavaInfo().getVersionFloat() >= 9) {
+				// 判断String.coder是否为0，如果为1，则抛出异常
+				if (StringUtils.getCoder(base64Str) == 1) {
+					throw new RuntimeException("Base64字符串的coder不能为1：" + base64Str);
+				}
+			}
+			// 测试isBase64方法
+			if (!Base64Utils.isBase64(base64Str)) {
+				throw new RuntimeException("Base64校验失败：" + base64Str);
 			}
 		}
 
 		// case: true
-		Assertions.assertFalse(Base64Utils.isBase64("aaaxx")); // 没有补位符时，长度除4的余数不能为1，这个字符串的长度 5 % 4 = 1，所以为false
 		Assertions.assertTrue(Base64Utils.isBase64("aaaxxx"));
 		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxx"));
 		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxxx"));
@@ -65,12 +90,13 @@ class Base64UtilsTest {
 		Assertions.assertTrue(Base64Utils.isBase64("aaa+/x=="));
 
 		// case: false
+		Assertions.assertFalse(Base64Utils.isBase64("aaaxx")); // 没有补位符时，长度除4的余数不能为1，这个字符串的长度 5 % 4 = 1，所以为false
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx=f"));
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx="));
 		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx=="));
 		Assertions.assertFalse(Base64Utils.isBase64("aa_xxx=="));
 
-		// case: Hutool的Base64，支持URL安全的字符
+		// case: Hutool的Base64，支持UrlSafe的字符：'-'、'_'
 		Assertions.assertFalse(Base64.isBase64("aaaxxx=f")); // hutool已支持对末尾=号的校验
 		Assertions.assertTrue(Base64.isBase64("aaaxxx=")); // hutool不校验长度，所以为true
 		Assertions.assertTrue(Base64.isBase64("aa-xxx=")); // hutool支持URL安全字符替换
@@ -86,13 +112,11 @@ class Base64UtilsTest {
 	@Test
 	void testIsBase64Performance() {
 		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=");
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k1131=");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=");
 		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11");
 	}
 
 	private void testIsBase64Performance(String str) {
-		System.out.println(Base64Utils.isBase64(str));
-
 		// 运行次数参数
 		int sets = 2;
 		int times = 300 * 10000;
@@ -108,7 +132,7 @@ class Base64UtilsTest {
 		};
 
 		// 运行测试，并获取每个函数的耗时
-		System.out.println(this.getClass().getSimpleName() + ".testIsBase64():");
+		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str));
 		long[] costs = PerformanceTestUtils.execute(sets, times, easyjSupplier, hutoolSupplier);
 
 		// case: 性能比Hutool高
@@ -118,4 +142,6 @@ class Base64UtilsTest {
 			throw new RuntimeException("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
 		}
 	}
+
+	//endregion
 }

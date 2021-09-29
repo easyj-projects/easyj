@@ -38,7 +38,7 @@ public abstract class PerformanceTestUtils {
 	 */
 	@SafeVarargs
 	@NonNull
-	public static long[] execute(int sets, int times, Supplier<String>... suppliers) {
+	public static long[] execute(int sets, int times, Supplier<?>... suppliers) {
 		Assert.isTrue(sets > 0, "'sets' must be greater than 0");
 		Assert.isTrue(times > 0, "'times' must be greater than 0");
 		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
@@ -46,7 +46,7 @@ public abstract class PerformanceTestUtils {
 		// 先预热一下
 		int i = times * 2;
 		while (i-- > 0) {
-			for (Supplier<String> supplier : suppliers) {
+			for (Supplier<?> supplier : suppliers) {
 				supplier.get();
 			}
 		}
@@ -85,12 +85,12 @@ public abstract class PerformanceTestUtils {
 	 * @param supplier 需运行的函数，返回值表示函数别名
 	 * @return 运行耗时，单位：毫秒
 	 */
-	private static long executeOne(int times, Supplier<String> supplier) {
+	private static long executeOne(int times, Supplier<?> supplier) {
 		long startTime = System.nanoTime();
 		while (times-- > 1) {
 			supplier.get();
 		}
-		String supplierName = supplier.get();
+		String supplierName = supplier.get().toString();
 		long cost = getCost(startTime);
 		String costStr = String.valueOf(cost);
 		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - icu.easyj.core.util.StringUtils.chineseLength(supplierName), ' ')

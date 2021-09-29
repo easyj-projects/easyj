@@ -43,7 +43,17 @@ public abstract class Base64Utils {
 	};
 
 	/**
-	 * 补位字符
+	 * Base64字符集中，ASSIC码最小的字符：'+'
+	 */
+	public static final char MIN_BASE64_CHAR = '+';
+
+	/**
+	 * Base64字符集中，ASSIC码最大的字符：'z'
+	 */
+	public static final char MAX_BASE64_CHAR = 'z';
+
+	/**
+	 * 补位字符：'='
 	 */
 	public static final char PADDING_CHAR = '=';
 
@@ -72,10 +82,16 @@ public abstract class Base64Utils {
 		while (i < base64Length) {
 			c = base64Str.charAt(i);
 			switch (c) {
-				// 空格 -> `+`
+				// 空格或'-' -> '+'
 				case ' ':
 				case '-': // hutool 使用UrlSafe模式生成的Base64串里，该字符表示'+'
 					sb.append('+');
+					i++;
+					needToChange = true;
+					break;
+				// '_' -> '/'
+				case '_': // hutool 使用UrlSafe模式生成的Base64串里，该字符表示'/'
+					sb.append('/');
 					i++;
 					needToChange = true;
 					break;
@@ -117,11 +133,6 @@ public abstract class Base64Utils {
 					}
 					needToChange = true;
 					break;
-				case '_': // hutool 使用UrlSafe模式生成的Base64串里，该字符表示'/'
-					sb.append('/');
-					i++;
-					needToChange = true;
-					break;
 				default:
 					sb.append(c);
 					i++;
@@ -141,7 +152,7 @@ public abstract class Base64Utils {
 	 * @return 是否为Base64字符
 	 */
 	private static boolean isBase64CharInner(char c) {
-		return c < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[c] != -1;
+		return c >= MIN_BASE64_CHAR && c <= MAX_BASE64_CHAR && BASE64_CHAR_TABLE[c] != -1;
 	}
 
 	/**
@@ -150,8 +161,8 @@ public abstract class Base64Utils {
 	 * @param b 字节
 	 * @return 是否为Base64字节
 	 */
-	private static boolean isBase64CharInner(byte b) {
-		return b >= '+' && BASE64_CHAR_TABLE[b] != -1;
+	private static boolean isBase64ByteInner(byte b) {
+		return b >= MIN_BASE64_CHAR && b <= MAX_BASE64_CHAR && BASE64_CHAR_TABLE[b] != -1;
 	}
 
 	/**
@@ -170,8 +181,8 @@ public abstract class Base64Utils {
 	 * @param b 字节
 	 * @return 是否为Base64字节
 	 */
-	public static boolean isBase64Code(byte b) {
-		return b == PADDING_CHAR || isBase64CharInner(b);
+	public static boolean isBase64Byte(byte b) {
+		return b == PADDING_CHAR || isBase64ByteInner(b);
 	}
 
 	/**
@@ -189,13 +200,15 @@ public abstract class Base64Utils {
 
 		final Object strValue = StringUtils.getValue(str);
 		if (char[].class.equals(strValue.getClass())) {
-			return isBase64((char[])strValue);
+			return isBase64Chars((char[])strValue);
 		} else {
+			// 获取String的字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
 			byte coder = StringUtils.getCoder(str);
 			if (coder == 0) {
-				return isBase64ByCoder0((byte[])strValue);
+				return isBase64Bytes((byte[])strValue);
 			} else {
-				return isBase64ByCoder1((byte[])strValue);
+				// coder为1时，表示字符串中存在双字节字符，肯定不是Base64，直接返回false
+				return false;
 			}
 		}
 	}
@@ -206,7 +219,7 @@ public abstract class Base64Utils {
 	 * @param chars 字符数组
 	 * @return 是否为Base64字符数组
 	 */
-	public static boolean isBase64(final char[] chars) {
+	public static boolean isBase64Chars(final char[] chars) {
 		int length;
 		if (chars == null || (length = chars.length) < 2) {
 			return false;
@@ -244,22 +257,12 @@ public abstract class Base64Utils {
 	}
 
 	/**
-	 * 判断是否为Base64字节数组（Java8使用）
+	 * 判断是否为Base64字节数组
 	 *
 	 * @param bytes 字节数组
 	 * @return 是否为Base64字节数组
 	 */
-	public static boolean isBase64(final byte[] bytes) {
-		return isBase64ByCoder0(bytes);
-	}
-
-	/**
-	 * 判断是否为Base64字节数组（Java8或coder=0使用）
-	 *
-	 * @param bytes 字节数组
-	 * @return 是否为Base64字节数组
-	 */
-	static boolean isBase64ByCoder0(final byte[] bytes) {
+	public static boolean isBase64Bytes(final byte[] bytes) {
 		int length;
 		if (bytes == null || (length = bytes.length) < 2) {
 			return false;
@@ -289,54 +292,7 @@ public abstract class Base64Utils {
 		byte b;
 		for (int i = 0; i < length; ++i) {
 			b = bytes[i];
-			if (!isBase64CharInner(b)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * 判断是否为Base64字节数组
-	 *
-	 * @param bytes 字节数组
-	 * @return 是否为Base64字节数组
-	 */
-	static boolean isBase64ByCoder1(final byte[] bytes) {
-		// 字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
-		final int coder = 1;
-
-		if (bytes == null || bytes.length >> coder < 2) {
-			return false;
-		}
-
-		// 计算需校验字符的长度，减掉末尾补位字符数量
-		int length = bytes.length;
-		if (bytes[length - 1] == 0 && bytes[length - 2] == PADDING_CHAR) {
-			// 存在补位字符时，长度必须为4的倍数
-			if ((bytes.length >> coder) % 4 != 0) {
-				return false;
-			}
-
-			length -= 2;
-
-			// 最多末尾两个'='
-			if (bytes[length - 1] == 0 && bytes[length - 2] == PADDING_CHAR) {
-				length -= 2;
-			}
-		} else {
-			// 不存在补位字符时，长度除4的余数不能为1
-			if ((bytes.length >> coder) % 4 == 1) {
-				return false;
-			}
-		}
-
-		// 校验除最后两位的字符
-		byte b;
-		for (int i = 0; i < length; ++i) {
-			b = bytes[i];
-			if (!(b == 0 || isBase64CharInner(b))) {
+			if (!isBase64ByteInner(b)) {
 				return false;
 			}
 		}
