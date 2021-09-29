@@ -57,8 +57,11 @@ class Base64UtilsTest {
 		}
 
 		// case: true
-		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxff"));
-		Assertions.assertTrue(Base64Utils.isBase64("aaa/xxf="));
+		Assertions.assertFalse(Base64Utils.isBase64("aaaxx")); // 没有补位符时，长度除4的余数不能为1，这个字符串的长度 5 % 4 = 1，所以为false
+		Assertions.assertTrue(Base64Utils.isBase64("aaaxxx"));
+		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxx"));
+		Assertions.assertTrue(Base64Utils.isBase64("aaaxxxxx"));
+		Assertions.assertTrue(Base64Utils.isBase64("aaa/xxx="));
 		Assertions.assertTrue(Base64Utils.isBase64("aaa+/x=="));
 
 		// case: false
