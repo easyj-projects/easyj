@@ -25,7 +25,7 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
-import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.core.util.StringUtils;
@@ -69,7 +69,7 @@ public abstract class EnvironmentUtils {
 	 * @param allSources 所有配置源
 	 */
 	public static void addOrMergeDefaultProperties(@Nullable Map<String, Object> source, @NonNull MutablePropertySources allSources) {
-		if (!CollectionUtils.isEmpty(source)) {
+		if (!MapUtils.isEmpty(source)) {
 			Map<String, Object> resultingSource = new HashMap<>(source.size());
 			MapPropertySource defaultPropertySource = new MapPropertySource(DEFAULT_PROPERTY_SOURCE_NAME, resultingSource);
 			if (allSources.contains(DEFAULT_PROPERTY_SOURCE_NAME)) {

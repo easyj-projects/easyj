@@ -18,7 +18,7 @@ package icu.easyj.web.cache304.config;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.MapUtils;
 import org.springframework.util.Assert;
 
 /**
@@ -64,7 +64,7 @@ public interface ICache304ConfigStore {
 	 * @param configMap 配置集合
 	 */
 	default void putConfig(Map<String, Cache304Config> configMap) {
-		if (!CollectionUtils.isEmpty(configMap)) {
+		if (!MapUtils.isEmpty(configMap)) {
 			configMap.forEach(this::putConfig);
 		}
 	}

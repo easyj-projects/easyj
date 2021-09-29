@@ -155,7 +155,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 			return false;
 		}
 
-		if (CollectionUtils.isEmpty(exclusions)) {
+		if (MapUtils.isEmpty(exclusions)) {
 			// 未配置需排除请求，继续执行过滤器
 			return true;
 		}

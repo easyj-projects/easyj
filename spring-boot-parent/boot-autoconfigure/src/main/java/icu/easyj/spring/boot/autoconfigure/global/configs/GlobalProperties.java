@@ -21,7 +21,7 @@ import icu.easyj.config.GlobalConfigSetter;
 import icu.easyj.config.GlobalConfigs;
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
-import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -146,7 +146,7 @@ public class GlobalProperties implements InitializingBean {
 		if (inUnitTest != null) {
 			GlobalConfigSetter.setInUnitTest(inUnitTest);
 		}
-		if (!CollectionUtils.isEmpty(configs)) {
+		if (!MapUtils.isEmpty(configs)) {
 			GlobalConfigSetter.addConfigs(configs);
 		}
 	}
