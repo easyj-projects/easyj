@@ -132,7 +132,7 @@ class Base64UtilsTest {
 		};
 
 		// 运行测试，并获取每个函数的耗时
-		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str));
+		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
 		long[] costs = PerformanceTestUtils.execute(sets, times, easyjSupplier, hutoolSupplier);
 
 		// case: 性能比Hutool高
