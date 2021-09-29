@@ -30,7 +30,6 @@ public abstract class Base64Utils {
 	/**
 	 * Base64字符在Assic码
 	 */
-	@SuppressWarnings("all")
 	public static final byte[] BASE64_CHAR_TABLE = {
 			// 0 1 2 3 4 5 6 7 8 9 A B C D E F
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, // 00-0F
@@ -40,7 +39,8 @@ public abstract class Base64Utils {
 			-1, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, // 40-4F（含：大写A~大写O）
 			80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, -1, -1, -1, -1, -1, // 50-5F（含：大写P~大写Z）
 			-1, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, // 60-6F（含：小写a~小写o）
-			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122}; // 70-7A（含：小写p-小写z）
+			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122 // 70-7A（含：小写p-小写z）
+	};
 
 	/**
 	 * 补位字符
@@ -137,6 +137,16 @@ public abstract class Base64Utils {
 	}
 
 	/**
+	 * 判断是否为Base64字节（除'='号外）
+	 *
+	 * @param b 字节
+	 * @return 是否为Base64字节
+	 */
+	private static boolean isBase64CharInner(byte b) {
+		return b >= 0 && b < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[b] != -1;
+	}
+
+	/**
 	 * 判断是否为Base64字符
 	 *
 	 * @param c 字符
@@ -153,7 +163,7 @@ public abstract class Base64Utils {
 	 * @return 是否为Base64字节
 	 */
 	public static boolean isBase64Code(byte b) {
-		return b == PADDING_CHAR || (b >= 0 && b < BASE64_CHAR_TABLE.length && BASE64_CHAR_TABLE[b] != -1);
+		return b == PADDING_CHAR || isBase64CharInner(b);
 	}
 
 	/**
@@ -169,7 +179,7 @@ public abstract class Base64Utils {
 
 		final char[] charArr = StringUtils.toCharArrayWithoutCopy(str);
 
-		// 计算需校验字符的长度
+		// 计算需校验字符的长度，减掉末尾补位字符数量
 		int length = charArr.length;
 		if (charArr[length - 1] == PADDING_CHAR) {
 			// 存在补位字符时，长度必须为4的倍数
@@ -181,6 +191,11 @@ public abstract class Base64Utils {
 			// 最多末尾两个'='
 			if (charArr[length - 1] == PADDING_CHAR) {
 				--length;
+			}
+		} else {
+			// 不存在补位字符时，长度除4的余数必须为小于等于2
+			if (str.length() % 4 <= 2) {
+				return false;
 			}
 		}
 

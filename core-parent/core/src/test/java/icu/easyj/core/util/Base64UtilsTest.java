@@ -29,6 +29,9 @@ import org.junit.jupiter.api.Test;
  */
 class Base64UtilsTest {
 
+	/**
+	 * @see Base64Utils#normalize(String)
+	 */
 	@Test
 	void testNormalize() {
 		String s = "123\r\n%2B%2B";
@@ -38,6 +41,10 @@ class Base64UtilsTest {
 		Assertions.assertEquals("123+", Base64Utils.normalize("123 "));
 	}
 
+	/**
+	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
+	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
+	 */
 	@Test
 	void testIsBase64() {
 		// 尝试校验1000次生成的Base64串
@@ -65,11 +72,22 @@ class Base64UtilsTest {
 		Assertions.assertTrue(Base64.isBase64("aaaxxx=")); // hutool不校验长度，所以为true
 		Assertions.assertTrue(Base64.isBase64("aa-xxx=")); // hutool支持URL安全字符替换
 		Assertions.assertTrue(Base64.isBase64("aa_xxx==")); // hutool支持URL安全字符替换
+	}
 
+	/**
+	 * 性能测试：与Hutool比较性能高低
+	 *
+	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
+	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
+	 */
+	@Test
+	void testIsBase64Performance() {
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k112");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k1123");
+	}
 
-		//region case: 与Hutool比较性能高低
-
-		String str = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa2oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k";
+	private void testIsBase64Performance(String str) {
+		System.out.println(Base64Utils.isBase64(str));
 
 		// 运行次数参数
 		int sets = 3;
@@ -95,7 +113,5 @@ class Base64UtilsTest {
 		if (costEasyj > costHutool) {
 			throw new RuntimeException("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
 		}
-
-		//endregion
 	}
 }

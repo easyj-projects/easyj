@@ -44,7 +44,7 @@ public abstract class PerformanceTestUtils {
 		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
 
 		// 先预热一下
-		int i = times;
+		int i = times * 2;
 		while (i-- > 0) {
 			for (Supplier<String> supplier : suppliers) {
 				supplier.get();
