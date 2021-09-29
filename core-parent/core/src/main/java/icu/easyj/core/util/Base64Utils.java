@@ -193,8 +193,8 @@ public abstract class Base64Utils {
 				--length;
 			}
 		} else {
-			// 不存在补位字符时，长度除4的余数必须为小于等于2
-			if (str.length() % 4 > 2) {
+			// 不存在补位字符时，长度除4的余数不能为1
+			if (str.length() % 4 == 1) {
 				return false;
 			}
 		}

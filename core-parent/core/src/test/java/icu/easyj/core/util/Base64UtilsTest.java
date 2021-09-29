@@ -82,8 +82,8 @@ class Base64UtilsTest {
 	 */
 	@Test
 	void testIsBase64Performance() {
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k11");
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k113");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11312");
 	}
 
 	private void testIsBase64Performance(String str) {
