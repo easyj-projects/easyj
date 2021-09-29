@@ -48,11 +48,11 @@ class Base64UtilsTest {
 	@Test
 	void testIsBase64() {
 		// 尝试校验1000次生成的Base64串
-		int n = 1000;
+		int n = 2000;
 		while (n-- > 0) {
-			String str = Base64.encode(RandomUtil.randomString(100));
+			String str = Base64.encode(RandomUtil.randomString(50));
 			if (!Base64Utils.isBase64(str)) {
-				throw new RuntimeException("Base64校验失败");
+				throw new RuntimeException("Base64校验失败：" + str);
 			}
 		}
 
@@ -86,15 +86,16 @@ class Base64UtilsTest {
 	@Test
 	void testIsBase64Performance() {
 		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=");
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11312");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k1131=");
+		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11");
 	}
 
 	private void testIsBase64Performance(String str) {
 		System.out.println(Base64Utils.isBase64(str));
 
 		// 运行次数参数
-		int sets = 3;
-		int times = 500 * 10000;
+		int sets = 2;
+		int times = 300 * 10000;
 		// easyj函数
 		Supplier<String> easyjSupplier = () -> {
 			Base64Utils.isBase64(str);

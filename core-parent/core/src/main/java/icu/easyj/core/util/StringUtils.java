@@ -42,36 +42,75 @@ public abstract class StringUtils {
 	/**
 	 * 字符串的value属性
 	 */
+	@NonNull
 	private static final Field STRING_VALUE_FIELD;
 
+	/**
+	 * 字符串的coder属性（java9以上才有）
+	 */
+	@Nullable
+	private static final Field CODER_VALUE_FIELD;
+
 	static {
+		Field field;
+
+		// Field: String.value
 		try {
-			STRING_VALUE_FIELD = String.class.getDeclaredField("value");
-			STRING_VALUE_FIELD.setAccessible(true);
+			field = String.class.getDeclaredField("value");
+			field.setAccessible(true);
 		} catch (NoSuchFieldException e) {
 			throw new RuntimeException(e);
 		}
+		STRING_VALUE_FIELD = field;
+
+		// Field: String.coder
+		try {
+			field = String.class.getDeclaredField("coder");
+			field.setAccessible(true);
+		} catch (NoSuchFieldException ignore) {
+			field = null;
+		}
+		CODER_VALUE_FIELD = field;
 	}
 
 
 	//region 获取字符串的value属性
 
 	/**
-	 * 直接获取String的value属性。
+	 * 获取String的value属性值
 	 * <p>
 	 * 部分场景下，我们获取字符串的char数组，只是为了校验字符串，并没有任何修改、删除操作。<br>
 	 * 但由于 {@link String#toCharArray()} 方法会复制一次字符数组，导致无谓的性能损耗。<br>
 	 * 所以，开发了此方法用于提升性能。
 	 *
 	 * @param str 字符串
-	 * @return 字符数组
+	 * @return java8返回char[]、java9及以上返回byte[]
 	 * @see String#toCharArray()
 	 */
-	public static char[] toCharArrayWithoutCopy(CharSequence str) {
+	public static Object getValue(CharSequence str) {
 		try {
-			return (char[])STRING_VALUE_FIELD.get(str.toString());
+			return STRING_VALUE_FIELD.get(str.toString());
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException("获取字符串的value失败", e);
+		}
+	}
+
+	/**
+	 * 获取String的coder属性值
+	 *
+	 * @param str 字符串
+	 * @return 字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
+	 */
+	public static byte getCoder(CharSequence str) {
+		if (CODER_VALUE_FIELD == null) {
+			//throw new NullPointerException("当前JDK版本中的String类，没有coder属性!");
+			return (byte)0;
+		}
+
+		try {
+			return (byte)CODER_VALUE_FIELD.get(str.toString());
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("获取字符串的coder失败", e);
 		}
 	}
 
