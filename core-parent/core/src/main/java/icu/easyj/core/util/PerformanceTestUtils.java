@@ -34,7 +34,7 @@ public abstract class PerformanceTestUtils {
 	 * @param sets      运行几组测试
 	 * @param times     每组运行函数次数
 	 * @param suppliers 需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
-	 * @return 每个函数的总耗时
+	 * @return costs 每个函数的总耗时
 	 */
 	@NonNull
 	public static long[] execute(int sets, int times, Supplier<?>... suppliers) {

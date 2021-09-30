@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.util;
 
-import java.util.function.Supplier;
-
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -120,23 +118,23 @@ class Base64UtilsTest {
 	}
 
 	private void testIsBase64Performance(String str) {
-		// 运行次数参数
+		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
+
+		// 运行次数
 		int sets = 2;
 		int times = 300 * 10000;
-		// easyj函数
-		Supplier<String> easyjSupplier = () -> {
-			Base64Utils.isBase64(str);
-			return "easyj";
-		};
-		// hutool函数
-		Supplier<String> hutoolSupplier = () -> {
-			Base64.isBase64(str);
-			return "hutool";
-		};
-
 		// 运行测试，并获取每个函数的耗时
-		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
-		long[] costs = PerformanceTestUtils.execute(sets, times, easyjSupplier, hutoolSupplier);
+		long[] costs = PerformanceTestUtils.execute(sets, times,
+				// easyj函数
+				() -> {
+					Base64Utils.isBase64(str);
+					return "easyj";
+				},
+				// hutool函数
+				() -> {
+					Base64.isBase64(str);
+					return "hutool";
+				});
 
 		// case: 性能比Hutool高
 		long costEasyj = costs[0];
