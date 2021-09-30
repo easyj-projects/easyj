@@ -74,7 +74,7 @@ class StringUtilsTest {
 		String s2 = "aaabbbccc啊";
 
 		JavaInfo javaInfo = SystemUtil.getJavaInfo();
-		System.out.println("java version: " + javaInfo.getVersionFloat());
+		System.out.println("Java version: " + javaInfo.getVersionFloat());
 		if (javaInfo.getVersionFloat() < 9) {
 			char[] chars = (char[])StringUtils.getValue(s1);
 			Assertions.assertEquals(chars.length, s1.length());
@@ -93,7 +93,7 @@ class StringUtilsTest {
 	@Test
 	void testGetCoder() {
 		JavaInfo javaInfo = SystemUtil.getJavaInfo();
-		System.out.println("java version: " + javaInfo.getVersionFloat());
+		System.out.println("Java version: " + javaInfo.getVersionFloat());
 		if (javaInfo.getVersionFloat() < 9) {
 			Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc"));
 			Assertions.assertEquals(0, StringUtils.getCoder("啊啊啊哦哦哦呃呃呃"));

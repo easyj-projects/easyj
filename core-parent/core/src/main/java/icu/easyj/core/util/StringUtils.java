@@ -17,6 +17,7 @@ package icu.easyj.core.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
@@ -26,6 +27,7 @@ import java.util.function.Supplier;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * 字符串工具类
@@ -37,7 +39,10 @@ public abstract class StringUtils {
 	/**
 	 * 大小写字符的差值
 	 */
-	public static final int CASE_DIFF = ('a' - 'A');
+	public static final byte CASE_DIFF = ('a' - 'A');
+
+
+	//region 获取字符串的value和coder属性值
 
 	/**
 	 * 字符串的value属性
@@ -46,13 +51,14 @@ public abstract class StringUtils {
 	private static final Field STRING_VALUE_FIELD;
 
 	/**
-	 * 字符串的coder属性（java9以上才有）
+	 * 字符串的coder()方法（java9以上才有）
 	 */
-	@Nullable
-	private static final Field CODER_VALUE_FIELD;
+	@Nullable // java9以下时，为空
+	private static final Method GET_STRING_CODER_METHOD;
 
 	static {
 		Field field;
+		Method method;
 
 		// Field: String.value
 		try {
@@ -63,18 +69,16 @@ public abstract class StringUtils {
 		}
 		STRING_VALUE_FIELD = field;
 
-		// Field: String.coder
+		// Method: String.coder()
 		try {
-			field = String.class.getDeclaredField("coder");
-			field.setAccessible(true);
-		} catch (NoSuchFieldException ignore) {
-			field = null;
+			method = String.class.getDeclaredMethod("coder");
+			method.setAccessible(true);
+		} catch (NoSuchMethodException ignore) {
+			method = null;
 		}
-		CODER_VALUE_FIELD = field;
+		GET_STRING_CODER_METHOD = method;
 	}
 
-
-	//region 获取字符串的value属性
 
 	/**
 	 * 获取String的value属性值
@@ -85,9 +89,12 @@ public abstract class StringUtils {
 	 *
 	 * @param str 字符串
 	 * @return java8返回char[]、java9及以上返回byte[]
+	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 * @see String#toCharArray()
 	 */
-	public static Object getValue(CharSequence str) {
+	public static Object getValue(@NonNull CharSequence str) {
+		Assert.notNull(str, "'str' must not be null");
+
 		try {
 			return STRING_VALUE_FIELD.get(str.toString());
 		} catch (IllegalAccessException e) {
@@ -100,16 +107,19 @@ public abstract class StringUtils {
 	 *
 	 * @param str 字符串
 	 * @return 字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
+	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 */
-	public static byte getCoder(CharSequence str) {
-		if (CODER_VALUE_FIELD == null) {
+	public static byte getCoder(@NonNull CharSequence str) {
+		Assert.notNull(str, "'str' must not be null");
+
+		if (GET_STRING_CODER_METHOD == null) {
 			//throw new NullPointerException("当前JDK版本中的String类，没有coder属性!");
 			return (byte)0;
 		}
 
 		try {
-			return (byte)CODER_VALUE_FIELD.get(str.toString());
-		} catch (IllegalAccessException e) {
+			return (byte)GET_STRING_CODER_METHOD.invoke(str);
+		} catch (InvocationTargetException | IllegalAccessException e) {
 			throw new RuntimeException("获取字符串的coder失败", e);
 		}
 	}

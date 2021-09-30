@@ -90,6 +90,7 @@ class Base64UtilsTest {
 		// case: false
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxx")); // 没有补位符时，长度除4的余数不能为1，这个字符串的长度 5 % 4 = 1，所以为false
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx=f"));
+		Assertions.assertFalse(Base64Utils.isBase64("aaaxx=x="));
 		Assertions.assertFalse(Base64Utils.isBase64("aaaxxx="));
 		Assertions.assertFalse(Base64Utils.isBase64("aa-xxx=="));
 		Assertions.assertFalse(Base64Utils.isBase64("aa_xxx=="));
@@ -110,15 +111,34 @@ class Base64UtilsTest {
 	@Test
 	void testIsBase64Performance() {
 		// case: isBase64(str) == true
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=");
-		// case: isBase64(str) == false && 不含双字节字符
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=");
-		// case: isBase64(str) == false && 含双字节字符
-		testIsBase64Performance("YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11");
+		String s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
+		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
+		String s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=";
+		// case: isBase64(str) == false && 含双字节字符   && 位数符合（此case，java9比java8速度要快非常多）
+		String s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
+		// case: isBase64(str) == false && 不含双字节字符 && 位数不符合
+		String s4 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11";
+		// case: isBase64(str) == false && 含双字节字符   && 位数不符合
+		String s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
+
+		Base64Utils.isBase64(s1);
+		Base64Utils.isBase64(s2);
+		Base64Utils.isBase64(s3);
+		Base64Utils.isBase64(s4);
+		Base64Utils.isBase64(s5);
+
+		System.out.println("\r\nJava version: " + SystemUtil.getJavaInfo().getVersionFloat());
+
+		testIsBase64PerformanceOne(1, s1);
+		testIsBase64PerformanceOne(2, s2);
+		testIsBase64PerformanceOne(3, s3);
+		testIsBase64PerformanceOne(4, s4);
+		testIsBase64PerformanceOne(5, s5);
 	}
 
-	private void testIsBase64Performance(String str) {
-		System.out.println(this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
+	private void testIsBase64PerformanceOne(int number, String str) {
+		System.out.println();
+		System.out.println(number + "、" + this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
 
 		// 运行次数
 		int sets = 2;
