@@ -129,16 +129,17 @@ class Base64UtilsTest {
 
 		System.out.println("\r\nJava version: " + SystemUtil.getJavaInfo().getVersionFloat());
 
-		testIsBase64PerformanceOne(1, s1);
-		testIsBase64PerformanceOne(2, s2);
-		testIsBase64PerformanceOne(3, s3);
-		testIsBase64PerformanceOne(4, s4);
-		testIsBase64PerformanceOne(5, s5);
+		testIsBase64PerformanceOne(1, "case: isBase64(str) == true", s1);
+		testIsBase64PerformanceOne(2, "case: isBase64(str) == false && 不含双字节字符 && 位数符合", s2);
+		testIsBase64PerformanceOne(3, "case: isBase64(str) == false && 含双字节字符 && 位数符合", s3);
+		testIsBase64PerformanceOne(4, "case: isBase64(str) == false && 不含双字节字符 && 位数不符合", s4);
+		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s5);
 	}
 
-	private void testIsBase64PerformanceOne(int number, String str) {
+	private void testIsBase64PerformanceOne(int number, String title, String str) {
 		System.out.println();
 		System.out.println(number + "、" + this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
+		System.out.println(title);
 
 		// 运行次数
 		int sets = 2;
