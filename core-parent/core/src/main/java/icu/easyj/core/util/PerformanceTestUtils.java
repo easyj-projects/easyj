@@ -36,7 +36,6 @@ public abstract class PerformanceTestUtils {
 	 * @param suppliers 需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
 	 * @return 每个函数的总耗时
 	 */
-	@SafeVarargs
 	@NonNull
 	public static long[] execute(int sets, int times, Supplier<?>... suppliers) {
 		Assert.isTrue(sets > 0, "'sets' must be greater than 0");
@@ -72,9 +71,8 @@ public abstract class PerformanceTestUtils {
 	 * @param suppliers 需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
 	 * @return 每个函数的耗时
 	 */
-	@SafeVarargs
 	@NonNull
-	public static long[] execute(int times, Supplier<String>... suppliers) {
+	public static long[] execute(int times, Supplier<?>... suppliers) {
 		return execute(1, times, suppliers);
 	}
 
