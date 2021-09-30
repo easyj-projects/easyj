@@ -139,6 +139,8 @@ class Base64UtilsTest {
 			// 一定概率抛出异常
 			if (RandomUtil.randomInt(10) > 7) {
 				throw e;
+			} else {
+				System.out.println(e.getMessage());
 			}
 		}
 	}
