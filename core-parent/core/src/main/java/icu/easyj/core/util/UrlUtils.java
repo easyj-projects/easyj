@@ -114,22 +114,26 @@ public abstract class UrlUtils {
 
 	/**
 	 * 字符串进行URL编码。<br>
-	 * 代码从 {@link java.net.URLEncoder#encode(String, String)} 中复制过来，并进行了优化：
+	 * 代码是从 OpenJDK8 {@link java.net.URLEncoder#encode(String, String)} 中复制过来，并进行了优化：
 	 * - 1、编码入参也由String直接变成了Charset；
 	 * - 2、StringBuffer变为StringBuilder
 	 *
 	 * @param s       字符串
 	 * @param charset 字符集
 	 * @return 编码后的字符串
+	 * @throws IllegalArgumentException s或charset为空时，将抛出该异常
 	 */
 	public static String encode(String s, Charset charset) {
+		Assert.notNull(s, "'s' must not be null");
+		Assert.notNull(charset, "'charset' must not be null");
+
 		boolean needToChange = false;
 		final StringBuilder sb = new StringBuilder(s.length());
 		final CharArrayWriter charArrayWriter = new CharArrayWriter();
 
 		int c;
 		for (int i = 0; i < s.length(); ) {
-			c = (int)s.charAt(i);
+			c = s.charAt(i);
 			if (DONT_NEED_URL_ENCODE.get(c)) {
 				if (c == ' ') {
 					c = '+';
@@ -142,7 +146,7 @@ public abstract class UrlUtils {
 					charArrayWriter.write(c);
 					if (c >= 0xD800 && c <= 0xDBFF) {
 						if ((i + 1) < s.length()) {
-							int d = (int)s.charAt(i + 1);
+							int d = s.charAt(i + 1);
 							if (d >= 0xDC00 && d <= 0xDFFF) {
 								charArrayWriter.write(d);
 								i++;
@@ -150,10 +154,10 @@ public abstract class UrlUtils {
 						}
 					}
 					i++;
-				} while (i < s.length() && !DONT_NEED_URL_ENCODE.get((c = (int)s.charAt(i))));
+				} while (i < s.length() && !DONT_NEED_URL_ENCODE.get((c = s.charAt(i))));
 
 				charArrayWriter.flush();
-				String str = new String(charArrayWriter.toCharArray());
+				String str = charArrayWriter.toString();
 				byte[] ba = str.getBytes(charset);
 				for (byte b : ba) {
 					sb.append('%');
@@ -188,15 +192,19 @@ public abstract class UrlUtils {
 
 	/**
 	 * 字符串进行URL解码.<br>
-	 * 代码从 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了优化：
+	 * 代码是从 OpenJDK8 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了优化：
 	 * - 1、编码入参也由String直接变成了Charset；
-	 * - 2、StringBuffer变为StringBuilder
+	 * - 2、StringBuffer变为StringBuilderc
 	 *
 	 * @param s       字符串
 	 * @param charset 字符集
 	 * @return 解码后的字符串
+	 * @throws IllegalArgumentException s或charset为空时，将抛出该异常
 	 */
 	public static String decode(String s, Charset charset) {
+		Assert.notNull(s, "'s' must not be null");
+		Assert.notNull(charset, "'charset' must not be null");
+
 		final int numChars = s.length();
 		final StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
 
