@@ -45,17 +45,17 @@ public abstract class Base64Utils {
 	/**
 	 * Base64字符集中，ASSIC码最小的字符：'+'
 	 */
-	public static final char MIN_BASE64_CHAR = '+';
+	public static final byte MIN_BASE64_CHAR = (byte)'+';
 
 	/**
 	 * Base64字符集中，ASSIC码最大的字符：'z'
 	 */
-	public static final char MAX_BASE64_CHAR = 'z';
+	public static final byte MAX_BASE64_CHAR = (byte)'z';
 
 	/**
 	 * 补位字符：'='
 	 */
-	public static final char PADDING_CHAR = '=';
+	public static final byte PADDING_CHAR = (byte)'=';
 
 	/**
 	 * 规范化Base64串.
