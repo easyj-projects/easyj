@@ -25,6 +25,7 @@ import icu.easyj.core.modelfortest.EmptyTestClass;
 import icu.easyj.core.modelfortest.EmptyTestInterface;
 import icu.easyj.core.modelfortest.NotExistsNoArgsConstructorTestClass;
 import icu.easyj.core.modelfortest.TestClass;
+import icu.easyj.core.modelfortest.TestClass2;
 import icu.easyj.core.modelfortest.TestSuperClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -106,9 +107,8 @@ class ReflectionUtilsTest {
 		Assertions.assertArrayEquals(new Object[]{Serializable.class},
 				ReflectionUtils.getInterfaces(Serializable.class).toArray());
 
-		Assertions.assertArrayEquals(new Object[]{
-						Serializable.class, Comparable.class, CharSequence.class},
-				ReflectionUtils.getInterfaces(String.class).toArray());
+		Assertions.assertArrayEquals(new Object[]{EmptyTestInterface.class},
+				ReflectionUtils.getInterfaces(TestClass2.class).toArray());
 	}
 
 	@Test
