@@ -58,4 +58,18 @@ public @interface LoadLevel {
 	 * @return the classes
 	 */
 	Class<?>[] dependOnClasses() default {};
+
+	/**
+	 * Depend on the min java version
+	 *
+	 * @return the min java version
+	 */
+	float dependOnMinJavaVersion() default 0;
+
+	/**
+	 * Depend on the max java version
+	 *
+	 * @return the max java version
+	 */
+	float dependOnMaxJavaVersion() default 0;
 }

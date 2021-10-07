@@ -30,6 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
+import cn.hutool.system.JavaInfo;
+import cn.hutool.system.SystemUtil;
 import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
@@ -556,6 +558,20 @@ public class EnhancedServiceLoader {
 					serviceName = loadLevel.name();
 					priority = loadLevel.order();
 					scope = loadLevel.scope();
+
+					// 判断依赖的Java版本
+					float dependOnMinJavaVersion = loadLevel.dependOnMinJavaVersion();
+					float dependOnMaxJavaVersion = loadLevel.dependOnMaxJavaVersion();
+					if (dependOnMinJavaVersion > 0 || dependOnMaxJavaVersion > 0) {
+						JavaInfo javaInfo = SystemUtil.getJavaInfo();
+						int version = (int)(javaInfo.getVersionFloat() * 10);
+						if (dependOnMinJavaVersion > 0 && (int)(dependOnMinJavaVersion * 10) > version) {
+							throw new ClassNotFoundException("java version is less than v" + dependOnMinJavaVersion);
+						}
+						if (dependOnMaxJavaVersion > 0 && (int)(dependOnMaxJavaVersion * 10) < version) {
+							throw new ClassNotFoundException("java version is greater than v" + dependOnMaxJavaVersion);
+						}
+					}
 				}
 				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz);
 				classToDefinitionMap.put(clazz, result);

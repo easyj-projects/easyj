@@ -19,6 +19,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -45,38 +46,51 @@ public abstract class StringUtils {
 	//region 获取字符串的value和coder属性值
 
 	/**
-	 * 字符串的value属性
+	 * 字符串的value属性（当Java版本为16及以上时，此常量才为null）
 	 */
-	@NonNull
+	@Nullable
 	private static final Field STRING_VALUE_FIELD;
 
 	/**
-	 * 字符串的coder()方法（java9以上才有）
+	 * 字符串的coder()方法
+	 * <p>
+	 * Java9及以上版本，才有此方法。
+	 * <p>
+	 * Java9~15版本，此常量不为null，其他版本均为null；<br>
+	 * 原因如下：<br>
+	 * - Java8及以下版本，没有此方法；<br>
+	 * - Java16及以上版本，禁止了非常多的非法访问，包括对java.lang下的类的反射操作，所以此常量为null。
 	 */
 	@Nullable // java9以下时，为空
 	private static final Method GET_STRING_CODER_METHOD;
 
 	static {
-		Field field;
-		Method method;
+		//region 获取Field: String.value
 
-		// Field: String.value
+		Field field;
 		try {
 			field = String.class.getDeclaredField("value");
-			field.setAccessible(true); // TODO: 控制台会出现WARNING警告信息，该操作是否存在风险，有没有大佬知道的？
-		} catch (NoSuchFieldException e) {
-			throw new RuntimeException(e);
+			field.setAccessible(true); // JDK9~15时，控制台会出现WARNING，JDK16及以上，此方法将抛出异常
+		} catch (NoSuchFieldException | RuntimeException ignore) {
+			field = null;
 		}
 		STRING_VALUE_FIELD = field;
 
-		// Method: String.coder()
+		//endregion
+
+
+		//region 获取Method: String.coder()
+
+		Method method;
 		try {
 			method = String.class.getDeclaredMethod("coder");
 			method.setAccessible(true);
-		} catch (NoSuchMethodException ignore) {
+		} catch (NoSuchMethodException | RuntimeException ignore) {
 			method = null;
 		}
 		GET_STRING_CODER_METHOD = method;
+
+		//endregion
 	}
 
 
@@ -94,6 +108,10 @@ public abstract class StringUtils {
 	 */
 	public static Object getValue(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
+
+		if (STRING_VALUE_FIELD == null) {
+			return str.toString().getBytes(StandardCharsets.UTF_8);
+		}
 
 		try {
 			return STRING_VALUE_FIELD.get(str.toString());
@@ -118,7 +136,7 @@ public abstract class StringUtils {
 		}
 
 		try {
-			return (byte)GET_STRING_CODER_METHOD.invoke(str);
+			return (byte)GET_STRING_CODER_METHOD.invoke(str.toString());
 		} catch (InvocationTargetException | IllegalAccessException e) {
 			throw new RuntimeException("获取字符串的coder失败", e);
 		}

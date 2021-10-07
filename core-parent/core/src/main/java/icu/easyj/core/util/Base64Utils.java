@@ -17,7 +17,9 @@ package icu.easyj.core.util;
 
 import java.nio.charset.StandardCharsets;
 
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -26,6 +28,12 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  */
 public abstract class Base64Utils {
+
+	/**
+	 * Base64服务的实现
+	 */
+	private static final IBase64Service BASE64_SERVICE = EnhancedServiceLoader.load(IBase64Service.class);
+
 
 	/**
 	 * Base64字符在Assic码
@@ -191,26 +199,12 @@ public abstract class Base64Utils {
 	 * @param cs 字符串
 	 * @return 是否为Base64字符串
 	 */
-	public static boolean isBase64(final CharSequence cs) {
-		if (cs == null || cs.length() < 2) {
+	public static boolean isBase64(@Nullable final CharSequence cs) {
+		if (cs == null) {
 			return false;
 		}
 
-		String str = cs.toString();
-
-		final Object strValue = StringUtils.getValue(str);
-		if (char[].class.equals(strValue.getClass())) {
-			return isBase64Chars((char[])strValue);
-		} else {
-			// 获取String的字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
-			byte coder = StringUtils.getCoder(str);
-			if (coder == 0) {
-				return isBase64Bytes((byte[])strValue);
-			} else {
-				// coder为1时，表示字符串中存在双字节字符，肯定不是Base64，直接返回false
-				return false;
-			}
-		}
+		return BASE64_SERVICE.isBase64(cs);
 	}
 
 	/**
@@ -219,7 +213,7 @@ public abstract class Base64Utils {
 	 * @param chars 字符数组
 	 * @return 是否为Base64字符数组
 	 */
-	public static boolean isBase64Chars(final char[] chars) {
+	public static boolean isBase64Chars(@Nullable final char[] chars) {
 		int length;
 		if (chars == null || (length = chars.length) < 2) {
 			return false;
@@ -239,7 +233,7 @@ public abstract class Base64Utils {
 			}
 		} else {
 			// 不存在补位字符时，长度除4的余数不能为1
-			if (chars.length % 4 == 1) {
+			if (length % 4 == 1) {
 				return false;
 			}
 		}
@@ -262,7 +256,7 @@ public abstract class Base64Utils {
 	 * @param bytes 字节数组
 	 * @return 是否为Base64字节数组
 	 */
-	public static boolean isBase64Bytes(final byte[] bytes) {
+	public static boolean isBase64Bytes(@Nullable final byte[] bytes) {
 		int length;
 		if (bytes == null || (length = bytes.length) < 2) {
 			return false;
@@ -283,7 +277,7 @@ public abstract class Base64Utils {
 			}
 		} else {
 			// 不存在补位字符时，长度除4的余数不能为1
-			if (bytes.length % 4 == 1) {
+			if (length % 4 == 1) {
 				return false;
 			}
 		}
