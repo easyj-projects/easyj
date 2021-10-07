@@ -81,12 +81,14 @@ class StringUtilsTest {
 
 			chars = (char[])StringUtils.getValue(s2);
 			Assertions.assertEquals(chars.length, s2.length());
-		} else {
+		} else if (javaInfo.getVersionFloat() < 16) {
 			byte[] bytes = (byte[])StringUtils.getValue(s1);
 			Assertions.assertEquals(bytes.length, s1.length());
 
 			bytes = (byte[])StringUtils.getValue(s2);
 			Assertions.assertEquals(bytes.length, s2.length() * 2);
+		} else {
+			// do nothing: java16及以上版本，无法通过反射获取，没有测试意义
 		}
 	}
 
@@ -97,11 +99,13 @@ class StringUtilsTest {
 		if (javaInfo.getVersionFloat() < 9) {
 			Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc"));
 			Assertions.assertEquals(0, StringUtils.getCoder("啊啊啊哦哦哦呃呃呃"));
-		} else {
+		} else if (javaInfo.getVersionFloat() < 16) {
 			Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc=="));
 			Assertions.assertEquals(1, StringUtils.getCoder("1啊啊啊哦哦哦呃呃呃"));
 			Assertions.assertEquals(1, StringUtils.getCoder("2啊啊啊哦哦哦呃呃呃="));
 			Assertions.assertEquals(1, StringUtils.getCoder("3啊啊啊哦哦哦呃呃呃=="));
+		} else {
+			// do nothing: java16及以上版本，无法通过反射获取，没有测试意义
 		}
 	}
 
