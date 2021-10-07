@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -26,6 +27,24 @@ import java.util.function.Supplier;
  * @author wangliang181230
  */
 public abstract class ObjectUtils {
+
+	/**
+	 * 判断对象是否与数组中的某个元素相等
+	 *
+	 * @param obj   对象
+	 * @param array 对象数组
+	 * @param <T>   对象类型
+	 * @return 是否存在相等的元素
+	 */
+	@SafeVarargs
+	public static <T> boolean in(T obj, T... array) {
+		for (T t : array) {
+			if (Objects.equals(obj, t)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * 如果为null，则返回默认值

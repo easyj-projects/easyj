@@ -125,9 +125,9 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			if (!resp.isSuccess()) {
 				BaiduDwzErrorType errorType = resp.getErrorType();
 				String errorMsg = resp.getErrorMessage();
-				String errorCode = errorType != null ? errorType.name() : resp.getCode().toString();
+				String errorCode = errorType != null ? errorType.name() : (resp.getCode() == null ? null : resp.getCode().toString());
 
-				throw new DwzSdkServerException("请求百度云短链接服务失败：" + errorMsg, errorCode);
+				throw new DwzSdkServerException("请求百度云短链接服务失败：[" + resp.getCode() + "]" + errorMsg, errorCode);
 			} else if (CollectionUtils.isEmpty(resp.getShortUrls())) {
 				throw new DwzSdkServerException("请求百度云短链接服务的响应中无数据", "NO_DATA");
 			}
