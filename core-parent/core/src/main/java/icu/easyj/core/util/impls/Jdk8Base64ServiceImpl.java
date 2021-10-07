@@ -26,12 +26,13 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK8-Base64-Impl", order = 100, dependOnMaxJavaVersion = 1.8F)
+@LoadLevel(name = "JDK8-Base64-Impl", order = 80, dependOnMaxJavaVersion = 1.8F)
 public class Jdk8Base64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {
-		// 通过反射直接获取字符串的字符数组，避免 `String.toCharArray()` 方法的arraycopy操作导致不必要的性能损耗。
+		// 通过反射直接获取字符串的字符数组，避免 `String.toCharArray()` 方法中的 `System.arraycopy()` 操作导致不必要的性能损耗。
+		//char[] chars = cs.toString().toCharArray();
 		char[] chars = (char[])StringUtils.getValue(cs);
 
 		// 判断字符数组是否为Base64

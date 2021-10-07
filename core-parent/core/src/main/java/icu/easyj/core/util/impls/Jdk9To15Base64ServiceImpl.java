@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util.impls;
 
+import java.nio.charset.StandardCharsets;
+
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.Base64Utils;
 import icu.easyj.core.util.IBase64Service;
@@ -26,7 +28,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK9~15-Base64-Impl", order = 100, dependOnMinJavaVersion = 9F, dependOnMaxJavaVersion = 15F)
+@LoadLevel(name = "JDK9~15-Base64-Impl", order = 90, dependOnMinJavaVersion = 9F, dependOnMaxJavaVersion = 15F)
 public class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
 	@Override
@@ -35,7 +37,8 @@ public class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
 		// coder为1时，表示字符串中存在双字节字符，肯定不是Base64，直接返回false
 		if (coder == 0) {
-			// 通过反射直接获取字符串的字节数组，避免 `String.toCharArray()` 方法的arraycopy操作导致不必要的性能损耗。
+			// 通过反射直接获取字符串的字节数组，避免 `String.getBytes(Charset)` 方法中不必要的性能损耗。
+			//byte[] bytes = cs.toString().getBytes(StandardCharsets.UTF_8);
 			byte[] bytes = (byte[])StringUtils.getValue(cs);
 
 			// 判断字符数组是否为Base64

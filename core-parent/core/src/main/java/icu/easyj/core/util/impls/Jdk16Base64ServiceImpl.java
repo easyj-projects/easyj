@@ -27,7 +27,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK16-Base64-Impl", order = 100, dependOnMinJavaVersion = 16F)
+@LoadLevel(name = "JDK16-Base64-Impl", order = 160, dependOnMinJavaVersion = 16F)
 public class Jdk16Base64ServiceImpl implements IBase64Service {
 
 	@Override
