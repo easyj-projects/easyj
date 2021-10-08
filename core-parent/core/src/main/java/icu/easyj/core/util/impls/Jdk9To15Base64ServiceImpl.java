@@ -15,9 +15,8 @@
  */
 package icu.easyj.core.util.impls;
 
-import java.nio.charset.StandardCharsets;
-
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.ServiceDependsOn;
 import icu.easyj.core.util.Base64Utils;
 import icu.easyj.core.util.IBase64Service;
 import icu.easyj.core.util.StringUtils;
@@ -28,7 +27,8 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK9~15-Base64-Impl", order = 90, dependOnMinJavaVersion = 9F, dependOnMaxJavaVersion = 15F)
+@LoadLevel(name = "JDK9~15-Base64-Impl", order = 90)
+@ServiceDependsOn(minJavaVersion = 9F, maxJavaVersion = 15F)
 public class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
 	@Override

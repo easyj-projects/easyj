@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.ServiceDependsOn;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
@@ -32,7 +33,8 @@ import org.apache.poi.ss.usermodel.Workbook;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "easyj", order = 1, dependOnClasses = {Excel.class})
+@LoadLevel(name = "easyj", order = 1)
+@ServiceDependsOn(classes = {Excel.class})
 public class EasyjExcelConverter implements IExcelConverter {
 
 	@Override

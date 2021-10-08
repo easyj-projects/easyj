@@ -22,33 +22,36 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The interface Load level.
- * 注：从阿里的seata项目中复制过来的。
+ * 服务依赖配置的注解
  *
- * @author slievrly
+ * @author wangliang181230
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface LoadLevel {
-	/**
-	 * Name string.
-	 *
-	 * @return the string
-	 */
-	String name();
+public @interface ServiceDependsOn {
 
 	/**
-	 * Order int.
+	 * 依赖于哪些类
 	 *
-	 * @return the int
+	 * @return the classes
 	 */
-	int order() default 0;
+	Class<?>[] classes() default {};
 
 	/**
-	 * Scope enum.
+	 * 依赖的最低版本的Java，小于等于0时，表示不限制最低版本<br>
+	 * 值域如：1.1* ~ 1.8*、9.** ~ 1*.**
 	 *
-	 * @return the scope
+	 * @return the min java version
 	 */
-	Scope scope() default Scope.SINGLETON;
+	float minJavaVersion() default 0;
+
+	/**
+	 * 依赖的最高版本的Java，小于等于0时，表示不限制最高版本。<br>
+	 * 注意：设置该值时，要注意小版本的设置。举例：设置为 17F 时，也许你想设置的是 17.99F，以包含所有Java17的小版本<br>
+	 * 值域如：1.1* ~ 1.8*、9.** ~ 1*.**
+	 *
+	 * @return the max java version
+	 */
+	float maxJavaVersion() default 0;
 }

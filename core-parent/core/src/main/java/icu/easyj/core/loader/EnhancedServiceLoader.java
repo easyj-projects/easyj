@@ -553,26 +553,35 @@ public class EnhancedServiceLoader {
 				String serviceName = null;
 				int priority = 0;
 				Scope scope = Scope.SINGLETON;
+
+				// 获取注解`@LoadLevel`的信息
 				LoadLevel loadLevel = clazz.getAnnotation(LoadLevel.class);
 				if (loadLevel != null) {
 					serviceName = loadLevel.name();
 					priority = loadLevel.order();
 					scope = loadLevel.scope();
+				}
 
+				// 获取注解`@ServiceDependsOn`的信息
+				ServiceDependsOn serviceDependsOn = clazz.getAnnotation(ServiceDependsOn.class);
+				if (serviceDependsOn != null) {
+					// 获取依赖的Java版本范围
+					int dependsOnMinJavaVersion = (int)(serviceDependsOn.minJavaVersion() * 100);
+					int dependsOnMaxJavaVersion = (int)(serviceDependsOn.maxJavaVersion() * 100);
+					// 默认包含所有小版本处理
+					dependsOnMaxJavaVersion = this.handleDependsOnMaxJavaVersion(dependsOnMaxJavaVersion);
 					// 判断依赖的Java版本
-					float dependOnMinJavaVersion = loadLevel.dependOnMinJavaVersion();
-					float dependOnMaxJavaVersion = loadLevel.dependOnMaxJavaVersion();
-					if (dependOnMinJavaVersion > 0 || dependOnMaxJavaVersion > 0) {
+					if (dependsOnMinJavaVersion > 0 || dependsOnMaxJavaVersion > 0) {
 						JavaInfo javaInfo = SystemUtil.getJavaInfo();
-						int version = (int)(javaInfo.getVersionFloat() * 10);
-						if (dependOnMinJavaVersion > 0 && (int)(dependOnMinJavaVersion * 10) > version) {
-							throw new ClassNotFoundException("java version is less than v" + dependOnMinJavaVersion);
+						if (dependsOnMinJavaVersion > 0 && javaInfo.getVersionInt() < dependsOnMinJavaVersion) {
+							throw new ClassNotFoundException("java version is less than v" + serviceDependsOn.minJavaVersion());
 						}
-						if (dependOnMaxJavaVersion > 0 && (int)(dependOnMaxJavaVersion * 10) < version) {
-							throw new ClassNotFoundException("java version is greater than v" + dependOnMaxJavaVersion);
+						if (dependsOnMaxJavaVersion > 0 && javaInfo.getVersionInt() > dependsOnMaxJavaVersion) {
+							throw new ClassNotFoundException("java version is greater than v" + serviceDependsOn.maxJavaVersion());
 						}
 					}
 				}
+
 				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz);
 				classToDefinitionMap.put(clazz, result);
 				if (serviceName != null) {
@@ -582,6 +591,21 @@ public class EnhancedServiceLoader {
 				return result;
 			}
 			return null;
+		}
+
+		private int handleDependsOnMaxJavaVersion(int dependsOnMaxJavaVersion) {
+			if (dependsOnMaxJavaVersion > 0) {
+				if (dependsOnMaxJavaVersion < 190) {
+					if (dependsOnMaxJavaVersion % 10 == 0) {
+						dependsOnMaxJavaVersion += 9;
+					}
+				} else {
+					if (dependsOnMaxJavaVersion % 100 == 0) {
+						dependsOnMaxJavaVersion += 99;
+					}
+				}
+			}
+			return dependsOnMaxJavaVersion;
 		}
 
 		private boolean isDefinitionContainsClazz(String className, ClassLoader loader) {
