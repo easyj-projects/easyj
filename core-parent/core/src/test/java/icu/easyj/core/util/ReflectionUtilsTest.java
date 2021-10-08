@@ -59,7 +59,7 @@ class ReflectionUtilsTest {
 	void testGetFieldValue() throws NoSuchFieldException {
 		Assertions.assertEquals("d", ReflectionUtils.getFieldValue(new ReflectionUtilsTest(), "STRING"));
 		Assertions.assertThrows(ClassCastException.class, () -> {
-			ReflectionUtils.getFieldValue(new ReflectionUtilsTest(), "STRING");
+			Integer var = ReflectionUtils.getFieldValue(new ReflectionUtilsTest(), "STRING");
 		});
 
 		Assertions.assertThrows(IllegalArgumentException.class,

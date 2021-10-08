@@ -57,6 +57,7 @@
 		<!-- POI dependencies version -->
 		<apache-poi.version>5.0.0</apache-poi.version>
 		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
+		<alibaba-easyexcel.version>2.2.11</alibaba-easyexcel.version>
 
 		<!-- XML dependencies version -->
 		<apache-xmlbeans.version>5.0.0</apache-xmlbeans.version>
@@ -177,6 +178,12 @@
 				<groupId>cn.afterturn</groupId>
 				<artifactId>easypoi-wps</artifactId>
 				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+			<!-- alibaba-easyexcel -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>easyexcel</artifactId>
+				<version>${alibaba-easyexcel.version}</version>
 			</dependency>
 
 			<!-- 依赖定义：XML -->
