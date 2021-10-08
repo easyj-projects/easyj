@@ -81,7 +81,6 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		// 提取参数
 		String image = request.getImage();
 		CardSide cardSide = request.getCardSide();
-		Integer minQuality = request.getMinQuality();
 		IdCardOcrAdvanced[] advancedArr = request.getAdvancedArr();
 		Map<String, String> config = request.getConfig();
 
@@ -158,7 +157,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		}
 
 		// 设置高级功能信息
-		this.setResponseAdvancedInfo(response, resp.getAdvancedInfo(), minQuality);
+		this.setResponseAdvancedInfo(response, resp.getAdvancedInfo(), request.getMinQuality());
 
 		//endregion
 
@@ -254,7 +253,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 
 			response.setValidDateStart(validDateStart);
 			response.setValidDateEnd(validDateEnd);
-		} catch (Exception e) {
+		} catch (ParseException e) {
 			throw new IdCardOcrSdkException("身份证有效期限解析失败：" + validDate, "PARSE_VALID_DATE_FAILED", e);
 		}
 	}

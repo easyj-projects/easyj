@@ -47,17 +47,6 @@
 		</developer>
 	</developers>
 
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
-
 	<modules>
 		<module>dependencies</module>
 
@@ -74,6 +63,17 @@
 
 		<module>test</module>
 	</modules>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
 
 	<properties>
 		<!-- 项目版本 -->

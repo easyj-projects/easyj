@@ -45,7 +45,7 @@ public abstract class UrlUtils {
 	static final BitSet DONT_NEED_URL_ENCODE;
 
 	static {
-		DONT_NEED_URL_ENCODE = new BitSet(256);
+		DONT_NEED_URL_ENCODE = new BitSet(128);
 		int i;
 		for (i = 'a'; i <= 'z'; i++) {
 			DONT_NEED_URL_ENCODE.set(i);
@@ -129,51 +129,51 @@ public abstract class UrlUtils {
 
 		boolean needToChange = false;
 		final StringBuilder sb = new StringBuilder(s.length());
-		final CharArrayWriter charArrayWriter = new CharArrayWriter();
-
-		int c;
-		for (int i = 0; i < s.length(); ) {
-			c = s.charAt(i);
-			if (DONT_NEED_URL_ENCODE.get(c)) {
-				if (c == ' ') {
-					c = '+';
-					needToChange = true;
-				}
-				sb.append((char)c);
-				i++;
-			} else {
-				do {
-					charArrayWriter.write(c);
-					if (c >= 0xD800 && c <= 0xDBFF) {
-						if ((i + 1) < s.length()) {
-							int d = s.charAt(i + 1);
-							if (d >= 0xDC00 && d <= 0xDFFF) {
-								charArrayWriter.write(d);
-								i++;
+		try (final CharArrayWriter charArrayWriter = new CharArrayWriter()) {
+			int c;
+			for (int i = 0; i < s.length(); ) {
+				c = s.charAt(i);
+				if (DONT_NEED_URL_ENCODE.get(c)) {
+					if (c == ' ') {
+						c = '+';
+						needToChange = true;
+					}
+					sb.append((char)c);
+					i++;
+				} else {
+					do {
+						charArrayWriter.write(c);
+						if (c >= 0xD800 && c <= 0xDBFF) {
+							if ((i + 1) < s.length()) {
+								int d = s.charAt(i + 1);
+								if (d >= 0xDC00 && d <= 0xDFFF) {
+									charArrayWriter.write(d);
+									i++;
+								}
 							}
 						}
-					}
-					i++;
-				} while (i < s.length() && !DONT_NEED_URL_ENCODE.get((c = s.charAt(i))));
+						i++;
+					} while (i < s.length() && !DONT_NEED_URL_ENCODE.get((c = s.charAt(i))));
 
-				charArrayWriter.flush();
-				String str = charArrayWriter.toString();
-				byte[] ba = str.getBytes(charset);
-				for (byte b : ba) {
-					sb.append('%');
-					char ch = Character.forDigit((b >> 4) & 0xF, 16);
-					if (Character.isLetter(ch)) {
-						ch -= StringUtils.CASE_DIFF;
+					charArrayWriter.flush();
+					String str = charArrayWriter.toString();
+					byte[] ba = str.getBytes(charset);
+					for (byte b : ba) {
+						sb.append('%');
+						char ch = Character.forDigit((b >> 4) & 0xF, 16);
+						if (Character.isLetter(ch)) {
+							ch -= StringUtils.CASE_DIFF;
+						}
+						sb.append(ch);
+						ch = Character.forDigit(b & 0xF, 16);
+						if (Character.isLetter(ch)) {
+							ch -= StringUtils.CASE_DIFF;
+						}
+						sb.append(ch);
 					}
-					sb.append(ch);
-					ch = Character.forDigit(b & 0xF, 16);
-					if (Character.isLetter(ch)) {
-						ch -= StringUtils.CASE_DIFF;
-					}
-					sb.append(ch);
+					charArrayWriter.reset();
+					needToChange = true;
 				}
-				charArrayWriter.reset();
-				needToChange = true;
 			}
 		}
 

@@ -78,7 +78,7 @@ public class TickClock implements ITickClock {
 
 	@Override
 	public long currentTimeMillis() {
-		return (getPassedNanos() / 1000000) + baseEpochMillis;
+		return (getPassedNanos() / 1_000_000) + baseEpochMillis;
 	}
 
 	@Override

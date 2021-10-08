@@ -38,7 +38,6 @@ public abstract class ThrowableUtils {
 	 * @return cause 目标异常
 	 */
 	@Nullable
-	@SuppressWarnings("all")
 	public static <T extends Throwable> T findCause(@NonNull Throwable t,
 													@NonNull final Class<T> causeClass) {
 		Assert.notNull(t, "'t' must not be null");
