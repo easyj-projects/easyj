@@ -18,7 +18,12 @@ package icu.easyj.core.util;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
+import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.impls.Jdk16Base64ServiceImpl;
+import icu.easyj.core.util.impls.Jdk8Base64ServiceImpl;
+import icu.easyj.core.util.impls.Jdk9To15Base64ServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -124,6 +129,17 @@ class Base64UtilsTest {
 	 */
 	@Test
 	void testIsBase64Performance() {
+		IBase64Service base64Service = EnhancedServiceLoader.load(IBase64Service.class);
+		System.out.println("\r\n" + IBase64Service.class.getSimpleName() + "实现类：" + base64Service.getClass().getName());
+		JavaInfo javaInfo = SystemUtil.getJavaInfo();
+		if (javaInfo.getVersionFloat() < 1.9) {
+			Assertions.assertEquals(Jdk8Base64ServiceImpl.class, base64Service.getClass());
+		} else if (javaInfo.getVersionFloat() < 16) {
+			Assertions.assertEquals(Jdk9To15Base64ServiceImpl.class, base64Service.getClass());
+		} else {
+			Assertions.assertEquals(Jdk16Base64ServiceImpl.class, base64Service.getClass());
+		}
+
 		// case: isBase64(str) == true
 		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
@@ -141,7 +157,7 @@ class Base64UtilsTest {
 		Base64Utils.isBase64(s4);
 		Base64Utils.isBase64(s5);
 
-		System.out.println("\r\nJava version: " + SystemUtil.getJavaInfo().getVersionFloat());
+		System.out.println("\r\nJava version: " + javaInfo.getVersionFloat());
 
 		testIsBase64PerformanceOne(1, "case: isBase64(str) == true", s1);
 		testIsBase64PerformanceOne(2, "case: isBase64(str) == false && 不含双字节字符 && 位数符合", s2);
