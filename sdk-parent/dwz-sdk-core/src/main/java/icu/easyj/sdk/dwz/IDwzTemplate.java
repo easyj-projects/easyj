@@ -50,12 +50,12 @@ public interface IDwzTemplate {
 	 * 生成短链接
 	 *
 	 * @param longUrl 长链接
-	 * @param config  可配置参数（主要为了考虑多种实现的不同入参需求）
+	 * @param configs 可配置参数（主要为了考虑多种实现的不同入参需求）
 	 * @return response 响应
 	 * @throws DwzSdkException          SDK异常
 	 * @throws IllegalArgumentException 参数有误的异常
 	 */
-	default DwzResponse createShortUrl(String longUrl, Map<String, Object> config) throws DwzSdkException {
-		return createShortUrl(new DwzRequest(longUrl, config));
+	default DwzResponse createShortUrl(String longUrl, Map<String, Object> configs) throws DwzSdkException {
+		return createShortUrl(new DwzRequest(longUrl, configs));
 	}
 }

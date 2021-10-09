@@ -53,12 +53,12 @@ public abstract class Base64Utils {
 	/**
 	 * Base64字符集中，ASSIC码最小的字符：'+'
 	 */
-	public static final byte MIN_BASE64_CHAR = (byte)'+';
+	public static final byte MIN_BASE64_BYTE = (byte)'+';
 
 	/**
 	 * Base64字符集中，ASSIC码最大的字符：'z'
 	 */
-	public static final byte MAX_BASE64_CHAR = (byte)'z';
+	public static final byte MAX_BASE64_BYTE = (byte)'z';
 
 	/**
 	 * 补位字符：'='
@@ -160,7 +160,7 @@ public abstract class Base64Utils {
 	 * @return 是否为Base64字符
 	 */
 	private static boolean isBase64CharInner(char c) {
-		return c >= MIN_BASE64_CHAR && c <= MAX_BASE64_CHAR && BASE64_CHAR_TABLE[c] != -1;
+		return c >= MIN_BASE64_BYTE && c <= MAX_BASE64_BYTE && BASE64_CHAR_TABLE[c] != -1;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public abstract class Base64Utils {
 	 * @return 是否为Base64字节
 	 */
 	private static boolean isBase64ByteInner(byte b) {
-		return b >= MIN_BASE64_CHAR && b <= MAX_BASE64_CHAR && BASE64_CHAR_TABLE[b] != -1;
+		return b >= MIN_BASE64_BYTE && b <= MAX_BASE64_BYTE && BASE64_CHAR_TABLE[b] != -1;
 	}
 
 	/**

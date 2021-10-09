@@ -46,7 +46,7 @@ class Base64UtilsTest {
 		// 尝试校验20000次生成的Base64串
 		int n = 20000;
 		while (n-- > 0) {
-			String base64Str = RandomUtil.randomString(20);
+			String base64Str = RandomUtil.randomString(RandomUtil.randomInt(20, 30));
 			byte[] bytes = Base64.encode(StrUtil.utf8Bytes(base64Str), false);
 			// 测试isBase64方法
 			if (!Base64Utils.isBase64Bytes(bytes)) {
