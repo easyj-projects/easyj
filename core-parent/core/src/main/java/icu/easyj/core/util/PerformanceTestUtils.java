@@ -52,7 +52,7 @@ public abstract class PerformanceTestUtils {
 
 		// 正式开始运行
 		System.out.println("--------------------------------------------------");
-		System.out.println("| 开始运行性能测试：                                 |");
+		System.out.println("| 开始运行性能测试：" + StringUtils.rightPad(sets + " * " + times, 33, ' ') + "|");
 		System.out.println("--------------------------------------------------");
 		long[] costs = new long[suppliers.length];
 		while (sets-- > 0) {
