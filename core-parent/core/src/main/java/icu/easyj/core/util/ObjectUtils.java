@@ -16,10 +16,19 @@
 package icu.easyj.core.util;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
+
+import cn.hutool.core.clone.CloneRuntimeException;
+import cn.hutool.core.clone.CloneSupport;
+import cn.hutool.core.util.ObjectUtil;
+import icu.easyj.core.convert.ConvertUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 对象工具类
@@ -27,6 +36,92 @@ import java.util.function.Supplier;
  * @author wangliang181230
  */
 public abstract class ObjectUtils {
+
+	//region ----------------- 合并数据
+
+	/**
+	 * 克隆模式
+	 * 只有不克隆时，目标对象才不需要继承 {@link cn.hutool.core.clone.CloneSupport} 类
+	 */
+	public enum CloneMode {
+		/**
+		 * 不克隆
+		 */
+		NOT_CLONE,
+
+		/**
+		 * 数据不为空时才克隆
+		 */
+		CLONE_ONLY_DATA_NOT_EMPTY,
+
+		/**
+		 * 总是克隆
+		 */
+		ALWAYS_CLONE
+	}
+
+	/**
+	 * 合并数据到目标对象中
+	 *
+	 * @param target    目标对象
+	 * @param data      数据
+	 * @param cloneMode 克隆模式
+	 * @param <T>       目标对象类
+	 * @return 返回目标对象或克隆对象
+	 * @throws CloneRuntimeException 目标对象不支持克隆时，将抛出该异常
+	 */
+	public static <T> T mergeData(@NonNull T target, @Nullable Map<String, Object> data, CloneMode cloneMode) {
+		if (MapUtils.isEmpty(data)) {
+			return cloneMode == CloneMode.ALWAYS_CLONE ? ((CloneSupport<T>)target).clone() : target;
+		}
+
+		// 新的变量
+		T result = (cloneMode != CloneMode.NOT_CLONE ? ((CloneSupport<T>)target).clone() : target);
+
+		// 反射获取所有字段
+		Field[] fields = ReflectionUtils.getAllFields(result.getClass());
+		Object value;
+		for (Field field : fields) {
+			// 跳过final字段
+			if (Modifier.isFinal(field.getModifiers())) {
+				continue;
+			}
+
+			// 获取值
+			value = data.get(field.getName());
+			if (ObjectUtil.isEmpty(value)) {
+				continue;
+			}
+			// 转换值类型
+			if (!value.getClass().equals(field.getType())) {
+				value = ConvertUtils.convert(value, field.getType());
+			}
+
+			// 设置值
+			try {
+				field.set(result, value);
+			} catch (IllegalAccessException ignore) {
+				// do nothing
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * 合并数据到目标对象中（当数据不为空时，会克隆一份对象）
+	 *
+	 * @param target 目标对象
+	 * @param data   数据
+	 * @param <T>    目标对象类
+	 * @return 返回目标对象或克隆对象
+	 * @throws CloneRuntimeException 目标对象不支持克隆时，将抛出该异常
+	 */
+	public static <T> T mergeData(@NonNull T target, @Nullable Map<String, Object> data) {
+		return mergeData(target, data, CloneMode.CLONE_ONLY_DATA_NOT_EMPTY);
+	}
+
+	//endregion
 
 	/**
 	 * 判断对象是否与数组中的某个元素相等
@@ -45,6 +140,9 @@ public abstract class ObjectUtils {
 		}
 		return false;
 	}
+
+
+	//region ----------------- defaultIfNull、defaultIfEmpty
 
 	/**
 	 * 如果为null，则返回默认值
@@ -123,4 +221,6 @@ public abstract class ObjectUtils {
 
 		return obj;
 	}
+
+	//endregion
 }
