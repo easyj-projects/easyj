@@ -55,7 +55,7 @@ public interface IDwzTemplate {
 	 * @throws DwzSdkException          SDK异常
 	 * @throws IllegalArgumentException 参数有误的异常
 	 */
-	default DwzResponse createShortUrl(String longUrl, Map<String, String> config) throws DwzSdkException {
+	default DwzResponse createShortUrl(String longUrl, Map<String, Object> config) throws DwzSdkException {
 		return createShortUrl(new DwzRequest(longUrl, config));
 	}
 }

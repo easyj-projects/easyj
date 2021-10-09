@@ -118,6 +118,7 @@ public abstract class ConvertUtils {
 	 * @param targetClass 目标类
 	 * @param <T>         目标类型
 	 * @return 转换后的目标类对象
+	 * @throws ConvertException 转换失败时，抛出该异常
 	 */
 	public static <T> T convert(@Nullable Object source, Class<T> targetClass) {
 		if (source == null) {

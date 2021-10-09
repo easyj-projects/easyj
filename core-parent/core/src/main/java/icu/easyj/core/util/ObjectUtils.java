@@ -25,8 +25,8 @@ import java.util.function.Supplier;
 
 import cn.hutool.core.clone.CloneRuntimeException;
 import cn.hutool.core.clone.CloneSupport;
-import cn.hutool.core.util.ObjectUtil;
 import icu.easyj.core.convert.ConvertUtils;
+import icu.easyj.core.exception.ConvertException;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -89,19 +89,26 @@ public abstract class ObjectUtils {
 
 			// 获取值
 			value = data.get(field.getName());
-			if (ObjectUtil.isEmpty(value)) {
+			if (value == null) {
+				// 值为空时，忽略该数据
 				continue;
 			}
+
 			// 转换值类型
 			if (!value.getClass().equals(field.getType())) {
-				value = ConvertUtils.convert(value, field.getType());
+				try {
+					value = ConvertUtils.convert(value, field.getType());
+				} catch (ConvertException ignore) {
+					// 转换失败时，忽略该字段
+					continue;
+				}
 			}
 
 			// 设置值
 			try {
 				field.set(result, value);
 			} catch (IllegalAccessException ignore) {
-				// do nothing
+				// 设置失败时，忽略该字段
 			}
 		}
 

@@ -33,14 +33,14 @@ public class BaiduDwzConfig {
 	private String token;
 
 	/**
-	 * 默认的短网址有效期<br>
+	 * 短网址有效期<br>
 	 * 值域：
 	 * <ul>
-	 *     <li>long-term：长期（有限额）</li>
+	 *     <li>long-term：长期</li>
 	 *     <li>1-year：1年</li>
 	 * </ul>
 	 */
-	private String defaultTermOfValidity = "1-year";
+	private String termOfValidity = "1-year";
 
 	/**
 	 * 返回错误语言
@@ -74,12 +74,12 @@ public class BaiduDwzConfig {
 		this.token = token;
 	}
 
-	public String getDefaultTermOfValidity() {
-		return defaultTermOfValidity;
+	public String getTermOfValidity() {
+		return termOfValidity;
 	}
 
-	public void setDefaultTermOfValidity(String defaultTermOfValidity) {
-		this.defaultTermOfValidity = defaultTermOfValidity;
+	public void setTermOfValidity(String termOfValidity) {
+		this.termOfValidity = termOfValidity;
 	}
 
 	public String getResponseLanguage() {

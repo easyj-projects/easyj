@@ -34,7 +34,7 @@ public class DwzRequest {
 	/**
 	 * 可配置参数（主要为了考虑多种实现）
 	 */
-	private Map<String, String> config;
+	private Map<String, Object> configs;
 
 
 	//region Constructor
@@ -46,9 +46,9 @@ public class DwzRequest {
 		this.longUrl = longUrl;
 	}
 
-	public DwzRequest(String longUrl, Map<String, String> config) {
+	public DwzRequest(String longUrl, Map<String, Object> configs) {
 		this.longUrl = longUrl;
-		this.config = config;
+		this.configs = configs;
 	}
 
 	//endregion
@@ -64,18 +64,18 @@ public class DwzRequest {
 		this.longUrl = longUrl;
 	}
 
-	public Map<String, String> getConfig() {
-		return config;
+	public Map<String, Object> getConfigs() {
+		return configs;
 	}
 
-	public void setConfig(Map<String, String> config) {
-		this.config = config;
+	public void setConfigs(Map<String, Object> configs) {
+		this.configs = configs;
 	}
 
 	@Nullable
-	public String getConfig(String key) {
-		if (config != null) {
-			return config.get(key);
+	public Object getConfig(String key) {
+		if (configs != null) {
+			return configs.get(key);
 		} else {
 			return null;
 		}

@@ -88,7 +88,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		try {
 			// 准备Body
 			List<BaiduDwzRequest> reqList = new ArrayList<>();
-			BaiduDwzRequest req1 = this.buildRequest(request.getLongUrl(), request.getConfig("termOfValidity"));
+			BaiduDwzRequest req1 = this.buildRequest(request.getLongUrl(), (String)request.getConfig("termOfValidity"));
 			reqList.add(req1);
 			body = JSONUtil.toJsonStr(reqList);
 			// 准备Headers
@@ -159,7 +159,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	private BaiduDwzRequest buildRequest(String longUrl, String termOfValidity) {
 		BaiduDwzRequest req = new BaiduDwzRequest(longUrl, termOfValidity);
 		if (StringUtils.isBlank(req.getTermOfValidity())) {
-			req.setTermOfValidity(config.getDefaultTermOfValidity());
+			req.setTermOfValidity(config.getTermOfValidity());
 		}
 		return req;
 	}
