@@ -48,17 +48,16 @@ public class IdCardOcrRequest extends SimpleIdCardOcrRequest {
 		this.cardSide = cardSide;
 	}
 
-	public IdCardOcrRequest(String image, CardSide cardSide, Integer minQuality, IdCardOcrAdvanced[] advancedArr, Map<String, String> config) {
-		super(minQuality, advancedArr, config);
+	public IdCardOcrRequest(String image, CardSide cardSide, IdCardOcrAdvanced[] advancedArr, Map<String, Object> configs) {
+		super(advancedArr, configs);
 		this.image = image;
 		this.cardSide = cardSide;
 	}
 
 	public IdCardOcrRequest(SimpleIdCardOcrRequest simpleRequest) {
 		if (simpleRequest != null) {
-			super.setMinQuality(simpleRequest.getMinQuality());
 			super.setAdvancedArr(simpleRequest.getAdvancedArr());
-			super.setConfig(simpleRequest.getConfig());
+			super.setConfigs(simpleRequest.getConfigs());
 		}
 	}
 

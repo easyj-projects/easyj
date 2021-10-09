@@ -24,7 +24,7 @@ import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrService;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,32 +37,27 @@ import org.springframework.util.Assert;
  *
  * @author wangliang181230
  */
-public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCardOcrTemplate {
+public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdCardOcrService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTencentCloudIdCardOcrTemplate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTencentCloudIdCardOcrServiceImpl.class);
 
 	private static final String ENDPOINT = "ocr.tencentcloudapi.com";
 
 	/**
 	 * 全局的身份证识别配置
 	 */
-	@Nullable
+	@NonNull
 	private final TencentCloudIdCardOcrConfig globalConfig;
 
-	@Nullable
+	@NonNull
 	private final OcrClient globalClient;
 
 
-	public DefaultTencentCloudIdCardOcrTemplate() {
-		this.globalConfig = null;
-		this.globalClient = null;
-	}
+	public DefaultTencentCloudIdCardOcrServiceImpl(@NonNull TencentCloudIdCardOcrConfig config) {
+		Assert.notNull(config, "'config' must not be null");
 
-	public DefaultTencentCloudIdCardOcrTemplate(@NonNull TencentCloudIdCardOcrConfig globalConfig) {
-		Assert.notNull(globalConfig, "'globalConfig' must not be null");
-
-		this.globalConfig = globalConfig;
-		this.globalClient = this.newOcrClient(globalConfig);
+		this.globalConfig = config;
+		this.globalClient = this.newOcrClient(config);
 	}
 
 
@@ -74,7 +69,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	 * 身份证识别
 	 *
 	 * @param request 请求
-	 * @param config  请求配置
+	 * @param config  当前请求的个性配置
 	 * @return response 响应
 	 * @see <a href="https://cloud.tencent.com/document/api/866/33524">API文档</a>
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
@@ -82,12 +77,8 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 	@Override
 	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		if (config == null) {
-			Assert.notNull(this.globalConfig, "'this.globalConfig' must not be null");
 			config = this.globalConfig;
 		}
-
-		// 合并全局配置
-		this.mergeGlobalConfig(config);
 
 		Assert.notNull(config.getSecretId(), "'secretId' must not be null");
 		Assert.notNull(config.getSecretKey(), "'secretKey' must not be null");
@@ -98,7 +89,6 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 			// 实例化要请求产品的client对象,clientProfile是可选的
 			OcrClient client;
 			if (config == this.globalConfig) {
-				Assert.notNull(this.globalClient, "未设置全局配置，没有生成过全局客户端实例。");
 				client = this.globalClient;
 			} else {
 				client = this.newOcrClient(config);
@@ -109,20 +99,36 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 
 			// 记录日志
 			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("IDCardOCR 请求成功！\r\n Request: {}\r\nResponse: {}\r\n  Config: {}\r\n   Cost: {} ms",
-						icu.easyj.core.util.StringUtils.toString(request),
-						icu.easyj.core.util.StringUtils.toString(response),
-						icu.easyj.core.util.StringUtils.toString(config),
-						(System.nanoTime() - startTime) / 1000000);
+				// base64不打印在日志中
+				String imageBase64Bak = request.getImageBase64();
+				String advancedInfoBak = response.getAdvancedInfo();
+				request.setImageBase64(null);
+				response.setAdvancedInfo(null);
+				try {
+					LOGGER.info("IDCardOCR 请求成功！\r\n Request: {}\r\nResponse: {}\r\n  Config: {}\r\n   Cost: {} ms",
+							icu.easyj.core.util.StringUtils.toString(request),
+							icu.easyj.core.util.StringUtils.toString(response),
+							icu.easyj.core.util.StringUtils.toString(config),
+							(System.nanoTime() - startTime) / 1000000);
+				} finally {
+					request.setImageBase64(imageBase64Bak);
+					response.setAdvancedInfo(advancedInfoBak);
+				}
 			}
 
 			return response;
 		} catch (TencentCloudSDKException | RuntimeException e) {
-			LOGGER.error("身份证识别服务请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {} ms",
-					e.getMessage(),
-					icu.easyj.core.util.StringUtils.toString(request),
-					icu.easyj.core.util.StringUtils.toString(config),
-					(System.nanoTime() - startTime) / 1000000);
+			String imageBase64Bak = request.getImageBase64();
+			request.setImageBase64(null); // base64不打印在日志中
+			try {
+				LOGGER.error("身份证识别服务请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {} ms",
+						e.getMessage(),
+						icu.easyj.core.util.StringUtils.toString(request),
+						icu.easyj.core.util.StringUtils.toString(config),
+						(System.nanoTime() - startTime) / 1000000);
+			} finally {
+				request.setImageBase64(imageBase64Bak);
+			}
 			throw e;
 		}
 	}
@@ -133,35 +139,6 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 
 
 	//region Private
-
-	private void mergeGlobalConfig(@NonNull TencentCloudIdCardOcrConfig config) {
-		if (config != this.globalConfig && this.globalConfig != null) {
-			if (StringUtils.isBlank(config.getSecretId())) {
-				config.setSecretId(this.globalConfig.getSecretId());
-			}
-			if (StringUtils.isBlank(config.getSecretKey())) {
-				config.setSecretKey(this.globalConfig.getSecretKey());
-			}
-			if (StringUtils.isBlank(config.getRegion())) {
-				config.setRegion(this.globalConfig.getRegion());
-			}
-			if (config.getConnTimeout() == null) {
-				config.setConnTimeout(this.globalConfig.getConnTimeout());
-			}
-			if (config.getWriteTimeout() == null) {
-				config.setWriteTimeout(this.globalConfig.getWriteTimeout());
-			}
-			if (config.getReadTimeout() == null) {
-				config.setReadTimeout(this.globalConfig.getReadTimeout());
-			}
-			if (config.getLanguage() == null) {
-				config.setLanguage(this.globalConfig.getLanguage());
-			}
-			if (config.getDebug() == null) {
-				config.setDebug(this.globalConfig.getDebug());
-			}
-		}
-	}
 
 	@Nullable
 	private Credential newCredential(TencentCloudIdCardOcrConfig config) {
@@ -216,7 +193,7 @@ public class DefaultTencentCloudIdCardOcrTemplate implements ITencentCloudIdCard
 
 	//region Getter
 
-	@Nullable
+	@NonNull
 	@Override
 	public TencentCloudIdCardOcrConfig getGlobalConfig() {
 		return globalConfig;

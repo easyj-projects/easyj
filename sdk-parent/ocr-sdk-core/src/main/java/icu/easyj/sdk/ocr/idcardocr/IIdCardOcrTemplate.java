@@ -51,7 +51,7 @@ public interface IIdCardOcrTemplate {
 	default IdCardOcrResponse idCardOcr(@NonNull String image,
 										@Nullable CardSide cardSide,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
-		return idCardOcr(new IdCardOcrRequest(image, cardSide, null, advancedArr, null));
+		return idCardOcr(new IdCardOcrRequest(image, cardSide, advancedArr, null));
 	}
 
 	/**

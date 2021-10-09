@@ -17,17 +17,15 @@ package icu.easyj.sdk.ocr.idcardocr;
 
 import java.util.Map;
 
+import icu.easyj.core.convert.ConvertUtils;
+import org.springframework.lang.Nullable;
+
 /**
  * 身份证识别请求信息
  *
  * @author wangliang181230
  */
 public class SimpleIdCardOcrRequest {
-
-	/**
-	 * 最小身份证图片质量分数
-	 */
-	private Integer minQuality;
 
 	/**
 	 * 高级功能数组
@@ -38,7 +36,8 @@ public class SimpleIdCardOcrRequest {
 	 * 动态传入最终实现类的配置信息
 	 * 可以做到动态可配置化
 	 */
-	private Map<String, String> config;
+	@Nullable
+	private Map<String, Object> configs;
 
 
 	//region Constructor
@@ -50,24 +49,15 @@ public class SimpleIdCardOcrRequest {
 		this.advancedArr = advancedArr;
 	}
 
-	public SimpleIdCardOcrRequest(Integer minQuality, IdCardOcrAdvanced[] advancedArr, Map<String, String> config) {
-		this.minQuality = minQuality;
+	public SimpleIdCardOcrRequest(IdCardOcrAdvanced[] advancedArr, Map<String, Object> configs) {
 		this.advancedArr = advancedArr;
-		this.config = config;
+		this.configs = configs;
 	}
 
 	//endregion
 
 
 	//region Getter、Setter
-
-	public Integer getMinQuality() {
-		return minQuality;
-	}
-
-	public void setMinQuality(Integer minQuality) {
-		this.minQuality = minQuality;
-	}
 
 	public IdCardOcrAdvanced[] getAdvancedArr() {
 		return advancedArr;
@@ -77,12 +67,31 @@ public class SimpleIdCardOcrRequest {
 		this.advancedArr = advancedArr;
 	}
 
-	public Map<String, String> getConfig() {
-		return config;
+	@Nullable
+	public Map<String, Object> getConfigs() {
+		return configs;
 	}
 
-	public void setConfig(Map<String, String> config) {
-		this.config = config;
+	public void setConfigs(Map<String, Object> configs) {
+		this.configs = configs;
+	}
+
+	@Nullable
+	public <T> T getConfig(String key) {
+		if (configs == null) {
+			return null;
+		} else {
+			return (T)configs.get(key);
+		}
+	}
+
+	@Nullable
+	public <T> T getConfig(String key, Class<T> typeClass) {
+		if (configs == null) {
+			return null;
+		} else {
+			return ConvertUtils.convert(configs.get(key), typeClass);
+		}
 	}
 
 	//endregion

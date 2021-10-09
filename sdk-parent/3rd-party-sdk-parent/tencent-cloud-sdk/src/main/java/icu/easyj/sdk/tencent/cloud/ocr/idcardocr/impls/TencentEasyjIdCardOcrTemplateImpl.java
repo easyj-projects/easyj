@@ -27,6 +27,7 @@ import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.DateUtils;
+import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.ocr.CardSide;
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
@@ -38,7 +39,7 @@ import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkServerException;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrWarn;
 import icu.easyj.sdk.tencent.cloud.ocr.OcrRequestBuilder;
-import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrService;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrAdvancedInfo;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrRequestBuilder;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
@@ -63,12 +64,13 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	public static final int MIN_QUALITY = 50;
 
 
-	private final ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate;
+	@NonNull
+	private final ITencentCloudIdCardOcrService tencentCloudIdCardOcrService;
 
 
-	public TencentEasyjIdCardOcrTemplateImpl(ITencentCloudIdCardOcrTemplate tencentCloudIdCardOcrTemplate) {
-		Assert.notNull(tencentCloudIdCardOcrTemplate, "'tencentCloudIdCardOcrTemplate' must not be null");
-		this.tencentCloudIdCardOcrTemplate = tencentCloudIdCardOcrTemplate;
+	public TencentEasyjIdCardOcrTemplateImpl(ITencentCloudIdCardOcrService tencentCloudIdCardOcrService) {
+		Assert.notNull(tencentCloudIdCardOcrService, "'tencentCloudIdCardOcrService' must not be null");
+		this.tencentCloudIdCardOcrService = tencentCloudIdCardOcrService;
 	}
 
 
@@ -82,7 +84,10 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		String image = request.getImage();
 		CardSide cardSide = request.getCardSide();
 		IdCardOcrAdvanced[] advancedArr = request.getAdvancedArr();
-		Map<String, String> config = request.getConfig();
+		Map<String, Object> configs = request.getConfigs();
+
+		// 将入参配置与通用配置合并，生成当前请求所使用的配置
+		TencentCloudIdCardOcrConfig config = ObjectUtils.mergeData(this.tencentCloudIdCardOcrService.getGlobalConfig(), configs);
 
 		// 为两面时，重置为null
 		if (CardSide.BOTH == cardSide) {
@@ -107,8 +112,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 
 		IDCardOCRResponse resp;
 		try {
-			TencentCloudIdCardOcrConfig tencentCloudIdCardOcrConfig = TencentCloudIdCardOcrConfig.fromMap(config);
-			resp = tencentCloudIdCardOcrTemplate.doIdCardOcr(req, tencentCloudIdCardOcrConfig);
+			resp = tencentCloudIdCardOcrService.doIdCardOcr(req, config);
 		} catch (TencentCloudSDKException e) {
 			String errorCode = e.getErrorCode();
 			String errorMsg = "身份证识别失败" + (StringUtils.isNotEmpty(errorCode) ? "：" + errorCode : "");
@@ -157,7 +161,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 		}
 
 		// 设置高级功能信息
-		this.setResponseAdvancedInfo(response, resp.getAdvancedInfo(), request.getMinQuality());
+		this.setResponseAdvancedInfo(response, resp.getAdvancedInfo(), config.getMinQuality());
 
 		//endregion
 
@@ -302,12 +306,8 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	 * @return 最小身份证图片质量分数
 	 */
 	private int getMinQuality(Integer minQuality) {
-		if (minQuality == null) {
-			TencentCloudIdCardOcrConfig globalConfig = this.tencentCloudIdCardOcrTemplate.getGlobalConfig();
-			minQuality = (globalConfig == null ? null : globalConfig.getMinQuality());
-			if (minQuality == null || minQuality <= 0 || minQuality >= 100) {
-				minQuality = MIN_QUALITY;
-			}
+		if (minQuality == null || minQuality <= 0 || minQuality >= 100) {
+			minQuality = MIN_QUALITY;
 		}
 		return minQuality;
 	}

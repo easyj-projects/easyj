@@ -18,9 +18,9 @@ package icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
 import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfigUtils;
-import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrService;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
-import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.DefaultTencentCloudIdCardOcrTemplate;
+import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.DefaultTencentCloudIdCardOcrServiceImpl;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.impls.TencentEasyjIdCardOcrTemplateImpl;
 import icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration;
 import icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration;
@@ -38,7 +38,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author wangliang181230
  */
-@ConditionalOnClass({ITencentCloudIdCardOcrTemplate.class, IDCardOCRRequest.class})
+@ConditionalOnClass({ITencentCloudIdCardOcrService.class, IDCardOCRRequest.class})
 @ConditionalOnProperty(value = "easyj.sdk.ocr.idcard-ocr.type", havingValue = "tencent", matchIfMissing = true)
 @AutoConfigureAfter(EasyjTencentCloudAutoConfiguration.class)
 @AutoConfigureBefore(EasyjOcrTemplateAutoConfiguration.class)
@@ -59,21 +59,21 @@ public class EasyjTencentCloudIdCardOcrAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public ITencentCloudIdCardOcrTemplate defaultTencentCloudIdCardOcrTemplate(
+	public ITencentCloudIdCardOcrService defaultTencentCloudIdCardOcrTemplate(
 			TencentCloudCommonProperties commonProperties, TencentCloudIdCardOcrConfig idCardOcrProperties) {
 		TencentCloudCommonConfigUtils.merge(idCardOcrProperties, commonProperties);
-		return new DefaultTencentCloudIdCardOcrTemplate(idCardOcrProperties);
+		return new DefaultTencentCloudIdCardOcrServiceImpl(idCardOcrProperties);
 	}
 
 	/**
 	 * 基于腾讯云实现的 {@link IIdCardOcrTemplate} 接口
 	 *
-	 * @param template 腾讯云身份证识别（IDCardOCR）接口封装的Bean
+	 * @param service 腾讯云身份证识别（IDCardOCR）接口封装的Bean
 	 * @return 身份证识别接口的Bean
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public IIdCardOcrTemplate tencentIdCardOcrTemplate(ITencentCloudIdCardOcrTemplate template) {
-		return new TencentEasyjIdCardOcrTemplateImpl(template);
+	public IIdCardOcrTemplate tencentIdCardOcrTemplate(ITencentCloudIdCardOcrService service) {
+		return new TencentEasyjIdCardOcrTemplateImpl(service);
 	}
 }

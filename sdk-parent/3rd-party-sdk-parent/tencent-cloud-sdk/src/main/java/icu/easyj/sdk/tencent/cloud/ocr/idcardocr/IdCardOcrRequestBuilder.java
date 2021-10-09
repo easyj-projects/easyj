@@ -141,7 +141,7 @@ public class IdCardOcrRequestBuilder {
 
 	/**
 	 * 高级功能：开启 多卡证检测
-	 * 存在多张卡时，{@link ITencentCloudIdCardOcrTemplate#doIdCardOcr} 方法将直接抛出异常
+	 * 存在多张卡时，{@link ITencentCloudIdCardOcrService#doIdCardOcr} 方法将直接抛出异常
 	 *
 	 * @return self
 	 */
