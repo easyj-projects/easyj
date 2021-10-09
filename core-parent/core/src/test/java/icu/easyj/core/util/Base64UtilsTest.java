@@ -66,7 +66,7 @@ class Base64UtilsTest {
 		// 尝试校验20000次生成的Base64串
 		int n = 20000;
 		while (n-- > 0) {
-			String base64Str = Base64.encode(RandomUtil.randomString(20));
+			CharSequence base64Str = Base64.encode(RandomUtil.randomString(RandomUtil.randomInt(20, 30)));
 			// java版本为9及以上时，校验String.coder值，肯定为0
 			if (SystemUtil.getJavaInfo().getVersionFloat() >= 9) {
 				// 判断String.coder是否为0，如果为1，则抛出异常
@@ -111,15 +111,15 @@ class Base64UtilsTest {
 	@Test
 	void testIsBase64Performance() {
 		// case: isBase64(str) == true
-		String s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
+		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
-		String s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=";
+		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=";
 		// case: isBase64(str) == false && 含双字节字符   && 位数符合（此case，java9比java8速度要快非常多）
-		String s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
+		CharSequence s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数不符合
-		String s4 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11";
+		CharSequence s4 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11";
 		// case: isBase64(str) == false && 含双字节字符   && 位数不符合
-		String s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
+		CharSequence s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
 
 		Base64Utils.isBase64(s1);
 		Base64Utils.isBase64(s2);
@@ -136,7 +136,7 @@ class Base64UtilsTest {
 		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s5);
 	}
 
-	private void testIsBase64PerformanceOne(int number, String title, String str) {
+	private void testIsBase64PerformanceOne(int number, String title, CharSequence str) {
 		System.out.println();
 		System.out.println(number + "、" + this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
 		System.out.println(title);
