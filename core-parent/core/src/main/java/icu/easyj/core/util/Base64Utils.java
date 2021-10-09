@@ -26,6 +26,8 @@ import org.springframework.util.Assert;
  * Base64工具类
  *
  * @author wangliang181230
+ * @see <a href="https://baike.baidu.com/item/base64">Base64原理_百度百科</a>
+ * @see <a href="https://segmentfault.com/a/1190000012654771">Base64原理（这偏文章的图片画的很不错，比较容易理解）</a>
  */
 public abstract class Base64Utils {
 
@@ -195,6 +197,8 @@ public abstract class Base64Utils {
 
 	/**
 	 * 判断是否为Base64字符串
+	 * <p>
+	 * 注：当前方法不考虑换行符！
 	 *
 	 * @param cs 字符串
 	 * @return 是否为Base64字符串
@@ -209,6 +213,8 @@ public abstract class Base64Utils {
 
 	/**
 	 * 判断是否为Base64字符数组
+	 * <p>
+	 * 注：当前方法不考虑换行符！
 	 *
 	 * @param chars 字符数组
 	 * @return 是否为Base64字符数组
@@ -234,7 +240,7 @@ public abstract class Base64Utils {
 				return false;
 			}
 		} else {
-			// 不存在补位字符时，长度除4的余数不能为1
+			// 不存在补位字符时，长度除4的余数不可能为1
 			if (length % 4 == 1) {
 				return false;
 			}
@@ -256,6 +262,8 @@ public abstract class Base64Utils {
 
 	/**
 	 * 判断是否为Base64字节数组
+	 * <p>
+	 * 注：当前方法不考虑换行符！
 	 *
 	 * @param bytes 字节数组
 	 * @return 是否为Base64字节数组
