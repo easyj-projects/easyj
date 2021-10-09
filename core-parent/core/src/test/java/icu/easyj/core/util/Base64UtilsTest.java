@@ -55,6 +55,20 @@ class Base64UtilsTest {
 		}
 	}
 
+	@Test
+	void testIsBase64Chars() {
+		// 尝试校验20000次生成的Base64串
+		int n = 20000;
+		while (n-- > 0) {
+			String base64Str = RandomUtil.randomString(RandomUtil.randomInt(20, 30));
+			char[] chars = Base64.encode(base64Str).toCharArray();
+			// 测试isBase64方法
+			if (!Base64Utils.isBase64Chars(chars)) {
+				throw new RuntimeException("Base64校验失败：" + base64Str);
+			}
+		}
+	}
+
 	//region test isBase64
 
 	/**
@@ -113,7 +127,7 @@ class Base64UtilsTest {
 		// case: isBase64(str) == true
 		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
-		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k113*=";
+		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11*==";
 		// case: isBase64(str) == false && 含双字节字符   && 位数符合（此case，java9比java8速度要快非常多）
 		CharSequence s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数不符合

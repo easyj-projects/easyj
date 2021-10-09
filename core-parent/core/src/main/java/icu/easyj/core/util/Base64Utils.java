@@ -220,29 +220,33 @@ public abstract class Base64Utils {
 		}
 
 		// 计算需校验字符的长度，减掉末尾补位字符数量
-		if (chars[length - 1] == PADDING_CHAR) {
+		char c = chars[length - 1];
+		if (c == PADDING_CHAR) {
 			// 存在补位字符时，长度必须为4的倍数
-			if (chars.length % 4 != 0) {
+			if (length % 4 != 0) {
 				return false;
 			}
-
 			--length;
+
 			// 最多末尾两个'='
-			if (chars[length - 1] == PADDING_CHAR) {
-				--length;
+			c = chars[length - 1];
+			if (c != PADDING_CHAR && !isBase64CharInner(c)) {
+				return false;
 			}
 		} else {
 			// 不存在补位字符时，长度除4的余数不能为1
 			if (length % 4 == 1) {
 				return false;
 			}
+			if (!isBase64CharInner(c)) {
+				return false;
+			}
 		}
+		--length;
 
 		// 校验除最后两位的字符
-		char c;
 		for (int i = 0; i < length; ++i) {
-			c = chars[i];
-			if (!isBase64CharInner(c)) {
+			if (!isBase64CharInner(chars[i])) {
 				return false;
 			}
 		}
@@ -263,30 +267,33 @@ public abstract class Base64Utils {
 		}
 
 		// 计算需校验字符的长度，减掉末尾补位字符数量
-		if (bytes[length - 1] == PADDING_CHAR) {
+		byte b = bytes[length - 1];
+		if (b == PADDING_CHAR) {
 			// 存在补位字符时，长度必须为4的倍数
-			if (bytes.length % 4 != 0) {
+			if (length % 4 != 0) {
 				return false;
 			}
-
 			--length;
 
 			// 最多末尾两个'='
-			if (bytes[length - 1] == PADDING_CHAR) {
-				--length;
+			b = bytes[length - 1];
+			if (b != PADDING_CHAR && !isBase64ByteInner(b)) {
+				return false;
 			}
 		} else {
 			// 不存在补位字符时，长度除4的余数不能为1
 			if (length % 4 == 1) {
 				return false;
 			}
+			if (!isBase64ByteInner(b)) {
+				return false;
+			}
 		}
+		--length;
 
 		// 校验除最后两位的字符
-		byte b;
 		for (int i = 0; i < length; ++i) {
-			b = bytes[i];
-			if (!isBase64ByteInner(b)) {
+			if (!isBase64ByteInner(bytes[i])) {
 				return false;
 			}
 		}
