@@ -116,12 +116,12 @@ public abstract class ObjectUtils {
 	}
 
 	/**
-	 * 合并数据到目标对象中（当数据不为空时，会克隆一份对象）
+	 * 合并数据到目标对象中
 	 *
 	 * @param target 目标对象
 	 * @param data   数据
 	 * @param <T>    目标对象类
-	 * @return 返回目标对象或克隆对象
+	 * @return 返回目标对象或克隆对象（当数据不为空时，才会克隆一份对象）
 	 * @throws CloneRuntimeException 目标对象不支持克隆时，将抛出该异常
 	 */
 	public static <T> T mergeData(@NonNull T target, @Nullable Map<String, Object> data) {

@@ -21,7 +21,9 @@ import cn.hutool.core.annotation.Alias;
  * 百度云DWZ请求参数
  *
  * @author wangliang181230
+ * @deprecated 由于参数比较简单，现已直接通过字符串拼接，不再使用该请求类
  */
+@Deprecated
 public class BaiduDwzRequest {
 
 	/**

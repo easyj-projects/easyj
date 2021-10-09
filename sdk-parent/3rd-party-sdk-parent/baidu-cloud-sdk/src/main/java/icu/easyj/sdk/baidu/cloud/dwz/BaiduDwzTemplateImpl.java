@@ -15,15 +15,14 @@
  */
 package icu.easyj.sdk.baidu.cloud.dwz;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
@@ -35,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -79,24 +79,22 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		Assert.notNull(request, "'request' must not be null");
 		Assert.notNull(request.getLongUrl(), "'longUrl' must not be null");
 
+		BaiduDwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
+
 		// 调用开始时间
 		long startTime = System.nanoTime();
 
 		String body = null;
 		String respStr = null;
-		Throwable t = null;
+		RuntimeException ex = null;
 		try {
 			// 准备Body
-			List<BaiduDwzRequest> reqList = new ArrayList<>();
-			BaiduDwzRequest req1 = this.buildRequest(request.getLongUrl(), (String)request.getConfig("termOfValidity"));
-			reqList.add(req1);
-			body = JSONUtil.toJsonStr(reqList);
+			body = String.format("[{\"LongUrl\":\"%s\",\"TermOfValidity\":\"%s\"}]", request.getLongUrl(), config.getTermOfValidity());
 			// 准备Headers
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Dwz-Token", config.getToken());
-			//headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+			headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			headers.add(HttpHeaders.CONTENT_LANGUAGE, config.getResponseLanguage());
-
 			// 创建HTTP请求体
 			HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
@@ -111,8 +109,6 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 					// 不是JSON数据，直接抛出异常
 					throw new DwzSdkServerException("请求百度云短链接服务失败：[" + e.getRawStatusCode() + "]" + e.getMessage(), ErrorCodeConstants.SERVER_ERROR, e);
 				}
-			} catch (RuntimeException e) {
-				throw new DwzSdkServerException("请求百度云短链接服务失败", ErrorCodeConstants.SERVER_ERROR, e);
 			}
 
 			// 判断：响应内容是否为空
@@ -127,43 +123,42 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 				String errorMsg = resp.getErrorMessage();
 				String errorCode = errorType != null ? errorType.name() : (resp.getCode() == null ? null : resp.getCode().toString());
 
-				throw new DwzSdkServerException("请求百度云短链接服务失败：[" + resp.getCode() + "]" + errorMsg, errorCode);
+				throw new DwzSdkServerException("请求百度云短链接服务失败：" + errorMsg, errorCode);
 			} else if (CollectionUtils.isEmpty(resp.getShortUrls())) {
 				throw new DwzSdkServerException("请求百度云短链接服务的响应中无数据", "NO_DATA");
 			}
 
 			// 转换响应类型，并返回
-			return this.convertToStandard(resp, req1.getTermOfValidity());
+			return this.convertToStandard(resp, config.getTermOfValidity());
 		} catch (DwzSdkException e) {
-			t = e;
+			ex = e;
 			throw e;
 		} catch (RuntimeException e) {
-			t = e;
-			throw new DwzSdkClientException("百度云短链接服务未知异常", ErrorCodeConstants.UNKNOWN, e);
+			ex = e;
+			throw new DwzSdkClientException("请求百度云短链接服务未知异常", ErrorCodeConstants.UNKNOWN, e);
 		} finally {
-			if (t == null) {
+			if (ex == null) {
 				if (LOGGER.isInfoEnabled()) {
 					LOGGER.info("百度云短链接服务调用成功：\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms",
 							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}
 			} else {
 				if (LOGGER.isErrorEnabled()) {
-					LOGGER.error("百度云短链接服务调用失败：{}\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms",
-							t.getMessage(),
+					LOGGER.error("{}{}\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms",
+							ex instanceof DwzSdkException ? "" : "百度云短链接服务调用失败：", ex,
 							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}
 			}
 		}
 	}
 
-	private BaiduDwzRequest buildRequest(String longUrl, String termOfValidity) {
-		BaiduDwzRequest req = new BaiduDwzRequest(longUrl, termOfValidity);
-		if (StringUtils.isBlank(req.getTermOfValidity())) {
-			req.setTermOfValidity(config.getTermOfValidity());
-		}
-		return req;
-	}
-
+	/**
+	 * 转换为标准响应
+	 *
+	 * @param resp           Baidu接口响应
+	 * @param termOfValidity 长链接有效时间：1-year、long-term
+	 * @return 标准响应
+	 */
 	private DwzResponse convertToStandard(BaiduDwzResponse resp, String termOfValidity) {
 		DwzResponse response = new DwzResponse();
 
