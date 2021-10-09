@@ -79,6 +79,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		Assert.notNull(request, "'request' must not be null");
 		Assert.notNull(request.getLongUrl(), "'longUrl' must not be null");
 
+		// 将入参配置与通用配置合并，生成当前请求所使用的配置
 		BaiduDwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
 
 		// 调用开始时间

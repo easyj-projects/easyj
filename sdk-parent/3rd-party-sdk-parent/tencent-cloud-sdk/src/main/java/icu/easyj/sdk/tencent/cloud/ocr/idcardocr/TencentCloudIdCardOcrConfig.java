@@ -38,6 +38,19 @@ public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
 	private Integer minQuality;
 
 
+	//region Getter、Setter
+
+	public Integer getMinQuality() {
+		return minQuality;
+	}
+
+	public void setMinQuality(Integer minQuality) {
+		this.minQuality = minQuality;
+	}
+
+	//endregion
+
+
 	//region Static
 
 	@Nullable
@@ -60,22 +73,13 @@ public class TencentCloudIdCardOcrConfig extends TencentCloudCommonConfig {
 		if (StringUtils.isNotBlank(configMap.get("readTimeout"))) {
 			config.setReadTimeout(Integer.parseInt(configMap.get("readTimeout")));
 		}
-		config.setLanguage(EnumUtils.getEnum(Language.class, configMap.get("language"), null));
+		config.setLanguage(EnumUtils.getEnum(Language.class, configMap.get("language"), Language.ZH_CN));
 		config.setDebug(configMap.get("debug") == null ? null : "true".equalsIgnoreCase(configMap.get("debug")));
+		if (StringUtils.isNotBlank(configMap.get("minQuality"))) {
+			config.setMinQuality(Integer.parseInt(configMap.get("minQuality")));
+		}
 
 		return config;
-	}
-
-	//endregion
-
-	//region Getter、Setter
-
-	public Integer getMinQuality() {
-		return minQuality;
-	}
-
-	public void setMinQuality(Integer minQuality) {
-		this.minQuality = minQuality;
 	}
 
 	//endregion

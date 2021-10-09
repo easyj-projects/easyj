@@ -20,6 +20,7 @@ import java.util.Date;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.UrlUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
@@ -74,6 +75,9 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 
 		// 调用开始时间
 		long startTime = System.nanoTime();
+
+		// 将入参配置与通用配置合并，生成当前请求所使用的配置
+		S3DwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
 
 		String url = null;
 		String respStr = null;
