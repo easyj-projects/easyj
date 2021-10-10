@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.util.impls;
 
-import java.nio.charset.StandardCharsets;
-
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.ServiceDependsOn;
 import icu.easyj.core.util.Base64Utils;
@@ -34,17 +32,7 @@ public class Jdk16Base64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {
-		String str = cs.toString();
-
-		// 获取字符串UTF-8编码的字节数组
-		byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
-
-		// 如果长度不一致，说明存在双精度字符，肯定不为Base64
-		if (bytes.length != str.length()) {
-			return false;
-		}
-
-		// 判断字符数组是否为Base64
-		return Base64Utils.isBase64Bytes(bytes);
+		// 由于Jdk16及以上版本禁止了很多非法访问，所以没办法获取String.value和coder的值，所以只能直接
+		return Base64Utils.isBase64Chars(cs.toString().toCharArray());
 	}
 }

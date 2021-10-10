@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util;
 
+import java.nio.charset.StandardCharsets;
+
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -166,9 +168,9 @@ class Base64UtilsTest {
 		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s5);
 	}
 
-	private void testIsBase64PerformanceOne(int number, String title, CharSequence str) {
+	private void testIsBase64PerformanceOne(int number, String title, CharSequence cs) {
 		System.out.println();
-		System.out.println(number + "、" + this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(str) + ": " + str);
+		System.out.println(number + "、" + this.getClass().getSimpleName() + ".testIsBase64(): " + Base64Utils.isBase64(cs) + ": " + cs);
 		System.out.println(title);
 
 		// 运行次数
@@ -178,21 +180,45 @@ class Base64UtilsTest {
 		long[] costs = PerformanceTestUtils.execute(sets, times,
 				// easyj函数
 				() -> {
-					Base64Utils.isBase64(str);
+					Base64Utils.isBase64(cs);
 					return "easyj";
+				},
+				// easyj函数
+				() -> {
+					isBase64ForJdk16ByBytes(cs);
+					return "easyj2";
 				},
 				// hutool函数
 				() -> {
-					Base64.isBase64(str);
+					Base64.isBase64(cs);
 					return "hutool";
 				});
 
 		// case: 性能比Hutool高
-		long costEasyj = costs[0];
-		long costHutool = costs[1];
-		if (costEasyj > costHutool) {
-			System.out.println("\r\n[WARNING] Easyj的isBase64方法比Hutool的性能要低了，请注意替换实现。");
+		long costEasyj1 = costs[0];
+		long costEasyj2 = costs[1];
+		long costHutool = costs[2];
+		if (costEasyj1 > costHutool) {
+			System.out.println("\r\n[WARNING] Easyj1的isBase64方法比Hutool的性能要低了，请注意替换实现。");
 		}
+		if (costEasyj1 > costEasyj2) {
+			System.out.println("\r\n[WARNING] Easyj1的isBase64方法比Easyj2的性能要低了，请注意替换实现。");
+		}
+	}
+
+	private boolean isBase64ForJdk16ByBytes(CharSequence cs) {
+		String str = cs.toString();
+
+		// 获取字符串UTF-8编码的字节数组
+		byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+
+		// 如果长度不一致，说明存在双精度字符，肯定不为Base64
+		if (bytes.length != str.length()) {
+			return false;
+		}
+
+		// 判断字符数组是否为Base64
+		return Base64Utils.isBase64Bytes(bytes);
 	}
 
 	//endregion
