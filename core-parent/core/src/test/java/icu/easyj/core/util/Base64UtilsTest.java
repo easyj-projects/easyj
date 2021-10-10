@@ -143,7 +143,7 @@ class Base64UtilsTest {
 		// case: isBase64(str) == true
 		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
-		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11*==";
+		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11=1s";
 		// case: isBase64(str) == false && 含双字节字符   && 位数符合（此case，java9比java8速度要快非常多）
 		CharSequence s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数不符合
@@ -151,11 +151,11 @@ class Base64UtilsTest {
 		// case: isBase64(str) == false && 含双字节字符   && 位数不符合
 		CharSequence s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
 
-		Base64Utils.isBase64(s1);
-		Base64Utils.isBase64(s2);
-		Base64Utils.isBase64(s3);
-		Base64Utils.isBase64(s4);
-		Base64Utils.isBase64(s5);
+		Assertions.assertTrue(Base64Utils.isBase64(s1));
+		Assertions.assertFalse(Base64Utils.isBase64(s2));
+		Assertions.assertFalse(Base64Utils.isBase64(s3));
+		Assertions.assertFalse(Base64Utils.isBase64(s4));
+		Assertions.assertFalse(Base64Utils.isBase64(s5));
 
 		System.out.println("\r\nJava version: " + javaInfo.getVersionFloat());
 
