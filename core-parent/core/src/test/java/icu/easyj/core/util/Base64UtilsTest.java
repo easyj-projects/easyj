@@ -142,30 +142,34 @@ class Base64UtilsTest {
 			Assertions.assertEquals(Jdk16Base64ServiceImpl.class, base64Service.getClass());
 		}
 
-		// case: isBase64(str) == true
-		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
+		// case: isBase64(str) == true && 长
+		CharSequence s1 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111aYXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111aYXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111aYXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111aYXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111aYXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
+		// case: isBase64(str) == true && 短
+		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2RrZmpsa+oxbDJqM2xrMTJqM2l1OWRzYWY5OD1k111=";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数符合
-		CharSequence s2 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11=1s";
+		CharSequence s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11=1s";
 		// case: isBase64(str) == false && 含双字节字符   && 位数符合（此case，java9比java8速度要快非常多）
-		CharSequence s3 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
+		CharSequence s4 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1k11123";
 		// case: isBase64(str) == false && 不含双字节字符 && 位数不符合
-		CharSequence s4 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11";
+		CharSequence s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr1Yq1115OD1k11";
 		// case: isBase64(str) == false && 含双字节字符   && 位数不符合
-		CharSequence s5 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
+		CharSequence s6 = "YXNkZmFzZGZhc2Rmc2Rmc2Rr啊Yq 我Y5OD1kx1";
 
 		Assertions.assertTrue(Base64Utils.isBase64(s1));
-		Assertions.assertFalse(Base64Utils.isBase64(s2));
+		Assertions.assertTrue(Base64Utils.isBase64(s2));
 		Assertions.assertFalse(Base64Utils.isBase64(s3));
 		Assertions.assertFalse(Base64Utils.isBase64(s4));
 		Assertions.assertFalse(Base64Utils.isBase64(s5));
+		Assertions.assertFalse(Base64Utils.isBase64(s6));
 
 		System.out.println("\r\nJava version: " + javaInfo.getVersionFloat());
 
-		testIsBase64PerformanceOne(1, "case: isBase64(str) == true", s1);
-		testIsBase64PerformanceOne(2, "case: isBase64(str) == false && 不含双字节字符 && 位数符合", s2);
-		testIsBase64PerformanceOne(3, "case: isBase64(str) == false && 含双字节字符 && 位数符合", s3);
-		testIsBase64PerformanceOne(4, "case: isBase64(str) == false && 不含双字节字符 && 位数不符合", s4);
-		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s5);
+		testIsBase64PerformanceOne(1, "case: isBase64(str) == true && 长", s1);
+		testIsBase64PerformanceOne(1, "case: isBase64(str) == true && 短", s2);
+		testIsBase64PerformanceOne(2, "case: isBase64(str) == false && 不含双字节字符 && 位数符合", s3);
+		testIsBase64PerformanceOne(3, "case: isBase64(str) == false && 含双字节字符 && 位数符合", s4);
+		testIsBase64PerformanceOne(4, "case: isBase64(str) == false && 不含双字节字符 && 位数不符合", s5);
+		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s6);
 	}
 
 	private void testIsBase64PerformanceOne(int number, String title, CharSequence cs) {
