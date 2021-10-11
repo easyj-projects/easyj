@@ -45,7 +45,7 @@ class ReflectionUtilsTest {
 
 	//Prevent jvm from optimizing final
 	@SuppressWarnings("all")
-	public static final String testValue = (null != null ? "hello" : "hello");
+	public static String testValue = (null != null ? "hello" : "hello");
 	@SuppressWarnings("all")
 	public final String testValue2 = (null != null ? "hello world" : "hello world");
 
@@ -113,22 +113,15 @@ class ReflectionUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	void testSetStaticFinalFieldValue() throws NoSuchFieldException, IllegalAccessException {
-		try {
-			Assertions.assertEquals("hello", testValue);
-			ReflectionUtils.setStaticFinalFieldValue(ReflectionUtilsTest.class, "testValue", "hello world");
-			Assertions.assertEquals("hello world", testValue);
+	void testSetStaticFieldValue() throws NoSuchFieldException, IllegalAccessException {
+		Assertions.assertEquals("hello", testValue);
+		ReflectionUtils.setStaticFieldValue(ReflectionUtilsTest.class, "testValue", "hello world");
+		Assertions.assertEquals("hello world", testValue);
 
-			// case: not a static field
-			Assertions.assertThrows(IllegalArgumentException.class, () -> {
-				ReflectionUtils.setStaticFinalFieldValue(ReflectionUtilsTest.class, "testValue2", "hello");
-			});
-		} catch (NoSuchFieldException e) {
-			// FIXME: Java17会抛异常，暂时忽略该异常
-			if (!"modifiers".equals(e.getMessage())) {
-				throw e;
-			}
-		}
+		// case: not a static field
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			ReflectionUtils.setStaticFieldValue(ReflectionUtilsTest.class, "testValue2", "hello");
+		});
 	}
 
 

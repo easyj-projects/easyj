@@ -442,7 +442,7 @@ public abstract class ReflectionUtils {
 	}
 
 	/**
-	 * set `static` or `static final` field value
+	 * set `static` field value
 	 *
 	 * @param staticField the static field
 	 * @param newValue    the new value
@@ -450,20 +450,13 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchFieldException     if the class of the staticField has no `modifiers` field
 	 * @throws IllegalAccessException   the illegal access exception
 	 */
-	public static void setStaticFinalFieldValue(Field staticField, Object newValue)
-			throws NoSuchFieldException, IllegalAccessException {
+	public static void setStaticFieldValue(Field staticField, Object newValue)
+			throws IllegalAccessException {
 		Assert.notNull(staticField, "'staticField' must not be null");
 
 		// check is static field
 		if (!Modifier.isStatic(staticField.getModifiers())) {
 			throw new IllegalArgumentException("the `" + fieldToString(staticField) + "` is not a static field, cannot modify value.");
-		}
-
-		// remove the `final` keyword from the field
-		if (Modifier.isFinal(staticField.getModifiers())) {
-			Field modifiersField = staticField.getClass().getDeclaredField("modifiers");
-			setAccessible(modifiersField);
-			modifiersField.setInt(staticField, staticField.getModifiers() & ~Modifier.FINAL);
 		}
 
 		// set new value
@@ -472,7 +465,7 @@ public abstract class ReflectionUtils {
 	}
 
 	/**
-	 * set `static` or `static final` field value
+	 * set `static` field value
 	 *
 	 * @param targetClass     the target class
 	 * @param staticFieldName the static field name
@@ -482,7 +475,7 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchFieldException     if the field named {@code modifyFieldName} does not exist
 	 * @throws IllegalAccessException   the illegal access exception
 	 */
-	public static void setStaticFinalFieldValue(Class<?> targetClass, String staticFieldName, Object newValue)
+	public static void setStaticFieldValue(Class<?> targetClass, String staticFieldName, Object newValue)
 			throws NoSuchFieldException, IllegalAccessException {
 		Assert.notNull(targetClass, "'targetClass' must not be null");
 		Assert.notNull(staticFieldName, "'staticFieldName' must not be null");
@@ -490,8 +483,8 @@ public abstract class ReflectionUtils {
 		// get field
 		Field field = targetClass.getDeclaredField(staticFieldName);
 
-		// modify static final field value
-		setStaticFinalFieldValue(field, newValue);
+		// modify static field value
+		setStaticFieldValue(field, newValue);
 	}
 
 	//endregion
