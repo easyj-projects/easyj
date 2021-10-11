@@ -533,7 +533,7 @@ public class EnhancedServiceLoader {
 										continue;
 									}
 									extensions.add(extensionDefinition);
-								} catch (LinkageError | ClassNotFoundException | ArrayStoreException e) {
+								} catch (LinkageError | ClassNotFoundException | TypeNotPresentException | ArrayStoreException e) {
 									LOGGER.warn("Load [{}] class fail: {}", line, e.toString());
 								}
 							}
@@ -554,17 +554,13 @@ public class EnhancedServiceLoader {
 				int priority = 0;
 				Scope scope = Scope.SINGLETON;
 
-				// 获取注解`@LoadLevel`的信息
-				LoadLevel loadLevel = clazz.getAnnotation(LoadLevel.class);
-				if (loadLevel != null) {
-					serviceName = loadLevel.name();
-					priority = loadLevel.order();
-					scope = loadLevel.scope();
-				}
-
 				// 获取注解`@ServiceDependsOn`的信息
 				ServiceDependsOn serviceDependsOn = clazz.getAnnotation(ServiceDependsOn.class);
 				if (serviceDependsOn != null) {
+					// 在高版本java中，只有访问过一次后，才会抛出TypeNotPresentException异常
+					@SuppressWarnings("all")
+					Class<?>[] dependsOnClasses = serviceDependsOn.classes();
+
 					// 获取依赖的Java版本范围
 					int dependsOnMinJavaVersion = (int)(serviceDependsOn.minJavaVersion() * 100);
 					int dependsOnMaxJavaVersion = (int)(serviceDependsOn.maxJavaVersion() * 100);
@@ -580,6 +576,14 @@ public class EnhancedServiceLoader {
 							throw new ClassNotFoundException("java version is greater than v" + serviceDependsOn.maxJavaVersion());
 						}
 					}
+				}
+
+				// 获取注解`@LoadLevel`的信息
+				LoadLevel loadLevel = clazz.getAnnotation(LoadLevel.class);
+				if (loadLevel != null) {
+					serviceName = loadLevel.name();
+					priority = loadLevel.order();
+					scope = loadLevel.scope();
 				}
 
 				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz);
