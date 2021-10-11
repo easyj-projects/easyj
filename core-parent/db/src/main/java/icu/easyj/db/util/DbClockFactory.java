@@ -54,6 +54,8 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 	}
 
 	/**
+	 * 获取数据库时钟工厂
+	 *
 	 * @return 数据库时钟工厂
 	 */
 	public static DbClockFactory getInstance() {

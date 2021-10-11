@@ -16,6 +16,8 @@
 package icu.easyj.core.modelfortest;
 
 /**
+ * 测试类2
+ *
  * @author wangliang181230
  */
 public class TestClass2 implements EmptyTestInterface {

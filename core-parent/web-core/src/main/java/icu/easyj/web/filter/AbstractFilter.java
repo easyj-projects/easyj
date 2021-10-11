@@ -199,6 +199,8 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	//region Getter
 
 	/**
+	 * 获取过滤器配置
+	 *
 	 * @return 过滤器配置
 	 */
 	public P getFilterProperties() {
@@ -206,6 +208,8 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	}
 
 	/**
+	 * 获取过滤器名称
+	 *
 	 * @return 过滤器名称
 	 */
 	@Nullable

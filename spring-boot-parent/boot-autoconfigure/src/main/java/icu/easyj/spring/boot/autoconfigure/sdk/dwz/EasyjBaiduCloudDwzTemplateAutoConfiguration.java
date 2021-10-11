@@ -38,6 +38,8 @@ import org.springframework.context.annotation.Bean;
 public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 
 	/**
+	 * 百度云短链接服务配置 Bean
+	 *
 	 * @return 百度云短链接服务配置
 	 */
 	@Bean
@@ -48,6 +50,8 @@ public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 	}
 
 	/**
+	 * 百度云短链接服务服务 Bean
+	 *
 	 * @param config 百度云短链接服务配置
 	 * @return 百度云短链接服务服务
 	 */

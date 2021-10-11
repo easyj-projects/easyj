@@ -51,6 +51,8 @@ public abstract class CryptoFactory {
 	}
 
 	/**
+	 * 获取加密算法生成器
+	 *
 	 * @return 加密算法生成器
 	 */
 	public static ICryptoGenerator getGenerator() {

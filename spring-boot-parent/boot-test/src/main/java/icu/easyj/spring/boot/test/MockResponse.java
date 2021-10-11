@@ -55,6 +55,8 @@ public class MockResponse {
 	//region Response Results 响应结果
 
 	/**
+	 * 获取响应状态结果
+	 *
 	 * @return 响应状态结果
 	 */
 	public StatusResult status() {
@@ -62,6 +64,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应头结果
+	 *
 	 * @return 响应头结果
 	 */
 	public HeaderResult header() {
@@ -69,6 +73,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容类型结果
+	 *
 	 * @return 响应内容类型结果
 	 */
 	public ContentTypeResult contentType() {
@@ -76,6 +82,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容编码结果
+	 *
 	 * @return 响应内容编码结果
 	 */
 	public CharacterEncodingResult characterEncoding() {
@@ -94,6 +102,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容结果
+	 *
 	 * @return 响应内容结果
 	 */
 	public ContentResult content() {
@@ -101,6 +111,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取文件导出结果
+	 *
 	 * @return 文件导出结果
 	 */
 	public FileExportResult file() {
@@ -128,6 +140,8 @@ public class MockResponse {
 	//region Private
 
 	/**
+	 * 获取响应
+	 *
 	 * @return 响应
 	 */
 	private MockHttpServletResponse getResponse() {
@@ -150,6 +164,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应状态
+	 *
 	 * @return 响应状态
 	 */
 	private int getStatus() {
@@ -157,6 +173,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容类型
+	 *
 	 * @return 响应内容类型
 	 */
 	private String getContentType() {
@@ -164,6 +182,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容编码
+	 *
 	 * @return 响应内容编码
 	 */
 	private String getCharacterEncoding() {
@@ -171,6 +191,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容
+	 *
 	 * @return 响应内容
 	 */
 	private String getContentAsString() {
@@ -182,6 +204,8 @@ public class MockResponse {
 	}
 
 	/**
+	 * 获取响应内容实例
+	 *
 	 * @return 响应内容实例
 	 */
 	private <T> T getContent(Class<T> contentClass) {

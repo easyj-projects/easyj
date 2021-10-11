@@ -112,6 +112,8 @@ public interface ITencentCloudIdCardOcrService {
 	}
 
 	/**
+	 * 获取全局配置
+	 *
 	 * @return 全局配置
 	 */
 	@NonNull

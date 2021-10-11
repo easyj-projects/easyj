@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * 测试用户类
+ *
  * @author wangliang181230
  */
 public class TestUser {

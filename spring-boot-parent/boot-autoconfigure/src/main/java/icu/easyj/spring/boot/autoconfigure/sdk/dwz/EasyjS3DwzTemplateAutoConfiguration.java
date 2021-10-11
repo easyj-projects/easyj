@@ -38,6 +38,8 @@ import org.springframework.context.annotation.Bean;
 public class EasyjS3DwzTemplateAutoConfiguration {
 
 	/**
+	 * S-3短链接服务配置 Bean
+	 *
 	 * @return S-3短链接服务配置
 	 */
 	@Bean
@@ -48,6 +50,8 @@ public class EasyjS3DwzTemplateAutoConfiguration {
 	}
 
 	/**
+	 * S-3短链接服务 Bean
+	 *
 	 * @param config S-3短链接服务配置
 	 * @return S-3短链接服务
 	 */

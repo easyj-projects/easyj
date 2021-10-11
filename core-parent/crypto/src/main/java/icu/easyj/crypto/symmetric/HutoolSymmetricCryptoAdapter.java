@@ -55,6 +55,8 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 
 
 	/**
+	 * 获取对称加密算法实例
+	 *
 	 * @return 对称加密算法实例
 	 */
 	public SymmetricCrypto getCrypto() {

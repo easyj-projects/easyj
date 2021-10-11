@@ -16,6 +16,8 @@
 package icu.easyj.sdk.s3.dwz;
 
 /**
+ * S-3短链接服务响应数据
+ *
  * @author wangliang181230
  */
 public class S3DwzResponseData {

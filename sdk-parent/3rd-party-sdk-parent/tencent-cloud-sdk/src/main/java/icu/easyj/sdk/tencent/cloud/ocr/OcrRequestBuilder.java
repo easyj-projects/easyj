@@ -25,6 +25,8 @@ import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrRequestBuilder;
 public abstract class OcrRequestBuilder {
 
 	/**
+	 * 创建身份证识别（IDCardOCR）请求构建者
+	 *
 	 * @return 身份证识别（IDCardOCR）请求构建者
 	 */
 	public static IdCardOcrRequestBuilder idCardOcrRequestBuilder() {

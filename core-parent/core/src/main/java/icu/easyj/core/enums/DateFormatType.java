@@ -64,6 +64,8 @@ public enum DateFormatType {
 	}
 
 	/**
+	 * 获取时间格式
+	 *
 	 * @return 时间格式
 	 */
 	public String getFormat() {

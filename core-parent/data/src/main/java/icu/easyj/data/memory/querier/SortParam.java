@@ -16,6 +16,8 @@
 package icu.easyj.data.memory.querier;
 
 /**
+ * 排序参数
+ *
  * @author wangliang181230
  */
 public class SortParam {

@@ -63,6 +63,8 @@ public class EasyjParamCryptoAutoConfiguration {
 	static final String PREFERRED_MAPPER_PROPERTY = "spring.mvc.converters.preferred-json-mapper";
 
 	/**
+	 * 参数加密解密过滤器配置Bean
+	 *
 	 * @return 参数加密解密过滤器配置
 	 */
 	@Bean
@@ -73,6 +75,8 @@ public class EasyjParamCryptoAutoConfiguration {
 	}
 
 	/**
+	 * 参数加密解密处理器配置 Bean
+	 *
 	 * @return 参数加密解密处理器配置
 	 */
 	@Bean
@@ -83,6 +87,8 @@ public class EasyjParamCryptoAutoConfiguration {
 	}
 
 	/**
+	 * 参数加密解密处理器 Bean
+	 *
 	 * @param properties 参数加密处理器配置
 	 * @return 参数加密解密处理器
 	 */

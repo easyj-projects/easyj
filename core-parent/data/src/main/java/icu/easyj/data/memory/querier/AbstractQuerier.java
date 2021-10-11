@@ -24,6 +24,8 @@ import icu.easyj.core.util.CollectionUtils;
 import org.springframework.lang.NonNull;
 
 /**
+ * 查询器 抽象类
+ *
  * @author wangliang181230
  */
 public abstract class AbstractQuerier<T> implements Querier<T>, Sortable, Pageable {

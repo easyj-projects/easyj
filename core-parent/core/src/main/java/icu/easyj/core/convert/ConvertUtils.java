@@ -52,6 +52,8 @@ public abstract class ConvertUtils {
 	}
 
 	/**
+	 * 获取转换服务
+	 *
 	 * @return 转换服务
 	 */
 	public static DefaultConversionService getConversionService() {

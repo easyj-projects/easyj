@@ -51,6 +51,8 @@ public class BaseRuntimeException extends RuntimeException {
 
 
 	/**
+	 * 获取错误码
+	 *
 	 * @return 错误码
 	 */
 	@Nullable

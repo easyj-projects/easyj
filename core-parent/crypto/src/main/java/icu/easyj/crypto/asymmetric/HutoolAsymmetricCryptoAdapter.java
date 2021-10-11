@@ -53,6 +53,8 @@ public class HutoolAsymmetricCryptoAdapter implements IAsymmetricCrypto {
 
 
 	/**
+	 * 获取非对称加密算法实例
+	 *
 	 * @return 非对称加密算法实例
 	 */
 	public AbstractAsymmetricCrypto<?> getCrypto() {

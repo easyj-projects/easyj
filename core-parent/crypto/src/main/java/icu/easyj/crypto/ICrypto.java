@@ -40,6 +40,8 @@ public interface ICrypto extends Serializable {
 	//region Property
 
 	/**
+	 * 获取加密算法
+	 *
 	 * @return 加密算法
 	 */
 	String getAlgorithm();

@@ -124,6 +124,8 @@ public class GlobalConfigs {
 	//region Getter start
 
 	/**
+	 * 获取项目所属区域代码
+	 *
 	 * @return 项目所属区域代码
 	 */
 	public static String getArea() {
@@ -131,6 +133,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取项目所属区域名称
+	 *
 	 * @return 项目所属区域名称
 	 */
 	public static String getAreaName() {
@@ -138,6 +142,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取项目偌
+	 *
 	 * @return 项目代码
 	 */
 	public static String getProject() {
@@ -145,6 +151,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取项目名称
+	 *
 	 * @return 项目名称
 	 */
 	public static String getProjectName() {
@@ -152,6 +160,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取应用代码
+	 *
 	 * @return 应用代码
 	 */
 	public static String getApplication() {
@@ -159,6 +169,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取应用名称
+	 *
 	 * @return 应用名称
 	 */
 	public static String getApplicationName() {
@@ -169,6 +181,8 @@ public class GlobalConfigs {
 	//region 环境相关 start
 
 	/**
+	 * 获取环境代码
+	 *
 	 * @return 环境代码
 	 */
 	public static String getEnv() {
@@ -176,6 +190,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取环境名称
+	 *
 	 * @return 环境名称
 	 */
 	public static String getEnvName() {
@@ -183,6 +199,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 获取环境类型枚举
+	 *
 	 * @return 环境类型枚举
 	 */
 	public static EnvironmentType getEnvType() {
@@ -190,6 +208,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为生产环境
+	 *
 	 * @return 是否为生产环境
 	 */
 	public static boolean isProdEnv() {
@@ -197,6 +217,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否不为生产环境
+	 *
 	 * @return 是否不为生产环境
 	 */
 	public static boolean isNotProdEnv() {
@@ -204,6 +226,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为沙箱环境
+	 *
 	 * @return 是否为沙箱环境
 	 */
 	public static boolean isSandboxEnv() {
@@ -211,6 +235,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否不为沙箱环境
+	 *
 	 * @return 是否不为沙箱环境
 	 */
 	public static boolean isNotSandboxEnv() {
@@ -218,6 +244,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为测试环境
+	 *
 	 * @return 是否为测试环境
 	 */
 	public static boolean isTestEnv() {
@@ -225,6 +253,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否不为测试环境
+	 *
 	 * @return 是否不为测试环境
 	 */
 	public static boolean isNotTestEnv() {
@@ -232,6 +262,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为开发环境
+	 *
 	 * @return 是否为开发环境
 	 */
 	public static boolean isDevEnv() {
@@ -239,6 +271,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否不为开发环境
+	 *
 	 * @return 是否不为开发环境
 	 */
 	public static boolean isNotDevEnv() {
@@ -251,6 +285,8 @@ public class GlobalConfigs {
 	//region 运行模式 start
 
 	/**
+	 * 获取运营模式
+	 *
 	 * @return 运行模式
 	 */
 	public static RunMode getRunMode() {
@@ -258,6 +294,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为发行模式
+	 *
 	 * @return 是否为发行模式
 	 */
 	public static boolean isReleaseMode() {
@@ -265,6 +303,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否为调试模式
+	 *
 	 * @return 是否为调试模式
 	 */
 	public static boolean isDebugMode() {
@@ -272,6 +312,8 @@ public class GlobalConfigs {
 	}
 
 	/**
+	 * 判断是否单元测试中
+	 *
 	 * @return 是否单元测试中
 	 */
 	public static boolean isInUnitTest() {
@@ -284,6 +326,8 @@ public class GlobalConfigs {
 	//region 其他全局配置 start
 
 	/**
+	 * 获取全局配置Map
+	 *
 	 * @return 全局配置Map
 	 */
 	public static Map<Object, Object> getConfigs() {

@@ -25,6 +25,8 @@ import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.Nullable;
 
 /**
+ * 身份证识别（IDCardOCR）高级响应信息
+ *
  * @author wangliang181230
  * @see IDCardOCRResponse#getAdvancedInfo()
  */
@@ -80,6 +82,8 @@ public class IdCardOcrAdvancedInfo {
 	//region 判断告警信息
 
 	/**
+	 * 判断是否不含任意告警
+	 *
 	 * @return 是否不含任意告警
 	 */
 	public boolean hasNoWarn() {
@@ -87,6 +91,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含任意告警
+	 *
 	 * @return 是否包含任意告警
 	 */
 	public boolean hasAnyWarn() {
@@ -107,6 +113,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含有效日期不合法告警
+	 *
 	 * @return 是否包含有效日期不合法告警
 	 */
 	public boolean hasInvalidDateWarn() {
@@ -114,6 +122,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含身份证边框不完整告警
+	 *
 	 * @return 是否包含身份证边框不完整告警
 	 */
 	public boolean hasBorderIncompleteWarn() {
@@ -121,6 +131,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含身份证复印件告警
+	 *
 	 * @return 是否包含身份证复印件告警
 	 */
 	public boolean hasCopyWarn() {
@@ -128,6 +140,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含身份证翻拍告警
+	 *
 	 * @return 是否包含身份证翻拍告警
 	 */
 	public boolean hasReshootWarn() {
@@ -135,6 +149,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含临时身份证告警
+	 *
 	 * @return 是否包含临时身份证告警
 	 */
 	public boolean hasTempIdWarn() {
@@ -142,6 +158,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含身份证框内遮挡告警
+	 *
 	 * @return 是否包含身份证框内遮挡告警
 	 */
 	public boolean hasInFrameCoveredWarn() {
@@ -149,6 +167,8 @@ public class IdCardOcrAdvancedInfo {
 	}
 
 	/**
+	 * 判断是否包含PS告警
+	 *
 	 * @return 是否包含PS告警
 	 */
 	public boolean hasDetectPsWarn() {

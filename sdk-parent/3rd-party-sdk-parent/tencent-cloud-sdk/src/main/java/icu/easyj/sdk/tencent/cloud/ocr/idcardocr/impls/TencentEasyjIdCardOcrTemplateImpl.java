@@ -303,6 +303,8 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	}
 
 	/**
+	 * 获取最小身份证图片质量分数（如果值非法，则获取默认的值）
+	 *
 	 * @return 最小身份证图片质量分数
 	 */
 	private int getMinQuality(Integer minQuality) {

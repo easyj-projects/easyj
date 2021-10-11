@@ -18,6 +18,8 @@ package icu.easyj.sdk.s3.dwz;
 import org.springframework.lang.Nullable;
 
 /**
+ * S-3短链接服务响应
+ *
  * @author wangliang181230
  */
 public class S3DwzResponse {
@@ -30,6 +32,8 @@ public class S3DwzResponse {
 
 
 	/**
+	 * 判断是否请求成功
+	 *
 	 * @return 是否请求成功
 	 */
 	public boolean isSuccess() {
@@ -37,6 +41,8 @@ public class S3DwzResponse {
 	}
 
 	/**
+	 * 获取错误类型枚举
+	 *
 	 * @return 错误类型枚举
 	 */
 	@Nullable
@@ -45,6 +51,8 @@ public class S3DwzResponse {
 	}
 
 	/**
+	 * 获取错误信息
+	 *
 	 * @return 错误信息
 	 */
 	public String getErrorMessage() {

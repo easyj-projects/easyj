@@ -38,6 +38,8 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL
 public class EasyjExcelExporterAutoConfiguration {
 
 	/**
+	 * Excel导出配置Bean
+	 *
 	 * @return Excel导出配置
 	 */
 	@Bean

@@ -42,6 +42,8 @@ public interface IParamCryptoHandlerProperties {
 	void setAlgorithm(String algorithm);
 
 	/**
+	 * 获取密钥
+	 *
 	 * @return key 密钥
 	 */
 	String getKey();
@@ -54,6 +56,8 @@ public interface IParamCryptoHandlerProperties {
 	void setKey(String key);
 
 	/**
+	 * 获取偏移向量
+	 *
 	 * @return iv 偏移向量
 	 */
 	String getIv();
@@ -66,7 +70,9 @@ public interface IParamCryptoHandlerProperties {
 	void setIv(String iv);
 
 	/**
-	 * @return 编码
+	 * 获取字符编码
+	 *
+	 * @return 字符编码
 	 */
 	default Charset getCharset() {
 		return StandardCharsets.UTF_8;
@@ -80,6 +86,8 @@ public interface IParamCryptoHandlerProperties {
 	void setCharset(Charset charset);
 
 	/**
+	 * 判断是否强制要求入参加密
+	 *
 	 * @return 是否强制要求入参加密
 	 */
 	boolean isNeedEncryptInputParam();
@@ -92,6 +100,8 @@ public interface IParamCryptoHandlerProperties {
 	void setNeedEncryptInputParam(boolean needEncryptInputParam);
 
 	/**
+	 * 判断出参是否需要加密
+	 *
 	 * @return 出参是否需要加密
 	 */
 	boolean isNeedEncryptOutputParam();

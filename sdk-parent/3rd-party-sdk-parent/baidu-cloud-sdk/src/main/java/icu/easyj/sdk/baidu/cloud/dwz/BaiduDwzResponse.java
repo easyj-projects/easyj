@@ -47,6 +47,8 @@ public class BaiduDwzResponse {
 
 
 	/**
+	 * 判断是否请求成功
+	 *
 	 * @return 是否请求成功
 	 */
 	public boolean isSuccess() {
@@ -54,6 +56,8 @@ public class BaiduDwzResponse {
 	}
 
 	/**
+	 * 获取错误类型枚举
+	 *
 	 * @return 错误类型枚举
 	 */
 	@Nullable
@@ -62,9 +66,11 @@ public class BaiduDwzResponse {
 	}
 
 	/**
-	 * @return 错误信息
+	 * 获取错误代码和信息
+	 *
+	 * @return 错误代码和信息字符串
 	 */
-	public String getErrorMessage() {
+	String getErrorCodeAndMessage() {
 		if (code != null) {
 			if (BaiduDwzErrorType.PART_LONG_URL_ERROR.getCode() == code && shortUrls != null) {
 				for (BaiduDwzResponseData data : shortUrls) {

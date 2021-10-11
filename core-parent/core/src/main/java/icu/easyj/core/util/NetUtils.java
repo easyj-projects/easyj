@@ -37,6 +37,8 @@ public abstract class NetUtils {
 	//region IP
 
 	/**
+	 * 获取所有网卡IP列表
+	 *
 	 * @return 所有网卡IP列表
 	 */
 	public static List<String> getIpList() {

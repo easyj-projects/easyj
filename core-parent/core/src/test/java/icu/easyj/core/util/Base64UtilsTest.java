@@ -37,6 +37,8 @@ import org.junit.jupiter.api.Test;
 class Base64UtilsTest {
 
 	/**
+	 * 测试Base64规范化方法
+	 *
 	 * @see Base64Utils#normalize(String)
 	 */
 	@Test
@@ -79,6 +81,8 @@ class Base64UtilsTest {
 	//region test isBase64
 
 	/**
+	 * 测试isBase64方法
+	 *
 	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */

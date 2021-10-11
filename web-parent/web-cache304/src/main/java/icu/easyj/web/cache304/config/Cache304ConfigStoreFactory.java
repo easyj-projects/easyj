@@ -38,6 +38,8 @@ public abstract class Cache304ConfigStoreFactory {
 	}
 
 	/**
+	 * 获取加密算法生成器
+	 *
 	 * @return 加密算法生成器
 	 */
 	public static ICache304ConfigStore getStore() {

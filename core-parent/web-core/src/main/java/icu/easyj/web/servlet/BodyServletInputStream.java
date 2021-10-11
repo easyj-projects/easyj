@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web;
+package icu.easyj.web.servlet;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,6 +24,8 @@ import javax.servlet.ServletInputStream;
 import org.springframework.lang.NonNull;
 
 /**
+ * Body输入流
+ *
  * @author wangliang181230
  */
 public class BodyServletInputStream extends ServletInputStream {

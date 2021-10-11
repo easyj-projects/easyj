@@ -116,7 +116,10 @@ public enum IdCardOcrWarn {
 	}
 
 	/**
-	 * @return 告警类别：1=已失效；2=不完整的；3=为副本；4=临时的；5=伪造的
+	 * 获取告警类型<br>
+	 * 值域：1=已失效；2=不完整的；3=为副本；4=临时的；5=伪造的
+	 *
+	 * @return 告警类别
 	 */
 	public int type() {
 		return type;

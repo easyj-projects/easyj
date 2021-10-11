@@ -21,11 +21,15 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
+ * JSON服务
+ *
  * @author wangliang181230
  */
 public interface IJSONService {
 
 	/**
+	 * 获取服务名
+	 *
 	 * @return 服务名
 	 */
 	@NonNull

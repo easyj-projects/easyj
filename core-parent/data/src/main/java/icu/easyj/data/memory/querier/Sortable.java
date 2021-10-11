@@ -21,6 +21,8 @@ import icu.easyj.core.util.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
+ * 可排序的
+ *
  * @author wangliang181230
  */
 public interface Sortable {

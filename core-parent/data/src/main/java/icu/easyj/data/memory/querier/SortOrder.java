@@ -16,6 +16,8 @@
 package icu.easyj.data.memory.querier;
 
 /**
+ * 排序方式
+ *
  * @author wangliang181230
  */
 public enum SortOrder {

@@ -16,6 +16,8 @@
 package icu.easyj.data.memory.querier;
 
 /**
+ * 可分页的接口
+ *
  * @author wangliang181230
  */
 public interface Pageable {

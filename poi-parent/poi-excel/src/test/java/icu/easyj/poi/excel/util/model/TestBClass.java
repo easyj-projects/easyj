@@ -16,6 +16,8 @@
 package icu.easyj.poi.excel.util.model;
 
 /**
+ * 测试类B
+ *
  * @author wangliang181230
  */
 public class TestBClass {

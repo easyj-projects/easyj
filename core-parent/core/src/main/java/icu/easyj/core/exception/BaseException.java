@@ -51,6 +51,8 @@ public class BaseException extends Exception {
 
 
 	/**
+	 * 获取错误码
+	 *
 	 * @return 错误码
 	 */
 	@Nullable
