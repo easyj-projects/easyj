@@ -149,8 +149,13 @@ class JSONUtilsTest {
 		TestUser user1 = new TestUser("某某人1", 31, DateUtils.parseDate("1990-10-01"));
 		TestUser user2 = new TestUser("某某人2", 32, DateUtils.parseDate("1989-10-02"));
 
-		Assertions.assertEquals(user1, service.toBean(service.toJSONString(user1), TestUser.class));
-		Assertions.assertEquals(user2, service.toBean(service.toJSONString(user2), TestUser.class));
+		String jsonStr1 = service.toJSONString(user1);
+		String jsonStr2 = service.toJSONString(user2);
+		Assertions.assertEquals(user1, service.toBean(jsonStr1, TestUser.class));
+		Assertions.assertEquals(user2, service.toBean(jsonStr2, TestUser.class));
+		Assertions.assertTrue(jsonStr1.contains("\"Name\""));
+		Assertions.assertTrue(jsonStr1.contains("\"Age\""));
+		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""));
 
 		List<TestUser> list1 = new ArrayList<>();
 		list1.add(user1);
