@@ -447,7 +447,6 @@ public abstract class ReflectionUtils {
 	 * @param staticField the static field
 	 * @param newValue    the new value
 	 * @throws IllegalArgumentException if {@code staticField} is {@code null} or not a static field
-	 * @throws NoSuchFieldException     if the class of the staticField has no `modifiers` field
 	 * @throws IllegalAccessException   the illegal access exception
 	 */
 	public static void setStaticFieldValue(Field staticField, Object newValue)
