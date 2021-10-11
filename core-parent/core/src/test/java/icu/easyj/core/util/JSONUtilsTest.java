@@ -175,8 +175,8 @@ class JSONUtilsTest {
 		Assertions.assertNotNull(list2);
 		Assertions.assertEquals(2, list2.size());
 
-		Assertions.assertEquals(list1.get(0), list2.get(0));
-		Assertions.assertEquals(list1.get(1), list2.get(1));
+		Assertions.assertTrue(list1.get(0).equals(list2.get(0)));
+		Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
 	}
 
 	private void assertEquals1(TestUser user) throws ParseException {
