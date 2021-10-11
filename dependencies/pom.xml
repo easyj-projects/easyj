@@ -41,6 +41,7 @@
 
 		<!-- JSON dependencies version -->
 		<fastjson.version>1.2.76</fastjson.version>
+		<jackson.version>2.13.0</jackson.version>
 
 		<!-- Spring dependencies version -->
 		<spring-framework.version>5.3.10</spring-framework.version>
@@ -114,6 +115,16 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
 			</dependency>
 
 			<!-- 依赖引入：Spring -->
