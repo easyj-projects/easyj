@@ -112,9 +112,13 @@ class JSONUtilsTest {
 
 		System.out.println("3、测试：JSONUtils.toJSONString(obj)");
 		Supplier<?>[] suppliers = new Supplier[SERVICES.size() + 1];
+		suppliers[0] = () -> {
+			StringUtils.toString(list1);
+			return "StringUtils";
+		};
 		for (int i = 0; i < SERVICES.size(); i++) {
 			final IJSONService service = SERVICES.get(i);
-			suppliers[i] = () -> {
+			suppliers[i + 1] = () -> {
 				try {
 					service.toList(JSON1, TestUser.class);
 				} catch (Exception e) {
@@ -122,10 +126,6 @@ class JSONUtilsTest {
 				return service.getName() + "_toStr";
 			};
 		}
-		suppliers[suppliers.length - 1] = () -> {
-			StringUtils.toString(list1);
-			return "StringUtils";
-		};
 		PerformanceTestUtils.execute(SETS, TIMES, suppliers);
 	}
 
