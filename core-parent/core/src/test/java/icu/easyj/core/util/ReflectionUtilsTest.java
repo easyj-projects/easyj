@@ -124,7 +124,7 @@ class ReflectionUtilsTest {
 				ReflectionUtils.setStaticFinalFieldValue(ReflectionUtilsTest.class, "testValue2", "hello");
 			});
 		} catch (NoSuchFieldException e) {
-			// TODO: Java17会抛异常，暂时忽略该异常
+			// FIXME: Java17会抛异常，暂时忽略该异常
 			if (!"modifiers".equals(e.getMessage())) {
 				throw e;
 			}
