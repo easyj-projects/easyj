@@ -622,12 +622,12 @@ public class EnhancedServiceLoader {
 
 		private ExtensionDefinition getDefaultExtensionDefinition() {
 			List<ExtensionDefinition> currentDefinitions = definitionsHolder.get();
-			return icu.easyj.core.util.CollectionUtils.getLast(currentDefinitions);
+			return icu.easyj.core.util.CollectionUtils.getFirst(currentDefinitions);
 		}
 
 		private ExtensionDefinition getCachedExtensionDefinition(String activateName) {
 			List<ExtensionDefinition> definitions = nameToDefinitionsMap.get(activateName);
-			return icu.easyj.core.util.CollectionUtils.getLast(definitions);
+			return icu.easyj.core.util.CollectionUtils.getFirst(definitions);
 		}
 
 		/**

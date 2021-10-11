@@ -63,6 +63,26 @@ public abstract class CollectionUtils extends MapUtils {
 	}
 
 	/**
+	 * 获取列表的第一项，并保证线程安全。
+	 *
+	 * @param list 列表
+	 * @param <T>  列表项的类型
+	 * @return lastItem 返回列表的第一项
+	 */
+	@Nullable
+	public static <T> T getFirst(List<T> list) {
+		if (isEmpty(list)) {
+			return null;
+		}
+
+		try {
+			return list.get(0);
+		} catch (IndexOutOfBoundsException ignore) {
+			return null;
+		}
+	}
+
+	/**
 	 * 获取列表的最后一项，并保证线程安全。
 	 * <p>
 	 * 存在线程安全问题的原因：`list.size()` 和 `list.get(size - 1)` 两个方法不是原子操作。<br>

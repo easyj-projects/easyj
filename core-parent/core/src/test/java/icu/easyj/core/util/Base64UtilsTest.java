@@ -23,9 +23,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
 import icu.easyj.core.loader.EnhancedServiceLoader;
-import icu.easyj.core.util.impls.Jdk16Base64ServiceImpl;
-import icu.easyj.core.util.impls.Jdk8Base64ServiceImpl;
-import icu.easyj.core.util.impls.Jdk9To15Base64ServiceImpl;
+import icu.easyj.core.util.base64.impls.Jdk16Base64ServiceImpl;
+import icu.easyj.core.util.base64.impls.Jdk8Base64ServiceImpl;
+import icu.easyj.core.util.base64.impls.Jdk9To15Base64ServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

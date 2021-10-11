@@ -24,7 +24,7 @@ import icu.easyj.core.loader.Scope;
  *
  * @author haozhibei
  */
-@LoadLevel(name = "LatinHello", order = 3, scope = Scope.PROTOTYPE)
+@LoadLevel(name = "LatinHello", order = 1, scope = Scope.PROTOTYPE)
 public class LatinHello implements Hello {
 
 	@Override

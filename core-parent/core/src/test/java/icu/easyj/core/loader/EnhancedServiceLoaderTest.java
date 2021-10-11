@@ -91,10 +91,10 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void getAllExtensionClass() {
 		List<Class<?>> allExtensionClass = EnhancedServiceLoader.getAllExtensionClass(Hello.class);
-		assertEquals(LatinHello.class, allExtensionClass.get(3));
-		assertEquals(FrenchHello.class, allExtensionClass.get(2));
-		assertEquals(EnglishHello.class, allExtensionClass.get(1));
-		assertEquals(ChineseHello.class, allExtensionClass.get(0));
+		assertEquals(LatinHello.class, allExtensionClass.get(0));
+		assertEquals(FrenchHello.class, allExtensionClass.get(1));
+		assertEquals(EnglishHello.class, allExtensionClass.get(2));
+		assertEquals(ChineseHello.class, allExtensionClass.get(3));
 	}
 
 	/**

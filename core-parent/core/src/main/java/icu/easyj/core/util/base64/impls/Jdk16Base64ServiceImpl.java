@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.impls;
+package icu.easyj.core.util.base64.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.ServiceDependsOn;
 import icu.easyj.core.util.Base64Utils;
 import icu.easyj.core.util.IBase64Service;
-import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
 
 /**
- * JDK8及以下时，{@link IBase64Service} 的实现
+ * JDK16及以上时，{@link IBase64Service} 的实现
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK8-Base64-Impl", order = 80)
-@ServiceDependsOn(maxJavaVersion = 1.8F)
-public class Jdk8Base64ServiceImpl implements IBase64Service {
+@LoadLevel(name = "JDK16-Base64-Impl", order = 1600)
+@ServiceDependsOn(minJavaVersion = 16F)
+public class Jdk16Base64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {
-		// 通过反射直接获取字符串的字符数组，避免 `String.toCharArray()` 方法中的 `System.arraycopy()` 操作导致不必要的性能损耗。
-		//char[] chars = cs.toString().toCharArray();
-		char[] chars = (char[])StringUtils.getValue(cs);
-
-		// 判断字符数组是否为Base64
-		return Base64Utils.isBase64Chars(chars);
+		// 由于Jdk16及以上版本禁止了很多非法访问，所以没办法获取String.value和coder的值，所以只能直接
+		return Base64Utils.isBase64Chars(cs.toString().toCharArray());
 	}
 }

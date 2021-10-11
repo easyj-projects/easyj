@@ -23,7 +23,7 @@ import icu.easyj.core.loader.LoadLevel;
  *
  * @author Otis.z
  */
-@LoadLevel(name = "EnglishHello", order = 1)
+@LoadLevel(name = "EnglishHello", order = 3)
 public class EnglishHello implements Hello {
 
 	@Override

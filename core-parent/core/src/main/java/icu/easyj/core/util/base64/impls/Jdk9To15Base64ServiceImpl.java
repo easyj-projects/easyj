@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.impls;
+package icu.easyj.core.util.base64.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.ServiceDependsOn;
@@ -27,7 +27,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK9~15-Base64-Impl", order = 90)
+@LoadLevel(name = "JDK9~15-Base64-Impl", order = 900)
 @ServiceDependsOn(minJavaVersion = 9F, maxJavaVersion = 15F)
 public class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
