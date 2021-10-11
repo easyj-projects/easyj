@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.hutool.json.JSONUtil;
+import icu.easyj.core.util.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.test.exception.TestException;
@@ -189,7 +189,7 @@ public class MockRequest {
 		if (!this.contentMap.isEmpty()) {
 			throw new TestException("`MockRequest.content(Object content)`与`MockRequest.content(String, Object)`两个方法不能混合使用");
 		}
-		this.content(JSONUtil.toJsonStr(content));
+		this.content(JSONUtils.toJSONString(content));
 		this.contentType(MediaType.APPLICATION_JSON);
 		return this;
 	}

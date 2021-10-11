@@ -18,6 +18,8 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 import java.util.List;
 
 import cn.hutool.core.annotation.Alias;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.Nullable;
 
@@ -28,13 +30,19 @@ import org.springframework.lang.Nullable;
  */
 public class BaiduDwzResponse {
 
-	@Alias("Code")
+	@JSONField(name = "Code") // fastjson键别名
+	@JsonProperty("Code") // jackson键别名
+	@Alias("Code") // hutool键别名
 	private Integer code;
 
-	@Alias("ErrMsg")
+	@JSONField(name = "ErrMsg") // fastjson键别名
+	@JsonProperty("ErrMsg") // jackson键别名
+	@Alias("ErrMsg") // hutool键别名
 	private String errMsg;
 
-	@Alias("ShortUrls")
+	@JSONField(name = "ShortUrls") // fastjson键别名
+	@JsonProperty("ShortUrls") // jackson键别名
+	@Alias("ShortUrls") // hutool键别名
 	private List<BaiduDwzResponseData> shortUrls;
 
 

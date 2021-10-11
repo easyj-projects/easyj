@@ -18,8 +18,8 @@ package icu.easyj.sdk.s3.dwz;
 import java.util.Date;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.util.JSONUtils;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.UrlUtils;
@@ -105,7 +105,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			}
 
 			// 解析响应JSON
-			S3DwzResponse resp = JSONUtil.toBean(respStr, S3DwzResponse.class);
+			S3DwzResponse resp = JSONUtils.toBean(respStr, S3DwzResponse.class);
 			if (!resp.isSuccess()) {
 				S3DwzErrorType errorType = resp.getErrorType();
 

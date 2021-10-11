@@ -18,10 +18,10 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 import java.util.Date;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.json.JSONUtil;
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.util.CollectionUtils;
+import icu.easyj.core.util.JSONUtils;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
@@ -118,7 +118,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			}
 
 			// 解析响应JSON
-			BaiduDwzResponse resp = JSONUtil.toBean(respStr, BaiduDwzResponse.class);
+			BaiduDwzResponse resp = JSONUtils.toBean(respStr, BaiduDwzResponse.class);
 			if (!resp.isSuccess()) {
 				BaiduDwzErrorType errorType = resp.getErrorType();
 				String errorMsg = resp.getErrorMessage();

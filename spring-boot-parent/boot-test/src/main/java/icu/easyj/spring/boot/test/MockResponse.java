@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.test;
 
 import java.io.UnsupportedEncodingException;
 
-import cn.hutool.json.JSONUtil;
+import icu.easyj.core.util.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;
@@ -189,7 +189,7 @@ public class MockResponse {
 		if (contentClass.equals(String.class)) {
 			return (T)content;
 		} else {
-			return JSONUtil.toBean(content, contentClass);
+			return JSONUtils.toBean(content, contentClass);
 		}
 	}
 
