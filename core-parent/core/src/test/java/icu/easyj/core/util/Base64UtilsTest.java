@@ -182,7 +182,7 @@ class Base64UtilsTest {
 		System.out.println(title);
 
 		// 运行次数
-		int sets = 2;
+		int sets = 1;
 		int times = 300 * 10000;
 		// 运行测试，并获取每个函数的耗时
 		long[] costs = PerformanceTestUtils.execute(sets, times,
