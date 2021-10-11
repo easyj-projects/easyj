@@ -533,13 +533,13 @@ public class EnhancedServiceLoader {
 										continue;
 									}
 									extensions.add(extensionDefinition);
-								} catch (LinkageError | ClassNotFoundException e) {
-									LOGGER.warn("Load [{}] class fail. {}", line, e.getMessage());
+								} catch (LinkageError | ClassNotFoundException | ArrayStoreException e) {
+									LOGGER.warn("Load [{}] class fail: {}", line, e.toString());
 								}
 							}
 						}
 					} catch (Throwable e) {
-						LOGGER.warn("load clazz instance error: {}", e.getMessage());
+						LOGGER.warn("load clazz instance error: {}", e.toString());
 					}
 				}
 			}

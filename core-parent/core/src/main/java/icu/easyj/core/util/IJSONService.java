@@ -38,6 +38,7 @@ public interface IJSONService {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的对象
+	 * @throws Exception 转换异常
 	 */
 	@NonNull
 	<T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws Exception;
@@ -49,6 +50,7 @@ public interface IJSONService {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的列表对象
+	 * @throws Exception 转换异常
 	 */
 	@NonNull
 	<T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws Exception;
@@ -58,6 +60,7 @@ public interface IJSONService {
 	 *
 	 * @param obj 对象
 	 * @return JSON字符串
+	 * @throws Exception 转换异常
 	 */
 	@NonNull
 	@SuppressWarnings("all")
