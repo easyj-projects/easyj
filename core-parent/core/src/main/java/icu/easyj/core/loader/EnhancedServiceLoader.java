@@ -30,15 +30,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-import cn.hutool.system.JavaInfo;
-import cn.hutool.system.SystemUtil;
 import icu.easyj.core.executor.Initialize;
+import icu.easyj.core.loader.condition.DependsOnClassValidator;
+import icu.easyj.core.loader.condition.DependsOnJavaVersionValidator;
+import icu.easyj.core.loader.condition.IDependsOnValidator;
+import icu.easyj.core.loader.condition.ServiceDependencyException;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * The type Enhanced service loader.
@@ -46,7 +49,19 @@ import org.springframework.lang.NonNull;
  *
  * @author slievrly
  */
-public class EnhancedServiceLoader {
+public abstract class EnhancedServiceLoader {
+
+	private static final List<IDependsOnValidator> DEPENDS_ON_VALIDATORS;
+
+	static {
+		List<IDependsOnValidator> dependsOnValidators = new ArrayList<>(2);
+
+		dependsOnValidators.add(new DependsOnClassValidator());
+		dependsOnValidators.add(new DependsOnJavaVersionValidator());
+
+		DEPENDS_ON_VALIDATORS = dependsOnValidators;
+	}
+
 
 	/**
 	 * Specify classLoader to load the service provider
@@ -513,9 +528,8 @@ public class EnhancedServiceLoader {
 			if (urls != null) {
 				while (urls.hasMoreElements()) {
 					java.net.URL url = urls.nextElement();
-					try (
-							InputStreamReader isr = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
-							BufferedReader reader = new BufferedReader(isr)) {
+					try (InputStreamReader isr = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+						 BufferedReader reader = new BufferedReader(isr)) {
 						String line;
 						while ((line = reader.readLine()) != null) {
 							final int ci = line.indexOf('#');
@@ -533,52 +547,34 @@ public class EnhancedServiceLoader {
 										continue;
 									}
 									extensions.add(extensionDefinition);
-								} catch (LinkageError | ClassNotFoundException | TypeNotPresentException | ArrayStoreException e) {
-									LOGGER.warn("Load [{}] class fail: {}", line, e.toString());
+								} catch (LinkageError | ClassNotFoundException | ServiceDependencyException e) {
+									LOGGER.warn("Load [{}] class failed: {}", line, e.getMessage());
 								}
 							}
 						}
-					} catch (Throwable e) {
-						LOGGER.warn("load clazz instance error: {}", e.toString());
+					} catch (RuntimeException | Error e) {
+						LOGGER.error("Load [{}] extension definition error", url.toString(), e);
 					}
 				}
 			}
 		}
 
-		private ExtensionDefinition getUnloadedExtensionDefinition(String className, ClassLoader loader)
+		@Nullable
+		private ExtensionDefinition getUnloadedExtensionDefinition(@NonNull String className, ClassLoader loader)
 				throws ClassNotFoundException {
 			//Check whether the definition has been loaded
 			if (!isDefinitionContainsClazz(className, loader)) {
 				Class<?> clazz = Class.forName(className, true, loader);
-				String serviceName = null;
-				int priority = 0;
-				Scope scope = Scope.SINGLETON;
 
-				// 获取注解`@ServiceDependsOn`的信息
-				ServiceDependsOn serviceDependsOn = clazz.getAnnotation(ServiceDependsOn.class);
-				if (serviceDependsOn != null) {
-					// 在高版本java中，只有访问过一次后，才会抛出TypeNotPresentException异常
-					@SuppressWarnings("all")
-					Class<?>[] dependsOnClasses = serviceDependsOn.classes();
-
-					// 获取依赖的Java版本范围
-					int dependsOnMinJavaVersion = (int)(serviceDependsOn.minJavaVersion() * 100);
-					int dependsOnMaxJavaVersion = (int)(serviceDependsOn.maxJavaVersion() * 100);
-					// 默认包含所有小版本处理
-					dependsOnMaxJavaVersion = this.handleDependsOnMaxJavaVersion(dependsOnMaxJavaVersion);
-					// 判断依赖的Java版本
-					if (dependsOnMinJavaVersion > 0 || dependsOnMaxJavaVersion > 0) {
-						JavaInfo javaInfo = SystemUtil.getJavaInfo();
-						if (dependsOnMinJavaVersion > 0 && javaInfo.getVersionInt() < dependsOnMinJavaVersion) {
-							throw new ClassNotFoundException("java version is less than v" + serviceDependsOn.minJavaVersion());
-						}
-						if (dependsOnMaxJavaVersion > 0 && javaInfo.getVersionInt() > dependsOnMaxJavaVersion) {
-							throw new ClassNotFoundException("java version is greater than v" + serviceDependsOn.maxJavaVersion());
-						}
-					}
+				// 执行依赖校验器
+				for (IDependsOnValidator dependsOnValidator : DEPENDS_ON_VALIDATORS) {
+					dependsOnValidator.validate(clazz, loader);
 				}
 
 				// 获取注解`@LoadLevel`的信息
+				String serviceName = null;
+				int priority = 0;
+				Scope scope = Scope.SINGLETON;
 				LoadLevel loadLevel = clazz.getAnnotation(LoadLevel.class);
 				if (loadLevel != null) {
 					serviceName = loadLevel.name();
@@ -595,21 +591,6 @@ public class EnhancedServiceLoader {
 				return result;
 			}
 			return null;
-		}
-
-		private int handleDependsOnMaxJavaVersion(int dependsOnMaxJavaVersion) {
-			if (dependsOnMaxJavaVersion > 0) {
-				if (dependsOnMaxJavaVersion < 190) {
-					if (dependsOnMaxJavaVersion % 10 == 0) {
-						dependsOnMaxJavaVersion += 9;
-					}
-				} else {
-					if (dependsOnMaxJavaVersion % 100 == 0) {
-						dependsOnMaxJavaVersion += 99;
-					}
-				}
-			}
-			return dependsOnMaxJavaVersion;
 		}
 
 		private boolean isDefinitionContainsClazz(String className, ClassLoader loader) {

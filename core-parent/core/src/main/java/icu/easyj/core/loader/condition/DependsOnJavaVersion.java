@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader;
+package icu.easyj.core.loader.condition;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,29 +22,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 服务依赖配置的注解
+ * 服务依赖的Java版本
  *
  * @author wangliang181230
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface ServiceDependsOn {
-
-	/**
-	 * 依赖于哪些类
-	 *
-	 * @return the classes
-	 */
-	Class<?>[] classes() default {};
+public @interface DependsOnJavaVersion {
 
 	/**
 	 * 依赖的最低版本的Java，小于等于0时，表示不限制最低版本<br>
-	 * 值域如：1.1* ~ 1.8*、9.** ~ 1*.**
+	 * java1~8时，值域为：1.10 ~ 1.89
+	 * java9及以上时，值域为：9.00 ~ xx.99
 	 *
 	 * @return the min java version
 	 */
-	float minJavaVersion() default 0;
+	float min() default 0;
 
 	/**
 	 * 依赖的最高版本的Java，小于等于0时，表示不限制最高版本。<br>
@@ -53,5 +47,5 @@ public @interface ServiceDependsOn {
 	 *
 	 * @return the max java version
 	 */
-	float maxJavaVersion() default 0;
+	float max() default 0;
 }

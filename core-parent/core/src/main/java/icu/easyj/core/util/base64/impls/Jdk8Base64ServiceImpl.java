@@ -16,7 +16,7 @@
 package icu.easyj.core.util.base64.impls;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.ServiceDependsOn;
+import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.Base64Utils;
 import icu.easyj.core.util.IBase64Service;
 import icu.easyj.core.util.StringUtils;
@@ -28,7 +28,7 @@ import org.springframework.lang.NonNull;
  * @author wangliang181230
  */
 @LoadLevel(name = "JDK8-Base64-Impl", order = 180)
-@ServiceDependsOn(maxJavaVersion = 1.8F)
+@DependsOnJavaVersion(max = 1.8F)
 public class Jdk8Base64ServiceImpl implements IBase64Service {
 
 	@Override

@@ -20,7 +20,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.ServiceDependsOn;
+import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.util.IJSONService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -31,7 +31,7 @@ import org.springframework.lang.Nullable;
  * @author wangliang181230
  */
 @LoadLevel(name = "jackson", order = 20)
-@ServiceDependsOn(classes = {ObjectMapper.class})
+@DependsOnClass(ObjectMapper.class)
 public class JacksonJSONServiceImpl implements IJSONService {
 
 	private final ObjectMapper mapper = new ObjectMapper();

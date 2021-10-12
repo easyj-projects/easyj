@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.ServiceDependsOn;
+import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.util.IJSONService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -30,7 +30,7 @@ import org.springframework.lang.Nullable;
  * @author wangliang181230
  */
 @LoadLevel(name = "fastjson", order = 10)
-@ServiceDependsOn(classes = {JSON.class})
+@DependsOnClass(JSON.class)
 public class AlibabaFastJSONServiceImpl implements IJSONService {
 
 	@NonNull

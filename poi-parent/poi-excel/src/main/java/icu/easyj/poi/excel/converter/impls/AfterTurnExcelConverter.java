@@ -24,7 +24,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.ServiceDependsOn;
+import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.poi.excel.converter.IExcelConverter;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -35,7 +35,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  * @author wangliang181230
  */
 @LoadLevel(name = "afterturn", order = 2)
-@ServiceDependsOn(classes = {cn.afterturn.easypoi.excel.annotation.Excel.class, ExcelImportUtil.class})
+@DependsOnClass({cn.afterturn.easypoi.excel.annotation.Excel.class, ExcelImportUtil.class})
 public class AfterTurnExcelConverter implements IExcelConverter {
 
 	@Override
