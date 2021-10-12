@@ -16,11 +16,15 @@
 package icu.easyj.sdk.baidu.cloud.dwz;
 
 import cn.hutool.core.annotation.Alias;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import icu.easyj.sdk.dwz.DwzRequest;
 
 /**
  * 百度云DWZ请求参数
  *
  * @author wangliang181230
+ * @see BaiduDwzTemplateImpl#createShortUrl(DwzRequest)
  * @deprecated 由于参数比较简单，现已直接通过字符串拼接，不再使用该请求类
  */
 @Deprecated
@@ -29,7 +33,9 @@ public class BaiduDwzRequest {
 	/**
 	 * 长链接
 	 */
-	@Alias("LongUrl")
+	@JSONField(name = "LongUrl") // fastjson键别名
+	@JsonProperty("LongUrl") // jackson键别名
+	@Alias("LongUrl") // hutool键别名
 	private String longUrl;
 
 	/**
@@ -40,7 +46,9 @@ public class BaiduDwzRequest {
 	 *     <li>1-year：1年</li>
 	 * </ul>
 	 */
-	@Alias("TermOfValidity")
+	@JSONField(name = "TermOfValidity") // fastjson键别名
+	@JsonProperty("TermOfValidity") // jackson键别名
+	@Alias("TermOfValidity") // hutool键别名
 	private String termOfValidity;
 
 

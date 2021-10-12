@@ -16,6 +16,7 @@
 package icu.easyj.sdk.baidu.cloud.dwz;
 
 import cn.hutool.core.annotation.Alias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 百度云DWZ响应数据
@@ -27,19 +28,22 @@ public class BaiduDwzResponseData {
 	/**
 	 * 短链接
 	 */
-	@Alias("ShortUrl")
+	@JsonProperty("ShortUrl") // jackson键别名
+	@Alias("ShortUrl") // hutool键别名
 	private String shortUrl;
 
 	/**
 	 * 对应的长连接
 	 */
-	@Alias("LongUrl")
+	@JsonProperty("LongUrl") // jackson键别名
+	@Alias("LongUrl") // hutool键别名
 	private String longUrl;
 
 	/**
 	 * 错误信息
 	 */
-	@Alias("ErrMsg")
+	@JsonProperty("ErrMsg") // jackson键别名
+	@Alias("ErrMsg") // hutool键别名
 	private String errMsg;
 
 
