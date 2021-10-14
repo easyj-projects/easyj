@@ -30,20 +30,18 @@ public abstract class ShortCodeUtils {
 
 	/**
 	 * 默认的自定义进制
-	 * 不含0、1，因为容易与O、L、I混淆
-	 * 不含字母O，因为大写字母O作为分隔字符使用，见常量：{@link #DEFAULT_SPLIT_CHAR}
+	 * 不含分隔字符，见常量：{@link #DEFAULT_SPLIT_CHAR}
 	 */
 	private static final char[] DEFAULT_CHAR_TABLE = new char[]{
-			'Q', 'W', 'E', '8', 'A', 'S', '2', 'D', 'Z', 'X',
-			'9', 'C', '7', 'P', '5', 'I', 'K', '3', 'M', 'J',
-			'U', 'F', 'R', '4', 'V', 'Y', 'L', 'T', 'N', '6',
-			'B', 'G', 'H',
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			/*'0',*/ '1', '2', '3', '4', '5', '6', '7', '8', '9'
 	};
 
 	/**
 	 * 默认的分隔字符（不能与自定义进制中的字符重复）
 	 */
-	private static final char DEFAULT_SPLIT_CHAR = 'O';
+	private static final char DEFAULT_SPLIT_CHAR = '0';
 
 	/**
 	 * 默认的短字符串最小长度
@@ -61,9 +59,11 @@ public abstract class ShortCodeUtils {
 	 * @param splitChar 正式字符与补位字符之间的分隔符（该字符不与chars参数中的任意字符相同）
 	 * @param minLength 最小字符长度
 	 * @return 短字符串
+	 * @throws IllegalArgumentException ID小于0 或 charTable为null
 	 */
 	public static String toCode(long id, @NonNull char[] charTable, char splitChar, int minLength) {
 		Assert.isTrue(id >= 0, "ID必须大于等于0");
+		Assert.notNull(charTable, "'charTable' must not be null");
 
 		// 自定义进制字符集长度
 		int charTableLength = charTable.length;
@@ -71,7 +71,7 @@ public abstract class ShortCodeUtils {
 		String str;
 		if (id > 0) {
 			double power = Math.log(id) / Math.log(charTableLength); // Math.pow(charTableLength, power) == id
-			int charPos = (int)power + 1;
+			int charPos = (int)(power) + 2;
 
 			// 生成字符数组
 			char[] buf = new char[charPos];
@@ -81,7 +81,11 @@ public abstract class ShortCodeUtils {
 				id /= charTableLength;
 			}
 
-			str = new String(buf);
+			if (charPos == 0) {
+				str = new String(buf);
+			} else {
+				str = new String(buf, charPos, (buf.length - charPos));
+			}
 		} else {
 			str = StrUtil.EMPTY;
 		}
@@ -100,11 +104,25 @@ public abstract class ShortCodeUtils {
 	}
 
 	/**
+	 * 根据ID生成短字符串（最小长度5）
+	 *
+	 * @param id        ID（必须大于等于0）
+	 * @param charTable 自定义进制字符集
+	 * @param splitChar 正式字符与补位字符之间的分隔符（该字符不与chars参数中的任意字符相同）
+	 * @return 短字符串
+	 * @throws IllegalArgumentException ID小于0 或 charTable为null
+	 */
+	public static String toCode(long id, @NonNull char[] charTable, char splitChar) {
+		return toCode(id, charTable, splitChar, DEFAULT_MIN_LENGTH);
+	}
+
+	/**
 	 * 根据ID生成短字符串（最小长度6位）
 	 *
 	 * @param id        ID
 	 * @param minLength 最小字符长度
 	 * @return 短字符串
+	 * @throws IllegalArgumentException ID小于0
 	 */
 	public static String toCode(long id, int minLength) {
 		return toCode(id, DEFAULT_CHAR_TABLE, DEFAULT_SPLIT_CHAR, minLength);
@@ -115,6 +133,7 @@ public abstract class ShortCodeUtils {
 	 *
 	 * @param id ID
 	 * @return 短字符串
+	 * @throws IllegalArgumentException ID小于0
 	 */
 	public static String toCode(long id) {
 		return toCode(id, DEFAULT_CHAR_TABLE, DEFAULT_SPLIT_CHAR, DEFAULT_MIN_LENGTH);
@@ -132,17 +151,22 @@ public abstract class ShortCodeUtils {
 	 * @param charsTable 自定义进制
 	 * @param splitChar  分隔字符
 	 * @return 原ID
+	 * @throws IllegalArgumentException charTable为null
 	 */
-	public static long toId(String code, char[] charsTable, char splitChar) {
+	public static long toId(String code, @NonNull char[] charsTable, char splitChar) {
+		if (StringUtils.isEmpty(code)) {
+			return 0L;
+		}
+
 		int tableLength = charsTable.length;
 
 		char[] chars = code.toCharArray();
 		long res = 0L;
 		for (int i = 0; i < chars.length; i++) {
-			int ind = 0;
+			int index = 0;
 			for (int j = 0; j < tableLength; j++) {
 				if (chars[i] == charsTable[j]) {
-					ind = j;
+					index = j;
 					break;
 				}
 			}
@@ -150,9 +174,9 @@ public abstract class ShortCodeUtils {
 				break;
 			}
 			if (i > 0) {
-				res = res * tableLength + ind;
+				res = res * tableLength + index;
 			} else {
-				res = ind;
+				res = index;
 			}
 		}
 		return res;

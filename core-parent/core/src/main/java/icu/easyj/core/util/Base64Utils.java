@@ -37,7 +37,7 @@ public abstract class Base64Utils {
 	private static final IBase64Service BASE64_SERVICE = EnhancedServiceLoader.load(IBase64Service.class);
 
 	/**
-	 * Base64字符在Assic码<br>
+	 * Base64字符的ASSIC码<br>
 	 * 非-1的数字为Base64字符表中的十进制数字
 	 */
 	public static final byte[] BASE64_CHAR_TABLE = {
