@@ -27,7 +27,9 @@ import org.springframework.lang.NonNull;
 public abstract class ShortCodeUtils {
 
 	/**
-	 * 默认的自定义进制（0、1没有加入，容易与O、L、I混淆）
+	 * 默认的自定义进制
+	 * 不含0、1，因为容易与O、L、I混淆
+	 * 不含字母O，因为大写字母O作为分隔字符使用，见常量：{@link #DEFAULT_SPLIT_CHAR}
 	 */
 	private static final char[] DEFAULT_CHARS_TABLE = new char[]{
 			'Q', 'W', 'E', '8', 'A', 'S', '2', 'D', 'Z', 'X',
