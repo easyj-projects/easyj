@@ -38,6 +38,7 @@ import icu.easyj.core.loader.condition.ServiceDependencyException;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
@@ -629,15 +630,12 @@ public abstract class EnhancedServiceLoader {
 		 */
 		private S initInstance(Class<S> implClazz, Class<?>[] argTypes, Object[] args)
 				throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-			S s;
-			if (argTypes != null && args != null) {
-				// Constructor with arguments
-				Constructor<S> constructor = implClazz.getDeclaredConstructor(argTypes);
-				s = type.cast(constructor.newInstance(args));
-			} else {
-				// default Constructor
-				s = type.cast(implClazz.newInstance());
+			Constructor<S> constructor = implClazz.getDeclaredConstructor(argTypes != null ? argTypes : ArrayUtils.EMPTY_CLASS_ARRAY);
+			if (!constructor.isAccessible()) {
+				constructor.setAccessible(true);
 			}
+
+			S s = type.cast(constructor.newInstance(args != null ? args : ArrayUtils.EMPTY_OBJECT_ARRAY));
 			if (s instanceof Initialize) {
 				((Initialize)s).init();
 			}
