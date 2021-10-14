@@ -279,6 +279,196 @@ public abstract class DateUtils {
 		return DateFormatFactory.get(dateFormat).format(date);
 	}
 
+
+	//region 格式化1
+
+	/**
+	 * 格式化为：yyyy-MM
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMonth(Date date) {
+		return format(DateFormatType.MM, date);
+	}
+
+	/**
+	 * 格式化为：yyyy-MM-dd
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toDate(Date date) {
+		return format(DateFormatType.DD, date);
+	}
+
+	/**
+	 * 格式化为：yyyy-MM-dd HH:mm
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMinute(Date date) {
+		return format(DateFormatType.MI, date);
+	}
+
+	/**
+	 * 格式化为：yyyy-MM-dd HH:mm:ss
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toSeconds(Date date) {
+		return format(DateFormatType.SS, date);
+	}
+
+	/**
+	 * 格式化为：yyyy-MM-dd HH:mm:ss.SSS
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMilliseconds(Date date) {
+		return format(DateFormatType.SSS, date);
+	}
+
+	//endregion 格式化1 end
+
+
+	//region 格式化2
+
+	/**
+	 * 格式化为：yyyy/MM
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMonth2(Date date) {
+		return format(DateFormatType.MM2, date);
+	}
+
+	/**
+	 * 格式化为：yyyy/MM/dd
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toDate2(Date date) {
+		return format(DateFormatType.DD2, date);
+	}
+
+	/**
+	 * 格式化为：yyyy/MM/dd HH:mm
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMinute2(Date date) {
+		return format(DateFormatType.MI2, date);
+	}
+
+	/**
+	 * 格式化为：yyyy/MM/dd HH:mm:ss
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toSeconds2(Date date) {
+		return format(DateFormatType.SS2, date);
+	}
+
+	/**
+	 * 格式化为：yyyy/MM/dd HH:mm:ss.SSS
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMilliseconds2(Date date) {
+		return format(DateFormatType.SSS2, date);
+	}
+
+	//endregion 格式化2 end
+
+
+	//region 格式化3
+
+	/**
+	 * 格式化为：yyyy.MM
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMonth3(Date date) {
+		return format(DateFormatType.MM3, date);
+	}
+
+	/**
+	 * 格式化为：yyyy.MM.dd
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toDate3(Date date) {
+		return format(DateFormatType.DD3, date);
+	}
+
+	//endregion 格式化3 end
+
+
+	//region 格式化-UNSIGNED
+
+	/**
+	 * 格式化为：yyyyMM
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMonthUnsigned(Date date) {
+		return format(DateFormatType.MM_UNSIGNED, date);
+	}
+
+	/**
+	 * 格式化为：yyyyMMdd
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toDateUnsigned(Date date) {
+		return format(DateFormatType.DD_UNSIGNED, date);
+	}
+
+	/**
+	 * 格式化为：yyyyMMddHHmm
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMinuteUnsigned(Date date) {
+		return format(DateFormatType.MI_UNSIGNED, date);
+	}
+
+	/**
+	 * 格式化为：yyyyMMddHHmmss
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toSecondsUnsigned(Date date) {
+		return format(DateFormatType.SS_UNSIGNED, date);
+	}
+
+	/**
+	 * 格式化为：yyyyMMddHHmmssSSS
+	 *
+	 * @param date 时间
+	 * @return 时间字符串
+	 */
+	public static String toMillisecondsUnsigned(Date date) {
+		return format(DateFormatType.SSS_UNSIGNED, date);
+	}
+
+	//endregion 格式化-UNSIGNED end
+
 	//endregion
 
 
