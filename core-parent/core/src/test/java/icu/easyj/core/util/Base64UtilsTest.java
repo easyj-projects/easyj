@@ -168,12 +168,12 @@ class Base64UtilsTest {
 
 		System.out.println("\r\nJava version: " + javaInfo.getVersionFloat());
 
-		testIsBase64PerformanceOne(1, "case: isBase64(str) == true && 长", s1);
-		testIsBase64PerformanceOne(1, "case: isBase64(str) == true && 短", s2);
-		testIsBase64PerformanceOne(2, "case: isBase64(str) == false && 不含双字节字符 && 位数符合", s3);
-		testIsBase64PerformanceOne(3, "case: isBase64(str) == false && 含双字节字符 && 位数符合", s4);
-		testIsBase64PerformanceOne(4, "case: isBase64(str) == false && 不含双字节字符 && 位数不符合", s5);
-		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 含双字节字符 && 位数不符合", s6);
+		testIsBase64PerformanceOne(1, "case: isBase64(str) == true && length=" + s1.length(), s1);
+		testIsBase64PerformanceOne(2, "case: isBase64(str) == true && length=" + s2.length(), s2);
+		testIsBase64PerformanceOne(3, "case: isBase64(str) == false && 不含双字节字符 && 位数符合 && length=" + s3.length(), s3);
+		testIsBase64PerformanceOne(4, "case: isBase64(str) == false && 含双字节字符 && 位数符合 && length=" + s4.length(), s4);
+		testIsBase64PerformanceOne(5, "case: isBase64(str) == false && 不含双字节字符 && 位数不符合 && length=" + s5.length(), s5);
+		testIsBase64PerformanceOne(6, "case: isBase64(str) == false && 含双字节字符 && 位数不符合 && length=" + s6.length(), s6);
 	}
 
 	private void testIsBase64PerformanceOne(int number, String title, CharSequence cs) {
