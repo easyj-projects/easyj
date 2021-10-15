@@ -40,6 +40,7 @@ class VersionUtilsTest {
 	 */
 	@Test
 	void test() throws IOException {
+		System.out.println("----------------------------------------------------");
 		ClassLoader cl = this.getClass().getClassLoader();
 
 		Enumeration<URL> urls = cl.getResources("META-INF/MANIFEST.MF");
@@ -48,38 +49,46 @@ class VersionUtilsTest {
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
 			urlList.add(url);
+			System.out.println(url);
 		}
+		System.out.println("----------------------------------------------------");
+		System.out.println(urlList.size());
+		System.out.println("----------------------------------------------------");
 
 		for (URL url : urlList) {
-			Manifest manifest = new Manifest(url.openStream());
-			Attributes attributes = manifest.getMainAttributes();
-			System.out.println(url.toString());
+			try {
+				Manifest manifest = new Manifest(url.openStream());
+				Attributes attributes = manifest.getMainAttributes();
+				System.out.println(url);
 
-			String version = attributes.getValue("Implementation-Version");
-			if (org.apache.commons.lang3.StringUtils.isBlank(version)) {
-				version = attributes.getValue("Bundle-Version");
-			}
-
-
-			String moduleName = null;
-			String jarFilePath = url.toString();
-			jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf("!/META-INF/MANIFEST.MF"));
-			String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
-			moduleName = jarFileName.replaceAll("(-\\d.*)?\\.jar$", "");
-			if (org.apache.commons.lang3.StringUtils.isBlank(version)) {
-				version = jarFileName.substring(0, jarFileName.lastIndexOf(".jar")).substring(moduleName.length());
-				if (version.startsWith("-")) {
-					version = version.substring(1);
+				String version = attributes.getValue("Implementation-Version");
+				if (org.apache.commons.lang3.StringUtils.isBlank(version)) {
+					version = attributes.getValue("Bundle-Version");
 				}
-			}
 
-			System.out.println("moduleName: " + moduleName + "    " + jarFilePath.contains(moduleName));
-			if (StringUtils.isNotBlank(version)) {
-				System.out.println("version: " + version + "    " + jarFilePath.contains(version));
-			} else {
-				System.out.println("version: 无版本号     false");
+				String moduleName;
+				String jarFilePath = url.toString();
+				jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf("!/META-INF/MANIFEST.MF"));
+				String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
+				moduleName = jarFileName.replaceAll("(-\\d.*)?\\.jar$", "");
+				if (org.apache.commons.lang3.StringUtils.isBlank(version)) {
+					version = jarFileName.substring(0, jarFileName.lastIndexOf(".jar")).substring(moduleName.length());
+					if (version.startsWith("-")) {
+						version = version.substring(1);
+					}
+				}
+
+				System.out.println("moduleName: " + moduleName + "    " + jarFilePath.contains(moduleName));
+				if (StringUtils.isNotBlank(version)) {
+					System.out.println("version: " + version + "    " + jarFilePath.contains(version));
+				} else {
+					System.out.println("version: 无版本号     false");
+				}
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+			} finally {
+				System.out.println("----------------------------------------------------");
 			}
-			System.out.println("----------------------------------------------------");
 		}
 	}
 }
