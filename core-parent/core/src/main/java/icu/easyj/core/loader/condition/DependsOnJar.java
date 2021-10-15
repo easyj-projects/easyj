@@ -15,19 +15,40 @@
  */
 package icu.easyj.core.loader.condition;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * 依赖校验接口
+ * 服务依赖的Jar包及其版本
  *
  * @author wangliang181230
  */
-public interface IDependsOnValidator {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
+public @interface DependsOnJar {
 
 	/**
-	 * 校验注解信息
+	 * 依赖的Jar包名称
 	 *
-	 * @param serviceClass 服务类型
-	 * @param classLoader  类加载器
-	 * @throws ServiceDependencyException 依赖有误时，请抛也该异常
+	 * @return the classes
 	 */
-	void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException;
+	String name();
+
+	/**
+	 * 依赖的Jar包最小版本号
+	 *
+	 * @return the min version
+	 */
+	String minVersion() default "";
+
+	/**
+	 * 依赖的Jar包最大版本号
+	 *
+	 * @return the min version
+	 */
+	String maxVersion() default "";
 }

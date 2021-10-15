@@ -23,7 +23,7 @@ package icu.easyj.core.loader.condition;
 public class DependsOnClassValidator implements IDependsOnValidator {
 
 	@Override
-	public void validate(Class<?> serviceClass, ClassLoader loader) throws ServiceDependencyException {
+	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
 		// 获取注解`@DependsOnClass`的信息，并判断类是否存在
 		try {
 			DependsOnClass dependsOnClass = serviceClass.getAnnotation(DependsOnClass.class);
@@ -35,7 +35,7 @@ public class DependsOnClassValidator implements IDependsOnValidator {
 				// 根据类名判断
 				String[] dependsOnClassNames = dependsOnClass.name();
 				for (String dependsOnClassName : dependsOnClassNames) {
-					Class.forName(dependsOnClassName, true, loader);
+					Class.forName(dependsOnClassName, true, classLoader);
 				}
 			}
 		} catch (ArrayStoreException | TypeNotPresentException | ClassNotFoundException e) {

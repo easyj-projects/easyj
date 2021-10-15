@@ -47,7 +47,7 @@ public class JarInfo {
 	/**
 	 * Jar版本号的long型值
 	 */
-	private final long longVersion;
+	private final long versionLong;
 
 
 	/**
@@ -65,10 +65,10 @@ public class JarInfo {
 		this.name = name;
 		if (StringUtils.isBlank(version)) {
 			this.version = VersionUtils.UNKNOWN_VERSION;
-			this.longVersion = 0L;
+			this.versionLong = 0L;
 		} else {
 			this.version = version;
-			this.longVersion = VersionUtils.toLong(version);
+			this.versionLong = VersionUtils.toLong(version);
 		}
 	}
 
@@ -86,9 +86,9 @@ public class JarInfo {
 		}
 
 		long otherLongVersion = VersionUtils.toLong(otherVersion);
-		if (this.longVersion == otherLongVersion) {
+		if (this.versionLong == otherLongVersion) {
 			return this.version.compareTo(otherVersion);
-		} else if (this.longVersion > otherLongVersion) {
+		} else if (this.versionLong > otherLongVersion) {
 			return 1;
 		} else {
 			return 0;
@@ -113,8 +113,8 @@ public class JarInfo {
 		return version;
 	}
 
-	public long getLongVersion() {
-		return longVersion;
+	public long getVersionLong() {
+		return versionLong;
 	}
 
 	//endregion

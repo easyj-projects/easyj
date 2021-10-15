@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.loader.condition.DependsOnClassValidator;
+import icu.easyj.core.loader.condition.DependsOnJarValidator;
 import icu.easyj.core.loader.condition.DependsOnJavaVersionValidator;
 import icu.easyj.core.loader.condition.IDependsOnValidator;
 import icu.easyj.core.loader.condition.ServiceDependencyException;
@@ -59,6 +60,7 @@ public abstract class EnhancedServiceLoader {
 
 		dependsOnValidators.add(new DependsOnClassValidator());
 		dependsOnValidators.add(new DependsOnJavaVersionValidator());
+		dependsOnValidators.add(new DependsOnJarValidator());
 
 		DEPENDS_ON_VALIDATORS = dependsOnValidators;
 	}

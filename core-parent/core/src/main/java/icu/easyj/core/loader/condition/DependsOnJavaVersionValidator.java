@@ -26,7 +26,7 @@ import cn.hutool.system.SystemUtil;
 public class DependsOnJavaVersionValidator implements IDependsOnValidator {
 
 	@Override
-	public void validate(Class<?> serviceClass, ClassLoader loader) throws ServiceDependencyException {
+	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
 		// 获取注解`@DependsOnJavaVersion`的信息，并判断Java版本是否符合
 		DependsOnJavaVersion dependsOnJavaVersion = serviceClass.getAnnotation(DependsOnJavaVersion.class);
 		if (dependsOnJavaVersion != null) {
