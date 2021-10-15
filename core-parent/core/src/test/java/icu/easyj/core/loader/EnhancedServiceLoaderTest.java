@@ -22,6 +22,7 @@ import icu.easyj.core.loader.model.EnglishHello;
 import icu.easyj.core.loader.model.FrenchHello;
 import icu.easyj.core.loader.model.Hello;
 import icu.easyj.core.loader.model.LatinHello;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,6 +92,7 @@ public class EnhancedServiceLoaderTest {
 	@Test
 	public void getAllExtensionClass() {
 		List<Class<?>> allExtensionClass = EnhancedServiceLoader.getAllExtensionClass(Hello.class);
+		Assertions.assertEquals(4, allExtensionClass.size());
 		assertEquals(LatinHello.class, allExtensionClass.get(0));
 		assertEquals(FrenchHello.class, allExtensionClass.get(1));
 		assertEquals(EnglishHello.class, allExtensionClass.get(2));

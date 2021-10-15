@@ -128,8 +128,12 @@ public abstract class JarUtils {
 	 */
 	@Nullable
 	public static JarInfo getJar(String name, @NonNull ClassLoader classLoader) {
+		if (name == null) {
+			return null;
+		}
+
 		Map<String, JarInfo> jarMap = getJarMap(classLoader);
-		return jarMap.get(name);
+		return jarMap.get(name.toLowerCase());
 	}
 
 	/**

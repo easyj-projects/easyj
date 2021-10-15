@@ -19,17 +19,16 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJar;
 
 /**
- * The type Chinese hello.
- * 注：从阿里的seata项目中复制过来的。
+ * The type Error hello 3.
  *
- * @author Otis.z
+ * @author wangliang181230
  */
-@LoadLevel(name = "ChineseHello", order = Integer.MAX_VALUE)
-@DependsOnJar(name = "fastjson", minVersion = "1", maxVersion = "99")
-public class ChineseHello implements Hello {
+@LoadLevel(name = "ErrorHello3", order = Integer.MAX_VALUE)
+@DependsOnJar(name = "nonexistent_jar")
+public class ErrorHello3 implements Hello {
 
 	@Override
 	public String say() {
-		return "ni hao!";
+		return "error hello2!";
 	}
 }

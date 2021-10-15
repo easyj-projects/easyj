@@ -62,7 +62,7 @@ public class JarInfo {
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
 
 		this.url = url;
-		this.name = name;
+		this.name = name.toLowerCase();
 		if (StringUtils.isBlank(version)) {
 			this.version = VersionUtils.UNKNOWN_VERSION;
 			this.versionLong = 0L;
