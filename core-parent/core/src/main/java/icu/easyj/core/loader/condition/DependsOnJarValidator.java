@@ -31,19 +31,23 @@ public class DependsOnJarValidator implements IDependsOnValidator {
 		// 获取注解`@DependsOnJar`的信息，并判断Jar版本是否符合
 		DependsOnJar dependsOnJar = serviceClass.getAnnotation(DependsOnJar.class);
 		if (dependsOnJar != null) {
-			// Jar名称
+			// 获取Jar名称
 			String name = dependsOnJar.name();
+
+			// 获取Jar信息，如果不存在，则抛出依赖异常
 			JarInfo jarInfo = JarUtils.getJar(name, classLoader);
 			if (jarInfo == null) {
 				throw new ServiceDependencyException("jar [" + name + "] not found");
 			}
 
+			// 获取Jar版本号限制，如果都为0，则说明不限制
 			long minVersion = VersionUtils.toLong(dependsOnJar.minVersion());
 			long maxVersion = VersionUtils.toLong(dependsOnJar.maxVersion());
 			if (minVersion == 0 && maxVersion == 0) {
 				return;
 			}
 
+			// 判断版本号是否符合
 			if (minVersion > 0 && jarInfo.getVersionLong() < minVersion) {
 				throw new ServiceDependencyException("jar[" + name + "] version is less than v" + dependsOnJar.minVersion());
 			}

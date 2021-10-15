@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
  * 服务依赖的类
  *
  * @author wangliang181230
+ * @see DependsOnClassValidator
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

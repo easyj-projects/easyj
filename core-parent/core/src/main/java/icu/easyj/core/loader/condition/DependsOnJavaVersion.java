@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
  * 服务依赖的Java版本
  *
  * @author wangliang181230
+ * @see DependsOnJavaVersionValidator
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
