@@ -17,7 +17,6 @@ package icu.easyj.core.util;
 
 import java.io.IOException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -41,9 +40,9 @@ class VersionUtilsTest {
 	 */
 	@Test
 	void test() throws IOException {
-		URLClassLoader cl = (URLClassLoader)this.getClass().getClassLoader();
+		ClassLoader cl = this.getClass().getClassLoader();
 
-		Enumeration<URL> urls = cl.findResources("META-INF/MANIFEST.MF");
+		Enumeration<URL> urls = cl.getResources("META-INF/MANIFEST.MF");
 
 		List<URL> urlList = new ArrayList<>();
 		while (urls.hasMoreElements()) {
