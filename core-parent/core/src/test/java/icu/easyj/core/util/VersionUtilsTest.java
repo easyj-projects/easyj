@@ -33,11 +33,13 @@ class VersionUtilsTest {
 		// case: RELEASE版本，个位数为1
 		Assertions.assertEquals(999_000_000_000_000_1L, VersionUtils.toLong("999"));
 		Assertions.assertEquals(999_002_000_000_000_1L, VersionUtils.toLong("999.2"));
+		Assertions.assertEquals(999_002_000_000_000_1L, VersionUtils.toLong("999_2"));
 		Assertions.assertEquals(999_002_003_004_005_1L, VersionUtils.toLong("999.2.3.4.5"));
 		Assertions.assertThrows(IncompatibleVersionException.class, () -> VersionUtils.toLong("999.2.3.4.5.6"));
 		// case: SNAPSHOT版本，个位数为0
 		Assertions.assertEquals(999_000_000_000_000_0L, VersionUtils.toLong("999-SNAPSHOT"));
 		Assertions.assertEquals(999_002_000_000_000_0L, VersionUtils.toLong("999.2-SNAPSHOT"));
+		Assertions.assertEquals(999_002_000_000_000_0L, VersionUtils.toLong("999_2-SNAPSHOT"));
 		Assertions.assertEquals(999_002_003_004_005_0L, VersionUtils.toLong("999.2.3.4.5-SNAPSHOT"));
 		Assertions.assertThrows(IncompatibleVersionException.class, () -> VersionUtils.toLong("999.2.3.4.5.6-SNAPSHOT"));
 		// case: 0

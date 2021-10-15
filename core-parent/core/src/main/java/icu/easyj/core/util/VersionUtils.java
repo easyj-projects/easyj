@@ -44,7 +44,7 @@ public abstract class VersionUtils {
 			return 0L;
 		}
 
-		String[] parts = StringUtils.split(version, '.');
+		String[] parts = StringUtils.split(version.replace('_', '.'), '.');
 		if (parts.length > MAX_PART_SIZE) {
 			throw new IncompatibleVersionException("incompatible version format: " + version);
 		}
