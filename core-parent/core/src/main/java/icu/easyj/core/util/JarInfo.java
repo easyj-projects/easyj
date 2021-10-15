@@ -16,6 +16,7 @@
 package icu.easyj.core.util;
 
 import java.net.URL;
+import java.util.Objects;
 
 import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
@@ -43,6 +44,11 @@ public class JarInfo {
 	 */
 	private final String version;
 
+	/**
+	 * Jar版本号的long型值
+	 */
+	private final long longVersion;
+
 
 	/**
 	 * 构造函数
@@ -54,13 +60,39 @@ public class JarInfo {
 	public JarInfo(@NonNull URL url, @NonNull String name, @Nullable String version) {
 		Assert.notNull(url, "'url' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
-		if (version != null && StringUtils.isBlank(version)) {
-			version = null;
-		}
 
 		this.url = url;
 		this.name = name;
-		this.version = version;
+		if (StringUtils.isBlank(version)) {
+			this.version = VersionUtils.UNKNOWN_VERSION;
+			this.longVersion = 0L;
+		} else {
+			this.version = version;
+			this.longVersion = VersionUtils.toLong(version);
+		}
+	}
+
+	/**
+	 * 比较版本号
+	 *
+	 * @param otherVersion 其他版本号
+	 * @return 比较结果：1=比other高、0=相同、-1=比other低
+	 */
+	public int compareToVersion(String otherVersion) {
+		if (Objects.equals(this.version, otherVersion)) {
+			return 0;
+		} else if (this.version == null) {
+			return -1;
+		}
+
+		long otherLongVersion = VersionUtils.toLong(otherVersion);
+		if (this.longVersion == otherLongVersion) {
+			return this.version.compareTo(otherVersion);
+		} else if (this.longVersion > otherLongVersion) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 
@@ -76,9 +108,13 @@ public class JarInfo {
 		return name;
 	}
 
-	@Nullable
+	@NonNull
 	public String getVersion() {
 		return version;
+	}
+
+	public long getLongVersion() {
+		return longVersion;
 	}
 
 	//endregion

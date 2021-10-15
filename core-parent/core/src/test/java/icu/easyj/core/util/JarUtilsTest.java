@@ -47,12 +47,16 @@ class JarUtilsTest {
 	private void print(List<JarInfo> jarList) {
 		int maxNameLength = 0;
 		int maxVersionLength = 0;
+		int maxLongVersionLength = 0;
 		for (JarInfo jar : jarList) {
 			if (maxNameLength < jar.getName().length()) {
 				maxNameLength = jar.getName().length();
 			}
-			if (jar.getVersion() != null && maxVersionLength < jar.getVersion().length()) {
+			if (maxVersionLength < jar.getVersion().length()) {
 				maxVersionLength = jar.getVersion().length();
+			}
+			if (maxLongVersionLength < String.valueOf(jar.getLongVersion()).length()) {
+				maxLongVersionLength = String.valueOf(jar.getLongVersion()).length();
 			}
 		}
 
@@ -62,6 +66,7 @@ class JarUtilsTest {
 		for (JarInfo jar : jarList) {
 			System.out.println(StringUtils.leftPad(jar.getName(), maxNameLength)
 					+ " : " + StringUtils.rightPad(ObjectUtils.defaultIfNull(jar.getVersion(), ""), maxVersionLength)
+					+ " : " + StringUtils.rightPad(String.valueOf(jar.getLongVersion()), maxLongVersionLength)
 					+ "   ->   " + jar.getUrl());
 		}
 		System.out.println("-----------------------------");
