@@ -29,21 +29,23 @@ public class DependsOnJavaVersionValidator implements IDependsOnValidator {
 	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
 		// 获取注解`@DependsOnJavaVersion`的信息，并判断Java版本是否符合
 		DependsOnJavaVersion dependsOnJavaVersion = serviceClass.getAnnotation(DependsOnJavaVersion.class);
-		if (dependsOnJavaVersion != null) {
-			// 获取依赖的Java版本范围
-			int dependsOnMinJavaVersion = (int)(dependsOnJavaVersion.min() * 100);
-			int dependsOnMaxJavaVersion = (int)(dependsOnJavaVersion.max() * 100);
-			// 默认包含所有小版本处理
-			dependsOnMaxJavaVersion = this.handleDependsOnMaxJavaVersion(dependsOnMaxJavaVersion);
-			// 判断依赖的Java版本
-			if (dependsOnMinJavaVersion > 0 || dependsOnMaxJavaVersion > 0) {
-				JavaInfo javaInfo = SystemUtil.getJavaInfo();
-				if (dependsOnMinJavaVersion > 0 && javaInfo.getVersionInt() < dependsOnMinJavaVersion) {
-					throw new ServiceDependencyException("java version is less than v" + dependsOnJavaVersion.min());
-				}
-				if (dependsOnMaxJavaVersion > 0 && javaInfo.getVersionInt() > dependsOnMaxJavaVersion) {
-					throw new ServiceDependencyException("java version is greater than v" + dependsOnJavaVersion.max());
-				}
+		if (dependsOnJavaVersion == null) {
+			return;
+		}
+
+		// 获取依赖的Java版本范围
+		int dependsOnMinJavaVersion = (int)(dependsOnJavaVersion.min() * 100);
+		int dependsOnMaxJavaVersion = (int)(dependsOnJavaVersion.max() * 100);
+		// 默认包含所有小版本处理
+		dependsOnMaxJavaVersion = this.handleDependsOnMaxJavaVersion(dependsOnMaxJavaVersion);
+		// 判断依赖的Java版本
+		if (dependsOnMinJavaVersion > 0 || dependsOnMaxJavaVersion > 0) {
+			JavaInfo javaInfo = SystemUtil.getJavaInfo();
+			if (dependsOnMinJavaVersion > 0 && javaInfo.getVersionInt() < dependsOnMinJavaVersion) {
+				throw new ServiceDependencyException("java version is less than v" + dependsOnJavaVersion.min());
+			}
+			if (dependsOnMaxJavaVersion > 0 && javaInfo.getVersionInt() > dependsOnMaxJavaVersion) {
+				throw new ServiceDependencyException("java version is greater than v" + dependsOnJavaVersion.max());
 			}
 		}
 	}

@@ -26,17 +26,20 @@ public class DependsOnClassValidator implements IDependsOnValidator {
 	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
 		// 获取注解`@DependsOnClass`的信息，并判断类是否存在
 		try {
+			// 在java11之前的版本中，如果设置的value中有类不存在，则会在这行代码直接抛出ArrayStoreException异常
 			DependsOnClass dependsOnClass = serviceClass.getAnnotation(DependsOnClass.class);
-			if (dependsOnClass != null) {
-				// 在java11及以上版本中，必须访问过一次注解的属性值，才会抛出TypeNotPresentException异常
-				@SuppressWarnings("all")
-				Class<?>[] dependsOnClasses = dependsOnClass.value();
+			if (dependsOnClass == null) {
+				return;
+			}
 
-				// 根据类名判断
-				String[] dependsOnClassNames = dependsOnClass.name();
-				for (String dependsOnClassName : dependsOnClassNames) {
-					Class.forName(dependsOnClassName, true, classLoader);
-				}
+			// 在java11及以上版本中，必须访问过一次注解的属性值，才会抛出TypeNotPresentException异常
+			@SuppressWarnings("all")
+			Class<?>[] dependsOnClasses = dependsOnClass.value();
+
+			// 根据类名判断
+			String[] dependsOnClassNames = dependsOnClass.name();
+			for (String dependsOnClassName : dependsOnClassNames) {
+				Class.forName(dependsOnClassName, true, classLoader);
 			}
 		} catch (ArrayStoreException | TypeNotPresentException | ClassNotFoundException e) {
 			throw new ServiceDependencyException("the depends on classes is not found", e);

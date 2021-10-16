@@ -31,34 +31,36 @@ public class DependsOnJarVersionValidator implements IDependsOnValidator {
 	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
 		// 获取注解`@DependsOnJarVersion`的信息，并判断Jar版本是否符合
 		DependsOnJarVersion dependsOnJarVersion = serviceClass.getAnnotation(DependsOnJarVersion.class);
-		if (dependsOnJarVersion != null) {
-			// 获取Jar版本号限制，如果都为0，则说明不限制
-			long minVersion = VersionUtils.toLong(dependsOnJarVersion.minVersion());
-			long maxVersion = VersionUtils.toLong(dependsOnJarVersion.maxVersion());
-			if (minVersion == 0 && maxVersion == 0) {
-				return;
-			}
+		if (dependsOnJarVersion == null) {
+			return;
+		}
 
-			// 获取Jar信息，如果不存在，则抛出依赖异常
-			String[] names = dependsOnJarVersion.name();
-			JarInfo jarInfo = null;
-			for (String name : names) {
-				jarInfo = JarUtils.getJar(name, classLoader);
-				if (jarInfo != null) {
-					break;
-				}
+		// 获取Jar信息，如果不存在，则抛出依赖异常
+		String[] names = dependsOnJarVersion.name();
+		JarInfo jarInfo = null;
+		for (String name : names) {
+			jarInfo = JarUtils.getJar(name, classLoader);
+			if (jarInfo != null) {
+				break;
 			}
-			if (jarInfo == null) {
-				throw new ServiceDependencyException("jar " + ArrayUtils.toString(names) + " not found");
-			}
+		}
+		if (jarInfo == null) {
+			throw new ServiceDependencyException("jar " + ArrayUtils.toString(names) + " not found");
+		}
 
-			// 判断版本号是否符合
-			if (minVersion > 0 && jarInfo.getVersionLong() < minVersion) {
-				throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is less than v" + dependsOnJarVersion.minVersion());
-			}
-			if (maxVersion > 0 && jarInfo.getVersionLong() > maxVersion) {
-				throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is greater than v" + dependsOnJarVersion.maxVersion());
-			}
+		// 获取Jar版本号限制，如果都为0，则说明不限制
+		long minVersion = VersionUtils.toLong(dependsOnJarVersion.minVersion());
+		long maxVersion = VersionUtils.toLong(dependsOnJarVersion.maxVersion());
+		if (minVersion == 0 && maxVersion == 0) {
+			return;
+		}
+
+		// 判断Jar版本号是否符合设置值
+		if (minVersion > 0 && jarInfo.getVersionLong() < minVersion) {
+			throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is less than v" + dependsOnJarVersion.minVersion());
+		}
+		if (maxVersion > 0 && jarInfo.getVersionLong() > maxVersion) {
+			throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is greater than v" + dependsOnJarVersion.maxVersion());
 		}
 	}
 }
