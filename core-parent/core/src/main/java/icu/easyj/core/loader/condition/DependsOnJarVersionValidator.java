@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.loader.condition;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.JarInfo;
 import icu.easyj.core.util.JarUtils;
 import icu.easyj.core.util.VersionUtils;
@@ -24,35 +25,39 @@ import icu.easyj.core.util.VersionUtils;
  *
  * @author wangliang181230
  */
-public class DependsOnJarValidator implements IDependsOnValidator {
+public class DependsOnJarVersionValidator implements IDependsOnValidator {
 
 	@Override
 	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
-		// 获取注解`@DependsOnJar`的信息，并判断Jar版本是否符合
-		DependsOnJar dependsOnJar = serviceClass.getAnnotation(DependsOnJar.class);
-		if (dependsOnJar != null) {
-			// 获取Jar名称
-			String name = dependsOnJar.name();
-
-			// 获取Jar信息，如果不存在，则抛出依赖异常
-			JarInfo jarInfo = JarUtils.getJar(name, classLoader);
-			if (jarInfo == null) {
-				throw new ServiceDependencyException("jar [" + name + "] not found");
-			}
-
+		// 获取注解`@DependsOnJarVersion`的信息，并判断Jar版本是否符合
+		DependsOnJarVersion dependsOnJarVersion = serviceClass.getAnnotation(DependsOnJarVersion.class);
+		if (dependsOnJarVersion != null) {
 			// 获取Jar版本号限制，如果都为0，则说明不限制
-			long minVersion = VersionUtils.toLong(dependsOnJar.minVersion());
-			long maxVersion = VersionUtils.toLong(dependsOnJar.maxVersion());
+			long minVersion = VersionUtils.toLong(dependsOnJarVersion.minVersion());
+			long maxVersion = VersionUtils.toLong(dependsOnJarVersion.maxVersion());
 			if (minVersion == 0 && maxVersion == 0) {
 				return;
 			}
 
+			// 获取Jar信息，如果不存在，则抛出依赖异常
+			String[] names = dependsOnJarVersion.name();
+			JarInfo jarInfo = null;
+			for (String name : names) {
+				jarInfo = JarUtils.getJar(name, classLoader);
+				if (jarInfo != null) {
+					break;
+				}
+			}
+			if (jarInfo == null) {
+				throw new ServiceDependencyException("jar " + ArrayUtils.toString(names) + " not found");
+			}
+
 			// 判断版本号是否符合
 			if (minVersion > 0 && jarInfo.getVersionLong() < minVersion) {
-				throw new ServiceDependencyException("jar[" + name + "] version is less than v" + dependsOnJar.minVersion());
+				throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is less than v" + dependsOnJarVersion.minVersion());
 			}
 			if (maxVersion > 0 && jarInfo.getVersionLong() > maxVersion) {
-				throw new ServiceDependencyException("jar[" + name + "] version is greater than v" + dependsOnJar.maxVersion());
+				throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is greater than v" + dependsOnJarVersion.maxVersion());
 			}
 		}
 	}

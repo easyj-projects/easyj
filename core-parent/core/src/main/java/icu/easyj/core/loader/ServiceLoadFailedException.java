@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+package icu.easyj.core.loader;
 
 /**
- * The type Error hello 2.
+ * 服务加载失败的异常
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello2", order = Integer.MAX_VALUE)
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
-public class ErrorHello2 implements Hello {
+public class ServiceLoadFailedException extends RuntimeException {
 
-	@Override
-	public String say() {
-		return "error hello2!";
+	public ServiceLoadFailedException(String message) {
+		super(message);
+	}
+
+	public ServiceLoadFailedException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ServiceLoadFailedException(Throwable cause) {
+		super(cause);
+	}
+
+	public ServiceLoadFailedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }

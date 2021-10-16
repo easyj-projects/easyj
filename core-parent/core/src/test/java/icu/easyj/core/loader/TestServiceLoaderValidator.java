@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+package icu.easyj.core.loader;
 
 /**
- * The type Error hello 2.
- *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello2", order = Integer.MAX_VALUE)
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
-public class ErrorHello2 implements Hello {
-
+public class TestServiceLoaderValidator implements IServiceLoaderValidator {
 	@Override
-	public String say() {
-		return "error hello2!";
+	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws InvalidServiceException {
+		throw new InvalidServiceException("测试服务加载校验器");
 	}
 }

@@ -16,7 +16,9 @@
 package icu.easyj.core.loader.model;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJar;
+import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 
 /**
  * The type Chinese hello.
@@ -25,7 +27,9 @@ import icu.easyj.core.loader.condition.DependsOnJar;
  * @author Otis.z
  */
 @LoadLevel(name = "ChineseHello", order = Integer.MAX_VALUE)
-@DependsOnJar(name = "fastjson", minVersion = "1", maxVersion = "99")
+@DependsOnJavaVersion(min = 1, max = 999)
+@DependsOnClass(value = Hello.class, name = "icu.easyj.core.loader.model.Hello")
+@DependsOnJarVersion(name = "slf4j-api", minVersion = "0", maxVersion = "99")
 public class ChineseHello implements Hello {
 
 	@Override

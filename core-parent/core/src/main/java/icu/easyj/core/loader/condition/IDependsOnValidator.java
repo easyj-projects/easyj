@@ -15,19 +15,22 @@
  */
 package icu.easyj.core.loader.condition;
 
+import icu.easyj.core.loader.IServiceLoaderValidator;
+
 /**
- * 依赖校验接口
+ * 依赖校验器接口
  *
  * @author wangliang181230
  */
-public interface IDependsOnValidator {
+public interface IDependsOnValidator extends IServiceLoaderValidator {
 
 	/**
 	 * 校验注解信息
 	 *
 	 * @param serviceClass 服务类型
 	 * @param classLoader  类加载器
-	 * @throws ServiceDependencyException 依赖有误时，请抛也该异常
+	 * @throws ServiceDependencyException 依赖无效或不匹配时，请抛出该异常
 	 */
+	@Override
 	void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException;
 }

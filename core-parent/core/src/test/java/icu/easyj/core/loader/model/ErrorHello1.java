@@ -16,7 +16,7 @@
 package icu.easyj.core.loader.model;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJar;
+import icu.easyj.core.loader.condition.DependsOnJarVersion;
 
 /**
  * The type Error hello 1.
@@ -24,7 +24,7 @@ import icu.easyj.core.loader.condition.DependsOnJar;
  * @author wangliang181230
  */
 @LoadLevel(name = "ErrorHello1", order = Integer.MAX_VALUE)
-@DependsOnJar(name = "fastjson", minVersion = "2")
+@DependsOnJarVersion(name = "slf4j-api", minVersion = "2.0.0")
 public class ErrorHello1 implements Hello {
 
 	@Override

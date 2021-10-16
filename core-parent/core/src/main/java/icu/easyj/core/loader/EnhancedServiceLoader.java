@@ -32,10 +32,9 @@ import java.util.stream.Collectors;
 
 import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.loader.condition.DependsOnClassValidator;
-import icu.easyj.core.loader.condition.DependsOnJarValidator;
+import icu.easyj.core.loader.condition.DependsOnJarVersionValidator;
 import icu.easyj.core.loader.condition.DependsOnJavaVersionValidator;
 import icu.easyj.core.loader.condition.IDependsOnValidator;
-import icu.easyj.core.loader.condition.ServiceDependencyException;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
@@ -53,17 +52,24 @@ import org.springframework.lang.Nullable;
  */
 public abstract class EnhancedServiceLoader {
 
+	//region depends on validators
+
 	private static final List<IDependsOnValidator> DEPENDS_ON_VALIDATORS;
 
 	static {
 		List<IDependsOnValidator> dependsOnValidators = new ArrayList<>(2);
 
+		// depends on class
 		dependsOnValidators.add(new DependsOnClassValidator());
+		// depends on java-version
 		dependsOnValidators.add(new DependsOnJavaVersionValidator());
-		dependsOnValidators.add(new DependsOnJarValidator());
+		// depends on jar and jar-version
+		dependsOnValidators.add(new DependsOnJarVersionValidator());
 
 		DEPENDS_ON_VALIDATORS = dependsOnValidators;
 	}
+
+	//endregion
 
 
 	/**
@@ -550,12 +556,12 @@ public abstract class EnhancedServiceLoader {
 										continue;
 									}
 									extensions.add(extensionDefinition);
-								} catch (LinkageError | ClassNotFoundException | ServiceDependencyException e) {
+								} catch (LinkageError | ClassNotFoundException | InvalidServiceException e) {
 									LOGGER.warn("Load [{}] class failed: {}", line, e.getMessage());
 								}
 							}
 						}
-					} catch (RuntimeException | Error e) {
+					} catch (RuntimeException e) {
 						LOGGER.error("Load [{}] extension definition error", url.toString(), e);
 					}
 				}
@@ -564,7 +570,7 @@ public abstract class EnhancedServiceLoader {
 
 		@Nullable
 		private ExtensionDefinition getUnloadedExtensionDefinition(@NonNull String className, ClassLoader loader)
-				throws ClassNotFoundException {
+				throws ClassNotFoundException, InvalidServiceException {
 			//Check whether the definition has been loaded
 			if (!isDefinitionContainsClazz(className, loader)) {
 				Class<?> clazz = Class.forName(className, true, loader);
@@ -583,6 +589,17 @@ public abstract class EnhancedServiceLoader {
 					serviceName = loadLevel.name();
 					priority = loadLevel.order();
 					scope = loadLevel.scope();
+
+					Class<? extends IServiceLoaderValidator>[] validatorClasses = loadLevel.validators();
+					for (Class<? extends IServiceLoaderValidator> validatorClass : validatorClasses) {
+						IServiceLoaderValidator validator;
+						try {
+							validator = validatorClass.newInstance();
+						} catch (InstantiationException | IllegalAccessException e) {
+							throw new ServiceLoadFailedException("Create instance of the validator failed: " + validatorClass.getName(), e);
+						}
+						validator.validate(clazz, loader);
+					}
 				}
 
 				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz);

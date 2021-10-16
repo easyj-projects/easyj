@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+package icu.easyj.core.loader;
 
 /**
- * The type Error hello 2.
+ * 无效服务的异常
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello2", order = Integer.MAX_VALUE)
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
-public class ErrorHello2 implements Hello {
+public class InvalidServiceException extends Exception {
 
-	@Override
-	public String say() {
-		return "error hello2!";
+	public InvalidServiceException(String message) {
+		super(message);
+	}
+
+	public InvalidServiceException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public InvalidServiceException(Throwable cause) {
+		super(cause);
+	}
+
+	public InvalidServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }

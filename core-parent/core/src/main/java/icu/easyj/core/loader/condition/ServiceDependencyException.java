@@ -15,12 +15,14 @@
  */
 package icu.easyj.core.loader.condition;
 
+import icu.easyj.core.loader.InvalidServiceException;
+
 /**
  * 服务依赖异常
  *
  * @author wangliang181230
  */
-public class ServiceDependencyException extends RuntimeException {
+public class ServiceDependencyException extends InvalidServiceException {
 
 	public ServiceDependencyException(String message) {
 		super(message);

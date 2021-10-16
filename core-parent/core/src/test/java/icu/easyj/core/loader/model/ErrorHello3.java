@@ -16,7 +16,7 @@
 package icu.easyj.core.loader.model;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJar;
+import icu.easyj.core.loader.condition.DependsOnJarVersion;
 
 /**
  * The type Error hello 3.
@@ -24,11 +24,11 @@ import icu.easyj.core.loader.condition.DependsOnJar;
  * @author wangliang181230
  */
 @LoadLevel(name = "ErrorHello3", order = Integer.MAX_VALUE)
-@DependsOnJar(name = "nonexistent_jar")
+@DependsOnJarVersion(name = "nonexistent_jar")
 public class ErrorHello3 implements Hello {
 
 	@Override
 	public String say() {
-		return "error hello2!";
+		return "error hello3!";
 	}
 }

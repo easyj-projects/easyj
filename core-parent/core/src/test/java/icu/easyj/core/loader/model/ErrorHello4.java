@@ -16,19 +16,18 @@
 package icu.easyj.core.loader.model;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import icu.easyj.core.loader.TestServiceLoaderValidator;
 
 /**
- * The type Error hello 2.
+ * The type Error hello 4.
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello2", order = Integer.MAX_VALUE)
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
-public class ErrorHello2 implements Hello {
+@LoadLevel(name = "ErrorHello4", order = Integer.MAX_VALUE, validators = TestServiceLoaderValidator.class)
+public class ErrorHello4 implements Hello {
 
 	@Override
 	public String say() {
-		return "error hello2!";
+		return "error hello4!";
 	}
 }

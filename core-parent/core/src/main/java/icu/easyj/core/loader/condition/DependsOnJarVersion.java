@@ -22,22 +22,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 服务依赖的Jar包及其版本
+ * 服务依赖的Jar及其版本
  *
  * @author wangliang181230
- * @see DependsOnJarValidator
+ * @see DependsOnJarVersionValidator
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface DependsOnJar {
+public @interface DependsOnJarVersion {
 
 	/**
-	 * 依赖的Jar包名称
+	 * 依赖的Jar包名称数组<br>
+	 * 由于部分jar变更过名字，所以可设置多个
 	 *
-	 * @return the classes
+	 * @return the jar names
 	 */
-	String name();
+	String[] name();
 
 	/**
 	 * 依赖的Jar包最小版本号
