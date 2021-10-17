@@ -19,8 +19,8 @@ import java.util.List;
 
 import cn.hutool.json.JSONUtil;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.util.IJSONService;
+import org.springframework.core.Ordered;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -29,8 +29,7 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "hutool", order = 100)
-@DependsOnClass(JSONUtil.class)
+@LoadLevel(name = "hutool", order = Ordered.LOWEST_PRECEDENCE)
 public class HutoolJSONServiceImpl implements IJSONService {
 
 	@NonNull
