@@ -17,6 +17,7 @@ package icu.easyj.core.util;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.jar.Attributes;
 
 import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
@@ -49,6 +50,11 @@ public class JarInfo {
 	 */
 	private final long versionLong;
 
+	/**
+	 * META-INF/MANIFEST.MF 文件中的属性
+	 */
+	private final Attributes manifestAttributes;
+
 
 	/**
 	 * 构造函数
@@ -57,12 +63,13 @@ public class JarInfo {
 	 * @param name    Jar名
 	 * @param version Jar版本号
 	 */
-	public JarInfo(@NonNull URL url, @NonNull String name, @Nullable String version) {
+	public JarInfo(@NonNull URL url, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
 		Assert.notNull(url, "'url' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
 
 		this.url = url;
 		this.name = name.toLowerCase();
+		this.manifestAttributes = manifestAttributes;
 		if (StringUtils.isBlank(version)) {
 			this.version = VersionUtils.UNKNOWN_VERSION;
 			this.versionLong = 0L;
@@ -115,6 +122,21 @@ public class JarInfo {
 
 	public long getVersionLong() {
 		return versionLong;
+	}
+
+	@NonNull
+	public Attributes getAttributes() {
+		return manifestAttributes;
+	}
+
+	@Nullable
+	public String getAttribute(Attributes.Name name) {
+		return manifestAttributes.getValue(name);
+	}
+
+	@Nullable
+	public String getAttribute(String name) {
+		return manifestAttributes.getValue(name);
 	}
 
 	//endregion

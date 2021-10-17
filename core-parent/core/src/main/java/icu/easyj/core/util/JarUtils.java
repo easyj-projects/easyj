@@ -42,6 +42,17 @@ public abstract class JarUtils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JarUtils.class);
 
+
+	//region The Constants Attributes.Name
+
+	public static final Attributes.Name IMPLEMENTATION_VERSION = Attributes.Name.IMPLEMENTATION_VERSION;
+
+	public static final Attributes.Name BUNDLE_VERSION = new Attributes.Name("Bundle-Version");
+
+	//endregion
+
+	//region The Caches
+
 	/**
 	 * cl -> jarList
 	 */
@@ -51,6 +62,8 @@ public abstract class JarUtils {
 	 * cl -> jarName -> jarInfo
 	 */
 	private static final Map<ClassLoader, Map<String, JarInfo>> CL_JAR_MAP_CACHE = new ConcurrentHashMap<>();
+
+	//endregion
 
 
 	//region getJarList
@@ -170,32 +183,41 @@ public abstract class JarUtils {
 		}
 
 		URL url;
+		String jarFilePath;
 		while (urls.hasMoreElements()) {
 			url = urls.nextElement();
+			jarFilePath = url.toString();
 			try {
+				// 跳过不是 '*.jar' 的文件
+				if (!jarFilePath.endsWith(".jar!/META-INF/MANIFEST.MF")) {
+					continue;
+				}
+
 				Manifest manifest = new Manifest(url.openStream());
 				Attributes attributes = manifest.getMainAttributes();
 
-				String version = attributes.getValue("Implementation-Version");
+				// 获取版本号
+				String version = attributes.getValue(IMPLEMENTATION_VERSION);
 				if (StringUtils.isBlank(version)) {
-					version = attributes.getValue("Bundle-Version");
+					version = attributes.getValue(BUNDLE_VERSION);
 				}
 
-				String name;
-				String jarFilePath = url.toString();
-				jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf("!/META-INF/MANIFEST.MF"));
+				// 获取模块名
+				jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/META-INF/MANIFEST.MF"));
 				String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
-				name = jarFileName.replaceAll("(-\\d.*)?\\.jar$", "");
-				if (StringUtils.isBlank(version)) {
-					version = jarFileName.substring(0, jarFileName.lastIndexOf(".jar")).substring(name.length());
+				String name = jarFileName.replaceAll("-\\d.*$", "");
+
+				// 如果版本号为空，则尝试获取除模块名以外的内容作为版本号
+				if (StringUtils.isBlank(version) && name.length() != jarFileName.length()) {
+					version = jarFileName.substring(name.length());
 					if (version.startsWith("-")) {
 						version = version.substring(1);
 					}
 				}
 
-				result.add(new JarInfo(url, name, version));
+				result.add(new JarInfo(url, name, attributes, version));
 			} catch (IOException | RuntimeException e) {
-				LOGGER.warn("加载jar信息失败：{}", url, e);
+				LOGGER.warn("加载jar信息失败：{}", jarFilePath, e);
 			}
 		}
 
