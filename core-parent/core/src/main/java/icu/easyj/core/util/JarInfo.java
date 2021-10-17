@@ -59,9 +59,10 @@ public class JarInfo {
 	/**
 	 * 构造函数
 	 *
-	 * @param url     路径
-	 * @param name    Jar名
-	 * @param version Jar版本号
+	 * @param url                路径
+	 * @param name               Jar名
+	 * @param manifestAttributes META-INF/MANIFEST.MF文件的属性集合
+	 * @param version            Jar版本号
 	 */
 	public JarInfo(@NonNull URL url, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
 		Assert.notNull(url, "'url' must not be null");
