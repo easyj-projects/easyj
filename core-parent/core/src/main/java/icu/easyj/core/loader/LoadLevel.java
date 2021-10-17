@@ -53,9 +53,9 @@ public @interface LoadLevel {
 	Scope scope() default Scope.SINGLETON;
 
 	/**
-	 * Validator array
+	 * Validator classes
 	 *
-	 * @return the validator array
+	 * @return the validator classes
 	 */
 	Class<? extends IServiceLoaderValidator>[] validators() default {};
 }
