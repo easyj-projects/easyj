@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
  */
 class JSONUtilsTest {
 
-	private static final int SETS = 1;
+	private static final int SETS = 10;
 	private static final int TIMES = 2 * 10000;
 
 	private static final String JSON1 = "{\"Name\":\"某某人1\",\"Age\":31,\"Birthday\":\"1990-10-01\"}";
