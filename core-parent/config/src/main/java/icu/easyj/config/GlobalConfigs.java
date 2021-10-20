@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.hutool.core.util.ObjectUtil;
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
 
@@ -343,6 +344,22 @@ public class GlobalConfigs {
 	 */
 	public static <T> T getConfig(Object key) {
 		return (T)getInstance().configs.get(key);
+	}
+
+	/**
+	 * 获取配置值
+	 *
+	 * @param key          配置键
+	 * @param defaultValue 默认值
+	 * @param <T>          配置值类型
+	 * @return 配置值
+	 */
+	public static <T> T getConfig(Object key, T defaultValue) {
+		T value = getConfig(key);
+		if (ObjectUtil.isEmpty(value)) {
+			return defaultValue;
+		}
+		return value;
 	}
 
 	//endregion 其他全局配置 end

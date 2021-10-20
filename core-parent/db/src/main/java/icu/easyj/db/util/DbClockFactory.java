@@ -15,6 +15,7 @@
  */
 package icu.easyj.db.util;
 
+import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 import icu.easyj.core.clock.IClock;
@@ -22,6 +23,8 @@ import icu.easyj.core.clock.ITickClock;
 import icu.easyj.core.clock.TickClock;
 import icu.easyj.core.clock.factory.AbstractRemotingClockFactory;
 import icu.easyj.core.clock.factory.IRemotingClockFactory;
+import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.MapUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -36,6 +39,9 @@ import org.springframework.util.Assert;
  * @see IRemotingClockFactory
  */
 final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
+
+	private static final ConcurrentHashMap<DataSource, IDbService> DB_SERVICE_MAP = new ConcurrentHashMap<>();
+
 
 	//region 数据库时钟工厂单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
 
@@ -75,7 +81,17 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 	@NonNull
 	public ITickClock createClock(DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
-		// TODO: @wangliang181230 待开发，方言需支持不同数据库不同`获取数据库时间的SQL`的功能。
-		return null;
+
+		// 根据数据库类型，获取对应的实现
+		IDbService dbService = MapUtils.computeIfAbsent(DB_SERVICE_MAP, dataSource, ds -> {
+			String dbType = DbUtils.getDbType(dataSource);
+			return EnhancedServiceLoader.load(IDbService.class, dbType.toLowerCase());
+		});
+
+		// 获取数据库时间：毫秒数
+		long currentTimeMillis = dbService.currentTimeMillis(dataSource);
+
+		// 创建数据库时钟
+		return new TickClock(currentTimeMillis * 1000);
 	}
 }

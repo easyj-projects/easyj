@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-core</artifactId>
+			<artifactId>easyj-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
