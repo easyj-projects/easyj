@@ -48,6 +48,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 
+		<!-- EasyJ All -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+		</dependency>
+
 		<!-- EasyJ Test -->
 		<dependency>
 			<groupId>icu.easyj</groupId>

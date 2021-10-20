@@ -23,9 +23,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
 import icu.easyj.core.loader.EnhancedServiceLoader;
-import icu.easyj.core.util.base64.impls.Jdk16Base64ServiceImpl;
-import icu.easyj.core.util.base64.impls.Jdk8Base64ServiceImpl;
-import icu.easyj.core.util.base64.impls.Jdk9To15Base64ServiceImpl;
+import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -137,13 +135,15 @@ class Base64UtilsTest {
 	void testIsBase64Performance() {
 		IBase64Service base64Service = EnhancedServiceLoader.load(IBase64Service.class);
 		System.out.println("\r\n" + IBase64Service.class.getSimpleName() + "实现类：" + base64Service.getClass().getName());
+
+		// 校验类型
 		JavaInfo javaInfo = SystemUtil.getJavaInfo();
 		if (javaInfo.getVersionFloat() < 1.9) {
-			Assertions.assertEquals(Jdk8Base64ServiceImpl.class, base64Service.getClass());
+			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk8Base64ServiceImpl", base64Service.getClass().getName());
 		} else if (javaInfo.getVersionFloat() < 16) {
-			Assertions.assertEquals(Jdk9To15Base64ServiceImpl.class, base64Service.getClass());
+			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk9To15Base64ServiceImpl", base64Service.getClass().getName());
 		} else {
-			Assertions.assertEquals(Jdk16Base64ServiceImpl.class, base64Service.getClass());
+			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk16ToLatestBase64ServiceImpl", base64Service.getClass().getName());
 		}
 
 		// case: isBase64(str) == true && 长
@@ -184,7 +184,7 @@ class Base64UtilsTest {
 		// 运行次数
 		int times = 150 * 10000;
 		// 运行测试，并获取每个函数的耗时
-		long[] costs = PerformanceTestUtils.execute(5, times,
+		long[] costs = TestUtils.performanceTest(5, times,
 				// easyj函数
 				() -> {
 					Base64Utils.isBase64(cs);

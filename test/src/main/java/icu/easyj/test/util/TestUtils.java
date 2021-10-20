@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.test.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -27,7 +27,9 @@ import org.springframework.util.Assert;
  *
  * @author wangliang181230
  */
-public abstract class PerformanceTestUtils {
+public abstract class TestUtils {
+
+	//region 性能测试
 
 	//region Private
 
@@ -39,7 +41,7 @@ public abstract class PerformanceTestUtils {
 	 * @param supplier    需运行的函数，返回值表示函数别名
 	 * @return 运行耗时，单位：毫秒
 	 */
-	private static long executeOne(final int threadCount, final int times, Supplier<?> supplier) {
+	private static long executeOnePerformanceTest(final int threadCount, final int times, Supplier<?> supplier) {
 		long startTime = System.nanoTime();
 		AtomicInteger atomicInteger = new AtomicInteger(threadCount);
 		String supplierName = supplier.get().toString();
@@ -73,7 +75,7 @@ public abstract class PerformanceTestUtils {
 		String costStr = String.valueOf(cost);
 
 		// 打印日志
-		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - icu.easyj.core.util.StringUtils.chineseLength(supplierName), ' ')
+		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - InnerStringUtils.chineseLength(supplierName), ' ')
 				+ "耗时：" + StringUtils.leftPad(costStr, 7, ' ') + " ms          |");
 		return cost;
 	}
@@ -82,7 +84,7 @@ public abstract class PerformanceTestUtils {
 
 
 	/**
-	 * 运行函数性能测试
+	 * 函数性能测试
 	 *
 	 * @param threadCount 并行执行的线程数
 	 * @param times       每个线程运行次数
@@ -90,7 +92,7 @@ public abstract class PerformanceTestUtils {
 	 * @return costs 每个函数的总耗时
 	 */
 	@NonNull
-	public static long[] execute(int threadCount, int times, Supplier<?>... suppliers) {
+	public static long[] performanceTest(int threadCount, int times, Supplier<?>... suppliers) {
 		Assert.isTrue(threadCount > 0, "'sets' must be greater than 0");
 		Assert.isTrue(times > 0, "'times' must be greater than 0");
 		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
@@ -105,15 +107,18 @@ public abstract class PerformanceTestUtils {
 
 		// 正式开始运行
 		System.out.println("--------------------------------------------------");
-		System.out.println("| 开始运行性能测试：" + StringUtils.rightPad(threadCount + " * " + times, 33, ' ') + "|");
+		System.out.println("| 开始性能测试：" + StringUtils.rightPad(threadCount + " * " + times, 36, ' ') + "|");
 		System.out.println("--------------------------------------------------");
 		long[] costs = new long[suppliers.length];
 		for (int y = 0; y < suppliers.length; ++y) {
-			costs[y] += executeOne(threadCount, times, suppliers[y]);
+			costs[y] += executeOnePerformanceTest(threadCount, times, suppliers[y]);
 		}
 		System.out.println("--------------------------------------------------");
 		return costs;
 	}
+
+	//endregion
+
 
 	/**
 	 * 获取耗时，单位：毫秒

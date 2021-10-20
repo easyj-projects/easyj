@@ -32,7 +32,7 @@ import org.springframework.lang.Nullable;
  */
 @LoadLevel(name = "jackson", order = 20)
 @DependsOnClass(ObjectMapper.class)
-public class JacksonJSONServiceImpl implements IJSONService {
+class JacksonJSONServiceImpl implements IJSONService {
 
 	private final ObjectMapper mapper = new ObjectMapper();
 

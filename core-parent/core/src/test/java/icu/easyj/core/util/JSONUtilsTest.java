@@ -22,9 +22,7 @@ import java.util.function.Supplier;
 import icu.easyj.core.enums.DateFormatType;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.modelfortest.TestUser;
-import icu.easyj.core.util.json.impls.AlibabaFastJSONServiceImpl;
-import icu.easyj.core.util.json.impls.HutoolJSONServiceImpl;
-import icu.easyj.core.util.json.impls.JacksonJSONServiceImpl;
+import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +33,7 @@ import org.junit.jupiter.api.Test;
  */
 class JSONUtilsTest {
 
-	private static final int SETS = 10;
+	private static final int THREAD_COUNT = 10;
 	private static final int TIMES = 2 * 10000;
 
 	private static final String JSON1 = "{\"Name\":\"某某人1\",\"Age\":31,\"Birthday\":\"1990-10-01\"}";
@@ -55,13 +53,13 @@ class JSONUtilsTest {
 		Assertions.assertEquals(DEFAULT, FASTJSON);
 
 		Assertions.assertEquals(FASTJSON, SERVICES.get(0));
-		Assertions.assertEquals(AlibabaFastJSONServiceImpl.class, FASTJSON.getClass());
+		Assertions.assertEquals("icu.easyj.core.util.json.impls.AlibabaFastJSONServiceImpl", FASTJSON.getClass().getName());
 
 		Assertions.assertEquals(JACKSON, SERVICES.get(1));
-		Assertions.assertEquals(JacksonJSONServiceImpl.class, JACKSON.getClass());
+		Assertions.assertEquals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl", JACKSON.getClass().getName());
 
 		Assertions.assertEquals(HUTOOL, SERVICES.get(2));
-		Assertions.assertEquals(HutoolJSONServiceImpl.class, HUTOOL.getClass());
+		Assertions.assertEquals("icu.easyj.core.util.json.impls.HutoolJSONServiceImpl", HUTOOL.getClass().getName());
 	}
 
 	@Test
@@ -83,7 +81,7 @@ class JSONUtilsTest {
 				return service.getName() + "_toBean";
 			};
 		}
-		PerformanceTestUtils.execute(SETS, TIMES, suppliers);
+		TestUtils.performanceTest(THREAD_COUNT, TIMES, suppliers);
 	}
 
 	@Test
@@ -105,7 +103,7 @@ class JSONUtilsTest {
 				return service.getName() + "_toList";
 			};
 		}
-		PerformanceTestUtils.execute(SETS, TIMES, suppliers);
+		TestUtils.performanceTest(THREAD_COUNT, TIMES, suppliers);
 	}
 
 	@Test
@@ -141,7 +139,7 @@ class JSONUtilsTest {
 			StringUtils.toString(list1);
 			return "StringUtils";
 		};
-		PerformanceTestUtils.execute(SETS, TIMES, suppliers);
+		TestUtils.performanceTest(THREAD_COUNT, TIMES, suppliers);
 	}
 
 
@@ -173,7 +171,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service instanceof JacksonJSONServiceImpl)) {
+			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
 				throw t;
 			}
 		}
@@ -194,7 +192,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service instanceof JacksonJSONServiceImpl)) {
+			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
 				throw t;
 			}
 		}
@@ -208,7 +206,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service instanceof JacksonJSONServiceImpl)) {
+			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
 				throw t;
 			}
 		}
@@ -222,7 +220,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service instanceof JacksonJSONServiceImpl)) {
+			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
 				throw t;
 			}
 		}

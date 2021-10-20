@@ -1,0 +1,3 @@
+icu.easyj.core.util.string.impls.Jdk8StringServiceImpl
+icu.easyj.core.util.string.impls.Jdk9To15StringServiceImpl
+icu.easyj.core.util.string.impls.Jdk16ToLatestStringServiceImpl

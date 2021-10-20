@@ -26,9 +26,9 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK16-Base64-Impl", order = 1600)
+@LoadLevel(name = "JDK16~Latest-Base64", order = 1600)
 @DependsOnJavaVersion(min = 16F)
-public class Jdk16Base64ServiceImpl implements IBase64Service {
+class Jdk16ToLatestBase64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {

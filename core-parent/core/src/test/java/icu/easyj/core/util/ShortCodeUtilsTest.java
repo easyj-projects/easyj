@@ -39,11 +39,11 @@ class ShortCodeUtilsTest {
 
 	private void innerTestToCodeAndToId(long id) {
 		try {
-			String code = ShortCodeUtils.toCode(id);
+			String code = ShortCodeUtils.toCode(id, ShortCodeUtils.URLSAFE_CHAR_TABLE, ShortCodeUtils.URLSAFE_SPLIT_CHAR);
 			System.out.println(id + " -> " + code + " (" + code.length() + ")");
-			Assertions.assertEquals(id, ShortCodeUtils.toId(code));
+			Assertions.assertEquals(id, ShortCodeUtils.toId(code, ShortCodeUtils.URLSAFE_CHAR_TABLE, ShortCodeUtils.URLSAFE_SPLIT_CHAR));
 		} catch (ArrayIndexOutOfBoundsException e) {
-			ShortCodeUtils.toCode(id);
+			ShortCodeUtils.toCode(id, ShortCodeUtils.URLSAFE_CHAR_TABLE, ShortCodeUtils.URLSAFE_SPLIT_CHAR);
 			throw e;
 		}
 	}

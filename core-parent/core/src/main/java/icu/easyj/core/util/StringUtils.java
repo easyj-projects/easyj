@@ -16,16 +16,16 @@
 package icu.easyj.core.util;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Native;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -42,57 +42,13 @@ public abstract class StringUtils {
 	 */
 	public static final byte CASE_DIFF = ('a' - 'A');
 
+	/**
+	 * String服务，用于不同版本的JDK的性能最佳实现
+	 */
+	private static final IStringService STRING_SERVICE = EnhancedServiceLoader.load(IStringService.class);
+
 
 	//region 获取字符串的value和coder属性值
-
-	/**
-	 * 字符串的value属性（当Java版本为16及以上时，此常量才为null）
-	 */
-	@Nullable
-	private static final Field STRING_VALUE_FIELD;
-
-	/**
-	 * 字符串的coder()方法
-	 * <p>
-	 * Java9及以上版本，才有此方法。
-	 * <p>
-	 * Java9~15版本，此常量不为null，其他版本均为null；<br>
-	 * 原因如下：<br>
-	 * - Java8及以下版本，没有此方法；<br>
-	 * - Java16及以上版本，禁止了非常多的非法访问，包括对java.lang下的类的反射操作，所以此常量为null。
-	 */
-	@Nullable // java9以下时，为空
-	private static final Method GET_STRING_CODER_METHOD;
-
-	static {
-		//region 获取Field: String.value
-
-		Field field;
-		try {
-			field = String.class.getDeclaredField("value");
-			field.setAccessible(true); // JDK9~15时，控制台会出现WARNING，JDK16及以上，此方法将抛出异常
-		} catch (NoSuchFieldException | RuntimeException ignore) {
-			field = null;
-		}
-		STRING_VALUE_FIELD = field;
-
-		//endregion
-
-
-		//region 获取Method: String.coder()
-
-		Method method;
-		try {
-			method = String.class.getDeclaredMethod("coder");
-			method.setAccessible(true);
-		} catch (NoSuchMethodException | RuntimeException ignore) {
-			method = null;
-		}
-		GET_STRING_CODER_METHOD = method;
-
-		//endregion
-	}
-
 
 	/**
 	 * 获取String的value属性值
@@ -108,16 +64,7 @@ public abstract class StringUtils {
 	 */
 	public static Object getValue(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
-
-		if (STRING_VALUE_FIELD == null) {
-			return str.toString().getBytes(StandardCharsets.UTF_8);
-		}
-
-		try {
-			return STRING_VALUE_FIELD.get(str.toString());
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException("获取字符串的value失败", e);
-		}
+		return STRING_SERVICE.getValue(str);
 	}
 
 	/**
@@ -129,17 +76,7 @@ public abstract class StringUtils {
 	 */
 	public static byte getCoder(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
-
-		if (GET_STRING_CODER_METHOD == null) {
-			//throw new NullPointerException("当前JDK版本中的String类，没有coder属性!");
-			return (byte)0;
-		}
-
-		try {
-			return (byte)GET_STRING_CODER_METHOD.invoke(str.toString());
-		} catch (InvocationTargetException | IllegalAccessException e) {
-			throw new RuntimeException("获取字符串的coder失败", e);
-		}
+		return STRING_SERVICE.getCoder(str);
 	}
 
 	//endregion
@@ -383,6 +320,23 @@ public abstract class StringUtils {
 	}
 
 	//endregion
+
+	//endregion
+
+
+	//region 转换
+
+	/**
+	 * 获取字符数组
+	 *
+	 * @param str 字符串
+	 * @return 字符数组
+	 */
+	public static char[] toCharArray(@NonNull CharSequence str) {
+		Assert.notNull(str, "'str' must not be null");
+
+		return STRING_SERVICE.toCharArray(str);
+	}
 
 	//endregion
 

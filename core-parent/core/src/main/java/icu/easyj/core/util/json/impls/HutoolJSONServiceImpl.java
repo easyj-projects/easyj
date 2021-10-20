@@ -30,7 +30,7 @@ import org.springframework.lang.Nullable;
  * @author wangliang181230
  */
 @LoadLevel(name = "hutool", order = Ordered.LOWEST_PRECEDENCE)
-public class HutoolJSONServiceImpl implements IJSONService {
+class HutoolJSONServiceImpl implements IJSONService {
 
 	@NonNull
 	@Override

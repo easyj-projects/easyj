@@ -31,7 +31,7 @@ import org.springframework.lang.Nullable;
  */
 @LoadLevel(name = "fastjson", order = 10)
 @DependsOnClass(JSON.class)
-public class AlibabaFastJSONServiceImpl implements IJSONService {
+class AlibabaFastJSONServiceImpl implements IJSONService {
 
 	@NonNull
 	@Override

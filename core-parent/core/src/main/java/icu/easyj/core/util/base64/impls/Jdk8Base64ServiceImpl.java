@@ -27,9 +27,9 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK8-Base64-Impl", order = 180)
+@LoadLevel(name = "JDK8-Base64", order = 180)
 @DependsOnJavaVersion(max = 1.8F)
-public class Jdk8Base64ServiceImpl implements IBase64Service {
+class Jdk8Base64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {

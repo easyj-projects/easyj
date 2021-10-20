@@ -42,10 +42,14 @@
 
 	<!-- 引用依赖：Tests -->
 	<dependencies>
+		<!-- 工具类依赖 -->
 		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-all</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
 		<!-- org.junit -->

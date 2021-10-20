@@ -27,9 +27,9 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK9~15-Base64-Impl", order = 900)
+@LoadLevel(name = "JDK9~15-Base64", order = 900)
 @DependsOnJavaVersion(min = 9F, max = 15F)
-public class Jdk9To15Base64ServiceImpl implements IBase64Service {
+class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
 	@Override
 	public boolean isBase64(@NonNull CharSequence cs) {

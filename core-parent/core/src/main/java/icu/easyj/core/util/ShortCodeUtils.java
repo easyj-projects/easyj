@@ -28,6 +28,8 @@ import org.springframework.util.Assert;
  */
 public abstract class ShortCodeUtils {
 
+	//region 一组默认的参数 Private
+
 	/**
 	 * 默认的自定义进制
 	 * 不含分隔字符，见常量：{@link #DEFAULT_SPLIT_CHAR}
@@ -39,14 +41,37 @@ public abstract class ShortCodeUtils {
 	};
 
 	/**
-	 * 默认的分隔字符（不能与自定义进制中的字符重复）
+	 * 默认的分隔字符（不能与 {@link #DEFAULT_CHAR_TABLE} 中的字符重复）
 	 */
-	private static final char DEFAULT_SPLIT_CHAR = '0';
+	private static final char DEFAULT_SPLIT_CHAR = '0'; // 数字0
 
 	/**
 	 * 默认的短字符串最小长度
 	 */
 	private static final int DEFAULT_MIN_LENGTH = 5;
+
+	//endregion
+
+
+	//region 其他可选参数
+
+	/**
+	 * Url安全的自定义进制
+	 * 不含分隔字符，见常量：{@link #DEFAULT_SPLIT_CHAR}
+	 */
+	public static final char[] URLSAFE_CHAR_TABLE = new char[]{
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'-', /*'_',*/ '*', '`', '~', '!', '+',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	};
+
+	/**
+	 * Url安全的分隔字符（不能与 {@link #URLSAFE_CHAR_TABLE} 中的字符重复）
+	 */
+	public static final char URLSAFE_SPLIT_CHAR = '_';
+
+	//endregion
 
 
 	//region toShortCode
