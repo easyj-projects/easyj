@@ -77,7 +77,7 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		// 根据数据库类型，获取对应的实现
-		IDbService dbService = DbUtils.getDbService(dataSource);
+		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 
 		// 获取数据库时间：毫秒数
 		long currentTimeMillis = dbService.currentTimeMillis();

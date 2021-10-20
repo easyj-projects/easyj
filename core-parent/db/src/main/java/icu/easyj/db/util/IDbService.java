@@ -100,8 +100,7 @@ public interface IDbService {
 	/**
 	 * 获取数据库版本号
 	 *
-	 * @param dataSource
-	 * @return
+	 * @return 数据库版本号
 	 */
 	default String getVersion() {
 		Connection conn = null;
