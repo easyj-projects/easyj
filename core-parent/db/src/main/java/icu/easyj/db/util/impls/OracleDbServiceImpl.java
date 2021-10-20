@@ -18,7 +18,7 @@ package icu.easyj.db.util.impls;
 import javax.sql.DataSource;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.db.util.IDbService;
+import icu.easyj.core.loader.condition.DependsOnClass;
 import org.springframework.lang.NonNull;
 
 /**
@@ -27,11 +27,23 @@ import org.springframework.lang.NonNull;
  * @author wangliang181230
  */
 @LoadLevel(name = "oracle", order = 20)
-class OracleDbServiceImpl implements IDbService {
+@DependsOnClass(name = "oracle.jdbc.OracleDriver")
+class OracleDbServiceImpl extends AbstractDbServiceImpl {
+
+	public OracleDbServiceImpl(DataSource dataSource) {
+		super(dataSource);
+	}
+
 
 	@NonNull
 	@Override
-	public String getTimeSql(DataSource dataSource) {
+	public String getTimeSql() {
 		return "SELECT SYSTIMESTAMP FROM DUAL";
+	}
+
+	@NonNull
+	@Override
+	public String getVersionSql() {
+		return "SELECT version FROM product_component_version WHERE product LIKE 'Oracle%'";
 	}
 }

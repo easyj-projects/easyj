@@ -17,33 +17,23 @@ package icu.easyj.db.util.impls;
 
 import javax.sql.DataSource;
 
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnClass;
-import org.springframework.lang.NonNull;
+import icu.easyj.db.util.IDbService;
 
 /**
- * MySql数据库服务
+ * 抽象数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "mysql", order = 10)
-@DependsOnClass(name = "com.mysql.cj.jdbc.Driver")
-class MySqlDbServiceImpl extends AbstractDbServiceImpl {
+abstract class AbstractDbServiceImpl implements IDbService {
 
-	public MySqlDbServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	protected final DataSource dataSource;
+
+	protected AbstractDbServiceImpl(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
-
-	@NonNull
 	@Override
-	public String getTimeSql() {
-		return "SELECT CURRENT_TIMESTAMP() FROM DUAL";
-	}
-
-	@NonNull
-	@Override
-	public String getVersionSql() {
-		return "SELECT VERSION()";
+	public DataSource getDataSource() {
+		return this.dataSource;
 	}
 }

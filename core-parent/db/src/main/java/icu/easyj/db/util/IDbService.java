@@ -28,57 +28,101 @@ import icu.easyj.db.exception.DbException;
 import org.springframework.lang.NonNull;
 
 /**
- * 数据库相关接口
+ * 数据库服务接口
  *
  * @author wangliang181230
  */
 public interface IDbService {
 
 	/**
+	 * 获取对应的数据源
+	 *
+	 * @return 对应的数据源
+	 */
+	DataSource getDataSource();
+
+	/**
 	 * 获取数据库当前时间的SQL（不同数据库SQL语句不同）
 	 *
-	 * @param dataSource 数据源
 	 * @return 获取时间SQL
 	 */
 	@NonNull
-	String getTimeSql(DataSource dataSource);
+	String getTimeSql();
+
+	/**
+	 * 获取数据库版本号的SQL
+	 *
+	 * @return 获取版本号SQL
+	 */
+	@NonNull
+	String getVersionSql();
 
 	/**
 	 * 获取数据库的当前时间
 	 *
-	 * @param dataSource 数据源
 	 * @return 数据库当前时间
 	 */
 	@NonNull
-	default Date now(DataSource dataSource) {
-		return new Date(currentTimeMillis(dataSource));
+	default Date now() {
+		return new Date(currentTimeMillis());
 	}
 
 	/**
 	 * 获取数据库的当前毫秒数
 	 *
-	 * @param dataSource 数据源
 	 * @return 数据库当前毫秒数
 	 */
-	default long currentTimeMillis(DataSource dataSource) {
+	default long currentTimeMillis() {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn = dataSource.getConnection();
-			conn.setAutoCommit(true);
+			conn = getDataSource().getConnection();
 
-			String sql = getTimeSql(dataSource);
-
+			// 执行查询
+			String sql = getTimeSql();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
+
+			// 获取结果
 			if (rs.next()) {
-				return rs.getTimestamp(0).getTime();
+				return rs.getTimestamp(1).getTime();
 			} else {
 				throw new DbDataNotFoundException("没有返回时间数据");
 			}
 		} catch (SQLException e) {
 			throw new DbException("获取数据库时间失败", e);
+		} finally {
+			IOUtils.close(rs, ps, conn);
+		}
+	}
+
+	/**
+	 * 获取数据库版本号
+	 *
+	 * @param dataSource
+	 * @return
+	 */
+	default String getVersion() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = getDataSource().getConnection();
+
+			// 执行查询
+			String sql = getVersionSql();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			// 获取结果
+			if (rs.next()) {
+				return rs.getString(1);
+			} else {
+				throw new DbDataNotFoundException("没有返回数据库版本号信息");
+			}
+		} catch (SQLException e) {
+			throw new DbException("获取数据库版本号失败", e);
 		} finally {
 			IOUtils.close(rs, ps, conn);
 		}
