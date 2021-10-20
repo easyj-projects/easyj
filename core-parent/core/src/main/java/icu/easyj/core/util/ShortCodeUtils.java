@@ -185,7 +185,7 @@ public abstract class ShortCodeUtils {
 
 		int tableLength = charsTable.length;
 
-		char[] chars = code.toCharArray();
+		char[] chars = StringUtils.toCharArray(code);
 		long res = 0L;
 		for (int i = 0; i < chars.length; i++) {
 			int index = 0;

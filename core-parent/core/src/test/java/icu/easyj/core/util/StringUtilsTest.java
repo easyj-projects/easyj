@@ -30,6 +30,7 @@ import java.util.Map;
 
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
+import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -97,6 +98,27 @@ class StringUtilsTest {
 		Assertions.assertEquals(1, StringUtils.getCoder("1啊啊啊哦哦哦呃呃呃"));
 		Assertions.assertEquals(1, StringUtils.getCoder("2啊啊啊哦哦哦呃呃呃="));
 		Assertions.assertEquals(1, StringUtils.getCoder("3啊啊啊哦哦哦呃呃呃=="));
+		String s = "asdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfj啊";
+		long[] costs = TestUtils.performanceTest(5, 500 * 10000, () -> {
+			StringUtils.getCoder(s);
+			return "default";
+		}, () -> {
+			this.getCoder(s);
+			return "to_bytes";
+		});
+
+		if (costs[0] > costs[1]) {
+			System.out.println("\r\n[WARNING] default的getCoder()方法比to_bytes的性能要低了，请注意替换实现。");
+		}
+	}
+
+	private byte getCoder(String s) {
+		byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
+		if (bytes.length != s.length()) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 

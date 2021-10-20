@@ -42,7 +42,7 @@ public abstract class TestUtils {
 	 * @return 运行耗时，单位：毫秒
 	 */
 	private static long executeOnePerformanceTest(final int threadCount, final int times, Supplier<?> supplier) {
-		long startTime = System.nanoTime();
+		long startTime = getStartTime();
 		AtomicInteger atomicInteger = new AtomicInteger(threadCount);
 		String supplierName = supplier.get().toString();
 
@@ -98,12 +98,17 @@ public abstract class TestUtils {
 		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
 
 		// 先预热一下
-		int i = times * 2;
-		while (i-- > 0) {
-			for (Supplier<?> supplier : suppliers) {
+		System.out.println("\r\n性能测试预热中...");
+		long startTime = getStartTime();
+		for (Supplier<?> supplier : suppliers) {
+			long startTime1 = getStartTime();
+			int i = times;
+			while (i-- > 0) {
 				supplier.get();
 			}
+			System.out.println(getCost(startTime1));
 		}
+		System.out.println("性能测试预热完成: " + getCost(startTime) + " ms\r\n");
 
 		// 正式开始运行
 		System.out.println("--------------------------------------------------");
@@ -119,6 +124,15 @@ public abstract class TestUtils {
 
 	//endregion
 
+
+	/**
+	 * 获取测试起始纳秒时间
+	 *
+	 * @return 起始纳秒时间
+	 */
+	public static long getStartTime() {
+		return System.nanoTime();
+	}
 
 	/**
 	 * 获取耗时，单位：毫秒

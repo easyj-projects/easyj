@@ -182,9 +182,10 @@ class Base64UtilsTest {
 		System.out.println(title);
 
 		// 运行次数
-		int times = 150 * 10000;
+		int threadCount = 5;
+		int times = 50 * 10000;
 		// 运行测试，并获取每个函数的耗时
-		long[] costs = TestUtils.performanceTest(5, times,
+		long[] costs = TestUtils.performanceTest(threadCount, times,
 				// easyj函数
 				() -> {
 					Base64Utils.isBase64(cs);

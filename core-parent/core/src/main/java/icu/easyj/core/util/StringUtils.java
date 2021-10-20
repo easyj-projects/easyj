@@ -16,7 +16,6 @@
 package icu.easyj.core.util;
 
 import java.lang.annotation.Annotation;
-import java.lang.annotation.Native;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -334,7 +333,6 @@ public abstract class StringUtils {
 	 */
 	public static char[] toCharArray(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
-
 		return STRING_SERVICE.toCharArray(str);
 	}
 

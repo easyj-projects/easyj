@@ -15,11 +15,10 @@
  */
 package icu.easyj.core.util.string.impls;
 
-import java.nio.charset.StandardCharsets;
-
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.IStringService;
+import org.springframework.lang.NonNull;
 
 /**
  * JDK8及以下时，{@link IStringService} 的实现
@@ -31,12 +30,12 @@ import icu.easyj.core.util.IStringService;
 class Jdk8StringServiceImpl implements IStringService {
 
 	@Override
-	public char[] toCharArray(CharSequence str) {
+	public char[] toCharArray(@NonNull CharSequence str) {
 		return getValue(str);
 	}
 
 	@Override
-	public char[] getValue(CharSequence str) {
+	public char[] getValue(@NonNull CharSequence str) {
 		// JDK8：返回 char[]
 		try {
 			return (char[])StringReflection.STRING_VALUE_FIELD.get(str.toString());
@@ -46,13 +45,14 @@ class Jdk8StringServiceImpl implements IStringService {
 	}
 
 	@Override
-	public byte getCoder(CharSequence str) {
+	public byte getCoder(@NonNull CharSequence str) {
 		// 注意：性能较差，不建议在JDK8版本使用
-		byte[] bytes = str.toString().getBytes(StandardCharsets.UTF_8);
-		if (str.length() != bytes.length) {
-			return StringReflection.UTF16;
-		} else {
-			return StringReflection.LATIN1;
+		char[] chars = toCharArray(str);
+		for (char c : chars) {
+			if (c > Byte.MAX_VALUE) {
+				return StringReflection.UTF16;
+			}
 		}
+		return StringReflection.LATIN1;
 	}
 }
