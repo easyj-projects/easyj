@@ -171,7 +171,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
+			if (!(service.getName().equals("jackson"))) {
 				throw t;
 			}
 		}
@@ -192,7 +192,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
+			if (!(service.getName().equals("jackson"))) {
 				throw t;
 			}
 		}
@@ -206,7 +206,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
+			if (!(service.getName().equals("jackson"))) {
 				throw t;
 			}
 		}
@@ -220,7 +220,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!(service.getName().equals("icu.easyj.core.util.json.impls.JacksonJSONServiceImpl"))) {
+			if (!(service.getName().equals("jackson"))) {
 				throw t;
 			}
 		}
