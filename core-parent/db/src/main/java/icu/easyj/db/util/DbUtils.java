@@ -44,8 +44,8 @@ public abstract class DbUtils {
 		try (Connection con = dataSource.getConnection()) {
 			DatabaseMetaData metaData = con.getMetaData();
 			return metaData.getDatabaseProductName();
-		} catch (SQLException t) {
-			throw new DbException("获取数据库类型");
+		} catch (SQLException e) {
+			throw new DbException("获取数据库类型失败", e);
 		}
 	}
 }
