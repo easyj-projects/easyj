@@ -32,7 +32,8 @@ import org.springframework.util.Assert;
 public abstract class DbUtils {
 
 	/**
-	 * 从数据源中获取数据库类型
+	 * 从数据源中获取数据库类型<br>
+	 * 值域：MySQL、Oracle、...（注意大小写）（TODO: 其他数据库待补充）
 	 *
 	 * @param dataSource 数据源
 	 * @return 数据库类型
