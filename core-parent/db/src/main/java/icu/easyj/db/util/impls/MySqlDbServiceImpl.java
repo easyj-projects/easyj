@@ -38,7 +38,7 @@ class MySqlDbServiceImpl extends AbstractDbServiceImpl {
 	@NonNull
 	@Override
 	public String getTimeSql() {
-		return "SELECT CURRENT_TIMESTAMP() FROM DUAL";
+		return "SELECT CURRENT_TIMESTAMP(3)";
 	}
 
 	@NonNull
