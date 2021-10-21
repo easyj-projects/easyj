@@ -16,12 +16,12 @@
 package icu.easyj.core.loader.condition;
 
 import icu.easyj.core.util.ArrayUtils;
-import icu.easyj.core.util.JarInfo;
-import icu.easyj.core.util.JarUtils;
-import icu.easyj.core.util.VersionUtils;
+import icu.easyj.core.util.jar.JarInfo;
+import icu.easyj.core.util.jar.JarUtils;
+import icu.easyj.core.util.version.VersionUtils;
 
 /**
- * 依赖Jar及其版本校验器
+ * 依赖JAR及其版本校验器
  *
  * @author wangliang181230
  */
@@ -29,13 +29,13 @@ public class DependsOnJarVersionValidator implements IDependsOnValidator {
 
 	@Override
 	public void validate(Class<?> serviceClass, ClassLoader classLoader) throws ServiceDependencyException {
-		// 获取注解`@DependsOnJarVersion`的信息，并判断Jar版本是否符合
+		// 获取注解`@DependsOnJarVersion`的信息，并判断JAR版本是否符合
 		DependsOnJarVersion dependsOnJarVersion = serviceClass.getAnnotation(DependsOnJarVersion.class);
 		if (dependsOnJarVersion == null) {
 			return;
 		}
 
-		// 获取Jar信息，如果不存在，则抛出依赖异常
+		// 获取JAR信息，如果不存在，则抛出依赖异常
 		String[] names = dependsOnJarVersion.name();
 		JarInfo jarInfo = null;
 		for (String name : names) {
@@ -48,19 +48,19 @@ public class DependsOnJarVersionValidator implements IDependsOnValidator {
 			throw new ServiceDependencyException("jar " + ArrayUtils.toString(names) + " not found");
 		}
 
-		// 获取Jar版本号限制，如果都为0，则说明不限制
+		// 获取JAR版本号限制，如果都为0，则说明不限制
 		long minVersion = VersionUtils.toLong(dependsOnJarVersion.minVersion());
 		long maxVersion = VersionUtils.toLong(dependsOnJarVersion.maxVersion());
 		if (minVersion == 0 && maxVersion == 0) {
 			return;
 		}
 
-		// 判断Jar版本号是否符合设置值
+		// 判断JAR版本号是否符合设置值
 		if (minVersion > 0 && jarInfo.getVersionLong() < minVersion) {
-			throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is less than v" + dependsOnJarVersion.minVersion());
+			throw new ServiceDependencyException("JAR[" + jarInfo.getName() + "] version is less than v" + dependsOnJarVersion.minVersion());
 		}
 		if (maxVersion > 0 && jarInfo.getVersionLong() > maxVersion) {
-			throw new ServiceDependencyException("jar[" + jarInfo.getName() + "] version is greater than v" + dependsOnJarVersion.maxVersion());
+			throw new ServiceDependencyException("JAR[" + jarInfo.getName() + "] version is greater than v" + dependsOnJarVersion.maxVersion());
 		}
 	}
 }

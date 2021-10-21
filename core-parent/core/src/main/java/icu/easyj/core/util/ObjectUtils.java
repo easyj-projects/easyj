@@ -21,6 +21,7 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import cn.hutool.core.clone.CloneRuntimeException;
@@ -37,7 +38,7 @@ import org.springframework.lang.Nullable;
  */
 public abstract class ObjectUtils {
 
-	//region ----------------- 合并数据
+	//region 合并数据
 
 	/**
 	 * 克隆模式
@@ -130,6 +131,9 @@ public abstract class ObjectUtils {
 
 	//endregion
 
+
+	//region 判断方法
+
 	/**
 	 * 判断对象是否与数组中的某个元素相等
 	 *
@@ -148,8 +152,33 @@ public abstract class ObjectUtils {
 		return false;
 	}
 
+	//endregion
 
-	//region ----------------- defaultIfNull、defaultIfEmpty
+
+	//region 查找数据
+
+	/**
+	 * 根据匹配函数，查找数据
+	 *
+	 * @param objArr     对象数组
+	 * @param objMatcher 对象匹配函数
+	 * @param <T>        对象类型
+	 * @return 返回找到的字符串 或 {@code null}
+	 */
+	@Nullable
+	public static <T> T find(final T[] objArr, final Predicate<T> objMatcher) {
+		for (final T obj : objArr) {
+			if (objMatcher.test(obj)) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	//endregion
+
+
+	//region defaultIfNull、defaultIfEmpty
 
 	/**
 	 * 如果为null，则返回默认值

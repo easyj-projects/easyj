@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.util.jar;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,13 +28,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Jar工具类
+ * JAR工具类
  *
  * @author wangliang181230
  */
@@ -69,10 +71,10 @@ public abstract class JarUtils {
 	//region getJarList
 
 	/**
-	 * 获取Jar列表（使用缓存）
+	 * 获取JAR列表（使用缓存）
 	 *
 	 * @param classLoader 类加载器
-	 * @return Jar列表
+	 * @return JAR列表
 	 */
 	@NonNull
 	public static List<JarInfo> getJarList(@NonNull ClassLoader classLoader) {
@@ -80,9 +82,9 @@ public abstract class JarUtils {
 	}
 
 	/**
-	 * 获取当前类加载器中的Jar列表（使用缓存）
+	 * 获取当前类加载器中的JAR列表（使用缓存）
 	 *
-	 * @return Jar列表
+	 * @return JAR列表
 	 */
 	@NonNull
 	public static List<JarInfo> getJarList() {
@@ -95,10 +97,10 @@ public abstract class JarUtils {
 	//region getJarMap
 
 	/**
-	 * 获取Jar集合
+	 * 获取JAR集合
 	 *
 	 * @param classLoader 类加载器
-	 * @return Jar集合
+	 * @return JAR集合
 	 */
 	@NonNull
 	public static Map<String, JarInfo> getJarMap(@NonNull ClassLoader classLoader) {
@@ -110,7 +112,9 @@ public abstract class JarUtils {
 			for (JarInfo jar : jarList) {
 				previousJar = jarMap.put(jar.getName(), jar);
 				if (previousJar != null) {
-					LOGGER.warn("存在重名的Jar，'{}:{}' 覆盖了 '{}:{}'", jar.getName(), jar.getVersion(), previousJar.getName(), previousJar.getVersion());
+					LOGGER.warn("存在重名的JAR，'{}:{}' 覆盖了 '{}:{}'",
+							jar.getName(), jar.getVersion(),
+							previousJar.getName(), previousJar.getVersion());
 				}
 			}
 			return Collections.unmodifiableMap(jarMap);
@@ -118,9 +122,9 @@ public abstract class JarUtils {
 	}
 
 	/**
-	 * 获取当前类加载器中的Jar集合（使用缓存）
+	 * 获取当前类加载器中的JAR集合（使用缓存）
 	 *
-	 * @return Jar集合
+	 * @return JAR集合
 	 */
 	@NonNull
 	public static Map<String, JarInfo> getJarMap() {
@@ -133,11 +137,11 @@ public abstract class JarUtils {
 	//region getJar
 
 	/**
-	 * 获取Jar信息
+	 * 获取JAR信息
 	 *
-	 * @param name        Jar名称
+	 * @param name        JAR名称
 	 * @param classLoader 类加载器
-	 * @return Jar信息
+	 * @return JAR信息
 	 */
 	@Nullable
 	public static JarInfo getJar(String name, @NonNull ClassLoader classLoader) {
@@ -150,10 +154,10 @@ public abstract class JarUtils {
 	}
 
 	/**
-	 * 获取当前类加载器中的Jar信息
+	 * 获取当前类加载器中的JAR信息
 	 *
-	 * @param name Jar名称
-	 * @return Jar信息
+	 * @param name JAR名称
+	 * @return JAR信息
 	 */
 	@Nullable
 	public static JarInfo getJar(String name) {
@@ -166,10 +170,10 @@ public abstract class JarUtils {
 	//region Private
 
 	/**
-	 * 加载Jar列表（不使用缓存）
+	 * 加载JAR列表（不使用缓存）
 	 *
 	 * @param classLoader 类加载器
-	 * @return Jar列表
+	 * @return JAR列表
 	 */
 	@NonNull
 	private static List<JarInfo> loadJarList(@NonNull ClassLoader classLoader) {

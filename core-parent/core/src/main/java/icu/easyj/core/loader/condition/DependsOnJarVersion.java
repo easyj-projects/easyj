@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 服务依赖的Jar及其版本
+ * 服务依赖的JAR及其版本
  *
  * @author wangliang181230
  * @see DependsOnJarVersionValidator
@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 public @interface DependsOnJarVersion {
 
 	/**
-	 * 依赖的Jar包名称数组<br>
+	 * 依赖的JAR包名称数组<br>
 	 * 由于部分jar变更过名字，所以可设置多个
 	 *
 	 * @return the jar names
@@ -41,14 +41,14 @@ public @interface DependsOnJarVersion {
 	String[] name();
 
 	/**
-	 * 依赖的Jar包最小版本号
+	 * 依赖的JAR包最小版本号
 	 *
 	 * @return the min version
 	 */
 	String minVersion() default "";
 
 	/**
-	 * 依赖的Jar包最大版本号
+	 * 依赖的JAR包最大版本号
 	 *
 	 * @return the min version
 	 */

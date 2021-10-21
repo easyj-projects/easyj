@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
@@ -37,14 +36,14 @@ import org.springframework.util.Assert;
 public abstract class StringUtils {
 
 	/**
-	 * 大小写字符的差值
-	 */
-	public static final byte CASE_DIFF = ('a' - 'A');
-
-	/**
 	 * String服务，用于不同版本的JDK的性能最佳实现
 	 */
 	private static final IStringService STRING_SERVICE = EnhancedServiceLoader.load(IStringService.class);
+
+	/**
+	 * 大小写字符的差值
+	 */
+	public static final byte CASE_DIFF = ('a' - 'A');
 
 
 	//region 获取字符串的value和coder属性值
@@ -81,7 +80,7 @@ public abstract class StringUtils {
 	//endregion
 
 
-	//region 判断方法
+	//region 判空方法
 
 	/**
 	 * 字符串是否为空
@@ -135,6 +134,59 @@ public abstract class StringUtils {
 	public static boolean isNotBlank(final CharSequence cs) {
 		return !isBlank(cs);
 	}
+
+	//endregion
+
+
+	//region 各种格式的字符串判断方法
+
+	/**
+	 * 判断是否全部由数字 '0' 组成的字符串
+	 *
+	 * @param str 字符串
+	 * @return true=全为0、false=为null或不全为0
+	 */
+	public static boolean isAllZero(String str) {
+		if (str == null) {
+			return false;
+		}
+
+		char[] chars = toCharArray(str);
+		for (char c : chars) {
+			if (c != '0') {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * 判断字符串是否包含字符
+	 *
+	 * @param str 字符串
+	 * @param c   字符
+	 * @return true=包含 | false=不包含
+	 */
+	public static boolean contains(String str, char c) {
+		if (isEmpty(str)) {
+			return false;
+		}
+
+		char[] chars = toCharArray(str);
+		for (char ch : chars) {
+			if (ch == c) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	//endregion
+
+
+	//region 比较方法
 
 	/**
 	 * 判断字符串是否相等
@@ -278,25 +330,6 @@ public abstract class StringUtils {
 	//region 查找数据
 
 	/**
-	 * 根据匹配函数，查找数据
-	 *
-	 * @param strArr  字符串数组
-	 * @param matcher 匹配函数
-	 * @return 返回找到的字符串 或 {@code null}
-	 */
-	@Nullable
-	public static String find(final String[] strArr, final Predicate<String> matcher) {
-		for (final String str : strArr) {
-			if (matcher.test(str)) {
-				return str;
-			}
-		}
-		return null;
-	}
-
-	//region 查找第一个不为空的字符串
-
-	/**
 	 * 查找一个不为null或空字符串的字符串
 	 *
 	 * @param strArr 字符串数组
@@ -304,7 +337,7 @@ public abstract class StringUtils {
 	 */
 	@Nullable
 	public static String findNotEmptyOne(final String... strArr) {
-		return find(strArr, StringUtils::isNotEmpty);
+		return ObjectUtils.find(strArr, StringUtils::isNotEmpty);
 	}
 
 	/**
@@ -315,10 +348,8 @@ public abstract class StringUtils {
 	 */
 	@Nullable
 	public static String findNotBlankOne(final String... strArr) {
-		return find(strArr, StringUtils::isNotBlank);
+		return ObjectUtils.find(strArr, StringUtils::isNotBlank);
 	}
-
-	//endregion
 
 	//endregion
 

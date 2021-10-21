@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.util.jar;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.jar.Attributes;
 
 import cn.hutool.core.lang.Assert;
+import icu.easyj.core.util.StringUtils;
+import icu.easyj.core.util.version.VersionInfo;
+import icu.easyj.core.util.version.VersionUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Jar信息
+ * JAR信息
  *
  * @author wangliang181230
  */
@@ -36,19 +38,14 @@ public class JarInfo {
 	private final URL url;
 
 	/**
-	 * Jar名
+	 * JAR名称
 	 */
 	private final String name;
 
 	/**
-	 * Jar版本号
+	 * JAR版本信息
 	 */
-	private final String version;
-
-	/**
-	 * Jar版本号的long型值
-	 */
-	private final long versionLong;
+	private final VersionInfo versionInfo;
 
 	/**
 	 * META-INF/MANIFEST.MF 文件中的属性
@@ -60,9 +57,9 @@ public class JarInfo {
 	 * 构造函数
 	 *
 	 * @param url                路径
-	 * @param name               Jar名
+	 * @param name               JAR名称
 	 * @param manifestAttributes META-INF/MANIFEST.MF文件的属性集合
-	 * @param version            Jar版本号
+	 * @param version            JAR版本号
 	 */
 	public JarInfo(@NonNull URL url, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
 		Assert.notNull(url, "'url' must not be null");
@@ -70,14 +67,8 @@ public class JarInfo {
 
 		this.url = url;
 		this.name = name.toLowerCase();
+		this.versionInfo = VersionUtils.parse(version);
 		this.manifestAttributes = manifestAttributes;
-		if (StringUtils.isBlank(version)) {
-			this.version = VersionUtils.UNKNOWN_VERSION;
-			this.versionLong = 0L;
-		} else {
-			this.version = version;
-			this.versionLong = VersionUtils.toLong(version);
-		}
 	}
 
 	/**
@@ -87,20 +78,7 @@ public class JarInfo {
 	 * @return 比较结果：1=比other高、0=相同、-1=比other低
 	 */
 	public int compareToVersion(String otherVersion) {
-		if (Objects.equals(this.version, otherVersion)) {
-			return 0;
-		} else if (this.version == null) {
-			return -1;
-		}
-
-		long otherLongVersion = VersionUtils.toLong(otherVersion);
-		if (this.versionLong == otherLongVersion) {
-			return this.version.compareTo(otherVersion);
-		} else if (this.versionLong > otherLongVersion) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return versionInfo.compareTo(otherVersion);
 	}
 
 
@@ -117,12 +95,17 @@ public class JarInfo {
 	}
 
 	@NonNull
+	public VersionInfo getVersionInfo() {
+		return versionInfo;
+	}
+
+	@NonNull
 	public String getVersion() {
-		return version;
+		return versionInfo.getVersion();
 	}
 
 	public long getVersionLong() {
-		return versionLong;
+		return versionInfo.getVersionLong();
 	}
 
 	@NonNull
