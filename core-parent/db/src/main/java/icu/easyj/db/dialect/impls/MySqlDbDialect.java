@@ -24,7 +24,7 @@ import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
 /**
- * MySql数据库方言
+ * MySQL数据库方言
  *
  * @author wangliang181230
  */
