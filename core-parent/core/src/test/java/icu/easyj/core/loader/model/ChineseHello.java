@@ -26,7 +26,7 @@ import icu.easyj.core.loader.condition.DependsOnJavaVersion;
  *
  * @author Otis.z
  */
-@LoadLevel(name = "ChineseHello", order = Integer.MAX_VALUE)
+@LoadLevel(name = "ChineseHello")
 @DependsOnJavaVersion(min = 1, max = 999)
 @DependsOnClass(value = Hello.class, name = "icu.easyj.core.loader.model.Hello")
 @DependsOnJarVersion(name = "slf4j-api", minVersion = "0", maxVersion = "99")

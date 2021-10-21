@@ -64,12 +64,6 @@
 			"description": "其他全局配置的Map."
 		},
 		{
-			"name": "easyj.global.configs.db-type",
-			"type": "java.lang.String",
-			"sourceType": "icu.easyj.db.util.DbClockFactory",
-			"description": "数据库类型."
-		},
-		{
 			"name": "easyj.sdk.tencent.common.conn-timeout",
 			"defaultValue": 60
 		},
@@ -145,24 +139,6 @@
 		}
 	],
 	"hints": [
-		{
-			"name": "easyj.global.configs.db-type",
-			"values": [
-				{
-					"value": "mysql",
-					"description": "(默认)MySQL数据库."
-				},
-				{
-					"value": "oracle",
-					"description": "Oracle数据库."
-				}
-			],
-			"providers": [
-				{
-					"name": "any"
-				}
-			]
-		},
 		{
 			"name": "easyj.sdk.dwz.type",
 			"values": [

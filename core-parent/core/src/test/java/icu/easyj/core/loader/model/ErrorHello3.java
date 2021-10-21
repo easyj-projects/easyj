@@ -23,7 +23,7 @@ import icu.easyj.core.loader.condition.DependsOnJarVersion;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello3", order = Integer.MAX_VALUE)
+@LoadLevel(name = "ErrorHello3")
 @DependsOnJarVersion(name = "nonexistent_jar")
 public class ErrorHello3 implements Hello {
 

@@ -23,7 +23,7 @@ import icu.easyj.core.loader.condition.DependsOnJarVersion;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1", order = Integer.MAX_VALUE)
+@LoadLevel(name = "ErrorHello1")
 @DependsOnJarVersion(name = "slf4j-api", minVersion = "2.0.0")
 public class ErrorHello1 implements Hello {
 

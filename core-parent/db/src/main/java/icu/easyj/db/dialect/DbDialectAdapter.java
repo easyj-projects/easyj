@@ -13,46 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.json.impls;
+package icu.easyj.db.dialect;
 
-import java.util.List;
-
-import cn.hutool.json.JSONUtil;
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.util.IJSONService;
-import org.springframework.core.Ordered;
+import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 /**
- * 基于 Hutool 实现的JSON服务
+ * 数据库方言适配器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "hutool")
-class HutoolJSONServiceImpl implements IJSONService {
+public class DbDialectAdapter implements IDbDialect {
+
+	@NonNull
+	protected final IDbDialect dbDialect;
+
+
+	public DbDialectAdapter(IDbDialect dbDialect) {
+		Assert.notNull(dbDialect, "'dbDialect' must not be null");
+		this.dbDialect = dbDialect;
+	}
+
 
 	@NonNull
 	@Override
-	public String getName() {
-		return "hutool";
+	public String getVersionSql() {
+		return this.dbDialect.getVersionSql();
 	}
 
 	@NonNull
 	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) {
-		return JSONUtil.toBean(text, targetClazz);
+	public String getTimeSql() {
+		return this.dbDialect.getTimeSql();
 	}
+
+
+	//-----------------------------------------------------------------------------------------
+
 
 	@NonNull
 	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) {
-		return JSONUtil.toList(text, targetClazz);
-	}
-
-	@NonNull
-	@Override
-	public String toJSONString(@Nullable Object obj) {
-		return JSONUtil.toJsonStr(obj);
+	public String getDbType() {
+		return this.dbDialect.getDbType();
 	}
 }

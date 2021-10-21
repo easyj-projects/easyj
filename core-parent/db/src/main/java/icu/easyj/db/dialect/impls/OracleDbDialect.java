@@ -13,26 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util.impls;
-
-import javax.sql.DataSource;
+package icu.easyj.db.dialect.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.db.dialect.IDbDialect;
+import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
 
 /**
- * Oracle数据库服务
+ * Oracle数据库方言
  *
  * @author wangliang181230
  */
 @LoadLevel(name = ORACLE, order = 20)
 @DependsOnClass(name = ORACLE_DRIVER)
-class OracleDbServiceImpl extends CommonDbServiceImpl {
+class OracleDbDialect implements IDbDialect {
 
-	public OracleDbServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	@NonNull
+	@Override
+	public String getVersionSql() {
+		return "SELECT version FROM product_component_version WHERE product LIKE 'Oracle%'";
+	}
+
+	@NonNull
+	@Override
+	public String getTimeSql() {
+		return "SELECT SYSTIMESTAMP FROM DUAL";
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+
+
+	@NonNull
+	@Override
+	public String getDbType() {
+		return ORACLE;
 	}
 }

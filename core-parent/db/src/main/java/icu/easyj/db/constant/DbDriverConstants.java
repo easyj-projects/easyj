@@ -13,27 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util.impls;
-
-import javax.sql.DataSource;
-
-import icu.easyj.db.util.IDbService;
+package icu.easyj.db.constant;
 
 /**
- * 抽象数据库服务
+ * 数据库驱动常量
  *
  * @author wangliang181230
  */
-abstract class AbstractDbServiceImpl implements IDbService {
+public interface DbDriverConstants {
 
-	protected final DataSource dataSource;
-
-	protected AbstractDbServiceImpl(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
-	@Override
-	public DataSource getDataSource() {
-		return this.dataSource;
-	}
+	String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
+	String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
 }

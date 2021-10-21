@@ -13,26 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util.impls;
-
-import javax.sql.DataSource;
+package icu.easyj.db.dialect.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.db.dialect.IDbDialect;
+import org.springframework.lang.NonNull;
 
-import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
-import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
+import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
 /**
- * Oracle数据库服务
+ * MySql数据库方言
  *
  * @author wangliang181230
  */
-@LoadLevel(name = ORACLE, order = 20)
-@DependsOnClass(name = ORACLE_DRIVER)
-class OracleDbServiceImpl extends CommonDbServiceImpl {
+@LoadLevel(name = MYSQL, order = 10)
+@DependsOnClass(name = MYSQL_DRIVER)
+class MySqlDbDialect implements IDbDialect {
 
-	public OracleDbServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	@NonNull
+	@Override
+	public String getVersionSql() {
+		return "SELECT VERSION()";
+	}
+
+	@NonNull
+	@Override
+	public String getTimeSql() {
+		return "SELECT CURRENT_TIMESTAMP(3)";
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+
+
+	@NonNull
+	@Override
+	public String getDbType() {
+		return MYSQL;
 	}
 }

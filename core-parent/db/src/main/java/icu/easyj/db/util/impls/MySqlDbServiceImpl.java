@@ -19,31 +19,20 @@ import javax.sql.DataSource;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
-import org.springframework.lang.NonNull;
+
+import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
 /**
  * MySql数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "mysql", order = 10)
-@DependsOnClass(name = "com.mysql.cj.jdbc.Driver")
-class MySqlDbServiceImpl extends AbstractDbServiceImpl {
+@LoadLevel(name = MYSQL, order = 10)
+@DependsOnClass(name = MYSQL_DRIVER)
+class MySqlDbServiceImpl extends CommonDbServiceImpl {
 
 	public MySqlDbServiceImpl(DataSource dataSource) {
 		super(dataSource);
-	}
-
-
-	@NonNull
-	@Override
-	public String getTimeSql() {
-		return "SELECT CURRENT_TIMESTAMP(3)";
-	}
-
-	@NonNull
-	@Override
-	public String getVersionSql() {
-		return "SELECT VERSION()";
 	}
 }

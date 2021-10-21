@@ -17,22 +17,35 @@ package icu.easyj.db.util.impls;
 
 import javax.sql.DataSource;
 
+import cn.hutool.core.lang.Assert;
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnClass;
-
-import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
-import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
+import icu.easyj.db.dialect.DbDialectAdapter;
+import icu.easyj.db.dialect.IDbDialect;
+import icu.easyj.db.util.DbUtils;
+import icu.easyj.db.util.IDbService;
 
 /**
- * Oracle数据库服务
+ * 通用数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = ORACLE, order = 20)
-@DependsOnClass(name = ORACLE_DRIVER)
-class OracleDbServiceImpl extends CommonDbServiceImpl {
+@LoadLevel(name = "common")
+public class CommonDbServiceImpl extends DbDialectAdapter implements IDbService {
 
-	public OracleDbServiceImpl(DataSource dataSource) {
-		super(dataSource);
+	protected final DataSource dataSource;
+
+
+	public CommonDbServiceImpl(DataSource dataSource) {
+		super(EnhancedServiceLoader.load(IDbDialect.class, DbUtils.getDbType(dataSource)));
+
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		this.dataSource = dataSource;
+	}
+
+
+	@Override
+	public DataSource getDataSource() {
+		return this.dataSource;
 	}
 }

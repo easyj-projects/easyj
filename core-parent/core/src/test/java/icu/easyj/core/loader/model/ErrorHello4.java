@@ -23,7 +23,7 @@ import icu.easyj.core.loader.TestServiceLoaderValidator;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello4", order = Integer.MAX_VALUE, validators = TestServiceLoaderValidator.class)
+@LoadLevel(name = "ErrorHello4", validators = TestServiceLoaderValidator.class)
 public class ErrorHello4 implements Hello {
 
 	@Override

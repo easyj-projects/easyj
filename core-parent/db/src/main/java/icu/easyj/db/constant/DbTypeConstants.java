@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.config;
+package icu.easyj.db.constant;
 
 /**
- * 全局配置默认值常用
+ * 数据库类型常量
  *
  * @author wangliang181230
- * @see GlobalConfigs#getConfig(Object, Object)
  */
-public interface GlobalConfigDefaultValues {
+public interface DbTypeConstants {
 
-	/**
-	 * 默认数据库类型
-	 * 配置项：easyj.global.configs.db-type
-	 */
-	String DB_TYPE = "mysql";
+	String MYSQL = "mysql";
+	String ORACLE = "oracle";
 }

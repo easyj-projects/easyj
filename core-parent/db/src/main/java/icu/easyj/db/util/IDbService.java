@@ -23,6 +23,7 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import icu.easyj.core.util.IOUtils;
+import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.exception.DbDataNotFoundException;
 import icu.easyj.db.exception.DbException;
 import org.springframework.lang.NonNull;
@@ -32,7 +33,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-public interface IDbService {
+public interface IDbService extends IDbDialect {
 
 	/**
 	 * 获取对应的数据源
@@ -40,22 +41,6 @@ public interface IDbService {
 	 * @return 对应的数据源
 	 */
 	DataSource getDataSource();
-
-	/**
-	 * 获取数据库当前时间的SQL（不同数据库SQL语句不同）
-	 *
-	 * @return 获取时间SQL
-	 */
-	@NonNull
-	String getTimeSql();
-
-	/**
-	 * 获取数据库版本号的SQL
-	 *
-	 * @return 获取版本号SQL
-	 */
-	@NonNull
-	String getVersionSql();
 
 	/**
 	 * 获取数据库的当前时间

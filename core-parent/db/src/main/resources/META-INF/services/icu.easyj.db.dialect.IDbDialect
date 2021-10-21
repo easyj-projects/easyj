@@ -1,0 +1,2 @@
+icu.easyj.db.dialect.impls.MySqlDbDialect
+icu.easyj.db.dialect.impls.OracleDbDialect

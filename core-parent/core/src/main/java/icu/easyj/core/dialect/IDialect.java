@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
+package icu.easyj.core.dialect;
 
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import java.io.Serializable;
 
 /**
- * The type Error hello 2.
+ * 方言
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello2")
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
-public class ErrorHello2 implements Hello {
-
-	@Override
-	public String say() {
-		return "error hello2!";
-	}
+public interface IDialect extends Serializable {
 }

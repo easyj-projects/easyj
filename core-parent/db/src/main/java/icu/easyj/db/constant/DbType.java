@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.config;
+package icu.easyj.db.constant;
 
 /**
- * 全局配置键，用于 {@link GlobalConfigs#getConfig} 方法
+ * 数据库类型枚举
  *
  * @author wangliang181230
- * @see GlobalConfigs#getConfig(Object)
- * @see GlobalConfigs#getConfig(Object, Object)
  */
-public interface GlobalConfigKeys {
+public enum DbType {
 
-	String DB_TYPE = "db-type";
+	MYSQL,
+
+	ORACLE;
+
 }

@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.core.Ordered;
+
 /**
  * The interface Load level.
  * 注：从阿里的seata项目中复制过来的。
@@ -43,7 +45,7 @@ public @interface LoadLevel {
 	 *
 	 * @return the int
 	 */
-	int order() default 0;
+	int order() default Ordered.LOWEST_PRECEDENCE;
 
 	/**
 	 * Scope enum.
