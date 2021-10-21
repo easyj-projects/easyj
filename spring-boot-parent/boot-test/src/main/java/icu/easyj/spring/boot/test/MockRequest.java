@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import icu.easyj.core.util.JSONUtils;
+import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.test.exception.TestException;

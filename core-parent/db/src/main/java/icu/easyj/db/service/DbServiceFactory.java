@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util;
+package icu.easyj.db.service;
 
 import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.loader.EnhancedServiceNotFoundException;
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.db.util.DbUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -30,6 +34,8 @@ import org.springframework.util.Assert;
  * @see IDbService
  */
 public abstract class DbServiceFactory {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(DbServiceFactory.class);
 
 	/**
 	 * DbService实现类缓存
@@ -48,8 +54,15 @@ public abstract class DbServiceFactory {
 
 		return MapUtils.computeIfAbsent(DB_SERVICE_MAP, dataSource, ds -> {
 			String dbType = DbUtils.getDbType(dataSource);
-			return EnhancedServiceLoader.load(IDbService.class, dbType.toLowerCase(),
-					new Class[]{DataSource.class}, new Object[]{dataSource});
+			Class<?>[] argTypes = new Class[]{DataSource.class};
+			Object[] args = new Object[]{dataSource};
+			try {
+				return EnhancedServiceLoader.load(IDbService.class, dbType, argTypes, args);
+			} catch (EnhancedServiceNotFoundException e) {
+				LOGGER.error("未找到数据库 '{}' 的服务，请使用 `{}` 的方式自行实现，参照MySQL服务实现类：MySqlDbServiceImpl",
+						dbType, EnhancedServiceLoader.class.getSimpleName());
+				throw new EnhancedServiceNotFoundException("未找到数据库 '" + dbType + "' 的服务", e);
+			}
 		});
 	}
 }

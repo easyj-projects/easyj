@@ -20,8 +20,9 @@ import java.util.Date;
 import cn.hutool.core.lang.Assert;
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.json.IJSONService;
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
-import icu.easyj.core.util.JSONUtils;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
@@ -40,6 +41,10 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
+import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
+import static icu.easyj.core.loader.ServiceProviders.JACKSON;
+
 /**
  * 基于百度云DWZ实现的 {@link IDwzTemplate} 接口
  *
@@ -48,6 +53,12 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 public class BaiduDwzTemplateImpl implements IDwzTemplate {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaiduDwzTemplateImpl.class);
+
+	/**
+	 * JSON服务实现
+	 */
+	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.loadBySupportNames(IJSONService.class, FASTJSON, JACKSON, HUTOOL);
+
 
 	/**
 	 * DWZ配置信息
@@ -118,7 +129,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			}
 
 			// 解析响应JSON
-			BaiduDwzResponse resp = JSONUtils.toBean(respStr, BaiduDwzResponse.class);
+			BaiduDwzResponse resp = JSON_SERVICE.toBean(respStr, BaiduDwzResponse.class);
 			if (!resp.isSuccess()) {
 				BaiduDwzErrorType errorType = resp.getErrorType();
 				String errorCodeAndMessage = resp.getErrorCodeAndMessage();

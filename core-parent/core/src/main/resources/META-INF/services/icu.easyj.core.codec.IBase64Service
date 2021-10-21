@@ -1,0 +1,3 @@
+icu.easyj.core.codec.impls.Jdk8Base64ServiceImpl
+icu.easyj.core.codec.impls.Jdk9To15Base64ServiceImpl
+icu.easyj.core.codec.impls.Jdk16ToLatestBase64ServiceImpl

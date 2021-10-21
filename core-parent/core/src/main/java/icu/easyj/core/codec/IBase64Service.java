@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.exception;
+package icu.easyj.core.codec;
+
+import org.springframework.lang.NonNull;
 
 /**
- * JSON解析异常
+ * Base64相关接口
  *
  * @author wangliang181230
  */
-public class JSONParseException extends BaseRuntimeException {
-	private static final long serialVersionUID = 1L;
+public interface IBase64Service {
 
-	public JSONParseException(String message) {
-		super(message);
-	}
-
-	public JSONParseException(String message, String errorCode) {
-		super(message, errorCode);
-	}
-
-	public JSONParseException(String message, Throwable cause) {
-		super(message, "CONVERT_FAILED", cause);
-	}
-
-	public JSONParseException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
-	}
+	/**
+	 * 判断是否为Base64串
+	 *
+	 * @param cs 字符串
+	 * @return 是否为Base64串
+	 */
+	boolean isBase64(@NonNull CharSequence cs);
 }

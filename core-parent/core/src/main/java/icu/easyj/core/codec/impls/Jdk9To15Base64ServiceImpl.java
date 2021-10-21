@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.base64.impls;
+package icu.easyj.core.codec.impls;
 
+import icu.easyj.core.codec.Base64Utils;
+import icu.easyj.core.codec.IBase64Service;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
-import icu.easyj.core.util.Base64Utils;
-import icu.easyj.core.util.IBase64Service;
 import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
 

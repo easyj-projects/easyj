@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.json;
 
 import java.util.List;
 
@@ -42,10 +42,10 @@ public interface IJSONService {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的对象
-	 * @throws Exception 转换异常
+	 * @throws JSONParseException 转换异常
 	 */
 	@NonNull
-	<T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws Exception;
+	<T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException;
 
 	/**
 	 * 转换为指定类型的列表
@@ -54,19 +54,19 @@ public interface IJSONService {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的列表对象
-	 * @throws Exception 转换异常
+	 * @throws JSONParseException 转换异常
 	 */
 	@NonNull
-	<T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws Exception;
+	<T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException;
 
 	/**
 	 * 转换为字符串
 	 *
 	 * @param obj 对象
 	 * @return JSON字符串
-	 * @throws Exception 转换异常
+	 * @throws JSONParseException 转换异常
 	 */
 	@NonNull
 	@SuppressWarnings("all")
-	String toJSONString(@Nullable Object obj) throws Exception;
+	String toJSONString(@Nullable Object obj) throws JSONParseException;
 }

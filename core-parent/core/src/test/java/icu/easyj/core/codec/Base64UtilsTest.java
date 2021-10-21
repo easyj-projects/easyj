@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.codec;
 
 import java.nio.charset.StandardCharsets;
 
@@ -23,9 +23,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 
 /**
  * {@link Base64Utils} 测试类
@@ -139,11 +142,11 @@ class Base64UtilsTest {
 		// 校验类型
 		JavaInfo javaInfo = SystemUtil.getJavaInfo();
 		if (javaInfo.getVersionFloat() < 1.9) {
-			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk8Base64ServiceImpl", base64Service.getClass().getName());
+			Assertions.assertEquals("icu.easyj.core.codec.impls.Jdk8Base64ServiceImpl", base64Service.getClass().getName());
 		} else if (javaInfo.getVersionFloat() < 16) {
-			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk9To15Base64ServiceImpl", base64Service.getClass().getName());
+			Assertions.assertEquals("icu.easyj.core.codec.impls.Jdk9To15Base64ServiceImpl", base64Service.getClass().getName());
 		} else {
-			Assertions.assertEquals("icu.easyj.core.util.base64.impls.Jdk16ToLatestBase64ServiceImpl", base64Service.getClass().getName());
+			Assertions.assertEquals("icu.easyj.core.codec.impls.Jdk16ToLatestBase64ServiceImpl", base64Service.getClass().getName());
 		}
 
 		// case: isBase64(str) == true && 长
@@ -199,7 +202,7 @@ class Base64UtilsTest {
 				// hutool函数
 				() -> {
 					Base64.isBase64(cs);
-					return "hutool";
+					return HUTOOL;
 				});
 
 		// case: 性能比Hutool高

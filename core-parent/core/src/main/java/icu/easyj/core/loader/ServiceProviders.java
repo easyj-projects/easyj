@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util.impls;
-
-import javax.sql.DataSource;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnClass;
-
-import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
-import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
+package icu.easyj.core.loader;
 
 /**
- * MySql数据库服务
+ * 服务提供方名称
  *
  * @author wangliang181230
  */
-@LoadLevel(name = MYSQL, order = 10)
-@DependsOnClass(name = MYSQL_DRIVER)
-class MySqlDbServiceImpl extends CommonDbServiceImpl {
+public interface ServiceProviders {
 
-	public MySqlDbServiceImpl(DataSource dataSource) {
-		super(dataSource);
-	}
+	/**
+	 * 提供的服务有：JSON服务
+	 */
+	String FASTJSON = "fastjson";
+
+	/**
+	 * 提供的服务有：JSON服务
+	 */
+	String JACKSON = "jackson";
+
+	/**
+	 * 提供的服务有：JSON、加密算法
+	 */
+	String HUTOOL = "hutool";
 }

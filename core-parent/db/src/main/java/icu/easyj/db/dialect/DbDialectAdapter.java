@@ -15,6 +15,8 @@
  */
 package icu.easyj.db.dialect;
 
+import java.util.function.Supplier;
+
 import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
 
@@ -28,6 +30,10 @@ public class DbDialectAdapter implements IDbDialect {
 	@NonNull
 	protected final IDbDialect dbDialect;
 
+
+	public DbDialectAdapter(Supplier<IDbDialect> dbDialectSupplier) {
+		this(dbDialectSupplier.get());
+	}
 
 	public DbDialectAdapter(IDbDialect dbDialect) {
 		Assert.notNull(dbDialect, "'dbDialect' must not be null");

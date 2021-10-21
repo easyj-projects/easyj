@@ -17,8 +17,8 @@ package icu.easyj.web.param.crypto.impls;
 
 import java.nio.charset.StandardCharsets;
 
+import icu.easyj.core.codec.Base64Utils;
 import icu.easyj.core.exception.ConfigurationException;
-import icu.easyj.core.util.Base64Utils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.CryptoFactory;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;

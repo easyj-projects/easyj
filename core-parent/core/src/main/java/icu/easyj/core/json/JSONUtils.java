@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.json;
 
 import java.util.List;
 
-import icu.easyj.core.exception.JSONParseException;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -33,7 +32,7 @@ public abstract class JSONUtils {
 	/**
 	 * JSON服务实现
 	 */
-	private static final IJSONService SERVICE = EnhancedServiceLoader.load(IJSONService.class);
+	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class);
 
 
 	/**
@@ -43,7 +42,7 @@ public abstract class JSONUtils {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的对象
-	 * @throws icu.easyj.core.exception.JSONParseException JSON解析失败
+	 * @throws JSONParseException JSON解析失败
 	 */
 	public static <T> T toBean(String text, @NonNull Class<T> targetClazz) {
 		if (text == null) {
@@ -52,11 +51,7 @@ public abstract class JSONUtils {
 
 		Assert.notNull(targetClazz, "'targetClazz' must not be null");
 
-		try {
-			return SERVICE.toBean(text, targetClazz);
-		} catch (Exception e) {
-			throw new JSONParseException("解析JSON失败", e);
-		}
+		return JSON_SERVICE.toBean(text, targetClazz);
 	}
 
 	/**
@@ -66,7 +61,7 @@ public abstract class JSONUtils {
 	 * @param targetClazz 目标类型
 	 * @param <T>         目标类
 	 * @return 目标类型的列表对象
-	 * @throws icu.easyj.core.exception.JSONParseException JSON解析失败
+	 * @throws JSONParseException JSON解析失败
 	 */
 	public static <T> List<T> toList(String text, @NonNull Class<T> targetClazz) {
 		if (text == null) {
@@ -75,11 +70,7 @@ public abstract class JSONUtils {
 
 		Assert.notNull(targetClazz, "'targetClazz' must not be null");
 
-		try {
-			return SERVICE.toList(text, targetClazz);
-		} catch (Exception e) {
-			throw new JSONParseException("解析JSON失败", e);
-		}
+		return JSON_SERVICE.toList(text, targetClazz);
 	}
 
 	/**
@@ -87,7 +78,7 @@ public abstract class JSONUtils {
 	 *
 	 * @param obj 对象
 	 * @return JSON字符串
-	 * @throws icu.easyj.core.exception.JSONParseException JSON解析失败
+	 * @throws JSONParseException JSON解析失败
 	 */
 	@NonNull
 	@SuppressWarnings("all")
@@ -96,10 +87,6 @@ public abstract class JSONUtils {
 			return "null";
 		}
 
-		try {
-			return SERVICE.toJSONString(obj);
-		} catch (Exception e) {
-			throw new JSONParseException("解析JSON失败", e);
-		}
+		return JSON_SERVICE.toJSONString(obj);
 	}
 }

@@ -17,7 +17,7 @@ package icu.easyj.spring.boot.test;
 
 import java.io.UnsupportedEncodingException;
 
-import icu.easyj.core.util.JSONUtils;
+import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;

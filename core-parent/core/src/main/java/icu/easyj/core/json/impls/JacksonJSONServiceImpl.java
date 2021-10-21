@@ -13,50 +13,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.json.impls;
+package icu.easyj.core.json.impls;
 
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import icu.easyj.core.json.IJSONService;
+import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
-import icu.easyj.core.util.IJSONService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+
+import static icu.easyj.core.loader.ServiceProviders.JACKSON;
 
 /**
  * 基于 jackson 实现的JSON服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "jackson", order = 20)
+@LoadLevel(name = JACKSON, order = 20)
 @DependsOnClass(ObjectMapper.class)
 class JacksonJSONServiceImpl implements IJSONService {
 
 	private final ObjectMapper mapper = new ObjectMapper();
 
+
+	@NonNull
+	@Override
+	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+		try {
+			return mapper.readValue(text, targetClazz);
+		} catch (Exception e) {
+			throw new JSONParseException("JSON字符串转Bean失败", e);
+		}
+	}
+
+	@NonNull
+	@Override
+	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+		try {
+			return mapper.readerForListOf(targetClazz).readValue(text);
+		} catch (Exception e) {
+			throw new JSONParseException("JSON字符串转List失败", e);
+		}
+	}
+
+	@NonNull
+	@Override
+	public String toJSONString(@Nullable Object obj) throws JSONParseException {
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new JSONParseException("obj转JSON字符串失败", e);
+		}
+	}
+
+
 	@NonNull
 	@Override
 	public String getName() {
-		return "jackson";
-	}
-
-	@NonNull
-	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JsonProcessingException {
-		return mapper.readValue(text, targetClazz);
-	}
-
-	@NonNull
-	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JsonProcessingException {
-		return mapper.readerForListOf(targetClazz).readValue(text);
-	}
-
-	@NonNull
-	@Override
-	public String toJSONString(@Nullable Object obj) throws JsonProcessingException {
-		return mapper.writeValueAsString(obj);
+		return JACKSON;
 	}
 }

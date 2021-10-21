@@ -46,6 +46,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_FILTER_PREFIX;
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_HANDLER_PREFIX;
 
@@ -133,7 +134,7 @@ public class EasyjParamCryptoAutoConfiguration {
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass({com.alibaba.fastjson.JSON.class})
-	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = "fastjson") // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
+	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = FASTJSON) // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
 	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration implements WebMvcConfigurer {
 
 		private final ParamCryptoFilter paramCryptoFilter;

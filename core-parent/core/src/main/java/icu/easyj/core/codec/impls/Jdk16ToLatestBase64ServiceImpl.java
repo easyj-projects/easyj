@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.codec.impls;
 
+import icu.easyj.core.codec.Base64Utils;
+import icu.easyj.core.codec.IBase64Service;
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import org.springframework.lang.NonNull;
 
 /**
- * Base64相关接口
+ * JDK16及以上时，{@link IBase64Service} 的实现
  *
  * @author wangliang181230
  */
-public interface IBase64Service {
+@LoadLevel(name = "JDK16~Latest-Base64", order = 1600)
+@DependsOnJavaVersion(min = 16F)
+class Jdk16ToLatestBase64ServiceImpl implements IBase64Service {
 
-	/**
-	 * 判断是否为Base64串
-	 *
-	 * @param cs 字符串
-	 * @return 是否为Base64串
-	 */
-	boolean isBase64(@NonNull CharSequence cs);
+	@Override
+	public boolean isBase64(@NonNull CharSequence cs) {
+		// 由于Jdk16及以上版本禁止了很多非法访问，所以没办法获取String.value和coder的值，所以只能直接
+		return Base64Utils.isBase64Chars(cs.toString().toCharArray());
+	}
 }

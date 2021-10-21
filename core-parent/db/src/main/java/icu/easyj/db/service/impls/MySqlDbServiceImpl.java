@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.util.impls;
+package icu.easyj.db.service.impls;
 
 import javax.sql.DataSource;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 
-import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
-import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
+import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
 /**
- * Oracle数据库服务
+ * MySql数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = ORACLE, order = 20)
-@DependsOnClass(name = ORACLE_DRIVER)
-class OracleDbServiceImpl extends CommonDbServiceImpl {
+@LoadLevel(name = MYSQL, order = 10)
+@DependsOnClass(name = MYSQL_DRIVER)
+class MySqlDbServiceImpl extends CommonDbServiceImpl {
 
-	public OracleDbServiceImpl(DataSource dataSource) {
+	public MySqlDbServiceImpl(DataSource dataSource) {
 		super(dataSource);
 	}
 }

@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * The type Enhanced service loader.
@@ -179,6 +180,56 @@ public abstract class EnhancedServiceLoader {
 	 */
 	public static <S> List<S> loadAll(Class<S> serviceClass, Class<?>[] argsType, Object[] args) {
 		return InnerEnhancedServiceLoader.getServiceLoader(serviceClass).loadAll(argsType, args, findClassLoader());
+	}
+
+	/**
+	 * @param serviceClass the service
+	 * @param supportNames the support service names
+	 * @param <S>          the type of the service
+	 * @return service the service
+	 */
+	public static <S> S loadBySupportNames(Class<S> serviceClass, @NonNull String... supportNames) {
+		Assert.notNull(supportNames, "'supportNames' must not be null");
+		if (supportNames.length == 1) {
+			return load(serviceClass, supportNames[0]);
+		}
+		List<S> serviceList = loadAll(serviceClass);
+		return match(serviceClass, serviceList, supportNames);
+	}
+
+	/**
+	 * @param serviceClass the service
+	 * @param argsType     the args type
+	 * @param args         the args
+	 * @param supportNames the support service names
+	 * @param <S>          the type of the service
+	 * @return service the service
+	 */
+	public static <S> S loadBySupportNames(Class<S> serviceClass, Class<?>[] argsType, Object[] args, @NonNull String... supportNames) {
+		Assert.notNull(supportNames, "'supportNames' must not be null");
+		if (supportNames.length == 1) {
+			return load(serviceClass, supportNames[0], argsType, args);
+		}
+		List<S> serviceList = loadAll(serviceClass, argsType, args);
+		return match(serviceClass, serviceList, supportNames);
+	}
+
+	private static <S> S match(Class<S> serviceClass, List<S> serviceList, String... supportNames) {
+		if (CollectionUtils.isEmpty(serviceList)) {
+			throw new EnhancedServiceNotFoundException("not found service provider for: " + serviceClass.getName());
+		}
+
+		for (S service : serviceList) {
+			LoadLevel loadLevel = service.getClass().getAnnotation(LoadLevel.class);
+
+			for (String supportName : supportNames) {
+				if (loadLevel.name().equalsIgnoreCase(supportName)) {
+					return service;
+				}
+			}
+		}
+
+		throw new EnhancedServiceNotFoundException("No services were matched for: " + serviceClass.getName());
 	}
 
 	/**

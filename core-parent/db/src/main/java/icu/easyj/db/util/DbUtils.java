@@ -23,6 +23,8 @@ import javax.sql.DataSource;
 
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.db.exception.DbException;
+import icu.easyj.db.service.DbServiceFactory;
+import icu.easyj.db.service.IDbService;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -44,10 +46,10 @@ public abstract class DbUtils {
 
 	/**
 	 * 从数据源中获取数据库类型<br>
-	 * 值域：MySQL、Oracle、...（注意大小写）（TODO: 其他数据库待补充）
+	 * 值域：mysql、oracle、...（TODO: 其他数据库待补充）
 	 *
 	 * @param dataSource 数据源
-	 * @return 数据库类型
+	 * @return 数据库类型（全部转为小写字母）
 	 */
 	@NonNull
 	public static String getDbType(@NonNull DataSource dataSource) {
@@ -56,7 +58,7 @@ public abstract class DbUtils {
 		return MapUtils.computeIfAbsent(DB_TYPE_MAP, dataSource, ds -> {
 			try (Connection con = dataSource.getConnection()) {
 				DatabaseMetaData metaData = con.getMetaData();
-				return metaData.getDatabaseProductName();
+				return metaData.getDatabaseProductName().toLowerCase();
 			} catch (SQLException e) {
 				throw new DbException("获取数据库类型失败", e);
 			}

@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.base64.impls;
+package icu.easyj.db.service.impls;
+
+import javax.sql.DataSource;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJavaVersion;
-import icu.easyj.core.util.Base64Utils;
-import icu.easyj.core.util.IBase64Service;
-import org.springframework.lang.NonNull;
+import icu.easyj.core.loader.condition.DependsOnClass;
+
+import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
 
 /**
- * JDK16及以上时，{@link IBase64Service} 的实现
+ * Oracle数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK16~Latest-Base64", order = 1600)
-@DependsOnJavaVersion(min = 16F)
-class Jdk16ToLatestBase64ServiceImpl implements IBase64Service {
+@LoadLevel(name = ORACLE, order = 20)
+@DependsOnClass(name = ORACLE_DRIVER)
+class OracleDbServiceImpl extends CommonDbServiceImpl {
 
-	@Override
-	public boolean isBase64(@NonNull CharSequence cs) {
-		// 由于Jdk16及以上版本禁止了很多非法访问，所以没办法获取String.value和coder的值，所以只能直接
-		return Base64Utils.isBase64Chars(cs.toString().toCharArray());
+	public OracleDbServiceImpl(DataSource dataSource) {
+		super(dataSource);
 	}
 }

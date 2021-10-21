@@ -1,3 +1,0 @@
-icu.easyj.core.util.base64.impls.Jdk8Base64ServiceImpl
-icu.easyj.core.util.base64.impls.Jdk9To15Base64ServiceImpl
-icu.easyj.core.util.base64.impls.Jdk16ToLatestBase64ServiceImpl

@@ -32,12 +32,14 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
+
 /**
  * 基于Hutool的加密算法生成器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "hutool", order = 100)
+@LoadLevel(name = HUTOOL, order = 100)
 public class HutoolCryptoGenerator implements ICryptoGenerator {
 
 	/**

@@ -13,46 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util.json.impls;
+package icu.easyj.core.json.impls;
 
 import java.util.List;
 
 import cn.hutool.json.JSONUtil;
+import icu.easyj.core.json.IJSONService;
+import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.util.IJSONService;
-import org.springframework.core.Ordered;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+
+import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 
 /**
  * 基于 Hutool 实现的JSON服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "hutool")
+@LoadLevel(name = HUTOOL)
 class HutoolJSONServiceImpl implements IJSONService {
 
 	@NonNull
 	@Override
+	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+		try {
+			return JSONUtil.toBean(text, targetClazz);
+		} catch (Exception e) {
+			throw new JSONParseException("JSON字符串转Bean失败", e);
+		}
+	}
+
+	@NonNull
+	@Override
+	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+		try {
+			return JSONUtil.toList(text, targetClazz);
+		} catch (Exception e) {
+			throw new JSONParseException("JSON字符串转List失败", e);
+		}
+	}
+
+	@NonNull
+	@Override
+	public String toJSONString(@Nullable Object obj) throws JSONParseException {
+		try {
+			return JSONUtil.toJsonStr(obj);
+		} catch (Exception e) {
+			throw new JSONParseException("obj转JSON字符串失败", e);
+		}
+	}
+
+
+	@NonNull
+	@Override
 	public String getName() {
-		return "hutool";
-	}
-
-	@NonNull
-	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) {
-		return JSONUtil.toBean(text, targetClazz);
-	}
-
-	@NonNull
-	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) {
-		return JSONUtil.toList(text, targetClazz);
-	}
-
-	@NonNull
-	@Override
-	public String toJSONString(@Nullable Object obj) {
-		return JSONUtil.toJsonStr(obj);
+		return HUTOOL;
 	}
 }
