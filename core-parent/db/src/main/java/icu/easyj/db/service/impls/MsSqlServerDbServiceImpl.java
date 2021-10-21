@@ -13,18 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.constant;
+package icu.easyj.db.service.impls;
+
+import javax.sql.DataSource;
+
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.condition.DependsOnClass;
+
+import static icu.easyj.db.constant.DbDriverConstants.MS_SQL_SERVER_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.MS_SQL_SERVER;
 
 /**
- * 数据库驱动常量
+ * MS SQL SERVER 数据库服务
  *
  * @author wangliang181230
  */
-public interface DbDriverConstants {
+@LoadLevel(name = MS_SQL_SERVER, order = 30)
+@DependsOnClass(name = MS_SQL_SERVER_DRIVER)
+class MsSqlServerDbServiceImpl extends CommonDbServiceImpl {
 
-	String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
-
-	String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
-
-	String MS_SQL_SERVER_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	public MsSqlServerDbServiceImpl(DataSource dataSource) {
+		super(dataSource);
+	}
 }

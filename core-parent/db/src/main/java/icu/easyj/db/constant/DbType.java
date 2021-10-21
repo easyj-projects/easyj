@@ -26,5 +26,7 @@ public enum DbType {
 
 	ORACLE,
 
+	MS_SQL_SERVER,
+
 	;
 }

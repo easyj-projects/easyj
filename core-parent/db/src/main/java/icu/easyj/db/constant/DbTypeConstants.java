@@ -23,5 +23,8 @@ package icu.easyj.db.constant;
 public interface DbTypeConstants {
 
 	String MYSQL = "mysql";
+
 	String ORACLE = "oracle";
+
+	String MS_SQL_SERVER = "ms_sql_server";
 }

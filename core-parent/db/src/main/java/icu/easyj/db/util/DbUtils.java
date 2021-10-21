@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.db.constant.DbTypeConstants;
 import icu.easyj.db.exception.DbException;
 import icu.easyj.db.service.DbServiceFactory;
 import icu.easyj.db.service.IDbService;
@@ -58,11 +59,20 @@ public abstract class DbUtils {
 		return MapUtils.computeIfAbsent(DB_TYPE_MAP, dataSource, ds -> {
 			try (Connection con = dataSource.getConnection()) {
 				DatabaseMetaData metaData = con.getMetaData();
-				return metaData.getDatabaseProductName().toLowerCase();
+				return convertDbType(metaData.getDatabaseProductName().toLowerCase());
 			} catch (SQLException e) {
 				throw new DbException("获取数据库类型失败", e);
 			}
 		});
+	}
+
+	private static String convertDbType(String dbType) {
+		// MS SQL Server返回的太长了，按自定义的常量返回
+		if ("microsoft sql server".equalsIgnoreCase(dbType)) {
+			return DbTypeConstants.MS_SQL_SERVER;
+		}
+
+		return dbType;
 	}
 
 	/**
