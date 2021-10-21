@@ -30,7 +30,6 @@ import icu.easyj.db.util.IDbService;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "common")
 public class CommonDbServiceImpl extends DbDialectAdapter implements IDbService {
 
 	protected final DataSource dataSource;
