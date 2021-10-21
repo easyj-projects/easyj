@@ -75,7 +75,7 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 	 */
 	@Override
 	@NonNull
-	public ITickClock createClock(DataSource dataSource) {
+	public ITickClock createClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		// 根据数据库类型，获取对应的实现

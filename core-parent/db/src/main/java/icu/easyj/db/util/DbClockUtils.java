@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 import icu.easyj.core.clock.ITickClock;
 import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -44,17 +43,6 @@ public abstract class DbClockUtils {
 		return DbClockFactory.getInstance();
 	}
 
-	/**
-	 * 创建数据库时钟
-	 *
-	 * @param dataSource 数据源
-	 * @return 时钟
-	 */
-	@NonNull
-	private static ITickClock createClock(DataSource dataSource) {
-		return getFactory().createClock(dataSource);
-	}
-
 	//endregion
 
 
@@ -67,14 +55,9 @@ public abstract class DbClockUtils {
 	 * @return 时钟
 	 */
 	@NonNull
-	public static ITickClock getClock(DataSource dataSource) {
+	public static ITickClock getClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
-
-		if (dataSource == primaryDataSource) {
-			return primaryClock;
-		} else {
-			return getFactory().getClock(dataSource);
-		}
+		return getFactory().getClock(dataSource);
 	}
 
 	/**
@@ -84,14 +67,9 @@ public abstract class DbClockUtils {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	public static ITickClock refreshClock(DataSource dataSource) {
+	public static ITickClock refreshClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
-
-		if (dataSource == primaryDataSource) {
-			return setPrimaryDataSource(dataSource);
-		} else {
-			return getFactory().getClock(dataSource);
-		}
+		return getFactory().getClock(dataSource);
 	}
 
 	/**
@@ -101,7 +79,7 @@ public abstract class DbClockUtils {
 	 * @return now 当前时间
 	 */
 	@NonNull
-	public static Date now(DataSource dataSource) {
+	public static Date now(@NonNull DataSource dataSource) {
 		return getClock(dataSource).now();
 	}
 
@@ -111,7 +89,7 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeMillis 毫秒数
 	 */
-	public static long currentTimeMillis(DataSource dataSource) {
+	public static long currentTimeMillis(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeMillis();
 	}
 
@@ -121,7 +99,7 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeMicros 微秒数
 	 */
-	public static long currentTimeMicros(DataSource dataSource) {
+	public static long currentTimeMicros(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeMicros();
 	}
 
@@ -132,110 +110,61 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeNanos 纳秒数
 	 */
-	public static long currentTimeNanos(DataSource dataSource) {
+	public static long currentTimeNanos(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeNanos();
 	}
 
 	//endregion
 
 
-	//region 主要数据库时钟相关方法
-
-	/**
-	 * 主要的数据源
-	 */
-	private static DataSource primaryDataSource;
-
-	/**
-	 * 主要数据库时钟
-	 */
-	private static ITickClock primaryClock;
-
-	/**
-	 * 设置主要数据源及其时钟（线程安全的）
-	 *
-	 * @param primaryDataSource 主要数据源
-	 * @param primaryClock      主要数据库时钟
-	 */
-	private static synchronized void setPrimaryDataSourceClock(DataSource primaryDataSource, ITickClock primaryClock) {
-		DbClockUtils.primaryDataSource = primaryDataSource;
-		DbClockUtils.primaryClock = primaryClock;
-	}
-
-	/**
-	 * 获取主要数据源
-	 *
-	 * @return primaryDataSource 主要数据源
-	 */
-	@Nullable
-	public static DataSource getPrimaryDataSource() {
-		return primaryDataSource;
-	}
-
-	/**
-	 * 设置主要数据源及其时钟
-	 *
-	 * @param primaryDataSource 主要数据源
-	 * @return primaryClock 主要数据库时钟
-	 */
-	public static ITickClock setPrimaryDataSource(DataSource primaryDataSource) {
-		ITickClock primaryClock = createClock(primaryDataSource);
-		setPrimaryDataSourceClock(primaryDataSource, primaryClock);
-		return primaryClock;
-	}
+	//region 主要数据库时钟相关方法（使用前提是设置过主要数据源：`PrimaryDataSourceHolder.set(primaryDataSource)` ）
 
 	/**
 	 * 获取主要数据库时钟
 	 *
 	 * @return primaryClock 主要数据库时钟
 	 */
-	@Nullable
+	@NonNull
 	public static ITickClock getClock() {
-		return primaryClock;
+		return getClock(PrimaryDataSourceHolder.get());
 	}
 
 	/**
 	 * 刷新数据库时钟并返回新时钟
 	 *
 	 * @return newClock 时钟
-	 * @throws RuntimeException 当primaryDataSource从未设置过时，会抛出该异常
 	 */
 	@NonNull
-	public static synchronized ITickClock refreshClock() {
-		if (primaryDataSource == null) {
-			throw new RuntimeException("`primaryDataSource`未设置，请先设置！");
-		}
-		return setPrimaryDataSource(primaryDataSource);
+	public static ITickClock refreshClock() {
+		return refreshClock(PrimaryDataSourceHolder.get());
 	}
 
 	/**
 	 * 主要数据源的当前时间
 	 *
 	 * @return now 当前时间
-	 * @throws NullPointerException 如果`primaryClock`为空，将抛出该异常
 	 */
+	@NonNull
 	public static Date now() {
-		return primaryClock.now();
+		return now(PrimaryDataSourceHolder.get());
 	}
 
 	/**
 	 * 主要数据源的当前毫秒数
 	 *
 	 * @return timeMillis 毫秒数
-	 * @throws NullPointerException 如果`primaryClock`为空，将抛出该异常
 	 */
 	public static long currentTimeMillis() {
-		return primaryClock.currentTimeMillis();
+		return currentTimeMillis(PrimaryDataSourceHolder.get());
 	}
 
 	/**
 	 * 主要数据源的当前微秒数
 	 *
 	 * @return timeMicros 微秒数
-	 * @throws NullPointerException 如果`primaryClock`为空，将抛出该异常
 	 */
 	public static long currentTimeMicros() {
-		return primaryClock.currentTimeMicros();
+		return currentTimeMicros(PrimaryDataSourceHolder.get());
 	}
 
 	/**
@@ -243,10 +172,9 @@ public abstract class DbClockUtils {
 	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
 	 *
 	 * @return timeNanos 纳秒数
-	 * @throws NullPointerException 如果`primaryClock`为空，将抛出该异常
 	 */
 	public static long currentTimeNanos() {
-		return primaryClock.currentTimeNanos();
+		return currentTimeNanos(PrimaryDataSourceHolder.get());
 	}
 
 	//endregion
