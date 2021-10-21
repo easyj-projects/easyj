@@ -24,6 +24,7 @@ public enum DbType {
 
 	MYSQL,
 
-	ORACLE;
+	ORACLE,
 
+	;
 }
