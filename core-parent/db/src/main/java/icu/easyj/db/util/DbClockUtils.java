@@ -130,7 +130,7 @@ public abstract class DbClockUtils {
 	}
 
 	/**
-	 * 刷新数据库时钟并返回新时钟
+	 * 刷新主要数据库时钟并返回新时钟
 	 *
 	 * @return newClock 时钟
 	 */

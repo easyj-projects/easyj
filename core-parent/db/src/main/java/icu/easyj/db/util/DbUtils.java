@@ -45,6 +45,16 @@ public abstract class DbUtils {
 	private static final ConcurrentHashMap<DataSource, String> DB_TYPE_MAP = new ConcurrentHashMap<>();
 
 
+	@NonNull
+	private static String convertDbType(String dbType) {
+		// MS SQL Server返回的太长了，按自定义的常量返回
+		if ("microsoft sql server".equalsIgnoreCase(dbType)) {
+			return DbTypeConstants.MS_SQL_SERVER;
+		}
+
+		return dbType;
+	}
+
 	/**
 	 * 从数据源中获取数据库类型<br>
 	 * 值域：mysql、oracle、...（TODO: 其他数据库待补充）
@@ -66,26 +76,43 @@ public abstract class DbUtils {
 		});
 	}
 
-	private static String convertDbType(String dbType) {
-		// MS SQL Server返回的太长了，按自定义的常量返回
-		if ("microsoft sql server".equalsIgnoreCase(dbType)) {
-			return DbTypeConstants.MS_SQL_SERVER;
-		}
-
-		return dbType;
-	}
-
 	/**
 	 * 获取数据库版本号
 	 *
 	 * @param dataSource 数据源
 	 * @return 数据库版本号
 	 */
+	@NonNull
 	public static String getDbVersion(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.getVersion();
+	}
+
+	//endregion
+
+
+	//region 获取主要数据源对应数据库的信息
+
+	/**
+	 * 获取主要数据源对应数据库的类型
+	 *
+	 * @return 主要数据源对应的数据库类型
+	 */
+	@NonNull
+	public static String getDbType() {
+		return getDbType(PrimaryDataSourceHolder.get());
+	}
+
+	/**
+	 * 获取主要数据源对应数据库的版本号
+	 *
+	 * @return 主要数据源对应的数据库版本号
+	 */
+	@NonNull
+	public static String getDbVersion() {
+		return getDbVersion(PrimaryDataSourceHolder.get());
 	}
 
 	//endregion

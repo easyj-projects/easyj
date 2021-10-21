@@ -87,6 +87,7 @@ public interface IDbService extends IDbDialect {
 	 *
 	 * @return 数据库版本号
 	 */
+	@NonNull
 	default String getVersion() {
 		Connection conn = null;
 		PreparedStatement ps = null;
