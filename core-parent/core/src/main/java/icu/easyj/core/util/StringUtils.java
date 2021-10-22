@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.string.IStringService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;

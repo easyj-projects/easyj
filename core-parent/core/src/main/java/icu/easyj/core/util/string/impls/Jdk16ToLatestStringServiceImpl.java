@@ -19,7 +19,7 @@ import java.lang.annotation.Native;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
-import icu.easyj.core.util.IStringService;
+import icu.easyj.core.util.string.IStringService;
 import org.springframework.lang.NonNull;
 
 /**
