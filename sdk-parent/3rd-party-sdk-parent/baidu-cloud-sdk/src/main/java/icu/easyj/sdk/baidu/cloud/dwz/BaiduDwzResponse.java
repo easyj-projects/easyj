@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.hutool.core.annotation.Alias;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.Nullable;
 
@@ -30,14 +31,17 @@ import org.springframework.lang.Nullable;
 public class BaiduDwzResponse {
 
 	@JsonProperty("Code") // jackson键别名
+	@SerializedName("Code") // gson键别名
 	@Alias("Code") // hutool键别名
 	private Integer code;
 
 	@JsonProperty("ErrMsg") // jackson键别名
+	@SerializedName("ErrMsg") // gson键别名
 	@Alias("ErrMsg") // hutool键别名
 	private String errMsg;
 
 	@JsonProperty("ShortUrls") // jackson键别名
+	@SerializedName("ShortUrls") // gson键别名
 	@Alias("ShortUrls") // hutool键别名
 	private List<BaiduDwzResponseData> shortUrls;
 

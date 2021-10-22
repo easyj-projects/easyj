@@ -22,6 +22,7 @@ import cn.hutool.core.annotation.Alias;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * 测试用户类
@@ -32,17 +33,20 @@ public class TestUser {
 
 	@JSONField(name = "Name") // fastjson键别名
 	@JsonProperty("Name") // jackson键别名
+	@SerializedName("Name") // gson键别名
 	@Alias("Name") // hutool键别名
 	private String name;
 
 	@JSONField(name = "Age") // fastjson键别名
 	@JsonProperty("Age") // jackson键别名
+	@SerializedName("Age") // gson键别名
 	@Alias("Age") // hutool键别名
 	private Integer age;
 
 	@JSONField(name = "Birthday") // fastjson键别名
 	@JsonProperty("Birthday") // jackson键别名
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	@SerializedName("Birthday") // gson键别名
 	@Alias("Birthday") // hutool键别名
 	private Date birthday;
 

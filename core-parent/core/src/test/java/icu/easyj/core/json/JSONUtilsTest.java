@@ -22,14 +22,19 @@ import java.util.function.Supplier;
 
 import icu.easyj.core.enums.DateFormatType;
 import icu.easyj.core.loader.EnhancedServiceLoader;
-import icu.easyj.core.loader.ServiceProviders;
 import icu.easyj.core.modelfortest.TestUser;
 import icu.easyj.core.modelfortest.TestUser3;
 import icu.easyj.core.util.DateUtils;
+import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
+import static icu.easyj.core.loader.ServiceProviders.GSON;
+import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
+import static icu.easyj.core.loader.ServiceProviders.JACKSON;
 
 /**
  * {@link JSONUtils} 测试类
@@ -46,26 +51,30 @@ class JSONUtilsTest {
 	private static final String JSON3 = "{\"user_name\":\"某某人3\",\"user_age\":33,\"user_birthday\":\"1988-10-03\"}";
 	private static final String LIST_JSON = "[" + JSON1 + "," + JSON2 + "]";
 
-	private static final IJSONService DEFAULT = EnhancedServiceLoader.load(IJSONService.class);
+	private static final IJSONService DEFAULT_SERVICE = EnhancedServiceLoader.load(IJSONService.class);
 
-	private static final IJSONService FASTJSON = EnhancedServiceLoader.load(IJSONService.class, ServiceProviders.FASTJSON);
-	private static final IJSONService JACKSON = EnhancedServiceLoader.load(IJSONService.class, ServiceProviders.JACKSON);
-	private static final IJSONService HUTOOL = EnhancedServiceLoader.load(IJSONService.class, ServiceProviders.HUTOOL);
+	private static final IJSONService FASTJSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, FASTJSON);
+	private static final IJSONService JACKSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, JACKSON);
+	private static final IJSONService GSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, GSON);
+	private static final IJSONService HUTOOL_SERVICE = EnhancedServiceLoader.load(IJSONService.class, HUTOOL);
 
 	private static final List<IJSONService> SERVICES = EnhancedServiceLoader.loadAll(IJSONService.class);
 
 	@Test
 	void testServiceLoader() {
-		Assertions.assertEquals(DEFAULT, FASTJSON);
+		Assertions.assertEquals(DEFAULT_SERVICE, FASTJSON_SERVICE);
 
-		Assertions.assertEquals(FASTJSON, SERVICES.get(0));
-		Assertions.assertEquals("icu.easyj.core.json.impls.AlibabaFastJSONServiceImpl", FASTJSON.getClass().getName());
+		Assertions.assertEquals(FASTJSON_SERVICE, SERVICES.get(0));
+		Assertions.assertEquals("AlibabaFastJSONServiceImpl", FASTJSON_SERVICE.getClass().getSimpleName());
 
-		Assertions.assertEquals(JACKSON, SERVICES.get(1));
-		Assertions.assertEquals("icu.easyj.core.json.impls.JacksonJSONServiceImpl", JACKSON.getClass().getName());
+		Assertions.assertEquals(JACKSON_SERVICE, SERVICES.get(1));
+		Assertions.assertEquals("JacksonJSONServiceImpl", JACKSON_SERVICE.getClass().getSimpleName());
 
-		Assertions.assertEquals(HUTOOL, SERVICES.get(2));
-		Assertions.assertEquals("icu.easyj.core.json.impls.HutoolJSONServiceImpl", HUTOOL.getClass().getName());
+		Assertions.assertEquals(GSON_SERVICE, SERVICES.get(2));
+		Assertions.assertEquals("GoogleGsonJSONServiceImpl", GSON_SERVICE.getClass().getSimpleName());
+
+		Assertions.assertEquals(HUTOOL_SERVICE, SERVICES.get(3));
+		Assertions.assertEquals("HutoolJSONServiceImpl", HUTOOL_SERVICE.getClass().getSimpleName());
 	}
 
 	@Test
@@ -74,8 +83,8 @@ class JSONUtilsTest {
 			assertEquals1(service, service.toBean(JSON1, TestUser.class));
 			assertEquals2(service, service.toBean(JSON2, TestUser.class));
 
-			// jackson不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			// jackson和json不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
+			if (ObjectUtils.notIn(service.getName(), JACKSON, GSON)) {
 				assertEquals3(service, service.toBean(JSON3, TestUser3.class));
 			}
 		}
@@ -127,7 +136,7 @@ class JSONUtilsTest {
 		TestUser user1 = new TestUser("某某人1", 31, DateUtils.parseDate("1990-10-01"));
 		TestUser user2 = new TestUser("某某人2", 32, DateUtils.parseDate("1989-10-02"));
 
-		System.out.println(JACKSON.toJSONString(user1));
+		System.out.println(JACKSON_SERVICE.toJSONString(user1));
 
 		List<TestUser> list1 = new ArrayList<>();
 		list1.add(user1);
@@ -178,7 +187,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			if (!JACKSON.equals(service.getName())) {
 				throw t;
 			}
 		}
@@ -199,7 +208,7 @@ class JSONUtilsTest {
 			Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			if (!JACKSON.equals(service.getName())) {
 				throw t;
 			}
 		}
@@ -213,7 +222,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			if (!JACKSON.equals(service.getName())) {
 				throw t;
 			}
 		}
@@ -227,7 +236,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			if (!JACKSON.equals(service.getName())) {
 				throw t;
 			}
 		}
@@ -241,7 +250,7 @@ class JSONUtilsTest {
 			Assertions.assertEquals("1988-10-03", DateUtils.format(DateFormatType.DD, user.getUserBirthday()));
 		} catch (Throwable t) {
 			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!ServiceProviders.JACKSON.equals(service.getName())) {
+			if (!JACKSON.equals(service.getName())) {
 				throw t;
 			}
 		}

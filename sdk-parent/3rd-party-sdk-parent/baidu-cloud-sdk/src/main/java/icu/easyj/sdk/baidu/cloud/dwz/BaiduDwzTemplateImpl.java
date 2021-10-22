@@ -20,6 +20,7 @@ import java.util.Date;
 import cn.hutool.core.lang.Assert;
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.json.EasyjSupportedJSON;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
@@ -57,7 +58,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * JSON服务实现
 	 */
-	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.loadBySupportNames(IJSONService.class, FASTJSON, JACKSON, HUTOOL);
+	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.loadBySupportNames(IJSONService.class, EasyjSupportedJSON.SUPPORTED);
 
 
 	/**

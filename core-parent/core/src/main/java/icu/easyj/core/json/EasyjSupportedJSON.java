@@ -13,34 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader;
+package icu.easyj.core.json;
+
+import icu.easyj.core.loader.ServiceProviders;
 
 /**
- * 服务提供方名称
+ * Easyj自己支持的JSON
  *
  * @author wangliang181230
  */
-public interface ServiceProviders {
+public interface EasyjSupportedJSON {
 
-	/**
-	 * 提供的服务有：JSON服务
-	 * 开发者：阿里巴巴（Alibaba）
-	 */
-	String FASTJSON = "fastjson";
-
-	/**
-	 * 提供的服务有：JSON服务
-	 */
-	String JACKSON = "jackson";
-
-	/**
-	 * 提供的服务有：JSON服务
-	 * 开发者：谷歌（Google）
-	 */
-	String GSON = "gson";
-
-	/**
-	 * 提供的服务有：JSON、加密算法
-	 */
-	String HUTOOL = "hutool";
+	String[] SUPPORTED = new String[]{
+			ServiceProviders.FASTJSON,
+			ServiceProviders.JACKSON,
+			ServiceProviders.GSON,
+			ServiceProviders.HUTOOL
+	};
 }

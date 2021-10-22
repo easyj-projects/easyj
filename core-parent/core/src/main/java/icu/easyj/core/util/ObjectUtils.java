@@ -135,12 +135,12 @@ public abstract class ObjectUtils {
 	//region 判断方法
 
 	/**
-	 * 判断对象是否与数组中的某个元素相等
+	 * 判断对象是否存在于数组中
 	 *
 	 * @param obj   对象
 	 * @param array 对象数组
 	 * @param <T>   对象类型
-	 * @return 是否存在相等的元素
+	 * @return 是否存在于数组中
 	 */
 	@SafeVarargs
 	public static <T> boolean in(T obj, T... array) {
@@ -150,6 +150,19 @@ public abstract class ObjectUtils {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 判断对象是否不存在于数组中
+	 *
+	 * @param obj   对象
+	 * @param array 对象数组
+	 * @param <T>   对象类型
+	 * @return 是否不存在于数组中
+	 */
+	@SafeVarargs
+	public static <T> boolean notIn(T obj, T... array) {
+		return !in(obj, array);
 	}
 
 	//endregion

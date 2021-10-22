@@ -18,6 +18,7 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 import cn.hutool.core.annotation.Alias;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import icu.easyj.sdk.dwz.DwzRequest;
 
 /**
@@ -35,6 +36,7 @@ public class BaiduDwzRequest {
 	 */
 	@JSONField(name = "LongUrl") // fastjson键别名
 	@JsonProperty("LongUrl") // jackson键别名
+	@SerializedName("LongUrl") // gson键别名
 	@Alias("LongUrl") // hutool键别名
 	private String longUrl;
 
@@ -48,6 +50,7 @@ public class BaiduDwzRequest {
 	 */
 	@JSONField(name = "TermOfValidity") // fastjson键别名
 	@JsonProperty("TermOfValidity") // jackson键别名
+	@SerializedName("TermOfValidity") // gson键别名
 	@Alias("TermOfValidity") // hutool键别名
 	private String termOfValidity;
 

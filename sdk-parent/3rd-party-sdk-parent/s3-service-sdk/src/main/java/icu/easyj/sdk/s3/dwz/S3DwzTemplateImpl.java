@@ -19,6 +19,7 @@ import java.util.Date;
 
 import cn.hutool.core.lang.Assert;
 import icu.easyj.core.constant.ErrorCodeConstants;
+import icu.easyj.core.json.EasyjSupportedJSON;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.ObjectUtils;
@@ -36,10 +37,6 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
-import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
-import static icu.easyj.core.loader.ServiceProviders.JACKSON;
-
 /**
  * 短链接服务接口 实现
  *
@@ -54,7 +51,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * JSON服务实现
 	 */
-	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.loadBySupportNames(IJSONService.class, FASTJSON, JACKSON, HUTOOL);
+	private static final IJSONService JSON_SERVICE = EnhancedServiceLoader.loadBySupportNames(IJSONService.class, EasyjSupportedJSON.SUPPORTED);
 
 
 	/**
