@@ -27,7 +27,6 @@ import icu.easyj.core.env.RunMode;
  * 全局配置
  *
  * @author wangliang181230
- * @see GlobalConfigSetter
  */
 public class GlobalConfigs {
 
@@ -374,7 +373,7 @@ public class GlobalConfigs {
 	 *
 	 * @param area 项目所属区域代码
 	 */
-	static void setArea(String area) {
+	public static void setArea(String area) {
 		getInstance().area = area;
 	}
 
@@ -383,7 +382,7 @@ public class GlobalConfigs {
 	 *
 	 * @param areaName 项目所属区域名称
 	 */
-	static void setAreaName(String areaName) {
+	public static void setAreaName(String areaName) {
 		getInstance().areaName = areaName;
 	}
 
@@ -392,7 +391,7 @@ public class GlobalConfigs {
 	 *
 	 * @param project 项目代码
 	 */
-	static void setProject(String project) {
+	public static void setProject(String project) {
 		getInstance().project = project;
 	}
 
@@ -401,7 +400,7 @@ public class GlobalConfigs {
 	 *
 	 * @param projectName 项目名称
 	 */
-	static void setProjectName(String projectName) {
+	public static void setProjectName(String projectName) {
 		getInstance().projectName = projectName;
 	}
 
@@ -410,7 +409,7 @@ public class GlobalConfigs {
 	 *
 	 * @param application 应用代码
 	 */
-	static void setApplication(String application) {
+	public static void setApplication(String application) {
 		getInstance().application = application;
 	}
 
@@ -419,7 +418,7 @@ public class GlobalConfigs {
 	 *
 	 * @param applicationName 应用名称
 	 */
-	static void setApplicationName(String applicationName) {
+	public static void setApplicationName(String applicationName) {
 		getInstance().applicationName = applicationName;
 	}
 
@@ -428,7 +427,7 @@ public class GlobalConfigs {
 	 *
 	 * @param env 环境代码
 	 */
-	static void setEnv(String env) {
+	public static void setEnv(String env) {
 		getInstance().env = env;
 	}
 
@@ -437,7 +436,7 @@ public class GlobalConfigs {
 	 *
 	 * @param envName 环境名称
 	 */
-	static void setEnvName(String envName) {
+	public static void setEnvName(String envName) {
 		getInstance().envName = envName;
 	}
 
@@ -446,7 +445,7 @@ public class GlobalConfigs {
 	 *
 	 * @param envType 环境类型
 	 */
-	static void setEnvType(EnvironmentType envType) {
+	public static void setEnvType(EnvironmentType envType) {
 		getInstance().envType = envType;
 	}
 
@@ -455,7 +454,7 @@ public class GlobalConfigs {
 	 *
 	 * @param runMode 运行模式
 	 */
-	static void setRunMode(RunMode runMode) {
+	public static void setRunMode(RunMode runMode) {
 		getInstance().runMode = runMode;
 	}
 
@@ -464,7 +463,7 @@ public class GlobalConfigs {
 	 *
 	 * @param inUnitTest 是否单元测试中
 	 */
-	static void setInUnitTest(boolean inUnitTest) {
+	public static void setInUnitTest(boolean inUnitTest) {
 		getInstance().inUnitTest = inUnitTest;
 	}
 
@@ -474,7 +473,7 @@ public class GlobalConfigs {
 	 * @param key   配置键
 	 * @param value 配置值
 	 */
-	static synchronized void addConfig(Object key, Object value) {
+	public static synchronized void addConfig(Object key, Object value) {
 		if (value != null) {
 			getInstance().configs.put(key, value);
 		}
@@ -487,7 +486,7 @@ public class GlobalConfigs {
 	 * @param <K>     配置键类型
 	 * @param <V>     配置值类型
 	 */
-	static synchronized <K, V> void addConfigs(Map<K, V> configs) {
+	public static synchronized <K, V> void addConfigs(Map<K, V> configs) {
 		if (configs != null && !configs.isEmpty()) {
 			getInstance().configs.putAll(configs);
 		}

@@ -15,7 +15,6 @@
  */
 package icu.easyj.spring.boot.autoconfigure.web.httpconfigs;
 
-import icu.easyj.web.util.HttpConfigSetter;
 import icu.easyj.web.util.HttpConfigs;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -34,6 +33,6 @@ import org.springframework.web.context.WebApplicationContext;
 public class EasyjWebConfigAutoConfiguration {
 
 	public EasyjWebConfigAutoConfiguration(WebApplicationContext context) {
-		HttpConfigSetter.loadFromWebApplicationContext(context);
+		HttpConfigs.loadFromWebApplicationContext(context);
 	}
 }

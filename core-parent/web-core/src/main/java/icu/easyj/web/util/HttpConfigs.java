@@ -15,6 +15,11 @@
  */
 package icu.easyj.web.util;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.lang.NonNull;
+import org.springframework.web.context.WebApplicationContext;
+
 /**
  * HTTP相关配置持有者
  *
@@ -28,17 +33,26 @@ public abstract class HttpConfigs {
 	private static String contextPath;
 
 
+	/**
+	 * 从WebApplicationContext中读取全局配置
+	 *
+	 * @param webApplicationContext Web应用内容
+	 */
+	public static void loadFromWebApplicationContext(@NonNull WebApplicationContext webApplicationContext) {
+		ServletContext servletContext = webApplicationContext.getServletContext();
+		if (servletContext != null) {
+			setContextPath(servletContext.getContextPath());
+		}
+	}
+
+
 	//region Getter、Setter
 
 	public static String getContextPath() {
 		return contextPath;
 	}
 
-	//endregion
-
-	//region Setter
-
-	static void setContextPath(String contextPath) {
+	public static void setContextPath(String contextPath) {
 		HttpConfigs.contextPath = contextPath;
 	}
 

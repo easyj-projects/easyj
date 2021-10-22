@@ -17,7 +17,6 @@ package icu.easyj.spring.boot.autoconfigure.global.configs;
 
 import java.util.Map;
 
-import icu.easyj.config.GlobalConfigSetter;
 import icu.easyj.config.GlobalConfigs;
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
@@ -101,31 +100,31 @@ public class GlobalProperties implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() {
 		if (StringUtils.isNotBlank(area)) {
-			GlobalConfigSetter.setArea(area.trim());
+			GlobalConfigs.setArea(area.trim());
 		}
 		if (StringUtils.isNotBlank(areaName)) {
-			GlobalConfigSetter.setAreaName(areaName.trim());
+			GlobalConfigs.setAreaName(areaName.trim());
 		}
 		if (StringUtils.isNotBlank(project)) {
-			GlobalConfigSetter.setProject(project.trim());
+			GlobalConfigs.setProject(project.trim());
 		}
 		if (StringUtils.isNotBlank(projectName)) {
-			GlobalConfigSetter.setProjectName(projectName.trim());
+			GlobalConfigs.setProjectName(projectName.trim());
 		}
 		if (StringUtils.isNotBlank(application)) {
-			GlobalConfigSetter.setApplication(application.trim());
+			GlobalConfigs.setApplication(application.trim());
 		}
 		if (StringUtils.isNotBlank(applicationName)) {
-			GlobalConfigSetter.setApplicationName(applicationName.trim());
+			GlobalConfigs.setApplicationName(applicationName.trim());
 		}
 		if (StringUtils.isNotBlank(env)) {
-			GlobalConfigSetter.setEnv(env.trim());
+			GlobalConfigs.setEnv(env.trim());
 		}
 		if (StringUtils.isNotBlank(envName)) {
-			GlobalConfigSetter.setEnvName(envName.trim());
+			GlobalConfigs.setEnvName(envName.trim());
 		}
 		if (envType != null) {
-			GlobalConfigSetter.setEnvType(envType);
+			GlobalConfigs.setEnvType(envType);
 		} else {
 			String env = GlobalConfigs.getEnv();
 			// 如果环境类型为空，则根据环境名前缀名与类型名是否匹配，来判断环境类型
@@ -134,20 +133,20 @@ public class GlobalProperties implements InitializingBean {
 				env = env.toUpperCase();
 				for (EnvironmentType type : EnvironmentType.values()) {
 					if (env.startsWith(type.name())) {
-						GlobalConfigSetter.setEnvType(type);
+						GlobalConfigs.setEnvType(type);
 						break;
 					}
 				}
 			}
 		}
 		if (runMode != null) {
-			GlobalConfigSetter.setRunMode(runMode);
+			GlobalConfigs.setRunMode(runMode);
 		}
 		if (inUnitTest != null) {
-			GlobalConfigSetter.setInUnitTest(inUnitTest);
+			GlobalConfigs.setInUnitTest(inUnitTest);
 		}
 		if (!MapUtils.isEmpty(configs)) {
-			GlobalConfigSetter.addConfigs(configs);
+			GlobalConfigs.addConfigs(configs);
 		}
 	}
 
