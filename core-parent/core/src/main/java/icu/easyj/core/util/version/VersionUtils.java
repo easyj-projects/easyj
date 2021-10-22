@@ -17,7 +17,6 @@ package icu.easyj.core.util.version;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 /**
  * 版本号工具类
