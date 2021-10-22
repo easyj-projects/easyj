@@ -57,7 +57,7 @@ public abstract class DbUtils {
 
 	/**
 	 * 从数据源中获取数据库类型<br>
-	 * 值域：mysql、oracle、...（TODO: 其他数据库待补充）
+	 * 值域：mysql、oracle、ms_sql_server、...（TODO: 其他数据库待补充）
 	 *
 	 * @param dataSource 数据源
 	 * @return 数据库类型（全部转为小写字母）
