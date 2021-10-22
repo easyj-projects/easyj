@@ -42,10 +42,6 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
-import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
-import static icu.easyj.core.loader.ServiceProviders.JACKSON;
-
 /**
  * 基于百度云DWZ实现的 {@link IDwzTemplate} 接口
  *
