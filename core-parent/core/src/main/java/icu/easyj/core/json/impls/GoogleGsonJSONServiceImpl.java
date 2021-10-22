@@ -15,7 +15,6 @@
  */
 package icu.easyj.core.json.impls;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -38,14 +37,11 @@ import static icu.easyj.core.loader.ServiceProviders.GSON;
 @DependsOnClass(Gson.class)
 class GoogleGsonJSONServiceImpl implements IJSONService {
 
-	private final Gson gson = new Gson();
-
-
 	@NonNull
 	@Override
 	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
-			return gson.fromJson(text, targetClazz);
+			return new Gson().fromJson(text, targetClazz);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转Bean失败", e);
 		}
@@ -55,7 +51,7 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
-			return Arrays.asList(gson.fromJson(text, TypeToken.getArray(targetClazz).getType()));
+			return new Gson().fromJson(text, TypeToken.getParameterized(List.class, targetClazz).getType());
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转List失败", e);
 		}
@@ -65,7 +61,7 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public String toJSONString(@Nullable Object obj) throws JSONParseException {
 		try {
-			return gson.toJson(obj);
+			return new Gson().toJson(obj);
 		} catch (Exception e) {
 			throw new JSONParseException("obj转JSON字符串失败", e);
 		}
