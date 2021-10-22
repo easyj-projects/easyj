@@ -43,32 +43,43 @@ public abstract class TestUtils {
 	 */
 	private static long executeOnePerformanceTest(final int threadCount, final int times, Supplier<?> supplier) {
 		long startTime = getStartTime();
-		AtomicInteger atomicInteger = new AtomicInteger(threadCount);
 		String supplierName = supplier.get().toString();
 
-		final Thread t = Thread.currentThread();
+		final Thread currentThread = Thread.currentThread();
 
-		// 先创建所有线程
-		Thread[] threads = new Thread[threadCount];
-		for (int i = 0; i < threadCount; i++) {
-			threads[i] = new Thread(() -> {
-				for (int j = 0; j < times; j++) {
-					supplier.get();
-				}
-				if (atomicInteger.decrementAndGet() == 0) {
-					// 恢复父线程
-					t.resume();
-				}
-			});
-		}
+		// 多线程并发测试时
+		if (threadCount > 1) {
+			AtomicInteger atomicInteger = new AtomicInteger(threadCount);
 
-		// 运行所有线程
-		for (Thread thread : threads) {
-			thread.start();
+			// 先创建所有线程
+			Thread[] threads = new Thread[threadCount];
+			for (int i = 0; i < threadCount; i++) {
+				threads[i] = new Thread(() -> {
+					for (int j = 0; j < times; j++) {
+						supplier.get();
+					}
+					if (atomicInteger.decrementAndGet() == 0) {
+						// 恢复父线程
+						currentThread.resume();
+					}
+				});
+			}
+
+			// 运行所有线程
+			for (Thread thread : threads) {
+				thread.start();
+			}
+		} else {
+			// 单线程测试
+			for (int i = 0; i < times; i++) {
+				supplier.get();
+			}
 		}
 
 		// 挂起父线程
-		t.suspend();
+		if (threadCount > 1) {
+			currentThread.suspend();
+		}
 
 		// 计算耗时
 		long cost = getCost(startTime);
