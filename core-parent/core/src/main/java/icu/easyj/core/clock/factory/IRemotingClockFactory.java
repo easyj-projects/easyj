@@ -17,9 +17,7 @@ package icu.easyj.core.clock.factory;
 
 import java.util.Date;
 
-import icu.easyj.core.clock.IClock;
 import icu.easyj.core.clock.ITickClock;
-import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
 
 /**
@@ -27,9 +25,7 @@ import org.springframework.lang.NonNull;
  *
  * @param <K> 远端键类型
  * @author wangliang181230
- * @see IClock
  * @see ITickClock
- * @see TickClock
  */
 public interface IRemotingClockFactory<K> {
 

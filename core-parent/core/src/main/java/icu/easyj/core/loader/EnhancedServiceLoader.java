@@ -347,7 +347,7 @@ public abstract class EnhancedServiceLoader {
 				throw new IllegalArgumentException("Enhanced Service type is null");
 			}
 			return (InnerEnhancedServiceLoader<S>)MapUtils.computeIfAbsent(SERVICE_LOADERS, type,
-					key -> new InnerEnhancedServiceLoader<>(type));
+					InnerEnhancedServiceLoader::new);
 		}
 
 		private static <S> InnerEnhancedServiceLoader<S> removeServiceLoader(Class<S> type) {

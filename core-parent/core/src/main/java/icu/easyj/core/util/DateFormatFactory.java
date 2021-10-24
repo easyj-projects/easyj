@@ -45,7 +45,7 @@ public abstract class DateFormatFactory {
 	public static SimpleDateFormat get(@NonNull String dateFormat) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Map<String, SimpleDateFormat> dateFormatMap = DATE_FORMAT.get();
-		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, f -> new SimpleDateFormat(dateFormat));
+		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, SimpleDateFormat::new);
 	}
 
 	//endregion

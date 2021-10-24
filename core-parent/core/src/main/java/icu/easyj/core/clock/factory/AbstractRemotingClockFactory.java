@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import icu.easyj.core.clock.ITickClock;
-import icu.easyj.core.clock.TickClock;
 import icu.easyj.core.util.MapUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
@@ -30,7 +29,6 @@ import org.springframework.util.Assert;
  * @param <K> 远端键类型
  * @author wangliang181230
  * @see ITickClock
- * @see TickClock
  * @see IRemotingClockFactory
  */
 public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockFactory<K> {
@@ -69,7 +67,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	@NonNull
 	public ITickClock getClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
-		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, ds -> createClock(remotingKey));
+		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::createClock);
 	}
 
 	/**

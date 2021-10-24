@@ -30,39 +30,6 @@ import org.springframework.lang.Nullable;
 public abstract class CollectionUtils extends MapUtils {
 
 	/**
-	 * Collection To String.
-	 *
-	 * @param col 集合
-	 * @return str 字符串
-	 */
-	@NonNull
-	public static String toString(final Collection<?> col) {
-		if (col == null) {
-			return "null";
-		}
-		if (col.isEmpty()) {
-			return "[]";
-		}
-
-		return CycleDependencyHandler.wrap(col, o -> {
-			StringBuilder sb = new StringBuilder(32);
-			sb.append("[");
-			for (Object obj : col) {
-				if (sb.length() > 1) {
-					sb.append(", ");
-				}
-				if (obj == col) {
-					sb.append("(this ").append(obj.getClass().getSimpleName()).append(")");
-				} else {
-					sb.append(StringUtils.toString(obj));
-				}
-			}
-			sb.append("]");
-			return sb.toString();
-		});
-	}
-
-	/**
 	 * 获取列表的第一项，并保证线程安全。
 	 *
 	 * @param list 列表
@@ -164,5 +131,38 @@ public abstract class CollectionUtils extends MapUtils {
 		}
 
 		return coll;
+	}
+
+	/**
+	 * Collection To String.
+	 *
+	 * @param col 集合
+	 * @return str 字符串
+	 */
+	@NonNull
+	public static String toString(final Collection<?> col) {
+		if (col == null) {
+			return "null";
+		}
+		if (col.isEmpty()) {
+			return "[]";
+		}
+
+		return CycleDependencyHandler.wrap(col, o -> {
+			StringBuilder sb = new StringBuilder(32);
+			sb.append("[");
+			for (Object obj : col) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+				if (obj == col) {
+					sb.append("(this ").append(obj.getClass().getSimpleName()).append(")");
+				} else {
+					sb.append(StringUtils.toString(obj));
+				}
+			}
+			sb.append("]");
+			return sb.toString();
+		});
 	}
 }

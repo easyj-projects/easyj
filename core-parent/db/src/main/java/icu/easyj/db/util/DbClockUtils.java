@@ -19,7 +19,6 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import icu.easyj.core.clock.ITickClock;
-import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -28,7 +27,6 @@ import org.springframework.util.Assert;
  *
  * @author wangliang181230
  * @see ITickClock
- * @see TickClock
  */
 public abstract class DbClockUtils {
 

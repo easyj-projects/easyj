@@ -15,10 +15,38 @@
  */
 package icu.easyj.core.exception;
 
+import java.io.Serializable;
+
+import org.springframework.lang.Nullable;
+
 /**
  * SDK相关异常
  *
  * @author wangliang181230
  */
-public interface ISdkException {
+public interface ISdkException extends Serializable {
+
+	/**
+	 * 获取异常信息
+	 *
+	 * @return 异常信息
+	 */
+	@Nullable
+	String getMessage();
+
+	/**
+	 * 获取局部异常信息
+	 *
+	 * @return 局部异常信息
+	 */
+	@Nullable
+	String getLocalizedMessage();
+
+	/**
+	 * 获取异常原因
+	 *
+	 * @return 异常原因
+	 */
+	@Nullable
+	Throwable getCause();
 }

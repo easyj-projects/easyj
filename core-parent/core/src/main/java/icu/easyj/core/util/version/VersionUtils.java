@@ -43,12 +43,12 @@ public abstract class VersionUtils {
 	/**
 	 * 最大支持几部分版本号
 	 */
-	private static final int MAX_PART_SIZE = 5;
+	private static final int DEFAULT_MAX_PART_SIZE = 5;
 
 	/**
 	 * 每部分版本号占位长度
 	 */
-	private static final int ONE_PART_LENGTH = 3;
+	private static final int DEFAULT_ONE_PART_LENGTH = 3;
 
 
 	/**
@@ -65,11 +65,13 @@ public abstract class VersionUtils {
 	/**
 	 * 将字符串版本号转换为long型版本号
 	 *
-	 * @param version 字符串版本号
+	 * @param version       字符串版本号
+	 * @param maxPartSize   最大部分数
+	 * @param onePartLength 每部分长度
 	 * @return long版本号
 	 * @throws IncompatibleVersionException 不兼容的版本格式
 	 */
-	public static long toLong(String version) throws IncompatibleVersionException {
+	public static long toLong(String version, int maxPartSize, int onePartLength) throws IncompatibleVersionException {
 		if (isUnknownVersion(version)) {
 			return UNKNOWN_VERSION_LONG;
 		}
@@ -84,8 +86,8 @@ public abstract class VersionUtils {
 
 		// 获取所有部分
 		String[] parts = StringUtils.split(version.replace('_', '.'), '.');
-		if (parts.length > MAX_PART_SIZE) {
-			throw new IncompatibleVersionException("当前版本号部分数 [" + parts.length + "] 超过了最大值 [" + MAX_PART_SIZE + "]，不兼容的版本号: " + version);
+		if (parts.length > maxPartSize) {
+			throw new IncompatibleVersionException("当前版本号部分数 [" + parts.length + "] 超过了最大值 [" + maxPartSize + "]，不兼容的版本号: " + version);
 		}
 
 		// 准备计算版本号长整形值
@@ -93,7 +95,7 @@ public abstract class VersionUtils {
 		int i = 1;
 		for (String part : parts) {
 			if (StringUtils.isNumeric(part)) {
-				versionLong += calculatePartValue(part, i);
+				versionLong += calculatePartValue(part, i, maxPartSize, onePartLength);
 			}
 			i++;
 		}
@@ -105,6 +107,17 @@ public abstract class VersionUtils {
 		}
 
 		return versionLong;
+	}
+
+	/**
+	 * 将字符串版本号转换为long型版本号
+	 *
+	 * @param version 字符串版本号
+	 * @return long版本号
+	 * @throws IncompatibleVersionException 不兼容的版本格式
+	 */
+	public static long toLong(String version) {
+		return toLong(version, DEFAULT_MAX_PART_SIZE, DEFAULT_ONE_PART_LENGTH);
 	}
 
 	/**
@@ -133,15 +146,17 @@ public abstract class VersionUtils {
 	/**
 	 * 计算当前版本号部分的值
 	 *
-	 * @param partNumeric 当前部分的版本号字符串
-	 * @param partIndex   当前部分的index
+	 * @param partNumeric   当前部分的版本号字符串
+	 * @param partIndex     当前部分的index
+	 * @param maxPartSize   最大部分数
+	 * @param onePartLength 每部分长度
 	 * @return 当前版本号部分的值
 	 */
-	private static long calculatePartValue(String partNumeric, int partIndex) {
+	private static long calculatePartValue(String partNumeric, int partIndex, int maxPartSize, int onePartLength) {
 		if (icu.easyj.core.util.StringUtils.isAllZero(partNumeric)) {
 			return 0;
 		} else {
-			return Long.parseLong(partNumeric) * Double.valueOf(Math.pow(Math.pow(10, ONE_PART_LENGTH), MAX_PART_SIZE - partIndex)).longValue();
+			return Long.parseLong(partNumeric) * Double.valueOf(Math.pow(Math.pow(10, onePartLength), maxPartSize - partIndex)).longValue();
 		}
 	}
 

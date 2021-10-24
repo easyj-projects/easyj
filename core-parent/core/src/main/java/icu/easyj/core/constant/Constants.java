@@ -15,6 +15,9 @@
  */
 package icu.easyj.core.constant;
 
+import icu.easyj.core.util.version.VersionInfo;
+import icu.easyj.core.util.version.VersionUtils;
+
 /**
  * EasyJ相关常量
  *
@@ -25,4 +28,6 @@ public interface Constants {
 	String PREFIX = "easyj";
 
 	String VERSION = "0.2.1-SNAPSHOT";
+
+	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
 }

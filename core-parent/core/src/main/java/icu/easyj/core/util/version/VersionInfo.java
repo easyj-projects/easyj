@@ -16,6 +16,7 @@
 package icu.easyj.core.util.version;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
@@ -56,9 +57,20 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 
 
 	public VersionInfo(String version) {
-		this.unknownVersion = VersionUtils.isUnknownVersion(version);
-		this.version = this.unknownVersion ? VersionUtils.UNKNOWN_VERSION : version;
-		this.versionLong = VersionUtils.toLong(version);
+		this.version = version;
+
+		boolean unknownVersion = VersionUtils.isUnknownVersion(version);
+
+		long versionLong;
+		try {
+			versionLong = VersionUtils.toLong(version);
+		} catch (IncompatibleVersionException e) {
+			unknownVersion = true;
+			versionLong = -1;
+		}
+
+		this.unknownVersion = unknownVersion;
+		this.versionLong = versionLong;
 		this.snapshotVersion = VersionUtils.isSnapshotVersion(version);
 	}
 
@@ -68,12 +80,14 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 		if (otherVersionInfo == null) {
 			return 1;
 		}
-
-		if (version.equals(otherVersionInfo.version)) {
+		if (otherVersionInfo == this) {
+			return 0;
+		}
+		if (Objects.equals(version, otherVersionInfo.version)) {
 			return 0;
 		}
 
-		return Long.compare(this.versionLong, otherVersionInfo.getVersionLong());
+		return Long.compare(this.versionLong, otherVersionInfo.versionLong);
 	}
 
 	public int compareTo(String otherVersion) {
