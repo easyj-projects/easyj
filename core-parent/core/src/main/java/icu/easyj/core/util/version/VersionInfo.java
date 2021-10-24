@@ -57,9 +57,8 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 
 
 	public VersionInfo(String version) {
-		this.version = version;
-
 		boolean unknownVersion = VersionUtils.isUnknownVersion(version);
+		this.version = unknownVersion ? VersionUtils.UNKNOWN_VERSION : version;
 
 		long versionLong;
 		try {
