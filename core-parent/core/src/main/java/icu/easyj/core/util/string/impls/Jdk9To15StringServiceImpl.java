@@ -27,7 +27,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "JDK9~15-Base64", order = 900)
+@LoadLevel(name = "JDK9~15-String", order = 900)
 @DependsOnJavaVersion(min = 9F, max = 15F)
 class Jdk9To15StringServiceImpl implements IStringService {
 

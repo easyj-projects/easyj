@@ -169,7 +169,7 @@ public abstract class StringUtils {
 	 * @param c   字符
 	 * @return true=包含 | false=不包含
 	 */
-	public static boolean contains(String str, char c) {
+	public static boolean contains(CharSequence str, char c) {
 		if (isEmpty(str)) {
 			return false;
 		}

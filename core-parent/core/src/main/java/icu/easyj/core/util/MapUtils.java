@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.util;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -25,6 +26,8 @@ import java.util.function.Supplier;
  * @author wangliang181230
  */
 public abstract class MapUtils {
+
+	//region 判空方法
 
 	/**
 	 * 判断集合是否为空
@@ -45,6 +48,11 @@ public abstract class MapUtils {
 	public static boolean isNotEmpty(Map<?, ?> map) {
 		return !isEmpty(map);
 	}
+
+	//endregion
+
+
+	//region 为空时的默认值
 
 	/**
 	 * 如果为空集合，则取默认值
@@ -77,6 +85,95 @@ public abstract class MapUtils {
 
 		return map;
 	}
+
+	//endregion
+
+
+	//region 快速创建Map
+
+	/**
+	 * 快速创建Map
+	 *
+	 * @param key   键
+	 * @param value 值
+	 * @param <K>   键类型
+	 * @param <V>   值类型
+	 * @return Map
+	 */
+	public static <K, V> Map<K, V> quickMap(K key, V value) {
+		Map<K, V> map = new HashMap<>();
+		map.put(key, value);
+		return map;
+	}
+
+	/**
+	 * 快速创建Map
+	 *
+	 * @param key1   键1
+	 * @param value1 值1
+	 * @param key2   键2
+	 * @param value2 值2
+	 * @param <K>    键类型
+	 * @param <V>    值类型
+	 * @return Map
+	 */
+	public static <K, V> Map<K, V> quickMap(K key1, V value1, K key2, V value2) {
+		Map<K, V> map = new HashMap<>();
+		map.put(key1, value1);
+		map.put(key2, value2);
+		return map;
+	}
+
+	/**
+	 * 快速创建Map
+	 *
+	 * @param key1   键1
+	 * @param value1 值1
+	 * @param key2   键2
+	 * @param value2 值2
+	 * @param key3   键3
+	 * @param value3 值3
+	 * @param <K>    键类型
+	 * @param <V>    值类型
+	 * @return Map
+	 */
+	public static <K, V> Map<K, V> quickMap(K key1, V value1, K key2, V value2, K key3, V value3) {
+		Map<K, V> map = new HashMap<>();
+		map.put(key1, value1);
+		map.put(key2, value2);
+		map.put(key3, value3);
+		return map;
+	}
+
+	//endregion
+
+
+	//region 解决Java8的BUG
+
+	/**
+	 * A temporary workaround for Java 8 specific performance issue JDK-8161372 .<br>
+	 * This class should be removed once we drop Java 8 support.
+	 *
+	 * @param map             the map
+	 * @param key             the key
+	 * @param mappingFunction the mapping function
+	 * @param <K>             the type of key
+	 * @param <V>             the type of value
+	 * @return the value
+	 * @see <a href="https://bugs.openjdk.java.net/browse/JDK-8161372">https://bugs.openjdk.java.net/browse/JDK-8161372</a>
+	 */
+	public static <K, V> V computeIfAbsent(Map<K, V> map, K key, Function<? super K, ? extends V> mappingFunction) {
+		V value = map.get(key);
+		if (value != null) {
+			return value;
+		}
+		return map.computeIfAbsent(key, mappingFunction);
+	}
+
+	//endregion
+
+
+	//region ToString
 
 	/**
 	 * Map to string.
@@ -116,23 +213,5 @@ public abstract class MapUtils {
 		});
 	}
 
-	/**
-	 * A temporary workaround for Java 8 specific performance issue JDK-8161372 .<br>
-	 * This class should be removed once we drop Java 8 support.
-	 *
-	 * @param map             the map
-	 * @param key             the key
-	 * @param mappingFunction the mapping function
-	 * @param <K>             the type of key
-	 * @param <V>             the type of value
-	 * @return the value
-	 * @see <a href="https://bugs.openjdk.java.net/browse/JDK-8161372">https://bugs.openjdk.java.net/browse/JDK-8161372</a>
-	 */
-	public static <K, V> V computeIfAbsent(Map<K, V> map, K key, Function<? super K, ? extends V> mappingFunction) {
-		V value = map.get(key);
-		if (value != null) {
-			return value;
-		}
-		return map.computeIfAbsent(key, mappingFunction);
-	}
+	//endregion
 }

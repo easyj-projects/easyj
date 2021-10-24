@@ -19,6 +19,7 @@ import java.io.CharArrayWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
+import java.util.Map;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
@@ -64,6 +65,9 @@ public abstract class UrlUtils {
 	}
 
 	//endregion
+
+
+	//region 标准化
 
 	/**
 	 * 标准化路径
@@ -111,6 +115,13 @@ public abstract class UrlUtils {
 
 		return path;
 	}
+
+	//endregion
+
+
+	//region URL参数编码解码
+
+	//region encode
 
 	/**
 	 * 字符串进行URL编码。<br>
@@ -190,6 +201,11 @@ public abstract class UrlUtils {
 		return encode(s, StandardCharsets.UTF_8);
 	}
 
+	//endregion
+
+
+	//region decode
+
 	/**
 	 * 字符串进行URL解码.<br>
 	 * 代码是从 OpenJDK8 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了优化：
@@ -268,4 +284,64 @@ public abstract class UrlUtils {
 	public static String decode(String s) {
 		return decode(s, StandardCharsets.UTF_8);
 	}
+
+	//endregion
+
+	//endregion
+
+
+	//region 参数处理
+
+	/**
+	 * 拼接QueryString参数
+	 *
+	 * @param urlOrPath      原URL或Path
+	 * @param queryStringMap 参数Map（键和值都未encode过）
+	 * @return 拼接好参数后的完整URL或Path
+	 */
+	@NonNull
+	public static String joinQueryString(@NonNull String urlOrPath, Map<String, String> queryStringMap) {
+		Assert.notNull(urlOrPath, "'urlOrPath' must not be null");
+
+		if (MapUtils.isEmpty(queryStringMap)) {
+			return urlOrPath;
+		}
+
+		String hashParam;
+		int idx = urlOrPath.indexOf('#');
+		if (idx == 0) {
+			hashParam = urlOrPath;
+		} else if (idx > 0) {
+			hashParam = urlOrPath.substring(idx);
+			urlOrPath = urlOrPath.substring(0, idx);
+		} else {
+			hashParam = null;
+		}
+
+		boolean isFirstParam = true;
+		char firstParamSplicerChar = (StringUtils.contains(urlOrPath, '?') ? '&' : '?');
+		StringBuilder sb = new StringBuilder(urlOrPath);
+		urlOrPath = null; // 设为null，方便GC回收
+		for (Map.Entry<String, String> kv : queryStringMap.entrySet()) {
+			if (isFirstParam) {
+				sb.append(firstParamSplicerChar);
+				isFirstParam = false;
+			} else {
+				sb.append('&');
+			}
+
+			sb.append(UrlUtils.encode(kv.getKey())).append('=');
+			if (kv.getValue() != null) {
+				sb.append(UrlUtils.encode(kv.getValue()));
+			}
+		}
+
+		if (hashParam != null) {
+			sb.append(hashParam);
+		}
+
+		return sb.toString();
+	}
+
+	//endregion
 }

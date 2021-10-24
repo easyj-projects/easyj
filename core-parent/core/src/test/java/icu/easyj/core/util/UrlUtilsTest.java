@@ -25,6 +25,8 @@ import org.junit.jupiter.api.Test;
  */
 class UrlUtilsTest {
 
+	static final String BASE_URL = "http://github.com/easyj-projects/easyj";
+
 	@Test
 	void testNormalizePath() {
 		//case: null
@@ -48,5 +50,23 @@ class UrlUtilsTest {
 		Assertions.assertEquals("/abc/bb", UrlUtils.normalizePath("http://a.com/abc\\bb/\\\\\\"));
 		//case: https完整路径
 		Assertions.assertEquals("/abc/bb", UrlUtils.normalizePath("https:\\\\a.com/abc\\bb/\\\\\\"));
+	}
+
+	@Test
+	void testJoinQueryString() {
+		String url = BASE_URL;
+		Assertions.assertEquals(url, UrlUtils.joinQueryString(url, null));
+		Assertions.assertEquals(BASE_URL + "?a=%E5%95%8A", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊")));
+		Assertions.assertEquals(BASE_URL + "?a=%E5%95%8A&b=%E5%93%A6", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊", "b", "哦")));
+
+		url = BASE_URL + "?x=1";
+		Assertions.assertEquals(url, UrlUtils.joinQueryString(url, null));
+		Assertions.assertEquals(BASE_URL + "?x=1&a=%E5%95%8A", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊")));
+		Assertions.assertEquals(BASE_URL + "?x=1&a=%E5%95%8A&b=%E5%93%A6", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊", "b", "哦")));
+
+		url = BASE_URL + "?x=1#xyz";
+		Assertions.assertEquals(url, UrlUtils.joinQueryString(url, null));
+		Assertions.assertEquals(BASE_URL + "?x=1&a=%E5%95%8A#xyz", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊")));
+		Assertions.assertEquals(BASE_URL + "?x=1&a=%E5%95%8A&b=%E5%93%A6#xyz", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊", "b", "哦")));
 	}
 }

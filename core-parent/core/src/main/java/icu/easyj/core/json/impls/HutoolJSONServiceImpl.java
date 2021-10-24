@@ -31,7 +31,7 @@ import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = HUTOOL)
+@LoadLevel(name = HUTOOL, order = 100)
 class HutoolJSONServiceImpl implements IJSONService {
 
 	@NonNull
