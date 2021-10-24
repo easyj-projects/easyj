@@ -40,7 +40,7 @@ import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
  * @author wangliang181230
  */
 @LoadLevel(name = HUTOOL, order = 100)
-public class HutoolCryptoGenerator implements ICryptoGenerator {
+public class HutoolCryptoGeneratorImpl implements ICryptoGenerator {
 
 	/**
 	 * 生成对称加密算法
