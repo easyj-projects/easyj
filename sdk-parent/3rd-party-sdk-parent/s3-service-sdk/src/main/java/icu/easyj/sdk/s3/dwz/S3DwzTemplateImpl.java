@@ -31,11 +31,10 @@ import icu.easyj.sdk.dwz.DwzSdkClientException;
 import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import icu.easyj.web.util.HttpClientUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientResponseException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * 短链接服务接口 实现
@@ -59,18 +58,10 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 	 */
 	private final S3DwzConfig config;
 
-	/**
-	 * REST请求接口
-	 */
-	private final RestTemplate restTemplate;
-
 
 	public S3DwzTemplateImpl(S3DwzConfig config) {
 		Assert.notNull(config, "'config' must not be null");
 		this.config = config;
-
-		this.restTemplate = new RestTemplate();
-		((DefaultUriBuilderFactory)this.restTemplate.getUriTemplateHandler()).setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
 	}
 
 
@@ -99,12 +90,10 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 
 			// 发送请求，接收响应
 			try {
-				respStr = restTemplate.getForObject(url, String.class);
+				respStr = HttpClientUtils.get(url);
 			} catch (RestClientResponseException e) {
 				respStr = "[" + e.getRawStatusCode() + "]" + e.getResponseBodyAsString();
 				throw new DwzSdkServerException("请求S-3短链接服务异常：" + respStr, ErrorCodeConstants.SERVER_ERROR, e);
-			} catch (RuntimeException e) {
-				throw new DwzSdkServerException("请求S-3短链接服务异常", ErrorCodeConstants.SERVER_ERROR, e);
 			}
 
 			// 判断：响应内容是否为空

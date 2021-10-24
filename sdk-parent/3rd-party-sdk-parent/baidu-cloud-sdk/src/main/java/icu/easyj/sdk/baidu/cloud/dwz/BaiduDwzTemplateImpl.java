@@ -32,15 +32,12 @@ import icu.easyj.sdk.dwz.DwzSdkClientException;
 import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import icu.easyj.web.util.HttpClientUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientResponseException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * 基于百度云DWZ实现的 {@link IDwzTemplate} 接口
@@ -62,11 +59,6 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	 */
 	private final BaiduDwzConfig config;
 
-	/**
-	 * REST请求接口
-	 */
-	private final RestTemplate restTemplate;
-
 
 	/**
 	 * 构造函数
@@ -76,9 +68,6 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	public BaiduDwzTemplateImpl(BaiduDwzConfig config) {
 		Assert.notNull(config, "'config' must not be null");
 		this.config = config;
-
-		this.restTemplate = new RestTemplate();
-		((DefaultUriBuilderFactory)this.restTemplate.getUriTemplateHandler()).setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
 	}
 
 
@@ -97,20 +86,17 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		String respStr = null;
 		RuntimeException ex = null;
 		try {
-			// 准备Body
+			// Body
 			body = String.format("[{\"LongUrl\":\"%s\",\"TermOfValidity\":\"%s\"}]", request.getLongUrl(), config.getTermOfValidity());
-			// 准备Headers
+			// Headers
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Dwz-Token", config.getToken());
 			headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			headers.add(HttpHeaders.CONTENT_LANGUAGE, config.getResponseLanguage());
-			// 创建HTTP请求体
-			HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
 
 			// 发送请求，接收响应
 			try {
-				ResponseEntity<String> respEntity = restTemplate.postForEntity(config.getServiceUrl(), httpEntity, String.class);
-				respStr = respEntity.getBody();
+				respStr = HttpClientUtils.post(config.getServiceUrl(), body, headers, String.class);
 			} catch (RestClientResponseException e) {
 				respStr = e.getResponseBodyAsString();
 				if (!respStr.startsWith("{")) {

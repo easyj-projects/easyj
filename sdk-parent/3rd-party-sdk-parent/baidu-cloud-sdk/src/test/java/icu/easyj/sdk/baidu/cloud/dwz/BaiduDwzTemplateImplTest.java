@@ -27,13 +27,13 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
+@Disabled("由于免费额度有限，不执行该测试用例")
 class BaiduDwzTemplateImplTest {
 
 	/**
 	 * 测试百度云短链接服务
 	 */
 	@Test
-	@Disabled("由于免费额度有限，不执行该测试用例")
 	void testCreateShortUrl() {
 		BaiduDwzConfig config = new BaiduDwzConfig("14b303c38c494cb0bfe36fd80c8b8a69");
 		BaiduDwzTemplateImpl template = new BaiduDwzTemplateImpl(config);
