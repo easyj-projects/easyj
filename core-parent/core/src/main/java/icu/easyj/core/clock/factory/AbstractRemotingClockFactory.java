@@ -15,8 +15,8 @@
  */
 package icu.easyj.core.clock.factory;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import icu.easyj.core.clock.ITickClock;
 import icu.easyj.core.clock.TickClock;
@@ -38,7 +38,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	/**
 	 * 远端时钟Map
 	 */
-	private final Map<K, ITickClock> remotingClockMap;
+	private final ConcurrentMap<K, ITickClock> remotingClockMap;
 
 	/**
 	 * 无参构造函数
@@ -52,7 +52,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	protected AbstractRemotingClockFactory(Map<K, ITickClock> remotingClockMap) {
+	protected AbstractRemotingClockFactory(ConcurrentMap<K, ITickClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
 
