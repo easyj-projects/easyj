@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web.util.httpclient.impl;
+package icu.easyj.web.util.httpclient.impls;
 
 import java.util.Map;
 
