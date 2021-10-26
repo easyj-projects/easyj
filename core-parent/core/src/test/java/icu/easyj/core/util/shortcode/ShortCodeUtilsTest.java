@@ -1,4 +1,4 @@
-package icu.easyj.core.util;
+package icu.easyj.core.util.shortcode;
 
 import icu.easyj.core.constant.DateConstants;
 import org.junit.jupiter.api.Assertions;

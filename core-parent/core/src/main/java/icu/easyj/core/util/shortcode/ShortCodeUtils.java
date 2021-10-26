@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.util;
+package icu.easyj.core.util.shortcode;
 
 import java.util.Random;
 
 import cn.hutool.core.util.StrUtil;
+import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * 短字符串工具类
+ * long型ID 与 短字符串 互相转换的工具类
+ * <p>
+ * 用途：邀请码、短链接码、...等等
  *
  * @author wangliang181230
  */
