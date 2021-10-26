@@ -158,6 +158,22 @@ public abstract class EnhancedServiceLoader {
 	}
 
 	/**
+	 * Load service
+	 *
+	 * @param serviceClass the service
+	 * @param activateName the activate name
+	 * @param argType      the only one arg type
+	 * @param arg          the only one arg
+	 * @param <S>          the type of the service
+	 * @return service the service
+	 * @throws EnhancedServiceNotFoundException the enhanced service not found exception
+	 */
+	public static <S> S load(Class<S> serviceClass, String activateName, Class<?> argType, Object arg)
+			throws EnhancedServiceNotFoundException {
+		return load(serviceClass, activateName, new Class<?>[]{argType}, new Object[]{arg});
+	}
+
+	/**
 	 * get all implements
 	 *
 	 * @param serviceClass the service class

@@ -15,48 +15,33 @@
  */
 package icu.easyj.core.util.shortcode;
 
-import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
 
 /**
- * long型ID 与 短字符串 互相转换的工具类
+ * long型ID 与 短字符串 互相转换的服务类
  * <p>
  * 用途：邀请码、短链接码、...等等
  *
  * @author wangliang181230
  */
-public abstract class ShortCodeUtils {
+public interface IShortCodeService {
 
 	/**
-	 * 默认的 短字符串服务
-	 */
-	public static final IShortCodeService DEFAULT = EnhancedServiceLoader.load(IShortCodeService.class, "default");
-
-	/**
-	 * 最小长度的 短字符串服务（默认最小长度5）
-	 */
-	public static final IShortCodeService MIN_LENGTH = EnhancedServiceLoader.load(IShortCodeService.class, "min-length");
-
-
-	/**
-	 * 根据ID生成短字符串
+	 * long型ID 转换为 短字符串
 	 *
-	 * @param id ID
+	 * @param id ID（必须大于等于0）
 	 * @return 短字符串
-	 * @throws IllegalArgumentException ID小于0
+	 * @throws IllegalArgumentException ID为null 或 ID小于0
 	 */
 	@NonNull
-	public static String toCode(@NonNull Long id) {
-		return DEFAULT.toCode(id);
-	}
+	String toCode(@NonNull Long id);
 
 	/**
-	 * 短字符串转为64位长整形ID
+	 * 短字符串 转换为 long长整形ID
 	 *
 	 * @param shortCode 短字符串
 	 * @return 原ID
+	 * @throws IllegalArgumentException shortCode为null
 	 */
-	public static long toId(@NonNull String shortCode) {
-		return DEFAULT.toId(shortCode);
-	}
+	long toId(@NonNull String shortCode);
 }
