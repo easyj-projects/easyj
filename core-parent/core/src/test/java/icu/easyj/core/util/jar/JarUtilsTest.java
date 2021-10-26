@@ -68,7 +68,7 @@ class JarUtilsTest {
 			System.out.println(StringUtils.leftPad(jar.getName(), maxNameLength)
 					+ " : " + StringUtils.rightPad(ObjectUtils.defaultIfNull(jar.getVersion(), ""), maxVersionLength)
 					+ " : " + StringUtils.rightPad(String.valueOf(jar.getVersionLong()), maxLongVersionLength)
-					+ "   ->   " + jar.getUrl());
+					+ "   ->   " + jar.getFilePath());
 		}
 		System.out.println("-----------------------------");
 	}

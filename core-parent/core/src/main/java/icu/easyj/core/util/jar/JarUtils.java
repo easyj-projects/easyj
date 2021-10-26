@@ -219,7 +219,7 @@ public abstract class JarUtils {
 					}
 				}
 
-				result.add(new JarInfo(url, name, attributes, version));
+				result.add(new JarInfo(jarFilePath + ".jar", name, attributes, version));
 			} catch (IOException | RuntimeException e) {
 				LOGGER.warn("加载jar信息失败：{}", jarFilePath, e);
 			}

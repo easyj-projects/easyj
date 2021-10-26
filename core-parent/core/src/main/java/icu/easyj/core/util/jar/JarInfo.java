@@ -15,7 +15,6 @@
  */
 package icu.easyj.core.util.jar;
 
-import java.net.URL;
 import java.util.jar.Attributes;
 
 import cn.hutool.core.lang.Assert;
@@ -33,9 +32,9 @@ import org.springframework.lang.Nullable;
 public class JarInfo {
 
 	/**
-	 * 路径
+	 * JAR文件路径
 	 */
-	private final URL url;
+	private final String filePath;
 
 	/**
 	 * JAR名称
@@ -56,16 +55,16 @@ public class JarInfo {
 	/**
 	 * 构造函数
 	 *
-	 * @param url                路径
+	 * @param filePath           JAR文件路径
 	 * @param name               JAR名称
 	 * @param manifestAttributes META-INF/MANIFEST.MF文件的属性集合
 	 * @param version            JAR版本号
 	 */
-	public JarInfo(@NonNull URL url, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
-		Assert.notNull(url, "'url' must not be null");
+	public JarInfo(@NonNull String filePath, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
+		Assert.notNull(filePath, "'filePath' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
 
-		this.url = url;
+		this.filePath = filePath;
 		this.name = name.toLowerCase();
 		this.versionInfo = VersionUtils.parse(version);
 		this.manifestAttributes = manifestAttributes;
@@ -85,8 +84,8 @@ public class JarInfo {
 	//region Getter
 
 	@NonNull
-	public URL getUrl() {
-		return url;
+	public String getFilePath() {
+		return filePath;
 	}
 
 	@NonNull
