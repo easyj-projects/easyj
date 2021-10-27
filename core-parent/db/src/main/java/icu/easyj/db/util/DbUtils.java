@@ -18,6 +18,7 @@ package icu.easyj.db.util;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
@@ -67,8 +68,8 @@ public abstract class DbUtils {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		return MapUtils.computeIfAbsent(DB_TYPE_MAP, dataSource, ds -> {
-			try (Connection con = dataSource.getConnection()) {
-				DatabaseMetaData metaData = con.getMetaData();
+			try (Connection conn = dataSource.getConnection()) {
+				DatabaseMetaData metaData = conn.getMetaData();
 				return convertDbType(metaData.getDatabaseProductName().toLowerCase());
 			} catch (SQLException e) {
 				throw new DbException("获取数据库类型失败", e);
@@ -88,6 +89,35 @@ public abstract class DbUtils {
 
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.getVersion();
+	}
+
+	/**
+	 * 获取数据库当前时间戳
+	 * <p>
+	 * 注意：与DbClockUtils的实现不同，DbClockUtils是基于记号时钟来快速计算出数据库的当前时间的。
+	 *
+	 * @param dataSource 数据源
+	 * @return 数据库当前时间戳
+	 */
+	@NonNull
+	public static long currentTimeMillis(@NonNull DataSource dataSource) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+
+		IDbService dbService = DbServiceFactory.getDbService(dataSource);
+		return dbService.currentTimeMillis();
+	}
+
+	/**
+	 * 获取数据库当前时间
+	 * <p>
+	 * 注意：与DbClockUtils的实现不同，DbClockUtils是基于记号时钟来快速计算出数据库的当前时间的。
+	 *
+	 * @param dataSource 数据源
+	 * @return 数据库当前时间
+	 */
+	@NonNull
+	public static Date now(@NonNull DataSource dataSource) {
+		return new Date(currentTimeMillis(dataSource));
 	}
 
 	//endregion
@@ -113,6 +143,30 @@ public abstract class DbUtils {
 	@NonNull
 	public static String getDbVersion() {
 		return getDbVersion(PrimaryDataSourceHolder.get());
+	}
+
+	/**
+	 * 获取数据库当前时间戳
+	 * <p>
+	 * 注意：与DbClockUtils的实现不同，DbClockUtils是基于记号时钟来快速计算出数据库的当前时间的。
+	 *
+	 * @return 数据库当前时间戳
+	 */
+	@NonNull
+	public static long currentTimeMillis() {
+		return currentTimeMillis(PrimaryDataSourceHolder.get());
+	}
+
+	/**
+	 * 获取数据库当前时间
+	 * <p>
+	 * 注意：与DbClockUtils的实现不同，DbClockUtils是基于记号时钟来快速计算出数据库的当前时间的。
+	 *
+	 * @return 数据库当前时间
+	 */
+	@NonNull
+	public static Date now() {
+		return now(PrimaryDataSourceHolder.get());
 	}
 
 	//endregion

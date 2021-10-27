@@ -43,46 +43,6 @@ public interface IDbService extends IDbDialect {
 	DataSource getDataSource();
 
 	/**
-	 * 获取数据库的当前时间
-	 *
-	 * @return 数据库当前时间
-	 */
-	@NonNull
-	default Date now() {
-		return new Date(currentTimeMillis());
-	}
-
-	/**
-	 * 获取数据库的当前毫秒数
-	 *
-	 * @return 数据库当前毫秒数
-	 */
-	default long currentTimeMillis() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			conn = getDataSource().getConnection();
-
-			// 执行查询
-			String sql = getTimeSql();
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-
-			// 获取结果
-			if (rs.next()) {
-				return rs.getTimestamp(1).getTime();
-			} else {
-				throw new DbDataNotFoundException("没有返回时间数据");
-			}
-		} catch (SQLException e) {
-			throw new DbException("获取数据库时间失败", e);
-		} finally {
-			IOUtils.close(rs, ps, conn);
-		}
-	}
-
-	/**
 	 * 获取数据库版本号
 	 *
 	 * @return 数据库版本号
@@ -112,4 +72,49 @@ public interface IDbService extends IDbDialect {
 			IOUtils.close(rs, ps, conn);
 		}
 	}
+
+
+	//region 数据库时间
+
+	/**
+	 * 获取数据库的当前时间戳
+	 *
+	 * @return 数据库当前时间戳
+	 */
+	default long currentTimeMillis() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = getDataSource().getConnection();
+
+			// 执行查询
+			String sql = getTimeSql();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			// 获取结果
+			if (rs.next()) {
+				return rs.getTimestamp(1).getTime();
+			} else {
+				throw new DbDataNotFoundException("没有返回时间数据");
+			}
+		} catch (SQLException e) {
+			throw new DbException("获取数据库时间失败", e);
+		} finally {
+			IOUtils.close(rs, ps, conn);
+		}
+	}
+
+	/**
+	 * 获取数据库的当前时间
+	 *
+	 * @return 数据库当前时间
+	 */
+	@NonNull
+	default Date now() {
+		return new Date(currentTimeMillis());
+	}
+
+	//endregion
 }
