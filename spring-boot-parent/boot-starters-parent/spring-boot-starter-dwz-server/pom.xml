@@ -4,12 +4,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
-		<artifactId>dwz-server-parent</artifactId>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>boot-starters-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
 	<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
@@ -40,13 +39,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<!-- 只参与打包生成`spring-configuration-metadata.json`文件 -->
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

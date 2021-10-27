@@ -128,5 +128,15 @@
 			<artifactId>easyj-s3-service-sdk</artifactId>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
+
+
+		<!-- 功能5：中间件-->
+
+		<!-- 功能5.1：中间件：DWZ（短链接服务） -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-server-core</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
 	</dependencies>
 </project>

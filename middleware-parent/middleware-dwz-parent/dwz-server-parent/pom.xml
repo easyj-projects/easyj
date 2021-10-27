@@ -17,7 +17,6 @@
 
 	<modules>
 		<module>dwz-server-core</module>
-		<module>spring-boot-starter-dwz-server</module>
 		<module>dwz-server-application</module>
 	</modules>
 </project>

@@ -18,6 +18,9 @@
 	<modules>
 		<module>spring-boot-starter</module>
 
+		<!-- 中间件：DWZ（短链接服务） -->
+		<module>spring-boot-starter-dwz-server</module>
+
 		<!-- POI -->
 		<module>spring-boot-starter-poi-excel</module>
 		<module>spring-boot-starter-poi-excel-afterturn</module>
