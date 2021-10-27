@@ -136,6 +136,10 @@
 			"name": "easyj.web.poi.excel.export.list-field-name",
 			"description": "全局配置列表属性名.",
 			"defaultValue": "list"
+		},
+		{
+			"name": "easyj.middleware.dwz.server.task.enabled",
+			"defaultValue": true
 		}
 	],
 	"hints": [

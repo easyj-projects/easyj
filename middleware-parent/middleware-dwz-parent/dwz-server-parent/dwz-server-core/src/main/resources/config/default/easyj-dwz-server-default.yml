@@ -1,0 +1,6 @@
+easyj:
+  middleware:
+    dwz:
+      server:
+        task:
+          enabled: true
