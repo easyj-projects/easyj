@@ -35,9 +35,9 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	//region 一组默认的参数 常量
 
 	/**
-	 * 默认的自定义进制（不含分隔字符 {@link #DEFAULT_SPLIT_CHAR}）
+	 * 默认的自定义进制（不含分隔字符 {@link #DEFAULT_SEPARATOR}）
 	 *
-	 * @see #DEFAULT_SPLIT_CHAR
+	 * @see #DEFAULT_SEPARATOR
 	 */
 	public static final char[] DEFAULT_CHAR_TABLE = new char[]{
 			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -50,7 +50,7 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	 *
 	 * @see #DEFAULT_CHAR_TABLE
 	 */
-	public static final char DEFAULT_SPLIT_CHAR = '0'; // 数字0
+	public static final char DEFAULT_SEPARATOR = '0'; // 数字0
 
 	/**
 	 * 默认的短字符串最小长度
@@ -63,7 +63,7 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	/**
 	 * 最短长度所需的分隔符（用于toId时解析使用）（不能与 {@link super#charTable} 中的字符重复）
 	 */
-	private final char splitChar;
+	private final char separator;
 
 	/**
 	 * 最短长度
@@ -75,34 +75,34 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	 * 构造函数
 	 *
 	 * @param charTable          字符集
-	 * @param splitChar          分隔字符
+	 * @param separator          分隔字符
 	 * @param minLength          最小长度
-	 * @param needCheckSplitChar 是否校验分隔符的有效性
+	 * @param needCheckSeparator 是否校验分隔符的有效性
 	 */
-	public MinLengthShortCodeServiceImpl(char[] charTable, char splitChar, int minLength, boolean needCheckSplitChar) {
+	public MinLengthShortCodeServiceImpl(char[] charTable, char separator, int minLength, boolean needCheckSeparator) {
 		super(charTable);
 
-		if (needCheckSplitChar) {
-			// 判断splitChar是否存在于charTable，如果存在，则抛出异常
-			if (ArrayUtil.contains(charTable, splitChar)) {
+		if (needCheckSeparator) {
+			// 判断 separator 是否存在于charTable，如果存在，则抛出异常
+			if (ArrayUtil.contains(charTable, separator)) {
 				throw new IllegalArgumentException("字符集中不能包含分隔字符，否则生成的短字符串将无法反向解析");
 			}
 		}
 
-		this.splitChar = splitChar;
+		this.separator = separator;
 		this.minLength = minLength;
 	}
 
-	public MinLengthShortCodeServiceImpl(char[] charTable, char splitChar, int minLength) {
-		this(charTable, splitChar, minLength, true);
+	public MinLengthShortCodeServiceImpl(char[] charTable, char separator, int minLength) {
+		this(charTable, separator, minLength, true);
 	}
 
-	public MinLengthShortCodeServiceImpl(char[] charTable, char splitChar) {
-		this(charTable, splitChar, DEFAULT_MIN_LENGTH, true);
+	public MinLengthShortCodeServiceImpl(char[] charTable, char separator) {
+		this(charTable, separator, DEFAULT_MIN_LENGTH, true);
 	}
 
 	public MinLengthShortCodeServiceImpl() {
-		this(DEFAULT_CHAR_TABLE, DEFAULT_SPLIT_CHAR, DEFAULT_MIN_LENGTH, true);
+		this(DEFAULT_CHAR_TABLE, DEFAULT_SEPARATOR, DEFAULT_MIN_LENGTH, true);
 	}
 
 
@@ -117,7 +117,7 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 		// 长度不够时，自动随机补全
 		if (shortCode.length() < this.minLength) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(this.splitChar);
+			sb.append(this.separator);
 			Random rnd = new Random();
 			for (int i = 1; i < this.minLength - shortCode.length(); i++) {
 				sb.append(this.charTable[rnd.nextInt(this.charTable.length)]);
@@ -147,7 +147,7 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 				}
 			}
 			// 当前方法相对于父类方法，多了这个判断，其他代码完全相同
-			if (chars[i] == this.splitChar) {
+			if (chars[i] == this.separator) {
 				break;
 			}
 			if (i > 0) {

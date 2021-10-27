@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>middleware-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>middleware-dwz-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ自研中间件模块：DWZ（短链接服务）实现</description>
+
+	<modules>
+		<module>dwz-common</module>
+		<module>spring-boot-starter-middleware-dwz-server</module>
+
+		<module>dwz-server</module>
+	</modules>
+</project>

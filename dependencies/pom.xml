@@ -47,6 +47,14 @@
 		<!-- Spring dependencies version -->
 		<spring-framework.version>5.3.10</spring-framework.version>
 
+		<!-- DB dependencies version -->
+		<!-- Oracle -->
+		<!-- groupId为'com.oracle.ojdbc'的版本号，该groupId对应的jar比较旧，不建议使用 -->
+		<ojdbc.version>19.3.0.0</ojdbc.version>
+		<!-- groupId为'com.oracle.database.jdbc'的版本号，该groupId对应的jar比较新，建议使用 -->
+		<ojdbc8.version>21.3.0.0</ojdbc8.version>
+		<ojdbc10.version>19.12.0.0</ojdbc10.version>
+
 		<!-- Web dependencies version -->
 		<servlet-api.version>4.0.1</servlet-api.version>
 
@@ -81,11 +89,6 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-core</artifactId>
-				<version>${logback.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -147,6 +150,19 @@
 				<version>${spring-framework.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+
+			<!-- 依赖定义：DB -->
+			<!-- Oracle -->
+			<dependency>
+				<groupId>com.oracle.database.jdbc</groupId>
+				<artifactId>ojdbc8</artifactId>
+				<version>${ojdbc8.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.oracle.database.jdbc</groupId>
+				<artifactId>ojdbc10</artifactId>
+				<version>${ojdbc10.version}</version>
 			</dependency>
 
 			<!-- 依赖定义：Web -->

@@ -10,7 +10,7 @@
 		<relativePath/>
 	</parent>
 
-	<groupId>icu.easyj.boot</groupId>
+	<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
 	<artifactId>spring-boot-parent</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>

@@ -69,6 +69,9 @@ class StringUtilsTest {
 		Assertions.assertTrue(StringUtils.isNotBlank(" 1 "));
 	}
 
+
+	//region test getValue 和 getCoder
+
 	@Test
 	void testGetValue() {
 		String s1 = "aaabbbccc";
@@ -91,6 +94,7 @@ class StringUtilsTest {
 			Assertions.assertEquals(chars.length, s2.length());
 		}
 	}
+
 
 	@Test
 	void testGetCoder() {
@@ -119,6 +123,62 @@ class StringUtilsTest {
 		} else {
 			return 0;
 		}
+	}
+
+	//endregion
+
+
+	@Test
+	void testJoin() {
+		// join
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.join('?', ',', -1);
+		});
+		Assertions.assertEquals("", StringUtils.join('?', ',', 0));
+		Assertions.assertEquals("?", StringUtils.join('?', ',', 1));
+		Assertions.assertEquals("?,?", StringUtils.join('?', ',', 2));
+		Assertions.assertEquals("?,?,?", StringUtils.join('?', ',', 3));
+
+		// join2
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.join2('?', ',', -1);
+		});
+		Assertions.assertEquals("", StringUtils.join2('?', ',', 0));
+		Assertions.assertEquals("?", StringUtils.join2('?', ',', 1));
+		Assertions.assertEquals("?, ?", StringUtils.join2('?', ',', 2));
+		Assertions.assertEquals("?, ?, ?", StringUtils.join2('?', ',', 3));
+	}
+
+
+	@Test
+	void testTrim() {
+		// trim
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.trim(null, '/');
+		});
+		Assertions.assertEquals("", StringUtils.trim("/ /", '/'));
+		Assertions.assertEquals("aabbcc", StringUtils.trim("//aabbcc/ /", '/'));
+		Assertions.assertEquals("aabbcc", StringUtils.trim("/ /aabbcc", '/'));
+		Assertions.assertEquals("aabbcc", StringUtils.trim(" aabbcc / /", '/'));
+
+		// trimStart
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.trimStart(null, '/');
+		});
+		Assertions.assertEquals("", StringUtils.trimStart("/ /", '/'));
+		Assertions.assertEquals("aabbcc/ /", StringUtils.trimStart("//aabbcc/ /", '/'));
+		Assertions.assertEquals("aabbcc", StringUtils.trimStart("//aabbcc", '/'));
+		Assertions.assertEquals("aabbcc / /", StringUtils.trimStart(" aabbcc / /", '/'));
+
+
+		// trimEnd
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.trimEnd(null, '/');
+		});
+		Assertions.assertEquals("", StringUtils.trimEnd("/ /", '/'));
+		Assertions.assertEquals("//aabbcc", StringUtils.trimEnd("//aabbcc/ /", '/'));
+		Assertions.assertEquals("/ /aabbcc", StringUtils.trimEnd("/ /aabbcc", '/'));
+		Assertions.assertEquals(" aabbcc", StringUtils.trimEnd(" aabbcc / /", '/'));
 	}
 
 

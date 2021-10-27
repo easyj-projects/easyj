@@ -101,7 +101,7 @@ public abstract class CycleDependencyHandler {
 	 * @return the substitute object
 	 */
 	static Object getUniqueSubstituteObject(Object obj) {
-		// FIXME: Optimize this method to ensure uniqueness
+		// FIXME: Optimize this method to ensure uniqueness（当前方法目前没有办法保证全局唯一性，但是在单线程有限的对象数量，可能够用）
 		return System.identityHashCode(obj);
 	}
 }

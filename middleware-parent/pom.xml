@@ -13,8 +13,30 @@
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ中间件模块，预计提供UMS、WebSocket、验证码、统一支付和其他一些通用服务等等。</description>
+	<description>
+		EasyJ自研中间件模块：
+		已经提供：DWZ（短链接服务）
+		预计提供：WebSocket服务、UMS（统一消息系统）、UPP（统一支付平台）、验证码服务、...等等。
+	</description>
+
+	<properties>
+		<spring-boot.version>2.5.6</spring-boot.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 依赖引入：SpringBoot BOM -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<modules>
+		<module>middleware-dwz-parent</module>
 	</modules>
 </project>

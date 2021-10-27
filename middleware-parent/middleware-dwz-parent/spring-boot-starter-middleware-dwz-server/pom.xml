@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>middleware-dwz-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
+	<artifactId>easyj-spring-boot-starter-middleware-dwz-server</artifactId>
+
+	<dependencies>
+		<!-- DWZ客户端和服务端通用的模块 -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Easyj Starter -->
+		<dependency>
+			<groupId>icu.easyj.boot</groupId>
+			<artifactId>easyj-spring-boot-starter</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Spring-Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Spring-Jdbc -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<!-- 只参与打包生成`spring-configuration-metadata.json`文件 -->
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+</project>

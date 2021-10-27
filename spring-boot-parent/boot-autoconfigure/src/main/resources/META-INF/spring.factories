@@ -1,6 +1,6 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-icu.easyj.spring.boot.autoconfigure.global.configs.EasyjGlobalConfigsAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.configs.EasyjConfigsAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration,\
@@ -8,6 +8,7 @@ icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjBaiduCloudDwzTemplateAutoConfig
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent.EasyjTencentCloudIdCardOcrAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.httpconfigs.EasyjWebConfigAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.web.mvc.EasyjWebMvcAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.cache304.EasyjWebCache304AutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjParamCryptoAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.EasyjExcelExporterAutoConfiguration

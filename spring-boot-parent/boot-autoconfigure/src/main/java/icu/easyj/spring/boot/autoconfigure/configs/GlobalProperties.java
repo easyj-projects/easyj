@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.global.configs;
+package icu.easyj.spring.boot.autoconfigure.configs;
 
 import java.util.Map;
 

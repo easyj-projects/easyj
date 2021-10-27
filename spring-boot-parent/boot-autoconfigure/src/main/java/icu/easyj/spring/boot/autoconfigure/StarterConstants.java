@@ -33,6 +33,9 @@ public interface StarterConstants {
 	String GLOBAL_ASYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".asymmetric-crypto";
 	String GLOBAL_SYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".symmetric-crypto";
 
+	// Server
+	String SERVER_PREFIX = PREFIX + ".server";
+
 
 	// Web
 	String WEB_PREFIX = PREFIX + ".web";

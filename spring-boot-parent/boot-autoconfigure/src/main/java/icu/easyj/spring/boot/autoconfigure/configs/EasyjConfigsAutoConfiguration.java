@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.global.configs;
+package icu.easyj.spring.boot.autoconfigure.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX;
+import static icu.easyj.spring.boot.autoconfigure.StarterConstants.SERVER_PREFIX;
 
 /**
  * 全局配置自动装配
@@ -27,7 +28,7 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX
  * @author wangliang181230
  * @see icu.easyj.config.GlobalConfigs
  */
-public class EasyjGlobalConfigsAutoConfiguration {
+public class EasyjConfigsAutoConfiguration {
 
 	/**
 	 * 创建全局配置bean
@@ -43,5 +44,16 @@ public class EasyjGlobalConfigsAutoConfiguration {
 			properties.setEnv(activeProfiles[0]);
 		}
 		return properties;
+	}
+
+	/**
+	 * 创建服务端配置bean
+	 *
+	 * @return 服务端配置
+	 */
+	@Bean
+	@ConfigurationProperties(SERVER_PREFIX)
+	public ServerProperties serverProperties() {
+		return new ServerProperties();
 	}
 }

@@ -81,7 +81,7 @@ public abstract class StringUtils {
 	//endregion
 
 
-	//region 判空方法
+	//region 判断方法
 
 	/**
 	 * 字符串是否为空
@@ -136,25 +136,21 @@ public abstract class StringUtils {
 		return !isBlank(cs);
 	}
 
-	//endregion
-
-
-	//region 各种格式的字符串判断方法
-
 	/**
-	 * 判断是否全部由数字 '0' 组成的字符串
+	 * 判断是否全部由指定字符组成的字符串
 	 *
-	 * @param str 字符串
+	 * @param str        字符串
+	 * @param targetChar 指定字符
 	 * @return true=全为0、false=为null或不全为0
 	 */
-	public static boolean isAllZero(String str) {
+	public static boolean isAll(String str, char targetChar) {
 		if (str == null) {
 			return false;
 		}
 
 		char[] chars = toCharArray(str);
 		for (char c : chars) {
-			if (c != '0') {
+			if (c != targetChar) {
 				return false;
 			}
 		}
@@ -163,20 +159,30 @@ public abstract class StringUtils {
 	}
 
 	/**
-	 * 判断字符串是否包含字符
+	 * 判断是否全部由数字 '0' 组成的字符串
 	 *
 	 * @param str 字符串
-	 * @param c   字符
+	 * @return true=全为0、false=为null或不全为0
+	 */
+	public static boolean isAllZero(String str) {
+		return isAll(str, '0');
+	}
+
+	/**
+	 * 判断字符串是否包含字符
+	 *
+	 * @param str        字符串
+	 * @param targetChar 目标字符
 	 * @return true=包含 | false=不包含
 	 */
-	public static boolean contains(CharSequence str, char c) {
+	public static boolean contains(CharSequence str, char targetChar) {
 		if (isEmpty(str)) {
 			return false;
 		}
 
 		char[] chars = toCharArray(str);
-		for (char ch : chars) {
-			if (ch == c) {
+		for (char c : chars) {
+			if (c == targetChar) {
 				return true;
 			}
 		}
@@ -355,6 +361,177 @@ public abstract class StringUtils {
 	//endregion
 
 
+	//region 字符串处理
+
+	/**
+	 * 裁剪掉两边的某个字符或空字符
+	 *
+	 * @param str     字符串
+	 * @param cutChar 需裁剪掉的字符
+	 * @return 裁剪后的字符串
+	 */
+	public static String trim(@NonNull String str, char cutChar) {
+		Assert.notNull(str, "'str' must not be null");
+
+		int start = 0;
+		int end = str.length();
+
+		char[] chars = toCharArray(str);
+
+		while (start < end && isCutCharOrBlank(chars[start], cutChar)) {
+			start++;
+		}
+		if (start == end) {
+			return "";
+		}
+
+		while (end > start && isCutCharOrBlank(chars[end - 1], cutChar)) {
+			end--;
+		}
+
+		if (start > 0 || end < str.length()) {
+			return str.substring(start, end);
+		} else {
+			return str;
+		}
+	}
+
+	/**
+	 * 裁剪掉两边的某个字符或空字符
+	 *
+	 * @param str     字符串
+	 * @param cutChar 需裁剪掉的字符
+	 * @return 裁剪后的字符串
+	 */
+	public static String trimStart(@NonNull String str, char cutChar) {
+		Assert.notNull(str, "'str' must not be null");
+
+		int start = 0;
+		int end = str.length();
+
+		char[] chars = toCharArray(str);
+
+		while (start < end && isCutCharOrBlank(chars[start], cutChar)) {
+			start++;
+		}
+		if (start == end) {
+			return "";
+		} else if (start > 0) {
+			return str.substring(start, end);
+		} else {
+			return str;
+		}
+	}
+
+	/**
+	 * 裁剪掉两边的某个字符或空字符
+	 *
+	 * @param str     字符串
+	 * @param cutChar 需裁剪掉的字符
+	 * @return 裁剪后的字符串
+	 */
+	public static String trimEnd(@NonNull String str, char cutChar) {
+		Assert.notNull(str, "'str' must not be null");
+
+		int start = 0;
+		int end = str.length();
+
+		char[] chars = toCharArray(str);
+
+		while (end > start && isCutCharOrBlank(chars[end - 1], cutChar)) {
+			end--;
+		}
+
+		if (start == end) {
+			return "";
+		} else if (end < str.length()) {
+			return str.substring(start, end);
+		} else {
+			return str;
+		}
+	}
+
+	private static boolean isCutCharOrBlank(char c, char cutChar) {
+		return c == cutChar || Character.isWhitespace(c);
+	}
+
+	//endregion
+
+
+	//region 快速生成字符串
+
+	/**
+	 * 生成 N个源字符 由 分隔符隔开而组成的字符串
+	 * <p>
+	 * 格式如：?,?,?,?（不带空格）
+	 *
+	 * @param c         源字符
+	 * @param separator 分隔符
+	 * @param n         源字符数量
+	 * @return 生成的字符串
+	 * @throws IllegalArgumentException n小于0
+	 * @see #join2(char, char, int) 带空格的方法
+	 */
+	public static String join(char c, char separator, int n) {
+		Assert.isTrue(n >= 0, "n必须大于等于0");
+
+		if (n == 0) {
+			return "";
+		}
+		if (n == 1) {
+			return String.valueOf(c);
+		}
+
+		char[] chars = new char[2 * n - 1];
+
+		chars[0] = c;
+
+		for (int i = 1; i < chars.length; ) {
+			chars[i++] = separator;
+			chars[i++] = c;
+		}
+
+		return new String(chars);
+	}
+
+	/**
+	 * 生成 N个源字符 由 分隔符隔开而组成的字符串
+	 * <p>
+	 * 格式如：?, ?, ?, ?（带空格）
+	 *
+	 * @param c         源字符
+	 * @param separator 分隔符
+	 * @param n         源字符数量
+	 * @return 生成的字符串
+	 * @throws IllegalArgumentException n小于0
+	 * @see #join(char, char, int) 不带空格的方法
+	 */
+	public static String join2(char c, char separator, int n) {
+		Assert.isTrue(n >= 0, "n必须大于等于0");
+
+		if (n == 0) {
+			return "";
+		}
+		if (n == 1) {
+			return String.valueOf(c);
+		}
+
+		char[] chars = new char[3 * n - 2];
+
+		chars[0] = c;
+
+		for (int i = 1; i < chars.length; ) {
+			chars[i++] = separator;
+			chars[i++] = ' ';
+			chars[i++] = c;
+		}
+
+		return new String(chars);
+	}
+
+	//endregion
+
+
 	//region 转换
 
 	/**
@@ -367,9 +544,6 @@ public abstract class StringUtils {
 		Assert.notNull(str, "'str' must not be null");
 		return STRING_SERVICE.toCharArray(str);
 	}
-
-	//endregion
-
 
 	//region toString
 
@@ -497,6 +671,8 @@ public abstract class StringUtils {
 			return sb.toString();
 		});
 	}
+
+	//endregion
 
 	//endregion
 }
