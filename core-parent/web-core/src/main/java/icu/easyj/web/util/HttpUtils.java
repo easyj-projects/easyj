@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.constant.DateFormatConstants;
+import icu.easyj.core.constant.UrlConstants;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.constant.HttpConstants;
 import icu.easyj.web.constant.HttpHeaderConstants;
@@ -134,6 +135,39 @@ public abstract class HttpUtils {
 
 
 	//region 校验请求信息 start
+
+	/**
+	 * 判断是否为http请求地址
+	 *
+	 * @param url 请求地址
+	 * @return true=是 | false=否
+	 */
+	public static boolean isHttp(@NonNull String url) {
+		url = url.toLowerCase();
+		return url.startsWith(UrlConstants.HTTP_PRE);
+	}
+
+	/**
+	 * 判断是否为https请求地址
+	 *
+	 * @param url 请求地址
+	 * @return true=是 | false=否
+	 */
+	public static boolean isHttps(@NonNull String url) {
+		url = url.toLowerCase();
+		return url.startsWith(UrlConstants.HTTPS_PRE);
+	}
+
+	/**
+	 * 判断是否为http(s)请求地址
+	 *
+	 * @param url 请求地址
+	 * @return true=是 | false=否
+	 */
+	public static boolean isHttpOrHttps(@NonNull String url) {
+		url = url.toLowerCase();
+		return url.startsWith(UrlConstants.HTTP_PRE) || url.startsWith(UrlConstants.HTTPS_PRE);
+	}
 
 	/**
 	 * 判断是否GET请求
