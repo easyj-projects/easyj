@@ -14,7 +14,7 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>
-		EasyJ自研中间件模块：
+		EasyJ中间件：
 		已经提供：DWZ（短链接服务）
 		预计提供：WebSocket服务、UMS（统一消息系统）、UPP（统一支付平台）、验证码服务、...等等。
 	</description>

@@ -13,21 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.json;
-
-import icu.easyj.core.loader.ServiceProviders;
+package icu.easyj.data.store;
 
 /**
- * EasyJ自己支持的JSON
+ * Redis存储接口异常
  *
  * @author wangliang181230
  */
-public interface EasyjSupportedJSON {
+public class RedisStoreException extends StoreException {
 
-	String[] SUPPORTED = new String[]{
-			ServiceProviders.FASTJSON,
-			ServiceProviders.JACKSON,
-			ServiceProviders.GSON,
-			ServiceProviders.HUTOOL
-	};
+	public RedisStoreException(String message) {
+		super(message);
+	}
+
+	public RedisStoreException(String message, String errorCode) {
+		super(message, errorCode);
+	}
+
+	public RedisStoreException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public RedisStoreException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
+	}
 }

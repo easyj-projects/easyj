@@ -40,7 +40,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- 依赖引入：Easyj Dependencies -->
+			<!-- 依赖引入：EasyJ Dependencies -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-dependencies</artifactId>

@@ -13,21 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.json;
-
-import icu.easyj.core.loader.ServiceProviders;
+package icu.easyj.data.store;
 
 /**
- * EasyJ自己支持的JSON
+ * 数据库存储接口异常
  *
  * @author wangliang181230
  */
-public interface EasyjSupportedJSON {
+public class DbStoreException extends StoreException {
 
-	String[] SUPPORTED = new String[]{
-			ServiceProviders.FASTJSON,
-			ServiceProviders.JACKSON,
-			ServiceProviders.GSON,
-			ServiceProviders.HUTOOL
-	};
+	public DbStoreException(String message) {
+		super(message);
+	}
+
+	public DbStoreException(String message, String errorCode) {
+		super(message, errorCode);
+	}
+
+	public DbStoreException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public DbStoreException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
+	}
 }

@@ -133,22 +133,22 @@
 			</dependency>
 
 
+			<!-- ************************* MiddleWare（中间件） ************************* -->
+
+			<!-- DWZ（短链接服务） -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
 			<!-- ************************* Test ************************* -->
 
 			<!-- EasyJ Spring Boot Test -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>
 				<artifactId>easyj-spring-boot-test</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-
-			<!-- ************************* MiddleWare（中间件） ************************* -->
-
-			<!-- DWZ（短链接服务） -->
-			<dependency>
-				<groupId>icu.easyj.boot</groupId>
-				<artifactId>easyj-spring-boot-starter-middleware-dwz-server</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

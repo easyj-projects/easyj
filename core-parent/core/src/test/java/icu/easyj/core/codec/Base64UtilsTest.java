@@ -84,7 +84,7 @@ class Base64UtilsTest {
 	/**
 	 * 测试isBase64方法
 	 *
-	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
+	 * @see Base64Utils#isBase64(CharSequence) EasyJ的判断方法
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */
 	@Test
@@ -131,7 +131,7 @@ class Base64UtilsTest {
 	/**
 	 * 性能测试：与Hutool比较性能高低
 	 *
-	 * @see Base64Utils#isBase64(CharSequence) Easyj的判断方法
+	 * @see Base64Utils#isBase64(CharSequence) EasyJ的判断方法
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */
 	@Test
@@ -210,10 +210,10 @@ class Base64UtilsTest {
 		long costEasyj2 = costs[1];
 		long costHutool = costs[2];
 		if (costEasyj1 > costHutool) {
-			System.out.println("\r\n[WARNING] Easyj1的isBase64方法比Hutool的性能要低了，请注意替换实现。");
+			System.out.println("\r\n[WARNING] EasyJ1的isBase64方法比Hutool的性能要低了，请注意替换实现。");
 		}
 		if (costEasyj1 > costEasyj2) {
-			System.out.println("\r\n[WARNING] Easyj1的isBase64方法比Easyj2的性能要低了，请注意替换实现。");
+			System.out.println("\r\n[WARNING] EasyJ1的isBase64方法比EasyJ2的性能要低了，请注意替换实现。");
 		}
 	}
 

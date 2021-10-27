@@ -11,6 +11,9 @@
 
 	<artifactId>easyj-dwz-common</artifactId>
 
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ中间件：DWZ（短链接服务）客户端和服务端共用的模块</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>icu.easyj</groupId>

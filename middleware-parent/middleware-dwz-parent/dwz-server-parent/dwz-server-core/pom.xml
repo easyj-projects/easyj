@@ -5,19 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>middleware-parent</artifactId>
+		<artifactId>dwz-server-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>middleware-dwz-parent</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>easyj-dwz-server-core</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ中间件：DWZ（短链接服务）项目模块</description>
+	<description>EasyJ中间件：DWZ（短链接服务）服务端核心模块</description>
 
-	<modules>
-		<module>dwz-common</module>
-		<module>dwz-server-parent</module>
-		<!--<module>dwz-client-parent</module>暂未开发-->
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

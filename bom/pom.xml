@@ -103,12 +103,12 @@
 			</dependency>
 
 
-			<!-- ************************* MiddleWare（中间件相关） ************************* -->
+			<!-- ************************* MiddleWare（中间件） ************************* -->
 
-			<!-- Easyj自研DWZ（短链接服务） -->
+			<!-- EasyJ中间件：DWZ（短链接服务）服务端核心模块 -->
 			<dependency>
 				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-dwz-common</artifactId>
+				<artifactId>easyj-dwz-server-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

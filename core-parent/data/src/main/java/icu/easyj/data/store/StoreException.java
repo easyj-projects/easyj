@@ -13,21 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.json;
+package icu.easyj.data.store;
 
-import icu.easyj.core.loader.ServiceProviders;
+import icu.easyj.core.exception.BaseRuntimeException;
 
 /**
- * EasyJ自己支持的JSON
+ * 存储接口异常
  *
  * @author wangliang181230
  */
-public interface EasyjSupportedJSON {
+public class StoreException extends BaseRuntimeException {
 
-	String[] SUPPORTED = new String[]{
-			ServiceProviders.FASTJSON,
-			ServiceProviders.JACKSON,
-			ServiceProviders.GSON,
-			ServiceProviders.HUTOOL
-	};
+	public StoreException(String message) {
+		super(message);
+	}
+
+	public StoreException(String message, String errorCode) {
+		super(message, errorCode);
+	}
+
+	public StoreException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public StoreException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
+	}
 }

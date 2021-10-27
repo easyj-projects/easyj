@@ -193,7 +193,7 @@ class DefaultTencentCloudIdCardOcrServiceImplTest {
 		//endregion
 
 
-		//region case5: 测试 Easyj 的 IOcrTemplate 接口
+		//region case5: 测试 EasyJ 的 IOcrTemplate 接口
 
 		IOcrTemplate ocrTemplate = new WrapperOcrTemplate(new TencentEasyjIdCardOcrTemplateImpl(service));
 

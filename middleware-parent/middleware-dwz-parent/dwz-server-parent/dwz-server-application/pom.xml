@@ -5,20 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>middleware-dwz-parent</artifactId>
+		<artifactId>dwz-server-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-dwz-server</artifactId>
+	<artifactId>easyj-dwz-server-application</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ自研中间件：DWZ（短链接服务）服务端</description>
+	<description>EasyJ中间件：DWZ（短链接服务）服务端</description>
 
 	<dependencies>
 		<!-- dwz-server-starter -->
 		<dependency>
 			<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
-			<artifactId>easyj-spring-boot-starter-middleware-dwz-server</artifactId>
+			<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -59,6 +59,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>easyj-dwz-server-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
