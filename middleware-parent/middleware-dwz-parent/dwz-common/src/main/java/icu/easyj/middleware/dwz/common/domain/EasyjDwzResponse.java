@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.middleware.dwz.common.domain.response;
+package icu.easyj.middleware.dwz.common.domain;
 
 import java.util.Date;
 import javax.annotation.Nullable;
@@ -25,7 +25,7 @@ import org.springframework.util.Assert;
 /**
  * @author wangliang181230
  */
-public class DwzLogResponse {
+public class EasyjDwzResponse {
 
 	/**
 	 * 短链接地址
@@ -45,10 +45,10 @@ public class DwzLogResponse {
 	private Long expireIn;
 
 
-	public DwzLogResponse() {
+	public EasyjDwzResponse() {
 	}
 
-	public DwzLogResponse(@NonNull String shortUrl, @NonNull Date createTime, @Nullable Date termOfValidity) {
+	public EasyjDwzResponse(@NonNull String shortUrl, @NonNull Date createTime, @Nullable Date termOfValidity) {
 		Assert.notNull(shortUrl, "'shortUrl' must not be null");
 		Assert.notNull(createTime, "'createTime' must not be null");
 		Assert.isTrue(termOfValidity == null || termOfValidity.compareTo(createTime) > 0, "termOfValidity可为空或必须大于createTime");

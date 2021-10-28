@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.middleware.dwz.common.domain.request;
+package icu.easyj.middleware.dwz.common.domain;
 
 import java.util.Date;
 
@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * @author wangliang181230
  */
-public class CreateShortUrlRequest {
+public class EasyjDwzRequest {
 
 	/**
 	 * 长链接

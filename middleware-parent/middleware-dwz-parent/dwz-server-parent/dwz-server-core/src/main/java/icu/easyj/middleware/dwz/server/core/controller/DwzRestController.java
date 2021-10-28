@@ -18,8 +18,8 @@ package icu.easyj.middleware.dwz.server.core.controller;
 import cn.hutool.core.lang.Assert;
 import icu.easyj.config.ServerConfigs;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.middleware.dwz.common.domain.request.CreateShortUrlRequest;
-import icu.easyj.middleware.dwz.common.domain.response.DwzLogResponse;
+import icu.easyj.middleware.dwz.common.domain.EasyjDwzRequest;
+import icu.easyj.middleware.dwz.common.domain.EasyjDwzResponse;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import org.slf4j.Logger;
@@ -57,7 +57,7 @@ public class DwzRestController {
 	 * @return response 短链接响应
 	 */
 	@PostMapping("/create-short-url")
-	public DwzLogResponse createShortUrl(@RequestBody CreateShortUrlRequest param) {
+	public EasyjDwzResponse createShortUrl(@RequestBody EasyjDwzRequest param) {
 		Assert.notNull(param.getLongUrl(), "长链接不能为空");
 
 		// 生成短链接码
@@ -65,7 +65,7 @@ public class DwzRestController {
 
 		// 拼接公网域名后，就是短链接了
 		String shortUrl = ServerConfigs.getDomain() + "/" + dwzLog.getShortUrlCode();
-		return new DwzLogResponse(shortUrl, dwzLog.getCreateTime(), dwzLog.getTermOfValidity());
+		return new EasyjDwzResponse(shortUrl, dwzLog.getCreateTime(), dwzLog.getTermOfValidity());
 	}
 
 	/**
