@@ -5,6 +5,7 @@ icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjMiddleWareDwzTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjBaiduCloudDwzTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.idcardocr.tencent.EasyjTencentCloudIdCardOcrAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration,\

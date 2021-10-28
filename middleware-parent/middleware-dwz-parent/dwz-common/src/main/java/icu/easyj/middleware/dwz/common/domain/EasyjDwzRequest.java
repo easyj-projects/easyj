@@ -15,6 +15,7 @@
  */
 package icu.easyj.middleware.dwz.common.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,7 +23,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * @author wangliang181230
  */
-public class EasyjDwzRequest {
+public class EasyjDwzRequest implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 长链接
@@ -34,6 +36,15 @@ public class EasyjDwzRequest {
 	 */
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
 	private Date termOfValidity;
+
+
+	public EasyjDwzRequest() {
+	}
+
+	public EasyjDwzRequest(String longUrl, Date termOfValidity) {
+		this.longUrl = longUrl;
+		this.termOfValidity = termOfValidity;
+	}
 
 
 	public String getLongUrl() {

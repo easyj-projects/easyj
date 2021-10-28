@@ -17,6 +17,8 @@ package icu.easyj.sdk.dwz;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 短链接服务 响应参数
  *
@@ -32,6 +34,7 @@ public class DwzResponse {
 	/**
 	 * 短链接创建时间
 	 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
 	private Date createTime;
 
 	/**

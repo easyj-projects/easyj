@@ -30,6 +30,7 @@
 		<module>spring-boot-starter-web-param-crypto</module>
 
 		<!-- SDK -->
+		<module>spring-boot-starter-sdk-dwz-easyj-middleware</module>
 		<module>spring-boot-starter-sdk-dwz-baidu</module>
 		<module>spring-boot-starter-sdk-dwz-s3</module>
 		<module>spring-boot-starter-sdk-ocr-tencent</module>

@@ -15,6 +15,8 @@
  */
 package icu.easyj.spring.boot.autoconfigure.configs;
 
+import cn.hutool.core.lang.Snowflake;
+import icu.easyj.config.ServerConfigs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -55,5 +57,15 @@ public class EasyjConfigsAutoConfiguration {
 	@ConfigurationProperties(SERVER_PREFIX)
 	public ServerProperties serverProperties() {
 		return new ServerProperties();
+	}
+
+	/**
+	 * 雪花算法Bean
+	 *
+	 * @return 雪花算法
+	 */
+	@Bean
+	public Snowflake snowflake(ServerProperties serverProperties) {
+		return ServerConfigs.getSnowflake();
 	}
 }

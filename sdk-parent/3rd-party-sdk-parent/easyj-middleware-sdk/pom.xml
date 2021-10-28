@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>3rd-party-sdk-parent</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-middleware-sdk</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ所有中间件的客户端SDK。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-dwz-common</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- 基于SpringCloudFeign的方式调用服务 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+			<version>3.0.5</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-core</artifactId>
+			<version>10.12</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+	</dependencies>
+</project>

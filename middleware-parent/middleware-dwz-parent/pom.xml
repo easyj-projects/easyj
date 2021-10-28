@@ -18,6 +18,5 @@
 	<modules>
 		<module>dwz-common</module>
 		<module>dwz-server-parent</module>
-		<!--<module>dwz-client-parent</module>暂未开发-->
 	</modules>
 </project>

@@ -17,6 +17,8 @@ package icu.easyj.middleware.dwz.server.core.domain.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 短链接记录 实体
  * 对应表：easyj_dwz_log
@@ -41,6 +43,7 @@ public class DwzLogEntity {
 	 */
 	private Integer status;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
 	private Date createTime;
 
 	private Date updateTime;

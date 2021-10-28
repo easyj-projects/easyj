@@ -94,6 +94,12 @@
 			<!-- ************************* SDK ************************* -->
 
 			<!-- DWZ SDK-->
+			<!-- Starter: 基于EasyJ中间件实现的短链接服务（DWZ）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-dwz-easyj-middleware</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<!-- Starter: 基于S-3实现的短链接服务（DWZ）SDK -->
 			<dependency>
 				<groupId>icu.easyj.boot</groupId>

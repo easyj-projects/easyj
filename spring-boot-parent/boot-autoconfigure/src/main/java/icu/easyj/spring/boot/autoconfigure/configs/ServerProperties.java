@@ -65,7 +65,7 @@ public class ServerProperties implements InitializingBean {
 		}
 
 		// 初始化雪花算法
-		ServerConfigs.initSnowflake();
+		ServerConfigs.init();
 	}
 
 

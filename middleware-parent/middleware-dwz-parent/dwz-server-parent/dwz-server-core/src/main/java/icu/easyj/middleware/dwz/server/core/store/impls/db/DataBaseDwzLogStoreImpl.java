@@ -103,7 +103,8 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 			"   SET t.status = 2," +
 			"       t.update_time = ?," +
 			"       t.version = t.verion + 1" +
-			" WHERE t.term_of_validity < ? AND t.status = 1";
+			" WHERE t.term_of_validity < ?" +
+			"   AND t.status = 1";
 
 	//endregion SQL相关常量 end
 
@@ -114,6 +115,10 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 
 	public DataBaseDwzLogStoreImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, Snowflake snowflake) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		Assert.notNull(jdbcTemplate, "'jdbcTemplate' must not be null");
+		Assert.notNull(snowflake, "'snowflake' must not be null");
+
 		this.dataSource = dataSource;
 		this.jdbcTemplate = jdbcTemplate;
 		this.snowflake = snowflake;

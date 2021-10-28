@@ -73,9 +73,9 @@ public class DwzRequest {
 	}
 
 	@Nullable
-	public Object getConfig(String key) {
+	public <T> T getConfig(String key) {
 		if (configs != null) {
-			return configs.get(key);
+			return (T)configs.get(key);
 		} else {
 			return null;
 		}

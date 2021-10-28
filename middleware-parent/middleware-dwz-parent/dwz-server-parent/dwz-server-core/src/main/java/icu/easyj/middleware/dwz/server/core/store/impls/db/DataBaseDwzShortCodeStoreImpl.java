@@ -17,6 +17,7 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 
 import javax.sql.DataSource;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Snowflake;
 import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
@@ -35,6 +36,10 @@ public class DataBaseDwzShortCodeStoreImpl implements IDwzShortCodeStore {
 
 
 	public DataBaseDwzShortCodeStoreImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, Snowflake snowflake) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		Assert.notNull(jdbcTemplate, "'jdbcTemplate' must not be null");
+		Assert.notNull(snowflake, "'snowflake' must not be null");
+
 		this.dataSource = dataSource;
 		this.jdbcTemplate = jdbcTemplate;
 		this.snowflake = snowflake;

@@ -55,7 +55,7 @@ public class EasyjDwzResponse {
 
 		this.shortUrl = shortUrl;
 		this.createTime = createTime;
-		this.expireIn = termOfValidity == null ? null : termOfValidity.getTime() - createTime.getTime();
+		this.expireIn = termOfValidity == null ? 0 : termOfValidity.getTime() - createTime.getTime();
 	}
 
 

@@ -17,8 +17,9 @@ package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 
 import javax.sql.DataSource;
 
-import icu.easyj.config.ServerConfigs;
+import cn.hutool.core.lang.Snowflake;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
+import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzServerServiceImpl;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
@@ -26,6 +27,7 @@ import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzLogStoreImpl;
 import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzShortCodeStoreImpl;
 import icu.easyj.middleware.dwz.server.core.task.EasyjDwzServerTask;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -41,19 +43,20 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author wangliang181230
  */
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnClass(DwzRestController.class)
 @ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzLogStore dataBaseDwzLogStore(DataSource dataSource, JdbcTemplate jdbcTemplate) {
-		return new DataBaseDwzLogStoreImpl(dataSource, jdbcTemplate, ServerConfigs.getSnowflake());
+	public IDwzLogStore dataBaseDwzLogStore(DataSource dataSource, JdbcTemplate jdbcTemplate, Snowflake snowflake) {
+		return new DataBaseDwzLogStoreImpl(dataSource, jdbcTemplate, snowflake);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource) {
-		return new DataBaseDwzShortCodeStoreImpl(dataSource, ServerConfigs.getSnowflake());
+	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource, Snowflake snowflake) {
+		return new DataBaseDwzShortCodeStoreImpl(dataSource, snowflake);
 	}
 
 	@Bean

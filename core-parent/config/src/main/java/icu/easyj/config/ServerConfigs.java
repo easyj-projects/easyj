@@ -82,26 +82,22 @@ public class ServerConfigs {
 
 
 	/**
-	 * 根据当前的workerId和dataCenterId初始化雪花算法
+	 * 初始化
 	 */
-	public static void initSnowflake() {
-		Long workerId = getWorkerId();
+	public static void init() {
 		Long dataCenterId = getDataCenterId();
+		Long workerId = getWorkerId();
 
-		if (workerId != null) {
-			if (dataCenterId != null) {
-				setSnowflake(new Snowflake(workerId, dataCenterId));
-			} else {
-				setSnowflake(new Snowflake(workerId));
-			}
-		} else {
-			if (dataCenterId != null) {
-				workerId = IdUtil.getWorkerId(dataCenterId, ~(-1L << 5));
-				setSnowflake(new Snowflake(workerId, dataCenterId));
-			} else {
-				setSnowflake(new Snowflake());
-			}
+		if (dataCenterId == null) {
+			dataCenterId = IdUtil.getDataCenterId(~(-1L << 5));
+			setDataCenterId(dataCenterId);
 		}
+		if (workerId == null) {
+			workerId = IdUtil.getWorkerId(dataCenterId, ~(-1L << 5));
+			setWorkerId(dataCenterId);
+		}
+
+		setSnowflake(new Snowflake(workerId, dataCenterId));
 	}
 
 
@@ -169,14 +165,6 @@ public class ServerConfigs {
 	 * @return 雪花算法
 	 */
 	public static Snowflake getSnowflake() {
-		if (getInstance().snowflake == null) {
-			synchronized (getInstance()) {
-				if (getInstance().snowflake == null) {
-					initSnowflake();
-				}
-			}
-		}
-
 		return getInstance().snowflake;
 	}
 

@@ -16,6 +16,9 @@
 	<description>EasyJ封装第三方SDK的模块。</description>
 
 	<modules>
+		<!-- EasyJ中间件 -->
+		<module>easyj-middleware-sdk</module>
+
 		<!-- 大厂云服务 -->
 		<module>tencent-cloud-sdk</module>
 		<module>baidu-cloud-sdk</module>

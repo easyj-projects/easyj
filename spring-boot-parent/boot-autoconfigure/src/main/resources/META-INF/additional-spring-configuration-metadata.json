@@ -64,6 +64,27 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.server.host",
+			"type": "java.lang.String",
+			"description": "当前服务内网地址：多网卡时，需要手动配置.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "NetUtils.getIp()"
+		},
+		{
+			"name": "easyj.server.data-center-id",
+			"type": "java.lang.Long",
+			"description": "当前服务所属数据中心ID.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "IdUtil.getDataCenterId(31)"
+		},
+		{
+			"name": "easyj.server.worker-id",
+			"type": "java.lang.Long",
+			"description": "当前服务工作ID.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "IdUtil.getWorkerId(dataCenterId, 31)"
+		},
+		{
 			"name": "easyj.sdk.tencent.common.conn-timeout",
 			"defaultValue": 60
 		},
@@ -81,6 +102,26 @@
 			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration",
 			"description": "短链接服务实现类型.",
 			"defaultValue": "s3"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.send-type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjMiddleWareDwzTemplateAutoConfiguration",
+			"description": "EasyJ的DWZ中间件调用方式.",
+			"defaultValue": "http"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.server-application-name",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.sdk.middleware.dwz.impls.feign.EasyjDwzRestControllerFeignClient",
+			"description": "send-type配置为 'feign' 时，该配置值必须与easyj-dwz-server端的spring.application-name的值保持一致.",
+			"defaultValue": "easyj-dwz"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.service-url",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.sdk.middleware.dwz.impls.http.HttpEasyjMiddleWareDwzTemplateConfig",
+			"defaultValue": "http://localhost:3001/api/v1/create-short-url"
 		},
 		{
 			"name": "easyj.sdk.dwz.s3.service-url",
@@ -140,6 +181,12 @@
 		{
 			"name": "easyj.middleware.dwz.server.task.enabled",
 			"defaultValue": true
+		},
+		{
+			"name": "easyj.middleware.dwz.server.task.overtime-handle-strategy",
+			"type": "icu.easyj.middleware.dwz.server.core.domain.enums.OvertimeHandleStrategy",
+			"sourceType": "icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig",
+			"defaultValue": "delete"
 		}
 	],
 	"hints": [
@@ -147,12 +194,34 @@
 			"name": "easyj.sdk.dwz.type",
 			"values": [
 				{
+					"value": "easyj-middleware",
+					"description": "基于EasyJ自己的DWZ中间件实现的短链接功能."
+				},
+				{
 					"value": "s3",
 					"description": "(默认)基于S-3的DWZ实现的短链接功能."
 				},
 				{
 					"value": "baidu",
 					"description": "基于百度云DWZ实现的短链接功能."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.send-type",
+			"values": [
+				{
+					"value": "http",
+					"description": "(默认)使用 HttpClientUtils 调用DWZ服务."
+				},
+				{
+					"value": "feign",
+					"description": "使用 SpringCloudFeign 接口调用DWZ服务."
 				}
 			],
 			"providers": [
