@@ -55,8 +55,8 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource, Snowflake snowflake) {
-		return new DataBaseDwzShortCodeStoreImpl(dataSource, snowflake);
+	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource) {
+		return new DataBaseDwzShortCodeStoreImpl(dataSource);
 	}
 
 	@Bean

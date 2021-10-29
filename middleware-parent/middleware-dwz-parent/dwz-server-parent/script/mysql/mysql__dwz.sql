@@ -1,3 +1,4 @@
+-- 创建短链接记录表
 CREATE TABLE `dwz_log`
 (
     `id`               bigint       NOT NULL           COMMENT 'ID',
@@ -13,3 +14,6 @@ CREATE TABLE `dwz_log`
     INDEX `IDX_LONG_URL_STATUS` (`long_url`, `status`) USING BTREE,
     INDEX `IDX_TERM_OF_VALIDITY_STATUS` (`term_of_validity`, `status`) USING BTREE
 ) COMMENT = '短链接记录表';
+
+
+-- 创建序列表及其函数，SQL文件位置：/core-parent/db/script/mysql/mysql__create_sequence-table_and_function.sql
