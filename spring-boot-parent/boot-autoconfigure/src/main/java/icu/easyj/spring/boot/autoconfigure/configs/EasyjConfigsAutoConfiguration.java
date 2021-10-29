@@ -62,6 +62,7 @@ public class EasyjConfigsAutoConfiguration {
 	/**
 	 * 雪花算法Bean
 	 *
+	 * @param serverProperties 要先初始化好该bean，所以这里空引用一下
 	 * @return 雪花算法
 	 */
 	@Bean

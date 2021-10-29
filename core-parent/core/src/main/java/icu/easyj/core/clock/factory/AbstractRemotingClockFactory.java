@@ -18,7 +18,8 @@ package icu.easyj.core.clock.factory;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.ClockManager;
+import icu.easyj.core.clock.IAutoRefreshTickClock;
 import icu.easyj.core.util.MapUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
@@ -28,7 +29,7 @@ import org.springframework.util.Assert;
  *
  * @param <K> 远端键类型
  * @author wangliang181230
- * @see ITickClock
+ * @see IAutoRefreshTickClock
  * @see IRemotingClockFactory
  */
 public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockFactory<K> {
@@ -36,7 +37,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	/**
 	 * 远端时钟Map
 	 */
-	private final ConcurrentMap<K, ITickClock> remotingClockMap;
+	private final ConcurrentMap<K, IAutoRefreshTickClock> remotingClockMap;
 
 	/**
 	 * 无参构造函数
@@ -50,7 +51,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	 *
 	 * @param remotingClockMap 保存远端时钟的Map
 	 */
-	protected AbstractRemotingClockFactory(ConcurrentMap<K, ITickClock> remotingClockMap) {
+	protected AbstractRemotingClockFactory(ConcurrentMap<K, IAutoRefreshTickClock> remotingClockMap) {
 		this.remotingClockMap = remotingClockMap;
 	}
 
@@ -65,25 +66,22 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	 */
 	@Override
 	@NonNull
-	public ITickClock getClock(@NonNull K remotingKey) {
+	public IAutoRefreshTickClock getClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
-		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::createClock);
+		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::buildClock);
 	}
 
 	/**
-	 * 刷新远端时钟并返回新时钟
+	 * 销毁远端时钟
 	 *
 	 * @param remotingKey 远端键值
-	 * @return newClock 时钟
 	 */
 	@Override
-	@NonNull
-	public ITickClock refreshClock(@NonNull K remotingKey) {
+	public void destroyClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 
-		ITickClock newClock = createClock(remotingKey);
-		remotingClockMap.put(remotingKey, newClock);
-		return newClock;
+		// 销毁原时钟
+		ClockManager.destroy(remotingClockMap.remove(remotingKey));
 	}
 
 	//endregion

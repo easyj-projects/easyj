@@ -18,7 +18,7 @@ package icu.easyj.db.util;
 import java.util.Date;
 import javax.sql.DataSource;
 
-import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.IAutoRefreshTickClock;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -26,7 +26,7 @@ import org.springframework.util.Assert;
  * 数据库时钟工具类
  *
  * @author wangliang181230
- * @see ITickClock
+ * @see IAutoRefreshTickClock
  */
 public abstract class DbClockUtils {
 
@@ -53,7 +53,7 @@ public abstract class DbClockUtils {
 	 * @return 时钟
 	 */
 	@NonNull
-	public static ITickClock getClock(@NonNull DataSource dataSource) {
+	public static IAutoRefreshTickClock getClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		return getFactory().getClock(dataSource);
 	}
@@ -65,7 +65,7 @@ public abstract class DbClockUtils {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	public static ITickClock refreshClock(@NonNull DataSource dataSource) {
+	public static IAutoRefreshTickClock refreshClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		return getFactory().getClock(dataSource);
 	}
@@ -123,7 +123,7 @@ public abstract class DbClockUtils {
 	 * @return primaryClock 主要数据库时钟
 	 */
 	@NonNull
-	public static ITickClock getClock() {
+	public static IAutoRefreshTickClock getClock() {
 		return getClock(PrimaryDataSourceHolder.get());
 	}
 
@@ -133,7 +133,7 @@ public abstract class DbClockUtils {
 	 * @return newClock 时钟
 	 */
 	@NonNull
-	public static ITickClock refreshClock() {
+	public static IAutoRefreshTickClock refreshClock() {
 		return refreshClock(PrimaryDataSourceHolder.get());
 	}
 

@@ -17,11 +17,7 @@ package icu.easyj.db.util;
 
 import javax.sql.DataSource;
 
-import icu.easyj.core.clock.IClock;
-import icu.easyj.core.clock.ITickClock;
-import icu.easyj.core.clock.TickClock;
 import icu.easyj.core.clock.factory.AbstractRemotingClockFactory;
-import icu.easyj.core.clock.factory.IRemotingClockFactory;
 import icu.easyj.db.service.DbServiceFactory;
 import icu.easyj.db.service.IDbService;
 import org.springframework.lang.NonNull;
@@ -31,11 +27,7 @@ import org.springframework.util.Assert;
  * 数据库时钟工厂
  *
  * @author wangliang181230
- * @see IClock
- * @see ITickClock
- * @see TickClock
  * @see AbstractRemotingClockFactory
- * @see IRemotingClockFactory
  */
 final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 
@@ -68,23 +60,20 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 
 
 	/**
-	 * 创建数据库时钟
+	 * 获取数据时间，单位：毫秒
 	 *
 	 * @param dataSource 数据源
-	 * @return dbClock 数据库时钟
+	 * @return 数据库时间
 	 */
 	@Override
 	@NonNull
-	public ITickClock createClock(@NonNull DataSource dataSource) {
+	public long getRemotingTime(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		// 根据数据库类型，获取对应的实现
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 
-		// 获取数据库时间：毫秒数
-		long currentTimeMillis = dbService.currentTimeMillis();
-
-		// 创建数据库时钟
-		return new TickClock(currentTimeMillis * 1000);
+		// 获取数据库时间（毫秒数）
+		return dbService.currentTimeMillis();
 	}
 }

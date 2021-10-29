@@ -17,26 +17,53 @@ package icu.easyj.core.clock.factory;
 
 import java.util.Date;
 
-import icu.easyj.core.clock.ITickClock;
+import icu.easyj.core.clock.AutoRefreshHighAccuracyTickClock;
+import icu.easyj.core.clock.IAutoRefreshTickClock;
+import icu.easyj.core.clock.TickClock;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 远端时钟工厂接口
  *
  * @param <K> 远端键类型
  * @author wangliang181230
- * @see ITickClock
+ * @see IAutoRefreshTickClock
  */
 public interface IRemotingClockFactory<K> {
 
 	/**
+	 * 获取远端时间，单位：毫秒
+	 *
+	 * @param remotingKey 远端键值
+	 * @return 远端时间
+	 */
+	@NonNull
+	long getRemotingTime(@NonNull K remotingKey);
+
+	/**
+	 * 获取createClock尝试次数
+	 *
+	 * @return createClock尝试次数
+	 */
+	default int getCreateClockTryCount() {
+		return 10; // 默认尝试10次
+	}
+
+	/**
 	 * 创建远端时钟
+	 * <p>
+	 * 为了使记号时钟的时间误差更小，使用此方法来获取远端时钟
 	 *
 	 * @param remotingKey 远端键值
 	 * @return 时钟
 	 */
 	@NonNull
-	ITickClock createClock(@NonNull K remotingKey);
+	default IAutoRefreshTickClock buildClock(@NonNull K remotingKey) {
+		Assert.notNull(remotingKey, "'remotingKey' must not be null");
+		return new AutoRefreshHighAccuracyTickClock(remotingKey.getClass().getSimpleName(),
+				() -> new TickClock(this.getRemotingTime(remotingKey) * 1000));
+	}
 
 	/**
 	 * 获取远端时钟
@@ -45,16 +72,14 @@ public interface IRemotingClockFactory<K> {
 	 * @return 时钟
 	 */
 	@NonNull
-	ITickClock getClock(@NonNull K remotingKey);
+	IAutoRefreshTickClock getClock(@NonNull K remotingKey);
 
 	/**
-	 * 刷新远端时钟并返回新时钟（新时钟实例可以与原来时钟的实例相同，也可以不同）
+	 * 销毁远端时钟
 	 *
 	 * @param remotingKey 远端键值
-	 * @return newClock 时钟
 	 */
-	@NonNull
-	ITickClock refreshClock(@NonNull K remotingKey);
+	void destroyClock(@NonNull K remotingKey);
 
 	/**
 	 * 远端的当前时间
