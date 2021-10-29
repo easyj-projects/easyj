@@ -15,7 +15,7 @@
  */
 package icu.easyj.test.util;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.StringUtils;
@@ -45,11 +45,9 @@ public abstract class TestUtils {
 		long startTime = getStartTime();
 		String supplierName = supplier.get().toString();
 
-		final Thread currentThread = Thread.currentThread();
-
 		// 多线程并发测试时
 		if (threadCount > 1) {
-			AtomicInteger atomicInteger = new AtomicInteger(threadCount);
+			CountDownLatch countDownLatch = new CountDownLatch(threadCount);
 
 			// 先创建所有线程
 			Thread[] threads = new Thread[threadCount];
@@ -58,10 +56,7 @@ public abstract class TestUtils {
 					for (int j = 0; j < times; j++) {
 						supplier.get();
 					}
-					if (atomicInteger.decrementAndGet() == 0) {
-						// 恢复父线程
-						currentThread.resume();
-					}
+					countDownLatch.countDown();
 				});
 			}
 
@@ -69,16 +64,16 @@ public abstract class TestUtils {
 			for (Thread thread : threads) {
 				thread.start();
 			}
+
+			try {
+				countDownLatch.await();
+			} catch (InterruptedException ignore) {
+			}
 		} else {
 			// 单线程测试
 			for (int i = 0; i < times; i++) {
 				supplier.get();
 			}
-		}
-
-		// 挂起父线程
-		if (threadCount > 1) {
-			currentThread.suspend();
 		}
 
 		// 计算耗时
