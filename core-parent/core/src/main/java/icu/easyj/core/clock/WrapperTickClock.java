@@ -19,11 +19,11 @@ import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
 
 /**
- * 包装的记号时钟
+ * 包装记号时钟
  *
  * @author wangliang181230
  */
-public abstract class WrapperTickClock implements IWrapperTickClock {
+public class WrapperTickClock implements IWrapperTickClock {
 
 	/**
 	 * 记号时钟
@@ -31,11 +31,32 @@ public abstract class WrapperTickClock implements IWrapperTickClock {
 	private ITickClock tickClock;
 
 
-	protected WrapperTickClock(@NonNull ITickClock tickClock) {
+	/**
+	 * 有参构造函数
+	 *
+	 * @param tickClock 记号时钟
+	 */
+	public WrapperTickClock(@NonNull ITickClock tickClock) {
 		this.setTickClock(tickClock);
 	}
 
-	public WrapperTickClock() {
+	/**
+	 * 无参构造函数
+	 * <p>
+	 * 注意，如果使用此构造函数，必须在子类中调用一次 {@link #setTickClock(ITickClock)} 方法，避免tickClock为空。
+	 */
+	protected WrapperTickClock() {
+	}
+
+
+	/**
+	 * 结合无参构造函数一起使用
+	 *
+	 * @param tickClock 记号时钟
+	 */
+	protected void setTickClock(@NonNull ITickClock tickClock) {
+		Assert.notNull(tickClock, "'tickClock' must not be null");
+		this.tickClock = tickClock;
 	}
 
 
@@ -62,10 +83,4 @@ public abstract class WrapperTickClock implements IWrapperTickClock {
 	}
 
 	//endregion
-
-
-	protected void setTickClock(@NonNull ITickClock tickClock) {
-		Assert.notNull(tickClock, "'tickClock' must not be null");
-		this.tickClock = tickClock;
-	}
 }

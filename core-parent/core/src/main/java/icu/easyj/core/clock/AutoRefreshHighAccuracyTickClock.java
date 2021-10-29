@@ -70,7 +70,7 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 	}
 
 
-	//region Override
+	//region Override IAutoRefreshTickClock
 
 	@Override
 	public synchronized void startAutoRefresh() {
@@ -105,6 +105,11 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 	public boolean isAutoRefreshing() {
 		return scheduledFuture != null;
 	}
+
+	//endregion
+
+
+	//region Override Destroyable
 
 	@Override
 	public void destroy() throws DestroyFailedException {
