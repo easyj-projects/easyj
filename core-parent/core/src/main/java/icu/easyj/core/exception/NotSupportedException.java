@@ -16,26 +16,26 @@
 package icu.easyj.core.exception;
 
 /**
- * 不支持的文件类型
+ * 不支持时抛出的异常
  *
  * @author wangliang181230
  */
-public class NotSupportedFileException extends NotSupportedException {
+public class NotSupportedException extends BaseRuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public NotSupportedFileException(String message) {
+	public NotSupportedException(String message) {
 		super(message);
 	}
 
-	public NotSupportedFileException(String message, String errorCode) {
+	public NotSupportedException(String message, String errorCode) {
 		super(message, errorCode);
 	}
 
-	public NotSupportedFileException(String message, Throwable cause) {
+	public NotSupportedException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public NotSupportedFileException(String message, String errorCode, Throwable cause) {
+	public NotSupportedException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 	}
 }

@@ -15,9 +15,11 @@
  */
 package icu.easyj.db.dialect.impls;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.db.dialect.IDbDialect;
+import icu.easyj.db.util.SqlUtils;
 import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.MS_SQL_SERVER_DRIVER;
@@ -32,16 +34,31 @@ import static icu.easyj.db.constant.DbTypeConstants.MS_SQL_SERVER;
 @DependsOnClass(name = MS_SQL_SERVER_DRIVER)
 class MsSqlServerDbDialect implements IDbDialect {
 
-	@NonNull
 	@Override
 	public String getVersionSql() {
 		return "SELECT SERVERPROPERTY('PRODUCTVERSION')";
 	}
 
-	@NonNull
 	@Override
 	public String getTimeSql() {
 		return "SELECT GETDATE()";
+	}
+
+	@Override
+	public String getSeqCurrValSql(String seqName) {
+		// TODO: 待开发
+		throw new NotSupportedException("暂不支持MS SQL Server获取当前序列值");
+	}
+
+	@Override
+	public String getSeqNextValSql(String seqName) {
+		return "SELECT NEXT VALUE FOR " + SqlUtils.removeDangerousCharsForSeqName(seqName);
+	}
+
+	@Override
+	public String getSeqSetValSql(String seqName, long val) {
+		// TODO: 待开发
+		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
 	}
 
 

@@ -18,6 +18,7 @@ package icu.easyj.db.dialect.impls;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.db.dialect.IDbDialect;
+import icu.easyj.db.util.SqlUtils;
 import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
@@ -32,16 +33,54 @@ import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 @DependsOnClass(name = MYSQL_DRIVER)
 class MySqlDbDialect implements IDbDialect {
 
-	@NonNull
 	@Override
 	public String getVersionSql() {
 		return "SELECT VERSION()";
 	}
 
-	@NonNull
 	@Override
 	public String getTimeSql() {
 		return "SELECT CURRENT_TIMESTAMP(3)";
+	}
+
+	/**
+	 * 获取当前序列号的SQL
+	 *
+	 * @param seqName 序列名
+	 * @return 当前序列号
+	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 */
+	@Override
+	public String getSeqCurrValSql(String seqName) {
+		return "SELECT func_currval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "')";
+	}
+
+	/**
+	 * 获取下一个序列号的SQL
+	 *
+	 * @param seqName 序列名
+	 * @return 下一个序列号
+	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 */
+	@Override
+	public String getSeqNextValSql(String seqName) {
+		return "SELECT func_nextval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "')";
+	}
+
+	/**
+	 * 设置序列值的SQL
+	 *
+	 * @param seqName 序列名
+	 * @param val     指定序列值
+	 * @return previousVal 原序列值（为null表示原来的序列不存在）
+	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+	 */
+	@Override
+	public String getSeqSetValSql(String seqName, long val) {
+		return "SELECT func_setval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "', " + val + ")";
 	}
 
 

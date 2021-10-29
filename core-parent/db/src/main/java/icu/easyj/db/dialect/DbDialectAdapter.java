@@ -41,16 +41,29 @@ public class DbDialectAdapter implements IDbDialect {
 	}
 
 
-	@NonNull
 	@Override
 	public String getVersionSql() {
 		return this.dbDialect.getVersionSql();
 	}
 
-	@NonNull
 	@Override
 	public String getTimeSql() {
 		return this.dbDialect.getTimeSql();
+	}
+
+	@Override
+	public String getSeqCurrValSql(String seqName) {
+		return this.dbDialect.getSeqCurrValSql(seqName);
+	}
+
+	@Override
+	public String getSeqNextValSql(String seqName) {
+		return this.dbDialect.getSeqNextValSql(seqName);
+	}
+
+	@Override
+	public String getSeqSetValSql(String seqName, long val) {
+		return this.dbDialect.getSeqSetValSql(seqName, val);
 	}
 
 

@@ -38,7 +38,7 @@ import org.springframework.util.Assert;
  */
 public abstract class DbUtils {
 
-	//region 获取数据库的一些信息：类型、版本、...等等
+	//region 获取数据库的一些信息：类型、版本、时间、序列值...等等
 
 	/**
 	 * 数据库类型缓存
@@ -86,10 +86,12 @@ public abstract class DbUtils {
 	@NonNull
 	public static String getDbVersion(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
-
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.getVersion();
 	}
+
+
+	//region 数据库时间
 
 	/**
 	 * 获取数据库当前时间戳
@@ -102,7 +104,6 @@ public abstract class DbUtils {
 	@NonNull
 	public static long currentTimeMillis(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
-
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.currentTimeMillis();
 	}
@@ -119,6 +120,53 @@ public abstract class DbUtils {
 	public static Date now(@NonNull DataSource dataSource) {
 		return new Date(currentTimeMillis(dataSource));
 	}
+
+	//endregion
+
+
+	//region 序列值：当前序列值、下一序列值、设置序列值
+
+	/**
+	 * 获取当前序列值
+	 *
+	 * @param dataSource 数据源
+	 * @param seqName    序列名
+	 * @return 当前序列值
+	 */
+	public static long seqCurrVal(DataSource dataSource, String seqName) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		IDbService dbService = DbServiceFactory.getDbService(dataSource);
+		return dbService.seqCurrVal(seqName);
+	}
+
+	/**
+	 * 获取下一序列值
+	 *
+	 * @param dataSource 数据源
+	 * @param seqName    序列名
+	 * @return 下一序列值
+	 */
+	public static long seqNextVal(DataSource dataSource, String seqName) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		IDbService dbService = DbServiceFactory.getDbService(dataSource);
+		return dbService.seqNextVal(seqName);
+	}
+
+	/**
+	 * 设置序列值，并返回原序列值
+	 *
+	 * @param dataSource 数据源
+	 * @param seqName    序列名
+	 * @param val        指定序列值
+	 * @return previousVal 原序列值
+	 */
+	public static long seqSetVal(DataSource dataSource, String seqName, long val) {
+		Assert.notNull(dataSource, "'dataSource' must not be null");
+		IDbService dbService = DbServiceFactory.getDbService(dataSource);
+		return dbService.seqSetVal(seqName, val);
+	}
+
+	//endregion
 
 	//endregion
 
@@ -145,6 +193,9 @@ public abstract class DbUtils {
 		return getDbVersion(PrimaryDataSourceHolder.get());
 	}
 
+
+	//region 数据库时间
+
 	/**
 	 * 获取数据库当前时间戳
 	 * <p>
@@ -168,6 +219,49 @@ public abstract class DbUtils {
 	public static Date now() {
 		return now(PrimaryDataSourceHolder.get());
 	}
+
+	//endregion
+
+
+	//region 序列值：当前序列值、下一序列值、设置序列值
+
+	/**
+	 * 获取当前序列值
+	 * <p>
+	 * MySQL支持度较高
+	 * FIXME: Oracle存在连接池中的连接第一次调用时，会抛异常，此时会自动调用seqNextVal方法代替，但会导致序列+1。  其他数据库暂不支持。
+	 *
+	 * @param seqName 序列名
+	 * @return 当前序列值
+	 */
+	public static long seqCurrVal(String seqName) {
+		return seqCurrVal(PrimaryDataSourceHolder.get(), seqName);
+	}
+
+	/**
+	 * 获取下一序列值
+	 *
+	 * @param seqName 序列名
+	 * @return 下一序列值
+	 */
+	public static long seqNextVal(String seqName) {
+		return seqNextVal(PrimaryDataSourceHolder.get(), seqName);
+	}
+
+	/**
+	 * 设置序列值，并返回原序列值
+	 * <p>
+	 * FIXME: 除了MySQL数据库以外，其他数据库暂不支持！
+	 *
+	 * @param seqName 序列名
+	 * @param val     指定序列值
+	 * @return previousVal 原序列值
+	 */
+	public static long seqSetVal(String seqName, long val) {
+		return seqSetVal(PrimaryDataSourceHolder.get(), seqName, val);
+	}
+
+	//endregion
 
 	//endregion
 }

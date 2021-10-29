@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.db.exception.DbException;
 
 import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
@@ -34,5 +35,19 @@ class OracleDbServiceImpl extends CommonDbServiceImpl {
 
 	public OracleDbServiceImpl(DataSource dataSource) {
 		super(dataSource);
+	}
+
+
+	@Override
+	public long seqCurrVal(String seqName) {
+		try {
+			return super.seqCurrVal(seqName);
+		} catch (DbException e) {
+			if (e.getCause() != null && e.getCause().getMessage() != null && e.getCause().getMessage().contains("ORA-08002")) {
+				// Oracle在没有获取过序列值的情况下，直接调用`SEQ_NAME.currval`获取当前序列值会抛出ORA-08002的异常，所以此次先调用nextval方法获取一次。
+				return this.seqNextVal(seqName);
+			}
+			throw e;
+		}
 	}
 }

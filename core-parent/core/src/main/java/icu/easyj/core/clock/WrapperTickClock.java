@@ -54,7 +54,7 @@ public class WrapperTickClock implements IWrapperTickClock {
 	 *
 	 * @param tickClock 记号时钟
 	 */
-	protected void setTickClock(@NonNull ITickClock tickClock) {
+	protected final void setTickClock(@NonNull ITickClock tickClock) {
 		Assert.notNull(tickClock, "'tickClock' must not be null");
 		this.tickClock = tickClock;
 	}
@@ -63,22 +63,22 @@ public class WrapperTickClock implements IWrapperTickClock {
 	//region Override
 
 	@Override
-	public long currentTimeNanos() {
+	public final long currentTimeNanos() {
 		return tickClock.currentTimeNanos();
 	}
 
 	@Override
-	public long getBaseEpochMicros() {
+	public final long getBaseEpochMicros() {
 		return tickClock.getBaseEpochMicros();
 	}
 
 	@Override
-	public long getBaseTickNanos() {
+	public final long getBaseTickNanos() {
 		return tickClock.getBaseTickNanos();
 	}
 
 	@Override
-	public ITickClock getTickClock() {
+	public final ITickClock getTickClock() {
 		return tickClock;
 	}
 

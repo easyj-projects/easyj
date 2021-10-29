@@ -12,5 +12,4 @@ CREATE TABLE `dwz_log`
     UNIQUE INDEX `UDX_SHORT_URL_CODE` (`short_url_code`) USING BTREE,
     INDEX `IDX_LONG_URL_STATUS` (`long_url`, `status`) USING BTREE,
     INDEX `IDX_TERM_OF_VALIDITY_STATUS` (`term_of_validity`, `status`) USING BTREE
-) ENGINE = InnoDB
-  CHARACTER SET = utf8;
+) COMMENT = '短链接记录表';

@@ -53,10 +53,11 @@ public interface IDbService extends IDbDialect {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn = getDataSource().getConnection();
+			conn = this.getDataSource().getConnection();
+			conn.setAutoCommit(true);
 
 			// 执行查询
-			String sql = getVersionSql();
+			String sql = this.getVersionSql();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 
@@ -86,10 +87,11 @@ public interface IDbService extends IDbDialect {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn = getDataSource().getConnection();
+			conn = this.getDataSource().getConnection();
+			conn.setAutoCommit(true);
 
 			// 执行查询
-			String sql = getTimeSql();
+			String sql = this.getTimeSql();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 
@@ -114,6 +116,108 @@ public interface IDbService extends IDbDialect {
 	@NonNull
 	default Date now() {
 		return new Date(currentTimeMillis());
+	}
+
+	//endregion
+
+
+	//region 序列值：当前序列值、下一序列值、设置序列值
+
+	/**
+	 * 获取当前序列值
+	 *
+	 * @param seqName 序列名
+	 * @return 当前序列值
+	 */
+	default long seqCurrVal(String seqName) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = this.getDataSource().getConnection();
+			conn.setAutoCommit(true);
+
+			// 执行查询
+			String sql = this.getSeqCurrValSql(seqName);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			// 获取结果
+			if (rs.next()) {
+				return rs.getLong(1);
+			} else {
+				throw new DbDataNotFoundException("没有返回当前序列值：" + seqName);
+			}
+		} catch (SQLException e) {
+			throw new DbException("获取当前序列值失败：" + seqName, e);
+		} finally {
+			IOUtils.close(rs, ps, conn);
+		}
+	}
+
+	/**
+	 * 获取下一序列值
+	 *
+	 * @param seqName 序列名
+	 * @return 下一序列值
+	 */
+	default long seqNextVal(String seqName) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = this.getDataSource().getConnection();
+			conn.setAutoCommit(true);
+
+			// 执行查询
+			String sql = this.getSeqNextValSql(seqName);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			// 获取结果
+			if (rs.next()) {
+				return rs.getLong(1);
+			} else {
+				throw new DbDataNotFoundException("没有返回下一序列值：" + seqName);
+			}
+		} catch (SQLException e) {
+			throw new DbException("获取下一序列值失败：" + seqName, e);
+		} finally {
+			IOUtils.close(rs, ps, conn);
+		}
+	}
+
+	/**
+	 * 设置序列值，并返回原序列值
+	 *
+	 * @param seqName 序列名
+	 * @param val     指定序列值
+	 * @return previousVal 原序列值
+	 */
+	default long seqSetVal(String seqName, long val) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = this.getDataSource().getConnection();
+			conn.setAutoCommit(true);
+
+			// 执行查询
+			String sql = this.getSeqSetValSql(seqName, val);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			// 获取结果
+			if (rs.next()) {
+				return rs.getLong(1);
+			} else {
+				throw new DbDataNotFoundException("没有返回原序列值：" + seqName);
+			}
+		} catch (SQLException e) {
+			throw new DbException("设置序列值失败：" + seqName, e);
+		} finally {
+			IOUtils.close(rs, ps, conn);
+		}
 	}
 
 	//endregion

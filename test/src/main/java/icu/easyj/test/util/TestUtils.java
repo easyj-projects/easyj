@@ -18,6 +18,7 @@ package icu.easyj.test.util;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
+import icu.easyj.test.exception.TestException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
@@ -58,6 +59,7 @@ public abstract class TestUtils {
 					}
 					countDownLatch.countDown();
 				});
+				threads[i].setName("TestThread_" + (i + 1));
 			}
 
 			// 运行所有线程
@@ -67,7 +69,8 @@ public abstract class TestUtils {
 
 			try {
 				countDownLatch.await();
-			} catch (InterruptedException ignore) {
+			} catch (InterruptedException e) {
+				throw new TestException("测试线程被中断", e);
 			}
 		} else {
 			// 单线程测试

@@ -15,9 +15,11 @@
  */
 package icu.easyj.db.dialect.impls;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.db.dialect.IDbDialect;
+import icu.easyj.db.util.SqlUtils;
 import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
@@ -32,16 +34,30 @@ import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
 @DependsOnClass(name = ORACLE_DRIVER)
 class OracleDbDialect implements IDbDialect {
 
-	@NonNull
 	@Override
 	public String getVersionSql() {
 		return "SELECT version FROM product_component_version WHERE product LIKE 'Oracle%'";
 	}
 
-	@NonNull
 	@Override
 	public String getTimeSql() {
 		return "SELECT SYSTIMESTAMP FROM DUAL";
+	}
+
+	@Override
+	public String getSeqCurrValSql(String seqName) {
+		return "SELECT " + SqlUtils.removeDangerousCharsForSeqName(seqName).toUpperCase() + ".CURRVAL FROM DUAL";
+	}
+
+	@Override
+	public String getSeqNextValSql(String seqName) {
+		return "SELECT " + SqlUtils.removeDangerousCharsForSeqName(seqName).toUpperCase() + ".NEXTVAL FROM DUAL";
+	}
+
+	@Override
+	public String getSeqSetValSql(String seqName, long val) {
+		// TODO: 待开发，参考：https://www.cnblogs.com/mq0036/p/13151770.html
+		throw new NotSupportedException("暂不支持Oracle设置序列值");
 	}
 
 
