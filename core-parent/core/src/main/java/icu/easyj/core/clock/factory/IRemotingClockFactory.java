@@ -42,15 +42,6 @@ public interface IRemotingClockFactory<K> {
 	long getRemotingTime(@NonNull K remotingKey);
 
 	/**
-	 * 获取createClock尝试次数
-	 *
-	 * @return createClock尝试次数
-	 */
-	default int getCreateClockTryCount() {
-		return 10; // 默认尝试10次
-	}
-
-	/**
 	 * 创建远端时钟
 	 * <p>
 	 * 为了使记号时钟的时间误差更小，使用此方法来获取远端时钟
@@ -59,7 +50,7 @@ public interface IRemotingClockFactory<K> {
 	 * @return 时钟
 	 */
 	@NonNull
-	default IAutoRefreshTickClock buildClock(@NonNull K remotingKey) {
+	default IAutoRefreshTickClock createClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 		return new AutoRefreshHighAccuracyTickClock(remotingKey.getClass().getSimpleName(),
 				() -> new TickClock(this.getRemotingTime(remotingKey) * 1000));

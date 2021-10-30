@@ -68,7 +68,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	@NonNull
 	public IAutoRefreshTickClock getClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
-		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::buildClock);
+		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::createClock);
 	}
 
 	/**

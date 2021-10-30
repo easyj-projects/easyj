@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
  */
 public abstract class DbClockUtils {
 
-	//region 私有方法（Private Methods）
+	//region 私有方法
 
 	/**
 	 * 获取数据库时钟工厂
@@ -43,8 +43,6 @@ public abstract class DbClockUtils {
 
 	//endregion
 
-
-	//region 所有数据库时钟相关方法
 
 	/**
 	 * 获取数据库时钟
@@ -111,69 +109,4 @@ public abstract class DbClockUtils {
 	public static long currentTimeNanos(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeNanos();
 	}
-
-	//endregion
-
-
-	//region 主要数据库时钟相关方法（使用前提是设置过主要数据源：`PrimaryDataSourceHolder.set(primaryDataSource)` ）
-
-	/**
-	 * 获取主要数据库时钟
-	 *
-	 * @return primaryClock 主要数据库时钟
-	 */
-	@NonNull
-	public static IAutoRefreshTickClock getClock() {
-		return getClock(PrimaryDataSourceHolder.get());
-	}
-
-	/**
-	 * 刷新主要数据库时钟并返回新时钟
-	 *
-	 * @return newClock 时钟
-	 */
-	@NonNull
-	public static IAutoRefreshTickClock refreshClock() {
-		return refreshClock(PrimaryDataSourceHolder.get());
-	}
-
-	/**
-	 * 主要数据源的当前时间
-	 *
-	 * @return now 当前时间
-	 */
-	@NonNull
-	public static Date now() {
-		return now(PrimaryDataSourceHolder.get());
-	}
-
-	/**
-	 * 主要数据源的当前毫秒数
-	 *
-	 * @return timeMillis 毫秒数
-	 */
-	public static long currentTimeMillis() {
-		return currentTimeMillis(PrimaryDataSourceHolder.get());
-	}
-
-	/**
-	 * 主要数据源的当前微秒数
-	 *
-	 * @return timeMicros 微秒数
-	 */
-	public static long currentTimeMicros() {
-		return currentTimeMicros(PrimaryDataSourceHolder.get());
-	}
-
-	/**
-	 * 主要数据源的当前纳秒数<br>
-	 * 注意：值格式与 {@link System#nanoTime()} 并不相同
-	 *
-	 * @return timeNanos 纳秒数
-	 */
-	public static long currentTimeNanos() {
-		return currentTimeNanos(PrimaryDataSourceHolder.get());
-	}
-
-	//endregion
 }
