@@ -105,7 +105,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 				request.setImageBase64(null);
 				response.setAdvancedInfo(null);
 				try {
-					LOGGER.info("IDCardOCR 请求成功！\r\n Request: {}\r\nResponse: {}\r\n  Config: {}\r\n   Cost: {} ms",
+					LOGGER.info("IDCardOCR 请求成功！\r\n==>\r\n -  Request: {}\r\n - Response: {}\r\n -   Config: {}\r\n -     Cost: {} ms\r\n<==\r\n",
 							icu.easyj.core.util.StringUtils.toString(request),
 							icu.easyj.core.util.StringUtils.toString(response),
 							icu.easyj.core.util.StringUtils.toString(config),
@@ -121,7 +121,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 			String imageBase64Bak = request.getImageBase64();
 			request.setImageBase64(null); // base64不打印在日志中
 			try {
-				LOGGER.error("身份证识别服务请求失败：{}\r\nRequest: {}\r\n Config: {}\r\n  Cost: {} ms",
+				LOGGER.error("身份证识别服务请求失败：{}\r\n==>\r\n - Request: {}\r\n -  Config: {}\r\n -    Cost: {} ms\r\n<==\r\n",
 						e.getMessage(),
 						icu.easyj.core.util.StringUtils.toString(request),
 						icu.easyj.core.util.StringUtils.toString(config),

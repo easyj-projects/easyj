@@ -134,12 +134,12 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		} finally {
 			if (ex == null) {
 				if (LOGGER.isInfoEnabled()) {
-					LOGGER.info("百度云短链接服务调用成功：\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms",
+					LOGGER.info("百度云短链接服务调用成功：\r\n==>\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms\r\n==>\r\n",
 							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}
 			} else {
 				if (LOGGER.isErrorEnabled()) {
-					LOGGER.error("{}{}\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms",
+					LOGGER.error("{}{}\r\n==>\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
 							ex instanceof DwzSdkException ? "" : "百度云短链接服务调用失败：", ex,
 							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}

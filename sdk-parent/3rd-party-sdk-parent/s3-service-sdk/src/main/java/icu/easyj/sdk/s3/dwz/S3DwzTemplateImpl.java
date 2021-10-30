@@ -125,12 +125,12 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		} finally {
 			if (t == null) {
 				if (LOGGER.isInfoEnabled()) {
-					LOGGER.info("S-3短链接服务调用成功：\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms",
+					LOGGER.info("S-3短链接服务调用成功：\r\n==>\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
 							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}
 			} else {
 				if (LOGGER.isErrorEnabled()) {
-					LOGGER.error("S-3短链接服务调用失败：{}\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms",
+					LOGGER.error("S-3短链接服务调用失败：{}\r\n==>\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
 							t.getMessage(),
 							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
 				}
