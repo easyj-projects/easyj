@@ -57,7 +57,6 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 	/**
 	 * 根据long_url获取记录的SQL
-	 * todo: 需要添加 limit 1，但不同数据库实现不同，需要在数据库方言中添加相关功能后，再根据数据库类型自动生成对应的SQL
 	 */
 	private static final String GET_DWZ_LOG_SQL = "" +
 			"SELECT " + ALL_FIELDS +
@@ -78,7 +77,6 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 	/**
 	 * 根据short_url_code获取long_url的SQL
-	 * todo: 需要添加 limit 1，但不同数据库实现不同，需要在数据库方言中添加相关功能后，再根据数据库类型自动生成对应的SQL
 	 */
 	private static final String GET_LONG_URL_SQL = "" +
 			"SELECT long_url" +
