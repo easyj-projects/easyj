@@ -17,7 +17,7 @@ package icu.easyj.middleware.dwz.server.core.service.impls;
 
 import java.util.Date;
 
-import icu.easyj.db.util.PrimaryDbClockUtils;
+import icu.easyj.core.util.DateUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 /**
  * {@link IDwzServerService} 默认实现
@@ -50,16 +49,16 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 	@Override
 	@Transactional
 	public DwzLogEntity createShortUrlCode(@NonNull String longUrl, @Nullable Date termOfValidity) {
-		//region 校验参数
-
+		// 先校验参数
 		if (!HttpUtils.isHttpOrHttps(longUrl)) {
 			LOGGER.warn("长链接不是有效的http(s)地址，longUrl = {}", longUrl);
 			throw new IllegalArgumentException("长链接不是有效的http(s)地址：" + longUrl);
 		}
-
-		Assert.isTrue(termOfValidity == null || termOfValidity.compareTo(PrimaryDbClockUtils.now()) > 0, "termOfValidity可为空或必须大于当前时间");
-
-		//endregion
+		if (termOfValidity != null && termOfValidity.getTime() <= System.currentTimeMillis()) {
+			String termOfValidityStr = DateUtils.toString(termOfValidity);
+			LOGGER.warn("termOfValidity不能小于等于当前时间, termOfValidity = {}，longUrl = {}", termOfValidityStr, longUrl);
+			throw new IllegalArgumentException("termOfValidity不能小于等于当前时间：" + termOfValidityStr);
+		}
 
 		// 先获取一次数据库中的数据是否存在，如果存在，则复用数据
 		DwzLogEntity dwzLog = logStore.getByLongUrlForUpdate(longUrl);
