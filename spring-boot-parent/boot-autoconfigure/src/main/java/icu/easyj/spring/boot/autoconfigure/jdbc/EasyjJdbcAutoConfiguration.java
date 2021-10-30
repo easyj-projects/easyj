@@ -20,12 +20,14 @@ import javax.sql.DataSource;
 import icu.easyj.db.util.PrimaryDataSourceHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * JDBC相关自动装配
  *
  * @author wangliang181230
  */
+@Lazy(false)
 @Configuration(proxyBeanMethods = false)
 public class EasyjJdbcAutoConfiguration {
 

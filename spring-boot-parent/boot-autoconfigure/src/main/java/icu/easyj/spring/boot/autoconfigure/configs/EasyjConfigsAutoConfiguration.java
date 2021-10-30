@@ -20,6 +20,7 @@ import icu.easyj.config.ServerConfigs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX;
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.SERVER_PREFIX;
@@ -39,6 +40,7 @@ public class EasyjConfigsAutoConfiguration {
 	 * @return 全局配置
 	 */
 	@Bean
+	@Lazy(false)
 	@ConfigurationProperties(GLOBAL_PREFIX)
 	public GlobalProperties globalProperties(@Value("${spring.profiles.active:}") String[] activeProfiles) {
 		GlobalProperties properties = new GlobalProperties();
@@ -54,6 +56,7 @@ public class EasyjConfigsAutoConfiguration {
 	 * @return 服务端配置
 	 */
 	@Bean
+	@Lazy(false)
 	@ConfigurationProperties(SERVER_PREFIX)
 	public ServerProperties serverProperties() {
 		return new ServerProperties();
