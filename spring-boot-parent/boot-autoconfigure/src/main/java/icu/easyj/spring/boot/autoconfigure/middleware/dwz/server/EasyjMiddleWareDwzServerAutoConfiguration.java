@@ -17,7 +17,6 @@ package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 
 import javax.sql.DataSource;
 
-import cn.hutool.core.lang.Snowflake;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
@@ -49,20 +48,20 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzLogStore dataBaseDwzLogStore(DataSource dataSource, JdbcTemplate jdbcTemplate, Snowflake snowflake) {
-		return new DataBaseDwzLogStoreImpl(dataSource, jdbcTemplate, snowflake);
-	}
-
-	@Bean
-	@ConditionalOnMissingBean
 	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource) {
 		return new DataBaseDwzShortCodeStoreImpl(dataSource);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzServerService defaultDwzServerService(IDwzLogStore logStore, IDwzShortCodeStore shortCodeStore) {
-		return new DefaultDwzServerServiceImpl(logStore, shortCodeStore);
+	public IDwzLogStore dataBaseDwzLogStore(DataSource dataSource, JdbcTemplate jdbcTemplate, IDwzShortCodeStore shortCodeStore) {
+		return new DataBaseDwzLogStoreImpl(dataSource, jdbcTemplate, shortCodeStore);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public IDwzServerService defaultDwzServerService(IDwzLogStore logStore) {
+		return new DefaultDwzServerServiceImpl(logStore);
 	}
 
 

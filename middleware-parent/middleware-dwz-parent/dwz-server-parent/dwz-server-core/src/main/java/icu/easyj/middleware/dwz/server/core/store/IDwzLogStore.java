@@ -32,14 +32,13 @@ public interface IDwzLogStore {
 	/**
 	 * 关联短链接码与长链接，并保存到store中
 	 *
-	 * @param shortUrlCode   短链接码
 	 * @param longUrl        长链接
 	 * @param termOfValidity 有效期截止时间（为空表示永久有效）
 	 * @return 保存是否成功
 	 * @throws StoreException 存储接口异常
 	 */
 	@NonNull
-	DwzLogEntity save(@NonNull String shortUrlCode, @NonNull String longUrl, @Nullable Date termOfValidity);
+	DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity);
 
 	/**
 	 * 根据长链接，获取有效的短链接记录数据。主要用于避免同一长链接重复创建多条数据。

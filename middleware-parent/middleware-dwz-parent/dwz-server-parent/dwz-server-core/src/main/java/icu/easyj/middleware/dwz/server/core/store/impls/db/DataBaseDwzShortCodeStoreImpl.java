@@ -18,7 +18,6 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 import javax.sql.DataSource;
 
 import cn.hutool.core.lang.Assert;
-import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.db.util.DbUtils;
 import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 
@@ -39,7 +38,8 @@ public class DataBaseDwzShortCodeStoreImpl implements IDwzShortCodeStore {
 
 
 	@Override
-	public String createShortUrlCode() {
-		return ShortCodeUtils.toCode(DbUtils.seqNextVal(this.dataSource, "SEQ_SHORT_URL_CODE"));
+	public long nextShortUrlCodeId() {
+		// 目前基于数据库序列来获取下一个ID
+		return DbUtils.seqNextVal(this.dataSource, "SEQ_SHORT_URL_CODE");
 	}
 }

@@ -19,12 +19,13 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.lang.Snowflake;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.data.store.DbStoreException;
 import icu.easyj.db.util.DbClockUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
+import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -111,31 +112,29 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 	private final DataSource dataSource;
 	private final JdbcTemplate jdbcTemplate;
-	private final Snowflake snowflake;
+
+	private final IDwzShortCodeStore dwzShortCodeStore;
 
 
-	public DataBaseDwzLogStoreImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, Snowflake snowflake) {
+	public DataBaseDwzLogStoreImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, IDwzShortCodeStore dwzShortCodeStore) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		Assert.notNull(jdbcTemplate, "'jdbcTemplate' must not be null");
-		Assert.notNull(snowflake, "'snowflake' must not be null");
+		Assert.notNull(dwzShortCodeStore, "'dwzShortCodeStore' must not be null");
 
 		this.dataSource = dataSource;
 		this.jdbcTemplate = jdbcTemplate;
-		this.snowflake = snowflake;
-	}
-
-	public DataBaseDwzLogStoreImpl(DataSource dataSource, Snowflake snowflake) {
-		this(dataSource, new JdbcTemplate(dataSource), snowflake);
+		this.dwzShortCodeStore = dwzShortCodeStore;
 	}
 
 
 	@NonNull
 	@Override
-	public DwzLogEntity save(@NonNull String shortUrlCode, @NonNull String longUrl, @Nullable Date termOfValidity) {
+	public DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity) {
 		Date now = DbClockUtils.now(this.dataSource);
 
-		// 生成ID
-		long id = snowflake.nextId();
+		// 生成ID和短链接码
+		long id = dwzShortCodeStore.nextShortUrlCodeId();
+		String shortUrlCode = ShortCodeUtils.toCode(id);
 
 		// 数据创建成功，创建entity并返回
 		DwzLogEntity dwzLog = new DwzLogEntity();

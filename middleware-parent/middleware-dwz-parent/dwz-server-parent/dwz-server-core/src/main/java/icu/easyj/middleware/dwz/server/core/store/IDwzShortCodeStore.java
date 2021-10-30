@@ -15,6 +15,7 @@
  */
 package icu.easyj.middleware.dwz.server.core.store;
 
+import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import org.springframework.lang.NonNull;
 
 /**
@@ -25,10 +26,21 @@ import org.springframework.lang.NonNull;
 public interface IDwzShortCodeStore {
 
 	/**
+	 * 获取下一个短链接码ID<br>
+	 * 建议该ID是自增1的方式生成，可以有效控制短链接码的长度。使用初期可以低于
+	 *
+	 * @return 下一个短链接码ID
+	 */
+	long nextShortUrlCodeId();
+
+	/**
 	 * 生成新的短链接码
 	 *
 	 * @return shortUrlCode 短链接码
 	 */
 	@NonNull
-	String createShortUrlCode();
+	default String createShortUrlCode() {
+		long nextShortCodeId = this.nextShortUrlCodeId();
+		return ShortCodeUtils.toCode(nextShortCodeId);
+	}
 }

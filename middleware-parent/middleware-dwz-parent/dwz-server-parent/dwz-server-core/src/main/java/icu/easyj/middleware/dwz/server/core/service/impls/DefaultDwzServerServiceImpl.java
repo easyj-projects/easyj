@@ -17,11 +17,10 @@ package icu.easyj.middleware.dwz.server.core.service.impls;
 
 import java.util.Date;
 
-import icu.easyj.db.util.DbClockUtils;
+import icu.easyj.db.util.PrimaryDbClockUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
-import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 import icu.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +39,10 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultDwzServerServiceImpl.class);
 
 	private final IDwzLogStore logStore;
-	private final IDwzShortCodeStore shortCodeStore;
 
 
-	public DefaultDwzServerServiceImpl(IDwzLogStore logStore, IDwzShortCodeStore shortCodeStore) {
+	public DefaultDwzServerServiceImpl(IDwzLogStore logStore) {
 		this.logStore = logStore;
-		this.shortCodeStore = shortCodeStore;
 	}
 
 
@@ -60,7 +57,7 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 			throw new IllegalArgumentException("长链接不是有效的http(s)地址：" + longUrl);
 		}
 
-		Assert.isTrue(termOfValidity == null || termOfValidity.compareTo(DbClockUtils.now()) > 0, "termOfValidity可为空或必须大于当前时间");
+		Assert.isTrue(termOfValidity == null || termOfValidity.compareTo(PrimaryDbClockUtils.now()) > 0, "termOfValidity可为空或必须大于当前时间");
 
 		//endregion
 
@@ -92,8 +89,7 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 			return dwzLog;
 		}
 
-		String shortUrlCode = shortCodeStore.createShortUrlCode();
-		return logStore.save(shortUrlCode, longUrl, termOfValidity);
+		return logStore.save(longUrl, termOfValidity);
 	}
 
 	@Nullable
