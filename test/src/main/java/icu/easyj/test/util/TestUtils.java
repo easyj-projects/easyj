@@ -80,12 +80,21 @@ public abstract class TestUtils {
 		}
 
 		// 计算耗时
-		long cost = getCost(startTime);
+		long endTime = System.nanoTime();
+		long cost = (endTime - startTime) / 1000000;
 		String costStr = String.valueOf(cost);
+		long onceCost = (System.nanoTime() - startTime) / times;
+		String onceCostStr;
+		if (onceCost >= 10000) {
+			onceCostStr = (onceCost / 1000) + " μs";
+		} else {
+			onceCostStr = (onceCost) + " ns";
+		}
 
 		// 打印日志
-		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - InnerStringUtils.chineseLength(supplierName), ' ')
-				+ "耗时：" + StringUtils.leftPad(costStr, 7, ' ') + " ms          |");
+		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - InnerStringUtils.chineseLength(supplierName))
+				+ "耗时：" + StringUtils.leftPad(costStr, 7) + " ms         "
+				+ "单次：" + StringUtils.leftPad(onceCostStr, 7 + 3) + " |");
 		return cost;
 	}
 
@@ -120,14 +129,14 @@ public abstract class TestUtils {
 		System.out.println("性能测试预热完成: " + getCost(startTime) + " ms\r\n");
 
 		// 正式开始运行
-		System.out.println("--------------------------------------------------");
-		System.out.println("| 开始性能测试：" + StringUtils.rightPad(threadCount + " * " + times, 36, ' ') + "|");
-		System.out.println("--------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------");
+		System.out.println("| 开始性能测试：" + StringUtils.rightPad(threadCount + " * " + times, 51) + "|");
+		System.out.println("-----------------------------------------------------------------");
 		long[] costs = new long[suppliers.length];
 		for (int y = 0; y < suppliers.length; ++y) {
 			costs[y] += executeOnePerformanceTest(threadCount, times, suppliers[y]);
 		}
-		System.out.println("--------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------");
 		return costs;
 	}
 
