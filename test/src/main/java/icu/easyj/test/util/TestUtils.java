@@ -16,6 +16,7 @@
 package icu.easyj.test.util;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import icu.easyj.test.exception.TestException;
@@ -39,12 +40,12 @@ public abstract class TestUtils {
 	 *
 	 * @param threadCount 并行执行的线程数
 	 * @param times       每个线程运行次数
-	 * @param supplier    需运行的函数，返回值表示函数别名
+	 * @param function    需运行的函数，返回值表示函数别名
 	 * @return 运行耗时，单位：毫秒
 	 */
-	private static long executeOnePerformanceTest(final int threadCount, final int times, Supplier<?> supplier) {
+	private static long executeOnePerformanceTest(final int threadCount, final int times, Function<TestParam, ?> function) {
 		long startTime = getStartTime();
-		String supplierName = supplier.get().toString();
+		String supplierName = function.apply(new TestParam(0, 0, true)).toString();
 
 		// 多线程并发测试时
 		if (threadCount > 1) {
@@ -53,9 +54,11 @@ public abstract class TestUtils {
 			// 先创建所有线程
 			Thread[] threads = new Thread[threadCount];
 			for (int i = 0; i < threadCount; i++) {
+				final int threadNo = i + 1;
 				threads[i] = new Thread(() -> {
-					for (int j = 0; j < times; j++) {
-						supplier.get();
+					TestParam param = new TestParam(threadNo, 0, false);
+					for (int j = 1; j <= times; j++) {
+						function.apply(param.setRunNo(j));
 					}
 					countDownLatch.countDown();
 				});
@@ -74,8 +77,9 @@ public abstract class TestUtils {
 			}
 		} else {
 			// 单线程测试
-			for (int i = 0; i < times; i++) {
-				supplier.get();
+			TestParam param = new TestParam(1, 0, false);
+			for (int i = 1; i <= times; i++) {
+				function.apply(param.setRunNo(i));
 			}
 		}
 
@@ -106,23 +110,23 @@ public abstract class TestUtils {
 	 *
 	 * @param threadCount 并行执行的线程数
 	 * @param times       每个线程运行次数
-	 * @param suppliers   需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
+	 * @param functions   需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
 	 * @return costs 每个函数的总耗时
 	 */
 	@NonNull
-	public static long[] performanceTest(int threadCount, int times, Supplier<?>... suppliers) {
+	public static long[] performanceTest(int threadCount, int times, Function<TestParam, ?>... functions) {
 		Assert.isTrue(threadCount > 0, "'sets' must be greater than 0");
 		Assert.isTrue(times > 0, "'times' must be greater than 0");
-		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
+		Assert.isTrue(functions != null && functions.length > 0, "'functions' must be not empty");
 
 		// 先预热一下
 		System.out.println("\r\n性能测试预热中...");
 		long startTime = getStartTime();
-		for (Supplier<?> supplier : suppliers) {
+		for (Function<TestParam, ?> function : functions) {
 			long startTime1 = getStartTime();
-			int i = times;
-			while (i-- > 0) {
-				supplier.get();
+			TestParam param = new TestParam(0, 0, true);
+			for (int i = 1; i <= times; ++i) {
+				function.apply(param.setRunNo(i));
 			}
 			System.out.println(getCost(startTime1));
 		}
@@ -132,12 +136,26 @@ public abstract class TestUtils {
 		System.out.println("-----------------------------------------------------------------");
 		System.out.println("| 开始性能测试：" + StringUtils.rightPad(threadCount + " * " + times, 51) + "|");
 		System.out.println("-----------------------------------------------------------------");
-		long[] costs = new long[suppliers.length];
-		for (int y = 0; y < suppliers.length; ++y) {
-			costs[y] += executeOnePerformanceTest(threadCount, times, suppliers[y]);
+		long[] costs = new long[functions.length];
+		for (int y = 0; y < functions.length; ++y) {
+			costs[y] += executeOnePerformanceTest(threadCount, times, functions[y]);
 		}
 		System.out.println("-----------------------------------------------------------------");
 		return costs;
+	}
+
+	// 重载方法
+	@NonNull
+	public static long[] performanceTest(int threadCount, int times, Supplier<?>... suppliers) {
+		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
+
+		Function<TestParam, ?>[] functions = new Function[suppliers.length];
+		for (int i = 0; i < suppliers.length; ++i) {
+			final int n = i;
+			functions[i] = t -> suppliers[n].get();
+		}
+
+		return performanceTest(threadCount, times, functions);
 	}
 
 	//endregion
