@@ -15,7 +15,6 @@
  */
 package icu.easyj.middleware.dwz.server.core.controller;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.config.ServerConfigs;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.middleware.dwz.common.domain.EasyjDwzRequest;
@@ -25,6 +24,7 @@ import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

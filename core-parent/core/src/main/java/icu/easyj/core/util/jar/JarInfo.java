@@ -17,12 +17,12 @@ package icu.easyj.core.util.jar;
 
 import java.util.jar.Attributes;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.version.VersionInfo;
 import icu.easyj.core.util.version.VersionUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * JAR信息

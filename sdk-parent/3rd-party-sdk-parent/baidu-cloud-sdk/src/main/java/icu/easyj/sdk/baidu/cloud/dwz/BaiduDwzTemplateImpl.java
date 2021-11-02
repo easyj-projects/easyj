@@ -17,7 +17,6 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 
 import java.util.Date;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.constant.ErrorCodeConstants;
 import icu.easyj.core.json.EasyjSupportedJSON;
@@ -37,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientResponseException;
 
 /**

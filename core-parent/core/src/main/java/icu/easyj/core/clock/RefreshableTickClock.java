@@ -17,8 +17,8 @@ package icu.easyj.core.clock;
 
 import java.util.function.Supplier;
 
-import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 可刷新的记号时钟

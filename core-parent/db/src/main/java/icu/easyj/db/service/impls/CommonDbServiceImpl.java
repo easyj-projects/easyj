@@ -17,7 +17,6 @@ package icu.easyj.db.service.impls;
 
 import javax.sql.DataSource;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.loader.EnhancedServiceNotFoundException;
 import icu.easyj.db.dialect.DbDialectAdapter;
@@ -26,6 +25,7 @@ import icu.easyj.db.service.IDbService;
 import icu.easyj.db.util.DbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 /**
  * 通用数据库服务

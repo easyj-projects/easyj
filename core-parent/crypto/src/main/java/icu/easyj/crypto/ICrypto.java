@@ -23,12 +23,12 @@ import cn.hutool.core.codec.BCD;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * 非对称加密算法

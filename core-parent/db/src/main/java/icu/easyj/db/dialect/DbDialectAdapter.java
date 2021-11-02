@@ -17,8 +17,8 @@ package icu.easyj.db.dialect;
 
 import java.util.function.Supplier;
 
-import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 数据库方言适配器

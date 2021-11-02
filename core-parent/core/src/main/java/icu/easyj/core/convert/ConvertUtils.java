@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.convert.converter.CharSequenceToDateConverter;
 import icu.easyj.core.convert.converter.DateToStringConverter;
 import icu.easyj.core.enums.DataType;
@@ -30,6 +29,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * 转换工具类

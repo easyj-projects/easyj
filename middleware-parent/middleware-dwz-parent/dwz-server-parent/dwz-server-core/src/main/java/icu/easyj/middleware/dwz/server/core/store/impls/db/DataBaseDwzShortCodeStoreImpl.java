@@ -17,9 +17,9 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 
 import javax.sql.DataSource;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.db.util.DbUtils;
 import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
+import org.springframework.util.Assert;
 
 /**
  * 基于数据库实现的 {@link IDwzShortCodeStore}

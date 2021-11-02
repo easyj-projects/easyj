@@ -19,7 +19,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.StrPool;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
@@ -48,6 +47,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 腾讯云IdCardOCR实现的 {@link IIdCardOcrTemplate} 接口

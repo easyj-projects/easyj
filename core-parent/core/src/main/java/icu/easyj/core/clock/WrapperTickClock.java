@@ -15,8 +15,8 @@
  */
 package icu.easyj.core.clock;
 
-import cn.hutool.core.lang.Assert;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 包装记号时钟

@@ -18,7 +18,6 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 import java.util.Date;
 import javax.sql.DataSource;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.data.store.DbStoreException;
@@ -33,6 +32,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 /**
  * 基于数据库实现的 {@link IDwzLogStore}

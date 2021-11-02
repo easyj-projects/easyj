@@ -20,9 +20,9 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.hutool.core.lang.Assert;
 import icu.easyj.core.enums.DateFormatType;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 日期格式化实例工厂
