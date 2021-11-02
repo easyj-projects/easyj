@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 
 import javax.sql.DataSource;
 
+import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
@@ -44,12 +45,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(DwzRestController.class)
 @ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
+@ConditionalOnProperty(value = "easyj.middleware.dwz.server.enabled", matchIfMissing = true)
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzShortCodeStore dataBaseDwzShortCodeStore(DataSource dataSource) {
-		return new DataBaseDwzShortCodeStoreImpl(dataSource);
+	public IDwzShortCodeStore dataBaseDwzShortCodeStore(ISequenceService sequenceService) {
+		return new DataBaseDwzShortCodeStoreImpl(sequenceService);
 	}
 
 	@Bean

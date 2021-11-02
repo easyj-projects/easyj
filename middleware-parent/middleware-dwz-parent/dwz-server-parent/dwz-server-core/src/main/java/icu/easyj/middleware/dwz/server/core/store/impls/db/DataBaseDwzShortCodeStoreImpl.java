@@ -15,10 +15,11 @@
  */
 package icu.easyj.middleware.dwz.server.core.store.impls.db;
 
-import javax.sql.DataSource;
-
-import icu.easyj.db.util.DbUtils;
+import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -28,18 +29,23 @@ import org.springframework.util.Assert;
  */
 public class DataBaseDwzShortCodeStoreImpl implements IDwzShortCodeStore {
 
-	private final DataSource dataSource;
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseDwzShortCodeStoreImpl.class);
 
 
-	public DataBaseDwzShortCodeStoreImpl(DataSource dataSource) {
-		Assert.notNull(dataSource, "'dataSource' must not be null");
-		this.dataSource = dataSource;
+	private final ISequenceService sequenceService;
+
+
+	public DataBaseDwzShortCodeStoreImpl(@NonNull ISequenceService sequenceService) {
+		Assert.notNull(sequenceService, "'sequenceService' must not be null");
+		this.sequenceService = sequenceService;
+
+		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：" + sequenceService.getClass().getName());
 	}
 
 
 	@Override
 	public long nextShortUrlCodeId() {
 		// 目前基于数据库序列来获取下一个ID
-		return DbUtils.seqNextVal(this.dataSource, "SEQ_SHORT_URL_CODE");
+		return sequenceService.nextVal("SEQ_SHORT_URL_CODE");
 	}
 }

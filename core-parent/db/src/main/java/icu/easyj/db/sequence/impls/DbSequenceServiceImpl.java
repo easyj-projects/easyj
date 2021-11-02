@@ -15,8 +15,11 @@
  */
 package icu.easyj.db.sequence.impls;
 
+import javax.sql.DataSource;
+
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.sequence.ISequenceService;
+import icu.easyj.db.util.DbUtils;
 import icu.easyj.db.util.PrimaryDbUtils;
 import org.springframework.lang.NonNull;
 
@@ -28,13 +31,33 @@ import org.springframework.lang.NonNull;
 @LoadLevel(name = "db", order = 1000)
 public class DbSequenceServiceImpl implements ISequenceService {
 
+	private final DataSource dataSource;
+
+
+	public DbSequenceServiceImpl() {
+		this(null);
+	}
+
+	public DbSequenceServiceImpl(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+
 	@Override
 	public long nextVal(@NonNull String seqName) {
-		return PrimaryDbUtils.seqNextVal(seqName);
+		if (this.dataSource != null) {
+			return DbUtils.seqNextVal(this.dataSource, seqName);
+		} else {
+			return PrimaryDbUtils.seqNextVal(seqName);
+		}
 	}
 
 	@Override
 	public long currVal(@NonNull String seqName) {
-		return PrimaryDbUtils.seqCurrVal(seqName);
+		if (this.dataSource != null) {
+			return DbUtils.seqCurrVal(this.dataSource, seqName);
+		} else {
+			return PrimaryDbUtils.seqCurrVal(seqName);
+		}
 	}
 }

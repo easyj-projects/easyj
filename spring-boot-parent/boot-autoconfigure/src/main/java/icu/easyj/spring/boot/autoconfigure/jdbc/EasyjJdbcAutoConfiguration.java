@@ -52,7 +52,7 @@ public class EasyjJdbcAutoConfiguration {
 	 */
 	@Bean
 	@Qualifier("dbSequenceService")
-	public ISequenceService primaryDataBaseSequenceService() {
-		return new DbSequenceServiceImpl();
+	public ISequenceService primaryDataBaseSequenceService(@Autowired(required = false) DataSource primaryDataSource) {
+		return new DbSequenceServiceImpl(primaryDataSource);
 	}
 }

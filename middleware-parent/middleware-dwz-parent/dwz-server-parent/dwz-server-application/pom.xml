@@ -41,6 +41,13 @@
 		</dependency>
 
 
+		<!-- Redis：用于生成短链接服务的序列生成 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+
 		<!-- logging -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

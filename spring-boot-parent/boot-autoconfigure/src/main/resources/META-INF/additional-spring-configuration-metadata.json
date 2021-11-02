@@ -179,6 +179,13 @@
 			"defaultValue": "list"
 		},
 		{
+			"name": "easyj.middleware.dwz.server.enabled",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration",
+			"description": "是否启用中间件DWZ（短链接服务）的功能.",
+			"defaultValue": true
+		},
+		{
 			"name": "easyj.middleware.dwz.server.task.enabled",
 			"defaultValue": true
 		},
