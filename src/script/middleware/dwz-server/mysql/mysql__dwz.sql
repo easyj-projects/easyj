@@ -16,4 +16,4 @@ CREATE TABLE `dwz_log`
 ) COMMENT = '短链接记录表';
 
 
--- 创建序列表及其函数，SQL文件位置：/core-parent/db/script/mysql/mysql__create_sequence-table_and_function.sql
+-- dwz-server使用mysql时，id生成依赖于数据库序列表，创建序列表及其函数的SQL文件位于：/src/script/db/mysql/mysql__create_sequence-table_and_function.sql

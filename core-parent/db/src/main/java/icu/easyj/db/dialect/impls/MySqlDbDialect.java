@@ -28,6 +28,8 @@ import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
  * MySQL数据库方言
  *
  * @author wangliang181230
+ * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/src/script/db/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+ * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/src/script/db/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
  */
 @LoadLevel(name = MYSQL, order = 10)
 @DependsOnClass(name = MYSQL_DRIVER)
@@ -48,8 +50,6 @@ class MySqlDbDialect implements IDbDialect {
 	 *
 	 * @param seqName 序列名
 	 * @return 当前序列号
-	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
-	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
 	 */
 	@Override
 	public String getSeqCurrValSql(String seqName) {
@@ -61,8 +61,6 @@ class MySqlDbDialect implements IDbDialect {
 	 *
 	 * @param seqName 序列名
 	 * @return 下一个序列号
-	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
-	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
 	 */
 	@Override
 	public String getSeqNextValSql(String seqName) {
@@ -75,8 +73,6 @@ class MySqlDbDialect implements IDbDialect {
 	 * @param seqName 序列名
 	 * @param val     指定序列值
 	 * @return previousVal 原序列值（为null表示原来的序列不存在）
-	 * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
-	 * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/core-parent/db/script/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
 	 */
 	@Override
 	public String getSeqSetValSql(String seqName, long val) {
