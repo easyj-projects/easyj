@@ -213,9 +213,9 @@ public abstract class DateUtils {
 						return parseDate3(timeStr);
 					}
 				case 16:
-					return parseSeconds2(timeStr);
-				case 19:
 					return parseMinutes2(timeStr);
+				case 19:
+					return parseSeconds2(timeStr);
 				case 23:
 					return parseMillisecond2(timeStr);
 
