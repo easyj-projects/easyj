@@ -130,7 +130,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		this.dataSource = jdbcTemplate.getDataSource();
 		this.sequenceService = sequenceService;
 
-		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}。", sequenceService.getClass().getName(), SEQ_NAME__DWZ_LOG_ID);
+		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}。", sequenceService.getClass().getSimpleName(), SEQ_NAME__DWZ_LOG_ID);
 	}
 
 

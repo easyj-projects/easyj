@@ -69,6 +69,7 @@ public class EasyjConfigsAutoConfiguration {
 	 * @return 雪花算法
 	 */
 	@Bean
+	@Lazy(true)
 	@SuppressWarnings("all")
 	public Snowflake snowflake(ServerProperties serverProperties) {
 		return ServerConfigs.getSnowflake();

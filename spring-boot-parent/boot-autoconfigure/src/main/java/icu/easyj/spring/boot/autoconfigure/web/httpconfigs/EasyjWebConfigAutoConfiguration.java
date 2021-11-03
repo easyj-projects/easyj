@@ -19,6 +19,7 @@ import icu.easyj.web.util.HttpConfigs;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author wangliang181230
  * @see HttpConfigs // HTTP相关配置持有者
  */
+@Lazy(false)
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(WebApplicationContext.class)
 @ConditionalOnWebApplication

@@ -23,7 +23,6 @@ import icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisSequenceSer
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,7 +41,6 @@ public class EasyjRedisAutoConfiguration {
 	 * @return 序列服务的实现
 	 * @see EasyjJdbcAutoConfiguration#primaryDataBaseSequenceService(DataSource) 基于数据库的实现
 	 */
-	@Lazy(false)
 	@Bean
 	@Primary
 	@Qualifier("redisTemplateSequenceService")

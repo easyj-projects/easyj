@@ -65,6 +65,7 @@ public class DefaultDwzCorrectErrorDataServiceImpl implements IDwzCorrectErrorDa
 				this.initSeqVal(currVal, maxId);
 				return 1;
 			} else {
+				LOGGER.info("不需要纠正序列值，当前序列值：{}，当前最大ID值：{}。", currVal, maxId);
 				return 0;
 			}
 		} catch (NotSupportedException e) {

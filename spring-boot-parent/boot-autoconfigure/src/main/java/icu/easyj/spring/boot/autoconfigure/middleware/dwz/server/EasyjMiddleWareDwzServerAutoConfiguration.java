@@ -34,6 +34,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -127,6 +128,7 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 		 * @return 定时任务Bean
 		 */
 		@Bean
+		@Lazy(false)
 		@ConditionalOnMissingBean
 		public EasyjDwzServerTask easyjDwzServerTask(IDwzLogStore dwzLogStore, DwzServerTaskConfig dwzServerTaskConfig) {
 			return new EasyjDwzServerTask(dwzLogStore, dwzServerTaskConfig);
