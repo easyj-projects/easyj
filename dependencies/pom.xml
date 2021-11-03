@@ -81,6 +81,7 @@
 		<junit.version>5.7.2</junit.version>
 		<mockito.version>3.11.2</mockito.version>
 		<assertj-core.version>3.20.2</assertj-core.version>
+		<jmh.version>1.33</jmh.version>
 	</properties>
 
 	<dependencyManagement>
@@ -276,6 +277,17 @@
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
 				<version>${assertj-core.version}</version>
+			</dependency>
+			<!-- JMH -->
+			<dependency>
+				<groupId>org.openjdk.jmh</groupId>
+				<artifactId>jmh-core</artifactId>
+				<version>${jmh.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjdk.jmh</groupId>
+				<artifactId>jmh-generator-annprocess</artifactId>
+				<version>${jmh.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
