@@ -79,17 +79,17 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 		}
 
 		// 定时任务参数
-		long period = 10; // 每次任务执行间隔时间
 		long initialDelay = 10; // 初始化延迟时间（即：定时任务开始后的多少时间才第一次执行任务）
+		long period = 10; // 每次任务执行间隔时间
 		TimeUnit timeUnit = TimeUnit.MINUTES; // 时间单位：分钟
 
 		// 开始定时任务
 		scheduledFuture = scheduledThreadPoolExecutor.scheduleAtFixedRate(() -> {
 			super.refreshTickClock();
-			LOGGER.info("记号时钟 '{}' 已自动刷新!", this.name);
+			LOGGER.debug("记号时钟 '{}' 已完成时间校准!", this.name);
 		}, initialDelay, period, timeUnit);
 
-		LOGGER.info("开始记号时钟 '{}' 的自动刷新的定时任务，执行间隔：{} 分钟", this.name, period);
+		LOGGER.info("已开始记号时钟 '{}' 的时间校准任务，执行间隔：{} 分钟。", this.name, period);
 	}
 
 	@Override
@@ -97,9 +97,9 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 		if (isAutoRefreshing()) {
 			try {
 				scheduledFuture.cancel(true);
-				LOGGER.info("停止记号时钟 '{}' 的自动刷新任务成功！", this.name);
+				LOGGER.info("已停止记号时钟 '{}' 的时间校准任务！", this.name);
 			} catch (Exception e) {
-				LOGGER.error("停止记号时钟 '{}' 的自动刷新任务失败：{}", this.name, e);
+				LOGGER.error("停止记号时钟 '{}' 的时间校准任务失败：{}", this.name, e);
 			}
 
 			scheduledFuture = null;
