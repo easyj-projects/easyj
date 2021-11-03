@@ -119,7 +119,7 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @param seqName 序列名
 	 * @param newVal  新的序列值
-	 * @return previousVal 原序列值
+	 * @return previousVal 前序列值
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	public static long seqSetVal(String seqName, long newVal) {

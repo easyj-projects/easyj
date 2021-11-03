@@ -30,14 +30,14 @@ public interface IDbDialect extends IDialect {
 	/**
 	 * 获取数据库版本号的SQL
 	 *
-	 * @return 获取版本号SQL
+	 * @return 获取数据库版本号的SQL
 	 */
 	String getVersionSql();
 
 	/**
 	 * 获取数据库当前时间的SQL（不同数据库SQL语句不同）
 	 *
-	 * @return 获取时间SQL
+	 * @return 获取数据库当前时间的SQL
 	 */
 	String getTimeSql();
 
@@ -45,7 +45,7 @@ public interface IDbDialect extends IDialect {
 	 * 获取当前序列号的SQL
 	 *
 	 * @param seqName 序列名
-	 * @return 当前序列号
+	 * @return 获取当前序列号的SQL
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	String getSeqCurrValSql(String seqName);
@@ -54,16 +54,16 @@ public interface IDbDialect extends IDialect {
 	 * 获取下一个序列号的SQL
 	 *
 	 * @param seqName 序列名
-	 * @return 下一个序列号
+	 * @return 获取下一个序列号的SQL
 	 */
 	String getSeqNextValSql(String seqName);
 
 	/**
-	 * 设置序列值的SQL
+	 * 获取 设置序列值的SQL
 	 *
 	 * @param seqName 序列名
 	 * @param newVal  新的序列值
-	 * @return previousVal 原序列值（为null表示原来的序列不存在）
+	 * @return 设置序列值的SQL
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	String getSeqSetValSql(String seqName, long newVal);

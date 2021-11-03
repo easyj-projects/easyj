@@ -43,8 +43,9 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	}
 
 	@Override
-	public void setVal(@NonNull String seqName, long newVal) {
+	public long setVal(@NonNull String seqName, long newVal) {
 		this.getAtomicLong(seqName).set(newVal);
+		return -1; // -1表示未知
 	}
 
 

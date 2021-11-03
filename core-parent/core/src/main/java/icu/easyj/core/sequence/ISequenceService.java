@@ -47,7 +47,8 @@ public interface ISequenceService {
 	 *
 	 * @param seqName 序列名
 	 * @param newVal  新的序列值
+	 * @return previousVal 前序列值：null=没有序列值 | -1=未知
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	void setVal(@NonNull String seqName, long newVal);
+	long setVal(@NonNull String seqName, long newVal);
 }

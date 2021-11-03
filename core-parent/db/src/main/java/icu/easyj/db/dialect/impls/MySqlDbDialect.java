@@ -45,35 +45,16 @@ class MySqlDbDialect implements IDbDialect {
 		return "SELECT CURRENT_TIMESTAMP(3)";
 	}
 
-	/**
-	 * 获取当前序列号的SQL
-	 *
-	 * @param seqName 序列名
-	 * @return 当前序列号
-	 */
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		return "SELECT func_currval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "')";
 	}
 
-	/**
-	 * 获取下一个序列号的SQL
-	 *
-	 * @param seqName 序列名
-	 * @return 下一个序列号
-	 */
 	@Override
 	public String getSeqNextValSql(String seqName) {
 		return "SELECT func_nextval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "')";
 	}
 
-	/**
-	 * 设置序列值的SQL
-	 *
-	 * @param seqName 序列名
-	 * @param newVal  指定序列值
-	 * @return previousVal 原序列值（为null表示原来的序列不存在）
-	 */
 	@Override
 	public String getSeqSetValSql(String seqName, long newVal) {
 		return "SELECT func_setval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "', " + newVal + ")";

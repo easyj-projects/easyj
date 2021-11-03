@@ -64,11 +64,11 @@ public class DbSequenceServiceImpl implements ISequenceService {
 	}
 
 	@Override
-	public void setVal(@NonNull String seqName, long newVal) {
+	public long setVal(@NonNull String seqName, long newVal) {
 		if (this.dataSource != null) {
-			DbUtils.seqSetVal(this.dataSource, seqName, newVal);
+			return DbUtils.seqSetVal(this.dataSource, seqName, newVal);
 		} else {
-			PrimaryDbUtils.seqSetVal(seqName, newVal);
+			return PrimaryDbUtils.seqSetVal(seqName, newVal);
 		}
 	}
 }
