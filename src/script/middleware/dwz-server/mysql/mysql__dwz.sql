@@ -1,5 +1,5 @@
 -- 创建短链接记录表
-CREATE TABLE `dwz_log`
+CREATE TABLE `easyj_dwz_log`
 (
     `id`               bigint       NOT NULL           COMMENT 'ID',
     `short_url_code`   varchar(16)  NOT NULL           COMMENT '短链接码',

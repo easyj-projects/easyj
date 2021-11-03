@@ -46,7 +46,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 	//region SQL相关常量 start
 
-	private static final String DWZ_LOG_TABLE_NAME = "dwz_log";
+	private static final String DWZ_LOG_TABLE_NAME = "easyj_dwz_log";
 	private static final String ALL_FIELDS = "id, short_url_code, long_url, term_of_validity, status, create_time, update_time, version";
 	private static final String ALL_PLACEHOLDER = StringUtils.join('?', ',', ALL_FIELDS.split(",").length);
 
@@ -60,7 +60,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	 */
 	private static final String GET_DWZ_LOG_SQL = "" +
 			"SELECT " + ALL_FIELDS +
-			"  FROM " + DWZ_LOG_TABLE_NAME + " t" +
+			"  FROM " + DWZ_LOG_TABLE_NAME + " AS t" +
 			" WHERE t.long_url = ?" +
 			"   FOR UPDATE";
 
@@ -68,7 +68,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	 * 更新记录的SQL
 	 */
 	private static final String UPDATE_DWZ_LOG_SQL = "" +
-			"UPDATE " + DWZ_LOG_TABLE_NAME + " t" +
+			"UPDATE " + DWZ_LOG_TABLE_NAME + " AS t" +
 			"   SET t.term_of_validity = ?," +
 			"       t.status = 1," +
 			"       t.update_time = ?," +
@@ -80,25 +80,26 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	 */
 	private static final String GET_LONG_URL_SQL = "" +
 			"SELECT long_url" +
-			"  FROM " + DWZ_LOG_TABLE_NAME + " t" +
+			"  FROM " + DWZ_LOG_TABLE_NAME + " AS t" +
 			" WHERE t.short_url_code = ?" +
 			"   AND t.status = 1";
 
 
 	/**
 	 * 删除所有超时记录的SQL
+	 * 注：MySql数据库 DELETE 语句不支持设置表别名
 	 */
 	private static final String DELETE_OVERTIME_SQL = "" +
 			"DELETE" +
-			"  FROM " + DWZ_LOG_TABLE_NAME + " t" +
-			" WHERE t.term_of_validity < ?" +
-			"   AND t.status = 1";
+			"  FROM " + DWZ_LOG_TABLE_NAME +
+			" WHERE term_of_validity < ?" +
+			"   AND status = 1";
 
 	/**
 	 * 更新所有超时记录的SQL
 	 */
 	private static final String UPDATE_OVERTIME_SQL = "" +
-			"UPDATE " + DWZ_LOG_TABLE_NAME + " t" +
+			"UPDATE " + DWZ_LOG_TABLE_NAME + " AS t" +
 			"   SET t.status = 2," +
 			"       t.update_time = ?," +
 			"       t.version = t.verion + 1" +
