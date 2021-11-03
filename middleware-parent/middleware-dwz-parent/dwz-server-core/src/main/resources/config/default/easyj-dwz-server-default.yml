@@ -4,3 +4,9 @@ easyj:
       server:
         task:
           enabled: true
+
+# 部分类的日志级别调整为INFO，让项目启动时，可以看到日志信息
+logging:
+  level:
+    icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzLogStoreImpl: INFO
+    icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzCorrectErrorDataServiceImpl: INFO

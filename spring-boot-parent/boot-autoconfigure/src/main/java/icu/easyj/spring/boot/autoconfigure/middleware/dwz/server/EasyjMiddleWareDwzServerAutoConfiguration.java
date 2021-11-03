@@ -18,7 +18,10 @@ package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
+import icu.easyj.middleware.dwz.server.core.listener.DwzServerStartupApplicationListener;
+import icu.easyj.middleware.dwz.server.core.service.IDwzCorrectErrorDataService;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
+import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzCorrectErrorDataServiceImpl;
 import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzServerServiceImpl;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzLogStoreImpl;
@@ -26,6 +29,7 @@ import icu.easyj.middleware.dwz.server.core.task.EasyjDwzServerTask;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -41,6 +45,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(DwzRestController.class)
 @ConditionalOnProperty(value = "easyj.middleware.dwz.server.enabled", matchIfMissing = true)
+@ConditionalOnWebApplication
 @ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
@@ -71,11 +76,36 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 
 	/**
+	 * 创建：纠正错误数据的服务接口Bean
+	 *
+	 * @param dwzLogStore     短链接记录存取接口Bean
+	 * @param sequenceService 序列服务bean
+	 * @return 纠正错误数据的服务接口Bean
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public IDwzCorrectErrorDataService defaultDwzCorrectErrorDataService(IDwzLogStore dwzLogStore, ISequenceService sequenceService) {
+		return new DefaultDwzCorrectErrorDataServiceImpl(dwzLogStore, sequenceService);
+	}
+
+	/**
+	 * 创建：项目启动完成的监听器Bean
+	 *
+	 * @param dwzCorrectErrorDataService 纠正错误数据的服务接口Bean
+	 * @return 项目启动完成的监听器Bean
+	 */
+	@Bean
+	public DwzServerStartupApplicationListener dwzServerInitApplicationListener(IDwzCorrectErrorDataService dwzCorrectErrorDataService) {
+		return new DwzServerStartupApplicationListener(dwzCorrectErrorDataService);
+	}
+
+
+	/**
 	 * 定时任务相关配置类
 	 */
 	@Configuration(proxyBeanMethods = false)
-	@EnableScheduling
 	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.task.enabled", matchIfMissing = true)
+	@EnableScheduling
 	public static class EasyjDwzServerTaskConfiguration {
 
 		/**

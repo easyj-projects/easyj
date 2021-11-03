@@ -84,6 +84,12 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 			" WHERE t.short_url_code = ?" +
 			"   AND t.status = 1";
 
+	/**
+	 * 获取最大ID值的SQL
+	 */
+	private static final String GET_MAX_ID_SQL = "" +
+			"SELECT MAX(id) FROM " + DWZ_LOG_TABLE_NAME;
+
 
 	/**
 	 * 删除所有超时记录的SQL
@@ -124,7 +130,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		this.dataSource = jdbcTemplate.getDataSource();
 		this.sequenceService = sequenceService;
 
-		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}，请确保当前序列服务中的该序列是存在且可用的。", sequenceService.getClass().getName(), SEQ_NAME__DWZ_LOG_ID);
+		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}。", sequenceService.getClass().getName(), SEQ_NAME__DWZ_LOG_ID);
 	}
 
 
@@ -220,6 +226,19 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 				return null;
 			}
 			throw new DbStoreException("根据短链接码获取长链接失败", e);
+		}
+	}
+
+	@Nullable
+	@Override
+	public Long getMaxId() {
+		try {
+			return jdbcTemplate.queryForObject(GET_MAX_ID_SQL, Long.class);
+		} catch (Exception e) {
+			if (e instanceof EmptyResultDataAccessException && ((EmptyResultDataAccessException)e).getActualSize() == 0) {
+				return null;
+			}
+			throw new DbStoreException("获取短链接记录的最大ID值失败", e);
 		}
 	}
 

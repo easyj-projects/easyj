@@ -17,6 +17,7 @@ package icu.easyj.middleware.dwz.server.core.store;
 
 import java.util.Date;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.data.store.StoreException;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import org.springframework.lang.NonNull;
@@ -73,6 +74,15 @@ public interface IDwzLogStore {
 	 */
 	@Nullable
 	String getLongUrlByShortUrlCode(@NonNull String shortUrlCode);
+
+	/**
+	 * 获取当前存储器中保存的短链接记录的最大ID值
+	 *
+	 * @return 最大ID值
+	 * @throws NotSupportedException 如果当前存储器无法获取最大ID值，请抛出该异常
+	 */
+	@Nullable
+	Long getMaxId();
 
 	/**
 	 * 删除超时的短链接数据
