@@ -17,8 +17,8 @@ package icu.easyj.middleware.dwz.server.core.controller;
 
 import icu.easyj.config.ServerConfigs;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.middleware.dwz.common.domain.EasyjDwzRequest;
-import icu.easyj.middleware.dwz.common.domain.EasyjDwzResponse;
+import icu.easyj.middleware.dwz.domain.EasyjDwzRequest;
+import icu.easyj.middleware.dwz.domain.EasyjDwzResponse;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import org.slf4j.Logger;

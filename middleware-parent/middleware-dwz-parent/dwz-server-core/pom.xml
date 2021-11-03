@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>dwz-server-parent</artifactId>
+		<artifactId>middleware-dwz-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-dwz-common</artifactId>
+			<artifactId>easyj-middleware-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

@@ -5,10 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>dwz-server-parent</artifactId>
+		<artifactId>middleware-dwz-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
+	<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
 	<artifactId>easyj-dwz-server-application</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
@@ -17,13 +18,17 @@
 	<dependencies>
 		<!-- dwz-server-starter -->
 		<dependency>
-			<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
+			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 
-		<!-- DB -->
+		<!--
+		DB：可选择的。
+		当前应用由于是用于打包公网镜像，所以引用了三种支持数据库的驱动包。
+		如果大家自己使用 `<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>` 来创建应用，请引入你所需要的数据库的驱动包即可。
+		-->
 		<!-- MySql -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -82,6 +87,19 @@
 				<configuration>
 					<!-- 当前为spring-boot应用，无需deploy -->
 					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<configuration>
+					<!-- 当前为spring-boot应用，无需暂存 -->
+					<skipStaging>true</skipStaging>
+					<skipLocalStaging>true</skipLocalStaging>
+					<skipRemoteStaging>true</skipRemoteStaging>
+					<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+					<skipStagingRepositoryClose>true</skipStagingRepositoryClose>
 				</configuration>
 			</plugin>
 		</plugins>

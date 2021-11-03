@@ -105,6 +105,13 @@
 
 			<!-- ************************* MiddleWare（中间件） ************************* -->
 
+			<!-- EasyJ所有中间件核心依赖模块：一些中间件的客户端和服务端通用的类都在这里。如：domain、param -->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-middleware-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- EasyJ中间件：DWZ（短链接服务）服务端核心模块 -->
 			<dependency>
 				<groupId>icu.easyj</groupId>

@@ -37,6 +37,7 @@
 	</dependencyManagement>
 
 	<modules>
+		<module>middleware-core</module>
 		<module>middleware-dwz-parent</module>
 	</modules>
 </project>

@@ -15,7 +15,7 @@
  */
 package icu.easyj.sdk.middleware.dwz.impls.feign;
 
-import icu.easyj.middleware.dwz.common.domain.EasyjDwzRequest;
+import icu.easyj.middleware.dwz.domain.EasyjDwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;

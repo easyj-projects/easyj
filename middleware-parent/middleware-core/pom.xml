@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>middleware-dwz-parent</artifactId>
+		<artifactId>middleware-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-dwz-common</artifactId>
+	<artifactId>easyj-middleware-core</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ中间件：DWZ（短链接服务）客户端和服务端共用的模块</description>
+	<description>EasyJ中间件核心：包含domain、param等等</description>
 
 	<dependencies>
 		<dependency>

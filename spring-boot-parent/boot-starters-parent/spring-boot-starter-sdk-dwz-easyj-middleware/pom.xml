@@ -29,7 +29,7 @@
 
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-dwz-common</artifactId>
+			<artifactId>easyj-middleware-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

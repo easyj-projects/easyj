@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.middleware.dwz.common.domain;
+package icu.easyj.middleware.dwz.domain;
 
 import java.io.Serializable;
 import java.util.Date;

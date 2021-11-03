@@ -17,7 +17,7 @@ package icu.easyj.sdk.middleware.dwz.impls.http;
 
 import java.util.Date;
 
-import icu.easyj.middleware.dwz.common.domain.EasyjDwzRequest;
+import icu.easyj.middleware.dwz.domain.EasyjDwzRequest;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.IDwzTemplate;
