@@ -30,6 +30,12 @@ import org.springframework.lang.Nullable;
 public interface IDwzLogStore {
 
 	/**
+	 * 生成短链接记录ID的序列名
+	 */
+	String SEQ_NAME__DWZ_LOG_ID = "SEQ_DWZ_LOG_ID";
+
+
+	/**
 	 * 关联短链接码与长链接，并保存到store中
 	 *
 	 * @param longUrl        长链接
@@ -78,7 +84,7 @@ public interface IDwzLogStore {
 	/**
 	 * 更新超时的短链接数据状态
 	 *
-	 * @return 此次删除的数据量
+	 * @return 此次更新的数据量
 	 */
 	int updateOvertime();
 }

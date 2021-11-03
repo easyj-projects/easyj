@@ -22,6 +22,7 @@ import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.db.util.DbUtils;
 import icu.easyj.db.util.PrimaryDbUtils;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 基于 {@link PrimaryDbUtils} 实现的序列服务
@@ -31,6 +32,7 @@ import org.springframework.lang.NonNull;
 @LoadLevel(name = "db", order = 1000)
 public class DbSequenceServiceImpl implements ISequenceService {
 
+	@Nullable
 	private final DataSource dataSource;
 
 

@@ -16,10 +16,10 @@
 package icu.easyj.middleware.dwz.common.domain;
 
 import java.util.Date;
-import javax.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**

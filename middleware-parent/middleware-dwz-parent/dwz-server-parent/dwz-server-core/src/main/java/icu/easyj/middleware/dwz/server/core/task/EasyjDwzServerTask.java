@@ -47,17 +47,17 @@ public class EasyjDwzServerTask {
 	 */
 	@Scheduled(fixedDelay = 2 * 60 * 1000, initialDelay = 5000)
 	public void handleOvertimeDwzLog() {
-		if (dwzServerTaskConfig.getOvertimeHandleStrategy() == OvertimeHandleStrategy.UPDATE) {
-			int count = this.dwzLogStore.updateOvertime();
-			// 打印此次更新的数据量
-			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("此次更新的超时短链接记录数据有 {} 条", count);
-			}
-		} else {
+		if (dwzServerTaskConfig.getOvertimeHandleStrategy() == OvertimeHandleStrategy.DELETE) {
 			int count = this.dwzLogStore.deleteOvertime();
 			// 打印此次删除的数据量
 			if (LOGGER.isInfoEnabled()) {
 				LOGGER.info("此次删除的超时短链接记录数据有 {} 条", count);
+			}
+		} else {
+			int count = this.dwzLogStore.updateOvertime();
+			// 打印此次更新的数据量
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("此次更新的超时短链接记录数据有 {} 条", count);
 			}
 		}
 	}

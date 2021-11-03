@@ -18,13 +18,13 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 import java.util.Date;
 import javax.sql.DataSource;
 
+import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.data.store.DbStoreException;
 import icu.easyj.db.util.DbClockUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
-import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -111,28 +111,32 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	private final DataSource dataSource;
 	private final JdbcTemplate jdbcTemplate;
 
-	private final IDwzShortCodeStore dwzShortCodeStore;
+	private final ISequenceService sequenceService;
 
 
-	public DataBaseDwzLogStoreImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, IDwzShortCodeStore dwzShortCodeStore) {
-		Assert.notNull(dataSource, "'dataSource' must not be null");
+	public DataBaseDwzLogStoreImpl(JdbcTemplate jdbcTemplate, ISequenceService sequenceService) {
 		Assert.notNull(jdbcTemplate, "'jdbcTemplate' must not be null");
-		Assert.notNull(dwzShortCodeStore, "'dwzShortCodeStore' must not be null");
+		Assert.notNull(jdbcTemplate.getDataSource(), "'jdbcTemplate.getDataSource()' must not be null");
+		Assert.notNull(sequenceService, "'sequenceService' must not be null");
 
-		this.dataSource = dataSource;
 		this.jdbcTemplate = jdbcTemplate;
-		this.dwzShortCodeStore = dwzShortCodeStore;
+		this.dataSource = jdbcTemplate.getDataSource();
+		this.sequenceService = sequenceService;
+
+		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}，请确保当前序列服务中的该序列是存在且可用的。", sequenceService.getClass().getName(), SEQ_NAME__DWZ_LOG_ID);
 	}
 
 
 	@NonNull
 	@Override
 	public DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity) {
-		Date now = DbClockUtils.now(this.dataSource);
-
-		// 生成ID和短链接码
-		long id = dwzShortCodeStore.nextShortUrlCodeId();
+		// 通过序列服务，获取下一序列值，作为ID
+		long id = this.sequenceService.nextVal(SEQ_NAME__DWZ_LOG_ID);
+		// ID 转换为 短字符串，即：短链接码（注：可通过 `ShortCodeUtils.toId(code)` 方法转换回ID）
 		String shortUrlCode = ShortCodeUtils.toCode(id);
+
+		// 使用TickClock快速获取数据库时间
+		Date now = DbClockUtils.now(this.dataSource);
 
 		// 数据创建成功，创建entity并返回
 		DwzLogEntity dwzLog = new DwzLogEntity();

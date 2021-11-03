@@ -15,17 +15,13 @@
  */
 package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 
-import javax.sql.DataSource;
-
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzServerServiceImpl;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
-import icu.easyj.middleware.dwz.server.core.store.IDwzShortCodeStore;
 import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzLogStoreImpl;
-import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzShortCodeStoreImpl;
 import icu.easyj.middleware.dwz.server.core.task.EasyjDwzServerTask;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -44,22 +40,29 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(DwzRestController.class)
-@ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
 @ConditionalOnProperty(value = "easyj.middleware.dwz.server.enabled", matchIfMissing = true)
+@ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
+	/**
+	 * 创建：短链接记录存取接口Bean
+	 *
+	 * @param primaryJdbcTemplate 主要数据源对应的jdbcTemplate
+	 * @param sequenceService     序列服务
+	 * @return 短链接记录存取接口Bean
+	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzShortCodeStore dataBaseDwzShortCodeStore(ISequenceService sequenceService) {
-		return new DataBaseDwzShortCodeStoreImpl(sequenceService);
+	public IDwzLogStore dataBaseDwzLogStore(JdbcTemplate primaryJdbcTemplate, ISequenceService sequenceService) {
+		return new DataBaseDwzLogStoreImpl(primaryJdbcTemplate, sequenceService);
 	}
 
-	@Bean
-	@ConditionalOnMissingBean
-	public IDwzLogStore dataBaseDwzLogStore(DataSource dataSource, JdbcTemplate jdbcTemplate, IDwzShortCodeStore shortCodeStore) {
-		return new DataBaseDwzLogStoreImpl(dataSource, jdbcTemplate, shortCodeStore);
-	}
-
+	/**
+	 * 创建：短链接服务接口Bean
+	 *
+	 * @param logStore 短链接记录存取接口Bean
+	 * @return 短链接服务接口Bean
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public IDwzServerService defaultDwzServerService(IDwzLogStore logStore) {
@@ -68,19 +71,31 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 
 	/**
-	 * 定时任务相关配置
+	 * 定时任务相关配置类
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@EnableScheduling
 	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.task.enabled", matchIfMissing = true)
 	public static class EasyjDwzServerTaskConfiguration {
 
+		/**
+		 * 创建：定时任务配置Bean
+		 *
+		 * @return 定时任务配置Bean
+		 */
 		@Bean
 		@ConfigurationProperties("easyj.middleware.dwz.server.task")
 		public DwzServerTaskConfig dwzServerTaskProperties() {
 			return new DwzServerTaskConfig();
 		}
 
+		/**
+		 * 创建：定时任务Bean
+		 *
+		 * @param dwzLogStore         短链接记录存取接口Bean
+		 * @param dwzServerTaskConfig 定时任务配置Bean
+		 * @return 定时任务Bean
+		 */
 		@Bean
 		@ConditionalOnMissingBean
 		public EasyjDwzServerTask easyjDwzServerTask(IDwzLogStore dwzLogStore, DwzServerTaskConfig dwzServerTaskConfig) {
