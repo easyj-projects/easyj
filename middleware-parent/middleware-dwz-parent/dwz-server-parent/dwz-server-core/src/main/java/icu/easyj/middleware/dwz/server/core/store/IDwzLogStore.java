@@ -32,7 +32,7 @@ public interface IDwzLogStore {
 	/**
 	 * 生成短链接记录ID的序列名
 	 */
-	String SEQ_NAME_FOR_CREATE_DWZ_LOG_ID = "SEQ_DWZ_LOG_ID";
+	String SEQ_NAME__DWZ_LOG_ID = "SEQ_DWZ_LOG_ID";
 
 
 	/**

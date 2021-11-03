@@ -124,7 +124,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		this.dataSource = jdbcTemplate.getDataSource();
 		this.sequenceService = sequenceService;
 
-		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}，请确保当前序列服务中的该序列是存在且可用的。", sequenceService.getClass().getName(), SEQ_NAME_FOR_CREATE_DWZ_LOG_ID);
+		LOGGER.info("当前用于生成短链接记录ID的序列服务的为：{}，对应的序列名：{}，请确保当前序列服务中的该序列是存在且可用的。", sequenceService.getClass().getName(), SEQ_NAME__DWZ_LOG_ID);
 	}
 
 
@@ -132,7 +132,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	@Override
 	public DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity) {
 		// 通过序列服务，获取下一序列值，作为ID
-		long id = this.sequenceService.nextVal(SEQ_NAME_FOR_CREATE_DWZ_LOG_ID);
+		long id = this.sequenceService.nextVal(SEQ_NAME__DWZ_LOG_ID);
 		// ID 转换为 短字符串，即：短链接码（注：可通过 `ShortCodeUtils.toId(code)` 方法转换回ID）
 		String shortUrlCode = ShortCodeUtils.toCode(id);
 
