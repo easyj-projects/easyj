@@ -28,8 +28,8 @@ import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
  * MySQL数据库方言
  *
  * @author wangliang181230
- * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/src/script/db/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
- * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/src/script/db/mysql/mysql__sequence-table_and_function.sql">参照需要创建的表和函数的SQL文件</a>
+ * @see <a href="https://gitee.com/easyj-projects/easyj/blob/develop/src/script/db/sequence/mysql/mysql__create_sequence-table_and_functions.sql">参照需要创建的表和函数的SQL文件</a>
+ * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/src/script/db/sequence/mysql/mysql__create_sequence-table_and_functions.sql">参照需要创建的表和函数的SQL文件</a>
  */
 @LoadLevel(name = MYSQL, order = 10)
 @DependsOnClass(name = MYSQL_DRIVER)
