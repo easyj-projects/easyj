@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +33,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DwzRedirectController {
 
-	@Autowired
-	private IDwzServerService dwzServerService;
+	private final IDwzServerService dwzServerService;
+
+
+	public DwzRedirectController(IDwzServerService dwzServerService) {
+		this.dwzServerService = dwzServerService;
+	}
+
 
 	@GetMapping("/{shortUrlCode}")
 	public void redirect(@PathVariable String shortUrlCode, HttpServletResponse response) throws IOException {
@@ -51,9 +55,14 @@ public class DwzRedirectController {
 		response.sendRedirect(longUrl.trim());
 	}
 
+
+	//region 测试短链接重定向用的接口，用于查看效果
+
 	@GetMapping("/test/long-url-page")
 	@ResponseBody
 	public String test() {
 		return "这是一个长链接的页面";
 	}
+
+	//endregion
 }
