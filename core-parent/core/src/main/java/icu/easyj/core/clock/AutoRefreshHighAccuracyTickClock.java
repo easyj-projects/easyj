@@ -39,29 +39,29 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 
 	private final String name;
 
-	private ScheduledThreadPoolExecutor autoRefreshTask;
+	private ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
 	private ScheduledFuture<?> scheduledFuture;
 
 
-	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor autoRefreshTask, @NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
+	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, @NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
 		super(tickClockSupplier, tryCount);
 
 		Assert.notNull(name, "'name' must be not null");
 		this.name = name;
 
-		this.autoRefreshTask = autoRefreshTask;
+		this.scheduledThreadPoolExecutor = scheduledThreadPoolExecutor;
 
 		// 开始自动刷新
 		this.startAutoRefresh();
 	}
 
-	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor autoRefreshTask, @NonNull Supplier<ITickClock> tickClockSupplier) {
-		this(name, autoRefreshTask, tickClockSupplier, DEFAULT_TRY_COUNT);
+	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, @NonNull Supplier<ITickClock> tickClockSupplier) {
+		this(name, scheduledThreadPoolExecutor, tickClockSupplier, DEFAULT_TRY_COUNT);
 	}
 
 	public AutoRefreshHighAccuracyTickClock(String name, @NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
-		this(name, new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(name + "_AutoRefreshTask_", true)),
+		this(name, new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(name + "-AutoRefreshTask-", true)),
 				tickClockSupplier, tryCount);
 	}
 
@@ -78,13 +78,18 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 			return;
 		}
 
-		scheduledFuture = autoRefreshTask.scheduleAtFixedRate(() -> {
+		// 定时任务参数
+		long period = 10; // 每次任务执行间隔时间
+		long initialDelay = 10; // 初始化延迟时间（即：定时任务开始后的多少时间才第一次执行任务）
+		TimeUnit timeUnit = TimeUnit.MINUTES; // 时间单位：分钟
+
+		// 开始定时任务
+		scheduledFuture = scheduledThreadPoolExecutor.scheduleAtFixedRate(() -> {
 			super.refreshTickClock();
-			LOGGER.debug("记号时钟 '{}' 已自动刷新!", this.name);
-		}, 10, 10, TimeUnit.SECONDS);
+			LOGGER.info("记号时钟 '{}' 已自动刷新!", this.name);
+		}, initialDelay, period, timeUnit);
 
-
-		LOGGER.info("开始记号时钟 '{}' 的自动刷新任务！", this.name);
+		LOGGER.info("开始记号时钟 '{}' 的自动刷新的定时任务，执行间隔：{} 分钟", this.name, period);
 	}
 
 	@Override
@@ -119,17 +124,17 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 
 		this.stopAutoRefresh();
 		try {
-			this.autoRefreshTask.shutdown();
+			this.scheduledThreadPoolExecutor.shutdown();
 		} catch (Exception e) {
 			LOGGER.error("自动刷新记号时钟的任务 shutdown 失败", e);
 			//throw new DestroyFailedException("自动刷新记号时钟的任务 shutdown 失败：" + e.getMessage());
 		}
-		this.autoRefreshTask = null;
+		this.scheduledThreadPoolExecutor = null;
 	}
 
 	@Override
 	public boolean isDestroyed() {
-		return autoRefreshTask == null;
+		return scheduledThreadPoolExecutor == null;
 	}
 
 	//endregion
