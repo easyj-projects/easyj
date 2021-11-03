@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import javax.sql.DataSource;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.util.IOUtils;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.exception.DbDataNotFoundException;
@@ -128,8 +129,11 @@ public interface IDbService extends IDbDialect {
 	 *
 	 * @param seqName 序列名
 	 * @return 当前序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	default long seqCurrVal(String seqName) {
+		String sql = this.getSeqCurrValSql(seqName);
+
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -138,7 +142,6 @@ public interface IDbService extends IDbDialect {
 			conn.setAutoCommit(true);
 
 			// 执行查询
-			String sql = this.getSeqCurrValSql(seqName);
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 
@@ -191,10 +194,13 @@ public interface IDbService extends IDbDialect {
 	 * 设置序列值，并返回原序列值
 	 *
 	 * @param seqName 序列名
-	 * @param val     指定序列值
+	 * @param newVal  新的序列值
 	 * @return previousVal 原序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	default long seqSetVal(String seqName, long val) {
+	default long seqSetVal(String seqName, long newVal) {
+		String sql = this.getSeqSetValSql(seqName, newVal);
+
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -203,7 +209,6 @@ public interface IDbService extends IDbDialect {
 			conn.setAutoCommit(true);
 
 			// 执行查询
-			String sql = this.getSeqSetValSql(seqName, val);
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 

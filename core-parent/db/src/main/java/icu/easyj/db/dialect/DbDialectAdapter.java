@@ -62,8 +62,8 @@ public class DbDialectAdapter implements IDbDialect {
 	}
 
 	@Override
-	public String getSeqSetValSql(String seqName, long val) {
-		return this.dbDialect.getSeqSetValSql(seqName, val);
+	public String getSeqSetValSql(String seqName, long newVal) {
+		return this.dbDialect.getSeqSetValSql(seqName, newVal);
 	}
 
 

@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.sql.DataSource;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.db.constant.DbTypeConstants;
 import icu.easyj.db.exception.DbException;
@@ -140,6 +141,7 @@ public abstract class DbUtils {
 	 * @param dataSource 数据源
 	 * @param seqName    序列名
 	 * @return 当前序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	public static long seqCurrVal(DataSource dataSource, String seqName) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
@@ -167,13 +169,14 @@ public abstract class DbUtils {
 	 *
 	 * @param dataSource 数据源
 	 * @param seqName    序列名
-	 * @param val        指定序列值
+	 * @param newVal     新的序列值
 	 * @return previousVal 原序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	public static long seqSetVal(DataSource dataSource, String seqName, long val) {
+	public static long seqSetVal(DataSource dataSource, String seqName, long newVal) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
-		return dbService.seqSetVal(seqName, val);
+		return dbService.seqSetVal(seqName, newVal);
 	}
 
 	//endregion

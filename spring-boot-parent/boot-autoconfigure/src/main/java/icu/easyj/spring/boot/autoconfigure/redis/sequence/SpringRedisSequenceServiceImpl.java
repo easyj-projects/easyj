@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.redis.sequence;
 
 import icu.easyj.core.sequence.ISequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.lang.NonNull;
@@ -26,36 +27,39 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-public class SpringRedisTemplateSequenceServiceImpl implements ISequenceService {
+public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
-	private static RedisTemplate redisTemplate;
+	private static RedisConnectionFactory connectionFactory;
 
 
 	@Override
 	public long nextVal(@NonNull String seqName) {
-		RedisAtomicLong atomicLong = this.getAtomicLong(seqName);
-		return atomicLong.incrementAndGet();
+		return this.getAtomicLong(seqName).incrementAndGet();
 	}
 
 	@Override
 	public long currVal(@NonNull String seqName) {
-		RedisAtomicLong atomicLong = this.getAtomicLong(seqName);
-		return atomicLong.get();
+		return this.getAtomicLong(seqName).get();
+	}
+
+	@Override
+	public void setVal(@NonNull String seqName, long newVal) {
+		this.getAtomicLong(seqName).set(newVal);
 	}
 
 
 	private RedisAtomicLong getAtomicLong(String seqName) {
-		return new RedisAtomicLong("SEQ__" + seqName, redisTemplate.getConnectionFactory());
+		return new RedisAtomicLong(seqName, connectionFactory);
 	}
 
 
 	/**
 	 * 依赖注入RedisTemplate
 	 *
-	 * @param redisTemplate redisTemplate
+	 * @param connectionFactory Redis连接工厂
 	 */
 	@Autowired
-	public void setRedisTemplate(RedisTemplate redisTemplate) {
-		SpringRedisTemplateSequenceServiceImpl.redisTemplate = redisTemplate;
+	public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
+		SpringRedisSequenceServiceImpl.connectionFactory = connectionFactory;
 	}
 }

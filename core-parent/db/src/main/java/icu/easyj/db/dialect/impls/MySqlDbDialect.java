@@ -71,12 +71,12 @@ class MySqlDbDialect implements IDbDialect {
 	 * 设置序列值的SQL
 	 *
 	 * @param seqName 序列名
-	 * @param val     指定序列值
+	 * @param newVal  指定序列值
 	 * @return previousVal 原序列值（为null表示原来的序列不存在）
 	 */
 	@Override
-	public String getSeqSetValSql(String seqName, long val) {
-		return "SELECT func_setval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "', " + val + ")";
+	public String getSeqSetValSql(String seqName, long newVal) {
+		return "SELECT func_setval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "', " + newVal + ")";
 	}
 
 

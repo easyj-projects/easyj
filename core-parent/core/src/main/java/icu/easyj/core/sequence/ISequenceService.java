@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.sequence;
 
+import icu.easyj.core.exception.NotSupportedException;
 import org.springframework.lang.NonNull;
 
 /**
@@ -25,6 +26,15 @@ import org.springframework.lang.NonNull;
 public interface ISequenceService {
 
 	/**
+	 * 获取当前序列值
+	 *
+	 * @param seqName 序列名
+	 * @return 当前序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
+	 */
+	long currVal(@NonNull String seqName);
+
+	/**
 	 * 获取下一序列值
 	 *
 	 * @param seqName 序列名
@@ -33,10 +43,11 @@ public interface ISequenceService {
 	long nextVal(@NonNull String seqName);
 
 	/**
-	 * 获取当前序列值
+	 * 设置序列值
 	 *
 	 * @param seqName 序列名
-	 * @return 当前序列值
+	 * @param newVal  新的序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	long currVal(@NonNull String seqName);
+	void setVal(@NonNull String seqName, long newVal);
 }

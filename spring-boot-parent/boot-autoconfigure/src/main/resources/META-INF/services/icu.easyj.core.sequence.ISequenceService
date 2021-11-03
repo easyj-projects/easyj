@@ -1,1 +1,1 @@
-icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisTemplateSequenceServiceImpl
+icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisSequenceServiceImpl

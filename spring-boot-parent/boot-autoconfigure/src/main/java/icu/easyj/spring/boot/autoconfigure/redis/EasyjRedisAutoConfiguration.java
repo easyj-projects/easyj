@@ -19,12 +19,13 @@ import javax.sql.DataSource;
 
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration;
-import icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisTemplateSequenceServiceImpl;
+import icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisSequenceServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -32,7 +33,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  *
  * @author wangliang181230
  */
-@ConditionalOnClass(RedisTemplate.class)
+@ConditionalOnClass(RedisConnectionFactory.class)
 public class EasyjRedisAutoConfiguration {
 
 	/**
@@ -46,6 +47,6 @@ public class EasyjRedisAutoConfiguration {
 	@Primary
 	@Qualifier("redisTemplateSequenceService")
 	public ISequenceService springRedisTemplateSequenceServiceImpl() {
-		return new SpringRedisTemplateSequenceServiceImpl();
+		return new SpringRedisSequenceServiceImpl();
 	}
 }

@@ -62,4 +62,13 @@ public class DbSequenceServiceImpl implements ISequenceService {
 			return PrimaryDbUtils.seqCurrVal(seqName);
 		}
 	}
+
+	@Override
+	public void setVal(@NonNull String seqName, long newVal) {
+		if (this.dataSource != null) {
+			DbUtils.seqSetVal(this.dataSource, seqName, newVal);
+		} else {
+			PrimaryDbUtils.seqSetVal(seqName, newVal);
+		}
+	}
 }

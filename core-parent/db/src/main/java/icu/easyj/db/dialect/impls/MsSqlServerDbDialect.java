@@ -56,7 +56,7 @@ class MsSqlServerDbDialect implements IDbDialect {
 	}
 
 	@Override
-	public String getSeqSetValSql(String seqName, long val) {
+	public String getSeqSetValSql(String seqName, long newVal) {
 		// TODO: 待开发
 		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
 	}

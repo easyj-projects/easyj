@@ -17,6 +17,7 @@ package icu.easyj.db.util;
 
 import java.util.Date;
 
+import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.db.service.DbServiceFactory;
 import org.springframework.lang.NonNull;
 
@@ -95,6 +96,7 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @param seqName 序列名
 	 * @return 当前序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	public static long seqCurrVal(String seqName) {
 		return DbUtils.seqCurrVal(PrimaryDataSourceHolder.get(), seqName);
@@ -116,11 +118,12 @@ public abstract class PrimaryDbUtils {
 	 * FIXME: 除了MySQL数据库（自建表+函数实现）以外，其他数据库暂不支持！
 	 *
 	 * @param seqName 序列名
-	 * @param val     指定序列值
+	 * @param newVal  新的序列值
 	 * @return previousVal 原序列值
+	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	public static long seqSetVal(String seqName, long val) {
-		return DbUtils.seqSetVal(PrimaryDataSourceHolder.get(), seqName, val);
+	public static long seqSetVal(String seqName, long newVal) {
+		return DbUtils.seqSetVal(PrimaryDataSourceHolder.get(), seqName, newVal);
 	}
 
 	//endregion
