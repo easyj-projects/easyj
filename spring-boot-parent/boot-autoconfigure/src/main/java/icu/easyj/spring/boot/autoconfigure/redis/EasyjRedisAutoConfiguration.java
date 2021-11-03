@@ -15,6 +15,8 @@
  */
 package icu.easyj.spring.boot.autoconfigure.redis;
 
+import javax.sql.DataSource;
+
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration;
 import icu.easyj.spring.boot.autoconfigure.redis.sequence.SpringRedisTemplateSequenceServiceImpl;
@@ -37,7 +39,7 @@ public class EasyjRedisAutoConfiguration {
 	 * 基于 {@link RedisTemplate} 实现的序列服务
 	 *
 	 * @return 序列服务的实现
-	 * @see EasyjJdbcAutoConfiguration#primaryDataBaseSequenceService() 基于数据库的实现
+	 * @see EasyjJdbcAutoConfiguration#primaryDataBaseSequenceService(DataSource) 基于数据库的实现
 	 */
 	@Lazy(false)
 	@Bean

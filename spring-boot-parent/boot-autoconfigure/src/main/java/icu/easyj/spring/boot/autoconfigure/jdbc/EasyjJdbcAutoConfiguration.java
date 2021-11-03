@@ -47,6 +47,7 @@ public class EasyjJdbcAutoConfiguration {
 	/**
 	 * 基于 {@link icu.easyj.db.util.PrimaryDbUtils} 实现的序列服务
 	 *
+	 * @param primaryDataSource 主要数据源
 	 * @return 序列服务的实现
 	 * @see EasyjRedisAutoConfiguration#springRedisTemplateSequenceServiceImpl() 基于redis实现的
 	 */
