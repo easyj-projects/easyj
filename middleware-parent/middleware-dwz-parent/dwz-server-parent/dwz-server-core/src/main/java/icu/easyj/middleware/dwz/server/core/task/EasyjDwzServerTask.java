@@ -44,8 +44,10 @@ public class EasyjDwzServerTask {
 
 	/**
 	 * 删除超时的短链接记录
+	 * <p>
+	 * 每10分钟执行一次，项目启动后延迟5秒钟执行第一次。
 	 */
-	@Scheduled(fixedDelay = 2 * 60 * 1000, initialDelay = 5000)
+	@Scheduled(fixedDelay = 10 * 60 * 1000, initialDelay = 5 * 1000)
 	public void handleOvertimeDwzLog() {
 		if (dwzServerTaskConfig.getOvertimeHandleStrategy() == OvertimeHandleStrategy.DELETE) {
 			int count = this.dwzLogStore.deleteOvertime();
