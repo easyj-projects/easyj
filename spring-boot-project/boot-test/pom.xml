@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-build</artifactId>
+		<version>1.0.19</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>icu.easyj.boot</groupId>
+	<artifactId>easyj-spring-boot-test</artifactId>
+	<version>0.2.2-SNAPSHOT</version>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>方便引用测试所需的依赖，并提供一些SpringBoot测试所需的类或功能。</description>
+	<url>https://gitee.com/easyj-projects/easyj</url>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-dependencies</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- StringBoot Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+
+		<!-- EasyJ All -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-all</artifactId>
+		</dependency>
+
+		<!-- EasyJ Test -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-test</artifactId>
+		</dependency>
+
+
+		<!-- 可选依赖 -->
+
+		<!-- AfterTurn EasyPoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>cn.afterturn</groupId>
+					<artifactId>easypoi-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>cn.afterturn</groupId>
+					<artifactId>easypoi-wps</artifactId>
+				</exclusion>
+			</exclusions>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+
+		<!-- 其他依赖 -->
+
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

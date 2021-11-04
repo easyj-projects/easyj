@@ -105,11 +105,35 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- POI -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-poi-excel</artifactId>
+			<version>${project.version}</version>
+			<exclusions>
+				<!-- apache-poi -->
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 		<!-- Web -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-web-core</artifactId>
+			<artifactId>easyj-web</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -135,7 +159,7 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
-		<!-- 加密 -->
+		<!-- 加密解密 -->
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>

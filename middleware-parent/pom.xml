@@ -9,6 +9,7 @@
 		<version>${revision}</version>
 	</parent>
 
+	<groupId>icu.easyj.middleware</groupId><!--二级分组：/middleware-->
 	<artifactId>middleware-parent</artifactId>
 	<packaging>pom</packaging>
 
@@ -38,6 +39,9 @@
 
 	<modules>
 		<module>middleware-core</module>
-		<module>middleware-dwz-parent</module>
+
+		<!--<module>middleware-dwz-parent</module>-->
+		<module>middleware-dwz-parent/dwz-server-application</module>
+		<module>middleware-dwz-parent/dwz-server-core</module>
 	</modules>
 </project>

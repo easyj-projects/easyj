@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>spring-boot-project</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>boot-starters-parent</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ各功能的starter</description>
+
+	<modules>
+		<!-- Core -->
+		<module>spring-boot-starter</module>
+
+		<!-- Web -->
+		<module>spring-boot-starter-web</module>
+
+		<!-- 中间件：DWZ（短链接服务） -->
+		<module>middleware/spring-boot-starter-dwz-server</module>
+
+		<!-- POI -->
+		<module>poi-excel/spring-boot-starter-poi-excel</module>
+		<module>poi-excel/spring-boot-starter-poi-excel-afterturn</module>
+
+		<!-- SDK -->
+		<module>sdk/spring-boot-starter-sdk-dwz-easyj-middleware</module>
+		<module>sdk/spring-boot-starter-sdk-dwz-baidu</module>
+		<module>sdk/spring-boot-starter-sdk-dwz-s3</module>
+		<module>sdk/spring-boot-starter-sdk-ocr-tencent</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<!-- 在`MANIFEST.MF`文件中，标记该jar为依赖引用，`spring-boot`插件打包时不将该jar打包进去。 -->
+							<Spring-Boot-Jar-Type>dependencies-starter</Spring-Boot-Jar-Type>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

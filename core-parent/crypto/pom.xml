@@ -5,8 +5,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>core-parent</artifactId>
+		<artifactId>easyj-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-crypto</artifactId>
@@ -19,11 +20,6 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-core</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
 		</dependency>
 
 		<dependency>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>spring-boot-project</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<artifactId>easyj-spring-boot-autoconfigure</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ各功能在Spring Boot项目中的自动装配功能，需要引用各功能的starter激活相应的自动装配类。</description>
+
+	<dependencies>
+		<!-- EasyJ Spring Boot -->
+		<dependency>
+			<groupId>icu.easyj.boot</groupId>
+			<artifactId>easyj-spring-boot</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<!-- 只参与打包生成`spring-configuration-metadata.json`文件 -->
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Spring Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- Spring Redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+		<!-- 多个模块所需依赖：Aspect -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+
+		<!-- 功能：Excel文件导入导出（目前包含easyj、afterturn两种实现） -->
+		<!-- afterturn-easypoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+
+		<!-- FastjsonParamCryptoHttpMessageConverter所需依赖 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+
+		<!-- 功能：各种SDK -->
+
+		<!-- 1.1）文字识别SDK（OCR）核心代码 -->
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-ocr-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<!-- 1.2）基于腾讯云实现的身份证识别SDK（OCR-IDCardOCR） -->
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-tencent-cloud-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+		<!-- 2.1）短链接服务SDK（DWZ）核心代码 -->
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<!-- 2.2）基于EasyJ中间件实现的短链接服务SDK（DWZ） -->
+		<dependency>
+			<groupId>icu.easyj.middleware</groupId>
+			<artifactId>easyj-middleware-core</artifactId>
+			<version>${project.version}</version>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+			<version>3.0.5</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+		<!-- 2.3）基于百度云实现的短链接服务SDK（DWZ） -->
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-baidu-cloud-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+		<!-- 2.4）基于S-3实现的短链接服务SDK（DWZ） -->
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-s3-service-sdk</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+
+
+		<!-- 功能：中间件-->
+
+		<!-- 1）中间件：DWZ（短链接服务） -->
+		<dependency>
+			<groupId>icu.easyj.middleware</groupId>
+			<artifactId>easyj-dwz-server-core</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
+	</dependencies>
+</project>

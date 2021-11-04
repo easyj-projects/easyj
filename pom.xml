@@ -52,15 +52,27 @@
 
 		<module>bom</module>
 
-		<module>core-parent</module>
-		<module>web-parent</module>
-		<module>poi-parent</module>
+		<!-- Core -->
+		<!--<module>core-parent</module>-->
+		<module>core-parent/all</module>
+		<module>core-parent/config</module>
+		<module>core-parent/core</module>
+		<module>core-parent/crypto</module>
+		<module>core-parent/data</module>
+		<module>core-parent/db</module>
+		<module>core-parent/poi-excel</module>
+		<module>core-parent/web</module>
+
+		<!-- SDK -->
 		<module>sdk-parent</module>
 
+		<!-- Middleware -->
 		<module>middleware-parent</module>
 
-		<module>spring-boot-parent</module>
+		<!-- Spring Boot -->
+		<module>spring-boot-project</module>
 
+		<!-- Test -->
 		<module>test</module>
 	</modules>
 

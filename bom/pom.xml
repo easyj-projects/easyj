@@ -41,64 +41,37 @@
 			</dependency>
 
 
-			<!-- ************************* POI ************************* -->
+			<!-- ************************* SDK ************************* -->
 
-			<!-- POI excel -->
+			<!-- SDK-Core：文字识别（OCR） -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-poi-excel</artifactId>
+				<groupId>icu.easyj.sdk</groupId>
+				<artifactId>easyj-ocr-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- SDK-Core：短链接服务（DWZ） -->
+			<dependency>
+				<groupId>icu.easyj.sdk</groupId>
+				<artifactId>easyj-dwz-sdk-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
-
-			<!-- ************************* SDK ************************* -->
-
 			<!-- 腾讯云 SDK -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
+				<groupId>icu.easyj.sdk</groupId>
 				<artifactId>easyj-tencent-cloud-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- 百度云 SDK -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
+				<groupId>icu.easyj.sdk</groupId>
 				<artifactId>easyj-baidu-cloud-sdk</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- S-3服务 SDK -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
+				<groupId>icu.easyj.sdk</groupId>
 				<artifactId>easyj-s3-service-sdk</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- 文字识别（OCR） -->
-			<dependency>
-				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-ocr-sdk-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!-- 短链接服务（DWZ） -->
-			<dependency>
-				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-dwz-sdk-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-
-			<!-- ************************* Web ************************* -->
-
-			<!-- Web cache304 -->
-			<dependency>
-				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-web-cache304</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-
-			<!-- Web param crypto -->
-			<dependency>
-				<groupId>icu.easyj</groupId>
-				<artifactId>easyj-web-param-crypto</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -107,14 +80,14 @@
 
 			<!-- EasyJ所有中间件核心依赖模块：一些中间件的客户端和服务端通用的类都在这里。如：domain、param -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
+				<groupId>icu.easyj.middleware</groupId>
 				<artifactId>easyj-middleware-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- EasyJ中间件：DWZ（短链接服务）服务端核心模块 -->
 			<dependency>
-				<groupId>icu.easyj</groupId>
+				<groupId>icu.easyj.middleware</groupId>
 				<artifactId>easyj-dwz-server-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>

@@ -4,12 +4,13 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
-		<artifactId>middleware-dwz-parent</artifactId>
+		<groupId>icu.easyj.middleware</groupId>
+		<artifactId>middleware-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<groupId>icu.easyj.boot</groupId><!--二级分组boot-->
+	<groupId>icu.easyj.boot.middleware</groupId><!--三级分组：/boot/middleware-->
 	<artifactId>easyj-dwz-server-application</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
@@ -18,7 +19,7 @@
 	<dependencies>
 		<!-- dwz-server-starter -->
 		<dependency>
-			<groupId>icu.easyj.boot</groupId>
+			<groupId>icu.easyj.boot.middleware</groupId>
 			<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>

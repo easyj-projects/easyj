@@ -19,6 +19,11 @@
     </dependencies>
 </dependencyManagement>
 <dependencies>
+    <!-- @Cache304所需依赖 -->
+    <dependency>
+        <groupId>icu.easyj.boot</groupId>
+        <artifactId>easyj-spring-boot-starter-web</artifactId>
+    <dependency>
     <!-- @ExcelExport所需依赖 -->
     <dependency>
         <groupId>icu.easyj.boot</groupId>
@@ -27,11 +32,6 @@
     <dependency>
         <groupId>icu.easyj.boot</groupId>
         <artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
-    <dependency>
-    <!-- @Cache304所需依赖 -->
-    <dependency>
-        <groupId>icu.easyj.boot</groupId>
-        <artifactId>easyj-spring-boot-starter-web-cache304</artifactId>
     <dependency>
 </dependencies>
 ```

@@ -4,9 +4,10 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
-		<artifactId>3rd-party-sdk-parent</artifactId>
+		<groupId>icu.easyj.sdk</groupId>
+		<artifactId>sdk-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-s3-service-sdk</artifactId>
@@ -26,10 +27,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>icu.easyj</groupId>
+			<groupId>icu.easyj.sdk</groupId>
 			<artifactId>easyj-dwz-sdk-core</artifactId>
 			<version>${project.version}</version>
 			<optional>true</optional><!--可选功能，虽然目前S-3只支持该服务。-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
 		</dependency>
 
 

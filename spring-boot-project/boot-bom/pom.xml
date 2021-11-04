@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-build</artifactId>
+		<version>1.0.19</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>icu.easyj.boot</groupId>
+	<artifactId>easyj-spring-boot-bom</artifactId>
+	<version>0.2.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ Spring Boot的组件清单</description>
+	<url>https://gitee.com/easyj-projects/easyj</url>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- ************************* Base ************************* -->
+
+			<!-- EasyJ BOM -->
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-bom</artifactId>
+				<version>${project.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+
+			<!-- ************************* Spring Boot ************************* -->
+
+			<!-- EasyJ Spring Boot -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- EasyJ Spring Boot Environment Enhanced -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-environment-enhanced</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- EasyJ Spring Boot Autoconfigure -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-autoconfigure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- EasyJ Spring Boot Starters -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* POI ************************* -->
+
+			<!-- Starter: POI excel -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Starter: POI excel by afterturn -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* SDK ************************* -->
+
+			<!-- DWZ SDK-->
+			<!-- Starter: 基于EasyJ中间件实现的短链接服务（DWZ）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot.sdk</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-dwz-easyj-middleware</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Starter: 基于S-3实现的短链接服务（DWZ）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot.sdk</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-dwz-s3</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- Starter: 基于百度云实现的短链接服务（DWZ）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot.sdk</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-dwz-baidu</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- OCR SDK -->
+			<!-- Starter: 基于腾讯云实现的文字识别（OCR）SDK -->
+			<dependency>
+				<groupId>icu.easyj.boot.sdk</groupId>
+				<artifactId>easyj-spring-boot-starter-sdk-ocr-tencent</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* Web ************************* -->
+
+			<!-- Starter: Web（含：@Cache304、参数加密解密功能） -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* MiddleWare（中间件服务端） ************************* -->
+
+			<!-- DWZ（短链接服务） -->
+			<dependency>
+				<groupId>icu.easyj.boot.middleware</groupId>
+				<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<!-- ************************* Test ************************* -->
+
+			<!-- EasyJ Spring Boot Test -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-test</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Flatten -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<configuration>
+					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

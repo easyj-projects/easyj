@@ -1,0 +1,413 @@
+{
+	"groups": [
+		{
+			"name": "easyj.global",
+			"description": "EasyJ定义的全局配置组."
+		},
+		{
+			"name": "easyj.web.param-crypto.filter",
+			"description": "EasyJ参数加密解密过滤器配置组."
+		},
+		{
+			"name": "easyj.web.param-crypto.handler",
+			"description": "EasyJ参数加密解密处理器配置组."
+		},
+		{
+			"name": "easyj.web.poi.excel.export",
+			"description": "Excel文件导出功能配置组."
+		}
+	],
+	"properties": [
+		{
+			"name": "easyj.global.project",
+			"description": "项目代码."
+		},
+		{
+			"name": "easyj.global.project-name",
+			"description": "项目名称."
+		},
+		{
+			"name": "easyj.global.application",
+			"description": "应用代码.",
+			"defaultValue": "${spring.application.name}"
+		},
+		{
+			"name": "easyj.global.application-name",
+			"description": "应用名称."
+		},
+		{
+			"name": "easyj.global.env",
+			"description": "环境代码.",
+			"defaultValue": "${spring.profiles.active[0]:prod}"
+		},
+		{
+			"name": "easyj.global.env-name",
+			"description": "环境名称."
+		},
+		{
+			"name": "easyj.global.env-type",
+			"description": "环境类型：prod|test|dev，默认：prod.",
+			"defaultValue": "prod"
+		},
+		{
+			"name": "easyj.global.run-mode",
+			"description": "运行模式：release|debug，默认：release.",
+			"defaultValue": "release"
+		},
+		{
+			"name": "easyj.global.in-unit-test",
+			"description": "是否单元测试中.",
+			"defaultValue": false
+		},
+		{
+			"name": "easyj.global.configs",
+			"description": "其他全局配置的Map."
+		},
+		{
+			"name": "easyj.server.host",
+			"type": "java.lang.String",
+			"description": "当前服务内网地址：多网卡时，需要手动配置.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "NetUtils.getIp()"
+		},
+		{
+			"name": "easyj.server.data-center-id",
+			"type": "java.lang.Long",
+			"description": "当前服务所属数据中心ID.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "IdUtil.getDataCenterId(31)"
+		},
+		{
+			"name": "easyj.server.worker-id",
+			"type": "java.lang.Long",
+			"description": "当前服务工作ID.",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
+			"defaultValue": "IdUtil.getWorkerId(dataCenterId, 31)"
+		},
+		{
+			"name": "easyj.sdk.tencent.common.conn-timeout",
+			"defaultValue": 60
+		},
+		{
+			"name": "easyj.sdk.tencent.common.language",
+			"defaultValue": "zh_cn"
+		},
+		{
+			"name": "easyj.sdk.tencent.common.debug",
+			"defaultValue": false
+		},
+		{
+			"name": "easyj.sdk.dwz.type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration",
+			"description": "短链接服务实现类型.",
+			"defaultValue": "s3"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.send-type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjMiddleWareDwzTemplateAutoConfiguration",
+			"description": "EasyJ的DWZ中间件调用方式.",
+			"defaultValue": "http"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.server-application-name",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.middleware.dwz.template.impls.feign.EasyjDwzRestControllerFeignClient",
+			"description": "send-type配置为 'feign' 时，该配置值必须与easyj-dwz-server端的spring.application-name的值保持一致.",
+			"defaultValue": "easyj-dwz"
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.service-url",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateConfig",
+			"defaultValue": "http://localhost:3001/api/v1/create-short-url"
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.service-url",
+			"description": "S-3短链接服务地址.",
+			"defaultValue": "https://s-3.cn/api/v2/shorten/create"
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.client-id",
+			"description": "S-3短链接服务-客户端ID."
+		},
+		{
+			"name": "easyj.sdk.dwz.s3.client-secret",
+			"description": "S-3短链接服务-客户端密钥."
+		},
+		{
+			"name": "easyj.sdk.dwz.baidu.service-url",
+			"description": "百度云DWZ服务地址.",
+			"defaultValue": "https://dwz.cn/api/v3/short-urls"
+		},
+		{
+			"name": "easyj.sdk.dwz.baidu.term-of-validity",
+			"description": "默认的短网址有效期.",
+			"defaultValue": "1-year"
+		},
+		{
+			"name": "easyj.sdk.dwz.baidu.response-language",
+			"description": "返回错误语言.",
+			"defaultValue": "zh"
+		},
+		{
+			"name": "easyj.sdk.dwz.baidu.token",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig",
+			"description": "百度云DWZ接口Token."
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.min-quality",
+			"defaultValue": 50
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.conn-timeout",
+			"defaultValue": "${easyj.sdk.tencent.common.conn-timeout:60}"
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.language",
+			"defaultValue": "${easyj.sdk.tencent.common.language:zh_cn}"
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.debug",
+			"defaultValue": "${easyj.sdk.tencent.common.debug:false}"
+		},
+		{
+			"name": "easyj.web.poi.excel.export.list-field-name",
+			"description": "全局配置列表属性名.",
+			"defaultValue": "list"
+		},
+		{
+			"name": "easyj.middleware.dwz.server.enabled",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration",
+			"description": "是否启用中间件DWZ（短链接服务）的功能.",
+			"defaultValue": true
+		},
+		{
+			"name": "easyj.middleware.dwz.server.task.enabled",
+			"defaultValue": true
+		},
+		{
+			"name": "easyj.middleware.dwz.server.task.overtime-handle-strategy",
+			"type": "icu.easyj.middleware.dwz.server.core.domain.enums.OvertimeHandleStrategy",
+			"sourceType": "icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig",
+			"defaultValue": "delete"
+		}
+	],
+	"hints": [
+		{
+			"name": "easyj.sdk.dwz.type",
+			"values": [
+				{
+					"value": "easyj-middleware",
+					"description": "基于EasyJ自己的DWZ中间件实现的短链接功能."
+				},
+				{
+					"value": "s3",
+					"description": "(默认)基于S-3的DWZ实现的短链接功能."
+				},
+				{
+					"value": "baidu",
+					"description": "基于百度云DWZ实现的短链接功能."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.dwz.easyj-middleware.send-type",
+			"values": [
+				{
+					"value": "http",
+					"description": "(默认)使用 HttpClientUtils 调用DWZ服务."
+				},
+				{
+					"value": "feign",
+					"description": "使用 SpringCloudFeign 接口调用DWZ服务."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.dwz.baidu.term-of-validity",
+			"values": [
+				{
+					"value": "1-year",
+					"description": "(默认)1年有效."
+				},
+				{
+					"value": "long-term",
+					"description": "长期有效."
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.type",
+			"values": [
+				{
+					"value": "tencent",
+					"description": "(默认)基于腾讯云实现的身份证识别功能."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.tencent.common.region",
+			"values": [
+				{
+					"value": "ap-shanghai",
+					"description": "华东地区(上海)."
+				},
+				{
+					"value": "ap-shanghai-fsi",
+					"description": "华东地区(上海金融)."
+				},
+				{
+					"value": "ap-nanjing",
+					"description": "华东地区(南京)."
+				},
+				{
+					"value": "ap-guangzhou",
+					"description": "华南地区(广州)."
+				},
+				{
+					"value": "ap-shenzhen-fsi",
+					"description": "华南地区(深圳金融)."
+				},
+				{
+					"value": "ap-chengdu",
+					"description": "西南地区(成都)."
+				},
+				{
+					"value": "ap-chongqing",
+					"description": "西南地区(重庆)."
+				},
+				{
+					"value": "ap-beijing",
+					"description": "华北地区(北京)."
+				},
+				{
+					"value": "ap-hongkong",
+					"description": "港澳台地区(中国香港)."
+				},
+				{
+					"value": "ap-seoul",
+					"description": "亚太地区(首尔)."
+				},
+				{
+					"value": "ap-bangkok",
+					"description": "亚太地区(曼谷)."
+				},
+				{
+					"value": "ap-mumbai",
+					"description": "亚太地区(孟买)."
+				},
+				{
+					"value": "ap-tokyo",
+					"description": "亚太地区(东京)."
+				},
+				{
+					"value": "ap-singapore",
+					"description": "东南亚地区(新加坡)."
+				},
+				{
+					"value": "eu-frankfurt",
+					"description": "欧洲地区(法兰克福)."
+				},
+				{
+					"value": "eu-moscow",
+					"description": "欧洲地区(莫斯科)."
+				},
+				{
+					"value": "na-ashburn",
+					"description": "美国东部(弗吉尼亚)."
+				},
+				{
+					"value": "na-siliconvalley",
+					"description": "美国西部(硅谷)."
+				},
+				{
+					"value": "na-toronto",
+					"description": "北美地区(多伦多)."
+				}
+			]
+		},
+		{
+			"name": "easyj.sdk.ocr.idcard-ocr.tencent.region",
+			"values": [
+				{
+					"value": "ap-shanghai",
+					"description": "华东地区(上海)."
+				},
+				{
+					"value": "ap-guangzhou",
+					"description": "华南地区(广州)."
+				},
+				{
+					"value": "ap-beijing",
+					"description": "华北地区(北京)."
+				},
+				{
+					"value": "ap-hongkong",
+					"description": "港澳台地区(中国香港)."
+				},
+				{
+					"value": "na-toronto",
+					"description": "北美地区(多伦多)."
+				}
+			]
+		},
+		{
+			"name": "easyj.web.param-crypto.handler.algorithm",
+			"values": [
+				{
+					"value": "AES/CBC/PKCS7Padding"
+				},
+				{
+					"value": "AES/ECB/PKCS5Padding"
+				},
+				{
+					"value": "DES/ECB/PKCS5Padding"
+				},
+				{
+					"value": "DESede/CBC/PKCS5Padding"
+				},
+				{
+					"value": "DESede/ECB/PKCS5Padding"
+				},
+				{
+					"value": "SM4/ECB/PKCS5Padding"
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
+		{
+			"name": "easyj.web.param-crypto.handler.charset",
+			"providers": [
+				{
+					"name": "handle-as",
+					"parameters": {
+						"target": "java.nio.charset.Charset"
+					}
+				}
+			]
+		}
+	]
+}

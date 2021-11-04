@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
+		<groupId>icu.easyj.middleware</groupId>
 		<artifactId>middleware-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
@@ -20,6 +20,30 @@
 			<artifactId>easyj-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>icu.easyj.sdk</groupId>
+			<artifactId>easyj-dwz-sdk-core</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+
+
+		<!-- 基于SpringCloudFeign的方式调用服务 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+			<version>3.0.5</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-core</artifactId>
+			<version>10.12</version>
+			<scope>provided</scope><!--可选功能-->
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

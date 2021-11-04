@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>easyj-poi-excel</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ POI封装，简化对MS Excel的操作</description>
+
+	<dependencies>
+		<!-- 当前项目的依赖 -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- POI -->
+		<!-- apache-poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+
+
+		<!-- afterturn-easypoi -->
+		<dependency>
+			<groupId>cn.afterturn</groupId>
+			<artifactId>easypoi-base</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+		<!-- alibaba-easyexcel -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>easyexcel</artifactId>
+			<optional>true</optional><!--可选功能-->
+		</dependency>
+
+
+		<!-- 以下是 @ExcelExport 注解功能所需的依赖。如要使用该功能，请自行引用以下依赖。 -->
+
+		<!-- Web -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web</artifactId>
+			<version>${project.version}</version>
+			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。如已引用了easyj-all，则无需再引用此依赖。-->
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Aspect -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+</project>

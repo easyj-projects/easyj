@@ -4,9 +4,10 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj</groupId>
-		<artifactId>3rd-party-sdk-parent</artifactId>
+		<groupId>icu.easyj.sdk</groupId>
+		<artifactId>sdk-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-tencent-cloud-sdk</artifactId>
@@ -33,7 +34,7 @@
 
 		<!-- OCR SDK核心模块 -->
 		<dependency>
-			<groupId>icu.easyj</groupId>
+			<groupId>icu.easyj.sdk</groupId>
 			<artifactId>easyj-ocr-sdk-core</artifactId>
 			<version>${project.version}</version>
 			<optional>true</optional><!--可选依赖-->

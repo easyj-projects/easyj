@@ -1,0 +1,73 @@
+/*
+ * Copyright 2021 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package icu.easyj.spring.boot.autoconfigure.sdk.dwz;
+
+import icu.easyj.middleware.dwz.template.impls.feign.EasyjDwzRestControllerFeignClient;
+import icu.easyj.middleware.dwz.template.impls.feign.SpringCloudFeignEasyjMiddleWareDwzTemplateImpl;
+import icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateConfig;
+import icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateImpl;
+import icu.easyj.sdk.dwz.IDwzTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 基于EasyJ自己的DWZ中间件实现的短链接服务
+ *
+ * @author wangliang181230
+ * @since 0.2.1
+ */
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(value = "easyj.sdk.dwz.type", havingValue = "easyj-middleware")
+public class EasyjMiddleWareDwzTemplateAutoConfiguration {
+
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnClass(HttpEasyjMiddleWareDwzTemplateImpl.class)
+	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "http", matchIfMissing = true)
+	public static class HttpEasyjMiddleWareDwzTemplateConfiguration {
+
+		@Bean
+		@ConditionalOnMissingBean
+		@ConfigurationProperties("easyj.sdk.dwz.easyj-middleware")
+		public HttpEasyjMiddleWareDwzTemplateConfig httpEasyjMiddleWareDwzTemplateConfig() {
+			return new HttpEasyjMiddleWareDwzTemplateConfig();
+		}
+
+		@Bean
+		@ConditionalOnMissingBean
+		public IDwzTemplate httpEasyjMiddleWareDwzTemplate(HttpEasyjMiddleWareDwzTemplateConfig config) {
+			return new HttpEasyjMiddleWareDwzTemplateImpl(config);
+		}
+	}
+
+
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnClass(SpringCloudFeignEasyjMiddleWareDwzTemplateImpl.class)
+	@EnableFeignClients(clients = EasyjDwzRestControllerFeignClient.class)
+	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "feign")
+	public static class SpringCloudFeignEasyjMiddleWareDwzTemplateConfiguration {
+
+		@Bean
+		@ConditionalOnMissingBean
+		public IDwzTemplate springCloudFeignEasyjMiddleWareDwzTemplate(EasyjDwzRestControllerFeignClient feignClient) {
+			return new SpringCloudFeignEasyjMiddleWareDwzTemplateImpl(feignClient);
+		}
+	}
+}
