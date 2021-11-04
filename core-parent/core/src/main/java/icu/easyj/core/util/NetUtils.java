@@ -15,8 +15,10 @@
  */
 package icu.easyj.core.util;
 
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -137,6 +139,30 @@ public abstract class NetUtils {
 	}
 
 	//endregion
+
+	//endregion
+
+
+	//region 连接相关
+
+	/**
+	 * 关闭连接
+	 *
+	 * @param conn 连接
+	 */
+	public static void disconnect(URLConnection conn) {
+		if (conn == null) {
+			return;
+		}
+		try {
+			if (conn instanceof HttpURLConnection) {
+				((HttpURLConnection)conn).disconnect();
+			} else if (conn instanceof sun.net.www.protocol.http.HttpURLConnection) {
+				((sun.net.www.protocol.http.HttpURLConnection)conn).disconnect();
+			}
+		} catch (RuntimeException ignore) {
+		}
+	}
 
 	//endregion
 }
