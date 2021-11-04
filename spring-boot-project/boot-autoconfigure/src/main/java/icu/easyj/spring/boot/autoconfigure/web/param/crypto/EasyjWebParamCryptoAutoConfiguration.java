@@ -58,8 +58,8 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRY
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ParamCryptoFilter.class, WebMvcConfigurer.class})
 @ConditionalOnWebApplication
-@ConditionalOnProperty(prefix = WEB_PARAM_CRYPTO_FILTER_PREFIX, name = "enabled")
-public class EasyjParamCryptoAutoConfiguration {
+@ConditionalOnProperty("easyj.web.param-crypto.filter.enabled") // 默认不启用
+public class EasyjWebParamCryptoAutoConfiguration {
 
 	static final String PREFERRED_MAPPER_PROPERTY = "spring.mvc.converters.preferred-json-mapper";
 

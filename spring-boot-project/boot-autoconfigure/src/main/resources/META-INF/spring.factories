@@ -13,5 +13,5 @@ icu.easyj.spring.boot.autoconfigure.sdk.ocr.EasyjOcrTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.httpconfigs.EasyjWebConfigAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.mvc.EasyjWebMvcAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.cache304.EasyjWebCache304AutoConfiguration,\
-icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjParamCryptoAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjWebParamCryptoAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.web.poi.excel.export.EasyjExcelExporterAutoConfiguration

@@ -64,6 +64,13 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.web.param-crypto.filter.enabled",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjWebParamCryptoAutoConfiguration",
+			"description": "参数加密解密过滤器启用开关.",
+			"defaultValue": false
+		},
+		{
 			"name": "easyj.server.host",
 			"type": "java.lang.String",
 			"description": "当前服务内网地址：多网卡时，需要手动配置.",
