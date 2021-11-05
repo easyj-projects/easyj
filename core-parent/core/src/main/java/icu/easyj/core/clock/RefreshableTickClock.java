@@ -36,7 +36,7 @@ public class RefreshableTickClock extends WrapperTickClock implements IRefreshab
 	public RefreshableTickClock(@NonNull Supplier<ITickClock> tickClockSupplier) {
 		Assert.notNull(tickClockSupplier, "'tickClockSupplier' must not be null");
 		this.tickClockSupplier = tickClockSupplier;
-		this.refreshTickClock();
+		this.init();
 	}
 
 
@@ -47,6 +47,13 @@ public class RefreshableTickClock extends WrapperTickClock implements IRefreshab
 	 */
 	protected ITickClock createClock() {
 		return this.tickClockSupplier.get();
+	}
+
+	/**
+	 * 初始化
+	 */
+	protected void init() {
+		this.refreshTickClock();
 	}
 
 

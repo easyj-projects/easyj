@@ -30,7 +30,7 @@ class AutoRefreshHighAccuracyTickClockTest {
 
 	@Test
 	void test() throws Exception {
-		int i = 5;
+		int i = 20;
 		while (i-- > 0) {
 			final AtomicInteger atomicInteger = new AtomicInteger(0);
 
@@ -72,6 +72,9 @@ class AutoRefreshHighAccuracyTickClockTest {
 
 			tickClock.stopAutoRefresh();
 			Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
+
+			// 销毁
+			tickClock.destroy();
 
 			System.out.println();
 			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");

@@ -20,7 +20,7 @@ package icu.easyj.core.clock;
  *
  * @author wangliang181230
  */
-public interface ITickClock extends IClock {
+public interface ITickClock extends IClock, Comparable<ITickClock> {
 
 	/**
 	 * 获取基准微秒数
@@ -44,5 +44,24 @@ public interface ITickClock extends IClock {
 	 */
 	default long getPassedNanos() {
 		return System.nanoTime() - getBaseTickNanos();
+	}
+
+	/**
+	 * 比较两个时钟，哪个时间更大一些
+	 * <p>
+	 * 注意：比较的不是基准微秒数哪个大，而是哪个记号时钟在同一时间生成的时间更大
+	 *
+	 * @param otherClock 其他时钟
+	 * @return -1=otherClock大 0=一样大 1=当前时钟大
+	 */
+	@Override
+	default int compareTo(ITickClock otherClock) {
+		// 取当前时钟的 `基准记号纳秒数` 作为时间点，来计算两个时钟在这个时间点的纳秒数
+		long nanoTime = getBaseTickNanos();
+
+		long nanos = nanoTime - getBaseTickNanos() + getBaseEpochMicros() * 1000;
+		long otherNanos = nanoTime - otherClock.getBaseTickNanos() + otherClock.getBaseEpochMicros() * 1000;
+
+		return Long.compare(nanos, otherNanos);
 	}
 }

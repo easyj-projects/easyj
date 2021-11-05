@@ -64,14 +64,6 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 
 
 	/**
-	 * 初始化
-	 */
-	protected void init() {
-		this.refreshTickClock();
-	}
-
-
-	/**
 	 * 刷新记号时钟
 	 */
 	@Override
@@ -79,22 +71,33 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 		// 尝试次数
 		int tryCount = this.tryCount;
 
-		// 多次创建远端记号时钟，取耗时最小的一次
-		long currentNanoTime;
-		ITickClock currentTickClock, newTickClock = null;
-		long currentCost, minCost = Long.MAX_VALUE;
-		do {
-			currentNanoTime = System.nanoTime();
-			currentTickClock = this.createClock();
-			currentCost = currentTickClock.getBaseTickNanos() - currentNanoTime;
+		// 方式一：多次创建远端记号时钟，取耗时最小的一次
+//		long currentNanoTime;
+//		ITickClock currentTickClock, newTickClock = null;
+//		long currentCost, minCost = Long.MAX_VALUE;
+//		do {
+//			currentNanoTime = System.nanoTime();
+//			newTickClock = this.createClock();
+//			currentCost = newTickClock.getBaseTickNanos() - currentNanoTime;
+//
+//			if (currentTickClock == null || minCost > currentCost) {
+//				currentTickClock = newTickClock;
+//				minCost = currentCost;
+//			}
+//		} while (--tryCount > 0);
 
-			if (newTickClock == null || minCost > currentCost) {
-				newTickClock = currentTickClock;
-				minCost = currentCost;
+
+		// 方式二：多次创建远端记号时钟，取时间最大的时钟
+		ITickClock newTickClock, currentTickClock = null;
+		do {
+			newTickClock = this.createClock();
+			if (currentTickClock == null || newTickClock.compareTo(currentTickClock) > 0) {
+				currentTickClock = newTickClock;
 			}
 		} while (--tryCount > 0);
 
-		super.setTickClock(newTickClock);
+
+		super.setTickClock(currentTickClock);
 	}
 
 

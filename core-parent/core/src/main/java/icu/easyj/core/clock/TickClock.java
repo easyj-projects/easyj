@@ -78,17 +78,17 @@ public class TickClock implements ITickClock {
 
 	@Override
 	public long currentTimeMillis() {
-		return (getPassedNanos() / 1_000_000) + baseEpochMillis;
+		return (this.getPassedNanos() / 1_000_000) + baseEpochMillis;
 	}
 
 	@Override
 	public long currentTimeMicros() {
-		return (getPassedNanos() / 1000) + baseEpochMicros;
+		return (this.getPassedNanos() / 1000) + baseEpochMicros;
 	}
 
 	@Override
 	public long currentTimeNanos() {
-		return getPassedNanos() + baseEpochNanos;
+		return this.getPassedNanos() + baseEpochNanos;
 	}
 
 	//endregion
