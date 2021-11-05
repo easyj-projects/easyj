@@ -49,7 +49,7 @@ public class DefaultDwzCorrectErrorDataServiceImpl implements IDwzCorrectErrorDa
 	public int correctSequence() {
 		try {
 			LOGGER.info("==>");
-			LOGGER.info("开始纠正序列值，当前序列服务：{}", this.sequenceService.getClass().getSimpleName());
+			LOGGER.info("开始纠正序列值，当前序列服务：{}，对应的序列名：{}。", this.sequenceService.getClass().getSimpleName(), SEQ_NAME__DWZ_LOG_ID);
 
 			// 获取序列的当前值
 			long currVal = this.seqCurrValOrNextVal();

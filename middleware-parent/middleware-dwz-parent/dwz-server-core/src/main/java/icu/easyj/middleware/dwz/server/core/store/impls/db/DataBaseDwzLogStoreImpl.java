@@ -18,6 +18,7 @@ package icu.easyj.middleware.dwz.server.core.store.impls.db;
 import java.util.Date;
 import javax.sql.DataSource;
 
+import cn.hutool.core.util.StrUtil;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.shortcode.ShortCodeUtils;
@@ -46,9 +47,29 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 
 	//region SQL相关常量 start
 
+	/**
+	 * 短链接记录表名
+	 */
 	private static final String DWZ_LOG_TABLE_NAME = "easyj_dwz_log";
+
+	/**
+	 * 短链接记录表的所有字段，用逗号隔开
+	 */
 	private static final String ALL_FIELDS = "id, short_url_code, long_url, term_of_validity, status, create_time, update_time, version";
-	private static final String ALL_PLACEHOLDER = StringUtils.join('?', ',', ALL_FIELDS.split(",").length);
+
+	/**
+	 * 短链接记录表的部分字段，用逗号隔开
+	 *
+	 * @see #getByLongUrlForUpdate(String) // 用于查询功能
+	 */
+	private static final String PARTIAL_FIELDS = "id, short_url_code, term_of_validity, status, create_time";
+
+	/**
+	 * 对应字段数量的INSERT语句的参数占位符
+	 *
+	 * @see #INSERT_DWZ_LOG_SQL
+	 */
+	private static final String ALL_PLACEHOLDER = StringUtils.join('?', ',', StrUtil.count(ALL_FIELDS, ',') + 1);
 
 	/**
 	 * 创建记录的SQL
@@ -56,10 +77,10 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	private static final String INSERT_DWZ_LOG_SQL = "INSERT INTO " + DWZ_LOG_TABLE_NAME + " (" + ALL_FIELDS + ") VALUES (" + ALL_PLACEHOLDER + ")";
 
 	/**
-	 * 根据long_url获取记录的SQL
+	 * 根据long_url获取记录的SQL（只查询部分需要用到的字段）
 	 */
 	private static final String GET_DWZ_LOG_SQL = "" +
-			"SELECT " + ALL_FIELDS +
+			"SELECT " + PARTIAL_FIELDS +
 			"  FROM " + DWZ_LOG_TABLE_NAME + " AS t" +
 			" WHERE t.long_url = ?" +
 			"   FOR UPDATE";
@@ -90,19 +111,20 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	private static final String GET_MAX_ID_SQL = "" +
 			"SELECT MAX(id) FROM " + DWZ_LOG_TABLE_NAME;
 
-
 	/**
 	 * 删除所有超时记录的SQL
-	 * 注：MySql数据库 DELETE 语句不支持设置表别名
+	 * 注：超时策略为DELETE时，会用到
+	 * <p>
+	 * 注意：MySql数据库 DELETE 语句不支持设置表别名
 	 */
 	private static final String DELETE_OVERTIME_SQL = "" +
 			"DELETE" +
 			"  FROM " + DWZ_LOG_TABLE_NAME +
-			" WHERE term_of_validity < ?" +
-			"   AND status = 1";
+			" WHERE term_of_validity < ?";
 
 	/**
 	 * 更新所有超时记录的SQL
+	 * 注：超时策略为UPDATE时，会用到
 	 */
 	private static final String UPDATE_OVERTIME_SQL = "" +
 			"UPDATE " + DWZ_LOG_TABLE_NAME + " AS t" +
@@ -200,13 +222,10 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	public void update(@NonNull DwzLogEntity dwzLog) {
 		Date now = DbClockUtils.now(this.dataSource);
 
-		dwzLog.setUpdateTime(now);
-		dwzLog.setVersion(dwzLog.getVersion() + 1);
-
 		int result;
 
 		try {
-			result = jdbcTemplate.update(UPDATE_DWZ_LOG_SQL, dwzLog.getTermOfValidity(), dwzLog.getUpdateTime(), dwzLog.getId());
+			result = jdbcTemplate.update(UPDATE_DWZ_LOG_SQL, dwzLog.getTermOfValidity(), now, dwzLog.getId());
 		} catch (Exception e) {
 			throw new DbStoreException("更新短链接记录失败", e);
 		}
