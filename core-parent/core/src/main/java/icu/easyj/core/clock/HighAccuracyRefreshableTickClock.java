@@ -73,7 +73,7 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 
 		// 方式一：多次创建远端记号时钟，取耗时最小的一次
 //		long currentNanoTime;
-//		ITickClock currentTickClock, newTickClock = null;
+//		ITickClock newTickClock, currentTickClock = null;
 //		long currentCost, minCost = Long.MAX_VALUE;
 //		do {
 //			currentNanoTime = System.nanoTime();
