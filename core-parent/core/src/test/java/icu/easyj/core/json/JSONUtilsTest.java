@@ -337,11 +337,11 @@ class JSONUtilsTest {
 		System.out.println();
 
 
-		SerializeConfig.getGlobalInstance().put(long[].class, EasyjPrimitiveArraySerializer.instance);
-		SerializeConfig.getGlobalInstance().put(ArrayList.class, EasyjListSerializer.instance);
-		SerializeConfig.getGlobalInstance().put(LinkedList.class, EasyjListSerializer.instance);
-		SerializeConfig.getGlobalInstance().put(HashSet.class, EasyjCollectionCodec.instance);
-		SerializeConfig.getGlobalInstance().put(LinkedHashSet.class, EasyjCollectionCodec.instance);
+		SerializeConfig.getGlobalInstance().put(long[].class, EasyjPrimitiveArraySerializer.INSTANCE);
+		SerializeConfig.getGlobalInstance().put(ArrayList.class, EasyjListSerializer.INSTANCE);
+		SerializeConfig.getGlobalInstance().put(LinkedList.class, EasyjListSerializer.INSTANCE);
+		SerializeConfig.getGlobalInstance().put(HashSet.class, EasyjCollectionCodec.INSTANCE);
+		SerializeConfig.getGlobalInstance().put(LinkedHashSet.class, EasyjCollectionCodec.INSTANCE);
 
 		// Long
 		System.out.println("Long：正常");

@@ -33,7 +33,7 @@ import com.alibaba.fastjson.util.TypeUtils;
  */
 public class EasyjCollectionCodec implements ObjectSerializer, ObjectDeserializer {
 
-	public static final EasyjCollectionCodec instance = new EasyjCollectionCodec();
+	public static final EasyjCollectionCodec INSTANCE = new EasyjCollectionCodec();
 
 	@Override
 	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features) throws IOException {

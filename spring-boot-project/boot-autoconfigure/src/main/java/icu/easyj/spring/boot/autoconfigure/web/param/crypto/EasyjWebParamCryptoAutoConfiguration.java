@@ -166,11 +166,11 @@ public class EasyjWebParamCryptoAutoConfiguration {
 			serializeConfig.put(Long.class, ToStringSerializer.instance);
 			serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
 			//region fastjson自带的 PrimitiveArraySerializer、ListSerializer、CollectionCodec 没有对Long数据进行转字符串处理，待BUG修复前临时解决一下
-			serializeConfig.put(long[].class, EasyjPrimitiveArraySerializer.instance);
-			serializeConfig.put(ArrayList.class, EasyjListSerializer.instance);
-			serializeConfig.put(LinkedList.class, EasyjListSerializer.instance);
-			serializeConfig.put(HashSet.class, EasyjCollectionCodec.instance);
-			serializeConfig.put(LinkedHashSet.class, EasyjCollectionCodec.instance);
+			serializeConfig.put(long[].class, EasyjPrimitiveArraySerializer.INSTANCE);
+			serializeConfig.put(ArrayList.class, EasyjListSerializer.INSTANCE);
+			serializeConfig.put(LinkedList.class, EasyjListSerializer.INSTANCE);
+			serializeConfig.put(HashSet.class, EasyjCollectionCodec.INSTANCE);
+			serializeConfig.put(LinkedHashSet.class, EasyjCollectionCodec.INSTANCE);
 			//endregion
 			fastJsonConfig.setSerializeConfig(serializeConfig);
 

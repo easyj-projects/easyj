@@ -25,7 +25,7 @@ import com.alibaba.fastjson.JSONException;
  */
 public class EasyjPrimitiveArraySerializer implements ObjectSerializer {
 
-	public static EasyjPrimitiveArraySerializer instance = new EasyjPrimitiveArraySerializer();
+	public static final EasyjPrimitiveArraySerializer INSTANCE = new EasyjPrimitiveArraySerializer();
 
 	@Override
 	public final void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features) throws IOException {

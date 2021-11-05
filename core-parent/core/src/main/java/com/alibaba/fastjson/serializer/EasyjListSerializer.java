@@ -27,7 +27,7 @@ import com.alibaba.fastjson.util.TypeUtils;
  */
 public final class EasyjListSerializer implements ObjectSerializer {
 
-	public static EasyjListSerializer instance = new EasyjListSerializer();
+	public static final EasyjListSerializer INSTANCE = new EasyjListSerializer();
 
 	@Override
 	public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
