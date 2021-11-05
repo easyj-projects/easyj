@@ -17,8 +17,14 @@ package icu.easyj.spring.boot.autoconfigure.web.param.crypto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 
+import com.alibaba.fastjson.serializer.EasyjCollectionCodec;
+import com.alibaba.fastjson.serializer.EasyjListSerializer;
+import com.alibaba.fastjson.serializer.EasyjPrimitiveArraySerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
@@ -154,15 +160,20 @@ public class EasyjWebParamCryptoAutoConfiguration {
 			FastJsonConfig fastJsonConfig = new FastJsonConfig();
 			fastJsonConfig.setSerializerFeatures(this.getFeatures());
 			fastJsonConfig.setCharset(StandardCharsets.UTF_8);
+
 			// Long类型数据转String，防止JS中丢失精度
 			SerializeConfig serializeConfig = SerializeConfig.globalInstance;
 			serializeConfig.put(Long.class, ToStringSerializer.instance);
 			serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
-			//fastjson自带的ListSerializer和CollectionCodec没有对Long数据进行转字符串处理
-//			serializeConfig.put(ArrayList.class, new FrwListSerializer());
-//			serializeConfig.put(HashSet.class, new FrwCollectionCodec());
-//			serializeConfig.put(LinkedList.class, new FrwCollectionCodec());
+			//region fastjson自带的 PrimitiveArraySerializer、ListSerializer、CollectionCodec 没有对Long数据进行转字符串处理，待BUG修复前临时解决一下
+			serializeConfig.put(long[].class, EasyjPrimitiveArraySerializer.instance);
+			serializeConfig.put(ArrayList.class, EasyjListSerializer.instance);
+			serializeConfig.put(LinkedList.class, EasyjListSerializer.instance);
+			serializeConfig.put(HashSet.class, EasyjCollectionCodec.instance);
+			serializeConfig.put(LinkedHashSet.class, EasyjCollectionCodec.instance);
+			//endregion
 			fastJsonConfig.setSerializeConfig(serializeConfig);
+
 			// 添加fastjson配置信息到转换器中
 			httpMessageConverter.setFastJsonConfig(fastJsonConfig);
 
