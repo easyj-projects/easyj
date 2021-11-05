@@ -26,7 +26,6 @@ import icu.easyj.web.param.crypto.IParamCryptoHandler;
 import icu.easyj.web.param.crypto.IParamCryptoHandlerProperties;
 import icu.easyj.web.param.crypto.exception.ParamDecryptException;
 import icu.easyj.web.param.crypto.exception.ParamEncryptException;
-import org.springframework.lang.NonNull;
 
 /**
  * 默认的参数加密解密处理器实现类
@@ -82,17 +81,6 @@ public class DefaultParamCryptoHandlerImpl implements IParamCryptoHandler {
 
 
 	//region Override
-
-	@NonNull
-	@Override
-	public String handleEscapedChars(@NonNull String encryptedParam) {
-		try {
-			return Base64Utils.normalize(encryptedParam);
-		} catch (IllegalArgumentException e) {
-			// 规范化失败时，返回原参数
-			return encryptedParam;
-		}
-	}
 
 	@Override
 	public boolean isEncryptedQueryString(String encryptedParam) {

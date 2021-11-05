@@ -104,45 +104,43 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		// 获取`待解密的queryString`
 		String encryptedQueryString = this.getEncryptedQueryString(request);
 
-		// 如果`待解密的queryString`不为空，才需要解密
-		if (StringUtils.isNotEmpty(encryptedQueryString)) {
-			// 处理被转义的字符
-			encryptedQueryString = cryptoHandler.handleEscapedChars(encryptedQueryString);
-
-			// 判断：是否强制要求调用端加密 或 入参就是加密过的串，则进行解密操作
-			if (cryptoHandlerProperties.isNeedEncryptInputParam() || cryptoHandler.isEncryptedQueryString(encryptedQueryString)) {
-				try {
-					// 解密
-					String queryString = cryptoHandler.decrypt(encryptedQueryString);
-
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("QueryString入参解密成功！\r\n==>\r\n解密前: {}\r\n解密后: {}\r\n<==", encryptedQueryString, queryString);
-					}
-
-					// 设为null，方便GC回收
-					encryptedQueryString = null;
-
-					// 包装Request：将解密后的`QueryString`重新注入到request中
-					return new QueryStringHttpServletRequestWrapper(request, queryString);
-				} catch (RuntimeException e) {
-					// 设为null，方便GC回收
-					encryptedQueryString = null;
-
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
-					}
-
-					// 如果强制要求调用端加密，则抛出异常，否则直接返回request
-					if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
-						throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", "DECRYPT_FAILED", e);
-					} else {
-						return request;
-					}
-				}
-			}
+		// 如果`待解密的queryString`为空，不需要解密
+		if (StringUtils.isEmpty(encryptedQueryString)) {
+			return request;
 		}
 
-		return request;
+		// 判断：如果不强制要求调用端加密 且 入参不是加密过的串，则直接返回
+		if (!cryptoHandlerProperties.isNeedEncryptInputParam() && !cryptoHandler.isEncryptedQueryString(encryptedQueryString)) {
+			return request;
+		}
+
+
+		try {
+			// 解密
+			String queryString = cryptoHandler.decrypt(encryptedQueryString);
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("QueryString入参解密成功！\r\n==>\r\n解密前: {}\r\n解密后: {}\r\n<==", encryptedQueryString, queryString);
+			}
+
+			// 包装Request：将解密后的`QueryString`重新注入到request中
+			return new QueryStringHttpServletRequestWrapper(request, queryString);
+		} catch (RuntimeException e) {
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
+			}
+
+			// 如果强制要求调用端加密，则抛出异常，否则直接返回request
+			if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
+				throw new ParamDecryptException("QueryString入参未加密或格式有误，解密失败", "DECRYPT_FAILED", e);
+			} else {
+				LOGGER.warn("QueryString尝试解密失败，QueryString：{}", encryptedQueryString, e);
+				return request;
+			}
+		} finally {
+			// 设为null，方便GC回收
+			encryptedQueryString = null;
+		}
 	}
 
 	/**

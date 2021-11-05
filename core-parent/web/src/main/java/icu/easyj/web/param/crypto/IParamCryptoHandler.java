@@ -27,17 +27,6 @@ import org.springframework.lang.NonNull;
 public interface IParamCryptoHandler {
 
 	/**
-	 * 处理加密串中，被转义了的字符
-	 *
-	 * @param encryptedParam 待解密参数
-	 * @return 处理后的字符串
-	 */
-	@NonNull
-	default String handleEscapedChars(@NonNull String encryptedParam) {
-		return encryptedParam;
-	}
-
-	/**
 	 * 校验加密串的格式，是否为当前加密算法加密后的字符串格式。
 	 * <p>
 	 * 举例说明：默认实现类中，加密后为base64串，则校验一下base64格式。

@@ -92,7 +92,7 @@ public abstract class TestUtils {
 		String onceCostStr = (onceCost) + " ns";
 
 		// 打印日志
-		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + supplierName.length() - InnerStringUtils.chineseLength(supplierName))
+		System.out.println("| 函数名：" + StringUtils.rightPad(supplierName, 16 + (supplierName.length() - InnerStringUtils.chineseLength(supplierName)) / 2)
 				+ "耗时：" + StringUtils.leftPad(costStr, 7) + " ms         "
 				+ "单次：" + StringUtils.leftPad(onceCostStr, 7 + 6) + " |");
 		return cost;
