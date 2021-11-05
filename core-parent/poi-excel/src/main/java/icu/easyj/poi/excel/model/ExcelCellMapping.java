@@ -235,6 +235,19 @@ public class ExcelCellMapping implements Serializable {
 
 	//******************************** static *********************************/
 
+
+	private static void addMapping(ExcelCell[] excelCells, Class<?> clazz, ExcelMapping mapping, Field field, List<ExcelCellMapping> mappingList) {
+		if (excelCells.length > 0) {
+			ExcelCellMapping cellMapping;
+			for (ExcelCell excelCell : excelCells) {
+				// 注解转换为映射类对象
+				cellMapping = toMapping(excelCell, clazz, field, mapping);
+				// 添加到列表中
+				mappingList.add(cellMapping);
+			}
+		}
+	}
+
 	/**
 	 * 获取属性与表格的映射关系
 	 *
@@ -249,22 +262,12 @@ public class ExcelCellMapping implements Serializable {
 		Field[] fields = clazz.getDeclaredFields();
 		ExcelCellMapping cellMapping;
 		for (Field f : fields) {
-			ExcelCell anno1 = f.getAnnotation(ExcelCell.class);
-			if (anno1 != null) {
-				// 注解转换为映射类对象
-				cellMapping = toMapping(anno1, clazz, f, mapping);
-				// 添加到列表中
-				mappingList.add(cellMapping);
-			}
+			ExcelCell[] excelCells = f.getAnnotationsByType(ExcelCell.class);
+			addMapping(excelCells, clazz, mapping, f, mappingList);
 
 			ExcelCells annos = f.getAnnotation(ExcelCells.class);
-			if (annos != null && annos.value().length > 0) {
-				for (ExcelCell anno2 : annos.value()) {
-					// 注解转换为映射类对象
-					cellMapping = toMapping(anno2, clazz, f, mapping);
-					// 添加到列表中
-					mappingList.add(cellMapping);
-				}
+			if (annos != null) {
+				addMapping(annos.value(), clazz, mapping, f, mappingList);
 			}
 		}
 

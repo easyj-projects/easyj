@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.autoconfigure.middleware.dwz.server;
 
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig;
+import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.dwz.server.core.listener.DwzServerStartupApplicationListener;
 import icu.easyj.middleware.dwz.server.core.service.IDwzCorrectErrorDataService;
@@ -32,8 +33,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -47,7 +48,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ConditionalOnClass(DwzRestController.class)
 @ConditionalOnProperty(value = "easyj.middleware.dwz.server.enabled", matchIfMissing = true)
 @ConditionalOnWebApplication
-@ComponentScan("icu.easyj.middleware.dwz.server.core.controller")
+@Import({DwzRestController.class, DwzRedirectController.class})
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	/**
