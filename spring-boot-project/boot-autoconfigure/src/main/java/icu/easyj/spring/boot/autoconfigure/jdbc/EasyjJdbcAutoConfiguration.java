@@ -17,13 +17,8 @@ package icu.easyj.spring.boot.autoconfigure.jdbc;
 
 import javax.sql.DataSource;
 
-import icu.easyj.core.sequence.ISequenceService;
-import icu.easyj.db.sequence.impls.DbSequenceServiceImpl;
 import icu.easyj.db.util.PrimaryDataSourceHolder;
-import icu.easyj.spring.boot.autoconfigure.redis.EasyjRedisAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
@@ -41,19 +36,5 @@ public class EasyjJdbcAutoConfiguration {
 		if (primaryDataSource != null) {
 			PrimaryDataSourceHolder.set(primaryDataSource);
 		}
-	}
-
-
-	/**
-	 * 基于 {@link icu.easyj.db.util.PrimaryDbUtils} 实现的序列服务
-	 *
-	 * @param primaryDataSource 主要数据源
-	 * @return 序列服务的实现
-	 * @see EasyjRedisAutoConfiguration#springRedisTemplateSequenceServiceImpl() 基于redis实现的
-	 */
-	@Bean
-	@Qualifier("dbSequenceService")
-	public ISequenceService primaryDataBaseSequenceService(@Autowired(required = false) DataSource primaryDataSource) {
-		return new DbSequenceServiceImpl(primaryDataSource);
 	}
 }

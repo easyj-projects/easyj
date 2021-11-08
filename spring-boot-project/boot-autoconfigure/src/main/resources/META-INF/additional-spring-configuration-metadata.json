@@ -64,13 +64,6 @@
 			"description": "其他全局配置的Map."
 		},
 		{
-			"name": "easyj.web.param-crypto.filter.enabled",
-			"type": "java.lang.Boolean",
-			"sourceType": "icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjWebParamCryptoAutoConfiguration",
-			"description": "参数加密解密过滤器启用开关.",
-			"defaultValue": false
-		},
-		{
 			"name": "easyj.server.host",
 			"type": "java.lang.String",
 			"description": "当前服务内网地址：多网卡时，需要手动配置.",
@@ -90,6 +83,20 @@
 			"description": "当前服务工作ID.",
 			"sourceType": "icu.easyj.spring.boot.autoconfigure.configs.ServerProperties",
 			"defaultValue": "IdUtil.getWorkerId(dataCenterId, 31)"
+		},
+		{
+			"name": "easyj.sequence.type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.sequence.EasyjSequenceAutoConfiguration",
+			"description": "序列服务类型.",
+			"defaultValue": "redis"
+		},
+		{
+			"name": "easyj.web.param-crypto.filter.enabled",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.web.param.crypto.EasyjWebParamCryptoAutoConfiguration",
+			"description": "参数加密解密过滤器启用开关.",
+			"defaultValue": false
 		},
 		{
 			"name": "easyj.sdk.tencent.common.conn-timeout",
@@ -204,6 +211,24 @@
 		}
 	],
 	"hints": [
+		{
+			"name": "easyj.sequence.type",
+			"values": [
+				{
+					"value": "redis",
+					"description": "(默认)基于Redis的序列服务."
+				},
+				{
+					"value": "db",
+					"description": "基于数据库的序列服务."
+				}
+			],
+			"providers": [
+				{
+					"name": "any"
+				}
+			]
+		},
 		{
 			"name": "easyj.sdk.dwz.type",
 			"values": [

@@ -61,6 +61,7 @@
 		<module>core-parent/data</module>
 		<module>core-parent/db</module>
 		<module>core-parent/poi-excel</module>
+		<module>core-parent/redis</module>
 		<module>core-parent/web</module>
 
 		<!-- SDK -->

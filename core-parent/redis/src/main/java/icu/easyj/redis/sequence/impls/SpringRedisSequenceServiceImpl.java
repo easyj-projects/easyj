@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.redis.sequence;
+package icu.easyj.redis.sequence.impls;
 
 import icu.easyj.core.sequence.ISequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,6 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 		this.getAtomicLong(seqName).set(newVal);
 		return -1; // -1表示未知
 	}
-
 
 	private RedisAtomicLong getAtomicLong(String seqName) {
 		return new RedisAtomicLong(seqName, connectionFactory);
