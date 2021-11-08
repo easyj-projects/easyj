@@ -54,7 +54,8 @@ public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 	/**
 	 * 百度云短链接服务服务 Bean
 	 *
-	 * @param config 百度云短链接服务配置
+	 * @param config            百度云短链接服务配置
+	 * @param httpClientService http客户端服务，用于发起http请求
 	 * @return 百度云短链接服务服务
 	 */
 	@Bean

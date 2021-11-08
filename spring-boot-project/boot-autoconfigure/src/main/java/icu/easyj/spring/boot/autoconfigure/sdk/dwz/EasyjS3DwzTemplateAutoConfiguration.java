@@ -54,7 +54,8 @@ public class EasyjS3DwzTemplateAutoConfiguration {
 	/**
 	 * S-3短链接服务 Bean
 	 *
-	 * @param config S-3短链接服务配置
+	 * @param config            S-3短链接服务配置
+	 * @param httpClientService http客户端服务，用于发起http请求
 	 * @return S-3短链接服务
 	 */
 	@Bean
