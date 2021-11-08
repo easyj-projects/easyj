@@ -31,7 +31,19 @@ import org.springframework.util.MultiValueMap;
  */
 public abstract class HttpClientUtils {
 
+	/**
+	 * {@link IHttpClientService} 默认的实现
+	 */
 	private static final IHttpClientService HTTP_CLIENT_SERVICE = EnhancedServiceLoader.load(IHttpClientService.class);
+
+	/**
+	 * 获取 {@link IHttpClientService} 默认的实现
+	 *
+	 * @return 默认的实现
+	 */
+	public static IHttpClientService getService() {
+		return HTTP_CLIENT_SERVICE;
+	}
 
 
 	//region GET请求

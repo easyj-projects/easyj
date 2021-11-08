@@ -18,6 +18,8 @@ package icu.easyj.spring.boot.autoconfigure.sdk.dwz;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import icu.easyj.sdk.s3.dwz.S3DwzConfig;
 import icu.easyj.sdk.s3.dwz.S3DwzTemplateImpl;
+import icu.easyj.web.util.httpclient.IHttpClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -57,7 +59,11 @@ public class EasyjS3DwzTemplateAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzTemplate s3DwzTemplate(S3DwzConfig config) {
-		return new S3DwzTemplateImpl(config);
+	public IDwzTemplate s3DwzTemplate(S3DwzConfig config, @Autowired(required = false) IHttpClientService httpClientService) {
+		if (httpClientService != null) {
+			return new S3DwzTemplateImpl(config, httpClientService);
+		} else {
+			return new S3DwzTemplateImpl(config);
+		}
 	}
 }

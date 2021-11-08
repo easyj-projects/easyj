@@ -22,7 +22,9 @@ import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import icu.easyj.web.util.HttpClientUtils;
+import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 基于 {@link HttpClientUtils} 实现DWZ服务调用
@@ -31,11 +33,27 @@ import org.springframework.lang.NonNull;
  */
 public class HttpEasyjMiddleWareDwzTemplateImpl implements IDwzTemplate {
 
+	/**
+	 * 配置信息
+	 */
 	private final HttpEasyjMiddleWareDwzTemplateConfig config;
 
+	/**
+	 * http客户端服务
+	 */
+	@NonNull
+	private final IHttpClientService httpClientService;
+
+
+	public HttpEasyjMiddleWareDwzTemplateImpl(HttpEasyjMiddleWareDwzTemplateConfig config, IHttpClientService httpClientService) {
+		Assert.notNull(config, "'config' must be not null");
+		Assert.notNull(httpClientService, "'httpClientService' must be not null");
+		this.config = config;
+		this.httpClientService = httpClientService;
+	}
 
 	public HttpEasyjMiddleWareDwzTemplateImpl(HttpEasyjMiddleWareDwzTemplateConfig config) {
-		this.config = config;
+		this(config, HttpClientUtils.getService());
 	}
 
 
@@ -43,6 +61,6 @@ public class HttpEasyjMiddleWareDwzTemplateImpl implements IDwzTemplate {
 	public DwzResponse createShortUrl(@NonNull DwzRequest request) {
 		Date termOfValidity = request.getConfig("term-of-validity");
 		EasyjDwzRequest req = new EasyjDwzRequest(request.getLongUrl(), termOfValidity);
-		return HttpClientUtils.post(this.config.getServiceUrl(), req, DwzResponse.class);
+		return httpClientService.post(this.config.getServiceUrl(), req, DwzResponse.class);
 	}
 }

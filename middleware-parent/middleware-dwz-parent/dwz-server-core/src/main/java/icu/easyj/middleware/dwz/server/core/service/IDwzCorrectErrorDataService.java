@@ -27,7 +27,7 @@ public interface IDwzCorrectErrorDataService {
 	 * <p>
 	 * 说明：当前序列值不能小于短链接记录的最大ID值
 	 *
-	 * @return result 纠正结果 1=成功 | 0=无需纠正 | -1=失败
+	 * @return result 纠正结果 1=纠正成功 | 0=无需纠正 | -1=纠正失败或无法纠正
 	 */
 	int correctSequence();
 }

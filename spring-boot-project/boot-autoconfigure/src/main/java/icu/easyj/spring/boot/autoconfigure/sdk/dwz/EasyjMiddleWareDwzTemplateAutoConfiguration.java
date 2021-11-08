@@ -20,6 +20,8 @@ import icu.easyj.middleware.dwz.template.impls.feign.SpringCloudFeignEasyjMiddle
 import icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateConfig;
 import icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateImpl;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import icu.easyj.web.util.httpclient.IHttpClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -52,8 +54,12 @@ public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
-		public IDwzTemplate httpEasyjMiddleWareDwzTemplate(HttpEasyjMiddleWareDwzTemplateConfig config) {
-			return new HttpEasyjMiddleWareDwzTemplateImpl(config);
+		public IDwzTemplate httpEasyjMiddleWareDwzTemplate(HttpEasyjMiddleWareDwzTemplateConfig config, @Autowired(required = false) IHttpClientService httpClientService) {
+			if (httpClientService != null) {
+				return new HttpEasyjMiddleWareDwzTemplateImpl(config, httpClientService);
+			} else {
+				return new HttpEasyjMiddleWareDwzTemplateImpl(config);
+			}
 		}
 	}
 

@@ -18,6 +18,8 @@ package icu.easyj.spring.boot.autoconfigure.sdk.dwz;
 import icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzConfig;
 import icu.easyj.sdk.baidu.cloud.dwz.BaiduDwzTemplateImpl;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import icu.easyj.web.util.httpclient.IHttpClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -57,7 +59,11 @@ public class EasyjBaiduCloudDwzTemplateAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public IDwzTemplate baiduCloudDwzTemplate(BaiduDwzConfig config) {
-		return new BaiduDwzTemplateImpl(config);
+	public IDwzTemplate baiduCloudDwzTemplate(BaiduDwzConfig config, @Autowired(required = false) IHttpClientService httpClientService) {
+		if (httpClientService != null) {
+			return new BaiduDwzTemplateImpl(config, httpClientService);
+		} else {
+			return new BaiduDwzTemplateImpl(config);
+		}
 	}
 }

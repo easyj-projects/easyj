@@ -36,6 +36,8 @@ public interface ISequenceService {
 
 	/**
 	 * 获取下一序列值
+	 * <p>
+	 * 注意：实现类中不允许抛出 NotSupportedException，该方法是序列服务必须要支持的功能。
 	 *
 	 * @param seqName 序列名
 	 * @return 下一序列值

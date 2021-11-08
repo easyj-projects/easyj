@@ -32,10 +32,12 @@ import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import icu.easyj.web.util.HttpClientUtils;
+import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientResponseException;
 
@@ -57,24 +59,32 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * DWZ配置信息
 	 */
+	@NonNull
 	private final BaiduDwzConfig config;
 
-
 	/**
-	 * 构造函数
-	 *
-	 * @param config DWZ配置信息
+	 * http客户端服务
 	 */
-	public BaiduDwzTemplateImpl(BaiduDwzConfig config) {
+	@NonNull
+	private final IHttpClientService httpClientService;
+
+
+	public BaiduDwzTemplateImpl(BaiduDwzConfig config, IHttpClientService httpClientService) {
 		Assert.notNull(config, "'config' must not be null");
+		Assert.notNull(httpClientService, "'httpClientService' must be not null");
 		this.config = config;
+		this.httpClientService = httpClientService;
+	}
+
+	public BaiduDwzTemplateImpl(BaiduDwzConfig config) {
+		this(config, HttpClientUtils.getService());
 	}
 
 
 	@Override
 	public DwzResponse createShortUrl(DwzRequest request) throws DwzSdkException {
 		Assert.notNull(request, "'request' must not be null");
-		Assert.notNull(request.getLongUrl(), "'longUrl' must not be null");
+		Assert.notNull(request.getLongUrl(), "'request.longUrl' must not be null");
 
 		// 将入参配置与通用配置合并，生成当前请求所使用的配置
 		BaiduDwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
@@ -96,7 +106,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 
 			// 发送请求，接收响应
 			try {
-				respStr = HttpClientUtils.post(config.getServiceUrl(), body, headers, String.class);
+				respStr = httpClientService.post(config.getServiceUrl(), body, headers, String.class);
 			} catch (RestClientResponseException e) {
 				respStr = e.getResponseBodyAsString();
 				if (!respStr.startsWith("{")) {

@@ -31,8 +31,10 @@ import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.DwzSdkServerException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import icu.easyj.web.util.HttpClientUtils;
+import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientResponseException;
 
@@ -56,12 +58,25 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * 配置信息
 	 */
+	@NonNull
 	private final S3DwzConfig config;
 
+	/**
+	 * http客户端服务
+	 */
+	@NonNull
+	private final IHttpClientService httpClientService;
+
+
+	public S3DwzTemplateImpl(S3DwzConfig config, IHttpClientService httpClientService) {
+		Assert.notNull(config, "'config' must not be null");
+		Assert.notNull(httpClientService, "'httpClientService' must be not null");
+		this.config = config;
+		this.httpClientService = httpClientService;
+	}
 
 	public S3DwzTemplateImpl(S3DwzConfig config) {
-		Assert.notNull(config, "'config' must not be null");
-		this.config = config;
+		this(config, HttpClientUtils.getService());
 	}
 
 
@@ -90,7 +105,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 
 			// 发送请求，接收响应
 			try {
-				respStr = HttpClientUtils.get(url);
+				respStr = httpClientService.get(url);
 			} catch (RestClientResponseException e) {
 				respStr = "[" + e.getRawStatusCode() + "]" + e.getResponseBodyAsString();
 				throw new DwzSdkServerException("请求S-3短链接服务异常：" + respStr, ErrorCodeConstants.SERVER_ERROR, e);
