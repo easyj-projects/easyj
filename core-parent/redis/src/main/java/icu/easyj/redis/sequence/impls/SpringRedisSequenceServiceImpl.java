@@ -15,6 +15,7 @@
  */
 package icu.easyj.redis.sequence.impls;
 
+import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.sequence.ISequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -27,6 +28,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
+@LoadLevel(name = "redisSequenceService", order = 100)
 public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
 	private static RedisConnectionFactory connectionFactory;

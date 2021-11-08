@@ -29,7 +29,7 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "db", order = 1000)
+@LoadLevel(name = "dbSequenceService", order = 200)
 public class DbSequenceServiceImpl implements ISequenceService {
 
 	@Nullable
