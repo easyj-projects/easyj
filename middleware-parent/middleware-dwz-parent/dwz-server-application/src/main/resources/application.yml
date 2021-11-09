@@ -14,4 +14,4 @@ spring:
 
 easyj:
   sequence:
-    type: db #序列服务类型，默认：redis
+    type: redis #序列服务类型（单应用时，建议配置为：atomic-long，集群时，建议配置为：redis）

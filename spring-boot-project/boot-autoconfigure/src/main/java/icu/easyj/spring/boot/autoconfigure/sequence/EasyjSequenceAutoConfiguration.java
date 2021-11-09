@@ -19,74 +19,63 @@ import javax.sql.DataSource;
 
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.core.sequence.impl.AtomicLongSequenceServiceImpl;
-import icu.easyj.db.sequence.impls.DbSequenceServiceImpl;
+import icu.easyj.db.sequence.impls.DataBaseSequenceServiceImpl;
 import icu.easyj.redis.sequence.impls.SpringRedisSequenceServiceImpl;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 /**
  * 序列服务自动装配类
  *
  * @author wangliang181230
  */
-@ConditionalOnClass(ISequenceService.class)
-@AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(value = "easyj.sequence.type")
 public class EasyjSequenceAutoConfiguration {
 
 	/**
 	 * 基于 Redis 实现的序列服务
-	 *
-	 * @return 序列服务的实现
 	 */
-	@Lazy(false)
-	@Primary
-	@Bean("redisSequenceService")
-	@ConditionalOnMissingBean(name = "redisSequenceService")
-	@ConditionalOnClass(RedisConnectionFactory.class)
-	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "redis", matchIfMissing = true)
-	public ISequenceService redisSequenceServiceImpl() {
-		return new SpringRedisSequenceServiceImpl();
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "redis")
+	public static class RedisSequenceServiceConfiguration {
+
+		@Lazy(false)
+		@Primary
+		@Bean
+		public ISequenceService redisSequenceServiceImpl() {
+			return new SpringRedisSequenceServiceImpl();
+		}
 	}
-
-
-	//--------------------------------------------------------------------------------------------------------------
 
 
 	/**
 	 * 基于 数据库 实现的序列服务
-	 *
-	 * @param primaryDataSource 主要数据源
-	 * @return 序列服务的实现
 	 */
-	@Bean("dbSequenceService")
-	@ConditionalOnMissingBean(name = "dbSequenceService")
-	@ConditionalOnBean(DataSource.class)
-	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "db", matchIfMissing = true)
-	public ISequenceService primaryDataBaseSequenceService(DataSource primaryDataSource) {
-		return new DbSequenceServiceImpl(primaryDataSource);
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "db")
+	public static class DataBaseSequenceServiceConfiguration {
+
+		@Bean
+		public ISequenceService dataBaseSequenceService(DataSource primaryDataSource) {
+			return new DataBaseSequenceServiceImpl(primaryDataSource);
+		}
 	}
-
-
-	//--------------------------------------------------------------------------------------------------------------
 
 
 	/**
 	 * 基于 {@link java.util.concurrent.atomic.AtomicLong} 实现的序列服务
-	 *
-	 * @return 序列服务的实现
 	 */
-	@Bean("atomicLongSequenceService")
-	@ConditionalOnMissingBean(name = "atomicLongSequenceService")
-	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long", matchIfMissing = true)
-	public ISequenceService atomicLongSequenceService() {
-		return new AtomicLongSequenceServiceImpl();
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long")
+	public static class AtomicLongSequenceServiceConfiguration {
+
+		@Bean
+		public ISequenceService atomicLongSequenceService() {
+			return new AtomicLongSequenceServiceImpl();
+		}
 	}
 }
