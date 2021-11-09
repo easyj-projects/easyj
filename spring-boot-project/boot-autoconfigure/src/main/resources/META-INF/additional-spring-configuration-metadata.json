@@ -207,6 +207,7 @@
 			"name": "easyj.middleware.dwz.server.task.overtime-handle-strategy",
 			"type": "icu.easyj.middleware.dwz.server.core.domain.enums.OvertimeHandleStrategy",
 			"sourceType": "icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig",
+			"description": "超时短链接记录处理策略。默认：删除策略。",
 			"defaultValue": "delete"
 		},
 		{
