@@ -85,7 +85,6 @@ public class EasyjSequenceAutoConfiguration {
 	 */
 	@Bean("atomicLongSequenceService")
 	@ConditionalOnMissingBean(name = "atomicLongSequenceService")
-	@ConditionalOnBean(DataSource.class)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long", matchIfMissing = true)
 	public ISequenceService atomicLongSequenceService() {
 		return new AtomicLongSequenceServiceImpl();
