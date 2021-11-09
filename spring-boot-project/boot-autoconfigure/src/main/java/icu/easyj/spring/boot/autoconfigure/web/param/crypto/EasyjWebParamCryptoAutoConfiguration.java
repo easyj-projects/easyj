@@ -162,7 +162,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 			fastJsonConfig.setCharset(StandardCharsets.UTF_8);
 
 			// Long类型数据转String，防止JS中丢失精度
-			SerializeConfig serializeConfig = SerializeConfig.globalInstance;
+			SerializeConfig serializeConfig = new SerializeConfig();
 			serializeConfig.put(Long.class, ToStringSerializer.instance);
 			serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
 			//region fastjson自带的 PrimitiveArraySerializer、ListSerializer、CollectionCodec 没有对Long数据进行转字符串处理，待BUG修复前临时解决一下
