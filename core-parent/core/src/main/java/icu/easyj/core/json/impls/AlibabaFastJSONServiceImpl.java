@@ -15,17 +15,9 @@
  */
 package icu.easyj.core.json.impls;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.EasyjCollectionCodec;
-import com.alibaba.fastjson.serializer.EasyjListSerializer;
-import com.alibaba.fastjson.serializer.EasyjPrimitiveArraySerializer;
-import com.alibaba.fastjson.serializer.SerializeConfig;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
@@ -43,18 +35,6 @@ import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 @LoadLevel(name = FASTJSON, order = 10)
 @DependsOnClass(JSON.class)
 class AlibabaFastJSONServiceImpl implements IJSONService {
-
-	static {
-		SerializeConfig serializeConfig = SerializeConfig.globalInstance;
-
-		//region fastjson自带的 PrimitiveArraySerializer、ListSerializer、CollectionCodec 没有对Long数据进行转字符串处理，待BUG修复前临时解决一下
-		serializeConfig.put(long[].class, EasyjPrimitiveArraySerializer.INSTANCE);
-		serializeConfig.put(ArrayList.class, EasyjListSerializer.INSTANCE);
-		serializeConfig.put(LinkedList.class, EasyjListSerializer.INSTANCE);
-		serializeConfig.put(HashSet.class, EasyjCollectionCodec.INSTANCE);
-		serializeConfig.put(LinkedHashSet.class, EasyjCollectionCodec.INSTANCE);
-		//endregion
-	}
 
 	@NonNull
 	@Override
