@@ -29,18 +29,18 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "dbSequenceService", order = 200)
-public class DbSequenceServiceImpl implements ISequenceService {
+@LoadLevel(name = "dataBaseSequenceService", order = 200)
+public class DataBaseSequenceServiceImpl implements ISequenceService {
 
 	@Nullable
 	private final DataSource dataSource;
 
 
-	public DbSequenceServiceImpl() {
+	public DataBaseSequenceServiceImpl() {
 		this(null);
 	}
 
-	public DbSequenceServiceImpl(DataSource dataSource) {
+	public DataBaseSequenceServiceImpl(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 

@@ -88,8 +88,7 @@
 			"name": "easyj.sequence.type",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.autoconfigure.sequence.EasyjSequenceAutoConfiguration",
-			"description": "序列服务类型.",
-			"defaultValue": "redis"
+			"description": "序列服务类型."
 		},
 		{
 			"name": "easyj.web.param-crypto.filter.enabled",

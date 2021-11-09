@@ -53,11 +53,8 @@ public class AtomicLongSequenceServiceImpl implements ISequenceService {
 	}
 
 	@Override
-	public synchronized long setVal(@NonNull String seqName, long newVal) {
-		AtomicLong atomicLong = this.getAtomicLong(seqName);
-		long currVal = atomicLong.get();
-		this.getAtomicLong(seqName).set(newVal);
-		return currVal;
+	public long setVal(@NonNull String seqName, long newVal) {
+		return this.getAtomicLong(seqName).getAndSet(newVal);
 	}
 
 
