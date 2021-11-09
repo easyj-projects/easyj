@@ -1,0 +1,8 @@
+easyj:
+  sequence:
+    type: atomic-long
+  middleware:
+    dwz:
+      server:
+        log-store:
+          type: mock

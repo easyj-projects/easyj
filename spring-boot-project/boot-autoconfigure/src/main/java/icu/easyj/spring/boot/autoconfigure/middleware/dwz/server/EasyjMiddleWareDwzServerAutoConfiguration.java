@@ -26,6 +26,7 @@ import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzCorrectError
 import icu.easyj.middleware.dwz.server.core.service.impls.DefaultDwzServerServiceImpl;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import icu.easyj.middleware.dwz.server.core.store.impls.db.DataBaseDwzLogStoreImpl;
+import icu.easyj.middleware.dwz.server.core.store.impls.mock.MockDwzLogStoreImpl;
 import icu.easyj.middleware.dwz.server.core.task.EasyjDwzServerTask;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -52,7 +53,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class EasyjMiddleWareDwzServerAutoConfiguration {
 
 	/**
-	 * 创建：短链接记录存取接口Bean
+	 * 创建：短链接记录存取接口Bean（基于数据库）（默认）
 	 *
 	 * @param primaryJdbcTemplate 主要数据源对应的jdbcTemplate
 	 * @param sequenceService     序列服务
@@ -60,8 +61,22 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
+	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.log-store.type", havingValue = "db", matchIfMissing = true)
 	public IDwzLogStore dataBaseDwzLogStore(JdbcTemplate primaryJdbcTemplate, ISequenceService sequenceService) {
 		return new DataBaseDwzLogStoreImpl(primaryJdbcTemplate, sequenceService);
+	}
+
+	/**
+	 * 创建：短链接记录存取接口Bean（模拟）
+	 *
+	 * @param sequenceService 序列服务
+	 * @return 短链接记录存取接口Bean
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.log-store.type", havingValue = "mock")
+	public IDwzLogStore mockDwzLogStore(ISequenceService sequenceService) {
+		return new MockDwzLogStoreImpl(sequenceService);
 	}
 
 	/**

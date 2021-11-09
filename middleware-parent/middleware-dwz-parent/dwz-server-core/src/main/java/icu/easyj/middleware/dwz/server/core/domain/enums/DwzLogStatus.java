@@ -13,31 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.middleware.dwz.server.core.store;
-
-import java.io.Serializable;
-import java.util.Date;
+package icu.easyj.middleware.dwz.server.core.domain.enums;
 
 /**
- * 短链接记录实体接口规范
+ * 短链接记录状态枚举
  *
  * @author wangliang181230
  */
-public interface IDwzLogEntity extends Serializable {
+public enum DwzLogStatus {
 
-	String getShortUrlCode();
+	/**
+	 * 无效的
+	 */
+	INVALID(0),
 
-	void setShortUrlCode(String shortUrlCode);
+	/**
+	 * 有效的
+	 */
+	EFFECTIVE(1),
 
-	String getLongUrl();
+	/**
+	 * 已过期的
+	 */
+	Expired(2),
 
-	void setLongUrl(String longUrl);
+	;
 
-	Date getTermOfValidity();
 
-	void setTermOfValidity(Date termOfValidity);
+	private final int status;
 
-	Date getCreateTime();
 
-	void setCreateTime(Date createTime);
+	DwzLogStatus(int status) {
+		this.status = status;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
 }

@@ -20,9 +20,9 @@ import javax.annotation.Resource;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * {@link DwzServerApplication} 测试类
@@ -30,14 +30,13 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author wangliang181230
  */
 @SpringBootTest
-@Disabled("需要连接序列服务所需的Redis或DB")
+@ActiveProfiles("unittest")
 class DwzServerApplicationTest {
 
 	@Resource
 	DwzRestController dwzRestController;
 	@Resource
 	DwzRedirectController dwzRedirectController;
-
 
 	@Test
 	void test() {

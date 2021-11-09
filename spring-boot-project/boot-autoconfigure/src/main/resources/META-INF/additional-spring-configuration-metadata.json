@@ -208,6 +208,13 @@
 			"type": "icu.easyj.middleware.dwz.server.core.domain.enums.OvertimeHandleStrategy",
 			"sourceType": "icu.easyj.middleware.dwz.server.core.config.DwzServerTaskConfig",
 			"defaultValue": "delete"
+		},
+		{
+			"name": "easyj.middleware.dwz.server.log-store.type",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration",
+			"description": "短链接存储服务的类型.",
+			"defaultValue": "db"
 		}
 	],
 	"hints": [
@@ -216,16 +223,28 @@
 			"values": [
 				{
 					"value": "redis",
-					"description": "(默认)基于Redis的序列服务."
+					"description": "(默认)基于Redis实现的序列服务."
 				},
 				{
 					"value": "db",
-					"description": "基于数据库的序列服务."
-				}
-			],
-			"providers": [
+					"description": "基于数据库实现的序列服务."
+				},
 				{
-					"name": "any"
+					"value": "atomic-long",
+					"description": "基于AtomicLong实现的序列服务."
+				}
+			]
+		},
+		{
+			"name": "easyj.middleware.dwz.server.log-store.type",
+			"values": [
+				{
+					"value": "db",
+					"description": "基于数据库实现的短链接记录存取服务."
+				},
+				{
+					"value": "mock",
+					"description": "基于模拟实现的短链接记录存取服务."
 				}
 			]
 		},
@@ -244,11 +263,6 @@
 					"value": "baidu",
 					"description": "基于百度云DWZ实现的短链接功能."
 				}
-			],
-			"providers": [
-				{
-					"name": "any"
-				}
 			]
 		},
 		{
@@ -261,11 +275,6 @@
 				{
 					"value": "feign",
 					"description": "使用 SpringCloudFeign 接口调用DWZ服务."
-				}
-			],
-			"providers": [
-				{
-					"name": "any"
 				}
 			]
 		},
@@ -288,11 +297,6 @@
 				{
 					"value": "tencent",
 					"description": "(默认)基于腾讯云实现的身份证识别功能."
-				}
-			],
-			"providers": [
-				{
-					"name": "any"
 				}
 			]
 		},

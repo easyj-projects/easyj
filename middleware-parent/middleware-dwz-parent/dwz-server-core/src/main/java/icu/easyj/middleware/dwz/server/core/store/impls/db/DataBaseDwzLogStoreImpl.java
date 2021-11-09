@@ -25,6 +25,7 @@ import icu.easyj.core.util.shortcode.ShortCodeUtils;
 import icu.easyj.data.store.DbStoreException;
 import icu.easyj.db.util.DbClockUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
+import icu.easyj.middleware.dwz.server.core.domain.enums.DwzLogStatus;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,7 +133,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 			"       t.update_time = ?," +
 			"       t.version = t.verion + 1" +
 			" WHERE t.term_of_validity < ?" +
-			"   AND t.status = 1";
+			"   AND t.status <> 2";
 
 	//endregion SQL相关常量 end
 
@@ -173,7 +174,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		dwzLog.setShortUrlCode(shortUrlCode);
 		dwzLog.setLongUrl(longUrl);
 		dwzLog.setTermOfValidity(termOfValidity);
-		dwzLog.setStatus(1);
+		dwzLog.setStatus(DwzLogStatus.EFFECTIVE);
 		dwzLog.setCreateTime(now);
 		dwzLog.setUpdateTime(now);
 		dwzLog.setVersion(1);

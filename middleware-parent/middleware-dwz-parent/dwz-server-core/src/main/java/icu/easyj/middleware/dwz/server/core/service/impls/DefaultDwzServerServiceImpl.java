@@ -19,6 +19,7 @@ import java.util.Date;
 
 import icu.easyj.core.util.DateUtils;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
+import icu.easyj.middleware.dwz.server.core.domain.enums.DwzLogStatus;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import icu.easyj.web.util.HttpUtils;
@@ -67,12 +68,12 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 			boolean needUpdate = false;
 
 			// 状态不为有效时，更新为有效
-			if (dwzLog.getStatus() != 1) {
-				dwzLog.setStatus(1);
+			if (dwzLog.isNotStatus(DwzLogStatus.EFFECTIVE)) {
+				dwzLog.setStatus(DwzLogStatus.EFFECTIVE);
 				needUpdate = true;
 			}
 
-			// 查看超时时间哪个更久，就用哪个
+			// 查看超时时间哪个更久，就用哪个，以兼容之前请求该数据的业务
 			if (dwzLog.getTermOfValidity() != null) {
 				if (termOfValidity == null
 						|| dwzLog.getTermOfValidity().compareTo(termOfValidity) < 0) {

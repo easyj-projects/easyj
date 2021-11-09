@@ -18,11 +18,13 @@ package icu.easyj.spring.boot.autoconfigure.sequence;
 import javax.sql.DataSource;
 
 import icu.easyj.core.sequence.ISequenceService;
+import icu.easyj.core.sequence.impl.AtomicLongSequenceServiceImpl;
 import icu.easyj.db.sequence.impls.DbSequenceServiceImpl;
 import icu.easyj.redis.sequence.impls.SpringRedisSequenceServiceImpl;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -47,9 +49,10 @@ public class EasyjSequenceAutoConfiguration {
 	@Lazy(false)
 	@Primary
 	@Bean("redisSequenceService")
+	@ConditionalOnMissingBean(name = "redisSequenceService")
 	@ConditionalOnClass(RedisConnectionFactory.class)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "redis", matchIfMissing = true)
-	public ISequenceService springRedisTemplateSequenceServiceImpl() {
+	public ISequenceService redisSequenceServiceImpl() {
 		return new SpringRedisSequenceServiceImpl();
 	}
 
@@ -64,9 +67,27 @@ public class EasyjSequenceAutoConfiguration {
 	 * @return 序列服务的实现
 	 */
 	@Bean("dbSequenceService")
+	@ConditionalOnMissingBean(name = "dbSequenceService")
 	@ConditionalOnBean(DataSource.class)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "db", matchIfMissing = true)
 	public ISequenceService primaryDataBaseSequenceService(DataSource primaryDataSource) {
 		return new DbSequenceServiceImpl(primaryDataSource);
+	}
+
+
+	//--------------------------------------------------------------------------------------------------------------
+
+
+	/**
+	 * 基于 {@link java.util.concurrent.atomic.AtomicLong} 实现的序列服务
+	 *
+	 * @return 序列服务的实现
+	 */
+	@Bean("atomicLongSequenceService")
+	@ConditionalOnMissingBean(name = "atomicLongSequenceService")
+	@ConditionalOnBean(DataSource.class)
+	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long", matchIfMissing = true)
+	public ISequenceService atomicLongSequenceService() {
+		return new AtomicLongSequenceServiceImpl();
 	}
 }

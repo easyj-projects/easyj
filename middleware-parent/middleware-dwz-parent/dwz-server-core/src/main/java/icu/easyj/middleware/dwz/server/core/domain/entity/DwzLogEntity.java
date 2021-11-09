@@ -18,6 +18,8 @@ package icu.easyj.middleware.dwz.server.core.domain.entity;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import icu.easyj.middleware.dwz.server.core.domain.enums.DwzLogStatus;
+import org.springframework.lang.NonNull;
 
 /**
  * 短链接记录 实体
@@ -65,6 +67,17 @@ public class DwzLogEntity {
 		this.version = version;
 	}
 
+	public DwzLogEntity(Long id, String shortUrlCode, String longUrl, Date termOfValidity, DwzLogStatus statusEnum, Date createTime, Date updateTime, Integer version) {
+		this.id = id;
+		this.shortUrlCode = shortUrlCode;
+		this.longUrl = longUrl;
+		this.termOfValidity = termOfValidity;
+		this.status = statusEnum.getStatus();
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.version = version;
+	}
+
 
 	//region Getter、Setter
 
@@ -106,6 +119,18 @@ public class DwzLogEntity {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setStatus(@NonNull DwzLogStatus statusEnum) {
+		this.status = statusEnum.getStatus();
+	}
+
+	public boolean isStatus(DwzLogStatus statusEnum) {
+		return this.status == statusEnum.getStatus();
+	}
+
+	public boolean isNotStatus(DwzLogStatus statusEnum) {
+		return !this.isStatus(statusEnum);
 	}
 
 	public Date getCreateTime() {

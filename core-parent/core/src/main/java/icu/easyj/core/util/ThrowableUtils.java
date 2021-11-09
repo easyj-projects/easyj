@@ -88,9 +88,9 @@ public abstract class ThrowableUtils {
 	 * 拆包异常
 	 *
 	 * @param t 包装异常
-	 * @return 拆包后的异常
+	 * @return 拆包后的异常（只要入参不为空，则出参也不会为空）
 	 */
-	public static Throwable unwrap(@Nullable WrapperException t) {
+	public static Throwable unwrap(WrapperException t) {
 		if (t == null) {
 			return null;
 		}
