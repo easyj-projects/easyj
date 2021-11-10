@@ -24,6 +24,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -33,13 +34,27 @@ import org.springframework.util.Assert;
  */
 public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
+	private static final long DEFAULT_INITIAL_VALUE = 0L;
+
+
+	/**
+	 * Redis连接工厂
+	 */
 	private final RedisConnectionFactory connectionFactory;
+
+	/**
+	 * 序列默认值
+	 */
+	@Nullable
 	private final Long initialValue;
 
+	/**
+	 * 序列Map
+	 */
 	private final Map<String, RedisAtomicLong> redisAtomicLongMap;
 
 
-	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory, Long initialValue) {
+	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory, @Nullable Long initialValue) {
 		Assert.notNull(connectionFactory, "'connectionFactory' must be not null");
 
 		this.connectionFactory = connectionFactory;
@@ -49,8 +64,9 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	}
 
 	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory) {
-		this(connectionFactory, null);
+		this(connectionFactory, DEFAULT_INITIAL_VALUE);
 	}
+
 
 	@Override
 	public long nextVal(@NonNull String seqName) {
@@ -68,8 +84,12 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	}
 
 	private RedisAtomicLong getRedisAtomicLong(String seqName) {
-		return MapUtils.computeIfAbsent(redisAtomicLongMap, seqName, k -> {
-			return new RedisAtomicLong(seqName, connectionFactory);
+		return MapUtils.computeIfAbsent(this.redisAtomicLongMap, seqName, k -> {
+			if (this.initialValue != null) {
+				return new RedisAtomicLong(seqName, this.connectionFactory, this.initialValue);
+			} else {
+				return new RedisAtomicLong(seqName, this.connectionFactory);
+			}
 		});
 	}
 }

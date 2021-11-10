@@ -40,7 +40,21 @@ import org.springframework.lang.NonNull;
 @LoadLevel(name = "atomic-long", order = 999)
 public class AtomicLongSequenceServiceImpl implements ISequenceService {
 
+	private static final long DEFAULT_INITIAL_VALUE = 0L;
+
+
 	private final Map<String, AtomicLong> atomicLongMap = new ConcurrentHashMap<>();
+	private final long initialValue;
+
+
+	public AtomicLongSequenceServiceImpl(long initialValue) {
+		this.initialValue = initialValue;
+	}
+
+	public AtomicLongSequenceServiceImpl() {
+		this(DEFAULT_INITIAL_VALUE);
+	}
+
 
 	@Override
 	public long currVal(@NonNull String seqName) {
@@ -59,6 +73,6 @@ public class AtomicLongSequenceServiceImpl implements ISequenceService {
 
 
 	public AtomicLong getAtomicLong(String seqName) {
-		return MapUtils.computeIfAbsent(atomicLongMap, seqName, k -> new AtomicLong(0L));
+		return MapUtils.computeIfAbsent(atomicLongMap, seqName, k -> new AtomicLong(this.initialValue));
 	}
 }
