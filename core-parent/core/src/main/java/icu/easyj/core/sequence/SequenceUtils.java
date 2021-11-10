@@ -16,23 +16,28 @@
 package icu.easyj.core.sequence;
 
 import icu.easyj.core.exception.NotSupportedException;
+import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
  * 序列工具
  * <p>
- * 需要先调用set方法设置序列服务后，才能使用。
+ * 如果想要使用自己的实现，可通过set方法设置，也可通过 EnhancedServiceLoader 在/META-INF/services目录下增加实现，并设置order值小于999
  *
  * @author wangliang181230
  */
-public class SequenceUtils {
+public abstract class SequenceUtils {
 
 	//region 序列服务
 
 	public static ISequenceService sequenceService;
 
 	public static ISequenceService getSequenceService() {
+		if (sequenceService == null) {
+			sequenceService = EnhancedServiceLoader.load(ISequenceService.class);
+		}
+
 		return sequenceService;
 	}
 
