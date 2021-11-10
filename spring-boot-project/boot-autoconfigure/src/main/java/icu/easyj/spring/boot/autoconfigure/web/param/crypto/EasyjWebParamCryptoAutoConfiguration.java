@@ -17,14 +17,9 @@ package icu.easyj.spring.boot.autoconfigure.web.param.crypto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 
-import com.alibaba.fastjson.serializer.EasyjCollectionCodec;
-import com.alibaba.fastjson.serializer.EasyjListSerializer;
-import com.alibaba.fastjson.serializer.EasyjPrimitiveArraySerializer;
+import com.alibaba.fastjson.serializer.EasyjFastjsonBugfixUtils;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
@@ -152,29 +147,20 @@ public class EasyjWebParamCryptoAutoConfiguration {
 		@Override
 		public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 			// 创建：JSON入参解密/出参加密 消息转换器
-			FastJsonParamCryptoHttpMessageConverter httpMessageConverter =
-					new FastJsonParamCryptoHttpMessageConverter(this.paramCryptoFilter);
+			FastJsonParamCryptoHttpMessageConverter httpMessageConverter = new FastJsonParamCryptoHttpMessageConverter(this.paramCryptoFilter);
 			httpMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
 
-			// 创建：fastjson配置
+			//region 创建：fastjson配置
 			FastJsonConfig fastJsonConfig = new FastJsonConfig();
 			fastJsonConfig.setSerializerFeatures(this.getFeatures());
 			fastJsonConfig.setCharset(StandardCharsets.UTF_8);
-
-			// Long类型数据转String，防止JS中丢失精度
-			SerializeConfig serializeConfig = new SerializeConfig();
+			// 创建：序列化配置，并设置 Long/long 型数据转String，防止前端JS丢失精度
+			SerializeConfig serializeConfig = EasyjFastjsonBugfixUtils.newSerializeConfig(); // 使用BUG修复工具创建
 			serializeConfig.put(Long.class, ToStringSerializer.instance);
-			serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
-			//region fastjson自带的 PrimitiveArraySerializer、ListSerializer、CollectionCodec 没有对Long数据进行转字符串处理，待BUG修复前临时解决一下
-			serializeConfig.put(long[].class, EasyjPrimitiveArraySerializer.INSTANCE);
-			serializeConfig.put(ArrayList.class, EasyjListSerializer.INSTANCE);
-			serializeConfig.put(LinkedList.class, EasyjListSerializer.INSTANCE);
-			serializeConfig.put(HashSet.class, EasyjCollectionCodec.INSTANCE);
-			serializeConfig.put(LinkedHashSet.class, EasyjCollectionCodec.INSTANCE);
-			//endregion
 			fastJsonConfig.setSerializeConfig(serializeConfig);
+			//endregion
 
-			// 添加fastjson配置信息到转换器中
+			// 设置fastjson配置信息到转换器中
 			httpMessageConverter.setFastJsonConfig(fastJsonConfig);
 
 			// 创建：需处理的媒体类型列表
@@ -185,7 +171,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 			// 添加媒体类型到转换器中
 			httpMessageConverter.setSupportedMediaTypes(mediaTypes);
 
-			// 添加到转换器列表中
+			// 添加到转换器列表中的最前面，优先使用该消息处理器
 			converters.add(0, httpMessageConverter);
 		}
 
