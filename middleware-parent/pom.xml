@@ -43,5 +43,9 @@
 		<!--<module>middleware-dwz-parent</module>-->
 		<module>middleware-dwz-parent/dwz-server-application</module>
 		<module>middleware-dwz-parent/dwz-server-core</module>
+
+		<!--<module>middleware-websocket-parent</module>-->
+		<module>middleware-websocket-parent/websocket-server-application</module>
+		<module>middleware-websocket-parent/websocket-server-core</module>
 	</modules>
 </project>

@@ -24,6 +24,9 @@
 
 		<!-- 中间件：DWZ（短链接服务） -->
 		<module>middleware/spring-boot-starter-dwz-server</module>
+		<!-- 中间件：WebSocket -->
+		<module>middleware/spring-boot-starter-websocket-server</module>
+		<module>middleware/spring-boot-starter-websocket-client</module>
 
 		<!-- POI -->
 		<module>poi-excel/spring-boot-starter-poi-excel</module>

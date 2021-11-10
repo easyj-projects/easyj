@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.middleware.dwz.server;
+package icu.easyj.middleware.websocket.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * DWZ（短链接）服务端应用
+ * WebSocket服务端应用
  *
  * @author wangliang181230
  */
 @SpringBootApplication
-public class DwzServerApplication {
+public class WebSocketServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DwzServerApplication.class, args);
+		SpringApplication.run(WebSocketServerApplication.class, args);
 	}
 }

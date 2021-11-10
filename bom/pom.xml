@@ -92,6 +92,13 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- EasyJ中间件：WebSocket服务端核心模块 -->
+			<dependency>
+				<groupId>icu.easyj.middleware</groupId>
+				<artifactId>easyj-websocket-server-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 			<!-- ************************* Test ************************* -->
 

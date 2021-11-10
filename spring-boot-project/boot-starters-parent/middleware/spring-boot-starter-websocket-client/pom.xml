@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>boot-starters-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<groupId>icu.easyj.boot.middleware</groupId><!--三级分组：/boot/middleware-->
+	<artifactId>easyj-spring-boot-starter-websocket-client</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ中间件：WebSocket客户端启动包</description>
+
+	<dependencies>
+		<!-- 所有中间件的客户端与服务端通用的模块（含：WebSocket客户端和服务端通用的模块） -->
+		<dependency>
+			<groupId>icu.easyj.middleware</groupId>
+			<artifactId>easyj-middleware-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- EasyJ Starter -->
+		<dependency>
+			<groupId>icu.easyj.boot</groupId>
+			<artifactId>easyj-spring-boot-starter</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

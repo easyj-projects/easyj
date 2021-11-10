@@ -141,6 +141,19 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- WebSocket服务端 -->
+			<dependency>
+				<groupId>icu.easyj.boot.middleware</groupId>
+				<artifactId>easyj-spring-boot-starter-websocket-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- WebSocket客户端 -->
+			<dependency>
+				<groupId>icu.easyj.boot.middleware</groupId>
+				<artifactId>easyj-spring-boot-starter-websocket-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 			<!-- ************************* Test ************************* -->
 
