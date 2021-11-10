@@ -17,7 +17,6 @@ package icu.easyj.db.sequence.impls;
 
 import javax.sql.DataSource;
 
-import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.db.util.DbUtils;
 import icu.easyj.db.util.PrimaryDbUtils;
@@ -29,7 +28,6 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "dataBaseSequenceService", order = 200)
 public class DataBaseSequenceServiceImpl implements ISequenceService {
 
 	@Nullable

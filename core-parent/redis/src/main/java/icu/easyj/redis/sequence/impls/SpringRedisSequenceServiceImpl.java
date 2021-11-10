@@ -15,53 +15,61 @@
  */
 package icu.easyj.redis.sequence.impls;
 
-import icu.easyj.core.loader.LoadLevel;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import icu.easyj.core.sequence.ISequenceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import icu.easyj.core.util.MapUtils;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.lang.NonNull;
+import org.springframework.util.Assert;
 
 /**
  * 基于 {@link RedisTemplate} 实现的序列服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "redisSequenceService", order = 100)
 public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
-	private static RedisConnectionFactory connectionFactory;
+	private final RedisConnectionFactory connectionFactory;
+	private final Long initialValue;
 
+	private final Map<String, RedisAtomicLong> redisAtomicLongMap;
+
+
+	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory, Long initialValue) {
+		Assert.notNull(connectionFactory, "'connectionFactory' must be not null");
+
+		this.connectionFactory = connectionFactory;
+		this.initialValue = initialValue;
+
+		this.redisAtomicLongMap = new ConcurrentHashMap<>();
+	}
+
+	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory) {
+		this(connectionFactory, null);
+	}
 
 	@Override
 	public long nextVal(@NonNull String seqName) {
-		return this.getAtomicLong(seqName).incrementAndGet();
+		return this.getRedisAtomicLong(seqName).incrementAndGet();
 	}
 
 	@Override
 	public long currVal(@NonNull String seqName) {
-		return this.getAtomicLong(seqName).get();
+		return this.getRedisAtomicLong(seqName).get();
 	}
 
 	@Override
 	public long setVal(@NonNull String seqName, long newVal) {
-		this.getAtomicLong(seqName).set(newVal);
-		return -1; // -1表示未知
+		return this.getRedisAtomicLong(seqName).getAndSet(newVal);
 	}
 
-	private RedisAtomicLong getAtomicLong(String seqName) {
-		return new RedisAtomicLong(seqName, connectionFactory);
-	}
-
-
-	/**
-	 * 依赖注入RedisTemplate
-	 *
-	 * @param connectionFactory Redis连接工厂
-	 */
-	@Autowired
-	public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
-		SpringRedisSequenceServiceImpl.connectionFactory = connectionFactory;
+	private RedisAtomicLong getRedisAtomicLong(String seqName) {
+		return MapUtils.computeIfAbsent(redisAtomicLongMap, seqName, k -> {
+			return new RedisAtomicLong(seqName, connectionFactory);
+		});
 	}
 }

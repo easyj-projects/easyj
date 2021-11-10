@@ -29,6 +29,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * 基于EasyJ自己的DWZ中间件实现的短链接服务
@@ -36,10 +37,12 @@ import org.springframework.context.annotation.Configuration;
  * @author wangliang181230
  * @since 0.2.1
  */
+@Lazy
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "easyj.sdk.dwz.type", havingValue = "easyj-middleware")
 public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 
+	@Lazy
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass(HttpEasyjMiddleWareDwzTemplateImpl.class)
 	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "http", matchIfMissing = true)
@@ -64,6 +67,7 @@ public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 	}
 
 
+	@Lazy
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass(SpringCloudFeignEasyjMiddleWareDwzTemplateImpl.class)
 	@EnableFeignClients(clients = EasyjDwzRestControllerFeignClient.class)

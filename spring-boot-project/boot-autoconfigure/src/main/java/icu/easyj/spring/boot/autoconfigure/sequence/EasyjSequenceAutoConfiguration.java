@@ -25,13 +25,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 /**
  * 序列服务自动装配类
  *
  * @author wangliang181230
  */
+@Lazy
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "easyj.sequence.type")
 public class EasyjSequenceAutoConfiguration {
@@ -39,15 +40,14 @@ public class EasyjSequenceAutoConfiguration {
 	/**
 	 * 基于 Redis 实现的序列服务
 	 */
+	@Lazy
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "redis")
 	static class RedisSequenceServiceConfiguration {
 
-		@Lazy(false)
-		@Primary
 		@Bean
-		public ISequenceService redisSequenceServiceImpl() {
-			return new SpringRedisSequenceServiceImpl();
+		public ISequenceService redisSequenceServiceImpl(RedisConnectionFactory connectionFactory) {
+			return new SpringRedisSequenceServiceImpl(connectionFactory);
 		}
 	}
 
@@ -55,6 +55,7 @@ public class EasyjSequenceAutoConfiguration {
 	/**
 	 * 基于 数据库 实现的序列服务
 	 */
+	@Lazy
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "db")
 	static class DataBaseSequenceServiceConfiguration {
@@ -69,6 +70,7 @@ public class EasyjSequenceAutoConfiguration {
 	/**
 	 * 基于 {@link java.util.concurrent.atomic.AtomicLong} 实现的序列服务
 	 */
+	@Lazy
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long")
 	static class AtomicLongSequenceServiceConfiguration {

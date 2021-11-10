@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.core.util.MapUtils;
 import org.springframework.lang.NonNull;
@@ -37,7 +36,6 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "atomicLongSequenceService", order = 999)
 public class AtomicLongSequenceServiceImpl implements ISequenceService {
 
 	private final Map<String, AtomicLong> atomicLongMap = new ConcurrentHashMap<>();

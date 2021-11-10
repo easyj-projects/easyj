@@ -16,18 +16,31 @@
 package icu.easyj.core.sequence;
 
 import icu.easyj.core.exception.NotSupportedException;
-import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
  * 序列工具
+ * <p>
+ * 需要先调用set方法设置序列服务后，才能使用。
  *
  * @author wangliang181230
  */
 public class SequenceUtils {
 
-	public static final ISequenceService SEQUENCE_SERVICE = EnhancedServiceLoader.load(ISequenceService.class);
+	//region 序列服务
+
+	public static ISequenceService sequenceService;
+
+	public static ISequenceService getSequenceService() {
+		return sequenceService;
+	}
+
+	public static void setSequenceService(ISequenceService sequenceService) {
+		SequenceUtils.sequenceService = sequenceService;
+	}
+
+	//endregion
 
 
 	/**
@@ -39,7 +52,7 @@ public class SequenceUtils {
 	 */
 	public static long currVal(@NonNull String seqName) {
 		Assert.notNull(seqName, "'seqName' must be not null");
-		return SEQUENCE_SERVICE.currVal(seqName);
+		return getSequenceService().currVal(seqName);
 	}
 
 	/**
@@ -50,7 +63,7 @@ public class SequenceUtils {
 	 */
 	public static long nextVal(@NonNull String seqName) {
 		Assert.notNull(seqName, "'seqName' must be not null");
-		return SEQUENCE_SERVICE.nextVal(seqName);
+		return getSequenceService().nextVal(seqName);
 	}
 
 	/**
@@ -63,6 +76,6 @@ public class SequenceUtils {
 	 */
 	public static long setVal(@NonNull String seqName, long newVal) {
 		Assert.notNull(seqName, "'seqName' must be not null");
-		return SEQUENCE_SERVICE.setVal(seqName, newVal);
+		return getSequenceService().setVal(seqName, newVal);
 	}
 }
