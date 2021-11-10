@@ -44,6 +44,9 @@ class OracleDbDialect implements IDbDialect {
 		return "SELECT SYSTIMESTAMP FROM DUAL";
 	}
 
+
+	//region 序列相关SQL
+
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		return "SELECT " + SqlUtils.removeDangerousCharsForSeqName(seqName).toUpperCase() + ".CURRVAL FROM DUAL";
@@ -59,6 +62,8 @@ class OracleDbDialect implements IDbDialect {
 		// TODO: 待开发，参考：https://www.cnblogs.com/mq0036/p/13151770.html
 		throw new NotSupportedException("暂不支持Oracle设置序列值");
 	}
+
+	//endregion
 
 
 	//-----------------------------------------------------------------------------------------

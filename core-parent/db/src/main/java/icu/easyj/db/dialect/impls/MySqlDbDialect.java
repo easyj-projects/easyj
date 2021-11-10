@@ -45,6 +45,9 @@ class MySqlDbDialect implements IDbDialect {
 		return "SELECT CURRENT_TIMESTAMP(3)";
 	}
 
+
+	//region 序列相关SQL
+
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		return "SELECT func_currval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "')";
@@ -59,6 +62,8 @@ class MySqlDbDialect implements IDbDialect {
 	public String getSeqSetValSql(String seqName, long newVal) {
 		return "SELECT func_setval('" + SqlUtils.removeDangerousCharsForSeqName(seqName) + "', " + newVal + ")";
 	}
+
+	//endregion
 
 
 	//-----------------------------------------------------------------------------------------

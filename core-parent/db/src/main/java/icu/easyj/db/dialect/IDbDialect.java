@@ -41,6 +41,9 @@ public interface IDbDialect extends IDialect {
 	 */
 	String getTimeSql();
 
+
+	//region 序列相关SQL
+
 	/**
 	 * 获取当前序列号的SQL
 	 *
@@ -67,6 +70,8 @@ public interface IDbDialect extends IDialect {
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
 	String getSeqSetValSql(String seqName, long newVal);
+
+	//endregion
 
 
 	//-----------------------------------------------------------------------------------------

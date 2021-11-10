@@ -44,6 +44,9 @@ class MsSqlServerDbDialect implements IDbDialect {
 		return "SELECT GETDATE()";
 	}
 
+
+	//region 序列相关SQL
+
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		// TODO: 待开发
@@ -60,6 +63,8 @@ class MsSqlServerDbDialect implements IDbDialect {
 		// TODO: 待开发
 		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
 	}
+
+	//endregion
 
 
 	//-----------------------------------------------------------------------------------------

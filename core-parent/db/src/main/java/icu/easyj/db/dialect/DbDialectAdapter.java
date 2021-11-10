@@ -51,6 +51,9 @@ public class DbDialectAdapter implements IDbDialect {
 		return this.dbDialect.getTimeSql();
 	}
 
+
+	//region 序列相关SQL
+
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		return this.dbDialect.getSeqCurrValSql(seqName);
@@ -65,6 +68,8 @@ public class DbDialectAdapter implements IDbDialect {
 	public String getSeqSetValSql(String seqName, long newVal) {
 		return this.dbDialect.getSeqSetValSql(seqName, newVal);
 	}
+
+	//endregion
 
 
 	//-----------------------------------------------------------------------------------------
