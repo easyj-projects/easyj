@@ -41,7 +41,7 @@ public class EasyjSequenceAutoConfiguration {
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "redis")
-	public static class RedisSequenceServiceConfiguration {
+	static class RedisSequenceServiceConfiguration {
 
 		@Lazy(false)
 		@Primary
@@ -57,7 +57,7 @@ public class EasyjSequenceAutoConfiguration {
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "db")
-	public static class DataBaseSequenceServiceConfiguration {
+	static class DataBaseSequenceServiceConfiguration {
 
 		@Bean
 		public ISequenceService dataBaseSequenceService(DataSource primaryDataSource) {
@@ -71,7 +71,7 @@ public class EasyjSequenceAutoConfiguration {
 	 */
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.sequence.type", havingValue = "atomic-long")
-	public static class AtomicLongSequenceServiceConfiguration {
+	static class AtomicLongSequenceServiceConfiguration {
 
 		@Bean
 		public ISequenceService atomicLongSequenceService() {

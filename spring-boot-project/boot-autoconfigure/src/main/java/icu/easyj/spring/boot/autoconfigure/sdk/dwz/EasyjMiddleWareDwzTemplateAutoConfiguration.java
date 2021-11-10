@@ -43,7 +43,7 @@ public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass(HttpEasyjMiddleWareDwzTemplateImpl.class)
 	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "http", matchIfMissing = true)
-	public static class HttpEasyjMiddleWareDwzTemplateConfiguration {
+	static class HttpEasyjMiddleWareDwzTemplateConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
@@ -68,7 +68,7 @@ public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 	@ConditionalOnClass(SpringCloudFeignEasyjMiddleWareDwzTemplateImpl.class)
 	@EnableFeignClients(clients = EasyjDwzRestControllerFeignClient.class)
 	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "feign")
-	public static class SpringCloudFeignEasyjMiddleWareDwzTemplateConfiguration {
+	static class SpringCloudFeignEasyjMiddleWareDwzTemplateConfiguration {
 
 		@Bean
 		@ConditionalOnMissingBean
