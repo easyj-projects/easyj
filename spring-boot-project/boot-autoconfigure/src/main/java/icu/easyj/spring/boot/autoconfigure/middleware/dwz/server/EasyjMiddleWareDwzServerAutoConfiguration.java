@@ -123,7 +123,7 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.task.enabled", matchIfMissing = true)
 	@EnableScheduling
-	public static class EasyjDwzServerTaskConfiguration {
+	static class EasyjDwzServerTaskConfiguration {
 
 		/**
 		 * 创建：定时任务配置Bean
