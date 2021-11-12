@@ -1,0 +1,31 @@
+easyj.config.activate.on-class:
+  - ch.qos.logback.core.FileAppender
+
+easyj:
+  logging:
+    logback:
+      console-appender:
+        enabled: true
+      file-appender:
+        enabled: true
+        #文件名前缀（文件名格式：${前缀}.${logLevel}.log，例子：dwz-server.error.log）
+        file-name-pre: ${spring.application.name:spring}
+
+        #异步执行日志的配置
+        async-appender:
+          enabled: false
+          queue-size: 256
+
+        #sub-appender的开关配置
+        all-appender.enabled: true
+        trace-appender.enabled: false
+        debug-appender.enabled: false
+        info-appender.enabled: false
+        warn-appender.enabled: true
+        error-appender.enabled: true
+        fatal-appender.enabled: true
+
+logging:
+  config: classpath:easyj/logging/logback/logback-spring.xml #TODO: 该配置考虑是否在默认配置中设置
+  file:
+    path: ${logging.path:${user.home}/logs/${easyj.logging.logback.file-appender.file-name-pre}}

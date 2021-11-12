@@ -33,6 +33,7 @@
 		<!-- Common dependencies version -->
 		<slf4j.version>1.7.32</slf4j.version>
 		<logback.version>1.2.6</logback.version>
+		<janino.version>3.1.6</janino.version>
 		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
 
 		<!-- Tool dependencies version -->
@@ -109,6 +110,17 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-core</artifactId>
 				<version>${logback.version}</version>
+			</dependency>
+			<!-- janino：目前用于Logback配置文件中的if判断表达式。 -->
+			<dependency>
+				<groupId>org.codehaus.janino</groupId>
+				<artifactId>janino</artifactId>
+				<version>${janino.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.janino</groupId>
+				<artifactId>commons-compiler</artifactId>
+				<version>${janino.version}</version>
 			</dependency>
 			<!-- jsr305 -->
 			<dependency>

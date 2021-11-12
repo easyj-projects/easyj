@@ -13,35 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.core.logging;
+
+import icu.easyj.core.modelfortest.TestClass;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
 
 /**
- * 测试用的类
+ * {@link EnhancedLogger} 测试类
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+class EnhancedLoggerTest {
 
-	private String f1;
+	@Test
+	void test() {
+		Logger logger = EnhancedLoggerFactory.getLogger(this.getClass());
 
+		Object logParam1 = new TestClass("aaa");
+		Object logParam2 = new TestClass("bbb");
 
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
+		logger.info("arg1: {}, arg2: {}, arg3: {}", 1, LogUtils.wrap(logParam1), LogUtils.wrap(logParam2));
 	}
 }

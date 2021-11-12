@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<include resource="easyj/logging/logback/defaults.xml"/>
+
+
+	<!-- console-appender properties -->
+	<springProperty name="CONSOLE_ENABLED" source="easyj.logging.logback.console-appender.enabled" defaultValue="true"/>
+	<!-- file-appender properties -->
+	<springProperty name="FILE_ENABLED" source="easyj.logging.logback.file-appender.enabled" defaultValue="true"/>
+	<springProperty name="FILE_ASYNC_ENABLED" source="easyj.logging.logback.file-appender.async-appender.enabled" defaultValue="false"/>
+
+
+	<!-- console-appender -->
+	<include resource="easyj/logging/logback/appenders/console-appender.xml"/>
+	<!-- file-appender -->
+	<include resource="easyj/logging/logback/appenders/file-appender.xml"/>
+	<include resource="easyj/logging/logback/appenders/async-file-appender.xml"/>
+
+
+	<root level="INFO">
+		<!-- console-appender -->
+		<if condition='"true".equalsIgnoreCase(property("CONSOLE_ENABLED"))'>
+			<then>
+				<appender-ref ref="CONSOLE"/>
+			</then>
+		</if>
+
+		<!-- file-appender -->
+		<if condition='"true".equalsIgnoreCase(property("FILE_ENABLED"))'>
+			<then>
+				<if condition='"true".equalsIgnoreCase(property("FILE_ASYNC_ENABLED"))'>
+					<then>
+						<!-- async-file-appender -->
+						<if condition='"true".equalsIgnoreCase(property("FILE_ALL_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_ALL"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_TRACE_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_TRACE"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_DEBUG_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_DEBUG"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_INFO_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_INFO"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_WARN_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_WARN"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_ERROR_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_ERROR"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_FATAL_ENABLED"))'>
+							<then>
+								<appender-ref ref="ASYNC_FILE_FATAL"/>
+							</then>
+						</if>
+					</then>
+					<else>
+						<!-- file-appender -->
+						<if condition='"true".equalsIgnoreCase(property("FILE_ALL_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_ALL"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_TRACE_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_TRACE"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_DEBUG_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_DEBUG"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_INFO_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_INFO"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_WARN_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_WARN"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_ERROR_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_ERROR"/>
+							</then>
+						</if>
+						<if condition='"true".equalsIgnoreCase(property("FILE_FATAL_ENABLED"))'>
+							<then>
+								<appender-ref ref="FILE_FATAL"/>
+							</then>
+						</if>
+					</else>
+				</if>
+			</then>
+		</if>
+	</root>
+</configuration>

@@ -13,35 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.spring.boot.logging.logback;
+
+import ch.qos.logback.classic.pattern.ExtendedThrowableProxyConverter;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.core.CoreConstants;
 
 /**
- * 测试用的类
+ * 在堆栈信息前后加一个标记行，更加方便观察
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+public class EasyjExtendedWhitespaceThrowableProxyConverter extends ExtendedThrowableProxyConverter {
 
-	private String f1;
-
-
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
+	@Override
+	protected String throwableProxyToString(IThrowableProxy tp) {
+		return "==>" + CoreConstants.LINE_SEPARATOR + super.throwableProxyToString(tp)
+				+ "<==" + CoreConstants.LINE_SEPARATOR + CoreConstants.LINE_SEPARATOR;
 	}
 }

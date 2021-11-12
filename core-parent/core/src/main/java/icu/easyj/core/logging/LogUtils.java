@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.core.logging;
+
+import java.util.function.Supplier;
 
 /**
- * 测试用的类
+ * 日志工具类
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+public abstract class LogUtils {
 
-	private String f1;
-
-
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
+	/**
+	 * 包装成 Supplier
+	 *
+	 * @param logParam 日志参数
+	 * @return 日志参数提供者
+	 */
+	public static Supplier<?> wrap(Object logParam) {
+		return () -> logParam;
 	}
 }

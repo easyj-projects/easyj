@@ -13,35 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.core.logging.impls;
+
+import com.alibaba.fastjson.JSON;
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.core.logging.IToStringService;
+
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 
 /**
- * 测试用的类
+ * 基于 Fastjson 方法实现的转字符串服务
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+@LoadLevel(name = FASTJSON, order = 10)
+@DependsOnClass(JSON.class)
+class AlibabaFastjsonToStringService implements IToStringService {
 
-	private String f1;
-
-
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
+	@Override
+	public String toString(Object obj) {
+		return JSON.toJSONString(obj);
 	}
 }

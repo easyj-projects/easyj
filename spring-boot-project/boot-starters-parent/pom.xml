@@ -18,7 +18,8 @@
 	<modules>
 		<!-- Core -->
 		<module>spring-boot-starter</module>
-
+		<!-- Logging -->
+		<module>spring-boot-starter-logging</module>
 		<!-- Web -->
 		<module>spring-boot-starter-web</module>
 

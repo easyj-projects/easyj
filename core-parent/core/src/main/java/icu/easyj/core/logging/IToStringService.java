@@ -13,35 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.core.logging;
 
 /**
- * 测试用的类
+ * 将对象转换为字符串的服务（主要用于日志参数转换为字符串）
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+public interface IToStringService {
 
-	private String f1;
-
-
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
-	}
+	/**
+	 * 转为字符串的工具类
+	 *
+	 * @param obj 对象
+	 * @return 字符串
+	 */
+	String toString(Object obj);
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+以下文件是从 'spring-boot-xxx.jar' 中复制过来的，并做了一些修改。
+-->
+
+<included>
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+	<!-- EasyJ的wEx2，console-appender和file-appender默认使用这个 -->
+	<conversionRule conversionWord="wEx2" converterClass="icu.easyj.spring.boot.logging.logback.EasyjExtendedWhitespaceThrowableProxyConverter"/>
+
+
+	<!-- spring-boot peoperties -->
+	<springProperty name="APPLICATION_NAME" source="spring.application-name"
+					defaultValue="UNKNOWN"/>
+	<springProperty name="PORT" source="server.port"
+					defaultValue="8080"/>
+
+
+	<logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+	<logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+	<logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+	<logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+	<logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+	<logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+	<logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+	<logger name="org.springframework.boot.actuate.endpoint.jmx" level="WARN"/>
+</included>

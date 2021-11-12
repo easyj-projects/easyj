@@ -57,6 +57,7 @@
 		<module>boot-bom</module>
 
 		<module>boot-core</module>
+		<module>boot-logging</module>
 		<module>boot-environment-enhanced</module>
 
 		<module>boot-autoconfigure</module>

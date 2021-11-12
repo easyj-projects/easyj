@@ -74,6 +74,23 @@
 			</dependency>
 
 
+			<!-- ************************* Logging ************************* -->
+
+			<!-- EasyJ Spring Boot Logging -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-logging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Starter: EasyJ Spring Boot Logging -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-logging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+
 			<!-- ************************* POI ************************* -->
 
 			<!-- Starter: POI excel -->

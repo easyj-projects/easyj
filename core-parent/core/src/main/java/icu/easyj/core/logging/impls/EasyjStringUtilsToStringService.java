@@ -13,35 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.modelfortest;
+package icu.easyj.core.logging.impls;
+
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.logging.IToStringService;
+import icu.easyj.core.util.StringUtils;
 
 /**
- * 测试用的类
+ * 基于EasyJ的 {@link StringUtils#toString(Object)} 方法实现的转字符串服务
  *
  * @author wangliang181230
  */
-public class TestClass extends TestSuperClass {
+@LoadLevel(name = "StringUtils", order = 999)
+class EasyjStringUtilsToStringService implements IToStringService {
 
-	private String f1;
-
-
-	public TestClass() {
-	}
-
-	public TestClass(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public String getF1() {
-		return f1;
-	}
-
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
-
-
-	public class TestInnerClass {
+	@Override
+	public String toString(Object obj) {
+		return StringUtils.toString(obj);
 	}
 }

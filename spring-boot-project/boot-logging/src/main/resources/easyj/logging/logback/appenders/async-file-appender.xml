@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+	<if condition='"truetrue".equalsIgnoreCase(property("FILE_ENABLED") + property("FILE_ASYNC_ENABLED"))'>
+		<then>
+			<!-- async-file-appender properties -->
+			<springProperty name="FILE_ASYNC_QUEUE_SIZE" source="easyj.logging.logback.file-appender.async.queue-size"
+							defaultValue="256"/>
+
+			<!-- async-all-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_ALL_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_ALL" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_ALL"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-trace-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_TRACE_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_TRACE" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_TRACE"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-debug-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_DEBUG_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_DEBUG" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_DEBUG"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-info-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_INFO_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_INFO" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_INFO"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-warn-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_WARN_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_WARN" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_WARN"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-error-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_ERROR_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_ERROR"/>
+					</appender>
+				</then>
+			</if>
+
+			<!-- async-fatal-appender -->
+			<if condition='"true".equalsIgnoreCase(property("FILE_FATAL_ENABLED"))'>
+				<then>
+					<appender name="ASYNC_FILE_FATAL" class="ch.qos.logback.classic.AsyncAppender">
+						<queueSize>${FILE_ASYNC_QUEUE_SIZE}</queueSize>
+						<appender-ref ref="FILE_FATAL"/>
+					</appender>
+				</then>
+			</if>
+		</then>
+	</if>
+</included>
