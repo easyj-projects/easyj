@@ -2,19 +2,28 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<include resource="easyj/logging/logback/defaults.xml"/>
 
-
+	<!-- Properties -->
 	<!-- console-appender properties -->
 	<springProperty name="CONSOLE_ENABLED" source="easyj.logging.logback.console-appender.enabled" defaultValue="true"/>
 	<!-- file-appender properties -->
 	<springProperty name="FILE_ENABLED" source="easyj.logging.logback.file-appender.enabled" defaultValue="true"/>
 	<springProperty name="FILE_ASYNC_ENABLED" source="easyj.logging.logback.file-appender.async-appender.enabled" defaultValue="false"/>
+	<!-- logstash-appender properties -->
+	<springProperty name="LOGSTASH_ENABLED" source="easyj.logging.logback.logstash-appender.enabled" defaultValue="false"/>
+	<!-- kafka-appender properties -->
+	<springProperty name="KAFKA_ENABLED" source="easyj.logging.logback.kafka-appender.enabled" defaultValue="false"/>
 
 
+	<!-- Includes -->
 	<!-- console-appender -->
 	<include resource="easyj/logging/logback/appenders/console-appender.xml"/>
 	<!-- file-appender -->
 	<include resource="easyj/logging/logback/appenders/file-appender.xml"/>
 	<include resource="easyj/logging/logback/appenders/async-file-appender.xml"/>
+	<!-- kafka-appender -->
+	<include resource="easyj/logging/logback/appenders/kafka-appender.xml"/>
+	<!-- logstash-appender -->
+	<include resource="easyj/logging/logback/appenders/logstash-appender.xml"/>
 
 
 	<root level="INFO">
@@ -22,6 +31,20 @@
 		<if condition='"true".equalsIgnoreCase(property("CONSOLE_ENABLED"))'>
 			<then>
 				<appender-ref ref="CONSOLE"/>
+			</then>
+		</if>
+
+		<!-- kafka-appender -->
+		<if condition='"true".equalsIgnoreCase(property("KAFKA_ENABLED"))'>
+			<then>
+				<appender-ref ref="KAFKA"/>
+			</then>
+		</if>
+
+		<!-- logstash-appender -->
+		<if condition='"true".equalsIgnoreCase(property("LOGSTASH_ENABLED"))'>
+			<then>
+				<appender-ref ref="LOGSTASH"/>
 			</then>
 		</if>
 

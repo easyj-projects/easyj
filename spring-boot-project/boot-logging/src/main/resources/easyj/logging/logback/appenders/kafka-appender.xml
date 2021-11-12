@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+	<if condition='"true".equalsIgnoreCase(property("KAFKA_ENABLED"))'>
+		<then>
+			<!-- kafka-appender properties -->
+			<springProperty name="KAFKA_BOOTSTRAP_SERVERS" source="easyj.logging.logback.kafka-appender.bootstrap-servers"
+							defaultValue="127.0.0.1:9092"/>
+			<springProperty name="KAFKA_TOPIC" source="easyj.logging.logback.kafka-appender.topic"
+							defaultValue="logback_to_logstash"/>
+
+			<appender name="KAFKA" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+				<encoder>
+					<!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%p|${APPLICATION_NAME:seata-server}|${RPC_PORT:-0}|%t|%logger|%X{X-TX-XID:-}|%X{X-TX-BRANCH-ID:-}|%m|%wex</pattern>-->
+					<pattern>
+						{
+						"app_name":"${APPLICATION_NAME}",
+						"http_port": ${PORT},
+						"@timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+						"level":"%p",
+						"thread_name": "%t",
+						"logger_name": "%logger",
+						"message": "%m",
+						"stack_trace": "%wex"
+						}
+					</pattern>
+				</encoder>
+				<topic>${KAFKA_TOPIC}</topic>
+				<keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+				<deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+				<producerConfig>bootstrap.servers=${KAFKA_BOOTSTRAP_SERVERS}</producerConfig>
+				<producerConfig>acks=0</producerConfig>
+				<producerConfig>linger.ms=1000</producerConfig>
+				<producerConfig>max.block.ms=0</producerConfig>
+			</appender>
+		</then>
+	</if>
+</included>

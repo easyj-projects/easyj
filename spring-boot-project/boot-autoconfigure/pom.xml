@@ -60,6 +60,19 @@
 			<optional>true</optional><!--可选功能-->
 		</dependency>
 
+		<!-- logback appenders -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.danielwegener</groupId>
+			<artifactId>logback-kafka-appender</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+
 
 		<!-- 功能：Excel文件导入导出（目前包含easyj、afterturn两种实现） -->
 		<!-- afterturn-easypoi -->

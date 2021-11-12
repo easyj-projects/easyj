@@ -89,6 +89,11 @@
 				<artifactId>easyj-spring-boot-starter-logging</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 
 			<!-- ************************* POI ************************* -->

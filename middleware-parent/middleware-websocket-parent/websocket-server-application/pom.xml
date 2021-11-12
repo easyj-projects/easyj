@@ -27,12 +27,9 @@
 
 		<!-- logging -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
+			<groupId>icu.easyj.boot</groupId>
+			<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 

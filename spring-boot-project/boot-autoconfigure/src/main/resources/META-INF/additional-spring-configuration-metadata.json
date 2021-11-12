@@ -84,7 +84,7 @@
 			"defaultValue": true
 		},
 		{
-			"name": "easyj.logging.logback.file-appender.file-name-pre",
+			"name": "easyj.logging.logback.file-appender.file-name-prefix",
 			"type": "java.lang.String",
 			"description": "[logback] 文件名前缀，格式：${前缀}.${PORT}.${LOG_LEVEL}.log，例：dwz-server.3001.error.log",
 			"defaultValue": "${spring.application.name:spring}"
@@ -142,6 +142,46 @@
 			"type": "java.lang.Integer",
 			"description": "[logback] 异步记录日志到文件时，日志队列的大小.",
 			"defaultValue": 256
+		},
+		{
+			"name": "easyj.logging.logback.kafka-appender.enabled",
+			"type": "java.lang.Boolean",
+			"description": "[logback] 是否启用将日志推送到 Kafka 中的appender.",
+			"defaultValue": false
+		},
+		{
+			"name": "easyj.logging.logback.kafka-appender.bootstrap-servers",
+			"type": "java.util.List<java.lang.String>",
+			"sourceType": "com.github.danielwegener.logback.kafka.KafkaAppender",
+			"description": "[logback] 日志推送到的Kafka的服务地址.",
+			"defaultValue": "${spring.kafka.bootstrap-servers:127.0.0.1:9092}"
+		},
+		{
+			"name": "easyj.logging.logback.kafka-appender.topic",
+			"type": "java.lang.String",
+			"sourceType": "com.github.danielwegener.logback.kafka.KafkaAppender",
+			"description": "[logback] 日志推送到的Kafka的topic.",
+			"defaultValue": "logback_to_logstash"
+		},
+		{
+			"name": "easyj.logging.logback.logstash-appender.enabled",
+			"type": "java.lang.Boolean",
+			"description": "[logback] 是否启用将日志推送到 LogStash 中的appender.",
+			"defaultValue": false
+		},
+		{
+			"name": "easyj.logging.logback.logstash-appender.destination",
+			"type": "java.lang.String",
+			"sourceType": "net.logstash.logback.appender.LogstashTcpSocketAppender",
+			"description": "[logback] 日志推送到的 LogStash 的地址.",
+			"defaultValue": "127.0.0.1:4560"
+		},
+		{
+			"name": "easyj.logging.logback.logstash-appender.queue-size",
+			"type": "java.lang.Integer",
+			"sourceType": "net.logstash.logback.appender.LogstashTcpSocketAppender",
+			"description": "[logback] logstash-appender的异步队列大小.",
+			"defaultValue": 8192
 		},
 		{
 			"name": "easyj.server.host",

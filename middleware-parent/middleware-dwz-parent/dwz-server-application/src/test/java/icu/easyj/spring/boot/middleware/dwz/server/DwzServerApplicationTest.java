@@ -21,6 +21,7 @@ import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -45,5 +46,10 @@ class DwzServerApplicationTest {
 
 		System.out.println(dwzRestController.getClass());
 		System.out.println(dwzRedirectController.getClass());
+	}
+
+	@Test
+	void testLogging() {
+		LoggerFactory.getLogger(this.getClass()).error("测试日志功能: {}", "aaa", new Exception("故意输出堆栈日志"));
 	}
 }

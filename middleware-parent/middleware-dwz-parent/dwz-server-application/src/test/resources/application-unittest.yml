@@ -6,3 +6,9 @@ easyj:
       server:
         log-store:
           type: mock
+  logging:
+    logback:
+      kafka-appender:
+        enabled: true
+      logstash-appender:
+        enabled: true

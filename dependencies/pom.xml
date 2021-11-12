@@ -32,9 +32,13 @@
 	<properties>
 		<!-- Common dependencies version -->
 		<slf4j.version>1.7.32</slf4j.version>
+		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
+
+		<!-- Logging dependencies version -->
 		<logback.version>1.2.6</logback.version>
 		<janino.version>3.1.6</janino.version>
-		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
+		<kafka-appender.version>0.2.0-RC2</kafka-appender.version>
+		<logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
 
 		<!-- Tool dependencies version -->
 		<commons-lang3.version>3.10</commons-lang3.version>
@@ -95,6 +99,15 @@
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
 			</dependency>
+			<!-- jsr305 -->
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${findbugs.jsr305.version}</version>
+			</dependency>
+
+
+			<!-- 依赖定义：Logging -->
 			<!-- Logback -->
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -122,11 +135,17 @@
 				<artifactId>commons-compiler</artifactId>
 				<version>${janino.version}</version>
 			</dependency>
-			<!-- jsr305 -->
+			<!-- logback-kafka-appender -->
 			<dependency>
-				<groupId>com.google.code.findbugs</groupId>
-				<artifactId>jsr305</artifactId>
-				<version>${findbugs.jsr305.version}</version>
+				<groupId>com.github.danielwegener</groupId>
+				<artifactId>logback-kafka-appender</artifactId>
+				<version>${kafka-appender.version}</version>
+			</dependency>
+			<!-- logback-logstash-appender -->
+			<dependency>
+				<groupId>net.logstash.logback</groupId>
+				<artifactId>logstash-logback-encoder</artifactId>
+				<version>${logstash-logback-encoder.version}</version>
 			</dependency>
 
 			<!-- 依赖定义：Tool -->

@@ -14,7 +14,7 @@
 
 
 	<!-- spring-boot peoperties -->
-	<springProperty name="APPLICATION_NAME" source="spring.application-name"
+	<springProperty name="APPLICATION_NAME" source="spring.application.name"
 					defaultValue="UNKNOWN"/>
 	<springProperty name="PORT" source="server.port"
 					defaultValue="8080"/>

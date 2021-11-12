@@ -5,32 +5,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj.boot</groupId>
-		<artifactId>spring-boot-project</artifactId>
+		<artifactId>boot-starters-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-spring-boot-logging</artifactId>
+	<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>在SpringBoot中使用EasyJ日志的模块。</description>
+	<description>EasyJ快速使用Logging的starter，同时包含所有appender所需的依赖。如果知道</description>
 
 	<dependencies>
-		<!-- String-Boot -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-			<optional>true</optional>
+			<groupId>icu.easyj.boot</groupId>
+			<artifactId>easyj-spring-boot-starter-logging</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 
@@ -38,14 +26,12 @@
 		<dependency>
 			<groupId>com.github.danielwegener</groupId>
 			<artifactId>logback-kafka-appender</artifactId>
-			<optional>true</optional>
 		</dependency>
 
 		<!-- logstash-appender所需的依赖，可将日志推送到 LogStash 中 -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>
