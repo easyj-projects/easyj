@@ -21,12 +21,13 @@
 			<artifactId>spring-boot</artifactId>
 		</dependency>
 
+		<!-- Logback -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<optional>true</optional>
 		</dependency>
-
+		<!-- Logback配置文件中的 condition 表达式所需的依赖 -->
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>

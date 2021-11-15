@@ -15,3 +15,13 @@ spring:
 easyj:
   sequence:
     type: redis #序列服务类型（单应用时，建议配置为：atomic-long，集群时，建议配置为：redis）
+  logging.logback:
+    kafka-appender:
+      enabled: false
+      bootstrap-servers: ${spring.kafka.bootstrap-servers:127.0.0.1:9092} #默认同步spring.kafka的配置
+    logstash-appender:
+      enabled: false
+      destination: 127.0.0.1:4560 #对应logstash提供的地址
+
+logging:
+  config: ${easyj.logging.logback.config} #引用EasyJ定义的配置文件，可将配置

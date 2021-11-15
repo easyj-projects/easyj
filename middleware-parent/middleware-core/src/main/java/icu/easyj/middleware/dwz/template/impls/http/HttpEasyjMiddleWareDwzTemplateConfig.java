@@ -25,7 +25,7 @@ public class HttpEasyjMiddleWareDwzTemplateConfig {
 	/**
 	 * 服务地址
 	 */
-	private String serviceUrl = "http://localhost:3001/api/v1/create-short-url";
+	private String serviceUrl = "http://127.0.0.1:3001/api/v1/create-short-url";
 
 
 	public String getServiceUrl() {

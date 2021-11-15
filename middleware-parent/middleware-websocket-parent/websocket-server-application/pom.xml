@@ -17,7 +17,7 @@
 	<description>EasyJ中间件：WebSocket服务端应用</description>
 
 	<dependencies>
-		<!-- dwz-server-starter -->
+		<!-- websocket-server-starter -->
 		<dependency>
 			<groupId>icu.easyj.boot.middleware</groupId>
 			<artifactId>easyj-spring-boot-starter-websocket-server</artifactId>
@@ -30,6 +30,11 @@
 			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
 		</dependency>
 
 

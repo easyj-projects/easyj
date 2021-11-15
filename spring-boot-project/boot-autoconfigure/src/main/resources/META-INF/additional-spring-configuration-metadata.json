@@ -72,6 +72,12 @@
 			"description": "其他全局配置的Map."
 		},
 		{
+			"name": "easyj.logging.logback.config",
+			"type": "java.lang.String",
+			"description": "[logback] 配置文件路径.",
+			"defaultValue": "classpath:easyj/logging/logback/logback-spring.xml"
+		},
+		{
 			"name": "easyj.logging.logback.console-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用控制台打印日志.",
@@ -254,7 +260,7 @@
 			"name": "easyj.sdk.dwz.easyj-middleware.service-url",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.middleware.dwz.template.impls.http.HttpEasyjMiddleWareDwzTemplateConfig",
-			"defaultValue": "http://localhost:3001/api/v1/create-short-url"
+			"defaultValue": "http://127.0.0.1:3001/api/v1/create-short-url"
 		},
 		{
 			"name": "easyj.sdk.dwz.s3.service-url",
@@ -338,6 +344,17 @@
 		}
 	],
 	"hints": [
+		{
+			"name": "easyj.logging.logback.config",
+			"providers": [
+				{
+					"name": "handle-as",
+					"parameters": {
+						"target": "org.springframework.core.io.Resource"
+					}
+				}
+			]
+		},
 		{
 			"name": "easyj.sequence.type",
 			"values": [

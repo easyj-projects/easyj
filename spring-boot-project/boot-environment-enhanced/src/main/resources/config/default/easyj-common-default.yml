@@ -11,4 +11,4 @@ easyj:
       iv: 1234567890123456
       charset: UTF-8
   server:
-    domain: http://localhost:${server.port:8080}
+    domain: http://127.0.0.1:${server.port:8080}
