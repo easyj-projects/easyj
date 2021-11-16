@@ -34,9 +34,6 @@ import org.springframework.util.Assert;
  */
 public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
-	private static final long DEFAULT_INITIAL_VALUE = 0L;
-
-
 	/**
 	 * Redis连接工厂
 	 */
@@ -64,7 +61,7 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	}
 
 	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory) {
-		this(connectionFactory, DEFAULT_INITIAL_VALUE);
+		this(connectionFactory, null);
 	}
 
 
