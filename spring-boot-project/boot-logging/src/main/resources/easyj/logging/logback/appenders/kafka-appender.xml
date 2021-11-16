@@ -13,8 +13,10 @@
 					<!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%p|${APPLICATION_NAME:seata-server}|${RPC_PORT:-0}|%t|%logger|%X{X-TX-XID:-}|%X{X-TX-BRANCH-ID:-}|%m|%wex</pattern>-->
 					<pattern>
 						{
-						"app_name":"${APPLICATION_NAME}",
-						"http_port": ${PORT},
+						"app_name": "${APPLICATION_NAME}",
+						"server_host": "${SERVER_HOST}",
+						"server_port": ${SERVER_PORT},
+						"pid": ${PID:-0},
 						"@timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
 						"level":"%p",
 						"thread_name": "%t",

@@ -11,4 +11,5 @@ easyj:
       iv: 1234567890123456
       charset: UTF-8
   server:
+    host: ${easyj.net.getIp()}
     domain: http://127.0.0.1:${server.port:8080}

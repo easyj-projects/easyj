@@ -33,9 +33,9 @@ import org.springframework.util.PatternMatchUtils;
  *
  * @author wangliang181230
  */
-public abstract class LocalIpPropertyUtils {
+public abstract class NetPropertyUtils {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(LocalIpPropertyUtils.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(NetPropertyUtils.class);
 
 	public static final String[] DEFAULT_PATTERN = new String[]{"192.168.*.*"};
 
@@ -60,7 +60,10 @@ public abstract class LocalIpPropertyUtils {
 			// 执行方法对应的逻辑
 			Object[] parameters = result.getParameters();
 			switch (result.getMethodName()) {
-				case "pattern":
+				case "getIp":
+					localIp = NetUtils.getIp();
+					return localIp;
+				case "patternIp":
 					// 获取匹配串
 					String[] patterns = new String[parameters.length];
 					if (patterns.length == 0) {
@@ -75,11 +78,13 @@ public abstract class LocalIpPropertyUtils {
 						}
 					}
 
-					localIp = getLocalIpByPattern(patterns);
+					localIp = patternIp(patterns);
 					return localIp;
 				default:
-					localIp = getFirstIp();
-					return localIp;
+					if (LOGGER.isWarnEnabled()) {
+						LOGGER.warn("不支持的网络函数式配置：${" + name + "}");
+					}
+					return null;
 			}
 		} finally {
 			if (localIp != null && LOGGER.isInfoEnabled()) {
@@ -114,7 +119,7 @@ public abstract class LocalIpPropertyUtils {
 	 * @param patterns 匹配串列表
 	 * @return localIp
 	 */
-	public static String getLocalIpByPattern(String[] patterns) {
+	public static String patternIp(String[] patterns) {
 		List<String> ipList = NetUtils.getIpList();
 
 		String ip;

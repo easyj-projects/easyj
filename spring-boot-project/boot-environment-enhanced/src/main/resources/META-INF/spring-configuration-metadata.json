@@ -62,10 +62,16 @@
 			"description": "函数式配置${xxx}：配置解密方法，例：${easyj.crypto.decrypt('xxxxxx这里是一个加密串')}."
 		},
 		{
-			"name": "easyj.localIp.pattern",
+			"name": "easyj.net.getIp",
 			"type": "java.lang.reflect.Method",
-			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils",
-			"description": "函数式配置${xxx}：网卡IP匹配的方法，例：${easyj.localIp.pattern('10.10.10.*', '192.168.10.*')}."
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils",
+			"description": "函数式配置${xxx}：获取第一张网卡IP的方法，例：${easyj.net.getIp()}."
+		},
+		{
+			"name": "easyj.net.patternIp",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils",
+			"description": "函数式配置${xxx}：网卡IP匹配的方法，例：${easyj.net.patternIp('10.10.10.*', '192.168.10.*')}."
 		},
 		{
 			"name": "easyj.random",

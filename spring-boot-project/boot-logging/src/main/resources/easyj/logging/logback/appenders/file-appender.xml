@@ -21,10 +21,10 @@
 			<if condition='"true".equalsIgnoreCase(property("FILE_ALL_ENABLED"))'>
 				<then>
 					<appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.all.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.all.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.all.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.all.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -47,10 +47,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.trace.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.trace.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.trace.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.trace.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -73,10 +73,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.debug.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.debug.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -99,10 +99,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.info.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.info.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -125,10 +125,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.warn.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.warn.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.warn.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.warn.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -151,10 +151,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.error.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.error.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
@@ -177,10 +177,10 @@
 							<onMatch>ACCEPT</onMatch>
 							<onMismatch>DENY</onMismatch>
 						</filter>
-						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${PORT}.fatal.log</file>
+						<file>${LOG_FILE_PATH}/${FILE_NAME_PRE}.${SERVER_PORT}.fatal.log</file>
 						<append>true</append>
 						<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${PORT}.fatal.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+							<fileNamePattern>${LOG_FILE_PATH}/history/${FILE_NAME_PRE}.${SERVER_PORT}.fatal.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>

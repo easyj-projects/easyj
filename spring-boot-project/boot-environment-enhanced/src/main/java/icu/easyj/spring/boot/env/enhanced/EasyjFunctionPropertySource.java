@@ -27,7 +27,7 @@ import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.autoconfigure.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
-import icu.easyj.spring.boot.env.enhanced.util.LocalIpPropertyUtils;
+import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
@@ -66,9 +66,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	private static final String CRYPTO_FUN_NAME = "crypto";
 
 	/**
-	 * 本地IP函数名
+	 * 网络函数名
 	 */
-	private static final String LOCAL_IP_FUN_NAME = "localIp";
+	private static final String NET_FUN_NAME = "net";
 
 	/**
 	 * 随机函数名
@@ -157,7 +157,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		name = name.substring(PREFIX.length());
 
 		return StrUtil.startWithAny(name,
-				CRYPTO_FUN_NAME, LOCAL_IP_FUN_NAME, RANDOM_FUN_NAME);
+				CRYPTO_FUN_NAME, NET_FUN_NAME, RANDOM_FUN_NAME);
 	}
 
 	/**
@@ -172,9 +172,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 			case CRYPTO_FUN_NAME:
 				// 加密解密
 				return CryptoPropertyUtils.getProperty(name, result);
-			case LOCAL_IP_FUN_NAME:
-				// 本地IP
-				return LocalIpPropertyUtils.getProperty(name, result);
+			case NET_FUN_NAME:
+				// 网络
+				return NetPropertyUtils.getProperty(name, result);
 			case RANDOM_FUN_NAME:
 				// 随机值
 				return RandomPropertyUtils.getProperty(name, result);

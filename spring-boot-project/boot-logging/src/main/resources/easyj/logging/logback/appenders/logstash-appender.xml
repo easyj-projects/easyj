@@ -19,7 +19,9 @@
 					<customFields>
 						{
 						"app_name": "${APPLICATION_NAME}",
-						"http_port": ${PORT}
+						"server_host": "${SERVER_HOST}",
+						"server_port": ${SERVER_PORT},
+						"pid": ${PID:-0}
 						}
 					</customFields>
 

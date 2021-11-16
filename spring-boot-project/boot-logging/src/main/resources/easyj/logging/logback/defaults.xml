@@ -16,7 +16,9 @@
 	<!-- spring-boot peoperties -->
 	<springProperty name="APPLICATION_NAME" source="spring.application.name"
 					defaultValue="UNKNOWN"/>
-	<springProperty name="PORT" source="server.port"
+	<springProperty name="SERVER_HOST" source="easyj.server.host"
+					defaultValue="0.0.0.0"/>
+	<springProperty name="SERVER_PORT" source="server.port"
 					defaultValue="8080"/>
 
 

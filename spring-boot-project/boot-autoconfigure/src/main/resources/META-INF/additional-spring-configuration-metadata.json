@@ -92,7 +92,7 @@
 		{
 			"name": "easyj.logging.logback.file-appender.file-name-prefix",
 			"type": "java.lang.String",
-			"description": "[logback] 文件名前缀，格式：${前缀}.${PORT}.${LOG_LEVEL}.log，例：dwz-server.3001.error.log",
+			"description": "[logback] 文件名前缀，格式：${前缀}.${SERVER_PORT}.${LOG_LEVEL}.log，例：dwz-server.3001.error.log",
 			"defaultValue": "${spring.application.name:spring}"
 		},
 		{
