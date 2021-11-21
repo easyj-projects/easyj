@@ -63,7 +63,7 @@ public abstract class NetPropertyUtils {
 				case "getIp":
 					localIp = NetUtils.getIp();
 					return localIp;
-				case "patternIp":
+				case "matchIp":
 					// 获取匹配串
 					String[] patterns = new String[parameters.length];
 					if (patterns.length == 0) {
@@ -78,7 +78,7 @@ public abstract class NetPropertyUtils {
 						}
 					}
 
-					localIp = patternIp(patterns);
+					localIp = matchIp(patterns);
 					return localIp;
 				default:
 					if (LOGGER.isWarnEnabled()) {
@@ -119,7 +119,7 @@ public abstract class NetPropertyUtils {
 	 * @param patterns 匹配串列表
 	 * @return localIp
 	 */
-	public static String patternIp(String[] patterns) {
+	public static String matchIp(String[] patterns) {
 		List<String> ipList = NetUtils.getIpList();
 
 		String ip;

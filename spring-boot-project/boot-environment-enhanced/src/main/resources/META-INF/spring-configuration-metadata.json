@@ -68,10 +68,10 @@
 			"description": "函数式配置${xxx}：获取第一张网卡IP的方法，例：${easyj.net.getIp()}."
 		},
 		{
-			"name": "easyj.net.patternIp",
+			"name": "easyj.net.matchIp",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils",
-			"description": "函数式配置${xxx}：网卡IP匹配的方法，例：${easyj.net.patternIp('10.10.10.*', '192.168.10.*')}."
+			"description": "函数式配置${xxx}：网卡IP匹配的方法，例：${easyj.net.matchIp('10.10.10.*', '192.168.10.*')}."
 		},
 		{
 			"name": "easyj.random",
