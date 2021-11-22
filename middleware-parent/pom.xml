@@ -40,6 +40,8 @@
 	<modules>
 		<module>middleware-core</module>
 
+		<module>middleware-all-server-application</module>
+
 		<!--<module>middleware-dwz-parent</module>-->
 		<module>middleware-dwz-parent/dwz-server-application</module>
 		<module>middleware-dwz-parent/dwz-server-core</module>

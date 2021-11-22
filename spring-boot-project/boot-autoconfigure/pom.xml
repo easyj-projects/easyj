@@ -149,5 +149,12 @@
 			<artifactId>easyj-dwz-server-core</artifactId>
 			<optional>true</optional><!--可选依赖-->
 		</dependency>
+
+		<!-- 2）中间件：WebSocket服务 -->
+		<dependency>
+			<groupId>icu.easyj.middleware</groupId>
+			<artifactId>easyj-websocket-server-core</artifactId>
+			<optional>true</optional><!--可选依赖-->
+		</dependency>
 	</dependencies>
 </project>

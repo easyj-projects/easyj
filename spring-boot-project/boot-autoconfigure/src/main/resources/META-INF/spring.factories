@@ -3,6 +3,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 icu.easyj.spring.boot.autoconfigure.configs.EasyjConfigsAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.middleware.websocket.server.EasyjMiddleWareWebSocketServerAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjS3DwzTemplateAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.dwz.EasyjMiddleWareDwzTemplateAutoConfiguration,\

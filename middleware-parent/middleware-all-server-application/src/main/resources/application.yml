@@ -1,9 +1,10 @@
 server:
-  port: 3001
+  port: 3999
 
+#Spring相关配置
 spring:
   application:
-    name: easyj-dwz
+    name: easyj-middleware-all
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.1.50.112:3306/easyj-dwz?autoReconnect=true&failOverReadOnly=false&useSSL=false&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
@@ -15,7 +16,7 @@ spring:
 
 #序列相关配置
 easyj.sequence:
-  type: redis #序列服务类型（单应用时，建议配置为：atomic-long，集群时，建议配置为：redis；虽然还有db模式，但不建议使用。）
+  type: redis #序列服务类型（单应用时，建议配置为：atomic-long，集群时，建议配置为：redis）
 
 
 #日志相关配置

@@ -1,14 +1,18 @@
-easyj:
-  sequence:
-    type: atomic-long
-  middleware:
-    dwz:
-      server:
-        log-store:
-          type: mock
-  logging:
-    logback:
-      kafka-appender:
-        enabled: true
-      logstash-appender:
-        enabled: true
+#序列相关服务
+easyj.sequence:
+  type: atomic-long
+
+
+#DWZ服务端相关配置
+easyj.middleware.dwz.server:
+  log-store:
+    type: mock
+
+
+#日志相关配置
+easyj.logging.logback:
+  kafka-appender:
+    enabled: false
+  logstash-appender:
+    enabled: true
+    destination: 10.1.50.114:4560

@@ -8,43 +8,46 @@
 
 1. springboot项目
 
-```
+```xml
 <dependencyManagement>
-    <dependencies>
-        <groupId>icu.easyj.boot</groupId>
-        <artifactId>easyj-spring-boot-bom</artifactId>
-        <version>0.2.3-SNAPSHOT</version>
-        <type>pom</type>
-        <scope>import</scope>
-    </dependencies>
+	<dependencies>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-bom</artifactId>
+		<version>0.2.3-SNAPSHOT</version>
+		<type>pom</type>
+		<scope>import</scope>
+	</dependencies>
 </dependencyManagement>
+```
+
+```xml
 <dependencies>
-    <!-- @Cache304所需依赖 -->
-    <dependency>
-        <groupId>icu.easyj.boot</groupId>
-        <artifactId>easyj-spring-boot-starter-web</artifactId>
-    <dependency>
-    <!-- @ExcelExport所需依赖 -->
-    <dependency>
-        <groupId>icu.easyj.boot</groupId>
-        <artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
-    <dependency>
-    <dependency>
-        <groupId>icu.easyj.boot</groupId>
-        <artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
-    <dependency>
+	<!-- @Cache304所需依赖 -->
+	<dependency>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-starter-web</artifactId>
+	</dependency>
+	<!-- @ExcelExport所需依赖 -->
+	<dependency>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-starter-poi-excel</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>icu.easyj.boot</groupId>
+		<artifactId>easyj-spring-boot-starter-poi-excel-afterturn</artifactId>
+	</dependency>
 </dependencies>
 ```
 
 2. 非springboot项目
 
-```
+```xml
 <dependencies>
-    <dependency>
-        <groupId>icu.easyj</groupId>
-        <artifactId>easyj-all</artifactId>
-        <version>0.2.3-SNAPSHOT</version>
-    </dependency>
+	<dependency>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-all</artifactId>
+		<version>0.2.3-SNAPSHOT</version>
+	</dependency>
 </dependencies>
 ```
 
@@ -64,17 +67,21 @@
 
 1.
 
-```
-@PostMapping("/test/excel-import")
-public List<MyEntity> testExcelImport(@RequestPart("file") MultipartFile file) throws Exception {
-    // excel文件转为列表数据
-    List<MyEntity> list = ExcelUtils.toList(file.getInputStream(), MyEntity.class);
+```java
+@RestController
+public class XxxController {
 
-    // 打印一下
-    System.out.println(StringUtils.toString(list));
+	@PostMapping("/test/excel-import")
+	public List<MyEntity> testExcelImport(@RequestPart("file") MultipartFile file) {
+		// excel文件转为列表数据
+		List<MyEntity> list = ExcelUtils.toList(file.getInputStream(), MyEntity.class);
 
-    // 将转换后的数据直接返回，方便查看
-    return list;
+		// 打印一下
+		System.out.println(StringUtils.toString(list));
+
+		// 将转换后的数据直接返回，方便查看
+		return list;
+	}
 }
 ```
 

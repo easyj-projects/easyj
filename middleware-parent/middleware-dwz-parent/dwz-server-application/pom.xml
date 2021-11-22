@@ -47,20 +47,20 @@
 		</dependency>
 
 
-		<!-- Redis：用于生成短链接服务的序列生成 -->
+		<!-- Redis：提供 “生成短链接记录的ID” 所需的序列服务 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 
-		<!-- logging -->
+		<!-- Logging -->
 		<dependency>
 			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- logback -->
+		<!-- Logback -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>

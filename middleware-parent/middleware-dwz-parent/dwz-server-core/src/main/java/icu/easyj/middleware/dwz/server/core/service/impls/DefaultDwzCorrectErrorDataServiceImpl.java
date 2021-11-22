@@ -107,7 +107,7 @@ public class DefaultDwzCorrectErrorDataServiceImpl implements IDwzCorrectErrorDa
 		try {
 			sequenceService.setVal(SEQ_NAME__DWZ_LOG_ID, maxId);
 			LOGGER.warn("序列[{}]的当前值 [{}] 小于短链接记录最大ID值 [{}]，现已初始化序列值为 [{}]。避免生成已存在的ID，导致创建短链接记录失败。",
-					SEQ_NAME__DWZ_LOG_ID, currVal, maxId, currVal);
+					SEQ_NAME__DWZ_LOG_ID, currVal, maxId, maxId);
 			return 1;
 		} catch (NotSupportedException e) {
 			// 如果相差值在1000以内，则进行循环递增纠正序列值。否则会太消耗时间，导致项目处于假死状态

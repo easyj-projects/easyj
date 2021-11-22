@@ -21,5 +21,11 @@
 			<artifactId>easyj-middleware-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- Spring-WebSocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 	</dependencies>
 </project>

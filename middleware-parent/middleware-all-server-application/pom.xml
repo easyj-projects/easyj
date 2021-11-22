@@ -7,16 +7,22 @@
 		<groupId>icu.easyj.middleware</groupId>
 		<artifactId>middleware-parent</artifactId>
 		<version>${revision}</version>
-		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 	<groupId>icu.easyj.boot.middleware</groupId><!--三级分组：/boot/middleware-->
-	<artifactId>easyj-websocket-server-application</artifactId>
+	<artifactId>easyj-middleware-all-server-application</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ中间件：WebSocket服务端应用</description>
+	<description>EasyJ所有中间件的服务端</description>
 
 	<dependencies>
+		<!-- ### 所有中间件服务端的Starter ### -->
+		<!-- dwz-server-starter -->
+		<dependency>
+			<groupId>icu.easyj.boot.middleware</groupId>
+			<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- websocket-server-starter -->
 		<dependency>
 			<groupId>icu.easyj.boot.middleware</groupId>
@@ -24,10 +30,33 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- 模板页面-starter -->
+
+		<!--
+		DB：可选择的。
+		当前应用由于是用于打包公网镜像，所以引用了三种支持数据库的驱动包。
+		如果大家自己使用 `<artifactId>easyj-spring-boot-starter-dwz-server</artifactId>` 来创建应用，请引入你所需要的数据库的驱动包即可。
+		-->
+		<!-- MySql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- Oracle -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+		</dependency>
+		<!-- Microsoft SQL Server -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+		</dependency>
+
+
+		<!-- Redis：用于生成短链接服务的序列生成 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 
@@ -54,7 +83,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>easyj-websocket-server-${project.version}</finalName>
+		<finalName>easyj-dwz-server-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
