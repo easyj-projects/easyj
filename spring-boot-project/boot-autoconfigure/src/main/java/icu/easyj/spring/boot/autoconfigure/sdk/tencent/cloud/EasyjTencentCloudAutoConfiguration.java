@@ -16,6 +16,7 @@
 package icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud;
 
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
+import icu.easyj.sdk.tencent.cloud.common.config.TencentCloudCommonConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
@@ -24,7 +25,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  *
  * @author wangliang181230
  */
-@ConditionalOnClass(IDCardOCRRequest.class)
+@ConditionalOnClass({IDCardOCRRequest.class, TencentCloudCommonConfig.class})
 @EnableConfigurationProperties(TencentCloudCommonProperties.class)
 public class EasyjTencentCloudAutoConfiguration {
 }
