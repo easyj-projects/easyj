@@ -108,7 +108,7 @@
 		<!-- POI -->
 		<dependency>
 			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-poi-excel</artifactId>
+			<artifactId>easyj-poi</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<!-- apache-poi -->

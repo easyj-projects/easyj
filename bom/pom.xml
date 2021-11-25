@@ -40,6 +40,47 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-config</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-crypto</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-data</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-db</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-poi</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-redis</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 			<!-- ************************* SDK ************************* -->
 

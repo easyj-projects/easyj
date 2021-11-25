@@ -31,8 +31,8 @@
 		<module>middleware/spring-boot-starter-websocket-client</module>
 
 		<!-- POI -->
-		<module>poi-excel/spring-boot-starter-poi-excel</module>
-		<module>poi-excel/spring-boot-starter-poi-excel-afterturn</module>
+		<module>poi/spring-boot-starter-poi-excel</module>
+		<module>poi/spring-boot-starter-poi-excel-afterturn</module>
 
 		<!-- SDK -->
 		<module>sdk/spring-boot-starter-sdk-dwz-easyj-middleware</module>
