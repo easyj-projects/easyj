@@ -92,13 +92,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- 依赖定义：Common -->
-			<!-- Slf4j -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
+			<!-- 依赖定义：FindBugs -->
 			<!-- jsr305 -->
 			<dependency>
 				<groupId>com.google.code.findbugs</groupId>
@@ -108,6 +102,18 @@
 
 
 			<!-- 依赖定义：Logging -->
+			<!-- Slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<!-- Slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
 			<!-- Logback -->
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
@@ -124,7 +130,7 @@
 				<artifactId>logback-core</artifactId>
 				<version>${logback.version}</version>
 			</dependency>
-			<!-- janino：目前用于Logback配置文件中的if判断表达式。 -->
+			<!-- janino：目前用于Logback配置文件中的if判断表达式 -->
 			<dependency>
 				<groupId>org.codehaus.janino</groupId>
 				<artifactId>janino</artifactId>
@@ -148,7 +154,7 @@
 				<version>${logstash-logback-encoder.version}</version>
 			</dependency>
 
-			<!-- 依赖定义：Tool -->
+			<!-- 依赖定义：Tools -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -182,7 +188,7 @@
 				<version>${gson.version}</version>
 			</dependency>
 
-			<!-- 依赖引入：Spring -->
+			<!-- 依赖引入：Spring-BOM -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>
@@ -190,6 +196,8 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<!-- 依赖定义：Redis -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>

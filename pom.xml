@@ -128,10 +128,10 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Logback -->
+		<!-- Slf4j -->
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
 		</dependency>
 

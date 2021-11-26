@@ -60,11 +60,6 @@
 			<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- Logback -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
 
 
 		<!-- Spring-Test -->
