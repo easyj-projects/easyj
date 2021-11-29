@@ -15,7 +15,7 @@
  */
 package icu.easyj.core.util.shortcode.impls;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import cn.hutool.core.util.ArrayUtil;
 import icu.easyj.core.loader.LoadLevel;
@@ -118,9 +118,8 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 		if (shortCode.length() < this.minLength) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(this.separator);
-			Random rnd = new Random();
 			for (int i = 1; i < this.minLength - shortCode.length(); i++) {
-				sb.append(this.charTable[rnd.nextInt(this.charTable.length)]);
+				sb.append(this.charTable[ThreadLocalRandom.current().nextInt(this.charTable.length)]);
 			}
 			shortCode += sb.toString();
 		}
