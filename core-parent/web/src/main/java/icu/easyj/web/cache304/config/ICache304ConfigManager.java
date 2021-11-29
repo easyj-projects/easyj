@@ -22,11 +22,11 @@ import icu.easyj.core.util.MapUtils;
 import org.springframework.util.Assert;
 
 /**
- * Cache304配置存储器
+ * Cache304配置缓存管理器接口
  *
  * @author wangliang181230
  */
-public interface ICache304ConfigStore {
+public interface ICache304ConfigManager {
 
 	/**
 	 * 添加配置

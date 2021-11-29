@@ -23,12 +23,12 @@ import icu.easyj.core.util.UrlUtils;
 import org.springframework.util.Assert;
 
 /**
- * Cache304配置存储器 默认实现类
+ * Cache304配置管理器 默认实现类
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "memory-map", order = 100)
-public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
+@LoadLevel(name = "memory-cache", order = 100)
+public class DefaultCache304ConfigManagerImpl implements ICache304ConfigManager {
 
 	/**
 	 * path → config
@@ -41,7 +41,7 @@ public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 	/**
 	 * 默认构造函数
 	 */
-	public DefaultCache304ConfigStoreImpl() {
+	public DefaultCache304ConfigManagerImpl() {
 		cache304ConfigMap = new ConcurrentHashMap<>(4);
 	}
 
@@ -50,7 +50,7 @@ public class DefaultCache304ConfigStoreImpl implements ICache304ConfigStore {
 	 *
 	 * @param cache304ConfigMap 保存配置的map
 	 */
-	public DefaultCache304ConfigStoreImpl(Map<String, Cache304Config> cache304ConfigMap) {
+	public DefaultCache304ConfigManagerImpl(Map<String, Cache304Config> cache304ConfigMap) {
 		this.cache304ConfigMap = cache304ConfigMap;
 	}
 

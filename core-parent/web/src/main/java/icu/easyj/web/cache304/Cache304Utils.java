@@ -24,7 +24,7 @@ import icu.easyj.core.util.DateUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.ThrowableUtils;
 import icu.easyj.web.cache304.config.Cache304Config;
-import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
+import icu.easyj.web.cache304.config.Cache304ConfigManagerFactory;
 import icu.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,7 +116,7 @@ public abstract class Cache304Utils {
 	//region `doCache`重载方法
 
 	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Supplier<Object> callback) {
-		Cache304Config config = Cache304ConfigStoreFactory.getStore().getConfig(request);
+		Cache304Config config = Cache304ConfigManagerFactory.getInstance().getConfig(request);
 		return doCache(request, response, config, callback);
 	}
 
@@ -128,7 +128,7 @@ public abstract class Cache304Utils {
 	}
 
 	public static void doCache(HttpServletRequest request, HttpServletResponse response, Runnable runnable) {
-		Cache304Config config = Cache304ConfigStoreFactory.getStore().getConfig(request);
+		Cache304Config config = Cache304ConfigManagerFactory.getInstance().getConfig(request);
 		doCache(request, response, config, runnable);
 	}
 

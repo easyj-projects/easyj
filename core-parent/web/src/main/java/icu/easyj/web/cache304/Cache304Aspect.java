@@ -24,8 +24,8 @@ import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.web.cache304.annotation.Cache304;
 import icu.easyj.web.cache304.annotation.Cache304AnnotationParser;
 import icu.easyj.web.cache304.config.Cache304Config;
-import icu.easyj.web.cache304.config.Cache304ConfigStoreFactory;
-import icu.easyj.web.cache304.config.ICache304ConfigStore;
+import icu.easyj.web.cache304.config.Cache304ConfigManagerFactory;
+import icu.easyj.web.cache304.config.ICache304ConfigManager;
 import icu.easyj.web.util.HttpUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -89,13 +89,13 @@ public class Cache304Aspect {
 		}
 
 		// 解析Cache304注解
-		ICache304ConfigStore configStore = Cache304ConfigStoreFactory.getStore();
-		Cache304Config config = configStore.getConfig(request);
+		ICache304ConfigManager configManager = Cache304ConfigManagerFactory.getInstance();
+		Cache304Config config = configManager.getConfig(request);
 		if (config == null) {
 			Cache304 anno = method.getAnnotation(Cache304.class);
 			config = Cache304AnnotationParser.parse(anno);
 			// 放入存储器，使`Cache304Filter`中 能够直接拦截下请求。
-			configStore.putConfig(request, config);
+			configManager.putConfig(request, config);
 		}
 
 		// 执行304缓存方法

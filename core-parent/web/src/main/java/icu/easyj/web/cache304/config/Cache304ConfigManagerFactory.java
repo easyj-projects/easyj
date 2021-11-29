@@ -18,32 +18,32 @@ package icu.easyj.web.cache304.config;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 
 /**
- * Cache304配置存储器 工厂类
+ * Cache304配置管理器 工厂类
  *
  * @author wangliang181230
  */
-public abstract class Cache304ConfigStoreFactory {
+public abstract class Cache304ConfigManagerFactory {
 
-	//region 配置存储器单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 配置管理器单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
 
-	private enum Cache304ConfigStoreSingletonHolder {
+	private enum Cache304ConfigManagerSingletonHolder {
 		// 单例
 		INSTANCE;
 
-		private final ICache304ConfigStore instance = EnhancedServiceLoader.load(ICache304ConfigStore.class);
+		private final ICache304ConfigManager instance = EnhancedServiceLoader.load(ICache304ConfigManager.class);
 
-		public ICache304ConfigStore getInstance() {
+		public ICache304ConfigManager getInstance() {
 			return INSTANCE.instance;
 		}
 	}
 
 	/**
-	 * 获取加密算法生成器
+	 * 获取配置管理器实例
 	 *
 	 * @return 加密算法生成器
 	 */
-	public static ICache304ConfigStore getStore() {
-		return Cache304ConfigStoreSingletonHolder.INSTANCE.getInstance();
+	public static ICache304ConfigManager getInstance() {
+		return Cache304ConfigManagerSingletonHolder.INSTANCE.getInstance();
 	}
 
 	//endregion
