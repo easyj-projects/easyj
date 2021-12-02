@@ -258,7 +258,11 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest queryParam(String name, String... values) {
-		this.builder.queryParam(name, values);
+		try {
+			this.builder.queryParam(name, values);
+		} catch (NoSuchMethodError e) {
+			this.builder.param(name, values);
+		}
 		return this;
 	}
 
@@ -269,7 +273,11 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest queryParams(MultiValueMap<String, String> params) {
-		this.builder.queryParams(params);
+		try {
+			this.builder.queryParams(params);
+		} catch (NoSuchMethodError e) {
+			this.builder.params(params);
+		}
 		return this;
 	}
 
