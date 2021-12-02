@@ -13,43 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.middleware.dwz.server;
+package icu.easyj.middleware.websocket.server;
 
 import javax.annotation.Resource;
 
-import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
-import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
+import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 /**
- * {@link DwzServerApplication} 测试类
+ * {@link WebSocketServerApplication} 测试类
  *
  * @author wangliang181230
  */
 @SpringBootTest
-@ActiveProfiles("unittest")
-class DwzServerApplicationTest {
+class WebSocketServerApplicationTest {
 
 	@Resource
-	DwzRestController dwzRestController;
-	@Resource
-	DwzRedirectController dwzRedirectController;
+	WebSocketService webSocketService;
 
 	@Test
 	void testStartup() {
-		Assertions.assertNotNull(dwzRestController);
-		Assertions.assertNotNull(dwzRedirectController);
-
-		System.out.println(dwzRestController.getClass());
-		System.out.println(dwzRedirectController.getClass());
-	}
-
-	@Test
-	void testLogging() {
-		LoggerFactory.getLogger(this.getClass()).error("测试日志功能: {}", "aaa", new Exception("故意输出堆栈日志"));
+		Assertions.assertNotNull(webSocketService);
 	}
 }

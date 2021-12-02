@@ -31,9 +31,6 @@
 	</issueManagement>
 
 	<properties>
-		<!-- SpringBoot版本 -->
-		<spring-boot.version>2.6.1</spring-boot.version>
-
 		<!-- POI相关版本 -->
 		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
 	</properties>
@@ -54,15 +51,6 @@
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-bom</artifactId>
 				<version>${project.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<!-- 依赖引入：SpringBoot BOM -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

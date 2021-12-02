@@ -128,12 +128,6 @@
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-redis</artifactId>
 			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.data</groupId>
-					<artifactId>spring-data-redis</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- Web -->

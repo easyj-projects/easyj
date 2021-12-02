@@ -21,21 +21,9 @@
 	</description>
 
 	<properties>
-		<spring-boot.version>2.6.1</spring-boot.version>
+		<sb>2.6.1</sb>
+		<spring-boot.version>${sb}</spring-boot.version>
 	</properties>
-
-	<dependencyManagement>
-		<dependencies>
-			<!-- 依赖引入：SpringBoot BOM -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${spring-boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<modules>
 		<module>middleware-core</module>
