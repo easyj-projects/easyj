@@ -235,13 +235,13 @@ public abstract class EnvironmentUtils {
 														 boolean immutable) {
 		// spring-boot从2.0.0版本开始，才有OriginTrackedMapPropertySource
 		try {
-			Class clazz = ReflectionUtils.getClassByName("org.springframework.boot.env.OriginTrackedMapPropertySource");
+			Class<?> clazz = ReflectionUtils.getClassByName("org.springframework.boot.env.OriginTrackedMapPropertySource");
 			try {
 				// 低于2.2.0版本的springboot中，OriginTrackedMapPropertySource类是没有immutable属性的，特殊处理一下
-				Constructor constructor = clazz.getConstructor(String.class, Map.class, boolean.class);
+				Constructor<?> constructor = clazz.getConstructor(String.class, Map.class, boolean.class);
 				return (MapPropertySource)constructor.newInstance(propertySourceName, source, immutable);
 			} catch (NoSuchMethodException e) {
-				Constructor constructor = clazz.getConstructor(String.class, Map.class);
+				Constructor<?> constructor = clazz.getConstructor(String.class, Map.class);
 				return (MapPropertySource)constructor.newInstance(propertySourceName, source);
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ignore) {
