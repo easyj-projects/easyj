@@ -30,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @Lazy(false)
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(WebApplicationContext.class)
+@ConditionalOnClass({WebApplicationContext.class, HttpConfigs.class})
 @ConditionalOnWebApplication
 public class EasyjWebConfigAutoConfiguration {
 

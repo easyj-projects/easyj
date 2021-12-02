@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author wangliang181230
  */
-@ConditionalOnClass(WebMvcConfigurer.class)
+@ConditionalOnClass({WebMvcConfigurer.class, CharSequenceToDateConverter.class})
 @ConditionalOnWebApplication
 public class EasyjWebMvcAutoConfiguration extends WebMvcConfigurerAdapter {
 
