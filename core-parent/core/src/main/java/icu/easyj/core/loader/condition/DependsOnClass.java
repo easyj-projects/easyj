@@ -45,4 +45,13 @@ public @interface DependsOnClass {
 	 * @return the class names
 	 */
 	String[] name() default {};
+
+	/**
+	 * 校验策略
+	 * <p>
+	 * 注：只针对 {@link #name()} 有效，因为 {@link #value()} 中任意一个不存在时，直接抛出异常了，无法校验
+	 *
+	 * @return the strategy
+	 */
+	ValidateStrategy strategy() default ValidateStrategy.ALL;
 }

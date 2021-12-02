@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.db.constant;
+package icu.easyj.core.loader.condition;
 
 /**
- * 数据库驱动常量
+ * {@link DependsOnClassValidator} 校验策略
  *
  * @author wangliang181230
  */
-public interface DbDriverConstants {
+public enum ValidateStrategy {
 
-	String MYSQL5_DRIVER = "com.mysql.jdbc.Driver";
+	/**
+	 * 只有所有类都存在时，校验才通过
+	 */
+	ALL,
 
-	String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
-
-	String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
-
-	String MS_SQL_SERVER_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	/**
+	 * 只要有一个类存在，校验就通过
+	 */
+	ANY_ONE;
 }

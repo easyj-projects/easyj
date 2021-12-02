@@ -16,6 +16,8 @@
 package icu.easyj.core.loader.model;
 
 import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.core.loader.condition.ValidateStrategy;
 
 /**
  * The type French hello.
@@ -24,6 +26,7 @@ import icu.easyj.core.loader.LoadLevel;
  * @author Otis.z
  */
 @LoadLevel(name = "FrenchHello", order = 2)
+@DependsOnClass(name = {"icu.easyj.Xxxx", "icu.easyj.core.loader.model.Hello"}, strategy = ValidateStrategy.ANY_ONE)
 public class FrenchHello implements Hello {
 
 	@Override
