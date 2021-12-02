@@ -258,17 +258,23 @@ class StringUtilsTest {
 		assertEquals("{\"aaa\" -> 111, \"bbb\" -> true, \"self\" -> (this HashMap), \"list\" -> [(ref HashMap), 'c']}", StringUtils.toString(map));
 		assertFalse((boolean)ReflectionUtils.invokeStaticMethod(CycleDependencyHandler.class, "isStarting"));
 
-		//case: Array
+		//case: String Array
 		String[] strArr = new String[2];
 		strArr[0] = "11";
 		strArr[1] = "22";
 		assertEquals("[\"11\", \"22\"]", StringUtils.toString(strArr));
+		//case: int Array
+		int[] intArr = new int[2];
+		intArr[0] = 11;
+		intArr[1] = 22;
+		assertEquals("[11, 22]", StringUtils.toString(intArr));
 		//case: Array, and cycle dependency
 		Object[] array = new Object[3];
 		array[0] = 1;
 		array[1] = '2';
 		array[2] = array;
 		assertEquals("[1, '2', (this Object[])]", StringUtils.toString(array));
+
 
 
 		//case: Object

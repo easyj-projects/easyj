@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.util;
 
+import java.lang.reflect.Array;
 import java.util.function.Supplier;
 
 import org.springframework.lang.NonNull;
@@ -81,6 +82,31 @@ public abstract class ArrayUtils {
 	}
 
 	/**
+	 * 将未知类型的数组对象转换为 Object[]
+	 *
+	 * @param arrayObj 数组对象
+	 * @return array 数组
+	 */
+	public static Object[] toArray(Object arrayObj) {
+		if (arrayObj == null) {
+			return null;
+		}
+
+		if (!arrayObj.getClass().isArray()) {
+			throw new ClassCastException("'arrayObj' is not an array, can't cast to Object[]");
+		}
+
+		int length = Array.getLength(arrayObj);
+		Object[] array = new Object[length];
+		if (length > 0) {
+			for (int i = 0; i < length; ++i) {
+				array[i] = Array.get(arrayObj, i);
+			}
+		}
+		return array;
+	}
+
+	/**
 	 * Array To String.
 	 *
 	 * @param objectArray 对象数组
@@ -111,5 +137,31 @@ public abstract class ArrayUtils {
 			sb.append("]");
 			return sb.toString();
 		});
+	}
+
+	/**
+	 * Array To String.
+	 *
+	 * @param arrayObj 数组对象
+	 * @return str 字符串
+	 */
+	@NonNull
+	public static String toString(final Object arrayObj) {
+		if (arrayObj == null) {
+			return "null";
+		}
+		if (!arrayObj.getClass().isArray()) {
+			return StringUtils.toString(arrayObj);
+		}
+
+		if (Array.getLength(arrayObj) == 0) {
+			return "[]";
+		}
+
+		if (arrayObj.getClass().getComponentType().isPrimitive()) {
+			return toString(toArray(arrayObj));
+		} else {
+			return toString((Object[])arrayObj);
+		}
 	}
 }

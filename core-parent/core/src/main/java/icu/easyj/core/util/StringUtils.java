@@ -597,7 +597,7 @@ public abstract class StringUtils {
 			return CollectionUtils.toString((Collection<?>)obj);
 		}
 		if (obj.getClass().isArray()) {
-			return ArrayUtils.toString((Object[])obj);
+			return ArrayUtils.toString(obj);
 		}
 		if (obj instanceof Map) {
 			return MapUtils.toString((Map<?, ?>)obj);
