@@ -276,7 +276,6 @@ class StringUtilsTest {
 		assertEquals("[1, '2', (this Object[])]", StringUtils.toString(array));
 
 
-
 		//case: Object
 		assertEquals("CycleDependency(s=\"a\", obj=null)", StringUtils.toString(new CycleDependency("a")));
 		//case: Object, and cycle dependency
