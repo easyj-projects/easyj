@@ -141,9 +141,15 @@ public abstract class BaseSpringBootMockMvcTest {
 	 * @param uriVars     参数
 	 * @return mockRequest 模拟DELETE请求
 	 */
+	@SuppressWarnings("deprecation")
 	protected MockRequest mockPostMultipart(String urlTemplate, Object... uriVars) {
-		MockMultipartHttpServletRequestBuilder builder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-		return new MockRequest(this.mockMvc, builder, urlTemplate, uriVars);
+		MockMultipartHttpServletRequestBuilder newMultipartBuilder;
+		try {
+			newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
+		} catch (NoSuchMethodError e) {
+			newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
+		}
+		return new MockRequest(this.mockMvc, newMultipartBuilder, urlTemplate, uriVars);
 	}
 
 	/**

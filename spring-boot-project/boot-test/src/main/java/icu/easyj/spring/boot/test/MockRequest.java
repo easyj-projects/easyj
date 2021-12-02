@@ -223,9 +223,15 @@ public class MockRequest {
 	 * @param filePath           文件路径，可以是相对于`/src/test/resources`目录的路径
 	 * @return self
 	 */
+	@SuppressWarnings("deprecation")
 	public MockRequest file(String multipartParamName, String filePath) {
 		if (this.multipartBuilder == null) {
-			MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
+			MockMultipartHttpServletRequestBuilder newMultipartBuilder;
+			try {
+				newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
+			} catch (NoSuchMethodError e) {
+				newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
+			}
 			newMultipartBuilder.merge(this.builder);
 			this.multipartBuilder = newMultipartBuilder;
 			this.builder = newMultipartBuilder;

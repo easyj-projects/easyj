@@ -16,6 +16,7 @@
 package icu.easyj.spring.boot.autoconfigure.web.mvc;
 
 import icu.easyj.core.convert.converter.CharSequenceToDateConverter;
+import icu.easyj.web.spring.WebMvcConfigurerAdapter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.format.FormatterRegistry;
@@ -28,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @ConditionalOnClass(WebMvcConfigurer.class)
 @ConditionalOnWebApplication
-public class EasyjWebMvcAutoConfiguration implements WebMvcConfigurer {
+public class EasyjWebMvcAutoConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addFormatters(FormatterRegistry registry) {

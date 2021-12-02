@@ -155,9 +155,9 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 			return result;
 		} catch (JSONException e) {
-			throw new HttpMessageNotReadableException("JSON parse error: " + e.getMessage(), e, inputMessage);
+			throw new HttpMessageNotReadableException("JSON parse error: " + e.getMessage(), e);
 		} catch (IOException e) {
-			throw new HttpMessageNotReadableException("I/O error while reading input message", e, inputMessage);
+			throw new HttpMessageNotReadableException("I/O error while reading input message", e);
 		}
 	}
 

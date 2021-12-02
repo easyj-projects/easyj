@@ -35,6 +35,7 @@ import icu.easyj.web.param.crypto.ParamCryptoFilter;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoFilterPropertiesImpl;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoHandlerImpl;
 import icu.easyj.web.param.crypto.impls.DefaultParamCryptoHandlerPropertiesImpl;
+import icu.easyj.web.spring.WebMvcConfigurerAdapter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -125,7 +126,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	 * @return filterRegistrationBean 参数加密解密过滤器注册
 	 */
 	@Bean
-	public FilterRegistrationBean<ParamCryptoFilter> paramEncryptFilterRegistration(ParamCryptoFilter paramCryptoFilter) {
+	public FilterRegistrationBean paramEncryptFilterRegistration(ParamCryptoFilter paramCryptoFilter) {
 		return FilterRegistrationUtils.register(paramCryptoFilter, paramCryptoFilter.getFilterProperties(), FilterOrderConstants.PARAM_ENCRYPT);
 	}
 
@@ -138,7 +139,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnClass({com.alibaba.fastjson.JSON.class})
 	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = FASTJSON) // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
-	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration implements WebMvcConfigurer {
+	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration extends WebMvcConfigurerAdapter {
 
 		private final ParamCryptoFilter paramCryptoFilter;
 

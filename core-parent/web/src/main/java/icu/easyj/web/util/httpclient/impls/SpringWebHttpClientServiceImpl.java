@@ -28,7 +28,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * 基于SpringWeb的 {@link org.springframework.web.client.RestTemplate} 实现
@@ -39,15 +38,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 @DependsOnClass(RestTemplate.class)
 class SpringWebHttpClientServiceImpl implements IHttpClientService {
 
-	private final RestTemplate restTemplate;
-
-
-	public SpringWebHttpClientServiceImpl() {
-		RestTemplate restTemplate = new RestTemplate();
-		((DefaultUriBuilderFactory)restTemplate.getUriTemplateHandler()).setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
-
-		this.restTemplate = restTemplate;
-	}
+	private final RestTemplate restTemplate = new RestTemplate();
 
 
 	//region GET
