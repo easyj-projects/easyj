@@ -28,6 +28,8 @@ import icu.easyj.test.exception.TestException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -291,6 +293,26 @@ public class MockRequest {
 
 		ResultActions resultActions = this.mockMvc.perform(builder);
 		return new MockResponse(resultActions);
+	}
+
+	//endregion
+
+
+	//region Getter
+
+	@NonNull
+	public MockMvc getOriginMockMvc() {
+		return mockMvc;
+	}
+
+	@NonNull
+	public MockHttpServletRequestBuilder getOriginBuilder() {
+		return builder;
+	}
+
+	@Nullable
+	public MockMultipartHttpServletRequestBuilder getOriginMultipartBuilder() {
+		return multipartBuilder;
 	}
 
 	//endregion
