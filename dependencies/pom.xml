@@ -31,10 +31,11 @@
 
 	<properties>
 		<!-- Common dependencies version -->
-		<slf4j.version>1.7.32</slf4j.version>
+		<javax-annotation-api>1.3.2</javax-annotation-api>
 		<findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
 
 		<!-- Logging dependencies version -->
+		<slf4j.version>1.7.32</slf4j.version>
 		<logback.version>1.2.6</logback.version>
 		<janino.version>3.1.6</janino.version>
 		<kafka-appender.version>0.2.0-RC2</kafka-appender.version>
@@ -98,6 +99,13 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- javax annotation -->
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>javax.annotation-api</artifactId>
+				<version>${javax-annotation-api}</version>
+			</dependency>
+
 			<!-- 依赖定义：FindBugs -->
 			<!-- jsr305 -->
 			<dependency>
