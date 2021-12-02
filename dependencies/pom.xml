@@ -83,7 +83,7 @@
 		<alibaba-easyexcel.version>2.2.11</alibaba-easyexcel.version>
 
 		<!-- XML dependencies version -->
-		<apache-xmlbeans.version>5.0.0</apache-xmlbeans.version>
+		<apache-xmlbeans.version>4.0.0</apache-xmlbeans.version>
 		<xerces.version>2.12.1</xerces.version>
 
 		<!-- 第三方服务SDK -->
