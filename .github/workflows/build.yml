@@ -17,8 +17,8 @@ jobs:
             -Dsb=2.5.7,
             -Dsb=2.4.13,
             -Dsb=2.3.12.RELEASE,
-            -Dsb=2.2.13.RELEASE,
-            -Dsb=2.1.18.RELEASE
+            -Dsb=2.2.13.RELEASE
+            #-Dsb=2.1.18.RELEASE,
             #-Dsb=2.0.9.RELEASE,
             #-Dsb=1.5.22.RELEASE,
             #-Dsb=1.4.7.RELEASE,
