@@ -225,7 +225,7 @@ class JSONUtilsTest {
 	private void assertEquals1(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人1", user.getName());
-		Assertions.assertEquals(31, user.getAge());
+		Assertions.assertEquals(31, user.getAge().intValue());
 		try {
 			Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
@@ -239,7 +239,7 @@ class JSONUtilsTest {
 	private void assertEquals2(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人2", user.getName());
-		Assertions.assertEquals(32, user.getAge());
+		Assertions.assertEquals(32, user.getAge().intValue());
 		try {
 			Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 		} catch (Throwable t) {
@@ -253,7 +253,7 @@ class JSONUtilsTest {
 	private void assertEquals3(IJSONService service, TestUser3 user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人3", user.getUserName());
-		Assertions.assertEquals(33, user.getUserAge());
+		Assertions.assertEquals(33, user.getUserAge().intValue());
 		try {
 			Assertions.assertEquals("1988-10-03", DateUtils.format(DateFormatType.DD, user.getUserBirthday()));
 		} catch (Throwable t) {

@@ -82,23 +82,23 @@ class ConvertUtilsTest {
 		// String -> Short
 		{
 			short s1 = ConvertUtils.convert(source, short.class);
-			Assertions.assertEquals(111, s1);
+			Assertions.assertEquals((short)111, s1);
 			Short s2 = ConvertUtils.convert(source, Short.class);
-			Assertions.assertEquals((short)111, s2);
+			Assertions.assertEquals((short)111, s2.shortValue());
 		}
 		// String -> Integer
 		{
 			int i1 = ConvertUtils.convert(source, int.class);
 			Assertions.assertEquals(111, i1);
 			Integer i2 = ConvertUtils.convert(source, Integer.class);
-			Assertions.assertEquals(111, i2);
+			Assertions.assertEquals(111, i2.intValue());
 		}
 		// String -> Long
 		{
 			long l1 = ConvertUtils.convert(source, long.class);
 			Assertions.assertEquals(111, l1);
 			Long l2 = ConvertUtils.convert(source, Long.class);
-			Assertions.assertEquals(111, l2);
+			Assertions.assertEquals(111L, l2.longValue());
 		}
 		// String -> BigInteger
 		{
@@ -117,14 +117,14 @@ class ConvertUtilsTest {
 			float f1 = ConvertUtils.convert(source, float.class);
 			Assertions.assertEquals(111.1F, f1);
 			Float f2 = ConvertUtils.convert(source, Float.class);
-			Assertions.assertEquals(111.1F, f2);
+			Assertions.assertEquals(111.1F, f2.floatValue());
 		}
 		// String -> Double
 		{
 			double f1 = ConvertUtils.convert(source, double.class);
 			Assertions.assertEquals(111.1D, f1);
 			Double f2 = ConvertUtils.convert(source, Double.class);
-			Assertions.assertEquals(111.1D, f2);
+			Assertions.assertEquals(111.1D, f2.doubleValue());
 		}
 		// String -> BigDecimal
 		{

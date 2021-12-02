@@ -71,8 +71,7 @@ class ReflectionUtilsTest {
 	@Test
 	void testInvokeMethod() throws NoSuchMethodException, InvocationTargetException {
 		Assertions.assertEquals(0, ReflectionUtils.invokeMethod("", "length"));
-		Assertions.assertEquals(3,
-				ReflectionUtils.invokeMethod("foo", "length"));
+		Assertions.assertEquals(3, ReflectionUtils.invokeMethod("foo", "length"));
 
 		Assertions.assertThrows(NoSuchMethodException.class,
 				() -> ReflectionUtils.invokeMethod("", "size"));
