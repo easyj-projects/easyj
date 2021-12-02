@@ -30,7 +30,6 @@ import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -57,9 +56,9 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_SYMMET
 public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
 	/**
-	 * HIGHEST + 20
+	 * HIGHEST + 20（为了兼容低版本的springboot，不使用springboot的常量）
 	 */
-	public static final int ORDER = ConfigDataEnvironmentPostProcessor.ORDER + 10;
+	public static final int ORDER = (Ordered.HIGHEST_PRECEDENCE + 10) + 10; // ConfigDataEnvironmentPostProcessor.ORDER + 10;
 
 	/**
 	 * 指定优先加载的配置文件地址
