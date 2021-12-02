@@ -16,6 +16,9 @@
 package icu.easyj.core.util;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.function.Supplier;
 
 import org.springframework.lang.NonNull;
@@ -26,6 +29,19 @@ import org.springframework.lang.NonNull;
  * @author wangliang181230
  */
 public abstract class ArrayUtils {
+
+	//region 由于apache的ArrayUtils中，较新版本才有以下常量。为了兼容低版本，将这些常量也添加在这里
+
+	public static final Field[] EMPTY_FIELD_ARRAY = new Field[0];
+
+	public static final Method[] EMPTY_METHOD_ARRAY = new Method[0];
+
+	public static final Throwable[] EMPTY_THROWABLE_ARRAY = new Throwable[0];
+
+	public static final Type[] EMPTY_TYPE_ARRAY = new Type[0];
+
+	//endregion
+
 
 	/**
 	 * 是否为空数组

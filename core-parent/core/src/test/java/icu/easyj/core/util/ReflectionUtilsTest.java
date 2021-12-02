@@ -30,7 +30,7 @@ import icu.easyj.core.modelfortest.TestSuperClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.apache.commons.lang3.ArrayUtils.EMPTY_FIELD_ARRAY;
+import static icu.easyj.core.util.ArrayUtils.EMPTY_FIELD_ARRAY;
 import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
 
 /**
