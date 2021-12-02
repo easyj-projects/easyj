@@ -175,7 +175,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			response.setCreateTime(new Date());
 		}
 		// 设置短链接有效时长，单位：毫秒
-		response.setExpireIn(data.getExpireIn() != null ? data.getExpireIn() : 0);
+		response.setExpireIn(data.getExpireIn() != null ? data.getExpireIn() : 0L);
 
 		return response;
 	}
