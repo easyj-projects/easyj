@@ -32,10 +32,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor;
 import org.springframework.boot.env.EnvironmentPostProcessor;
-import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
@@ -205,7 +205,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				}
 
 				// 加载配置文件为配置源
-				OriginTrackedMapPropertySource propertySource = EnvironmentUtils.buildPropertySource(resource, true);
+				MapPropertySource propertySource = EnvironmentUtils.buildPropertySource(resource, true);
 				if (propertySource == null) {
 					// 配置文件不存在或为空
 					continue;
@@ -244,7 +244,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * @param filters        过滤器列表
 	 * @return 是否需要过滤，true=过滤掉|false=不过滤
 	 */
-	private boolean doFilters(OriginTrackedMapPropertySource propertySource, List<IPropertySourceFilter> filters) {
+	private boolean doFilters(MapPropertySource propertySource, List<IPropertySourceFilter> filters) {
 		if (!CollectionUtils.isEmpty(filters)) {
 			for (IPropertySourceFilter filter : filters) {
 				if (filter.doFilter(propertySource)) {

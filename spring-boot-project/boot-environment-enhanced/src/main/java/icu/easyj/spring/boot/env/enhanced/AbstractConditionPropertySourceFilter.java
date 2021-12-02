@@ -18,7 +18,7 @@ package icu.easyj.spring.boot.env.enhanced;
 import java.util.List;
 
 import icu.easyj.spring.boot.util.EnvironmentUtils;
-import org.springframework.boot.env.OriginTrackedMapPropertySource;
+import org.springframework.core.env.MapPropertySource;
 
 /**
  * 配置源条件过滤器
@@ -34,7 +34,7 @@ public abstract class AbstractConditionPropertySourceFilter implements IProperty
 	}
 
 	@Override
-	public boolean doFilter(OriginTrackedMapPropertySource propertySource) {
+	public boolean doFilter(MapPropertySource propertySource) {
 		List<String> propertyList = EnvironmentUtils.getPropertyList(propertySource, propertyName);
 		if (propertyList.isEmpty()) {
 			// 配置不存在，不过滤

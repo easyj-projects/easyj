@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.env.enhanced;
 
-import org.springframework.boot.env.OriginTrackedMapPropertySource;
+import org.springframework.core.env.MapPropertySource;
 
 /**
  * 配置源过滤器
@@ -30,6 +30,6 @@ public interface IPropertySourceFilter {
 	 * @param propertySource 配置源
 	 * @return 是否需要过滤，true=过滤掉|false=不过滤
 	 */
-	boolean doFilter(OriginTrackedMapPropertySource propertySource);
+	boolean doFilter(MapPropertySource propertySource);
 
 }

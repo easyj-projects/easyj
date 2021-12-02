@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.util.ClassUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
@@ -204,7 +205,7 @@ public abstract class EnvironmentUtils {
 	 * @return propertySource 配置源
 	 */
 	@Nullable
-	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull Resource configFileResource, boolean immutable) {
+	public static MapPropertySource buildPropertySource(@NonNull Resource configFileResource, boolean immutable) {
 		// 加载配置文件
 		Properties properties = buildProperties(configFileResource);
 		if (properties == null || properties.isEmpty()) {
@@ -216,7 +217,7 @@ public abstract class EnvironmentUtils {
 		String propertySourceName = buildPropertySourceNameByPath(configFileResource);
 
 		// 创建配置源
-		Map<?, ?> source = immutable ? Collections.unmodifiableMap(properties) : properties;
+		Map source = immutable ? Collections.unmodifiableMap(properties) : properties;
 		return newMapPropertySource(propertySourceName, source, immutable);
 	}
 
@@ -229,14 +230,19 @@ public abstract class EnvironmentUtils {
 	 * @return 配置源
 	 */
 	@NonNull
-	public static OriginTrackedMapPropertySource newMapPropertySource(@NonNull String propertySourceName,
-																	  @NonNull Map<?, ?> source,
-																	  boolean immutable) {
-		// 低版本的springboot中，OriginTrackedMapPropertySource类是没有immutable属性的，特殊处理一下
-		if (ReflectionUtils.hasField(OriginTrackedMapPropertySource.class, "immutable")) {
-			return new OriginTrackedMapPropertySource(propertySourceName, source, immutable);
+	public static MapPropertySource newMapPropertySource(@NonNull String propertySourceName,
+														 @NonNull Map<String, Object> source,
+														 boolean immutable) {
+		// spring-boot从2.0.0版本开始，才有OriginTrackedMapPropertySource
+		if (ClassUtils.isExist("org.springframework.boot.env.OriginTrackedMapPropertySource")) {
+			// 低于2.2.0版本的springboot中，OriginTrackedMapPropertySource类是没有immutable属性的，特殊处理一下
+			if (ReflectionUtils.hasField(OriginTrackedMapPropertySource.class, "immutable")) {
+				return new OriginTrackedMapPropertySource(propertySourceName, source, immutable);
+			} else {
+				return new OriginTrackedMapPropertySource(propertySourceName, source);
+			}
 		} else {
-			return new OriginTrackedMapPropertySource(propertySourceName, source);
+			return new MapPropertySource(propertySourceName, source);
 		}
 	}
 
@@ -248,7 +254,7 @@ public abstract class EnvironmentUtils {
 	 * @return propertySource 配置源
 	 */
 	@Nullable
-	public static OriginTrackedMapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
+	public static MapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
 		// 创建资源对象
 		Resource configFileResource = new ClassPathResource(configFilePath);
 		if (!configFileResource.exists()) {
