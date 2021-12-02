@@ -17,10 +17,10 @@ package icu.easyj.spring.boot.env.enhanced.util;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.GlobalCrypto;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -50,7 +50,7 @@ public abstract class CryptoPropertyUtils {
 			switch (result.getMethodName()) {
 				case "decrypt":
 					try {
-						if (ArrayUtils.isEmpty(parameters) || ObjectUtils.isEmpty(parameters[0])) {
+						if (ArrayUtils.isEmpty(parameters) || parameters[0] == null || StringUtils.isEmpty(parameters[0].toString())) {
 							// 没有值，直接返回空字符串
 							return "";
 						}
