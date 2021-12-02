@@ -58,7 +58,7 @@ class ConvertUtilsTest {
 		// String -> Character
 		{
 			Character c = ConvertUtils.convert("c", Character.class);
-			Assertions.assertEquals('c', c);
+			Assertions.assertEquals('c', c.charValue());
 		}
 
 
@@ -71,8 +71,8 @@ class ConvertUtilsTest {
 
 		// String -> Byte
 		{
-			Assertions.assertEquals((byte)1, ConvertUtils.convert("1", Byte.class));
-			Assertions.assertEquals((byte)0, ConvertUtils.convert("0", byte.class));
+			Assertions.assertEquals((byte)1, ConvertUtils.convert("1", Byte.class).byteValue());
+			Assertions.assertEquals((byte)0, ConvertUtils.convert("0", byte.class).byteValue());
 		}
 
 
