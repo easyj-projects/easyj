@@ -34,7 +34,6 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
-import org.springframework.boot.DefaultPropertiesPropertySource;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
@@ -61,7 +60,7 @@ public abstract class EnvironmentUtils {
 
 	//region 默认配置源 start
 
-	public static final String DEFAULT_PROPERTY_SOURCE_NAME = DefaultPropertiesPropertySource.NAME;
+	public static final String DEFAULT_PROPERTY_SOURCE_NAME = "defaultProperties"; // 对应springboot中的常量：DefaultPropertiesPropertySource.NAME;
 
 	/**
 	 * 添加或合并默认配置
