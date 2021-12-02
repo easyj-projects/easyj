@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.test;
 import javax.annotation.Resource;
 import javax.servlet.Filter;
 
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -61,6 +62,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 * 测试前的初始化方法
 	 */
 	@BeforeEach
+	@Before
 	public void initMockMvcBeforeEachTestMethod() {
 		this.initMockMvc(this.filters);
 	}
