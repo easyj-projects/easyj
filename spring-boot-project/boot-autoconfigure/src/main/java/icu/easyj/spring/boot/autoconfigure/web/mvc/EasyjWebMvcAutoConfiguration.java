@@ -29,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @ConditionalOnClass({WebMvcConfigurer.class, CharSequenceToDateConverter.class})
 @ConditionalOnWebApplication
-public class EasyjWebMvcAutoConfiguration extends WebMvcConfigurerAdapter {
+public class EasyjWebMvcAutoConfiguration implements WebMvcConfigurerAdapter {
 
 	@Override
 	public void addFormatters(FormatterRegistry registry) {

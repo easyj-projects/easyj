@@ -26,6 +26,7 @@ import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.autoconfigure.StarterConstants;
+import icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
@@ -59,6 +60,11 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 
 
 	//region 各函数名的常量
+
+	/**
+	 * 类函数名
+	 */
+	private static final String CLASS_FUN_NAME = "class";
 
 	/**
 	 * 加密函数名
@@ -157,7 +163,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		name = name.substring(PREFIX.length());
 
 		return StrUtil.startWithAny(name,
-				CRYPTO_FUN_NAME, NET_FUN_NAME, RANDOM_FUN_NAME);
+				CLASS_FUN_NAME, CRYPTO_FUN_NAME, NET_FUN_NAME, RANDOM_FUN_NAME);
 	}
 
 	/**
@@ -169,6 +175,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	@Nullable
 	private Object computeProperty(CodeAnalysisResult result) {
 		switch (result.getVariableName()) {
+			case CLASS_FUN_NAME:
+				// 类函数
+				return ClassPropertyUtils.getProperty(name, result);
 			case CRYPTO_FUN_NAME:
 				// 加密解密
 				return CryptoPropertyUtils.getProperty(name, result);

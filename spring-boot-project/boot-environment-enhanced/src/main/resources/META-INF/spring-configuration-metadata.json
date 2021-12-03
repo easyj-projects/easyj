@@ -56,10 +56,22 @@
 			"defaultValue": "UTF-8"
 		},
 		{
+			"name": "easyj.class.isExist",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils",
+			"description": "函数式配置${xxx}：判断类是否存在的方法，返回：true|false，例：${easyj.class.isExist('类名1', '类名2', ..., '类名n')}."
+		},
+		{
+			"name": "easyj.class.getExistingOne",
+			"type": "java.lang.reflect.Method",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils",
+			"description": "函数式配置${xxx}：获取存在类的类名的方法，根据优先级设置类名顺序，例：${easyj.class.getExistingOne('类名1', '类名2', ..., '类名n')}."
+		},
+		{
 			"name": "easyj.crypto.decrypt",
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils",
-			"description": "函数式配置${xxx}：配置解密方法，例：${easyj.crypto.decrypt('xxxxxx这里是一个加密串')}."
+			"description": "函数式配置${xxx}：解密方法，例：${easyj.crypto.decrypt('xxxxxx这里是一个加密串')}."
 		},
 		{
 			"name": "easyj.net.getIp",
