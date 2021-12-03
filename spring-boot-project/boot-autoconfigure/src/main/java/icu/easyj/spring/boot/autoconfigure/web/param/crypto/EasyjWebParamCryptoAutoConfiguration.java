@@ -139,7 +139,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	@Configuration
 	@ConditionalOnClass({com.alibaba.fastjson.JSON.class})
 	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = FASTJSON) // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
-	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration extends WebMvcConfigurerAdapter {
+	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration implements WebMvcConfigurerAdapter {
 
 		private final ParamCryptoFilter paramCryptoFilter;
 

@@ -40,79 +40,79 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author wangliang181230
  */
-public abstract class WebMvcConfigurerAdapter implements WebMvcConfigurer {
+public interface WebMvcConfigurerAdapter extends WebMvcConfigurer {
 
 	@Override
-	public void configurePathMatch(PathMatchConfigurer configurer) {
+	default void configurePathMatch(PathMatchConfigurer configurer) {
 	}
 
 	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+	default void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 	}
 
 	@Override
-	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+	default void configureAsyncSupport(AsyncSupportConfigurer configurer) {
 	}
 
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	default void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 	}
 
 	@Override
-	public void addFormatters(FormatterRegistry registry) {
+	default void addFormatters(FormatterRegistry registry) {
 	}
 
 	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
+	default void addInterceptors(InterceptorRegistry registry) {
 	}
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	default void addResourceHandlers(ResourceHandlerRegistry registry) {
 	}
 
 	@Override
-	public void addCorsMappings(CorsRegistry registry) {
+	default void addCorsMappings(CorsRegistry registry) {
 	}
 
 	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
+	default void addViewControllers(ViewControllerRegistry registry) {
 	}
 
 	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
+	default void configureViewResolvers(ViewResolverRegistry registry) {
 	}
 
 	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+	default void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 	}
 
 	@Override
-	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+	default void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
 	}
 
 	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+	default void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 	}
 
 	@Override
-	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+	default void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 	}
 
 	@Override
-	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+	default void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
 	}
 
 	@Override
-	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+	default void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
 	}
 
 	@Override
-	public Validator getValidator() {
+	default Validator getValidator() {
 		return null;
 	}
 
 	@Override
-	public MessageCodesResolver getMessageCodesResolver() {
+	default MessageCodesResolver getMessageCodesResolver() {
 		return null;
 	}
 }

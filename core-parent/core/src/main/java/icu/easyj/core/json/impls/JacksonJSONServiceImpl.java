@@ -49,7 +49,9 @@ class JacksonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
-			return mapper.readerForListOf(targetClazz).readValue(text);
+			// 为了兼容低版本的Jackson，采用下面的方式解析
+			//return mapper.readerForListOf(targetClazz).readValue(text);
+			return mapper.readValue(text, mapper.getTypeFactory().constructCollectionType(List.class, targetClazz));
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转List失败", e);
 		}

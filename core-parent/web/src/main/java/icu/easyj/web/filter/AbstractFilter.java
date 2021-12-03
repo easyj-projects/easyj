@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,7 @@ import static icu.easyj.web.constant.FilterConstants.GLOBAL_EXCLUSIONS;
  *
  * @author wangliang181230
  */
-public abstract class AbstractFilter<P extends IFilterProperties> implements Filter {
+public abstract class AbstractFilter<P extends IFilterProperties> implements FilterAdapter {
 
 	/**
 	 * 全局过滤器需排除列表

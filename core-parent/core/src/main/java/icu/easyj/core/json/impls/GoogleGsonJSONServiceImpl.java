@@ -18,6 +18,7 @@ package icu.easyj.core.json.impls;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
@@ -47,7 +48,11 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
-			return new Gson().fromJson(text, TypeToken.getParameterized(List.class, targetClazz).getType());
+			// 为了兼容低版本Gson，使用下面的代码
+			//TypeToken<?> typeToken = TypeToken.getParameterized(List.class, targetClazz);
+			TypeToken<?> typeToken = TypeToken.get($Gson$Types.newParameterizedTypeWithOwner(null, List.class, targetClazz));
+
+			return new Gson().fromJson(text, typeToken.getType());
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转List失败", e);
 		}
