@@ -74,7 +74,7 @@
 		{
 			"name": "easyj.logging.logback.config",
 			"type": "java.lang.String",
-			"description": "[logback] 配置文件路径.",
+			"description": "[logback] 可引用配置：配置文件路径.",
 			"defaultValue": "classpath:easyj/logging/logback/logback-spring.xml"
 		},
 		{
