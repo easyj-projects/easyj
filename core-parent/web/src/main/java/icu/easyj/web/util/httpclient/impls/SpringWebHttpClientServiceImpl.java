@@ -21,6 +21,7 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.UrlUtils;
+import icu.easyj.web.spring.NonUriTemplateHandler;
 import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -38,7 +39,19 @@ import org.springframework.web.client.RestTemplate;
 @DependsOnClass(RestTemplate.class)
 class SpringWebHttpClientServiceImpl implements IHttpClientService {
 
-	private final RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate;
+
+
+	public SpringWebHttpClientServiceImpl(RestTemplate restTemplate) {
+		// 因为当前服务不需要URI模板处理器，所以设置一个空处理器
+		restTemplate.setUriTemplateHandler(NonUriTemplateHandler.getInstance());
+
+		this.restTemplate = restTemplate;
+	}
+
+	public SpringWebHttpClientServiceImpl() {
+		this(new RestTemplate());
+	}
 
 
 	//region GET

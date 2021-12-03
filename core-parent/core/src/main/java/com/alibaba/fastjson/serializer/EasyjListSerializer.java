@@ -143,5 +143,4 @@ public final class EasyjListSerializer implements ObjectSerializer {
 			serializer.context = context;
 		}
 	}
-
 }

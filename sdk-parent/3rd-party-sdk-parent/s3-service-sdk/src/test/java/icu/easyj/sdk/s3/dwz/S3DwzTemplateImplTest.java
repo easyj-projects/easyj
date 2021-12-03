@@ -19,7 +19,6 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -27,7 +26,6 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-@Disabled("经常报错，暂时禁用")
 public class S3DwzTemplateImplTest {
 
 	/**
@@ -43,5 +41,4 @@ public class S3DwzTemplateImplTest {
 		System.out.println(StringUtils.toString(response));
 		Assertions.assertTrue(response.getShortUrl().startsWith("https://s-3.cn/"));
 	}
-
 }
