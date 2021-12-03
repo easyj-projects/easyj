@@ -2,9 +2,9 @@ name: Tests And Codecov
 
 on:
   push:
-    branches: [ develop,master ]
+    branches: [ develop, master, spring-boot_2.1.x, spring-boot_1.x.x-2.0.x ]
   pull_request:
-    branches: [ develop,master ]
+    branches: [ develop, master, spring-boot_2.1.x, spring-boot_1.x.x-2.0.x ]
 
 jobs:
   build:
