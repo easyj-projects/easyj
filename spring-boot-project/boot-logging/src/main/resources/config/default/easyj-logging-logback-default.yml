@@ -23,7 +23,7 @@ easyj.logging.logback:
       queue-size: 256
   kafka-appender:
     enabled: false #默认关闭
-    bootstrap-servers: ${spring.kafka.bootstrap-servers:127.0.0.1:9092}
+    bootstrap-servers: ${spring.kafka.bootstrap-servers:127.0.0.1:9092} #默认同步spring.kafka的配置
     topic: logback_to_logstash
   logstash-appender:
     enabled: false #默认关闭
