@@ -31,8 +31,8 @@ import java.util.Map;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
 import icu.easyj.test.util.TestUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

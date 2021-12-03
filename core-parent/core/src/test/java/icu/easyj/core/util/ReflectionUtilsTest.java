@@ -27,8 +27,8 @@ import icu.easyj.core.modelfortest.NotExistsNoArgsConstructorTestClass;
 import icu.easyj.core.modelfortest.TestClass;
 import icu.easyj.core.modelfortest.TestClass2;
 import icu.easyj.core.modelfortest.TestSuperClass;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static icu.easyj.core.util.ArrayUtils.EMPTY_FIELD_ARRAY;
 import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;

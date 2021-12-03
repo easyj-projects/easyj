@@ -18,8 +18,8 @@ package icu.easyj.core.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link CycleDependencyHandler} 测试类

@@ -22,8 +22,8 @@ import icu.easyj.core.loader.model.EnglishHello;
 import icu.easyj.core.loader.model.FrenchHello;
 import icu.easyj.core.loader.model.Hello;
 import icu.easyj.core.loader.model.LatinHello;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

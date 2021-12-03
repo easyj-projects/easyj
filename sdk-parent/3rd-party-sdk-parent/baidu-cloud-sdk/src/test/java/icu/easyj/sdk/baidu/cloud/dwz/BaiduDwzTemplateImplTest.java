@@ -18,16 +18,16 @@ package icu.easyj.sdk.baidu.cloud.dwz;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link BaiduDwzTemplateImpl} 测试类
  *
  * @author wangliang181230
  */
-@Disabled("由于免费额度有限，不执行该测试用例")
+@Ignore("由于免费额度有限，不执行该测试用例")
 public class BaiduDwzTemplateImplTest {
 
 	/**

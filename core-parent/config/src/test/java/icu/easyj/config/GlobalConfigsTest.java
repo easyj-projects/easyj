@@ -20,8 +20,8 @@ import java.util.Map;
 
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link GlobalConfigs} 的测试类

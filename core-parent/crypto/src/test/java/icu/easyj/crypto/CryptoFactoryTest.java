@@ -19,8 +19,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link CryptoFactory} 测试类

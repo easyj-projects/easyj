@@ -17,8 +17,8 @@ package icu.easyj.core.util;
 
 import java.util.Date;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link DateUtils} 测试类

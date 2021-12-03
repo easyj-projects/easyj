@@ -30,9 +30,9 @@ import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
 import icu.easyj.sdk.tencent.cloud.ocr.OcrRequestBuilder;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.IdCardOcrAdvancedInfo;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link DefaultTencentCloudIdCardOcrServiceImpl} 测试类
@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
 public class DefaultTencentCloudIdCardOcrServiceImplTest {
 
 	@Test
-	@Disabled("由于身份证件为敏感信息，所以请自行将二代身份证图片放到指定目录中，并设置好密钥对后，再手动执行该测试用例")
+	@Ignore("由于身份证件为敏感信息，所以请自行将二代身份证图片放到指定目录中，并设置好密钥对后，再手动执行该测试用例")
 	public void testIDCardOCR() throws Exception {
 		// 设置密钥对
 		// 获取方式：请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对

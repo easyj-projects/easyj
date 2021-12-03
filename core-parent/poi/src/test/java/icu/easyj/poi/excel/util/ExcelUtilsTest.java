@@ -23,8 +23,8 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.util.model.TestClass;
 import icu.easyj.web.poi.excel.ExcelExportUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link ExcelUtils} 测试类

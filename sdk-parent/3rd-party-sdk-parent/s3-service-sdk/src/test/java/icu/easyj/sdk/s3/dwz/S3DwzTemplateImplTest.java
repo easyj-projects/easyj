@@ -18,8 +18,8 @@ package icu.easyj.sdk.s3.dwz;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link S3DwzTemplateImpl} 测试类

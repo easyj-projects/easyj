@@ -15,8 +15,8 @@
  */
 package icu.easyj.core.util.version;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static icu.easyj.core.util.version.VersionUtils.UNKNOWN_VERSION_LONG;
 

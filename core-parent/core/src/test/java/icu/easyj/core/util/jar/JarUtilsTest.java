@@ -19,8 +19,8 @@ import java.util.List;
 
 import icu.easyj.core.util.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link JarUtils} 测试类

@@ -16,8 +16,8 @@
 package icu.easyj.core.code.analysis;
 
 import icu.easyj.core.util.StringUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link CodeAnalysisUtils} 测试类

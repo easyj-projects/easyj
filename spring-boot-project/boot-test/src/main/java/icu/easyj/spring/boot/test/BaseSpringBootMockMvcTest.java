@@ -19,7 +19,6 @@ import javax.annotation.Resource;
 import javax.servlet.Filter;
 
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
@@ -61,7 +60,6 @@ public abstract class BaseSpringBootMockMvcTest {
 	/**
 	 * 测试前的初始化方法
 	 */
-	@BeforeEach
 	@Before
 	public void initMockMvcBeforeEachTestMethod() {
 		this.initMockMvc(this.filters);
@@ -145,12 +143,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	@SuppressWarnings("deprecation")
 	protected MockRequest mockPostMultipart(String urlTemplate, Object... uriVars) {
-		MockMultipartHttpServletRequestBuilder newMultipartBuilder;
-		try {
-			newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-		} catch (NoSuchMethodError e) {
-			newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
-		}
+		MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
 		return new MockRequest(this.mockMvc, newMultipartBuilder, urlTemplate, uriVars);
 	}
 

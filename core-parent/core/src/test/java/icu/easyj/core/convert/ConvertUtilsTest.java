@@ -21,8 +21,8 @@ import java.util.Date;
 
 import icu.easyj.core.enums.DateFormatType;
 import icu.easyj.core.util.DateUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link ConvertUtils} 测试类

@@ -16,8 +16,8 @@
 package icu.easyj.core.util.shortcode;
 
 import icu.easyj.core.constant.DateConstants;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link ShortCodeUtils} 测试类

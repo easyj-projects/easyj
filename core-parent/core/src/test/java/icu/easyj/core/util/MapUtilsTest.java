@@ -18,8 +18,8 @@ package icu.easyj.core.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link MapUtils} 测试类

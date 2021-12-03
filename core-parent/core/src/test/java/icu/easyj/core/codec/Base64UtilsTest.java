@@ -25,8 +25,8 @@ import cn.hutool.system.SystemUtil;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.test.util.TestUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 

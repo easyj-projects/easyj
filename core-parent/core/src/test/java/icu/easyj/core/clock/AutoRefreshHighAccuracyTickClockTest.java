@@ -18,8 +18,8 @@ package icu.easyj.core.clock;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import icu.easyj.core.util.DateUtils;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link AutoRefreshHighAccuracyTickClock} 测试类

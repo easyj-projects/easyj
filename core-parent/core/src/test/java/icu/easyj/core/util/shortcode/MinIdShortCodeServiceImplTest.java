@@ -17,8 +17,8 @@ package icu.easyj.core.util.shortcode;
 
 import icu.easyj.core.constant.DateConstants;
 import icu.easyj.core.util.shortcode.impls.MinIdShortCodeServiceImpl;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link MinIdShortCodeServiceImpl} 测试类

@@ -20,16 +20,19 @@ import javax.annotation.Resource;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * {@link AllMiddleWareServerApplication} 测试类
  *
  * @author wangliang181230
  */
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("unittest")
 public class AllMiddleWareServerApplicationTest {
