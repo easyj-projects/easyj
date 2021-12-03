@@ -54,6 +54,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--junit4-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 		<!-- junit5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
