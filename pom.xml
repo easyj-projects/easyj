@@ -128,13 +128,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- JMH -->
 		<dependency>
 			<groupId>org.openjdk.jmh</groupId>
