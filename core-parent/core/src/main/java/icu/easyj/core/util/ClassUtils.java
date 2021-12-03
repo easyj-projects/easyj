@@ -47,4 +47,25 @@ public abstract class ClassUtils {
 	public static boolean isExist(String className) {
 		return isExist(className, Thread.currentThread().getContextClassLoader());
 	}
+
+	/**
+	 * 判断类是否不存在
+	 *
+	 * @param className 类名
+	 * @param loader    类加载器
+	 * @return 是否不存在
+	 */
+	public static boolean isNotExist(String className, ClassLoader loader) {
+		return !isExist(className, loader);
+	}
+
+	/**
+	 * 判断类是否不存在
+	 *
+	 * @param className 类名
+	 * @return 是否不存在
+	 */
+	public static boolean isNotExist(String className) {
+		return isNotExist(className, Thread.currentThread().getContextClassLoader());
+	}
 }

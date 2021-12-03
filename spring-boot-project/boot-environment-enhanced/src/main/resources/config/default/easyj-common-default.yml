@@ -13,3 +13,6 @@ easyj:
   server:
     host: ${easyj.net.getIp()}
     domain: http://${easyj.server.host}:${server.port:8080}
+  datasource:
+    mysql:
+      driver-class-name: ${easyj.class.getExistingOne('com.mysql.cj.jdbc.Driver', 'com.mysql.jdbc.Driver')}
