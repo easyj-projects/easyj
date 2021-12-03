@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class MinIdShortCodeServiceImplTest {
+public class MinIdShortCodeServiceImplTest {
 
 	long minId = 1000000000000L;
 
@@ -33,7 +33,7 @@ class MinIdShortCodeServiceImplTest {
 
 
 	@Test
-	void testToCodeAndToId() {
+	public void testToCodeAndToId() {
 		int range = 20;
 
 		long now = System.currentTimeMillis();

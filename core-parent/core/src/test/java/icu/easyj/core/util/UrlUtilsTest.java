@@ -23,12 +23,12 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class UrlUtilsTest {
+public class UrlUtilsTest {
 
 	static final String BASE_URL = "http://github.com/easyj-projects/easyj";
 
 	@Test
-	void testNormalizePath() {
+	public void testNormalizePath() {
 		//case: null
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			UrlUtils.normalizePath(null);
@@ -53,7 +53,7 @@ class UrlUtilsTest {
 	}
 
 	@Test
-	void testJoinQueryString() {
+	public void testJoinQueryString() {
 		String url = BASE_URL;
 		Assertions.assertEquals(url, UrlUtils.joinQueryString(url, null));
 		Assertions.assertEquals(BASE_URL + "?a=%E5%95%8A", UrlUtils.joinQueryString(url, MapUtils.quickMap("a", "啊")));

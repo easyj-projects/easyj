@@ -23,6 +23,7 @@ import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * {@link AllMiddleWareServerApplication} 测试类
@@ -30,7 +31,8 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author wangliang181230
  */
 @SpringBootTest
-class AllMiddleWareServerApplicationTest {
+@ActiveProfiles("unittest")
+public class AllMiddleWareServerApplicationTest {
 
 	// dwz
 	@Resource
@@ -43,7 +45,7 @@ class AllMiddleWareServerApplicationTest {
 	WebSocketService webSocketService;
 
 	@Test
-	void testStartup() {
+	public void testStartup() {
 		Assertions.assertNotNull(dwzRestController);
 		Assertions.assertNotNull(dwzRedirectController);
 

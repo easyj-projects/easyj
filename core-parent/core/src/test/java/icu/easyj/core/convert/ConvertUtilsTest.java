@@ -29,10 +29,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class ConvertUtilsTest {
+public class ConvertUtilsTest {
 
 	@Test
-	void testStringToOtherConvert() {
+	public void testStringToOtherConvert() {
 		String source;
 
 

@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class JarUtilsTest {
+public class JarUtilsTest {
 
 	@Test
-	void testGetJarList() {
+	public void testGetJarList() {
 		List<JarInfo> jarList = JarUtils.getJarList();
 		Assertions.assertNotNull(jarList);
 

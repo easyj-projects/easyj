@@ -32,7 +32,7 @@ import org.springframework.test.context.ActiveProfiles;
  */
 @SpringBootTest
 @ActiveProfiles("unittest")
-class DwzServerApplicationTest {
+public class DwzServerApplicationTest {
 
 	@Resource
 	DwzRestController dwzRestController;
@@ -40,7 +40,7 @@ class DwzServerApplicationTest {
 	DwzRedirectController dwzRedirectController;
 
 	@Test
-	void testStartup() {
+	public void testStartup() {
 		Assertions.assertNotNull(dwzRestController);
 		Assertions.assertNotNull(dwzRedirectController);
 
@@ -49,7 +49,7 @@ class DwzServerApplicationTest {
 	}
 
 	@Test
-	void testLogging() {
+	public void testLogging() {
 		LoggerFactory.getLogger(this.getClass()).error("测试日志功能: {}", "aaa", new Exception("故意输出堆栈日志"));
 	}
 }

@@ -49,7 +49,7 @@ import static icu.easyj.core.loader.ServiceProviders.JACKSON;
  *
  * @author wangliang181230
  */
-class JSONUtilsTest {
+public class JSONUtilsTest {
 
 	private static final int THREAD_COUNT = 10;
 	private static final int TIMES = 2 * 10000;
@@ -69,7 +69,7 @@ class JSONUtilsTest {
 	private static final List<IJSONService> SERVICES = EnhancedServiceLoader.loadAll(IJSONService.class);
 
 	@Test
-	void testServiceLoader() {
+	public void testServiceLoader() {
 		Assertions.assertEquals(DEFAULT_SERVICE, FASTJSON_SERVICE);
 
 		Assertions.assertEquals(FASTJSON_SERVICE, SERVICES.get(0));
@@ -86,7 +86,7 @@ class JSONUtilsTest {
 	}
 
 	@Test
-	void testToBean() {
+	public void testToBean() {
 		for (IJSONService service : SERVICES) {
 			assertEquals1(service, service.toBean(JSON1, TestUser.class));
 			assertEquals2(service, service.toBean(JSON2, TestUser.class));
@@ -114,7 +114,7 @@ class JSONUtilsTest {
 	}
 
 	@Test
-	void testToList() {
+	public void testToList() {
 		for (IJSONService service : SERVICES) {
 			testToList(service);
 		}
@@ -136,7 +136,7 @@ class JSONUtilsTest {
 	}
 
 	@Test
-	void testToJSONString() throws ParseException {
+	public void testToJSONString() throws ParseException {
 		for (IJSONService service : SERVICES) {
 			testToJSONString(service);
 		}
@@ -273,7 +273,7 @@ class JSONUtilsTest {
 	 * @see <a href="https://github.com/alibaba/fastjson/issues/3720">BUG的ISSUE</a>
 	 */
 	@Test
-	void testFastjsonBug() {
+	public void testFastjsonBug() {
 		SerializeConfig.getGlobalInstance().put(Long.class, ToStringSerializer.instance);
 
 		this.testFastjsonBeforeBugfix();
@@ -296,7 +296,7 @@ class JSONUtilsTest {
 	/**
 	 * BUG修复前
 	 */
-	void testFastjsonBeforeBugfix() {
+	private void testFastjsonBeforeBugfix() {
 		// Long
 		System.out.println("Long：正常");
 		Assertions.assertEquals("\"9223372036854775807\"", JSON.toJSONString(Long.MAX_VALUE)); // 含双引号，正确的
@@ -350,7 +350,7 @@ class JSONUtilsTest {
 	/**
 	 * BUG修复后
 	 */
-	void testFastjsonAfterBugfix() {
+	private void testFastjsonAfterBugfix() {
 		// Long
 		System.out.println("Long：正常");
 		Assertions.assertEquals("\"9223372036854775807\"", FASTJSON_SERVICE.toJSONString(Long.MAX_VALUE)); // 含双引号，正确的

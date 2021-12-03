@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class CycleDependencyHandlerTest {
+public class CycleDependencyHandlerTest {
 
 	@Test
-	void testGetUniqueSubstituteObject() {
+	public void testGetUniqueSubstituteObject() {
 		Set<Object> objSet = new HashSet<>();
 
 		Assertions.assertDoesNotThrow(() -> {

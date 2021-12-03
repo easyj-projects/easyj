@@ -24,12 +24,12 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class ShortCodeUtilsTest {
+public class ShortCodeUtilsTest {
 
 	IShortCodeService shortCodeService = ShortCodeUtils.DEFAULT;
 
 	@Test
-	void testToCodeAndToId() {
+	public void testToCodeAndToId() {
 		int range = 20;
 
 		long now = System.currentTimeMillis();

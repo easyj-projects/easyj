@@ -39,11 +39,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class DefaultTencentCloudIdCardOcrServiceImplTest {
+public class DefaultTencentCloudIdCardOcrServiceImplTest {
 
 	@Test
 	@Disabled("由于身份证件为敏感信息，所以请自行将二代身份证图片放到指定目录中，并设置好密钥对后，再手动执行该测试用例")
-	void testIDCardOCR() throws Exception {
+	public void testIDCardOCR() throws Exception {
 		// 设置密钥对
 		// 获取方式：请前往页面 https://console.cloud.tencent.com/cam/capi 获取密钥对
 		// 特别说明：以下是测试用的腾讯云账号的密钥对，由于文字识别接口免费额度有限，请大家尽量少执行测试。

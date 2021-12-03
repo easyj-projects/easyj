@@ -23,10 +23,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class TickClockTest {
+public class TickClockTest {
 
 	@Test
-	void testCompareTo() {
+	public void testCompareTo() {
 		long currentTimeMicros = System.currentTimeMillis() * 1000;
 		long nanoTime = System.nanoTime();
 

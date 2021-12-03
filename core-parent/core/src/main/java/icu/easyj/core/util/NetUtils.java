@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.util;
 
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -35,6 +36,32 @@ import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
  * @author wangliang181230
  */
 public abstract class NetUtils {
+
+	/**
+	 * 类型：sun.net.www.protocol.http.HttpURLConnection
+	 */
+	private static final Class<?> HTTP_URL_CONNECTION_CLASS;
+
+	private static final Method DISCONNECT_METHOD;
+
+	static {
+		Class<?> httpUrlConnectionClass;
+		Method disconnectMethod;
+		try {
+			httpUrlConnectionClass = ReflectionUtils.getClassByName("sun.net.www.protocol.http.HttpURLConnection");
+			try {
+				disconnectMethod = httpUrlConnectionClass.getMethod("disconnect");
+			} catch (NoSuchMethodException e) {
+				disconnectMethod = null;
+			}
+		} catch (ClassNotFoundException e) {
+			httpUrlConnectionClass = null;
+			disconnectMethod = null;
+		}
+		HTTP_URL_CONNECTION_CLASS = httpUrlConnectionClass;
+		DISCONNECT_METHOD = disconnectMethod;
+	}
+
 
 	//region IP
 
@@ -157,10 +184,10 @@ public abstract class NetUtils {
 		try {
 			if (conn instanceof HttpURLConnection) {
 				((HttpURLConnection)conn).disconnect();
-			} else if (conn instanceof sun.net.www.protocol.http.HttpURLConnection) {
-				((sun.net.www.protocol.http.HttpURLConnection)conn).disconnect();
+			} else if (DISCONNECT_METHOD != null && HTTP_URL_CONNECTION_CLASS.isAssignableFrom(conn.getClass())) {
+				DISCONNECT_METHOD.invoke(conn);
 			}
-		} catch (RuntimeException ignore) {
+		} catch (Exception ignore) {
 		}
 	}
 

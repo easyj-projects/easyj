@@ -42,10 +42,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  *
  * @author wangliang181230
  */
-class StringUtilsTest {
+public class StringUtilsTest {
 
 	@Test
-	void testIsEmptyAndIsBlank() {
+	public void testIsEmptyAndIsBlank() {
 		// isEmpty
 		Assertions.assertTrue(StringUtils.isEmpty(null));
 		Assertions.assertTrue(StringUtils.isEmpty(""));
@@ -73,7 +73,7 @@ class StringUtilsTest {
 	//region test getValue 和 getCoder
 
 	@Test
-	void testGetValue() {
+	public void testGetValue() {
 		String s1 = "aaabbbccc";
 		String s2 = "aaabbbccc啊";
 
@@ -97,7 +97,7 @@ class StringUtilsTest {
 
 
 	@Test
-	void testGetCoder() {
+	public void testGetCoder() {
 		Assertions.assertEquals(0, StringUtils.getCoder("aaabbbccc=="));
 		Assertions.assertEquals(1, StringUtils.getCoder("1啊啊啊哦哦哦呃呃呃"));
 		Assertions.assertEquals(1, StringUtils.getCoder("2啊啊啊哦哦哦呃呃呃="));
@@ -129,7 +129,7 @@ class StringUtilsTest {
 
 
 	@Test
-	void testJoin() {
+	public void testJoin() {
 		// join
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			StringUtils.join('?', ',', -1);
@@ -151,7 +151,7 @@ class StringUtilsTest {
 
 
 	@Test
-	void testTrim() {
+	public void testTrim() {
 		// trim
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			StringUtils.trim(null, '/');
@@ -186,7 +186,7 @@ class StringUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	void testToStringAndCycleDependency() throws Exception {
+	public void testToStringAndCycleDependency() throws Exception {
 		//case: String
 		assertEquals("\"aaa\"", StringUtils.toString("aaa"));
 

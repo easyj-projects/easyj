@@ -27,11 +27,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class CollectionUtilsTest {
+public class CollectionUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	void testGetLast() {
+	public void testGetLast() {
 		// case: null
 		Assertions.assertNull(CollectionUtils.getLast(null));
 

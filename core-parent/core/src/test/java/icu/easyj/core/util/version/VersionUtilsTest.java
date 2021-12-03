@@ -25,10 +25,10 @@ import static icu.easyj.core.util.version.VersionUtils.UNKNOWN_VERSION_LONG;
  *
  * @author wangliang181230
  */
-class VersionUtilsTest {
+public class VersionUtilsTest {
 
 	@Test
-	void testParse() {
+	public void testParse() {
 		VersionInfo versionInfo = VersionUtils.parse("999");
 		Assertions.assertEquals("999", versionInfo.getVersion());
 		Assertions.assertEquals(999_000_000_000_000_1L, versionInfo.getVersionLong());
@@ -49,7 +49,7 @@ class VersionUtilsTest {
 	}
 
 	@Test
-	void testToLong() {
+	public void testToLong() {
 		System.out.println(Long.MAX_VALUE); // 19位
 		System.out.println(VersionUtils.toLong("999")); // 16位
 
@@ -73,7 +73,7 @@ class VersionUtilsTest {
 	}
 
 	@Test
-	void testIsUnknownVersion() {
+	public void testIsUnknownVersion() {
 		Assertions.assertTrue(VersionUtils.isUnknownVersion(null));
 		Assertions.assertTrue(VersionUtils.isUnknownVersion(""));
 		Assertions.assertTrue(VersionUtils.isUnknownVersion("   "));
@@ -82,7 +82,7 @@ class VersionUtilsTest {
 	}
 
 	@Test
-	void testIsSnapshotVersion() {
+	public void testIsSnapshotVersion() {
 		Assertions.assertFalse(VersionUtils.isSnapshotVersion(null));
 		Assertions.assertFalse(VersionUtils.isSnapshotVersion(""));
 		Assertions.assertFalse(VersionUtils.isSnapshotVersion("   "));

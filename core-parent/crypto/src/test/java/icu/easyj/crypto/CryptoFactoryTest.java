@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class CryptoFactoryTest {
+public class CryptoFactoryTest {
 
 	@Test
-	void testGetSymmetricCrypto() {
+	public void testGetSymmetricCrypto() {
 		String algorithmStr = "AES/CBC/PKCS7Padding";
 		String key = "12345678901234567890123456789012";
 		String iv = "1234567890123456";

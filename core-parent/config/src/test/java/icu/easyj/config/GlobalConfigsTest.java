@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class GlobalConfigsTest {
+public class GlobalConfigsTest {
 
 	@Test
-	void testSetAndGetGlobalConfigs() {
+	public void testSetAndGetGlobalConfigs() {
 		// case: Area
 		GlobalConfigs.setArea("area1");
 		Assertions.assertEquals("area1", GlobalConfigs.getArea());

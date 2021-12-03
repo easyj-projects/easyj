@@ -26,11 +26,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class MapUtilsTest {
+public class MapUtilsTest {
 
 	@Test
 	@SuppressWarnings("all")
-	void testComputeIfAbsent() {
+	public void testComputeIfAbsent() {
 		// case: null
 		Assertions.assertThrows(NullPointerException.class, () -> {
 			MapUtils.computeIfAbsent(null, null, k -> null);

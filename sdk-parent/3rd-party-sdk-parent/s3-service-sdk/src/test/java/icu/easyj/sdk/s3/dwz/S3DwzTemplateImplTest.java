@@ -28,13 +28,13 @@ import org.junit.jupiter.api.Test;
  * @author wangliang181230
  */
 @Disabled("经常报错，暂时禁用")
-class S3DwzTemplateImplTest {
+public class S3DwzTemplateImplTest {
 
 	/**
 	 * 测试S-3短链接服务
 	 */
 	@Test
-	void testCreateShortUrl() {
+	public void testCreateShortUrl() {
 		S3DwzConfig config = new S3DwzConfig("108104", "d49ca510520b0f02004e03ddc2de7c49");
 		S3DwzTemplateImpl template = new S3DwzTemplateImpl(config);
 

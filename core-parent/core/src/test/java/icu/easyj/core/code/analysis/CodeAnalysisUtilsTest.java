@@ -24,10 +24,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class CodeAnalysisUtilsTest {
+public class CodeAnalysisUtilsTest {
 
 	@Test
-	void testAnalysisCode() {
+	public void testAnalysisCode() {
 		String expectedPrefix = "CodeAnalysisResult(variableName=\"encrypt\", fieldName=null, methodName=\"dec\", ";
 
 		String code = "encrypt.dec(0, 1l, 2L, 3.1f, 3.2F, 4.1d, 4.2D, 4.3, '', \"\", ' ', \" \"" +

@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class AutoRefreshHighAccuracyTickClockTest {
+public class AutoRefreshHighAccuracyTickClockTest {
 
 	@Test
-	void test() throws Exception {
+	public void test() throws Exception {
 		int i = 20;
 		while (i-- > 0) {
 			final AtomicInteger atomicInteger = new AtomicInteger(0);

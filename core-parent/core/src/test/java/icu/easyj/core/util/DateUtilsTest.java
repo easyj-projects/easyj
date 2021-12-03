@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class DateUtilsTest {
+public class DateUtilsTest {
 
 	@Test
-	void testToString() {
+	public void testToString() {
 		Date time;
 
 		// month

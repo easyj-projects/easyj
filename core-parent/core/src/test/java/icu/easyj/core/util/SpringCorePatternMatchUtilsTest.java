@@ -24,10 +24,10 @@ import org.springframework.util.PatternMatchUtils;
  *
  * @author wangliang181230
  */
-class SpringCorePatternMatchUtilsTest {
+public class SpringCorePatternMatchUtilsTest {
 
 	@Test
-	void testSimpleMatch() {
+	public void testSimpleMatch() {
 		// case: one pattern
 		String pattern = "1122.*3";
 		Assertions.assertTrue(PatternMatchUtils.simpleMatch(pattern, "1122.a\\lkj?!@#$^*()/*3"));

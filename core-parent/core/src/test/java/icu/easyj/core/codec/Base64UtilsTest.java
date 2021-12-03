@@ -35,7 +35,7 @@ import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
  *
  * @author wangliang181230
  */
-class Base64UtilsTest {
+public class Base64UtilsTest {
 
 	/**
 	 * 测试Base64规范化方法
@@ -43,7 +43,7 @@ class Base64UtilsTest {
 	 * @see Base64Utils#normalize(String)
 	 */
 	@Test
-	void testNormalize() {
+	public void testNormalize() {
 		String s = "123\r\n%2B%2B";
 		Assertions.assertEquals("123++", Base64Utils.normalize(s));
 
@@ -52,7 +52,7 @@ class Base64UtilsTest {
 	}
 
 	@Test
-	void testIsBase64Bytes() {
+	public void testIsBase64Bytes() {
 		// 尝试校验20000次生成的Base64串
 		int n = 20000;
 		while (n-- > 0) {
@@ -66,7 +66,7 @@ class Base64UtilsTest {
 	}
 
 	@Test
-	void testIsBase64Chars() {
+	public void testIsBase64Chars() {
 		// 尝试校验20000次生成的Base64串
 		int n = 20000;
 		while (n-- > 0) {
@@ -88,7 +88,7 @@ class Base64UtilsTest {
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */
 	@Test
-	void testIsBase64() {
+	public void testIsBase64() {
 		// 尝试校验20000次生成的Base64串
 		int n = 20000;
 		while (n-- > 0) {
@@ -135,7 +135,7 @@ class Base64UtilsTest {
 	 * @see Base64#isBase64(CharSequence) Hutool的判断方法
 	 */
 	@Test
-	void testIsBase64Performance() {
+	public void testIsBase64Performance() {
 		IBase64Service base64Service = EnhancedServiceLoader.load(IBase64Service.class);
 		System.out.println("\r\n" + IBase64Service.class.getSimpleName() + "实现类：" + base64Service.getClass().getName());
 

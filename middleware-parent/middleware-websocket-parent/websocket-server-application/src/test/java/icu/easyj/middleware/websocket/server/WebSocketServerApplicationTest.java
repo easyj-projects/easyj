@@ -28,13 +28,13 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author wangliang181230
  */
 @SpringBootTest
-class WebSocketServerApplicationTest {
+public class WebSocketServerApplicationTest {
 
 	@Resource
 	WebSocketService webSocketService;
 
 	@Test
-	void testStartup() {
+	public void testStartup() {
 		Assertions.assertNotNull(webSocketService);
 	}
 }

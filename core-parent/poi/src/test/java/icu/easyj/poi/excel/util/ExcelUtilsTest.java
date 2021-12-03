@@ -31,11 +31,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
-class ExcelUtilsTest {
+public class ExcelUtilsTest {
 
 	@Test
 	@SuppressWarnings("deprecation")
-	void testToExcelAndToList() throws Exception {
+	public void testToExcelAndToList() throws Exception {
 		// list to excel
 		List<TestClass> list = new ArrayList<>();
 		list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111"));
