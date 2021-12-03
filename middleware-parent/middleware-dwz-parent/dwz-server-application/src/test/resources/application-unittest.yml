@@ -12,6 +12,6 @@ easyj.middleware.dwz.server:
 #日志相关配置
 easyj.logging.logback:
   kafka-appender:
-    enabled: true
+    enabled: false
   logstash-appender:
     enabled: true

@@ -6,7 +6,7 @@ spring:
   application:
     name: easyj-dwz
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://10.1.50.112:3306/easyj-dwz?autoReconnect=true&failOverReadOnly=false&useSSL=false&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
     username: root
     password: ${easyj.crypto.decrypt('DQuf6oN5c0bQIyI/VjVHF+57JRCelEcjA1GSlAguH7rM0rkhdrf8XTIthHMYena77jCO4+uO0DBy6A+6z0vauvpqPLKTkcSO4YMQb2sAJiXHjYKdvjDEqW0MDjnT1ZdZS/Ed+pFJo7i7V5TqDtFiuiDJ4xFV5vejWihX38aRszA=')}
