@@ -54,7 +54,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- org.junit -->
+		<!-- junit5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
@@ -67,6 +67,18 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
+		</dependency>
+
+		<!-- Slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+
+		<!-- javax -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
 		</dependency>
 	</dependencies>
 

@@ -47,11 +47,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>provided</scope>
-		</dependency>
 
 		<!-- EasyJ All -->
 		<dependency>
@@ -114,11 +109,10 @@
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 
-
+		<!-- javax -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
-			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
