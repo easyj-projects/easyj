@@ -19,7 +19,6 @@ import icu.easyj.middleware.dwz.domain.EasyjDwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/v1")
 public interface EasyjDwzRestControllerFeignClient {
 
-	@NonNull
 	@PostMapping("/create-short-url")
-	DwzResponse createShortUrl(@NonNull @RequestBody EasyjDwzRequest param);
+	DwzResponse createShortUrl(@RequestBody EasyjDwzRequest param);
 }

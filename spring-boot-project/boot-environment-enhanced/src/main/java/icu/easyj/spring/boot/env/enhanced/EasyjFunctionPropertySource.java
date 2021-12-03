@@ -31,7 +31,6 @@ import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
-import org.springframework.lang.Nullable;
 
 /**
  * 函数式配置源
@@ -100,7 +99,6 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @param name 配置键
 	 * @return 配置值
 	 */
-	@Nullable
 	@Override
 	public Object getProperty(String name) {
 		// 判断该配置是否为当前配置源的配置
@@ -166,7 +164,6 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @param result 配置代码解析结果
 	 * @return 配置值
 	 */
-	@Nullable
 	private Object computeProperty(CodeAnalysisResult result) {
 		switch (result.getVariableName()) {
 			case CRYPTO_FUN_NAME:

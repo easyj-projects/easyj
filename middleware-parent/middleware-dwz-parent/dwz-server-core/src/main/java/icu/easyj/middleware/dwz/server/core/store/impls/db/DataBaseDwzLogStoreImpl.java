@@ -32,8 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -157,9 +155,8 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	}
 
 
-	@NonNull
 	@Override
-	public DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity) {
+	public DwzLogEntity save(String longUrl, Date termOfValidity) {
 		// 通过序列服务，获取下一序列值，作为ID
 		long id = this.sequenceService.nextVal(SEQ_NAME__DWZ_LOG_ID);
 		// ID 转换为 短字符串，即：短链接码（注：可通过 `ShortCodeUtils.toId(code)` 方法转换回ID）
@@ -205,9 +202,8 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		return dwzLog;
 	}
 
-	@Nullable
 	@Override
-	public DwzLogEntity getByLongUrlForUpdate(@NonNull String longUrl) {
+	public DwzLogEntity getByLongUrlForUpdate(String longUrl) {
 		Assert.notNull(longUrl, "'longUrl' must not be null");
 		try {
 			return jdbcTemplate.queryForObject(GET_DWZ_LOG_SQL, new BeanPropertyRowMapper<>(DwzLogEntity.class), longUrl);
@@ -220,7 +216,7 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 	}
 
 	@Override
-	public void update(@NonNull DwzLogEntity dwzLog) {
+	public void update(DwzLogEntity dwzLog) {
 		Date now = DbClockUtils.now(this.dataSource);
 
 		int result;
@@ -236,9 +232,8 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		}
 	}
 
-	@Nullable
 	@Override
-	public String getLongUrlByShortUrlCode(@NonNull String shortUrlCode) {
+	public String getLongUrlByShortUrlCode(String shortUrlCode) {
 		try {
 			return jdbcTemplate.queryForObject(GET_LONG_URL_SQL, String.class, shortUrlCode);
 		} catch (Exception e) {
@@ -249,7 +244,6 @@ public class DataBaseDwzLogStoreImpl implements IDwzLogStore {
 		}
 	}
 
-	@Nullable
 	@Override
 	public Long getMaxId() {
 		try {

@@ -17,7 +17,6 @@ package icu.easyj.core.clock;
 
 import java.util.function.Supplier;
 
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -33,7 +32,7 @@ public class RefreshableTickClock extends WrapperTickClock implements IRefreshab
 	private final Supplier<ITickClock> tickClockSupplier;
 
 
-	public RefreshableTickClock(@NonNull Supplier<ITickClock> tickClockSupplier) {
+	public RefreshableTickClock(Supplier<ITickClock> tickClockSupplier) {
 		Assert.notNull(tickClockSupplier, "'tickClockSupplier' must not be null");
 		this.tickClockSupplier = tickClockSupplier;
 		this.init();

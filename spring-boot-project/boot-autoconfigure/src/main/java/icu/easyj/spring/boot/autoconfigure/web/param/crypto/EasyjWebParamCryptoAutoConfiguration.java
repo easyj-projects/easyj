@@ -59,7 +59,7 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRY
  * @author wangliang181230
  */
 @Lazy
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnClass({ParamCryptoFilter.class, WebMvcConfigurer.class})
 @ConditionalOnWebApplication
 @ConditionalOnProperty("easyj.web.param-crypto.filter.enabled") // 默认不启用
@@ -136,7 +136,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	/**
 	 * 基于Fastjson的参数加密解密消息转换器自动装配类
 	 */
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@ConditionalOnClass({com.alibaba.fastjson.JSON.class})
 	@ConditionalOnProperty(value = PREFERRED_MAPPER_PROPERTY, havingValue = FASTJSON) // 该配置在springboot中，默认为jackson，所以不加`matchIfMissing = true`
 	static class FastjsonParamCryptoHttpMessageConverterAutoConfiguration extends WebMvcConfigurerAdapter {

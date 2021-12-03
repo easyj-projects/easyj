@@ -22,8 +22,6 @@ import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 
@@ -36,9 +34,8 @@ import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 @DependsOnClass(JSON.class)
 class AlibabaFastJSONServiceImpl implements IJSONService {
 
-	@NonNull
 	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> T toBean(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return JSON.parseObject(text, targetClazz);
 		} catch (Exception e) {
@@ -46,9 +43,8 @@ class AlibabaFastJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return JSON.parseArray(text, targetClazz);
 		} catch (Exception e) {
@@ -56,9 +52,8 @@ class AlibabaFastJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public String toJSONString(@Nullable Object obj) throws JSONParseException {
+	public String toJSONString(Object obj) throws JSONParseException {
 		try {
 			return JSON.toJSONString(obj);
 		} catch (Exception e) {
@@ -67,7 +62,6 @@ class AlibabaFastJSONServiceImpl implements IJSONService {
 	}
 
 
-	@NonNull
 	@Override
 	public String getName() {
 		return FASTJSON;

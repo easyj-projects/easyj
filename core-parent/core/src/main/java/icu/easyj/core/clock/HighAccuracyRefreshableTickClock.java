@@ -17,8 +17,6 @@ package icu.easyj.core.clock;
 
 import java.util.function.Supplier;
 
-import org.springframework.lang.NonNull;
-
 /**
  * 高精准可刷新记号时钟
  *
@@ -45,7 +43,7 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 	private final int tryCount;
 
 
-	public HighAccuracyRefreshableTickClock(@NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
+	public HighAccuracyRefreshableTickClock(Supplier<ITickClock> tickClockSupplier, int tryCount) {
 		super(tickClockSupplier);
 
 		// 不能小于最小尝试次数
@@ -58,7 +56,7 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 		this.init();
 	}
 
-	public HighAccuracyRefreshableTickClock(@NonNull Supplier<ITickClock> tickClockSupplier) {
+	public HighAccuracyRefreshableTickClock(Supplier<ITickClock> tickClockSupplier) {
 		this(tickClockSupplier, DEFAULT_TRY_COUNT);
 	}
 

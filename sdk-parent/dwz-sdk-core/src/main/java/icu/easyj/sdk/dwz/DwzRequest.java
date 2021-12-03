@@ -17,8 +17,6 @@ package icu.easyj.sdk.dwz;
 
 import java.util.Map;
 
-import org.springframework.lang.Nullable;
-
 /**
  * 短链接服务 请求参数
  *
@@ -72,7 +70,6 @@ public class DwzRequest {
 		this.configs = configs;
 	}
 
-	@Nullable
 	public <T> T getConfig(String key) {
 		if (configs != null) {
 			return (T)configs.get(key);

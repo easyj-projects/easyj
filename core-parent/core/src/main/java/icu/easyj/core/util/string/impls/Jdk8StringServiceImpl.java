@@ -18,7 +18,6 @@ package icu.easyj.core.util.string.impls;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.string.IStringService;
-import org.springframework.lang.NonNull;
 
 /**
  * JDK8及以下时，{@link IStringService} 的实现
@@ -30,12 +29,12 @@ import org.springframework.lang.NonNull;
 class Jdk8StringServiceImpl implements IStringService {
 
 	@Override
-	public char[] toCharArray(@NonNull CharSequence str) {
+	public char[] toCharArray(CharSequence str) {
 		return getValue(str);
 	}
 
 	@Override
-	public char[] getValue(@NonNull CharSequence str) {
+	public char[] getValue(CharSequence str) {
 		// JDK8：返回 char[]
 		try {
 			return (char[])StringReflection.STRING_VALUE_FIELD.get(str.toString());
@@ -45,7 +44,7 @@ class Jdk8StringServiceImpl implements IStringService {
 	}
 
 	@Override
-	public byte getCoder(@NonNull CharSequence str) {
+	public byte getCoder(CharSequence str) {
 		// 注意：性能较差，不建议在JDK8版本使用
 		char[] chars = toCharArray(str);
 		for (char c : chars) {

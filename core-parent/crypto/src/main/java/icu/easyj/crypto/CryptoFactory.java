@@ -24,8 +24,6 @@ import javax.crypto.SecretKey;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 /**
  * 加密算法工厂类
@@ -72,8 +70,8 @@ public abstract class CryptoFactory {
 	 * @param algorithmParameterSpec 算法参数
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull SecretKey secretKey,
-													  @Nullable AlgorithmParameterSpec algorithmParameterSpec) {
+	public static ISymmetricCrypto getSymmetricCrypto(String algorithm, SecretKey secretKey,
+													  AlgorithmParameterSpec algorithmParameterSpec) {
 		return getGenerator().getSymmetricCrypto(algorithm, secretKey, algorithmParameterSpec);
 	}
 
@@ -85,7 +83,7 @@ public abstract class CryptoFactory {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {
+	public static ISymmetricCrypto getSymmetricCrypto(String algorithm, byte[] key, byte[] iv) {
 		return getGenerator().getSymmetricCrypto(algorithm, key, iv);
 	}
 
@@ -97,7 +95,7 @@ public abstract class CryptoFactory {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, @Nullable String iv) {
+	public static ISymmetricCrypto getSymmetricCrypto(String algorithm, String key, String iv) {
 		return getGenerator().getSymmetricCrypto(algorithm, key, iv);
 	}
 
@@ -110,7 +108,7 @@ public abstract class CryptoFactory {
 	 * @param charset   编码
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	public static ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv, Charset charset) {
+	public static ISymmetricCrypto getSymmetricCrypto(String algorithm, String key, String iv, Charset charset) {
 		return getGenerator().getSymmetricCrypto(algorithm, key, iv, charset);
 	}
 
@@ -127,8 +125,8 @@ public abstract class CryptoFactory {
 	 * @param privateKey 私钥
 	 * @return asymmetricCrypto 非对称加密算法
 	 */
-	public IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
-												 @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey) {
+	public IAsymmetricCrypto getAsymmetricCrypto(String algorithm,
+												 PublicKey publicKey, PrivateKey privateKey) {
 		return getGenerator().getAsymmetricCrypto(algorithm, publicKey, privateKey);
 	}
 

@@ -18,8 +18,6 @@ package icu.easyj.core.json;
 import java.util.List;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -44,7 +42,7 @@ public abstract class JSONUtils {
 	 * @return 目标类型的对象
 	 * @throws JSONParseException JSON解析失败
 	 */
-	public static <T> T toBean(String text, @NonNull Class<T> targetClazz) {
+	public static <T> T toBean(String text, Class<T> targetClazz) {
 		if (text == null) {
 			return null;
 		}
@@ -63,7 +61,7 @@ public abstract class JSONUtils {
 	 * @return 目标类型的列表对象
 	 * @throws JSONParseException JSON解析失败
 	 */
-	public static <T> List<T> toList(String text, @NonNull Class<T> targetClazz) {
+	public static <T> List<T> toList(String text, Class<T> targetClazz) {
 		if (text == null) {
 			return null;
 		}
@@ -80,9 +78,8 @@ public abstract class JSONUtils {
 	 * @return JSON字符串
 	 * @throws JSONParseException JSON解析失败
 	 */
-	@NonNull
 	@SuppressWarnings("all")
-	public static String toJSONString(@Nullable Object obj) {
+	public static String toJSONString(Object obj) {
 		if (obj == null) {
 			return "null";
 		}

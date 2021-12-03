@@ -32,8 +32,6 @@ import icu.easyj.web.exception.RequestContextNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -55,7 +53,6 @@ public abstract class HttpUtils {
 	 * @return request 请求实例
 	 * @throws RequestContextNotFoundException HTTP请求上下文不存在的异常
 	 */
-	@NonNull
 	public static HttpServletRequest getRequest() throws RequestContextNotFoundException {
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		if (requestAttributes == null) {
@@ -72,7 +69,6 @@ public abstract class HttpUtils {
 	 * @return response 响应实例
 	 * @throws RequestContextNotFoundException HTTP请求上下文不存在的异常
 	 */
-	@NonNull
 	public static HttpServletResponse getResponse() throws RequestContextNotFoundException {
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		if (requestAttributes == null) {
@@ -99,7 +95,7 @@ public abstract class HttpUtils {
 	 * @param context 上下文
 	 * @return contextPath 二级目录
 	 */
-	public static String getContextPath(@NonNull ServletContext context) {
+	public static String getContextPath(ServletContext context) {
 		String contextPath = context.getContextPath();
 
 		if (contextPath == null || contextPath.isEmpty()) {
@@ -116,8 +112,7 @@ public abstract class HttpUtils {
 	 * @param contextPath 二级目录
 	 * @return noContextPathUri 排除了二级目录的请求路径
 	 */
-	@NonNull
-	public static String getNoContextPathUri(String uri, @Nullable String contextPath) {
+	public static String getNoContextPathUri(String uri, String contextPath) {
 		if (uri == null) {
 			return StrPool.SLASH;
 		}
@@ -142,7 +137,7 @@ public abstract class HttpUtils {
 	 * @param url 请求地址
 	 * @return true=是 | false=否
 	 */
-	public static boolean isHttp(@NonNull String url) {
+	public static boolean isHttp(String url) {
 		url = url.toLowerCase();
 		return url.startsWith(UrlConstants.HTTP_PRE);
 	}
@@ -153,7 +148,7 @@ public abstract class HttpUtils {
 	 * @param url 请求地址
 	 * @return true=是 | false=否
 	 */
-	public static boolean isHttps(@NonNull String url) {
+	public static boolean isHttps(String url) {
 		url = url.toLowerCase();
 		return url.startsWith(UrlConstants.HTTPS_PRE);
 	}
@@ -164,7 +159,7 @@ public abstract class HttpUtils {
 	 * @param url 请求地址
 	 * @return true=是 | false=否
 	 */
-	public static boolean isHttpOrHttps(@NonNull String url) {
+	public static boolean isHttpOrHttps(String url) {
 		url = url.toLowerCase();
 		return url.startsWith(UrlConstants.HTTP_PRE) || url.startsWith(UrlConstants.HTTPS_PRE);
 	}
@@ -364,7 +359,7 @@ public abstract class HttpUtils {
 	 * @param fileSuffix  文件后续名
 	 * @return fileName 导出的文件名
 	 */
-	public static String generateExportFileName(@NonNull String fileNamePre, String fileSuffix) {
+	public static String generateExportFileName(String fileNamePre, String fileSuffix) {
 		if (!fileNamePre.endsWith(StrPool.UNDERLINE)) {
 			fileNamePre += StrPool.UNDERLINE;
 		}

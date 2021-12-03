@@ -26,7 +26,6 @@ import java.util.Set;
 
 import icu.easyj.core.util.StringUtils;
 import org.springframework.core.convert.TypeDescriptor;
-import org.springframework.lang.Nullable;
 
 /**
  * 数据类型（目前就一些常用的数据类型，可以根据需要再添加一些）
@@ -155,7 +154,6 @@ public enum DataType {
 	 * @param code 代码
 	 * @return 枚举
 	 */
-	@Nullable
 	public static DataType getByCode(final int code) {
 		if (code <= 0) {
 			return null;
@@ -174,7 +172,6 @@ public enum DataType {
 	 * @param type 类型字符串
 	 * @return 枚举
 	 */
-	@Nullable
 	public static DataType getByType(final String type) {
 		if (StringUtils.isEmpty(type)) {
 			return null;
@@ -203,7 +200,6 @@ public enum DataType {
 	 * @param clazz 数据类
 	 * @return 枚举
 	 */
-	@Nullable
 	public static DataType getByClass(final Class<?> clazz) {
 		if (clazz == null) {
 			return null;

@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.exception;
 
-import org.springframework.lang.Nullable;
-
 /**
  * 通用运行时异常
  *
@@ -55,7 +53,6 @@ public class BaseRuntimeException extends RuntimeException {
 	 *
 	 * @return 错误码
 	 */
-	@Nullable
 	public String getErrorCode() {
 		return errorCode;
 	}

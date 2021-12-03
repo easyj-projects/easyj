@@ -16,8 +16,6 @@
 package icu.easyj.core.util;
 
 import icu.easyj.core.exception.WrapperException;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -37,9 +35,8 @@ public abstract class ThrowableUtils {
 	 * @param <T>        异常类型
 	 * @return cause 目标异常
 	 */
-	@Nullable
-	public static <T extends Throwable> T findCause(@NonNull Throwable t,
-													@NonNull final Class<T> causeClass) {
+	public static <T extends Throwable> T findCause(Throwable t,
+													final Class<T> causeClass) {
 		Assert.notNull(t, "'t' must not be null");
 		Assert.notNull(causeClass, "'causeClass' must not be null");
 
@@ -59,7 +56,7 @@ public abstract class ThrowableUtils {
 	 * @param causeClass 要查找的目标异常类
 	 * @return isContains 返回是否包含
 	 */
-	public static boolean containsCause(@NonNull Throwable t, @NonNull Class<? extends Throwable> causeClass) {
+	public static boolean containsCause(Throwable t, Class<? extends Throwable> causeClass) {
 		return findCause(t, causeClass) != null;
 	}
 
@@ -69,7 +66,7 @@ public abstract class ThrowableUtils {
 	 * @param t 异常
 	 * @return 拆包后的异常
 	 */
-	public static Throwable unwrap(@Nullable Throwable t) {
+	public static Throwable unwrap(Throwable t) {
 		if (t == null) {
 			return null;
 		}

@@ -28,8 +28,6 @@ import icu.easyj.test.exception.TestException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -226,12 +224,7 @@ public class MockRequest {
 	@SuppressWarnings("deprecation")
 	public MockRequest file(String multipartParamName, String filePath) {
 		if (this.multipartBuilder == null) {
-			MockMultipartHttpServletRequestBuilder newMultipartBuilder;
-			try {
-				newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-			} catch (NoSuchMethodError e) {
-				newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
-			}
+			MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
 			newMultipartBuilder.merge(this.builder);
 			this.multipartBuilder = newMultipartBuilder;
 			this.builder = newMultipartBuilder;
@@ -264,11 +257,7 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest queryParam(String name, String... values) {
-		try {
-			this.builder.queryParam(name, values);
-		} catch (NoSuchMethodError e) {
-			this.builder.param(name, values);
-		}
+		this.builder.param(name, values);
 		return this;
 	}
 
@@ -279,11 +268,7 @@ public class MockRequest {
 	 * @return self
 	 */
 	public MockRequest queryParams(MultiValueMap<String, String> params) {
-		try {
-			this.builder.queryParams(params);
-		} catch (NoSuchMethodError e) {
-			this.builder.params(params);
-		}
+		this.builder.params(params);
 		return this;
 	}
 
@@ -314,17 +299,14 @@ public class MockRequest {
 
 	//region Getter
 
-	@NonNull
 	public MockMvc getOriginMockMvc() {
 		return mockMvc;
 	}
 
-	@NonNull
 	public MockHttpServletRequestBuilder getOriginBuilder() {
 		return builder;
 	}
 
-	@Nullable
 	public MockMultipartHttpServletRequestBuilder getOriginMultipartBuilder() {
 		return multipartBuilder;
 	}

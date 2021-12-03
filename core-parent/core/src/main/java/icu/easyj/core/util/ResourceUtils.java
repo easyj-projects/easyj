@@ -24,7 +24,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.lang.NonNull;
 
 /**
  * 资源工具类
@@ -44,7 +43,6 @@ public abstract class ResourceUtils {
 	 * @param locationPattern 要解析的位置
 	 * @return resources 资源数组
 	 */
-	@NonNull
 	public static Resource[] getResources(String locationPattern) {
 		try {
 			return RESOURCE_RESOLVER.getResources(locationPattern);
@@ -59,7 +57,6 @@ public abstract class ResourceUtils {
 	 * @param locationPatternArr 要解析的位置数组
 	 * @return resources 资源数组
 	 */
-	@NonNull
 	public static Resource[] getResources(String... locationPatternArr) {
 		return Stream
 				.of(Optional.ofNullable(locationPatternArr).orElse(ArrayUtils.EMPTY_STRING_ARRAY))
@@ -73,8 +70,7 @@ public abstract class ResourceUtils {
 	 * @param resource 目录或文件资源
 	 * @return 资源路径
 	 */
-	@NonNull
-	public static String getResourceUri(@NonNull Resource resource) {
+	public static String getResourceUri(Resource resource) {
 		try {
 			return resource.getURI().toString();
 		} catch (IOException e) {

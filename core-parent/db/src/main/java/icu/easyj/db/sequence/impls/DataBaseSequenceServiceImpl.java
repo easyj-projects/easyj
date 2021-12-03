@@ -20,8 +20,6 @@ import javax.sql.DataSource;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.db.util.DbUtils;
 import icu.easyj.db.util.PrimaryDbUtils;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 /**
  * 基于 {@link PrimaryDbUtils} 实现的序列服务
@@ -30,7 +28,6 @@ import org.springframework.lang.Nullable;
  */
 public class DataBaseSequenceServiceImpl implements ISequenceService {
 
-	@Nullable
 	private final DataSource dataSource;
 
 
@@ -44,7 +41,7 @@ public class DataBaseSequenceServiceImpl implements ISequenceService {
 
 
 	@Override
-	public long nextVal(@NonNull String seqName) {
+	public long nextVal(String seqName) {
 		if (this.dataSource != null) {
 			return DbUtils.seqNextVal(this.dataSource, seqName);
 		} else {
@@ -53,7 +50,7 @@ public class DataBaseSequenceServiceImpl implements ISequenceService {
 	}
 
 	@Override
-	public long currVal(@NonNull String seqName) {
+	public long currVal(String seqName) {
 		if (this.dataSource != null) {
 			return DbUtils.seqCurrVal(this.dataSource, seqName);
 		} else {
@@ -62,7 +59,7 @@ public class DataBaseSequenceServiceImpl implements ISequenceService {
 	}
 
 	@Override
-	public long setVal(@NonNull String seqName, long newVal) {
+	public long setVal(String seqName, long newVal) {
 		if (this.dataSource != null) {
 			return DbUtils.seqSetVal(this.dataSource, seqName, newVal);
 		} else {

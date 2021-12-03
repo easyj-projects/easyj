@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentMap;
 import icu.easyj.core.clock.ClockManager;
 import icu.easyj.core.clock.IAutoRefreshTickClock;
 import icu.easyj.core.util.MapUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -65,8 +64,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	 * @return 时钟
 	 */
 	@Override
-	@NonNull
-	public IAutoRefreshTickClock getClock(@NonNull K remotingKey) {
+	public IAutoRefreshTickClock getClock(K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 		return MapUtils.computeIfAbsent(remotingClockMap, remotingKey, this::createClock);
 	}
@@ -77,7 +75,7 @@ public abstract class AbstractRemotingClockFactory<K> implements IRemotingClockF
 	 * @param remotingKey 远端键值
 	 */
 	@Override
-	public void destroyClock(@NonNull K remotingKey) {
+	public void destroyClock(K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 
 		// 销毁原时钟

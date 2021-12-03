@@ -20,7 +20,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import cn.hutool.core.util.ArrayUtil;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.StringUtils;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -106,9 +105,8 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	}
 
 
-	@NonNull
 	@Override
-	public String toCode(@NonNull Long id) {
+	public String toCode(Long id) {
 		Assert.isTrue(id != null && id >= 0, "ID必须大于等于0");
 
 		// 调用默认实现的方法
@@ -128,7 +126,7 @@ public class MinLengthShortCodeServiceImpl extends DefaultShortCodeServiceImpl {
 	}
 
 	@Override
-	public long toId(@NonNull String shortCode) {
+	public long toId(String shortCode) {
 		Assert.notNull(shortCode, "'shortCode' must not be null");
 
 		if (shortCode.isEmpty()) {

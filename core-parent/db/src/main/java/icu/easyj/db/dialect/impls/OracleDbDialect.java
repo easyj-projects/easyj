@@ -20,7 +20,6 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.util.SqlUtils;
-import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
@@ -69,7 +68,6 @@ class OracleDbDialect implements IDbDialect {
 	//-----------------------------------------------------------------------------------------
 
 
-	@NonNull
 	@Override
 	public String getDbType() {
 		return ORACLE;

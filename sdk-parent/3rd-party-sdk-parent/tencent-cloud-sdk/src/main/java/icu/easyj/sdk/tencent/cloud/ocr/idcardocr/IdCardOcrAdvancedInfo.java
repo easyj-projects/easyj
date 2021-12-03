@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.StringUtils;
-import org.springframework.lang.Nullable;
 
 /**
  * 身份证识别（IDCardOCR）高级响应信息
@@ -186,7 +185,6 @@ public class IdCardOcrAdvancedInfo {
 	 * @param advanceInfoJson 扩展信息JSON串
 	 * @return advancedInfo 扩展信息
 	 */
-	@Nullable
 	public static IdCardOcrAdvancedInfo fromJsonString(String advanceInfoJson) {
 		if (StringUtils.isBlank(advanceInfoJson) || advanceInfoJson.length() == 2) { // length=2，即{}
 			return null;

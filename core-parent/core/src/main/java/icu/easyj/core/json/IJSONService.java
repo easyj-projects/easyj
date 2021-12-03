@@ -17,9 +17,6 @@ package icu.easyj.core.json;
 
 import java.util.List;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
 /**
  * JSON服务
  *
@@ -32,7 +29,6 @@ public interface IJSONService {
 	 *
 	 * @return 服务名
 	 */
-	@NonNull
 	String getName();
 
 	/**
@@ -44,8 +40,7 @@ public interface IJSONService {
 	 * @return 目标类型的对象
 	 * @throws JSONParseException 转换异常
 	 */
-	@NonNull
-	<T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException;
+	<T> T toBean(String text, Class<T> targetClazz) throws JSONParseException;
 
 	/**
 	 * 转换为指定类型的列表
@@ -56,8 +51,7 @@ public interface IJSONService {
 	 * @return 目标类型的列表对象
 	 * @throws JSONParseException 转换异常
 	 */
-	@NonNull
-	<T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException;
+	<T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException;
 
 	/**
 	 * 转换为字符串
@@ -66,7 +60,6 @@ public interface IJSONService {
 	 * @return JSON字符串
 	 * @throws JSONParseException 转换异常
 	 */
-	@NonNull
 	@SuppressWarnings("all")
-	String toJSONString(@Nullable Object obj) throws JSONParseException;
+	String toJSONString(Object obj) throws JSONParseException;
 }

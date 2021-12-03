@@ -16,7 +16,6 @@
 package icu.easyj.sdk.s3.dwz;
 
 import icu.easyj.core.util.EnumUtils;
-import org.springframework.lang.Nullable;
 
 /**
  * S-3的短链接服务错误枚举
@@ -86,7 +85,6 @@ public enum S3DwzErrorType {
 	 * @param code 错误代码
 	 * @return 枚举
 	 */
-	@Nullable
 	public static S3DwzErrorType getByCode(String code) {
 		return EnumUtils.match(S3DwzErrorType.class, e -> e.getCode().equalsIgnoreCase(code));
 	}

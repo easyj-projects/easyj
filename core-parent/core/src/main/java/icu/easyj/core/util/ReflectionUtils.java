@@ -34,8 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.text.StrPool;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 import static icu.easyj.core.util.ArrayUtils.EMPTY_FIELD_ARRAY;
@@ -116,7 +114,6 @@ public abstract class ReflectionUtils {
 	 * @return the class by name
 	 * @throws ClassNotFoundException the class not found exception
 	 */
-	@NonNull
 	public static Class<?> getClassByName(String className, ClassLoader loader) throws ClassNotFoundException {
 		return Class.forName(className, true, loader);
 	}
@@ -128,7 +125,6 @@ public abstract class ReflectionUtils {
 	 * @return the class by name
 	 * @throws ClassNotFoundException the class not found exception
 	 */
-	@NonNull
 	public static Class<?> getClassByName(String className) throws ClassNotFoundException {
 		return getClassByName(className, Thread.currentThread().getContextClassLoader());
 	}
@@ -144,7 +140,6 @@ public abstract class ReflectionUtils {
 	 * @param clazz the clazz
 	 * @return set
 	 */
-	@NonNull
 	public static Set<Class<?>> getInterfaces(Class<?> clazz) {
 		if (clazz.isInterface()) {
 			return Collections.singleton(clazz);
@@ -189,7 +184,6 @@ public abstract class ReflectionUtils {
 	 * @param targetClazz the target class
 	 * @return allFields the all fields
 	 */
-	@NonNull
 	public static Field[] getAllFields(final Class<?> targetClazz) {
 		if (targetClazz == Object.class || targetClazz.isInterface()) {
 			return EMPTY_FIELD_ARRAY;
@@ -255,7 +249,6 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchFieldException     if the field named {@code fieldName} does not exist
 	 * @throws SecurityException        the security exception
 	 */
-	@NonNull
 	public static Field getField(final Class<?> clazz, final String fieldName) throws NoSuchFieldException, SecurityException {
 		Assert.notNull(clazz, "'clazz' must not be null");
 		Assert.notNull(fieldName, "'fieldName' must not be null");
@@ -314,7 +307,6 @@ public abstract class ReflectionUtils {
 	 * @throws SecurityException        the security exception
 	 * @throws ClassCastException       if the type of the variable receiving the field value is not equals to the field type
 	 */
-	@Nullable
 	public static <T> T getFieldValue(Object target, Field field)
 			throws IllegalArgumentException, SecurityException {
 		Assert.notNull(target, "'target' must not be null");
@@ -341,7 +333,6 @@ public abstract class ReflectionUtils {
 	 * @throws SecurityException        the security exception
 	 * @throws ClassCastException       if the type of the variable receiving the field value is not equals to the field type
 	 */
-	@Nullable
 	public static <T> T getFieldValue(Object target, String fieldName)
 			throws IllegalArgumentException, NoSuchFieldException, SecurityException {
 		Assert.notNull(target, "'target' must not be null");
@@ -503,7 +494,6 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchMethodException    if the method named {@code methodName} does not exist
 	 * @throws SecurityException        the security exception
 	 */
-	@NonNull
 	public static Method getMethod(final Class<?> clazz, final String methodName, final Class<?>... parameterTypes)
 			throws NoSuchMethodException, SecurityException {
 		Assert.notNull(clazz, "'clazz' must not be null");
@@ -555,7 +545,6 @@ public abstract class ReflectionUtils {
 	 * @throws NoSuchMethodException    if the method named {@code methodName} does not exist
 	 * @throws SecurityException        the security exception
 	 */
-	@NonNull
 	public static Method getMethod(final Class<?> clazz, final String methodName)
 			throws NoSuchMethodException, SecurityException {
 		return getMethod(clazz, methodName, EMPTY_CLASS_ARRAY);
@@ -821,7 +810,6 @@ public abstract class ReflectionUtils {
 	 * @param <T>             the annotation type
 	 * @return the annotation
 	 */
-	@Nullable
 	public static <T extends Annotation> T getAnnotation(final Method method, final Class<T> annotationClass) {
 		T annotation = method.getAnnotation(annotationClass);
 		if (annotation == null) {
@@ -851,7 +839,6 @@ public abstract class ReflectionUtils {
 	 * @throws IllegalArgumentException if {@code annotation} is {@code null}
 	 * @throws NoSuchFieldException     the no such field exception
 	 */
-	@NonNull
 	@SuppressWarnings("all")
 	public static Map<String, Object> getAnnotationValues(Annotation annotation) throws NoSuchFieldException {
 		Assert.notNull(annotation, "'annotation' must not be null");
@@ -870,7 +857,6 @@ public abstract class ReflectionUtils {
 	 * @throws IllegalArgumentException if {@code annotation} or {@code fieldName} is {@code null}
 	 * @throws NoSuchFieldException     the no such field exception
 	 */
-	@Nullable
 	public static <T> T getAnnotationValue(Annotation annotation, String fieldName) throws NoSuchFieldException {
 		Assert.notNull(fieldName, "'fieldName' must not be null");
 		Map<String, Object> annotationValues = getAnnotationValues(annotation);
@@ -890,7 +876,6 @@ public abstract class ReflectionUtils {
 	 * @return the singleton
 	 * @throws IllegalArgumentException if {@code clazz} is null
 	 */
-	@NonNull
 	public static <T> T getSingleton(Class<T> clazz) {
 		Assert.notNull(clazz, "'clazz' must not be null");
 

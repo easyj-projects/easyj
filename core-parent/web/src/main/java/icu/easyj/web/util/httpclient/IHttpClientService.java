@@ -17,7 +17,6 @@ package icu.easyj.web.util.httpclient;
 
 import java.util.Map;
 
-import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 
 /**
@@ -39,7 +38,7 @@ public interface IHttpClientService {
 	 * @param <T>            响应类
 	 * @return 响应
 	 */
-	<T> T get(String url, @Nullable Map<String, String> queryStringMap, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass);
+	<T> T get(String url, Map<String, String> queryStringMap, MultiValueMap<String, String> headers, Class<T> responseClass);
 
 	/**
 	 * 发送GET请求（无附加头信息）
@@ -50,7 +49,7 @@ public interface IHttpClientService {
 	 * @param <T>            响应类
 	 * @return 响应
 	 */
-	default <T> T get(String url, @Nullable Map<String, String> queryStringMap, Class<T> responseClass) {
+	default <T> T get(String url, Map<String, String> queryStringMap, Class<T> responseClass) {
 		return get(url, queryStringMap, null, responseClass);
 	}
 
@@ -63,7 +62,7 @@ public interface IHttpClientService {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	default <T> T get(String url, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	default <T> T get(String url, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return get(url, null, headers, responseClass);
 	}
 
@@ -104,7 +103,7 @@ public interface IHttpClientService {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	<T> T post(String url, @Nullable Object requestBody, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass);
+	<T> T post(String url, Object requestBody, MultiValueMap<String, String> headers, Class<T> responseClass);
 
 	/**
 	 * 发送POST请求（无请求体）
@@ -115,7 +114,7 @@ public interface IHttpClientService {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	default <T> T post(String url, @Nullable Object requestBody, Class<T> responseClass) {
+	default <T> T post(String url, Object requestBody, Class<T> responseClass) {
 		return post(url, requestBody, null, responseClass);
 	}
 
@@ -128,7 +127,7 @@ public interface IHttpClientService {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	default <T> T post(String url, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	default <T> T post(String url, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return post(url, null, headers, responseClass);
 	}
 

@@ -35,7 +35,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.lang.NonNull;
 
 /**
  * Excel行 工具类
@@ -57,7 +56,6 @@ public abstract class ExcelRowUtils {
 	 * @return rowObj 行数据对象
 	 * @throws Exception 异常
 	 */
-	@NonNull
 	public static <T> T rowToObject(Row row, boolean hasNumberCell, Row headRow, Class<T> clazz, ExcelMapping mapping) throws Exception {
 		try {
 			T t = clazz.newInstance();

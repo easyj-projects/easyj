@@ -19,7 +19,6 @@ import java.util.Date;
 
 import icu.easyj.core.util.DateUtils;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 /**
  * 字符串转换为时间的转换器
@@ -28,7 +27,6 @@ import org.springframework.lang.Nullable;
  */
 public class CharSequenceToDateConverter implements Converter<CharSequence, Date> {
 
-	@Nullable
 	@Override
 	public Date convert(CharSequence source) {
 		if (source != null) {

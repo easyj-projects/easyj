@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Lazy;
  * @author wangliang181230
  */
 @Lazy
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnClass(WebSocketService.class)
 @ConditionalOnProperty(value = "easyj.middleware.websocket.server.enabled", matchIfMissing = true)
 public class EasyjMiddleWareWebSocketServerAutoConfiguration {
@@ -46,7 +46,7 @@ public class EasyjMiddleWareWebSocketServerAutoConfiguration {
 	 * 调试所需的测试功能
 	 */
 	@Lazy
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@ConditionalOnProperty(name = "easyj.global.run-mode", havingValue = "debug")
 	@Import({TestRestController.class, TestController.class})
 	static class WebSocketServerTestConfiguration {

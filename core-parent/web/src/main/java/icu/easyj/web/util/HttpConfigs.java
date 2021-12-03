@@ -17,7 +17,6 @@ package icu.easyj.web.util;
 
 import javax.servlet.ServletContext;
 
-import org.springframework.lang.NonNull;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -38,7 +37,7 @@ public abstract class HttpConfigs {
 	 *
 	 * @param webApplicationContext Web应用内容
 	 */
-	public static void loadFromWebApplicationContext(@NonNull WebApplicationContext webApplicationContext) {
+	public static void loadFromWebApplicationContext(WebApplicationContext webApplicationContext) {
 		ServletContext servletContext = webApplicationContext.getServletContext();
 		if (servletContext != null) {
 			setContextPath(servletContext.getContextPath());

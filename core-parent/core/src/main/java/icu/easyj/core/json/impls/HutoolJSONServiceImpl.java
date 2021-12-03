@@ -21,8 +21,6 @@ import cn.hutool.json.JSONUtil;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 
@@ -34,9 +32,8 @@ import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 @LoadLevel(name = HUTOOL, order = 100)
 class HutoolJSONServiceImpl implements IJSONService {
 
-	@NonNull
 	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> T toBean(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return JSONUtil.toBean(text, targetClazz);
 		} catch (Exception e) {
@@ -44,9 +41,8 @@ class HutoolJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return JSONUtil.toList(text, targetClazz);
 		} catch (Exception e) {
@@ -54,9 +50,8 @@ class HutoolJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public String toJSONString(@Nullable Object obj) throws JSONParseException {
+	public String toJSONString(Object obj) throws JSONParseException {
 		try {
 			return JSONUtil.toJsonStr(obj);
 		} catch (Exception e) {
@@ -65,7 +60,6 @@ class HutoolJSONServiceImpl implements IJSONService {
 	}
 
 
-	@NonNull
 	@Override
 	public String getName() {
 		return HUTOOL;

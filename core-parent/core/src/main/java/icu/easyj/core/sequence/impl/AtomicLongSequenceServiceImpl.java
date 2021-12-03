@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.sequence.ISequenceService;
 import icu.easyj.core.util.MapUtils;
-import org.springframework.lang.NonNull;
 
 /**
  * 基于 {@link AtomicLong} 实现的内存序列服务
@@ -57,17 +56,17 @@ public class AtomicLongSequenceServiceImpl implements ISequenceService {
 
 
 	@Override
-	public long currVal(@NonNull String seqName) {
+	public long currVal(String seqName) {
 		return this.getAtomicLong(seqName).get();
 	}
 
 	@Override
-	public long nextVal(@NonNull String seqName) {
+	public long nextVal(String seqName) {
 		return this.getAtomicLong(seqName).incrementAndGet();
 	}
 
 	@Override
-	public long setVal(@NonNull String seqName, long newVal) {
+	public long setVal(String seqName, long newVal) {
 		return this.getAtomicLong(seqName).getAndSet(newVal);
 	}
 

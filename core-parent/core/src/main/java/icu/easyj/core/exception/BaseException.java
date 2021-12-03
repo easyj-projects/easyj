@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.exception;
 
-import org.springframework.lang.Nullable;
-
 /**
  * 通用异常
  *
@@ -55,7 +53,6 @@ public class BaseException extends Exception {
 	 *
 	 * @return 错误码
 	 */
-	@Nullable
 	public String getErrorCode() {
 		return errorCode;
 	}

@@ -20,7 +20,6 @@ import java.io.OutputStream;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -72,7 +71,7 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	}
 
 	@Override
-	public byte[] encrypt(@Nullable byte[] data) {
+	public byte[] encrypt(byte[] data) {
 		if (data == null) {
 			return null;
 		}
@@ -85,8 +84,7 @@ public class HutoolSymmetricCryptoAdapter implements ISymmetricCrypto {
 	}
 
 	@Override
-	@Nullable
-	public byte[] decrypt(@Nullable byte[] bytes) {
+	public byte[] decrypt(byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}

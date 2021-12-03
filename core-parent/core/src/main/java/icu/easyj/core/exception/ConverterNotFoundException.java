@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.exception;
 
-import org.springframework.lang.Nullable;
-
 /**
  * 转换器未找到的异常
  *
@@ -65,12 +63,10 @@ public class ConverterNotFoundException extends BaseRuntimeException {
 
 	//region Getter
 
-	@Nullable
 	public Class<?> getSourceType() {
 		return sourceType;
 	}
 
-	@Nullable
 	public Class<?> getTargetType() {
 		return targetType;
 	}

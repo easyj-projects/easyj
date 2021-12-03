@@ -38,7 +38,6 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_ASYMMETRIC_CRYPTO_PREFIX;
@@ -311,8 +310,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	 * @param dirPath 目录路径
 	 * @return configFilePaths 配置文件路径数组
 	 */
-	@NonNull
-	private Resource[] loadConfigFileResources(@NonNull String dirPath) {
+	private Resource[] loadConfigFileResources(String dirPath) {
 		String[] configFileLocationPatternArr = new String[]{
 				"classpath*:/" + dirPath + "*.yml",
 				"classpath*:/" + dirPath + "*.yaml",

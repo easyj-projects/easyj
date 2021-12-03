@@ -23,7 +23,6 @@ import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.util.PatternUtils;
 import icu.easyj.core.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.lang.NonNull;
 
 /**
  * 代码解析类
@@ -41,7 +40,6 @@ public abstract class CodeAnalysisUtils {
 	 * @param limitParameterSize 限制获取参数数量
 	 * @return parameters 返回参数列表
 	 */
-	@NonNull
 	public static Object[] analysisParameters(String parametersStr, int limitParameterSize) {
 		if (StringUtils.isBlank(parametersStr) || limitParameterSize <= 0) {
 			return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -125,7 +123,6 @@ public abstract class CodeAnalysisUtils {
 	}
 
 	// 重载方法
-	@NonNull
 	public static Object[] analysisParameters(String parametersStr) {
 		return analysisParameters(parametersStr, Integer.MAX_VALUE);
 	}
@@ -143,7 +140,6 @@ public abstract class CodeAnalysisUtils {
 	 * @param isRigorous         是否为严谨的校验
 	 * @return result 返回命令解析结果
 	 */
-	@NonNull
 	public static CodeAnalysisResult analysisCode(String code, int limitParameterSize, boolean isRigorous) {
 		if (code == null) {
 			throw new IllegalArgumentException("'code' must not be null");
@@ -180,19 +176,16 @@ public abstract class CodeAnalysisUtils {
 	}
 
 	// 重载方法
-	@NonNull
 	public static CodeAnalysisResult analysisCode(String code, boolean isRigorous) {
 		return analysisCode(code, Integer.MAX_VALUE, isRigorous);
 	}
 
 	// 重载方法
-	@NonNull
 	public static CodeAnalysisResult analysisCode(String code, int limitParameterSize) {
 		return analysisCode(code, limitParameterSize, false);
 	}
 
 	// 重载方法
-	@NonNull
 	public static CodeAnalysisResult analysisCode(String code) {
 		return analysisCode(code, Integer.MAX_VALUE, false);
 	}

@@ -18,7 +18,6 @@ package icu.easyj.core.util.shortcode.impls;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.shortcode.IShortCodeService;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -64,9 +63,8 @@ public class DefaultShortCodeServiceImpl implements IShortCodeService {
 	}
 
 
-	@NonNull
 	@Override
-	public String toCode(@NonNull Long id) {
+	public String toCode(Long id) {
 		Assert.isTrue(id != null && id >= 0, "ID必须大于等于0");
 
 		if (id == 0) {
@@ -96,7 +94,7 @@ public class DefaultShortCodeServiceImpl implements IShortCodeService {
 
 
 	@Override
-	public long toId(@NonNull String shortCode) {
+	public long toId(String shortCode) {
 		Assert.isTrue(StringUtils.isNotBlank(shortCode), "'shortCode' must not be blank");
 
 		char[] chars = StringUtils.toCharArray(shortCode);

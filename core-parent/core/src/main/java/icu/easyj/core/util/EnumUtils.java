@@ -17,8 +17,6 @@ package icu.easyj.core.util;
 
 import java.util.function.Predicate;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -36,7 +34,6 @@ public abstract class EnumUtils {
 	 * @param <E>       枚举类型
 	 * @return enum 枚举
 	 */
-	@NonNull
 	public static <E extends Enum<?>> E fromName(Class<E> enumClass, String enumName) {
 		Assert.notNull(enumName, "'enumName' must not be null");
 
@@ -56,7 +53,6 @@ public abstract class EnumUtils {
 	 * @param <E>       枚举类型
 	 * @return enum 枚举
 	 */
-	@Nullable
 	public static <E extends Enum<?>> E match(Class<E> enumClass, Predicate<E> matcher) {
 		Assert.notNull(enumClass, "'enumClass' must not be null");
 		Assert.notNull(matcher, "'matcher' must not be null");

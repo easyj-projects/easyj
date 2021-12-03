@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import icu.easyj.core.util.StringUtils;
-import org.springframework.lang.NonNull;
 
 /**
  * 版本信息
@@ -103,7 +102,6 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 	}
 
 
-	@NonNull
 	public String getVersion() {
 		return version;
 	}

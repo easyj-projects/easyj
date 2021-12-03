@@ -23,7 +23,6 @@ import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.IDwzTemplate;
 import icu.easyj.web.util.HttpClientUtils;
 import icu.easyj.web.util.httpclient.IHttpClientService;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -41,7 +40,6 @@ public class HttpEasyjMiddleWareDwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * http客户端服务
 	 */
-	@NonNull
 	private final IHttpClientService httpClientService;
 
 
@@ -58,7 +56,7 @@ public class HttpEasyjMiddleWareDwzTemplateImpl implements IDwzTemplate {
 
 
 	@Override
-	public DwzResponse createShortUrl(@NonNull DwzRequest request) {
+	public DwzResponse createShortUrl(DwzRequest request) {
 		Date termOfValidity = request.getConfig("term-of-validity");
 		EasyjDwzRequest req = new EasyjDwzRequest(request.getLongUrl(), termOfValidity);
 		return httpClientService.post(this.config.getServiceUrl(), req, DwzResponse.class);

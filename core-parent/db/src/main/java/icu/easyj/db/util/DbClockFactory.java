@@ -20,7 +20,6 @@ import javax.sql.DataSource;
 import icu.easyj.core.clock.factory.AbstractRemotingClockFactory;
 import icu.easyj.db.service.DbServiceFactory;
 import icu.easyj.db.service.IDbService;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -66,8 +65,7 @@ final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 	 * @return 数据库时间
 	 */
 	@Override
-	@NonNull
-	public long getRemotingTime(@NonNull DataSource dataSource) {
+	public long getRemotingTime(DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		// 根据数据库类型，获取对应的实现

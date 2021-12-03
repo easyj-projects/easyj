@@ -41,8 +41,6 @@ import icu.easyj.core.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -180,7 +178,6 @@ public abstract class EnhancedServiceLoader {
 	 * @param <S>          the type of the service
 	 * @return list the service list
 	 */
-	@NonNull
 	public static <S> List<S> loadAll(Class<S> serviceClass) {
 		return InnerEnhancedServiceLoader.getServiceLoader(serviceClass).loadAll(findClassLoader());
 	}
@@ -204,7 +201,7 @@ public abstract class EnhancedServiceLoader {
 	 * @param <S>          the type of the service
 	 * @return service the service
 	 */
-	public static <S> S loadBySupportNames(Class<S> serviceClass, @NonNull String... supportNames) {
+	public static <S> S loadBySupportNames(Class<S> serviceClass, String... supportNames) {
 		Assert.notNull(supportNames, "'supportNames' must not be null");
 		if (supportNames.length == 1) {
 			return load(serviceClass, supportNames[0]);
@@ -221,7 +218,7 @@ public abstract class EnhancedServiceLoader {
 	 * @param <S>          the type of the service
 	 * @return service the service
 	 */
-	public static <S> S loadBySupportNames(Class<S> serviceClass, Class<?>[] argsType, Object[] args, @NonNull String... supportNames) {
+	public static <S> S loadBySupportNames(Class<S> serviceClass, Class<?>[] argsType, Object[] args, String... supportNames) {
 		Assert.notNull(supportNames, "'supportNames' must not be null");
 		if (supportNames.length == 1) {
 			return load(serviceClass, supportNames[0], argsType, args);
@@ -443,7 +440,6 @@ public abstract class EnhancedServiceLoader {
 		 * @param loader the class loader
 		 * @return list
 		 */
-		@NonNull
 		private List<S> loadAll(ClassLoader loader) {
 			return loadAll(null, null, loader);
 		}
@@ -455,7 +451,6 @@ public abstract class EnhancedServiceLoader {
 		 * @param args     the args
 		 * @return list
 		 */
-		@NonNull
 		private List<S> loadAll(Class<?>[] argsType, Object[] args, ClassLoader loader) {
 			List<S> allInstances = new ArrayList<>();
 			List<Class<?>> allClasses = getAllExtensionClass(loader);
@@ -635,8 +630,7 @@ public abstract class EnhancedServiceLoader {
 			}
 		}
 
-		@Nullable
-		private ExtensionDefinition getUnloadedExtensionDefinition(@NonNull String className, ClassLoader loader)
+		private ExtensionDefinition getUnloadedExtensionDefinition(String className, ClassLoader loader)
 				throws ClassNotFoundException, InvalidServiceException {
 			//Check whether the definition has been loaded
 			if (!isDefinitionContainsClazz(className, loader)) {

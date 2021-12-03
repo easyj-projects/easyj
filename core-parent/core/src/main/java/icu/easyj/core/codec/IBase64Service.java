@@ -15,8 +15,6 @@
  */
 package icu.easyj.core.codec;
 
-import org.springframework.lang.NonNull;
-
 /**
  * Base64相关接口
  *
@@ -30,5 +28,5 @@ public interface IBase64Service {
 	 * @param cs 字符串
 	 * @return 是否为Base64串
 	 */
-	boolean isBase64(@NonNull CharSequence cs);
+	boolean isBase64(CharSequence cs);
 }

@@ -21,7 +21,6 @@ import java.util.Set;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.ocr.CardSide;
-import org.springframework.lang.NonNull;
 
 /**
  * 身份证识别响应内容
@@ -121,7 +120,6 @@ public class IdCardOcrResponse {
 	 * 告警信息
 	 * 部分告警功能不需要传高级功能参数，也会返回告警枚举
 	 */
-	@NonNull
 	private final Set<IdCardOcrWarn> warns = new HashSet<>();
 
 	//endregion
@@ -236,7 +234,6 @@ public class IdCardOcrResponse {
 		this.portraitBase64 = portraitBase64;
 	}
 
-	@NonNull
 	public Set<IdCardOcrWarn> getWarns() {
 		return warns;
 	}

@@ -19,7 +19,6 @@ import java.util.Map;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.web.util.httpclient.IHttpClientService;
-import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 
 /**
@@ -58,7 +57,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>            响应类
 	 * @return 响应
 	 */
-	public <T> T get(String url, @Nullable Map<String, String> queryStringMap, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public <T> T get(String url, Map<String, String> queryStringMap, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.get(url, queryStringMap, headers, responseClass);
 	}
 
@@ -71,7 +70,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>            响应类
 	 * @return 响应
 	 */
-	public static <T> T get(String url, @Nullable Map<String, String> queryStringMap, Class<T> responseClass) {
+	public static <T> T get(String url, Map<String, String> queryStringMap, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.get(url, queryStringMap, null, responseClass);
 	}
 
@@ -84,7 +83,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	public static <T> T get(String url, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public static <T> T get(String url, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.get(url, null, headers, responseClass);
 	}
 
@@ -125,7 +124,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	public static <T> T post(String url, @Nullable Object requestBody, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public static <T> T post(String url, Object requestBody, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.post(url, requestBody, headers, responseClass);
 	}
 
@@ -138,7 +137,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	public static <T> T post(String url, @Nullable Object requestBody, Class<T> responseClass) {
+	public static <T> T post(String url, Object requestBody, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.post(url, requestBody, null, responseClass);
 	}
 
@@ -151,7 +150,7 @@ public abstract class HttpClientUtils {
 	 * @param <T>           响应类
 	 * @return 响应
 	 */
-	public static <T> T post(String url, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public static <T> T post(String url, MultiValueMap<String, String> headers, Class<T> responseClass) {
 		return HTTP_CLIENT_SERVICE.post(url, null, headers, responseClass);
 	}
 

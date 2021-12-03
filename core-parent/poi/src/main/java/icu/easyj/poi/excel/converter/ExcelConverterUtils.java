@@ -27,7 +27,6 @@ import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.lang.NonNull;
 
 /**
  * Excel转换器工具类
@@ -56,8 +55,7 @@ public abstract class ExcelConverterUtils {
 	 * @return excelConverter excel转换器
 	 * @throws ConverterNotFoundException 转换器不存在或未匹配
 	 */
-	@NonNull
-	public static IExcelConverter getConverter(@NonNull Class<?> clazz) throws ConverterNotFoundException {
+	public static IExcelConverter getConverter(Class<?> clazz) throws ConverterNotFoundException {
 		return MapUtils.computeIfAbsent(CLASS_CONVERTER_CACHE, clazz, k -> {
 			if (CollectionUtils.isEmpty(CONVERTERS)) {
 				throw new ConverterNotFoundException("没有任何Excel转换器可以使用：" + IExcelConverter.class.getName() + "，当前数据类型为：" + clazz.getName());

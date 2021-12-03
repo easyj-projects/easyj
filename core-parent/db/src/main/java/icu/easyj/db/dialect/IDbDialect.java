@@ -18,7 +18,6 @@ package icu.easyj.db.dialect;
 import icu.easyj.core.dialect.IDialect;
 import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.db.constant.DbType;
-import org.springframework.lang.NonNull;
 
 /**
  * 数据库方言
@@ -82,7 +81,6 @@ public interface IDbDialect extends IDialect {
 	 *
 	 * @return 数据库类型（要求只包含 数字 和 小写英文字母）
 	 */
-	@NonNull
 	String getDbType();
 
 	/**

@@ -19,7 +19,6 @@ import java.util.Date;
 
 import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.db.service.DbServiceFactory;
-import org.springframework.lang.NonNull;
 
 /**
  * 主要数据库工具类
@@ -39,7 +38,6 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @return 主要数据源对应的数据库类型
 	 */
-	@NonNull
 	public static String getDbType() {
 		return DbUtils.getDbType(PrimaryDataSourceHolder.get());
 	}
@@ -49,7 +47,6 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @return 主要数据源对应的数据库版本号
 	 */
-	@NonNull
 	public static String getDbVersion() {
 		return DbUtils.getDbVersion(PrimaryDataSourceHolder.get());
 	}
@@ -66,7 +63,6 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @return 数据库当前时间戳
 	 */
-	@NonNull
 	public static long currentTimeMillis() {
 		return DbUtils.currentTimeMillis(PrimaryDataSourceHolder.get());
 	}
@@ -78,7 +74,6 @@ public abstract class PrimaryDbUtils {
 	 *
 	 * @return 数据库当前时间
 	 */
-	@NonNull
 	public static Date now() {
 		return DbUtils.now(PrimaryDataSourceHolder.get());
 	}

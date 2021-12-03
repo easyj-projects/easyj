@@ -20,7 +20,6 @@ import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.loader.condition.ValidateStrategy;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.util.SqlUtils;
-import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.MYSQL5_DRIVER;
 import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
@@ -71,7 +70,6 @@ class MySqlDbDialect implements IDbDialect {
 	//-----------------------------------------------------------------------------------------
 
 
-	@NonNull
 	@Override
 	public String getDbType() {
 		return MYSQL;

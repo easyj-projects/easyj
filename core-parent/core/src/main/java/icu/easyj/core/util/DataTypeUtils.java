@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.enums.DataType;
 import icu.easyj.core.exception.SkipCallbackWrapperException;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -43,7 +42,6 @@ public abstract class DataTypeUtils {
 	 * @return 数据类
 	 * @throws ClassNotFoundException 类未找到
 	 */
-	@NonNull
 	public static Class<?> toClass(final String dataType) throws ClassNotFoundException {
 		Assert.notNull(dataType, "'dataType' must not be null");
 

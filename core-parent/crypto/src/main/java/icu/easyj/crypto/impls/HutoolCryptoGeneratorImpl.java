@@ -28,8 +28,6 @@ import icu.easyj.crypto.asymmetric.HutoolAsymmetricCryptoAdapter;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.HutoolSymmetricCryptoAdapter;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
@@ -51,8 +49,8 @@ public class HutoolCryptoGeneratorImpl implements ICryptoGenerator {
 	 * @return symmetricCrypto 对称加密算法
 	 */
 	@Override
-	public ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull SecretKey secretKey,
-											   @Nullable AlgorithmParameterSpec algorithmParameterSpec) {
+	public ISymmetricCrypto getSymmetricCrypto(String algorithm, SecretKey secretKey,
+											   AlgorithmParameterSpec algorithmParameterSpec) {
 		// 实例化Hutool的对称加密实例
 		SymmetricCrypto symmetricCrypto = new SymmetricCrypto(algorithm, secretKey, algorithmParameterSpec);
 		// 创建适配器
@@ -69,8 +67,8 @@ public class HutoolCryptoGeneratorImpl implements ICryptoGenerator {
 	 * @return asymmetricCrypto 非对称加密算法
 	 */
 	@Override
-	public IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
-												 @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey) {
+	public IAsymmetricCrypto getAsymmetricCrypto(String algorithm,
+												 PublicKey publicKey, PrivateKey privateKey) {
 		Assert.notNull(algorithm, "'algorithm' must not be null");
 		Assert.notNull(publicKey, "'publicKey' must not be null");
 		Assert.notNull(privateKey, "'privateKey' must not be null");

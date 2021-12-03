@@ -22,8 +22,6 @@ import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import static icu.easyj.core.loader.ServiceProviders.JACKSON;
 
@@ -39,9 +37,8 @@ class JacksonJSONServiceImpl implements IJSONService {
 	private final ObjectMapper mapper = new ObjectMapper();
 
 
-	@NonNull
 	@Override
-	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> T toBean(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return mapper.readValue(text, targetClazz);
 		} catch (Exception e) {
@@ -49,9 +46,8 @@ class JacksonJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
+	public <T> List<T> toList(String text, Class<T> targetClazz) throws JSONParseException {
 		try {
 			return mapper.readerForListOf(targetClazz).readValue(text);
 		} catch (Exception e) {
@@ -59,9 +55,8 @@ class JacksonJSONServiceImpl implements IJSONService {
 		}
 	}
 
-	@NonNull
 	@Override
-	public String toJSONString(@Nullable Object obj) throws JSONParseException {
+	public String toJSONString(Object obj) throws JSONParseException {
 		try {
 			return mapper.writeValueAsString(obj);
 		} catch (Exception e) {
@@ -70,7 +65,6 @@ class JacksonJSONServiceImpl implements IJSONService {
 	}
 
 
-	@NonNull
 	@Override
 	public String getName() {
 		return JACKSON;

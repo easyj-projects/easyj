@@ -17,7 +17,6 @@ package icu.easyj.core.sequence;
 
 import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.loader.EnhancedServiceLoader;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -55,7 +54,7 @@ public abstract class SequenceUtils {
 	 * @return 当前序列值
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	public static long currVal(@NonNull String seqName) {
+	public static long currVal(String seqName) {
 		Assert.notNull(seqName, "'seqName' must be not null");
 		return getSequenceService().currVal(seqName);
 	}
@@ -66,7 +65,7 @@ public abstract class SequenceUtils {
 	 * @param seqName 序列名
 	 * @return 下一序列值
 	 */
-	public static long nextVal(@NonNull String seqName) {
+	public static long nextVal(String seqName) {
 		Assert.notNull(seqName, "'seqName' must be not null");
 		return getSequenceService().nextVal(seqName);
 	}
@@ -79,7 +78,7 @@ public abstract class SequenceUtils {
 	 * @return previousVal 前序列值
 	 * @throws NotSupportedException 部分实现无法设置序列值，将抛出该异常
 	 */
-	public static long setVal(@NonNull String seqName, long newVal) {
+	public static long setVal(String seqName, long newVal) {
 		Assert.notNull(seqName, "'seqName' must be not null");
 		return getSequenceService().setVal(seqName, newVal);
 	}

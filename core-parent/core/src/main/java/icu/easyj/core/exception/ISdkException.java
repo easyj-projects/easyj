@@ -17,8 +17,6 @@ package icu.easyj.core.exception;
 
 import java.io.Serializable;
 
-import org.springframework.lang.Nullable;
-
 /**
  * SDK相关异常
  *
@@ -31,7 +29,6 @@ public interface ISdkException extends Serializable {
 	 *
 	 * @return 异常信息
 	 */
-	@Nullable
 	String getMessage();
 
 	/**
@@ -39,7 +36,6 @@ public interface ISdkException extends Serializable {
 	 *
 	 * @return 局部异常信息
 	 */
-	@Nullable
 	String getLocalizedMessage();
 
 	/**
@@ -47,6 +43,5 @@ public interface ISdkException extends Serializable {
 	 *
 	 * @return 异常原因
 	 */
-	@Nullable
 	Throwable getCause();
 }

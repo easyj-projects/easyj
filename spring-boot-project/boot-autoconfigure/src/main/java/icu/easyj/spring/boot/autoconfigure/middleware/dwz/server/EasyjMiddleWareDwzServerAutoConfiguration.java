@@ -46,7 +46,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author wangliang181230
  */
 @Lazy
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnClass(DwzRestController.class)
 @ConditionalOnProperty(value = "easyj.middleware.dwz.server.enabled", matchIfMissing = true)
 @ConditionalOnWebApplication
@@ -122,7 +122,7 @@ public class EasyjMiddleWareDwzServerAutoConfiguration {
 	 * 定时任务相关配置类
 	 */
 	@Lazy
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@ConditionalOnProperty(value = "easyj.middleware.dwz.server.task.enabled", matchIfMissing = true)
 	@EnableScheduling
 	static class EasyjDwzServerTaskConfiguration {

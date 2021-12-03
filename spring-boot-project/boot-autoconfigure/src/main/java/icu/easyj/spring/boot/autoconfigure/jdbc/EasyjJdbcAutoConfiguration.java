@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Lazy;
  * @author wangliang181230
  */
 @Lazy(false)
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class EasyjJdbcAutoConfiguration {
 
 	public EasyjJdbcAutoConfiguration(@Autowired(required = false) DataSource primaryDataSource) {

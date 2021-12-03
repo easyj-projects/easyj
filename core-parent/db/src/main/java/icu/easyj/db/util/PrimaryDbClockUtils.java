@@ -18,7 +18,6 @@ package icu.easyj.db.util;
 import java.util.Date;
 
 import icu.easyj.core.clock.IAutoRefreshTickClock;
-import org.springframework.lang.NonNull;
 
 /**
  * 主要数据库时钟工具类
@@ -34,7 +33,6 @@ public abstract class PrimaryDbClockUtils {
 	 *
 	 * @return primaryClock 主要数据库时钟
 	 */
-	@NonNull
 	public static IAutoRefreshTickClock getClock() {
 		return DbClockUtils.getClock(PrimaryDataSourceHolder.get());
 	}
@@ -44,7 +42,6 @@ public abstract class PrimaryDbClockUtils {
 	 *
 	 * @return newClock 时钟
 	 */
-	@NonNull
 	public static IAutoRefreshTickClock refreshClock() {
 		return DbClockUtils.refreshClock(PrimaryDataSourceHolder.get());
 	}
@@ -54,7 +51,6 @@ public abstract class PrimaryDbClockUtils {
 	 *
 	 * @return now 当前时间
 	 */
-	@NonNull
 	public static Date now() {
 		return DbClockUtils.now(PrimaryDataSourceHolder.get());
 	}

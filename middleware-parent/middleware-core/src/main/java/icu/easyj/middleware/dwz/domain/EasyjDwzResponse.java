@@ -18,8 +18,6 @@ package icu.easyj.middleware.dwz.domain;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -48,7 +46,7 @@ public class EasyjDwzResponse {
 	public EasyjDwzResponse() {
 	}
 
-	public EasyjDwzResponse(@NonNull String shortUrl, @NonNull Date createTime, @Nullable Date termOfValidity) {
+	public EasyjDwzResponse(String shortUrl, Date createTime, Date termOfValidity) {
 		Assert.notNull(shortUrl, "'shortUrl' must not be null");
 		Assert.notNull(createTime, "'createTime' must not be null");
 		Assert.isTrue(termOfValidity == null || termOfValidity.compareTo(createTime) > 0, "termOfValidity可为空或必须大于createTime");

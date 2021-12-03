@@ -21,8 +21,6 @@ import java.io.InputStream;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 
-import org.springframework.lang.NonNull;
-
 /**
  * Body输入流
  *
@@ -60,12 +58,12 @@ public class BodyServletInputStream extends ServletInputStream {
 	}
 
 	@Override
-	public int read(@NonNull byte[] b, int off, int len) throws IOException {
+	public int read(byte[] b, int off, int len) throws IOException {
 		return this.delegate.read(b, off, len);
 	}
 
 	@Override
-	public int read(@NonNull byte[] b) throws IOException {
+	public int read(byte[] b) throws IOException {
 		return this.delegate.read(b);
 	}
 

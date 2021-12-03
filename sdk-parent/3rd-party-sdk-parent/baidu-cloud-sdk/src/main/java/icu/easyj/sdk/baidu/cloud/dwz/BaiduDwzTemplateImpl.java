@@ -37,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientResponseException;
 
@@ -59,13 +58,11 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * DWZ配置信息
 	 */
-	@NonNull
 	private final BaiduDwzConfig config;
 
 	/**
 	 * http客户端服务
 	 */
-	@NonNull
 	private final IHttpClientService httpClientService;
 
 

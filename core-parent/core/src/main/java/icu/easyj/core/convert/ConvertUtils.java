@@ -27,8 +27,6 @@ import org.springframework.core.convert.ConversionException;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -65,7 +63,7 @@ public abstract class ConvertUtils {
 	 *
 	 * @param converter 转换器
 	 */
-	public static void addConvert(@NonNull Converter<?, ?> converter) {
+	public static void addConvert(Converter<?, ?> converter) {
 		Assert.notNull(converter, "'converter' must not be null");
 		CONVERSION_SERVICE.addConverter(converter);
 	}
@@ -82,7 +80,7 @@ public abstract class ConvertUtils {
 	 * @param targetType 目标类型
 	 * @return 是否可以转换
 	 */
-	public static boolean canConvert(@Nullable Class<?> sourceType, Class<?> targetType) {
+	public static boolean canConvert(Class<?> sourceType, Class<?> targetType) {
 		return getConversionService().canConvert(sourceType, targetType);
 	}
 
@@ -93,7 +91,7 @@ public abstract class ConvertUtils {
 	 * @param targetType 目标类型
 	 * @return 是否可以转换
 	 */
-	public static boolean canConvert(@Nullable TypeDescriptor sourceType, TypeDescriptor targetType) {
+	public static boolean canConvert(TypeDescriptor sourceType, TypeDescriptor targetType) {
 		return getConversionService().canConvert(sourceType, targetType);
 	}
 
@@ -104,7 +102,7 @@ public abstract class ConvertUtils {
 	 * @param targetType 目标类型
 	 * @return 是否可以转换
 	 */
-	public static boolean canConvert(@Nullable DataType sourceType, DataType targetType) {
+	public static boolean canConvert(DataType sourceType, DataType targetType) {
 		if (sourceType == null) {
 			return true;
 		} else {
@@ -122,7 +120,7 @@ public abstract class ConvertUtils {
 	 * @return 转换后的目标类对象
 	 * @throws ConvertException 转换失败时，抛出该异常
 	 */
-	public static <T> T convert(@Nullable Object source, Class<T> targetClass) {
+	public static <T> T convert(Object source, Class<T> targetClass) {
 		if (source == null) {
 			return null;
 		}
@@ -142,7 +140,7 @@ public abstract class ConvertUtils {
 	 * @param <T>        目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, TypeDescriptor targetType) {
+	public static <T> T convert(Object source, TypeDescriptor targetType) {
 		if (source == null) {
 			return null;
 		}
@@ -162,7 +160,7 @@ public abstract class ConvertUtils {
 	 * @param <T>        目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, DataType targetType) {
+	public static <T> T convert(Object source, DataType targetType) {
 		if (source == null) {
 			return null;
 		} else {
@@ -180,7 +178,7 @@ public abstract class ConvertUtils {
 	 * @param <T>          目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, Class<T> targetClass, @Nullable T defaultValue) {
+	public static <T> T convert(Object source, Class<T> targetClass, T defaultValue) {
 		if (source == null) {
 			return defaultValue;
 		}
@@ -201,7 +199,7 @@ public abstract class ConvertUtils {
 	 * @param <T>          目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, TypeDescriptor targetType, @Nullable T defaultValue) {
+	public static <T> T convert(Object source, TypeDescriptor targetType, T defaultValue) {
 		if (source == null) {
 			return defaultValue;
 		}
@@ -222,7 +220,7 @@ public abstract class ConvertUtils {
 	 * @param <T>          目标类型
 	 * @return 转换后的目标类对象
 	 */
-	public static <T> T convert(@Nullable Object source, DataType targetType, @Nullable T defaultValue) {
+	public static <T> T convert(Object source, DataType targetType, T defaultValue) {
 		if (source == null) {
 			return defaultValue;
 		} else {
@@ -239,8 +237,7 @@ public abstract class ConvertUtils {
 	 * @param <T>         目标类型
 	 * @return 转换后的目标类对象列表
 	 */
-	@NonNull
-	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, Class<T> targetClass) {
+	public static <T> List<T> convertList(Collection<?> sourceList, Class<T> targetClass) {
 		List<T> list = new ArrayList<>();
 
 		if (sourceList != null) {
@@ -260,8 +257,7 @@ public abstract class ConvertUtils {
 	 * @param <T>        目标类型
 	 * @return 转换后的目标类对象列表
 	 */
-	@NonNull
-	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, TypeDescriptor targetType) {
+	public static <T> List<T> convertList(Collection<?> sourceList, TypeDescriptor targetType) {
 		List<T> list = new ArrayList<>();
 
 		if (sourceList != null) {
@@ -281,8 +277,7 @@ public abstract class ConvertUtils {
 	 * @param <T>        目标类型
 	 * @return 转换后的目标类对象列表
 	 */
-	@NonNull
-	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, DataType targetType) {
+	public static <T> List<T> convertList(Collection<?> sourceList, DataType targetType) {
 		if (sourceList == null) {
 			return new ArrayList<>();
 		} else {

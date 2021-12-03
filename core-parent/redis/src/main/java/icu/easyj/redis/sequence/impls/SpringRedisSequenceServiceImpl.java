@@ -23,8 +23,6 @@ import icu.easyj.core.util.MapUtils;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -42,7 +40,6 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	/**
 	 * 序列默认值
 	 */
-	@Nullable
 	private final Long initialValue;
 
 	/**
@@ -51,7 +48,7 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 	private final Map<String, RedisAtomicLong> redisAtomicLongMap;
 
 
-	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory, @Nullable Long initialValue) {
+	public SpringRedisSequenceServiceImpl(RedisConnectionFactory connectionFactory, Long initialValue) {
 		Assert.notNull(connectionFactory, "'connectionFactory' must be not null");
 
 		this.connectionFactory = connectionFactory;
@@ -66,17 +63,17 @@ public class SpringRedisSequenceServiceImpl implements ISequenceService {
 
 
 	@Override
-	public long nextVal(@NonNull String seqName) {
+	public long nextVal(String seqName) {
 		return this.getRedisAtomicLong(seqName).incrementAndGet();
 	}
 
 	@Override
-	public long currVal(@NonNull String seqName) {
+	public long currVal(String seqName) {
 		return this.getRedisAtomicLong(seqName).get();
 	}
 
 	@Override
-	public long setVal(@NonNull String seqName, long newVal) {
+	public long setVal(String seqName, long newVal) {
 		return this.getRedisAtomicLong(seqName).getAndSet(newVal);
 	}
 
