@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
+import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.NetUtils;
 import icu.easyj.core.util.StringUtils;
@@ -80,10 +81,7 @@ public abstract class NetPropertyUtils {
 					localIp = matchIp(patterns);
 					return localIp;
 				default:
-					if (LOGGER.isWarnEnabled()) {
-						LOGGER.warn("不支持的网络函数式配置：${" + name + "}");
-					}
-					return null;
+					throw new ConfigurationException("不支持的网络函数式配置：${" + name + "}");
 			}
 		} finally {
 			if (localIp != null && LOGGER.isInfoEnabled()) {

@@ -69,10 +69,7 @@ public abstract class CryptoPropertyUtils {
 						throw new ConfigurationException("配置信息解密失败：" + name, e);
 					}
 				default:
-					if (LOGGER.isWarnEnabled()) {
-						LOGGER.warn("不支持的加密解密函数式配置：${" + name + "}");
-					}
-					return null;
+					throw new ConfigurationException("不支持的加解密函数式配置：${" + name + "}");
 			}
 		} finally {
 			if (property != null && LOGGER.isDebugEnabled()) {
