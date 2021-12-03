@@ -1,5 +1,6 @@
 #建议将以下配置信息，配置在env、配置中心、k8s等
 easyj:
+  #通用-加解密配置
   global:
     asymmetric-crypto:
       algorithm: RSA/ECB/PKCS1Padding
@@ -10,9 +11,15 @@ easyj:
       key: 12345678901234567890123456789012
       iv: 1234567890123456
       charset: UTF-8
+  #服务端配置
   server:
     host: ${easyj.net.getIp()}
     domain: http://${easyj.server.host}:${server.port:8080}
+  #数据源配置：主要提供可引用配置
   datasource:
     mysql:
       driver-class-name: ${easyj.class.getExistingOne('com.mysql.cj.jdbc.Driver', 'com.mysql.jdbc.Driver')}
+    oracle:
+      driver-class-name: ${easyj.class.getExistingOne('oracle.jdbc.OracleDriver', 'oracle.jdbc.driver.OracleDriver')}
+    mssql:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

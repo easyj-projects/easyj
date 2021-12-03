@@ -132,6 +132,24 @@
 			"type": "java.lang.reflect.Method",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils",
 			"description": "函数式配置${xxx}：随机选取一个值的方法，例：${easyj.random.port('1', '2', '3', '4')}."
+		},
+		{
+			"name": "easyj.datasource.mysql.driver-class-name",
+			"type": "java.lang.Class<java.sql.Driver>",
+			"description": "可引用配置：MySQL驱动类名.",
+			"defaultValue": "自动选择：com.mysql.cj.jdbc.Driver 或 com.mysql.jdbc.Driver"
+		},
+		{
+			"name": "easyj.datasource.oracle.driver-class-name",
+			"type": "java.lang.Class<java.sql.Driver>",
+			"description": "可引用配置：Oracle驱动类名.",
+			"defaultValue": "自动选择：oracle.jdbc.OracleDriver 或 oracle.jdbc.driver.OracleDriver"
+		},
+		{
+			"name": "easyj.datasource.mssql.driver-class-name",
+			"type": "java.lang.Class<java.sql.Driver>",
+			"description": "可引用配置：MS SQL Server驱动类名.",
+			"defaultValue": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		}
 	],
 	"hints": [
