@@ -24,6 +24,7 @@ import java.util.Map;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.URLUtil;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 import static icu.easyj.core.constant.UrlConstants.HTTPS_PRE;
@@ -81,6 +82,7 @@ public abstract class UrlUtils {
 	 * @param path 路径
 	 * @return path 标准化后的路径
 	 */
+	@NonNull
 	public static String normalizePath(String path) {
 		Assert.notNull(path, "'path' must not be null");
 
@@ -297,7 +299,8 @@ public abstract class UrlUtils {
 	 * @param queryStringMap 参数Map（键和值都未encode过）
 	 * @return 拼接好参数后的完整URL或Path
 	 */
-	public static String joinQueryString(String urlOrPath, Map<String, String> queryStringMap) {
+	@NonNull
+	public static String joinQueryString(@NonNull String urlOrPath, Map<String, String> queryStringMap) {
 		Assert.notNull(urlOrPath, "'urlOrPath' must not be null");
 
 		if (MapUtils.isEmpty(queryStringMap)) {

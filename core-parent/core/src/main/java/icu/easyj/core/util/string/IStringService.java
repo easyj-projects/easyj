@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util.string;
 
+import org.springframework.lang.NonNull;
+
 /**
  * {@link String} 的功能接口，用于不同版本号使用不同方式执行
  *
@@ -28,7 +30,7 @@ public interface IStringService {
 	 * @param str 字符串
 	 * @return 字符数组
 	 */
-	char[] toCharArray(CharSequence str);
+	char[] toCharArray(@NonNull CharSequence str);
 
 	/**
 	 * 获取String的value属性值
@@ -42,7 +44,7 @@ public interface IStringService {
 	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 * @see String#toCharArray()
 	 */
-	Object getValue(CharSequence str);
+	Object getValue(@NonNull CharSequence str);
 
 	/**
 	 * 获取String的coder属性值
@@ -51,5 +53,5 @@ public interface IStringService {
 	 * @return 字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
 	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 */
-	byte getCoder(CharSequence str);
+	byte getCoder(@NonNull CharSequence str);
 }

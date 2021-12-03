@@ -19,6 +19,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 /**
  * 集合工具类
  *
@@ -33,6 +36,7 @@ public abstract class CollectionUtils extends MapUtils {
 	 * @param <T>  列表项的类型
 	 * @return lastItem 返回列表的第一项
 	 */
+	@Nullable
 	public static <T> T getFirst(List<T> list) {
 		if (isEmpty(list)) {
 			return null;
@@ -56,6 +60,7 @@ public abstract class CollectionUtils extends MapUtils {
 	 * @param <T>  列表项的类型
 	 * @return lastItem 返回列表的最后一项
 	 */
+	@Nullable
 	public static <T> T getLast(List<T> list) {
 		if (isEmpty(list)) {
 			return null;
@@ -134,6 +139,7 @@ public abstract class CollectionUtils extends MapUtils {
 	 * @param col 集合
 	 * @return str 字符串
 	 */
+	@NonNull
 	public static String toString(final Collection<?> col) {
 		if (col == null) {
 			return "null";

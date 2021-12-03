@@ -18,6 +18,8 @@ package icu.easyj.core.codec;
 import java.nio.charset.StandardCharsets;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -72,7 +74,8 @@ public abstract class Base64Utils {
 	 * @return 规范化后的Base64串
 	 * @throws IllegalArgumentException 编码有误
 	 */
-	public static String normalize(String base64Str) throws IllegalArgumentException {
+	@NonNull
+	public static String normalize(@NonNull String base64Str) throws IllegalArgumentException {
 		Assert.notNull(base64Str, "'base64Str' must not be null");
 
 		boolean needToChange = false;
@@ -200,7 +203,7 @@ public abstract class Base64Utils {
 	 * @param cs 字符串
 	 * @return 是否为Base64字符串
 	 */
-	public static boolean isBase64(final CharSequence cs) {
+	public static boolean isBase64(@Nullable final CharSequence cs) {
 		if (cs == null) {
 			return false;
 		}
@@ -216,7 +219,7 @@ public abstract class Base64Utils {
 	 * @param chars 字符数组
 	 * @return 是否为Base64字符数组
 	 */
-	public static boolean isBase64Chars(final char[] chars) {
+	public static boolean isBase64Chars(@Nullable final char[] chars) {
 		int length;
 		if (chars == null || (length = chars.length) < 2) {
 			return false;
@@ -265,7 +268,7 @@ public abstract class Base64Utils {
 	 * @param bytes 字节数组
 	 * @return 是否为Base64字节数组
 	 */
-	public static boolean isBase64Bytes(final byte[] bytes) {
+	public static boolean isBase64Bytes(@Nullable final byte[] bytes) {
 		int length;
 		if (bytes == null || (length = bytes.length) < 2) {
 			return false;

@@ -21,6 +21,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.function.Supplier;
 
+import org.springframework.lang.NonNull;
+
 /**
  * 数组工具类
  *
@@ -126,6 +128,7 @@ public abstract class ArrayUtils {
 	 * @param objectArray 对象数组
 	 * @return str 字符串
 	 */
+	@NonNull
 	public static String toString(final Object[] objectArray) {
 		if (objectArray == null) {
 			return "null";
@@ -158,6 +161,7 @@ public abstract class ArrayUtils {
 	 * @param arrayObj 数组对象
 	 * @return str 字符串
 	 */
+	@NonNull
 	public static String toString(final Object arrayObj) {
 		if (arrayObj == null) {
 			return "null";

@@ -28,6 +28,8 @@ import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrService;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -44,12 +46,14 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 	/**
 	 * 全局的身份证识别配置
 	 */
+	@NonNull
 	private final TencentCloudIdCardOcrConfig globalConfig;
 
+	@NonNull
 	private final OcrClient globalClient;
 
 
-	public DefaultTencentCloudIdCardOcrServiceImpl(TencentCloudIdCardOcrConfig config) {
+	public DefaultTencentCloudIdCardOcrServiceImpl(@NonNull TencentCloudIdCardOcrConfig config) {
 		Assert.notNull(config, "'config' must not be null");
 
 		this.globalConfig = config;
@@ -71,7 +75,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
 	@Override
-	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
+	public IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		if (config == null) {
 			config = this.globalConfig;
 		}
@@ -136,6 +140,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 
 	//region Private
 
+	@Nullable
 	private Credential newCredential(TencentCloudIdCardOcrConfig config) {
 		if (StringUtils.isNotBlank(config.getSecretId()) && StringUtils.isNotBlank(config.getSecretKey())) {
 			return new Credential(config.getSecretId(), config.getSecretKey());
@@ -144,6 +149,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 		}
 	}
 
+	@NonNull
 	private HttpProfile newHttpProfile(TencentCloudIdCardOcrConfig config) {
 		HttpProfile httpProfile = new HttpProfile();
 		httpProfile.setEndpoint(ENDPOINT);
@@ -187,6 +193,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 
 	//region Getter
 
+	@NonNull
 	@Override
 	public TencentCloudIdCardOcrConfig getGlobalConfig() {
 		return globalConfig;

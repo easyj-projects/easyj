@@ -20,6 +20,7 @@ import icu.easyj.core.codec.IBase64Service;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.StringUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * JDK8及以下时，{@link IBase64Service} 的实现
@@ -31,7 +32,7 @@ import icu.easyj.core.util.StringUtils;
 class Jdk8Base64ServiceImpl implements IBase64Service {
 
 	@Override
-	public boolean isBase64(CharSequence cs) {
+	public boolean isBase64(@NonNull CharSequence cs) {
 		// 通过反射直接获取字符串的字符数组，避免 `String.toCharArray()` 方法中的 `System.arraycopy()` 操作导致不必要的性能损耗。
 		//char[] chars = cs.toString().toCharArray();
 		char[] chars = (char[])StringUtils.getValue(cs);

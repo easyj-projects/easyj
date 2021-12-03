@@ -27,6 +27,7 @@ import icu.easyj.core.util.IOUtils;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.exception.DbDataNotFoundException;
 import icu.easyj.db.exception.DbException;
+import org.springframework.lang.NonNull;
 
 /**
  * 数据库服务接口
@@ -47,6 +48,7 @@ public interface IDbService extends IDbDialect {
 	 *
 	 * @return 数据库版本号
 	 */
+	@NonNull
 	default String getVersion() {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -112,6 +114,7 @@ public interface IDbService extends IDbDialect {
 	 *
 	 * @return 数据库当前时间
 	 */
+	@NonNull
 	default Date now() {
 		return new Date(currentTimeMillis());
 	}

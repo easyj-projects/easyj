@@ -19,6 +19,8 @@ import java.util.Date;
 
 import icu.easyj.data.store.StoreException;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 短链接服务接口
@@ -35,7 +37,8 @@ public interface IDwzServerService {
 	 * @return shortUrlCode 短链接码
 	 * @throws StoreException 存储接口异常
 	 */
-	DwzLogEntity createShortUrlCode(String longUrl, Date termOfValidity);
+	@NonNull
+	DwzLogEntity createShortUrlCode(@NonNull String longUrl, @Nullable Date termOfValidity);
 
 	/**
 	 * 查找短链接码对应的长链接
@@ -44,5 +47,6 @@ public interface IDwzServerService {
 	 * @return 短链接码对应的长链接（如果不存在或已过期，则返回null）
 	 * @throws StoreException 存储接口异常
 	 */
-	String getLongUrlByShortUrlCode(String shortUrlCode);
+	@Nullable
+	String getLongUrlByShortUrlCode(@NonNull String shortUrlCode);
 }

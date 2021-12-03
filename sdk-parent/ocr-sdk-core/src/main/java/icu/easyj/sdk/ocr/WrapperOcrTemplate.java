@@ -19,6 +19,7 @@ import icu.easyj.sdk.ocr.idcardocr.IIdCardOcrTemplate;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrRequest;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrResponse;
 import icu.easyj.sdk.ocr.idcardocr.IdCardOcrSdkException;
+import org.springframework.lang.NonNull;
 
 /**
  * 文字识别（OCR）接口包装实现
@@ -37,8 +38,9 @@ public class WrapperOcrTemplate implements IOcrTemplate {
 
 	//region Override 身份证识别
 
+	@NonNull
 	@Override
-	public IdCardOcrResponse idCardOcr(IdCardOcrRequest request) throws IdCardOcrSdkException {
+	public IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException {
 		return idCardOcrTemplate.idCardOcr(request);
 	}
 

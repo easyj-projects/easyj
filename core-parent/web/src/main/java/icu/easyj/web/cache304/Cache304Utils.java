@@ -29,6 +29,7 @@ import icu.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.Nullable;
 
 /**
  * Cache304工具类
@@ -48,6 +49,7 @@ public abstract class Cache304Utils {
 	 * @param callback 回执函数
 	 * @return result 回执函数执行结果
 	 */
+	@Nullable
 	public static Object doCache(HttpServletRequest request, HttpServletResponse response, Cache304Config config, Supplier<Object> callback) {
 		// 配置为空时，不执行304缓存逻辑
 		if (config == null) {

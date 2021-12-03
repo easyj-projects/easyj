@@ -16,6 +16,8 @@
 package icu.easyj.sdk.ocr.idcardocr;
 
 import icu.easyj.sdk.ocr.CardSide;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 身份证识别（IDCardOCR）接口
@@ -33,7 +35,8 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	IdCardOcrResponse idCardOcr(IdCardOcrRequest request) throws IdCardOcrSdkException;
+	@NonNull
+	IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException;
 
 	/**
 	 * 重载方法：身份证识别
@@ -44,8 +47,9 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	default IdCardOcrResponse idCardOcr(String image,
-										CardSide cardSide,
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image,
+										@Nullable CardSide cardSide,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return idCardOcr(new IdCardOcrRequest(image, cardSide, advancedArr, null));
 	}
@@ -58,7 +62,8 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	default IdCardOcrResponse idCardOcr(String image,
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return this.idCardOcr(image, (CardSide)null, advancedArr);
 	}
@@ -78,7 +83,8 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	default IdCardOcrResponse idCardOcr(String image1, String image2, boolean returnIfHasWarn,
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
 										SimpleIdCardOcrRequest simpleRequest) throws IdCardOcrSdkException {
 		IdCardOcrRequest request = new IdCardOcrRequest(simpleRequest);
 
@@ -157,7 +163,8 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	default IdCardOcrResponse idCardOcr(String image1, String image2, boolean returnIfHasWarn,
+	@NonNull
+	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2, boolean returnIfHasWarn,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return this.idCardOcr(image1, image2, returnIfHasWarn, new SimpleIdCardOcrRequest(advancedArr));
 	}
@@ -171,7 +178,7 @@ public interface IIdCardOcrTemplate {
 	 * @return response 响应
 	 * @throws IdCardOcrSdkException 身份证识别异常
 	 */
-	default IdCardOcrResponse idCardOcr(String image1, String image2,
+	default IdCardOcrResponse idCardOcr(@NonNull String image1, @NonNull String image2,
 										IdCardOcrAdvanced... advancedArr) throws IdCardOcrSdkException {
 		return idCardOcr(image1, image2, false, advancedArr);
 	}

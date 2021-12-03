@@ -16,6 +16,7 @@
 package icu.easyj.core.util.version;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * 版本号工具类
@@ -56,6 +57,7 @@ public abstract class VersionUtils {
 	 * @param version 版本号
 	 * @return 版本信息
 	 */
+	@NonNull
 	public static VersionInfo parse(String version) {
 		return new VersionInfo(version);
 	}

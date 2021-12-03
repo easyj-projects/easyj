@@ -16,6 +16,7 @@
 package icu.easyj.sdk.baidu.cloud.dwz;
 
 import icu.easyj.core.util.EnumUtils;
+import org.springframework.lang.Nullable;
 
 /**
  * 百度云DWZ服务错误类型枚举
@@ -65,6 +66,7 @@ public enum BaiduDwzErrorType {
 	 * @param code 错误代码
 	 * @return 枚举
 	 */
+	@Nullable
 	public static BaiduDwzErrorType getByCode(Integer code) {
 		if (code == null) {
 			return null;

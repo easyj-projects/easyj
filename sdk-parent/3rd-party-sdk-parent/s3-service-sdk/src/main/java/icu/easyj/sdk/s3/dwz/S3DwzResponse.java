@@ -15,6 +15,8 @@
  */
 package icu.easyj.sdk.s3.dwz;
 
+import org.springframework.lang.Nullable;
+
 /**
  * S-3短链接服务响应
  *
@@ -43,6 +45,7 @@ public class S3DwzResponse {
 	 *
 	 * @return 错误类型枚举
 	 */
+	@Nullable
 	public S3DwzErrorType getErrorType() {
 		return S3DwzErrorType.getByCode(this.code);
 	}
@@ -63,7 +66,7 @@ public class S3DwzResponse {
 	 * @param errorType 错误类型枚举
 	 * @return 错误信息
 	 */
-	public String getErrorMessage(S3DwzErrorType errorType) {
+	public String getErrorMessage(@Nullable S3DwzErrorType errorType) {
 		if (errorType != null) {
 			return errorType.getDesc();
 		}

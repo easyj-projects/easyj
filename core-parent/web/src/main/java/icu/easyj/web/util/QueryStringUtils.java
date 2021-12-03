@@ -21,6 +21,8 @@ import java.util.Map;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.UrlUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 查询参数串工具类
@@ -35,7 +37,8 @@ public abstract class QueryStringUtils {
 	 * @param queryString 查询参数串
 	 * @return parameterMap 查询参数Map
 	 */
-	public static Map<String, String[]> parse(String queryString) {
+	@NonNull
+	public static Map<String, String[]> parse(@Nullable String queryString) {
 		// 如果为空，则返回空的Map
 		if (StringUtils.isEmpty(queryString)) {
 			return new HashMap<>(0);

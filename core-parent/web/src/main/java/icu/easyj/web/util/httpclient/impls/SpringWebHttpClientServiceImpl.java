@@ -26,6 +26,7 @@ import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -56,7 +57,7 @@ class SpringWebHttpClientServiceImpl implements IHttpClientService {
 	//region GET
 
 	@Override
-	public <T> T get(String url, Map<String, String> queryStringMap, MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public <T> T get(String url, @Nullable Map<String, String> queryStringMap, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
 		// 拼接URL参数
 		url = UrlUtils.joinQueryString(url, queryStringMap);
 
@@ -76,7 +77,7 @@ class SpringWebHttpClientServiceImpl implements IHttpClientService {
 	//region POST
 
 	@Override
-	public <T> T post(String url, Object requestBody, MultiValueMap<String, String> headers, Class<T> responseClass) {
+	public <T> T post(String url, @Nullable Object requestBody, @Nullable MultiValueMap<String, String> headers, Class<T> responseClass) {
 		if (MapUtils.isEmpty(headers)) {
 			return restTemplate.postForObject(url, requestBody, responseClass);
 		} else {

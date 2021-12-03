@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.util.QueryStringUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 查询参数串 HttpServletRequest包装类
@@ -55,11 +57,13 @@ public class QueryStringHttpServletRequestWrapper extends HttpServletRequestWrap
 
 	//region Override
 
+	@NonNull
 	@Override
 	public String getQueryString() {
 		return queryString;
 	}
 
+	@NonNull
 	@Override
 	public Map<String, String[]> getParameterMap() {
 		if (this.parameterMap == null) {
@@ -68,16 +72,19 @@ public class QueryStringHttpServletRequestWrapper extends HttpServletRequestWrap
 		return this.parameterMap;
 	}
 
+	@NonNull
 	@Override
 	public Enumeration<String> getParameterNames() {
 		return Collections.enumeration(getParameterMap().keySet());
 	}
 
+	@Nullable
 	@Override
 	public String[] getParameterValues(String name) {
 		return getParameterMap().get(name);
 	}
 
+	@Nullable
 	@Override
 	public String getParameter(String name) {
 		String[] values = getParameterValues(name);

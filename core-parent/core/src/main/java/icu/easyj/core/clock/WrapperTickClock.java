@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.clock;
 
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -35,7 +36,7 @@ public class WrapperTickClock implements IWrapperTickClock {
 	 *
 	 * @param tickClock 记号时钟
 	 */
-	public WrapperTickClock(ITickClock tickClock) {
+	public WrapperTickClock(@NonNull ITickClock tickClock) {
 		this.setTickClock(tickClock);
 	}
 
@@ -53,7 +54,7 @@ public class WrapperTickClock implements IWrapperTickClock {
 	 *
 	 * @param tickClock 记号时钟
 	 */
-	protected final void setTickClock(ITickClock tickClock) {
+	protected final void setTickClock(@NonNull ITickClock tickClock) {
 		Assert.notNull(tickClock, "'tickClock' must not be null");
 		this.tickClock = tickClock;
 	}

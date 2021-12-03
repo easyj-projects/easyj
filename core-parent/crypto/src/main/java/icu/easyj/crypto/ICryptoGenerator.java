@@ -30,6 +30,8 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -49,8 +51,8 @@ public interface ICryptoGenerator {
 	 * @param algorithmParameterSpec 算法参数
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	ISymmetricCrypto getSymmetricCrypto(String algorithm, SecretKey secretKey,
-										AlgorithmParameterSpec algorithmParameterSpec);
+	ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull SecretKey secretKey,
+										@Nullable AlgorithmParameterSpec algorithmParameterSpec);
 
 	/**
 	 * 生成对称加密算法
@@ -60,7 +62,7 @@ public interface ICryptoGenerator {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	default ISymmetricCrypto getSymmetricCrypto(String algorithm, byte[] key, byte[] iv) {
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull byte[] key, byte[] iv) {
 		Assert.notNull(algorithm, "'algorithmStr' must not be null");
 		Assert.notNull(key, "'key' must not be null");
 
@@ -84,7 +86,7 @@ public interface ICryptoGenerator {
 	 * @param iv        偏移向量
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	default ISymmetricCrypto getSymmetricCrypto(String algorithm, String key, String iv) {
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, @Nullable String iv) {
 		return getSymmetricCrypto(algorithm, key, iv, StandardCharsets.UTF_8);
 	}
 
@@ -97,7 +99,7 @@ public interface ICryptoGenerator {
 	 * @param charset   编码
 	 * @return symmetricCrypto 对称加密算法
 	 */
-	default ISymmetricCrypto getSymmetricCrypto(String algorithm, String key, String iv, Charset charset) {
+	default ISymmetricCrypto getSymmetricCrypto(@NonNull String algorithm, @NonNull String key, String iv, Charset charset) {
 		Assert.notNull(algorithm, "'algorithmStr' must not be null");
 		Assert.notNull(key, "'key' must not be null");
 
@@ -124,8 +126,8 @@ public interface ICryptoGenerator {
 	 * @param privateKey 私钥
 	 * @return asymmetricCrypto 非对称加密算法
 	 */
-	IAsymmetricCrypto getAsymmetricCrypto(String algorithm,
-										  PublicKey publicKey, PrivateKey privateKey);
+	IAsymmetricCrypto getAsymmetricCrypto(@NonNull String algorithm,
+										  @NonNull PublicKey publicKey, @NonNull PrivateKey privateKey);
 
 	/**
 	 * 生成非对称加密算法

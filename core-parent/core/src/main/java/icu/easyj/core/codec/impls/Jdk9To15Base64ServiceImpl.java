@@ -20,6 +20,7 @@ import icu.easyj.core.codec.IBase64Service;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.StringUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * JDK9~15时，{@link IBase64Service} 的实现
@@ -31,7 +32,7 @@ import icu.easyj.core.util.StringUtils;
 class Jdk9To15Base64ServiceImpl implements IBase64Service {
 
 	@Override
-	public boolean isBase64(CharSequence cs) {
+	public boolean isBase64(@NonNull CharSequence cs) {
 		int coder = StringUtils.getCoder(cs);
 
 		// coder为1时，表示字符串中存在双字节字符，肯定不是Base64，直接返回false

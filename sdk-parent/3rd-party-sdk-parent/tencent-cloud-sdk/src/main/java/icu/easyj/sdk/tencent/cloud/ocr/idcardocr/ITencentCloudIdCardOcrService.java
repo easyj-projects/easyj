@@ -22,6 +22,8 @@ import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.sdk.ocr.CardSide;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 腾讯云 身份证识别（IDCardOCR） 服务接口
@@ -40,7 +42,7 @@ public interface ITencentCloudIdCardOcrService {
 	 * @see <a href="https://cloud.tencent.com/document/api/866/33524">API文档</a>
 	 * @see <a href="https://console.cloud.tencent.com/api/explorer?Product=ocr&Version=2018-11-19&Action=IDCardOCR">调试页面</a>
 	 */
-	IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException;
+	IDCardOCRResponse doIdCardOcr(IDCardOCRRequest request, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException;
 
 	/**
 	 * 重载方法：执行身份证识别
@@ -62,7 +64,7 @@ public interface ITencentCloudIdCardOcrService {
 	 * @return response 响应
 	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 */
-	default IDCardOCRResponse doIdCardOcr(InputStream idCardImageInputStream, CardSide cardSide, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
+	default IDCardOCRResponse doIdCardOcr(InputStream idCardImageInputStream, CardSide cardSide, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		IDCardOCRRequest request = new IDCardOCRRequest();
 		request.setImageBase64(Base64.encode(idCardImageInputStream));
 		request.setCardSide(cardSide.name());
@@ -90,7 +92,7 @@ public interface ITencentCloudIdCardOcrService {
 	 * @return response 响应
 	 * @throws TencentCloudSDKException 调用腾讯云出现异常
 	 */
-	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide, TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
+	default IDCardOCRResponse doIdCardOcr(byte[] idCardImageBytes, CardSide cardSide, @Nullable TencentCloudIdCardOcrConfig config) throws TencentCloudSDKException {
 		IDCardOCRRequest request = new IDCardOCRRequest();
 		request.setImageBase64(Base64.encode(idCardImageBytes));
 		request.setCardSide(cardSide.name());
@@ -114,5 +116,6 @@ public interface ITencentCloudIdCardOcrService {
 	 *
 	 * @return 全局配置
 	 */
+	@NonNull
 	TencentCloudIdCardOcrConfig getGlobalConfig();
 }

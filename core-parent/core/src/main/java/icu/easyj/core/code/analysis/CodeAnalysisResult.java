@@ -16,6 +16,7 @@
 package icu.easyj.core.code.analysis;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * 代码解析结果
@@ -50,6 +51,7 @@ public class CodeAnalysisResult {
 	 * @param size 选取参数的数量
 	 * @return newParameters
 	 */
+	@NonNull
 	public Object[] chooseParameters(int size) {
 		if (parameters == null || parameters.length == 0) {
 			return ArrayUtils.EMPTY_OBJECT_ARRAY;

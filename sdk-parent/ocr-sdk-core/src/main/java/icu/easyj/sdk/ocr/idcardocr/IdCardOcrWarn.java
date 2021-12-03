@@ -16,6 +16,8 @@
 package icu.easyj.sdk.ocr.idcardocr;
 
 import icu.easyj.core.util.EnumUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 身份证识别告警
@@ -132,6 +134,7 @@ public enum IdCardOcrWarn {
 	 * @param warnCode 告警码
 	 * @return warnEnum 告警枚举
 	 */
+	@Nullable
 	public static IdCardOcrWarn get(int warnCode) {
 		for (IdCardOcrWarn warn : IdCardOcrWarn.values()) {
 			if (warnCode == warn.code()) {
@@ -147,6 +150,7 @@ public enum IdCardOcrWarn {
 	 * @param name 枚举名
 	 * @return warnEnum 告警枚举
 	 */
+	@NonNull
 	public static IdCardOcrWarn get(String name) {
 		return EnumUtils.fromName(IdCardOcrWarn.class, name);
 	}

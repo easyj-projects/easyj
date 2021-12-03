@@ -34,6 +34,7 @@ import icu.easyj.web.util.HttpClientUtils;
 import icu.easyj.web.util.httpclient.IHttpClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientResponseException;
 
@@ -57,11 +58,13 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 	/**
 	 * 配置信息
 	 */
+	@NonNull
 	private final S3DwzConfig config;
 
 	/**
 	 * http客户端服务
 	 */
+	@NonNull
 	private final IHttpClientService httpClientService;
 
 

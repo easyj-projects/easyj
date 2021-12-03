@@ -20,6 +20,7 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.util.SqlUtils;
+import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.MS_SQL_SERVER_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.MS_SQL_SERVER;
@@ -69,6 +70,7 @@ class MsSqlServerDbDialect implements IDbDialect {
 	//-----------------------------------------------------------------------------------------
 
 
+	@NonNull
 	@Override
 	public String getDbType() {
 		return MS_SQL_SERVER;

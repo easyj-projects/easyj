@@ -22,6 +22,8 @@ import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkException;
 import icu.easyj.sdk.dwz.IDwzTemplate;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 基于 SpringCloudFeign 实现DWZ服务调用
@@ -30,24 +32,26 @@ import icu.easyj.sdk.dwz.IDwzTemplate;
  */
 public class SpringCloudFeignEasyjMiddleWareDwzTemplateImpl implements IDwzTemplate {
 
+	@NonNull
 	private final EasyjDwzRestControllerFeignClient feignClient;
 
+	@Nullable
 	private final IFeignExceptionHandler exceptionHandler;
 
 
-	public SpringCloudFeignEasyjMiddleWareDwzTemplateImpl(EasyjDwzRestControllerFeignClient feignClient,
-														  IFeignExceptionHandler exceptionHandler) {
+	public SpringCloudFeignEasyjMiddleWareDwzTemplateImpl(@NonNull EasyjDwzRestControllerFeignClient feignClient,
+														  @Nullable IFeignExceptionHandler exceptionHandler) {
 		this.feignClient = feignClient;
 		this.exceptionHandler = exceptionHandler;
 	}
 
-	public SpringCloudFeignEasyjMiddleWareDwzTemplateImpl(EasyjDwzRestControllerFeignClient feignClient) {
+	public SpringCloudFeignEasyjMiddleWareDwzTemplateImpl(@NonNull EasyjDwzRestControllerFeignClient feignClient) {
 		this(feignClient, null);
 	}
 
 
 	@Override
-	public DwzResponse createShortUrl(DwzRequest request) {
+	public DwzResponse createShortUrl(@NonNull DwzRequest request) {
 		try {
 			Date termOfValidity = request.getConfig("term-of-validity");
 			EasyjDwzRequest req = new EasyjDwzRequest(request.getLongUrl(), termOfValidity);

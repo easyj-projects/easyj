@@ -25,6 +25,8 @@ import java.util.function.Supplier;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.string.IStringService;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -59,7 +61,7 @@ public abstract class StringUtils {
 	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 * @see String#toCharArray()
 	 */
-	public static Object getValue(CharSequence str) {
+	public static Object getValue(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
 		return STRING_SERVICE.getValue(str);
 	}
@@ -71,7 +73,7 @@ public abstract class StringUtils {
 	 * @return 字符编码的标识符（值域：0=LATIN1 | 1=UTF16）
 	 * @throws IllegalArgumentException str为空时，抛出该异常
 	 */
-	public static byte getCoder(CharSequence str) {
+	public static byte getCoder(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
 		return STRING_SERVICE.getCoder(str);
 	}
@@ -340,6 +342,7 @@ public abstract class StringUtils {
 	 * @param strArr 字符串数组
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
+	@Nullable
 	public static String findNotEmptyOne(final String... strArr) {
 		return ObjectUtils.find(strArr, StringUtils::isNotEmpty);
 	}
@@ -350,6 +353,7 @@ public abstract class StringUtils {
 	 * @param strArr 字符串数组
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
+	@Nullable
 	public static String findNotBlankOne(final String... strArr) {
 		return ObjectUtils.find(strArr, StringUtils::isNotBlank);
 	}
@@ -366,7 +370,7 @@ public abstract class StringUtils {
 	 * @param cutChar 需裁剪掉的字符
 	 * @return 裁剪后的字符串
 	 */
-	public static String trim(String str, char cutChar) {
+	public static String trim(@NonNull String str, char cutChar) {
 		Assert.notNull(str, "'str' must not be null");
 
 		int start = 0;
@@ -399,7 +403,7 @@ public abstract class StringUtils {
 	 * @param cutChar 需裁剪掉的字符
 	 * @return 裁剪后的字符串
 	 */
-	public static String trimStart(String str, char cutChar) {
+	public static String trimStart(@NonNull String str, char cutChar) {
 		Assert.notNull(str, "'str' must not be null");
 
 		int start = 0;
@@ -426,7 +430,7 @@ public abstract class StringUtils {
 	 * @param cutChar 需裁剪掉的字符
 	 * @return 裁剪后的字符串
 	 */
-	public static String trimEnd(String str, char cutChar) {
+	public static String trimEnd(@NonNull String str, char cutChar) {
 		Assert.notNull(str, "'str' must not be null");
 
 		int start = 0;
@@ -536,7 +540,7 @@ public abstract class StringUtils {
 	 * @param str 字符串
 	 * @return 字符数组
 	 */
-	public static char[] toCharArray(CharSequence str) {
+	public static char[] toCharArray(@NonNull CharSequence str) {
 		Assert.notNull(str, "'str' must not be null");
 		return STRING_SERVICE.toCharArray(str);
 	}
@@ -549,6 +553,7 @@ public abstract class StringUtils {
 	 * @param obj 任意类型的对象
 	 * @return str 转换后的字符串
 	 */
+	@NonNull
 	public static String toString(final Object obj) {
 		if (obj == null) {
 			return "null";
@@ -615,7 +620,8 @@ public abstract class StringUtils {
 	 * @param obj 未知类型的对象
 	 * @return str 转换后的字符串
 	 */
-	private static String unknownTypeObjectToString(final Object obj) {
+	@NonNull
+	private static String unknownTypeObjectToString(@NonNull final Object obj) {
 		return CycleDependencyHandler.wrap(obj, o -> {
 			final StringBuilder sb = new StringBuilder(32);
 

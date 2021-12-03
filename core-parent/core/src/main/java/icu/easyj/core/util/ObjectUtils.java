@@ -28,6 +28,8 @@ import cn.hutool.core.clone.CloneRuntimeException;
 import cn.hutool.core.clone.CloneSupport;
 import icu.easyj.core.convert.ConvertUtils;
 import icu.easyj.core.exception.ConvertException;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 对象工具类
@@ -69,7 +71,7 @@ public abstract class ObjectUtils {
 	 * @return 返回目标对象或克隆对象
 	 * @throws CloneRuntimeException 目标对象不支持克隆时，将抛出该异常
 	 */
-	public static <T> T mergeData(T target, Map<String, Object> data, CloneMode cloneMode) {
+	public static <T> T mergeData(@NonNull T target, @Nullable Map<String, Object> data, CloneMode cloneMode) {
 		if (MapUtils.isEmpty(data)) {
 			return cloneMode == CloneMode.ALWAYS_CLONE ? ((CloneSupport<T>)target).clone() : target;
 		}
@@ -123,7 +125,7 @@ public abstract class ObjectUtils {
 	 * @return 返回目标对象或克隆对象（当数据不为空时，才会克隆一份对象）
 	 * @throws CloneRuntimeException 目标对象不支持克隆时，将抛出该异常
 	 */
-	public static <T> T mergeData(T target, Map<String, Object> data) {
+	public static <T> T mergeData(@NonNull T target, @Nullable Map<String, Object> data) {
 		return mergeData(target, data, CloneMode.CLONE_ONLY_DATA_NOT_EMPTY);
 	}
 
@@ -176,6 +178,7 @@ public abstract class ObjectUtils {
 	 * @param <T>        对象类型
 	 * @return 返回找到的字符串 或 {@code null}
 	 */
+	@Nullable
 	public static <T> T find(final T[] objArr, final Predicate<T> objMatcher) {
 		for (final T obj : objArr) {
 			if (objMatcher.test(obj)) {

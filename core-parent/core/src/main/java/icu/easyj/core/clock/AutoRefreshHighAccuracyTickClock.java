@@ -24,6 +24,7 @@ import javax.security.auth.DestroyFailedException;
 import cn.hutool.core.thread.NamedThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -43,7 +44,7 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 	private ScheduledFuture<?> scheduledFuture;
 
 
-	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, Supplier<ITickClock> tickClockSupplier, int tryCount) {
+	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, @NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
 		super(tickClockSupplier, tryCount);
 
 		Assert.notNull(name, "'name' must be not null");
@@ -55,16 +56,16 @@ public class AutoRefreshHighAccuracyTickClock extends HighAccuracyRefreshableTic
 		this.startAutoRefresh();
 	}
 
-	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, Supplier<ITickClock> tickClockSupplier) {
+	public AutoRefreshHighAccuracyTickClock(String name, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor, @NonNull Supplier<ITickClock> tickClockSupplier) {
 		this(name, scheduledThreadPoolExecutor, tickClockSupplier, DEFAULT_TRY_COUNT);
 	}
 
-	public AutoRefreshHighAccuracyTickClock(String name, Supplier<ITickClock> tickClockSupplier, int tryCount) {
+	public AutoRefreshHighAccuracyTickClock(String name, @NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
 		this(name, new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(name + "-AutoRefreshTask-", true)),
 				tickClockSupplier, tryCount);
 	}
 
-	public AutoRefreshHighAccuracyTickClock(String name, Supplier<ITickClock> tickClockSupplier) {
+	public AutoRefreshHighAccuracyTickClock(String name, @NonNull Supplier<ITickClock> tickClockSupplier) {
 		this(name, tickClockSupplier, DEFAULT_TRY_COUNT);
 	}
 

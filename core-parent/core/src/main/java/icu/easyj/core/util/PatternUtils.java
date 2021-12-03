@@ -18,6 +18,8 @@ package icu.easyj.core.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -70,7 +72,7 @@ public abstract class PatternUtils {
 	 * @param str     字符串
 	 * @return isMatch 是否匹配
 	 */
-	public static boolean validate(Pattern pattern, CharSequence str) {
+	public static boolean validate(@NonNull Pattern pattern, @Nullable CharSequence str) {
 		if (str == null) {
 			return false;
 		}
@@ -86,7 +88,7 @@ public abstract class PatternUtils {
 	 * @param str   字符串
 	 * @return isMatch 是否匹配
 	 */
-	public static boolean validate(String regex, CharSequence str) {
+	public static boolean validate(@NonNull String regex, @Nullable CharSequence str) {
 		if (str == null) {
 			return false;
 		}

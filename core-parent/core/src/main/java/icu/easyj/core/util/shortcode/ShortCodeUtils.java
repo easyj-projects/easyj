@@ -16,6 +16,7 @@
 package icu.easyj.core.util.shortcode;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import org.springframework.lang.NonNull;
 
 /**
  * long型ID 与 短字符串 互相转换的工具类
@@ -44,7 +45,8 @@ public abstract class ShortCodeUtils {
 	 * @return 短字符串
 	 * @throws IllegalArgumentException ID小于0
 	 */
-	public static String toCode(Long id) {
+	@NonNull
+	public static String toCode(@NonNull Long id) {
 		return DEFAULT.toCode(id);
 	}
 
@@ -54,7 +56,7 @@ public abstract class ShortCodeUtils {
 	 * @param shortCode 短字符串
 	 * @return 原ID
 	 */
-	public static long toId(String shortCode) {
+	public static long toId(@NonNull String shortCode) {
 		return DEFAULT.toId(shortCode);
 	}
 }

@@ -19,6 +19,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import icu.easyj.middleware.dwz.server.core.domain.enums.DwzLogStatus;
+import org.springframework.lang.NonNull;
 
 /**
  * 短链接记录 实体
@@ -120,7 +121,7 @@ public class DwzLogEntity {
 		this.status = status;
 	}
 
-	public void setStatus(DwzLogStatus statusEnum) {
+	public void setStatus(@NonNull DwzLogStatus statusEnum) {
 		this.status = statusEnum.getStatus();
 	}
 

@@ -15,6 +15,8 @@
  */
 package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
+import org.springframework.lang.Nullable;
+
 /**
  * 身份证识别（IDCardOCR）接口高级功能配置
  *
@@ -95,6 +97,7 @@ public class IdCardOcrAdvancedConfig {
 	 *
 	 * @return JSON数据
 	 */
+	@Nullable
 	public String toJson() {
 		StringBuilder sb = new StringBuilder("{");
 		if (Boolean.TRUE.equals(cropIdCard)) {

@@ -26,6 +26,7 @@ import icu.easyj.core.util.NetUtils;
 import icu.easyj.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.util.PatternMatchUtils;
 
 /**
@@ -167,6 +168,7 @@ public abstract class NetPropertyUtils {
 	 * @param pattern 匹配串
 	 * @return ip 返回匹配到的IP地址
 	 */
+	@Nullable
 	public static String matchIp(List<String> ipList, String pattern) {
 		// 正则匹配
 		if (pattern.startsWith("^")) {

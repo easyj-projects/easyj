@@ -15,6 +15,8 @@
  */
 package icu.easyj.core.util.shortcode;
 
+import org.springframework.lang.NonNull;
+
 /**
  * long型ID 与 短字符串 互相转换的服务类
  * <p>
@@ -31,7 +33,8 @@ public interface IShortCodeService {
 	 * @return 短字符串
 	 * @throws IllegalArgumentException ID为null 或 ID小于0
 	 */
-	String toCode(Long id);
+	@NonNull
+	String toCode(@NonNull Long id);
 
 	/**
 	 * 短字符串 转换为 long长整形ID
@@ -40,5 +43,5 @@ public interface IShortCodeService {
 	 * @return 原ID
 	 * @throws IllegalArgumentException shortCode为null
 	 */
-	long toId(String shortCode);
+	long toId(@NonNull String shortCode);
 }

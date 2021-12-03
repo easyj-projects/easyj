@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.servlet.BodyServletInputStream;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -39,8 +40,10 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	private String body;
 
+	@Nullable
 	private ServletInputStream inputStream;
 
+	@Nullable
 	private BufferedReader reader;
 
 	/**

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import icu.easyj.core.enums.DateFormatType;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -40,7 +41,8 @@ public abstract class DateFormatFactory {
 	 * @param dateFormat 时间格式
 	 * @return dateFormat 时间格式化实例
 	 */
-	public static SimpleDateFormat get(String dateFormat) {
+	@NonNull
+	public static SimpleDateFormat get(@NonNull String dateFormat) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Map<String, SimpleDateFormat> dateFormatMap = DATE_FORMAT.get();
 		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, SimpleDateFormat::new);
@@ -60,7 +62,8 @@ public abstract class DateFormatFactory {
 	 * @param dateFormat 常用时间格式
 	 * @return dateFormat 常用时间格式化实例
 	 */
-	public static SimpleDateFormat get(DateFormatType dateFormat) {
+	@NonNull
+	public static SimpleDateFormat get(@NonNull DateFormatType dateFormat) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Map<DateFormatType, SimpleDateFormat> dateFormatMap = FREQUENTLY_USED_DATE_FORMAT.get();
 		return MapUtils.computeIfAbsent(dateFormatMap, dateFormat, f -> new SimpleDateFormat(dateFormat.getFormat()));

@@ -24,6 +24,7 @@ import icu.easyj.core.util.MapUtils;
 import icu.easyj.db.util.DbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -48,7 +49,7 @@ public abstract class DbServiceFactory {
 	 * @param dataSource 数据源
 	 * @return 数据库服务
 	 */
-	public static IDbService getDbService(DataSource dataSource) {
+	public static IDbService getDbService(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		return MapUtils.computeIfAbsent(DB_SERVICE_MAP, dataSource, ds -> {

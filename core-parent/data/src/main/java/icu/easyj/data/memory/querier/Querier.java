@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import icu.easyj.core.util.CollectionUtils;
+import org.springframework.lang.NonNull;
 
 /**
  * 查询者接口
@@ -81,6 +82,7 @@ public interface Querier<T> {
 	 * @param <D>  the data type
 	 * @return the list after sort
 	 */
+	@NonNull
 	<D extends T> List<D> doSort(List<D> list);
 
 	/**

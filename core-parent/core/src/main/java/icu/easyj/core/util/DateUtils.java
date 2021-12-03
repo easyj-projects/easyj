@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import icu.easyj.core.enums.DateFormatType;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 import static icu.easyj.core.constant.DateConstants.ONE_DAY_MILL;
@@ -40,6 +42,7 @@ public abstract class DateUtils {
 	 * @param time 时间
 	 * @return date 日期
 	 */
+	@NonNull
 	public static Date getDate(Date time) {
 		return new Date(time.getYear(), time.getMonth(), time.getDate());
 	}
@@ -50,7 +53,8 @@ public abstract class DateUtils {
 	 * @param time 时间
 	 * @return tomorrowDate 明天的日期
 	 */
-	public static Date getTomorrowDate(Date time) {
+	@NonNull
+	public static Date getTomorrowDate(@NonNull Date time) {
 		return getDate(new Date(time.getTime() + ONE_DAY_MILL));
 	}
 
@@ -67,7 +71,8 @@ public abstract class DateUtils {
 	 * @return time 时间
 	 * @throws ParseException 解析异常
 	 */
-	public static Date parse(String str, DateFormatType format) throws ParseException {
+	@NonNull
+	public static Date parse(@NonNull String str, @NonNull DateFormatType format) throws ParseException {
 		SimpleDateFormat sdf = DateFormatFactory.get(format);
 		return sdf.parse(str);
 	}
@@ -80,79 +85,96 @@ public abstract class DateUtils {
 	 * @return time
 	 * @throws ParseException 解析异常
 	 */
-	public static Date parse(String str, String format) throws ParseException {
+	@NonNull
+	public static Date parse(@NonNull String str, @NonNull String format) throws ParseException {
 		SimpleDateFormat sdf = DateFormatFactory.get(format);
 		return sdf.parse(str);
 	}
 
-	public static Date parseMonth(String str) throws ParseException {
+	@NonNull
+	public static Date parseMonth(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MM);
 	}
 
-	public static Date parseDate(String str) throws ParseException {
+	@NonNull
+	public static Date parseDate(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.DD);
 	}
 
-	public static Date parseMinutes(String str) throws ParseException {
+	@NonNull
+	public static Date parseMinutes(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MI);
 	}
 
-	public static Date parseSeconds(String str) throws ParseException {
+	@NonNull
+	public static Date parseSeconds(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.SS);
 	}
 
-	public static Date parseMillisecond(String str) throws ParseException {
+	@NonNull
+	public static Date parseMillisecond(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.SSS);
 	}
 
 
-	public static Date parseMonth2(String str) throws ParseException {
+	@NonNull
+	public static Date parseMonth2(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MM2);
 	}
 
-	public static Date parseDate2(String str) throws ParseException {
+	@NonNull
+	public static Date parseDate2(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.DD2);
 	}
 
-	public static Date parseMinutes2(String str) throws ParseException {
+	public static Date parseMinutes2(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MI2);
 	}
 
-	public static Date parseSeconds2(String str) throws ParseException {
+	@NonNull
+	public static Date parseSeconds2(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.SS2);
 	}
 
+	@NonNull
 	public static Date parseMillisecond2(String str) throws ParseException {
 		return parse(str, DateFormatType.SSS2);
 	}
 
 
-	public static Date parseMonth3(String str) throws ParseException {
+	@NonNull
+	public static Date parseMonth3(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MM3);
 	}
 
-	public static Date parseDate3(String str) throws ParseException {
+	@NonNull
+	public static Date parseDate3(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.DD3);
 	}
 
 
-	public static Date parseMonthUnsigned(String str) throws ParseException {
+	@NonNull
+	public static Date parseMonthUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MM_UNSIGNED);
 	}
 
-	public static Date parseDateUnsigned(String str) throws ParseException {
+	@NonNull
+	public static Date parseDateUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.DD_UNSIGNED);
 	}
 
-	public static Date parseMinutesUnsigned(String str) throws ParseException {
+	@NonNull
+	public static Date parseMinutesUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.MI_UNSIGNED);
 	}
 
-	public static Date parseSecondsUnsigned(String str) throws ParseException {
+	@NonNull
+	public static Date parseSecondsUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.SS_UNSIGNED);
 	}
 
-	public static Date parseMillisecondUnsigned(String str) throws ParseException {
+	@NonNull
+	public static Date parseMillisecondUnsigned(@NonNull String str) throws ParseException {
 		return parse(str, DateFormatType.SSS_UNSIGNED);
 	}
 
@@ -162,7 +184,8 @@ public abstract class DateUtils {
 	 * @param timeStr 时间字符串
 	 * @return time 时间
 	 */
-	public static Date parseAll(String timeStr) {
+	@NonNull
+	public static Date parseAll(@NonNull String timeStr) {
 		Assert.notNull(timeStr, "'timeStr' must not be null");
 
 		RuntimeException e = null;
@@ -233,7 +256,8 @@ public abstract class DateUtils {
 	 * @param date       时间
 	 * @return dateStr 格式化的时间字符串
 	 */
-	public static String format(String dateFormat, Date date) {
+	@NonNull
+	public static String format(@NonNull String dateFormat, @NonNull Date date) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Assert.notNull(date, "'date' must not be null");
 
@@ -247,7 +271,8 @@ public abstract class DateUtils {
 	 * @param date       时间
 	 * @return dateStr 格式化的时间字符串
 	 */
-	public static String format(DateFormatType dateFormat, Date date) {
+	@NonNull
+	public static String format(@NonNull DateFormatType dateFormat, @NonNull Date date) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
 		Assert.notNull(date, "'date' must not be null");
 
@@ -455,7 +480,8 @@ public abstract class DateUtils {
 	 * @param date 时间
 	 * @return str 转换后的字符串
 	 */
-	public static String toString(Date date) {
+	@NonNull
+	public static String toString(@Nullable Date date) {
 		if (date == null) {
 			return "null";
 		}

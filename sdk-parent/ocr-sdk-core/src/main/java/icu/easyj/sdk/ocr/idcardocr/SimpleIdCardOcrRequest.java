@@ -18,6 +18,7 @@ package icu.easyj.sdk.ocr.idcardocr;
 import java.util.Map;
 
 import icu.easyj.core.convert.ConvertUtils;
+import org.springframework.lang.Nullable;
 
 /**
  * 身份证识别请求信息
@@ -35,6 +36,7 @@ public class SimpleIdCardOcrRequest {
 	 * 动态传入最终实现类的配置信息
 	 * 可以做到动态可配置化
 	 */
+	@Nullable
 	private Map<String, Object> configs;
 
 
@@ -65,6 +67,7 @@ public class SimpleIdCardOcrRequest {
 		this.advancedArr = advancedArr;
 	}
 
+	@Nullable
 	public Map<String, Object> getConfigs() {
 		return configs;
 	}
@@ -73,6 +76,7 @@ public class SimpleIdCardOcrRequest {
 		this.configs = configs;
 	}
 
+	@Nullable
 	public <T> T getConfig(String key) {
 		if (configs == null) {
 			return null;
@@ -81,6 +85,7 @@ public class SimpleIdCardOcrRequest {
 		}
 	}
 
+	@Nullable
 	public <T> T getConfig(String key, Class<T> typeClass) {
 		if (configs == null) {
 			return null;

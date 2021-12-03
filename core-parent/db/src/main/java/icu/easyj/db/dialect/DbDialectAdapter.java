@@ -17,6 +17,7 @@ package icu.easyj.db.dialect;
 
 import java.util.function.Supplier;
 
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.util.Assert;
  */
 public class DbDialectAdapter implements IDbDialect {
 
+	@NonNull
 	protected final IDbDialect dbDialect;
 
 
@@ -73,6 +75,7 @@ public class DbDialectAdapter implements IDbDialect {
 	//-----------------------------------------------------------------------------------------
 
 
+	@NonNull
 	@Override
 	public String getDbType() {
 		return this.dbDialect.getDbType();

@@ -23,6 +23,7 @@ import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,7 @@ public class DwzRestController {
 	 * @param shortUrl 短链接
 	 * @return longUrl 长链接
 	 */
+	@Nullable
 	@GetMapping("/get-long-url")
 	public String getLongUrl(@RequestParam String shortUrl) {
 		String shortUrlCode;

@@ -20,6 +20,7 @@ import java.util.Date;
 import icu.easyj.core.clock.AutoRefreshHighAccuracyTickClock;
 import icu.easyj.core.clock.IAutoRefreshTickClock;
 import icu.easyj.core.clock.TickClock;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -37,7 +38,8 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return 远端时间
 	 */
-	long getRemotingTime(K remotingKey);
+	@NonNull
+	long getRemotingTime(@NonNull K remotingKey);
 
 	/**
 	 * 创建远端时钟
@@ -47,7 +49,8 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return 时钟
 	 */
-	default IAutoRefreshTickClock createClock(K remotingKey) {
+	@NonNull
+	default IAutoRefreshTickClock createClock(@NonNull K remotingKey) {
 		Assert.notNull(remotingKey, "'remotingKey' must not be null");
 		return new AutoRefreshHighAccuracyTickClock(remotingKey.getClass().getSimpleName(),
 				() -> new TickClock(this.getRemotingTime(remotingKey) * 1000));
@@ -59,14 +62,15 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端健值
 	 * @return 时钟
 	 */
-	IAutoRefreshTickClock getClock(K remotingKey);
+	@NonNull
+	IAutoRefreshTickClock getClock(@NonNull K remotingKey);
 
 	/**
 	 * 销毁远端时钟
 	 *
 	 * @param remotingKey 远端键值
 	 */
-	void destroyClock(K remotingKey);
+	void destroyClock(@NonNull K remotingKey);
 
 	/**
 	 * 远端的当前时间
@@ -74,7 +78,8 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return now 当前时间
 	 */
-	default Date now(K remotingKey) {
+	@NonNull
+	default Date now(@NonNull K remotingKey) {
 		return getClock(remotingKey).now();
 	}
 
@@ -84,7 +89,7 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return timeMillis 毫秒数
 	 */
-	default long currentTimeMillis(K remotingKey) {
+	default long currentTimeMillis(@NonNull K remotingKey) {
 		return getClock(remotingKey).currentTimeMillis();
 	}
 
@@ -94,7 +99,7 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return timeMicros 微秒数
 	 */
-	default long currentTimeMicros(K remotingKey) {
+	default long currentTimeMicros(@NonNull K remotingKey) {
 		return getClock(remotingKey).currentTimeMicros();
 	}
 
@@ -105,7 +110,7 @@ public interface IRemotingClockFactory<K> {
 	 * @param remotingKey 远端键值
 	 * @return timeNanos 纳秒数
 	 */
-	default long currentTimeNanos(K remotingKey) {
+	default long currentTimeNanos(@NonNull K remotingKey) {
 		return getClock(remotingKey).currentTimeNanos();
 	}
 }

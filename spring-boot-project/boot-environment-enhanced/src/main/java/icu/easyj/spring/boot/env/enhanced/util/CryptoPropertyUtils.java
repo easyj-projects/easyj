@@ -23,6 +23,7 @@ import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 
 /**
  * 加密解密函数式配置工具类
@@ -40,6 +41,7 @@ public abstract class CryptoPropertyUtils {
 	 * @param result 配置命令解析结果
 	 * @return property 配置值
 	 */
+	@Nullable
 	public static String getProperty(String name, CodeAnalysisResult result) {
 		String property = null;
 		try {

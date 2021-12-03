@@ -25,6 +25,8 @@ import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import icu.easyj.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -44,9 +46,10 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 	}
 
 
+	@NonNull
 	@Override
 	@Transactional
-	public DwzLogEntity createShortUrlCode(String longUrl, Date termOfValidity) {
+	public DwzLogEntity createShortUrlCode(@NonNull String longUrl, @Nullable Date termOfValidity) {
 		// 先校验参数
 		if (!HttpUtils.isHttpOrHttps(longUrl)) {
 			LOGGER.warn("长链接不是有效的http(s)地址，longUrl = {}", longUrl);
@@ -89,8 +92,9 @@ public class DefaultDwzServerServiceImpl implements IDwzServerService {
 		return logStore.save(longUrl, termOfValidity);
 	}
 
+	@Nullable
 	@Override
-	public String getLongUrlByShortUrlCode(String shortUrlCode) {
+	public String getLongUrlByShortUrlCode(@NonNull String shortUrlCode) {
 		return logStore.getLongUrlByShortUrlCode(shortUrlCode);
 	}
 }

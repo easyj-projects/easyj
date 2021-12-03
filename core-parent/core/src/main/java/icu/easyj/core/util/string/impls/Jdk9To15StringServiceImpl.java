@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.string.IStringService;
+import org.springframework.lang.NonNull;
 
 /**
  * JDK9及以上时，{@link IStringService} 的实现
@@ -31,12 +32,12 @@ import icu.easyj.core.util.string.IStringService;
 class Jdk9To15StringServiceImpl implements IStringService {
 
 	@Override
-	public char[] toCharArray(CharSequence str) {
+	public char[] toCharArray(@NonNull CharSequence str) {
 		return str.toString().toCharArray();
 	}
 
 	@Override
-	public byte[] getValue(CharSequence str) {
+	public byte[] getValue(@NonNull CharSequence str) {
 		// JDK9及以上：返回 byte[]
 		try {
 			return (byte[])StringReflection.STRING_VALUE_FIELD.get(str.toString());
@@ -46,7 +47,7 @@ class Jdk9To15StringServiceImpl implements IStringService {
 	}
 
 	@Override
-	public byte getCoder(CharSequence str) {
+	public byte getCoder(@NonNull CharSequence str) {
 		try {
 			return (byte)StringReflection.GET_STRING_CODER_METHOD.invoke(str.toString());
 		} catch (InvocationTargetException | IllegalAccessException e) {

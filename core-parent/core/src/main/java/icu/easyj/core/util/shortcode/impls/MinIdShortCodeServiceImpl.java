@@ -17,6 +17,7 @@ package icu.easyj.core.util.shortcode.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.shortcode.IShortCodeService;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -53,15 +54,16 @@ public class MinIdShortCodeServiceImpl implements IShortCodeService {
 	}
 
 
+	@NonNull
 	@Override
-	public String toCode(Long id) {
+	public String toCode(@NonNull Long id) {
 		Assert.isTrue(id != null && id >= minId, "ID必须大于等于最小ID：" + minId);
 		id -= minId; // 减掉最小ID
 		return shortCodeService.toCode(id);
 	}
 
 	@Override
-	public long toId(String shortCode) {
+	public long toId(@NonNull String shortCode) {
 		long id = shortCodeService.toId(shortCode);
 		id += minId; // 加上最小ID
 		if (id < minId) { // 如果加上最小ID后反而变小了，说明ID超过Long.MAX_VALUE了，shortCode并非当前实例生成的。

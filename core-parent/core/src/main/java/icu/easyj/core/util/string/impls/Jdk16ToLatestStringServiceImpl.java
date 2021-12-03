@@ -20,6 +20,7 @@ import java.lang.annotation.Native;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 import icu.easyj.core.util.string.IStringService;
+import org.springframework.lang.NonNull;
 
 /**
  * JDK9及以上时，{@link IStringService} 的实现
@@ -36,18 +37,18 @@ class Jdk16ToLatestStringServiceImpl implements IStringService {
 	static final byte UTF16 = 1;
 
 	@Override
-	public char[] toCharArray(CharSequence str) {
+	public char[] toCharArray(@NonNull CharSequence str) {
 		return str.toString().toCharArray();
 	}
 
 	@Override
-	public char[] getValue(CharSequence str) {
+	public char[] getValue(@NonNull CharSequence str) {
 		// JDK16及以上：返回 char[]
 		return this.toCharArray(str);
 	}
 
 	@Override
-	public byte getCoder(CharSequence str) {
+	public byte getCoder(@NonNull CharSequence str) {
 		// 注意：性能较差，不建议在JDK16及以上版本使用
 		char[] chars = toCharArray(str);
 		for (char c : chars) {

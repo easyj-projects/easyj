@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 import icu.easyj.test.exception.TestException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -108,6 +109,7 @@ public abstract class TestUtils {
 	 * @param functions   需比较性能的函数集，每个函数可以设置一个返回值，表示函数别名，会打印在控制台中
 	 * @return costs 每个函数的总耗时
 	 */
+	@NonNull
 	public static long[] performanceTest(int threadCount, int times, Function<TestParam, ?>... functions) {
 		Assert.isTrue(threadCount > 0, "'sets' must be greater than 0");
 		Assert.isTrue(times > 0, "'times' must be greater than 0");
@@ -139,6 +141,7 @@ public abstract class TestUtils {
 	}
 
 	// 重载方法
+	@NonNull
 	public static long[] performanceTest(int threadCount, int times, Supplier<?>... suppliers) {
 		Assert.isTrue(suppliers != null && suppliers.length > 0, "'suppliers' must be not empty");
 

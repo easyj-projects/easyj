@@ -19,6 +19,7 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import icu.easyj.core.clock.IAutoRefreshTickClock;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -49,7 +50,8 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return 时钟
 	 */
-	public static IAutoRefreshTickClock getClock(DataSource dataSource) {
+	@NonNull
+	public static IAutoRefreshTickClock getClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		return getFactory().getClock(dataSource);
 	}
@@ -60,7 +62,8 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return newClock 时钟
 	 */
-	public static IAutoRefreshTickClock refreshClock(DataSource dataSource) {
+	@NonNull
+	public static IAutoRefreshTickClock refreshClock(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		return getFactory().getClock(dataSource);
 	}
@@ -71,7 +74,8 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return now 当前时间
 	 */
-	public static Date now(DataSource dataSource) {
+	@NonNull
+	public static Date now(@NonNull DataSource dataSource) {
 		return getClock(dataSource).now();
 	}
 
@@ -81,7 +85,7 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeMillis 毫秒数
 	 */
-	public static long currentTimeMillis(DataSource dataSource) {
+	public static long currentTimeMillis(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeMillis();
 	}
 
@@ -91,7 +95,7 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeMicros 微秒数
 	 */
-	public static long currentTimeMicros(DataSource dataSource) {
+	public static long currentTimeMicros(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeMicros();
 	}
 
@@ -102,7 +106,7 @@ public abstract class DbClockUtils {
 	 * @param dataSource 数据源
 	 * @return timeNanos 纳秒数
 	 */
-	public static long currentTimeNanos(DataSource dataSource) {
+	public static long currentTimeNanos(@NonNull DataSource dataSource) {
 		return getClock(dataSource).currentTimeNanos();
 	}
 }

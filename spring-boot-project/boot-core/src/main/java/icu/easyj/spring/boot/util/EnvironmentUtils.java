@@ -41,6 +41,8 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 环境工具类
@@ -66,7 +68,7 @@ public abstract class EnvironmentUtils {
 	 * @param source     需添加的默认配置
 	 * @param allSources 所有配置源
 	 */
-	public static void addOrMergeDefaultProperties(Map<String, Object> source, MutablePropertySources allSources) {
+	public static void addOrMergeDefaultProperties(@Nullable Map<String, Object> source, @NonNull MutablePropertySources allSources) {
 		if (!MapUtils.isEmpty(source)) {
 			Map<String, Object> resultingSource = new HashMap<>(source.size());
 			MapPropertySource defaultPropertySource = new MapPropertySource(DEFAULT_PROPERTY_SOURCE_NAME, resultingSource);
@@ -86,7 +88,7 @@ public abstract class EnvironmentUtils {
 	 * @param source      需添加的默认配置
 	 * @param environment 环境实例
 	 */
-	public static void addOrMergeDefaultProperties(Map<String, Object> source, ConfigurableEnvironment environment) {
+	public static void addOrMergeDefaultProperties(@Nullable Map<String, Object> source, ConfigurableEnvironment environment) {
 		addOrMergeDefaultProperties(source, environment.getPropertySources());
 	}
 
@@ -97,9 +99,9 @@ public abstract class EnvironmentUtils {
 	 * @param allSources      所有配置源
 	 * @param resultingSource 待返回的配置源
 	 */
-	private static void mergeIfPossible(Map<String, Object> source,
-										MutablePropertySources allSources,
-										Map<String, Object> resultingSource) {
+	private static void mergeIfPossible(@NonNull Map<String, Object> source,
+										@NonNull MutablePropertySources allSources,
+										@NonNull Map<String, Object> resultingSource) {
 		PropertySource<?> existingSource = allSources.get(DEFAULT_PROPERTY_SOURCE_NAME);
 		if (existingSource != null) {
 			Object underlyingSource = existingSource.getSource();
@@ -121,7 +123,8 @@ public abstract class EnvironmentUtils {
 	 * @param configFileResource 配置文件资源
 	 * @return properties 配置集合
 	 */
-	public static Properties buildProperties(Resource configFileResource) {
+	@Nullable
+	public static Properties buildProperties(@NonNull Resource configFileResource) {
 		String configFileName = configFileResource.getFilename();
 		if (configFileName == null) {
 			return null;
@@ -158,7 +161,8 @@ public abstract class EnvironmentUtils {
 	 * @param configFilePath 配置文件路径
 	 * @return properties 配置集合
 	 */
-	public static Properties buildProperties(String configFilePath) {
+	@Nullable
+	public static Properties buildProperties(@NonNull String configFilePath) {
 		// 创建资源对象
 		Resource configFileResource = new ClassPathResource(configFilePath);
 		if (!configFileResource.exists()) {
@@ -175,7 +179,8 @@ public abstract class EnvironmentUtils {
 	 * @param configFilePath 配置文件路径
 	 * @return propertySourceName 配置源名称
 	 */
-	public static String buildPropertySourceNameByPath(String configFilePath) {
+	@NonNull
+	public static String buildPropertySourceNameByPath(@NonNull String configFilePath) {
 		return "[EasyJ] Config resource '" + configFilePath + "'";
 	}
 
@@ -185,7 +190,8 @@ public abstract class EnvironmentUtils {
 	 * @param configFileResource 配置文件资源
 	 * @return propertySourceName 配置源名称
 	 */
-	public static String buildPropertySourceNameByPath(Resource configFileResource) {
+	@NonNull
+	public static String buildPropertySourceNameByPath(@NonNull Resource configFileResource) {
 		String configFilePath = ResourceUtils.getResourceUri(configFileResource);
 		return buildPropertySourceNameByPath(configFilePath);
 	}
@@ -197,7 +203,8 @@ public abstract class EnvironmentUtils {
 	 * @param immutable          配置源是否不会更改
 	 * @return propertySource 配置源
 	 */
-	public static MapPropertySource buildPropertySource(Resource configFileResource, boolean immutable) {
+	@Nullable
+	public static MapPropertySource buildPropertySource(@NonNull Resource configFileResource, boolean immutable) {
 		// 加载配置文件
 		Properties properties = buildProperties(configFileResource);
 		if (properties == null || properties.isEmpty()) {
@@ -221,8 +228,9 @@ public abstract class EnvironmentUtils {
 	 * @param immutable          配置源是否不会更改
 	 * @return 配置源
 	 */
-	public static MapPropertySource newMapPropertySource(String propertySourceName,
-														 Map<String, Object> source,
+	@NonNull
+	public static MapPropertySource newMapPropertySource(@NonNull String propertySourceName,
+														 @NonNull Map<String, Object> source,
 														 boolean immutable) {
 		// spring-boot从2.0.0版本开始，才有OriginTrackedMapPropertySource
 		try {
@@ -247,7 +255,8 @@ public abstract class EnvironmentUtils {
 	 * @param immutable      配置源是否不会更改
 	 * @return propertySource 配置源
 	 */
-	public static MapPropertySource buildPropertySource(String configFilePath, boolean immutable) {
+	@Nullable
+	public static MapPropertySource buildPropertySource(@NonNull String configFilePath, boolean immutable) {
 		// 创建资源对象
 		Resource configFileResource = new ClassPathResource(configFilePath);
 		if (!configFileResource.exists()) {
@@ -266,7 +275,8 @@ public abstract class EnvironmentUtils {
 	 * @param environment        环境实例
 	 * @return propertySource 配置源
 	 */
-	public static PropertySource<?> addPropertySourceToLast(Resource configFileResource, boolean immutable, ConfigurableEnvironment environment) {
+	@Nullable
+	public static PropertySource<?> addPropertySourceToLast(@NonNull Resource configFileResource, boolean immutable, @NonNull ConfigurableEnvironment environment) {
 		// 加载配置文件为配置源
 		PropertySource<?> propertySource = buildPropertySource(configFileResource, immutable);
 		if (propertySource != null) {
@@ -287,7 +297,8 @@ public abstract class EnvironmentUtils {
 	 * @param environment    环境实例
 	 * @return propertySource 配置源
 	 */
-	public static PropertySource<?> addPropertySourceToLast(String configFilePath, boolean immutable, ConfigurableEnvironment environment) {
+	@Nullable
+	public static PropertySource<?> addPropertySourceToLast(@NonNull String configFilePath, boolean immutable, @NonNull ConfigurableEnvironment environment) {
 		// 创建资源对象
 		Resource configFileResource = new ClassPathResource(configFilePath);
 		if (!configFileResource.exists()) {
@@ -304,7 +315,7 @@ public abstract class EnvironmentUtils {
 	 * @param propertySource 配置源
 	 * @param environment    环境实例
 	 */
-	public static void addLastButBeforeDefault(PropertySource<?> propertySource, ConfigurableEnvironment environment) {
+	public static void addLastButBeforeDefault(@NonNull PropertySource<?> propertySource, @NonNull ConfigurableEnvironment environment) {
 		MutablePropertySources propertySources = environment.getPropertySources();
 		if (propertySources.contains(DEFAULT_PROPERTY_SOURCE_NAME)) {
 			propertySources.addBefore(DEFAULT_PROPERTY_SOURCE_NAME, propertySource);
@@ -324,7 +335,8 @@ public abstract class EnvironmentUtils {
 	 * @param environment 环境
 	 * @return env 环境代码
 	 */
-	public static String getEnv(ConfigurableEnvironment environment) {
+	@Nullable
+	public static String getEnv(@NonNull ConfigurableEnvironment environment) {
 		String env = environment.getProperty(ENV_KEY);
 		if (StringUtils.isBlank(env)) {
 			env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
@@ -343,7 +355,8 @@ public abstract class EnvironmentUtils {
 	 * @param propertyName 配置名
 	 * @return propertyList 配置值列表
 	 */
-	public static List<String> getPropertyList(ConfigurableEnvironment environment, String propertyName) {
+	@NonNull
+	public static List<String> getPropertyList(@NonNull ConfigurableEnvironment environment, String propertyName) {
 		List<String> propertyList = new ArrayList<>();
 		String property = environment.getProperty(propertyName);
 		if (property != null) {
@@ -365,7 +378,8 @@ public abstract class EnvironmentUtils {
 	 * @param propertyName   配置名
 	 * @return propertyList 配置值列表
 	 */
-	public static List<String> getPropertyList(PropertySource<?> propertySource, String propertyName) {
+	@NonNull
+	public static List<String> getPropertyList(@NonNull PropertySource<?> propertySource, String propertyName) {
 		List<String> propertyList = new ArrayList<>();
 		String property = getPropertyStr(propertySource, propertyName);
 		if (property != null) {
@@ -393,7 +407,8 @@ public abstract class EnvironmentUtils {
 		return propertyList;
 	}
 
-	private static String getPropertyStr(PropertySource<?> propertySource, String propertyName) {
+	@Nullable
+	private static String getPropertyStr(@NonNull PropertySource<?> propertySource, String propertyName) {
 		Object propertyObj = propertySource.getProperty(propertyName);
 		if (propertyObj == null) {
 			return null;

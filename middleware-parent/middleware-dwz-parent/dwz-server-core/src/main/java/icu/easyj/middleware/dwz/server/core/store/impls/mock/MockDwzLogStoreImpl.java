@@ -25,6 +25,8 @@ import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
 import icu.easyj.middleware.dwz.server.core.domain.enums.DwzLogStatus;
 import icu.easyj.middleware.dwz.server.core.store.IDwzLogStore;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 模拟 {@link IDwzLogStore}
@@ -43,8 +45,9 @@ public class MockDwzLogStoreImpl implements IDwzLogStore {
 	}
 
 
+	@NonNull
 	@Override
-	public synchronized DwzLogEntity save(String longUrl, Date termOfValidity) {
+	public synchronized DwzLogEntity save(@NonNull String longUrl, Date termOfValidity) {
 		// 通过序列服务，获取下一序列值，作为ID
 		long id = this.sequenceService.nextVal(SEQ_NAME__DWZ_LOG_ID);
 		if (dwzLogMap.containsKey(id)) {
@@ -73,8 +76,9 @@ public class MockDwzLogStoreImpl implements IDwzLogStore {
 		return dwzLog;
 	}
 
+	@Nullable
 	@Override
-	public synchronized DwzLogEntity getByLongUrlForUpdate(String longUrl) {
+	public synchronized DwzLogEntity getByLongUrlForUpdate(@NonNull String longUrl) {
 		for (DwzLogEntity entity : dwzLogMap.values()) {
 			if (longUrl.equals(entity.getLongUrl())) {
 				return entity;
@@ -84,12 +88,13 @@ public class MockDwzLogStoreImpl implements IDwzLogStore {
 	}
 
 	@Override
-	public synchronized void update(DwzLogEntity dwzLog) {
+	public synchronized void update(@NonNull DwzLogEntity dwzLog) {
 		// do nothing：数据取出来直接对象修改了，无需更新
 	}
 
+	@Nullable
 	@Override
-	public synchronized String getLongUrlByShortUrlCode(String shortUrlCode) {
+	public synchronized String getLongUrlByShortUrlCode(@NonNull String shortUrlCode) {
 		for (DwzLogEntity entity : dwzLogMap.values()) {
 			if (entity.isStatus(DwzLogStatus.EFFECTIVE) && shortUrlCode.equals(entity.getShortUrlCode())) {
 				return entity.getLongUrl();
@@ -98,6 +103,7 @@ public class MockDwzLogStoreImpl implements IDwzLogStore {
 		return null;
 	}
 
+	@Nullable
 	@Override
 	public synchronized Long getMaxId() {
 		Long maxId = null;

@@ -30,6 +30,8 @@ import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.util.HttpConfigs;
 import icu.easyj.web.util.HttpUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.PatternMatchUtils;
 
@@ -85,7 +87,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 *
 	 * @param filterProperties 过滤器配置
 	 */
-	protected AbstractFilter(P filterProperties) {
+	protected AbstractFilter(@NonNull P filterProperties) {
 		Assert.notNull(filterProperties, "'filterProperties' must not be null");
 
 		// 设置过滤器配置
@@ -209,6 +211,7 @@ public abstract class AbstractFilter<P extends IFilterProperties> implements Fil
 	 *
 	 * @return 过滤器名称
 	 */
+	@Nullable
 	public String getFilterName() {
 		return filterName;
 	}

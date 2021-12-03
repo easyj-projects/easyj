@@ -28,6 +28,7 @@ import icu.easyj.db.constant.DbTypeConstants;
 import icu.easyj.db.exception.DbException;
 import icu.easyj.db.service.DbServiceFactory;
 import icu.easyj.db.service.IDbService;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -46,6 +47,7 @@ public abstract class DbUtils {
 	private static final ConcurrentHashMap<DataSource, String> DB_TYPE_MAP = new ConcurrentHashMap<>();
 
 
+	@NonNull
 	private static String convertDbType(String dbType) {
 		// MS SQL Server返回的太长了，按自定义的常量返回
 		if ("microsoft sql server".equalsIgnoreCase(dbType)) {
@@ -65,7 +67,8 @@ public abstract class DbUtils {
 	 * @param dataSource 数据源
 	 * @return 数据库类型（全部转为小写字母）
 	 */
-	public static String getDbType(DataSource dataSource) {
+	@NonNull
+	public static String getDbType(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 
 		return MapUtils.computeIfAbsent(DB_TYPE_MAP, dataSource, ds -> {
@@ -84,7 +87,8 @@ public abstract class DbUtils {
 	 * @param dataSource 数据源
 	 * @return 数据库版本号
 	 */
-	public static String getDbVersion(DataSource dataSource) {
+	@NonNull
+	public static String getDbVersion(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.getVersion();
@@ -103,7 +107,8 @@ public abstract class DbUtils {
 	 * @param dataSource 数据源
 	 * @return 数据库当前时间戳
 	 */
-	public static long currentTimeMillis(DataSource dataSource) {
+	@NonNull
+	public static long currentTimeMillis(@NonNull DataSource dataSource) {
 		Assert.notNull(dataSource, "'dataSource' must not be null");
 		IDbService dbService = DbServiceFactory.getDbService(dataSource);
 		return dbService.currentTimeMillis();
@@ -117,7 +122,8 @@ public abstract class DbUtils {
 	 * @param dataSource 数据源
 	 * @return 数据库当前时间
 	 */
-	public static Date now(DataSource dataSource) {
+	@NonNull
+	public static Date now(@NonNull DataSource dataSource) {
 		return new Date(currentTimeMillis(dataSource));
 	}
 

@@ -21,6 +21,7 @@ import cn.hutool.core.annotation.Alias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import icu.easyj.core.util.StringUtils;
+import org.springframework.lang.Nullable;
 
 /**
  * 百度云DWZ响应参数
@@ -59,6 +60,7 @@ public class BaiduDwzResponse {
 	 *
 	 * @return 错误类型枚举
 	 */
+	@Nullable
 	public BaiduDwzErrorType getErrorType() {
 		return BaiduDwzErrorType.getByCode(this.code);
 	}

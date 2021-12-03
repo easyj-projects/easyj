@@ -32,6 +32,8 @@ import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * JAR工具类
@@ -74,7 +76,8 @@ public abstract class JarUtils {
 	 * @param classLoader 类加载器
 	 * @return JAR列表
 	 */
-	public static List<JarInfo> getJarList(ClassLoader classLoader) {
+	@NonNull
+	public static List<JarInfo> getJarList(@NonNull ClassLoader classLoader) {
 		return MapUtils.computeIfAbsent(CL_JAR_LIST_CACHE, classLoader, cl -> Collections.unmodifiableList(loadJarList(cl)));
 	}
 
@@ -83,6 +86,7 @@ public abstract class JarUtils {
 	 *
 	 * @return JAR列表
 	 */
+	@NonNull
 	public static List<JarInfo> getJarList() {
 		return getJarList(Thread.currentThread().getContextClassLoader());
 	}
@@ -98,7 +102,8 @@ public abstract class JarUtils {
 	 * @param classLoader 类加载器
 	 * @return JAR集合
 	 */
-	public static Map<String, JarInfo> getJarMap(ClassLoader classLoader) {
+	@NonNull
+	public static Map<String, JarInfo> getJarMap(@NonNull ClassLoader classLoader) {
 		return MapUtils.computeIfAbsent(CL_JAR_MAP_CACHE, classLoader, cl -> {
 			List<JarInfo> jarList = getJarList(classLoader);
 
@@ -121,6 +126,7 @@ public abstract class JarUtils {
 	 *
 	 * @return JAR集合
 	 */
+	@NonNull
 	public static Map<String, JarInfo> getJarMap() {
 		return getJarMap(Thread.currentThread().getContextClassLoader());
 	}
@@ -137,7 +143,8 @@ public abstract class JarUtils {
 	 * @param classLoader 类加载器
 	 * @return JAR信息
 	 */
-	public static JarInfo getJar(String name, ClassLoader classLoader) {
+	@Nullable
+	public static JarInfo getJar(String name, @NonNull ClassLoader classLoader) {
 		if (name == null) {
 			return null;
 		}
@@ -152,6 +159,7 @@ public abstract class JarUtils {
 	 * @param name JAR名称
 	 * @return JAR信息
 	 */
+	@Nullable
 	public static JarInfo getJar(String name) {
 		return getJar(name, Thread.currentThread().getContextClassLoader());
 	}
@@ -167,7 +175,8 @@ public abstract class JarUtils {
 	 * @param classLoader 类加载器
 	 * @return JAR列表
 	 */
-	private static List<JarInfo> loadJarList(ClassLoader classLoader) {
+	@NonNull
+	private static List<JarInfo> loadJarList(@NonNull ClassLoader classLoader) {
 		List<JarInfo> result = new ArrayList<>();
 
 		Enumeration<URL> urls;

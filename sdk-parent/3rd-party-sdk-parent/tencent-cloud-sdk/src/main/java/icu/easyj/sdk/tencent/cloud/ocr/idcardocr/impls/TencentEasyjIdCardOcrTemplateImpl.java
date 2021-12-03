@@ -46,6 +46,7 @@ import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentIdCardOcrWarn;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -63,6 +64,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	public static final int MIN_QUALITY = 50;
 
 
+	@NonNull
 	private final ITencentCloudIdCardOcrService tencentCloudIdCardOcrService;
 
 
@@ -72,8 +74,9 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 	}
 
 
+	@NonNull
 	@Override
-	public IdCardOcrResponse idCardOcr(IdCardOcrRequest request) throws IdCardOcrSdkException {
+	public IdCardOcrResponse idCardOcr(@NonNull IdCardOcrRequest request) throws IdCardOcrSdkException {
 		Assert.notNull(request, "'request' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(request.getImage()), "'image' must not be null");
 

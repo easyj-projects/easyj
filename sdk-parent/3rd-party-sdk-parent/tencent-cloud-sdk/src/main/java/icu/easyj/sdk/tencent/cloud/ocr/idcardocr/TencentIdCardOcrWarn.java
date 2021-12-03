@@ -15,6 +15,8 @@
  */
 package icu.easyj.sdk.tencent.cloud.ocr.idcardocr;
 
+import org.springframework.lang.Nullable;
+
 /**
  * 身份证识别告警
  *
@@ -102,6 +104,7 @@ public enum TencentIdCardOcrWarn {
 	 * @param warnCode 告警码
 	 * @return warnEnum 告警枚举
 	 */
+	@Nullable
 	public static TencentIdCardOcrWarn get(int warnCode) {
 		for (TencentIdCardOcrWarn warn : TencentIdCardOcrWarn.values()) {
 			if (warnCode == warn.code()) {

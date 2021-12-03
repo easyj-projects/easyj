@@ -44,6 +44,7 @@ import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 
@@ -69,7 +70,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 	 *
 	 * @param paramCryptoFilter 参数加密解密过滤器
 	 */
-	public FastJsonParamCryptoHttpMessageConverter(ParamCryptoFilter paramCryptoFilter) {
+	public FastJsonParamCryptoHttpMessageConverter(@NonNull ParamCryptoFilter paramCryptoFilter) {
 		Assert.notNull(paramCryptoFilter, "'paramCryptoFilter' must not be null");
 		this.paramCryptoFilter = paramCryptoFilter;
 	}

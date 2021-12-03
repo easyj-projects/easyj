@@ -25,6 +25,8 @@ import cn.hutool.core.text.StrPool;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.StringUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -49,7 +51,7 @@ public class FilterExclusion {
 	 *
 	 * @param configStr 配置串，格式如：*:/data/get、POST:/data/save
 	 */
-	public FilterExclusion(String configStr) {
+	public FilterExclusion(@NonNull String configStr) {
 		Assert.notNull(configStr, "'configStr' must not be null");
 
 		if (configStr.contains(StrPool.COLON)) {
@@ -75,6 +77,7 @@ public class FilterExclusion {
 	 * @param configList 配置列表
 	 * @return 配置集合
 	 */
+	@Nullable
 	public static Map<String, List<String>> convert(List<String> configList) {
 		if (CollectionUtils.isEmpty(configList)) {
 			return null;
@@ -98,11 +101,13 @@ public class FilterExclusion {
 	}
 
 	// 重载方法
+	@Nullable
 	public static Map<String, List<String>> convert(String[] configArr) {
 		return convert(CollectionUtil.toList(configArr));
 	}
 
 	// 重载方法
+	@Nullable
 	public static Map<String, List<String>> convert(String configStr) {
 		return convert(configStr.split(StrPool.COMMA));
 	}

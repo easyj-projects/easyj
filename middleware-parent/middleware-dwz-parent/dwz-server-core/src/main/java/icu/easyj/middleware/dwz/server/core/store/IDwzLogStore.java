@@ -20,6 +20,8 @@ import java.util.Date;
 import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.data.store.StoreException;
 import icu.easyj.middleware.dwz.server.core.domain.entity.DwzLogEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * 短链接记录 存取接口
@@ -42,7 +44,8 @@ public interface IDwzLogStore {
 	 * @return 保存是否成功
 	 * @throws StoreException 存储接口异常
 	 */
-	DwzLogEntity save(String longUrl, Date termOfValidity);
+	@NonNull
+	DwzLogEntity save(@NonNull String longUrl, @Nullable Date termOfValidity);
 
 	/**
 	 * 根据长链接，获取有效的短链接记录数据。主要用于避免同一长链接重复创建多条数据。
@@ -51,7 +54,8 @@ public interface IDwzLogStore {
 	 * @return 短链接记录
 	 * @throws StoreException 存储接口异常
 	 */
-	DwzLogEntity getByLongUrlForUpdate(String longUrl);
+	@Nullable
+	DwzLogEntity getByLongUrlForUpdate(@NonNull String longUrl);
 
 	/**
 	 * 更新成功
@@ -59,7 +63,7 @@ public interface IDwzLogStore {
 	 * @param dwzLog 短链接记录
 	 * @throws StoreException 存储接口异常
 	 */
-	void update(DwzLogEntity dwzLog);
+	void update(@NonNull DwzLogEntity dwzLog);
 
 	/**
 	 * 根据短链接码，获取长链接
@@ -68,7 +72,8 @@ public interface IDwzLogStore {
 	 * @return longUrl 长链接
 	 * @throws StoreException 存储接口异常
 	 */
-	String getLongUrlByShortUrlCode(String shortUrlCode);
+	@Nullable
+	String getLongUrlByShortUrlCode(@NonNull String shortUrlCode);
 
 	/**
 	 * 获取当前存储器中保存的短链接记录的最大ID值
@@ -76,6 +81,7 @@ public interface IDwzLogStore {
 	 * @return 最大ID值
 	 * @throws NotSupportedException 如果当前存储器无法获取最大ID值，请抛出该异常
 	 */
+	@Nullable
 	Long getMaxId();
 
 	/**

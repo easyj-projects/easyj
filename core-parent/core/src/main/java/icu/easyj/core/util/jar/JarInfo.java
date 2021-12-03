@@ -20,6 +20,8 @@ import java.util.jar.Attributes;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.version.VersionInfo;
 import icu.easyj.core.util.version.VersionUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
@@ -58,7 +60,7 @@ public class JarInfo {
 	 * @param manifestAttributes META-INF/MANIFEST.MF文件的属性集合
 	 * @param version            JAR版本号
 	 */
-	public JarInfo(String filePath, String name, Attributes manifestAttributes, String version) {
+	public JarInfo(@NonNull String filePath, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
 		Assert.notNull(filePath, "'filePath' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
 
@@ -81,18 +83,22 @@ public class JarInfo {
 
 	//region Getter
 
+	@NonNull
 	public String getFilePath() {
 		return filePath;
 	}
 
+	@NonNull
 	public String getName() {
 		return name;
 	}
 
+	@NonNull
 	public VersionInfo getVersionInfo() {
 		return versionInfo;
 	}
 
+	@NonNull
 	public String getVersion() {
 		return versionInfo.getVersion();
 	}
@@ -101,14 +107,17 @@ public class JarInfo {
 		return versionInfo.getVersionLong();
 	}
 
+	@NonNull
 	public Attributes getAttributes() {
 		return manifestAttributes;
 	}
 
+	@Nullable
 	public String getAttribute(Attributes.Name name) {
 		return manifestAttributes.getValue(name);
 	}
 
+	@Nullable
 	public String getAttribute(String name) {
 		return manifestAttributes.getValue(name);
 	}
