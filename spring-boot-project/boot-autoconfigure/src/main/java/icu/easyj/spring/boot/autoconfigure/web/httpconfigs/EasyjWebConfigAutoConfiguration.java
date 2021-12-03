@@ -29,7 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @see HttpConfigs // HTTP相关配置持有者
  */
 @Lazy(false)
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnClass({WebApplicationContext.class, HttpConfigs.class})
 @ConditionalOnWebApplication
 public class EasyjWebConfigAutoConfiguration {

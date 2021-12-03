@@ -38,12 +38,12 @@ import org.springframework.context.annotation.Lazy;
  * @since 0.2.1
  */
 @Lazy
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnProperty(value = "easyj.sdk.dwz.type", havingValue = "easyj-middleware")
 public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 
 	@Lazy
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@ConditionalOnClass(HttpEasyjMiddleWareDwzTemplateImpl.class)
 	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "http", matchIfMissing = true)
 	static class HttpEasyjMiddleWareDwzTemplateConfiguration {
@@ -68,7 +68,7 @@ public class EasyjMiddleWareDwzTemplateAutoConfiguration {
 
 
 	@Lazy
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@ConditionalOnClass(SpringCloudFeignEasyjMiddleWareDwzTemplateImpl.class)
 	@EnableFeignClients(clients = EasyjDwzRestControllerFeignClient.class)
 	@ConditionalOnProperty(value = "easyj.sdk.dwz.easyj-middleware.send-type", havingValue = "feign")

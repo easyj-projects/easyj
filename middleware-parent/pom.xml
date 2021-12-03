@@ -21,7 +21,7 @@
 	</description>
 
 	<properties>
-		<sb>2.6.1</sb>
+		<sb>2.1.18.RELEASE</sb>
 		<spring-boot.version>${sb}</spring-boot.version>
 	</properties>
 
