@@ -18,11 +18,13 @@ package icu.easyj.db.dialect.impls;
 import icu.easyj.core.exception.NotSupportedException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.core.loader.condition.ValidateStrategy;
 import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.util.SqlUtils;
 import org.springframework.lang.NonNull;
 
 import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER;
+import static icu.easyj.db.constant.DbDriverConstants.ORACLE_DRIVER_OLD;
 import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
 
 /**
@@ -31,7 +33,7 @@ import static icu.easyj.db.constant.DbTypeConstants.ORACLE;
  * @author wangliang181230
  */
 @LoadLevel(name = ORACLE, order = 20)
-@DependsOnClass(name = ORACLE_DRIVER)
+@DependsOnClass(name = {ORACLE_DRIVER, ORACLE_DRIVER_OLD}, strategy = ValidateStrategy.ANY_ONE)
 class OracleDbDialect implements IDbDialect {
 
 	@Override

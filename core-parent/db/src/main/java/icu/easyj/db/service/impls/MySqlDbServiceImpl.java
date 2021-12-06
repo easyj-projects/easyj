@@ -21,7 +21,7 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.loader.condition.ValidateStrategy;
 
-import static icu.easyj.db.constant.DbDriverConstants.MYSQL5_DRIVER;
+import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER_OLD;
 import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
@@ -31,7 +31,7 @@ import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
  * @author wangliang181230
  */
 @LoadLevel(name = MYSQL, order = 10)
-@DependsOnClass(name = {MYSQL5_DRIVER, MYSQL_DRIVER}, strategy = ValidateStrategy.ANY_ONE)
+@DependsOnClass(name = {MYSQL_DRIVER, MYSQL_DRIVER_OLD}, strategy = ValidateStrategy.ANY_ONE)
 class MySqlDbServiceImpl extends CommonDbServiceImpl {
 
 	public MySqlDbServiceImpl(DataSource dataSource) {
