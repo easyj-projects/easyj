@@ -57,7 +57,7 @@
 		<!-- Logging -->
 		<dependency>
 			<groupId>icu.easyj.boot</groupId>
-			<artifactId>easyj-spring-boot-starter-logging-all</artifactId>
+			<artifactId>easyj-spring-boot-starter-logging</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

@@ -22,11 +22,11 @@ package icu.easyj.db.constant;
  */
 public interface DbDriverConstants {
 
-	String MYSQL5_DRIVER = "com.mysql.jdbc.Driver";
-
 	String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
+	String MYSQL_DRIVER_OLD = "com.mysql.jdbc.Driver";
 
 	String ORACLE_DRIVER = "oracle.jdbc.OracleDriver";
+	String ORACLE_DRIVER_OLD = "oracle.jdbc.driver.OracleDriver";
 
 	String MS_SQL_SERVER_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 }

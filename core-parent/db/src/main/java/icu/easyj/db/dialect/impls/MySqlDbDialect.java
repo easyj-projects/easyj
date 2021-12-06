@@ -22,7 +22,7 @@ import icu.easyj.db.dialect.IDbDialect;
 import icu.easyj.db.util.SqlUtils;
 import org.springframework.lang.NonNull;
 
-import static icu.easyj.db.constant.DbDriverConstants.MYSQL5_DRIVER;
+import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER_OLD;
 import static icu.easyj.db.constant.DbDriverConstants.MYSQL_DRIVER;
 import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
 
@@ -34,7 +34,7 @@ import static icu.easyj.db.constant.DbTypeConstants.MYSQL;
  * @see <a href="https://github.com/easyj-projects/easyj/blob/develop/src/script/db/sequence/mysql/mysql__create_sequence-table_and_functions.sql">参照需要创建的表和函数的SQL文件</a>
  */
 @LoadLevel(name = MYSQL, order = 10)
-@DependsOnClass(name = {MYSQL5_DRIVER, MYSQL_DRIVER}, strategy = ValidateStrategy.ANY_ONE)
+@DependsOnClass(name = {MYSQL_DRIVER, MYSQL_DRIVER_OLD}, strategy = ValidateStrategy.ANY_ONE)
 class MySqlDbDialect implements IDbDialect {
 
 	@Override
