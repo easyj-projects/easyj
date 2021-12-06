@@ -20,7 +20,6 @@
 		<module>spring-boot-starter</module>
 		<!-- Logging -->
 		<module>spring-boot-starter-logging</module>
-		<module>spring-boot-starter-logging-all</module>
 		<!-- Web -->
 		<module>spring-boot-starter-web</module>
 

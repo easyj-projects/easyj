@@ -42,13 +42,15 @@
 		</dependency>
 
 		<!-- logback appenders -->
-		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-		</dependency>
+		<!-- kafka-appender所需的依赖，可将日志推送到 Kafka 中 -->
 		<dependency>
 			<groupId>com.github.danielwegener</groupId>
 			<artifactId>logback-kafka-appender</artifactId>
+		</dependency>
+		<!-- logstash-appender所需的依赖，可将日志推送到 LogStash 中 -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
 		</dependency>
 	</dependencies>
 </project>
