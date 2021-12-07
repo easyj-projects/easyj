@@ -18,7 +18,12 @@
 			"type": "java.util.List<java.lang.String>",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "标准环境代码列表，用于自动根据环境代码匹配标准环境代码.",
-			"defaultValue": "prod,sandbox,test,dev"
+			"defaultValue": [
+				"prod",
+				"sandbox",
+				"test",
+				"dev"
+			]
 		},
 		{
 			"name": "easyj.global.default-standard-env",
