@@ -169,7 +169,7 @@ public abstract class StringUtils {
 	}
 
 	/**
-	 * 判断字符串是否包含字符
+	 * 判断字符串是否包含目标字符
 	 *
 	 * @param str        字符串
 	 * @param targetChar 目标字符
@@ -181,6 +181,21 @@ public abstract class StringUtils {
 		}
 
 		char[] chars = toCharArray(str);
+		return contains(chars, targetChar);
+	}
+
+	/**
+	 * 判断字符数组是否包含目标字符
+	 *
+	 * @param chars
+	 * @param targetChar
+	 * @return
+	 */
+	public static boolean contains(char[] chars, char targetChar) {
+		if (chars == null || chars.length == 0) {
+			return false;
+		}
+
 		for (char c : chars) {
 			if (c == targetChar) {
 				return true;
@@ -358,6 +373,39 @@ public abstract class StringUtils {
 		return ObjectUtils.find(strArr, StringUtils::isNotBlank);
 	}
 
+	/**
+	 * 统计字符串中包含的目标字符数量
+	 *
+	 * @param str        字符串
+	 * @param targetChar 需统计的字符
+	 * @return 字符数量
+	 */
+	public static int count(@NonNull String str, char targetChar) {
+		Assert.notNull(str, "'str' must be not null");
+
+		char[] chars = toCharArray(str);
+		return count(chars, targetChar);
+	}
+
+	/**
+	 * 统计字符数组中包含的目标字符数量
+	 *
+	 * @param chars      字符数组
+	 * @param targetChar 需统计的字符
+	 * @return 字符数量
+	 */
+	public static int count(@NonNull char[] chars, char targetChar) {
+		Assert.notNull(chars, "'chars' must be not null");
+
+		int count = 0;
+		for (char c : chars) {
+			if (c == targetChar) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	//endregion
 
 
@@ -366,26 +414,24 @@ public abstract class StringUtils {
 	/**
 	 * 从字符串中移除对应的字符
 	 *
-	 * @param str        字符串
-	 * @param removeChar 需移除字符
+	 * @param str             字符串
+	 * @param toBeRemovedChar 需移除字符
 	 * @return 新的字符串
 	 */
-	public static String remove(@NonNull String str, char removeChar) {
+	public static String remove(@NonNull String str, char toBeRemovedChar) {
 		Assert.notNull(str, "'s' must not be null");
 
-		boolean needToChange = false;
-		final StringBuilder sb = new StringBuilder((int)(str.length() * 0.8));
+		final char[] result = new char[str.length()];
+		int n = 0;
 
 		char[] chars = toCharArray(str);
 		for (char c : chars) {
-			if (c == removeChar) {
-				needToChange = true;
-			} else {
-				sb.append(c);
+			if (c != toBeRemovedChar) {
+				result[n++] = c;
 			}
 		}
 
-		return (needToChange ? sb.toString() : str);
+		return (n > 0 ? new String(result, 0, n) : str);
 	}
 
 	/**
