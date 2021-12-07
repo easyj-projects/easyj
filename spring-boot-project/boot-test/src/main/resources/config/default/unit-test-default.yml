@@ -1,4 +1,4 @@
 easyj.global.in-unit-test: true
 
 logging.level:
-  org.springframework.web.client.RestTemplate: DEBUG #为了在运行单元测试时，能够显示出发送请求的日志
+  org.springframework.web.client.RestTemplate: DEBUG #为了在运行单元测试时，能够显示出发送请求的日志，将RestTemplate的日志级别调整为DEBUG

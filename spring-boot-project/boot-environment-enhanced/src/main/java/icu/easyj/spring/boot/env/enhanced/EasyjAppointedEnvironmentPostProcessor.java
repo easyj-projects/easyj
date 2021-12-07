@@ -92,6 +92,16 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			"config/${project}/default/",
 			// 区域项目默认配置
 			"config/${area}/${project}/default/",
+
+			// 标准环境配置
+			"config/standard-${standardEnv}/",
+			// 区域标准环境配置
+			"config/${area}/standard-${standardEnv}/",
+			// 项目标准环境配置
+			"config/${project}/standard-${standardEnv}/",
+			// 区域项目标准环境配置
+			"config/${area}/${project}/standard-${standardEnv}/",
+
 			// 环境配置
 			"config/${env}/",
 			// 区域环境配置
@@ -148,6 +158,23 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			// 如果环境为'default'，则设置为null
 			env = null;
 		}
+		// 标准环境代码
+		String standardEnv = environment.getProperty(EnvironmentUtils.STANDARD_ENV_KEY);
+		if (StringUtils.isBlank(standardEnv) && env != null) {
+			// 获取标准环境列表
+			List<String> standardEnvList = EnvironmentUtils.getPropertyList(environment, EnvironmentUtils.STANDARD_ENV_LIST_KEY);
+			if (standardEnvList.isEmpty()) {
+				standardEnvList.add("prod"); // 生产环境
+				standardEnvList.add("sandbox"); // 沙箱环境
+				standardEnvList.add("test"); // 测试环境
+				standardEnvList.add("dev"); // 开发环境
+			}
+			// 获取默认标准环境（如果未配置，则取标准列表中的第一个作为默认值）
+			String defaultStandardEnv = environment.getProperty(EnvironmentUtils.DEFAULT_STANDARD_ENV_KEY);
+
+			// 环境代码 转换为 标准环境代码
+			standardEnv = EnvironmentUtils.convertToStandard(standardEnvList, env, defaultStandardEnv);
+		}
 
 		//endregion
 
@@ -174,6 +201,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			if (dirPath.contains("${env}")) {
 				if (StringUtils.isNotEmpty(env)) {
 					dirPath = dirPath.replace("${env}", env);
+				} else {
+					continue;
+				}
+			}
+			if (dirPath.contains("${standardEnv}")) {
+				if (StringUtils.isNotEmpty(standardEnv)) {
+					dirPath = dirPath.replace("${standardEnv}", standardEnv);
 				} else {
 					continue;
 				}
