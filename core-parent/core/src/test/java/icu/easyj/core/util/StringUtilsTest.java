@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.SystemUtil;
 import icu.easyj.test.util.TestUtils;
@@ -139,16 +140,56 @@ public class StringUtilsTest {
 		Assertions.assertEquals("?,?", StringUtils.join('?', ',', 2));
 		Assertions.assertEquals("?,?,?", StringUtils.join('?', ',', 3));
 
-		// join2
+		// joinWithSpace
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			StringUtils.join2('?', ',', -1);
+			StringUtils.joinWithSpace('?', ',', -1);
 		});
-		Assertions.assertEquals("", StringUtils.join2('?', ',', 0));
-		Assertions.assertEquals("?", StringUtils.join2('?', ',', 1));
-		Assertions.assertEquals("?, ?", StringUtils.join2('?', ',', 2));
-		Assertions.assertEquals("?, ?, ?", StringUtils.join2('?', ',', 3));
+		Assertions.assertEquals("", StringUtils.joinWithSpace('?', ',', 0));
+		Assertions.assertEquals("?", StringUtils.joinWithSpace('?', ',', 1));
+		Assertions.assertEquals("?, ?", StringUtils.joinWithSpace('?', ',', 2));
+		Assertions.assertEquals("?, ?, ?", StringUtils.joinWithSpace('?', ',', 3));
 	}
 
+
+	@Test
+	public void testRemove() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.remove(null, '/');
+		});
+		Assertions.assertEquals(" ", StringUtils.remove("/ /", '/'));
+		Assertions.assertEquals("aabbcc ", StringUtils.remove("//aabbcc/ /", '/'));
+		Assertions.assertEquals(" aabbcc", StringUtils.remove("/ /aabbcc", '/'));
+		Assertions.assertEquals(" aabbcc  ", StringUtils.remove(" aabbcc / /", '/'));
+
+		Assertions.assertEquals(" aabbcc  ", " aabbcc / /".replace("/", ""));
+		Assertions.assertEquals(" aabbcc  ", " aabbcc / /".replaceAll("/", ""));
+
+		// 比较 StringUtils.remove 方法 和 String.replace方法的性能
+		{
+			TestUtils.performanceTest(1, 50 * 10000, () -> {
+				StringUtils.remove(RandomUtil.randomString(20), 'a');
+				return "remove";
+			}, () -> {
+				RandomUtil.randomString(20).replace("a", "");
+				return "replace";
+			}, () -> {
+				RandomUtil.randomString(20).replaceAll("a", "");
+				return "replaceAll";
+			});
+		}
+		{
+			TestUtils.performanceTest(5, 50 * 10000, () -> {
+				StringUtils.remove(RandomUtil.randomString(20), 'a');
+				return "remove";
+			}, () -> {
+				RandomUtil.randomString(20).replace("a", "");
+				return "replace";
+			}, () -> {
+				RandomUtil.randomString(20).replaceAll("a", "");
+				return "replaceAll";
+			});
+		}
+	}
 
 	@Test
 	public void testTrim() {
