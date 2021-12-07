@@ -187,9 +187,9 @@ public abstract class StringUtils {
 	/**
 	 * 判断字符数组是否包含目标字符
 	 *
-	 * @param chars
-	 * @param targetChar
-	 * @return
+	 * @param chars      字符数组
+	 * @param targetChar 目标字符
+	 * @return true=包含 | false=不包含
 	 */
 	public static boolean contains(char[] chars, char targetChar) {
 		if (chars == null || chars.length == 0) {
