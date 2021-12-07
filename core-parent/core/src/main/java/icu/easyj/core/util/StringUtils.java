@@ -364,6 +364,31 @@ public abstract class StringUtils {
 	//region 字符串处理
 
 	/**
+	 * 从字符串中移除对应的字符
+	 *
+	 * @param str        字符串
+	 * @param removeChar 需移除字符
+	 * @return 新的字符串
+	 */
+	public static String remove(@NonNull String str, char removeChar) {
+		Assert.notNull(str, "'s' must not be null");
+
+		boolean needToChange = false;
+		final StringBuilder sb = new StringBuilder((int)(str.length() * 0.8));
+
+		char[] chars = toCharArray(str);
+		for (char c : chars) {
+			if (c == removeChar) {
+				needToChange = true;
+			} else {
+				sb.append(c);
+			}
+		}
+
+		return (needToChange ? sb.toString() : str);
+	}
+
+	/**
 	 * 裁剪掉两边的某个字符或空字符
 	 *
 	 * @param str     字符串
@@ -470,7 +495,7 @@ public abstract class StringUtils {
 	 * @param n         源字符数量
 	 * @return 生成的字符串
 	 * @throws IllegalArgumentException n小于0
-	 * @see #join2(char, char, int) 带空格的方法
+	 * @see #joinWithSpace(char, char, int) 带空格的方法
 	 */
 	public static String join(char c, char separator, int n) {
 		Assert.isTrue(n >= 0, "n必须大于等于0");
@@ -506,7 +531,7 @@ public abstract class StringUtils {
 	 * @throws IllegalArgumentException n小于0
 	 * @see #join(char, char, int) 不带空格的方法
 	 */
-	public static String join2(char c, char separator, int n) {
+	public static String joinWithSpace(char c, char separator, int n) {
 		Assert.isTrue(n >= 0, "n必须大于等于0");
 
 		if (n == 0) {

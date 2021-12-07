@@ -139,16 +139,55 @@ public class StringUtilsTest {
 		Assertions.assertEquals("?,?", StringUtils.join('?', ',', 2));
 		Assertions.assertEquals("?,?,?", StringUtils.join('?', ',', 3));
 
-		// join2
+		// joinWithSpace
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			StringUtils.join2('?', ',', -1);
+			StringUtils.joinWithSpace('?', ',', -1);
 		});
-		Assertions.assertEquals("", StringUtils.join2('?', ',', 0));
-		Assertions.assertEquals("?", StringUtils.join2('?', ',', 1));
-		Assertions.assertEquals("?, ?", StringUtils.join2('?', ',', 2));
-		Assertions.assertEquals("?, ?, ?", StringUtils.join2('?', ',', 3));
+		Assertions.assertEquals("", StringUtils.joinWithSpace('?', ',', 0));
+		Assertions.assertEquals("?", StringUtils.joinWithSpace('?', ',', 1));
+		Assertions.assertEquals("?, ?", StringUtils.joinWithSpace('?', ',', 2));
+		Assertions.assertEquals("?, ?, ?", StringUtils.joinWithSpace('?', ',', 3));
 	}
 
+
+	@Test
+	public void testRemove() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			StringUtils.remove(null, '/');
+		});
+		Assertions.assertEquals(" ", StringUtils.remove("/ /", '/'));
+		Assertions.assertEquals("aabbcc ", StringUtils.remove("//aabbcc/ /", '/'));
+		Assertions.assertEquals(" aabbcc", StringUtils.remove("/ /aabbcc", '/'));
+		Assertions.assertEquals(" aabbcc  ", StringUtils.remove(" aabbcc / /", '/'));
+
+		Assertions.assertEquals(" aabbcc  ", " aabbcc / /".replace("/", ""));
+		Assertions.assertEquals(" aabbcc  ", " aabbcc / /".replaceAll("/", ""));
+
+		// 比较 StringUtils.remove 方法 和 String.replace方法的性能
+		String str = "aasdflaskdfjlkajsd23423.4234//dsfsadf..sdaf.mnsdkl花木成畦手自栽jLjlsdajflkja/fn";
+		TestUtils.performanceTest(1, 50 * 10000, () -> {
+			StringUtils.remove(str, '/');
+			return "remove";
+		}, () -> {
+			str.replace("/", "");
+			return "replace";
+		}, () -> {
+			str.replaceAll("/", "");
+			return "replaceAll";
+		});
+
+		String str2 = "aasdflaskdfjlkajsd23423.4234dsfsadf..sdaf.mnsdkl花木成畦手自栽jLjlsdajflkjafn";
+		TestUtils.performanceTest(5, 50 * 10000, () -> {
+			StringUtils.remove(str2, '/');
+			return "remove";
+		}, () -> {
+			str2.replace("/", "");
+			return "replace";
+		}, () -> {
+			str2.replaceAll("/", "");
+			return "replaceAll";
+		});
+	}
 
 	@Test
 	public void testTrim() {

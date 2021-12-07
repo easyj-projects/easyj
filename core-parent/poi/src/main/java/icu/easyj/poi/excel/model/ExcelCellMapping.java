@@ -463,7 +463,7 @@ public class ExcelCellMapping implements Serializable {
 		short colorIndexRet = 0;
 
 		if (color.contains("#")) {
-			color = color.replace("#", "");
+			color = StringUtils.remove(color, '#');
 		}
 
 		if (color.length() == 3) {
