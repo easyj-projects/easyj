@@ -27,6 +27,7 @@ import java.util.Properties;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
+import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
@@ -56,6 +57,9 @@ public abstract class EnvironmentUtils {
 	public static final String AREA_KEY = PREFIX + ".area";
 	public static final String PROJECT_KEY = PREFIX + ".project";
 	public static final String ENV_KEY = PREFIX + ".env";
+	public static final String STANDARD_ENV_KEY = PREFIX + ".standard-env";
+	public static final String STANDARD_ENV_LIST_KEY = PREFIX + ".standard-env-list";
+	public static final String DEFAULT_STANDARD_ENV_KEY = PREFIX + ".default-standard-env";
 
 
 	//region 默认配置源 start
@@ -349,6 +353,50 @@ public abstract class EnvironmentUtils {
 	}
 
 	/**
+	 * 转换为标准环境代码
+	 *
+	 * @param standardEnvList    标准环境代码数组
+	 * @param env                环境代码
+	 * @param defaultStandardEnv 默认的标准环境代码（如果在数组中没有匹配到，则返回该标准代码）
+	 * @return 标准环境代码
+	 */
+	public static String convertToStandard(List<String> standardEnvList, String env, String defaultStandardEnv) {
+		for (String standardEnv : standardEnvList) {
+			if (env.startsWith(standardEnv)) {
+				return standardEnv;
+			}
+		}
+		if (StringUtils.isNotBlank(defaultStandardEnv)) {
+			return defaultStandardEnv;
+		} else if (!standardEnvList.isEmpty()) {
+			return standardEnvList.get(0);
+		} else {
+			return EnvironmentType.PROD.name().toLowerCase(); // 默认为生产环境
+		}
+	}
+
+	/**
+	 * 将单个配置转换为列表（用逗号分隔）
+	 *
+	 * @param property 配置值
+	 * @return 配置列表
+	 */
+	public static List<String> convertToList(String property) {
+		List<String> propertyList = new ArrayList<>();
+		if (property.contains(StrPool.COMMA)) {
+			String[] propertyArr = property.split(StrPool.COMMA);
+			for (String pro : propertyArr) {
+				if (StringUtils.isNotBlank(pro)) {
+					propertyList.add(pro.trim());
+				}
+			}
+		} else {
+			propertyList.add(property);
+		}
+		return propertyList;
+	}
+
+	/**
 	 * 获取配置列表
 	 *
 	 * @param environment  环境
@@ -357,18 +405,22 @@ public abstract class EnvironmentUtils {
 	 */
 	@NonNull
 	public static List<String> getPropertyList(@NonNull ConfigurableEnvironment environment, String propertyName) {
-		List<String> propertyList = new ArrayList<>();
 		String property = environment.getProperty(propertyName);
 		if (property != null) {
-			propertyList.add(property);
+			return convertToList(property);
 		} else {
+			List<String> propertyList = new ArrayList<>();
+
 			int i = 0;
 			while ((property = environment.getProperty(propertyName + "[" + i + "]")) != null) {
-				propertyList.add(property);
+				if (StringUtils.isNotBlank(property)) {
+					propertyList.add(property);
+				}
 				i++;
 			}
+
+			return propertyList;
 		}
-		return propertyList;
 	}
 
 	/**
@@ -380,31 +432,22 @@ public abstract class EnvironmentUtils {
 	 */
 	@NonNull
 	public static List<String> getPropertyList(@NonNull PropertySource<?> propertySource, String propertyName) {
-		List<String> propertyList = new ArrayList<>();
 		String property = getPropertyStr(propertySource, propertyName);
 		if (property != null) {
-			if (property.contains(StrPool.COMMA)) {
-				String[] propertyArr = property.split(StrPool.COMMA);
-				for (String pro : propertyArr) {
-					if (StringUtils.isNotBlank(pro)) {
-						propertyList.add(pro.trim());
-					}
-				}
-			} else {
-				if (StringUtils.isNotBlank(property)) {
-					propertyList.add(property.trim());
-				}
-			}
+			return convertToList(property);
 		} else {
+			List<String> propertyList = new ArrayList<>();
+
 			int i = 0;
 			while ((property = getPropertyStr(propertySource, propertyName + "[" + i + "]")) != null) {
 				if (StringUtils.isNotBlank(property)) {
-					propertyList.add(property.trim());
+					propertyList.add(property);
 				}
 				i++;
 			}
+
+			return propertyList;
 		}
-		return propertyList;
 	}
 
 	@Nullable
