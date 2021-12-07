@@ -7,6 +7,27 @@
 	],
 	"properties": [
 		{
+			"name": "easyj.global.standard-env",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "手动配置标准环境代码.",
+			"defaultValue": "prod"
+		},
+		{
+			"name": "easyj.global.standard-env-list",
+			"type": "java.util.List<java.lang.String>",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "标准环境代码列表，用于自动根据环境代码匹配标准环境代码.",
+			"defaultValue": "prod,sandbox,test,dev"
+		},
+		{
+			"name": "easyj.global.default-standard-env",
+			"type": "java.lang.String",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
+			"description": "默认的标准环境代码，当没有匹配到时，使用该值作为标准环境代码.",
+			"defaultValue": "${easyj.global.standard-env-list[0]}"
+		},
+		{
 			"name": "easyj.config.activate.on-class",
 			"type": "java.util.List<java.lang.Class>",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnClassConditionPropertySourceFilter",
