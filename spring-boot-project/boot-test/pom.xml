@@ -116,6 +116,13 @@
 			<artifactId>javax.annotation-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- 引用依赖：Provided dependencies。（注：仅参与编译，无需被继承的依赖。） -->
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
