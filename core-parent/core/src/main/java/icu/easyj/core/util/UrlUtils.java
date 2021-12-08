@@ -121,7 +121,7 @@ public abstract class UrlUtils {
 
 	//region URL参数编码解码
 
-	//region encode
+	////region encode
 
 	/**
 	 * 字符串进行URL编码。<br>
@@ -201,10 +201,10 @@ public abstract class UrlUtils {
 		return encode(s, StandardCharsets.UTF_8);
 	}
 
-	//endregion
+	////endregion
 
 
-	//region decode
+	////region decode
 
 	/**
 	 * 字符串进行URL解码.<br>
@@ -285,7 +285,7 @@ public abstract class UrlUtils {
 		return decode(s, StandardCharsets.UTF_8);
 	}
 
-	//endregion
+	////endregion
 
 	//endregion
 

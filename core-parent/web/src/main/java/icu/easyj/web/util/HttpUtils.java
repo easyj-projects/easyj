@@ -279,7 +279,7 @@ public abstract class HttpUtils {
 		return isNoCacheRequest(getRequest());
 	}
 
-	//region 来自内部服务器的请求相关 start
+	////region 来自内部服务器的请求相关 start
 
 	private static final ThreadLocal<Boolean> INTERNAL_REQUEST_FLAG = new ThreadLocal<>();
 
@@ -306,7 +306,7 @@ public abstract class HttpUtils {
 		INTERNAL_REQUEST_FLAG.remove();
 	}
 
-	//endregion 来自内部服务器的请求相关 end
+	////endregion 来自内部服务器的请求相关 end
 
 	//endregion 校验请求信息 end
 

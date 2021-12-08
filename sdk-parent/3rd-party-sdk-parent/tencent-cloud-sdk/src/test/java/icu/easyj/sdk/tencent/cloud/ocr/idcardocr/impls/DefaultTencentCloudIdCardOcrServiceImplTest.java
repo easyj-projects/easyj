@@ -197,7 +197,7 @@ public class DefaultTencentCloudIdCardOcrServiceImplTest {
 
 		IOcrTemplate ocrTemplate = new WrapperOcrTemplate(new TencentEasyjIdCardOcrTemplateImpl(service));
 
-		//region case5.1: 正面
+		////region case5.1: 正面
 		{
 			IdCardOcrResponse response = ocrTemplate.idCardOcr(frontIdCardBase64, IdCardOcrAdvanced.ALL_ARRAY);
 			response.setIdCardBase64(null);
@@ -205,9 +205,9 @@ public class DefaultTencentCloudIdCardOcrServiceImplTest {
 			response.setPortraitBase64(null);
 			System.out.println("正面照响应（EasyJ）：\r\n" + StringUtils.toString(response));
 		}
-		//endregion
+		////endregion
 
-		//region case5.2: 反面
+		////region case5.2: 反面
 		{
 			IdCardOcrResponse response = ocrTemplate.idCardOcr(backIdCardBase64, IdCardOcrAdvanced.ALL_ARRAY);
 			// base64不打印在日志中
@@ -216,9 +216,9 @@ public class DefaultTencentCloudIdCardOcrServiceImplTest {
 			response.setPortraitBase64(null);
 			System.out.println("反面照响应（EasyJ）：\r\n" + StringUtils.toString(response));
 		}
-		//endregion
+		////endregion
 
-		//region case5.3: 正反面一起
+		////region case5.3: 正反面一起
 		{
 			IdCardOcrResponse response = ocrTemplate.idCardOcr(frontIdCardBase64, backIdCardBase64, IdCardOcrAdvanced.ALL_ARRAY);// base64不打印在日志中
 			Assertions.assertEquals(CardSide.BOTH, response.getCardSide());
@@ -259,7 +259,7 @@ public class DefaultTencentCloudIdCardOcrServiceImplTest {
 			response2.setPortraitBase64(null);
 			System.out.println("正反面照一起的响应（EasyJ）：\r\n" + StringUtils.toString(response2));
 		}
-		//endregion
+		////endregion
 
 		//endregion
 	}

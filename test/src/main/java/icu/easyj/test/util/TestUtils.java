@@ -33,7 +33,7 @@ public abstract class TestUtils {
 
 	//region 性能测试
 
-	//region Private
+	////region Private
 
 	/**
 	 * 运行单个函数的性能测试
@@ -98,7 +98,7 @@ public abstract class TestUtils {
 		return cost;
 	}
 
-	//endregion Private end
+	////endregion Private end
 
 
 	/**

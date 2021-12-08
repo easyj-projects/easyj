@@ -366,7 +366,7 @@ public class StringUtilsTest {
 		assertFalse(CycleDependency.toStringTriggered);
 	}
 
-	//region 辅助测试的类、注解、枚举等
+	////region 辅助测试的类、注解、枚举等
 
 	enum TestEnum {
 		AAA
@@ -450,7 +450,7 @@ public class StringUtilsTest {
 		}
 	}
 
-	//endregion
+	////endregion
 
 	//endregion
 }

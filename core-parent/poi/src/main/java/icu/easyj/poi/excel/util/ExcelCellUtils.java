@@ -311,7 +311,8 @@ public abstract class ExcelCellUtils {
 				if (StringUtils.isNotBlank(cellMapping.getFormat())) {
 					cellStyle.setDataFormat(book.createDataFormat().getFormat(cellMapping.getFormat()));
 				}
-				//// 创建样式：位置 ////
+
+				//region 创建样式：位置
 				// 创建样式：水平位置
 				if (StringUtils.isNotBlank(cellMapping.getAlign())) {
 					switch (cellMapping.getAlign()) {
@@ -346,6 +347,8 @@ public abstract class ExcelCellUtils {
 							break;
 					}
 				}
+				//endregion
+
 				// 是否允许自动换行
 				cellStyle.setWrapText(cellMapping.isWrapText());
 				// 创建样式：背景颜色
