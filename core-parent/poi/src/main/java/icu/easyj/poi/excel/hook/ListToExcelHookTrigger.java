@@ -17,6 +17,7 @@ package icu.easyj.poi.excel.hook;
 
 import java.util.List;
 
+import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import icu.easyj.poi.excel.util.ExcelContext;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -36,6 +37,9 @@ public abstract class ListToExcelHookTrigger {
 	 */
 	public static void onBeforeCreateHeadRow(Sheet sheet, ExcelMapping mapping) {
 		List<IListToExcelHook> hookList = mapping.getToExcelHookList();
+		if (CollectionUtils.isEmpty(hookList)) {
+			return;
+		}
 		for (IListToExcelHook hook : hookList) {
 			hook.onBeforeCreateHeadRow(ExcelContext.get(), sheet, mapping);
 		}
@@ -49,6 +53,9 @@ public abstract class ListToExcelHookTrigger {
 	 */
 	public static void onAfterCreateDataRows(Sheet sheet, ExcelMapping mapping) {
 		List<IListToExcelHook> hookList = mapping.getToExcelHookList();
+		if (CollectionUtils.isEmpty(hookList)) {
+			return;
+		}
 		for (IListToExcelHook hook : hookList) {
 			hook.onAfterCreateDataRows(ExcelContext.get(), sheet, mapping);
 		}
