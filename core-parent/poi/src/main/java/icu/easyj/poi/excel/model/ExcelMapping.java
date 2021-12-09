@@ -16,12 +16,16 @@
 package icu.easyj.poi.excel.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
+import icu.easyj.poi.excel.hook.IListToExcelHook;
 
 /**
  * model中的属性和excel表格中的列的映射关系
@@ -45,7 +49,7 @@ public class ExcelMapping implements Serializable {
 	private int defaultWidth = -1; // 默认列宽
 	private boolean widthAutoSize = false; // 列宽自适应（警告：此功能可能存在性能问题，数据较多时谨慎使用。）
 
-	private boolean needHeadRow = true; // 是否需要头名称行
+	private boolean needHeadRow = true; // 是否需要头行
 	private boolean freezeHeadRow = true; // 是否冻结头行，默认：true=冻结
 
 	private boolean needNumberCell = true; // 是否需要序号列
@@ -60,6 +64,16 @@ public class ExcelMapping implements Serializable {
 	 * 列信息列表
 	 */
 	private List<ExcelCellMapping> cellMappingList;
+
+	/**
+	 * 勾子类型列表
+	 */
+	private Class<? extends IListToExcelHook>[] toExcelHookClasses;
+
+	/**
+	 * 勾子列表
+	 */
+	private List<IListToExcelHook> toExcelHookList;
 
 	//endregion
 
@@ -193,6 +207,28 @@ public class ExcelMapping implements Serializable {
 		this.cellMappingList = cellMappingList;
 	}
 
+	public Class<? extends IListToExcelHook>[] getToExcelHookClasses() {
+		return toExcelHookClasses;
+	}
+
+	public ExcelMapping setToExcelHookClasses(Class<? extends IListToExcelHook>[] toExcelHookClasses) {
+		this.toExcelHookClasses = toExcelHookClasses;
+		return this;
+	}
+
+	public List<IListToExcelHook> getToExcelHookList() {
+		if (toExcelHookList == null && ArrayUtils.isNotEmpty(toExcelHookClasses)) {
+			List<IListToExcelHook> list = new ArrayList<>();
+
+			for (Class<? extends IListToExcelHook> clazz : toExcelHookClasses) {
+				list.add(ReflectionUtils.getSingleton(clazz));
+			}
+
+			toExcelHookList = list;
+		}
+		return toExcelHookList;
+	}
+
 	//endregion
 
 
@@ -219,13 +255,14 @@ public class ExcelMapping implements Serializable {
 				mapping.setNeedBorder(anno.needBorder()); // 是否需要边框
 				mapping.setDefaultWidth(anno.defaultWidth()); // 默认列宽
 				mapping.setWidthAutoSize(anno.widthAutoSize()); // 列宽自适应
-				mapping.setNeedHeadRow(anno.needHeadRow()); // 是否需要头名称行
+				mapping.setNeedHeadRow(anno.needHeadRow()); // 是否需要头行
 				mapping.setFreezeHeadRow(anno.needHeadRow() && anno.freezeHeadRow()); // 是否冻结头行，如果没有头行，则肯定不冻结
 				mapping.setNeedNumberCell(anno.needNumberCell()); // 是否需要序号列
 				mapping.setNumberCellHeadName(anno.numberCellHeadName()); // 序号列的列头
 				mapping.setFreezeNumberCell(anno.needNumberCell() && anno.freezeNumberCell()); // 是否冻结序号列，如果没有序号列，则肯定不冻结
 				mapping.setFreezeDataCells(anno.freezeDataCells()); // 冻结的数据列的数量，不包含序号列
 				mapping.setNeedFilter(anno.needFilter()); // 是否需要列筛选功能
+				mapping.setToExcelHookClasses(anno.toExcelHookClasses()); // 勾子列表
 			}
 			// 读取列信息列表
 			List<ExcelCellMapping> cellMappingList = ExcelCellMapping.getCellMappingList(clazz, mapping);

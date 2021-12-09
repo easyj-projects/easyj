@@ -50,7 +50,7 @@ public abstract class ExcelRowUtils {
 	 *
 	 * @param row           行
 	 * @param hasNumberCell 是否有序号列
-	 * @param headRow       标题行
+	 * @param headRow       头行
 	 * @param clazz         数据类
 	 * @param mapping       表格映射
 	 * @param <T>           数据类型
@@ -117,7 +117,7 @@ public abstract class ExcelRowUtils {
 	/**
 	 * 根据头行获取当前列号
 	 *
-	 * @param headRow     标题行
+	 * @param headRow     头行
 	 * @param cellNum     列号
 	 * @param cellMapping 列映射
 	 * @return cellNum 列号
@@ -154,7 +154,7 @@ public abstract class ExcelRowUtils {
 	 *
 	 * @param row     行
 	 * @param mapping 表格映射
-	 * @return isHeadRow 是否为标题行
+	 * @return isHeadRow 是否为头行
 	 */
 	public static boolean isHeadRow(Row row, ExcelMapping mapping) {
 		int cellStart = row.getFirstCellNum();
@@ -240,7 +240,7 @@ public abstract class ExcelRowUtils {
 		}
 
 		// 创建行
-		Row row = sheet.createRow(0);
+		Row row = sheet.createRow(sheet.getLastRowNum() + 1);
 		int cellNum = 0; // 标记当前列号
 
 		// 创建序号列头
@@ -296,7 +296,7 @@ public abstract class ExcelRowUtils {
 	 * @param mapping  表格映射
 	 */
 	public static void createDataRows(Sheet sheet, List<?> dataList, ExcelMapping mapping) {
-		int rowNum = (mapping.isNeedHeadRow() ? 1 : 0); // 开始行号
+		int rowNum = sheet.getLastRowNum() + 1; // 开始行号
 		int cellNum; // 当前列号
 		int number = 1; // 序号
 

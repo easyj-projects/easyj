@@ -17,13 +17,18 @@ package icu.easyj.poi.excel.util.model;
 
 import java.util.Date;
 
+import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
+import icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig;
+import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 
 /**
  * 测试类
  *
  * @author wangliang181230
  */
+@Excel(toExcelHookClasses = {TestListToExcelHook.class})
+@ExcelCustomFirstRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top")
 public class TestClass {
 
 	@ExcelCell(headName = "姓名", cellNum = 0)

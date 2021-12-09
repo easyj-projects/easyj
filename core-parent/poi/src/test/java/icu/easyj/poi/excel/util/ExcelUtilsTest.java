@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import icu.easyj.core.util.DateUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.util.model.TestClass;
 import icu.easyj.web.poi.excel.ExcelExportUtils;
@@ -45,7 +46,7 @@ public class ExcelUtilsTest {
 		List<TestClass> list2;
 		try (Workbook workbook = ExcelUtils.toExcel(list, TestClass.class)) {
 			// 如果想看一下导出的excel文件是什么样的，可以放开此注释。执行完测试方法后，去D盘根目录下，找到文件即可。
-			ExcelExportUtils.saveToFile(workbook, "D:\\ExcelUtilsTest_" + System.currentTimeMillis() + ".xlsx");
+			ExcelExportUtils.saveToFile(workbook, "D:\\ExcelUtilsTest_" + DateUtils.toSecondsUnsigned(new Date()) + ".xlsx");
 
 			// excel to list
 			list2 = ExcelUtils.toList(workbook, TestClass.class, null);
