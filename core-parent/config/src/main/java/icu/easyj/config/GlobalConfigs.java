@@ -178,7 +178,7 @@ public class GlobalConfigs {
 	}
 
 
-	//region 环境相关 start
+	////region 环境相关 start
 
 	/**
 	 * 获取环境代码
@@ -279,10 +279,10 @@ public class GlobalConfigs {
 		return !isDevEnv();
 	}
 
-	//endregion 环境相关 end
+	////endregion 环境相关 end
 
 
-	//region 运行模式 start
+	////region 运行模式 start
 
 	/**
 	 * 获取运营模式
@@ -320,10 +320,10 @@ public class GlobalConfigs {
 		return getInstance().inUnitTest;
 	}
 
-	//endregion 运行模式 end
+	////endregion 运行模式 end
 
 
-	//region 其他全局配置 start
+	////region 其他全局配置 start
 
 	/**
 	 * 获取全局配置Map
@@ -361,7 +361,7 @@ public class GlobalConfigs {
 		return value;
 	}
 
-	//endregion 其他全局配置 end
+	////endregion 其他全局配置 end
 
 	//endregion Getter end
 

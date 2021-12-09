@@ -51,7 +51,7 @@ public interface ICrypto extends Serializable {
 
 	//region Encrypt
 
-	//region 加密为byte[] start
+	////region 加密为byte[] start
 
 	/**
 	 * 加密
@@ -105,10 +105,10 @@ public interface ICrypto extends Serializable {
 		return encrypt(IoUtil.readBytes(data));
 	}
 
-	//endregion 加密为byte[] end
+	////endregion 加密为byte[] end
 
 
-	//region 加密为Hex start
+	////region 加密为Hex start
 
 	/**
 	 * 编码为Hex字符串
@@ -162,10 +162,10 @@ public interface ICrypto extends Serializable {
 		return HexUtil.encodeHexStr(encrypt(data));
 	}
 
-	//endregion 加密为Hex end
+	////endregion 加密为Hex end
 
 
-	//region 加密为Base64 start
+	////region 加密为Base64 start
 
 	/**
 	 * 编码为Base64字符串
@@ -219,10 +219,10 @@ public interface ICrypto extends Serializable {
 		return Base64.encode(encrypt(data));
 	}
 
-	//endregion 加密为Base64 end
+	////endregion 加密为Base64 end
 
 
-	//region 分组加密 start
+	////region 分组加密 start
 
 	/**
 	 * 分组加密
@@ -276,14 +276,14 @@ public interface ICrypto extends Serializable {
 		return BCD.bcdToStr(encrypt(data));
 	}
 
-	//endregion 分组加密 end
+	////endregion 分组加密 end
 
 	//endregion
 
 
 	//region Decrypt
 
-	//region 解密为byte[] start
+	////region 解密为byte[] start
 
 	/**
 	 * 解密
@@ -315,10 +315,10 @@ public interface ICrypto extends Serializable {
 		return decrypt(IoUtil.readBytes(data));
 	}
 
-	//endregion 解密为byte[] end
+	////endregion 解密为byte[] end
 
 
-	//region 解密为String start
+	////region 解密为String start
 
 	/**
 	 * 解密为字符串
@@ -362,10 +362,10 @@ public interface ICrypto extends Serializable {
 		return decryptStr(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
-	//endregion 解密为String end
+	////endregion 解密为String end
 
 
-	//region 解密 Hex（16进制）或Base64 为String start
+	////region 解密 Hex（16进制）或Base64 为String start
 
 	/**
 	 * 解密为字符串，密文需为Hex（16进制）或Base64字符串
@@ -388,10 +388,10 @@ public interface ICrypto extends Serializable {
 		return decryptStr(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
-	//endregion
+	////endregion
 
 
-	//region 解密Base64为String start
+	////region 解密Base64为String start
 
 	/**
 	 * 解密Base64表示的字符串
@@ -414,10 +414,10 @@ public interface ICrypto extends Serializable {
 		return decryptBase64(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
-	//endregion 解密Base64为String end
+	////endregion 解密Base64为String end
 
 
-	//region 解密Hex为String start
+	////region 解密Hex为String start
 
 	/**
 	 * 解密Hex（16进制）
@@ -440,10 +440,10 @@ public interface ICrypto extends Serializable {
 		return decryptHex(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
-	//endregion 解密Hex为String end
+	////endregion 解密Hex为String end
 
 
-	//region 解密BCD start
+	////region 解密BCD start
 
 	/**
 	 * 解密BCD
@@ -489,7 +489,7 @@ public interface ICrypto extends Serializable {
 		return decryptStrFromBcd(data, CharsetUtil.CHARSET_UTF_8);
 	}
 
-	//endregion 解密BCD end
+	////endregion 解密BCD end
 
 	//endregion
 }

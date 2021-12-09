@@ -280,7 +280,7 @@ public abstract class DateUtils {
 	}
 
 
-	//region 格式化1
+	////region 格式化1
 
 	/**
 	 * 格式化为：yyyy-MM
@@ -332,10 +332,10 @@ public abstract class DateUtils {
 		return format(DateFormatType.SSS, date);
 	}
 
-	//endregion 格式化1 end
+	////endregion 格式化1 end
 
 
-	//region 格式化2
+	////region 格式化2
 
 	/**
 	 * 格式化为：yyyy/MM
@@ -387,10 +387,10 @@ public abstract class DateUtils {
 		return format(DateFormatType.SSS2, date);
 	}
 
-	//endregion 格式化2 end
+	////endregion 格式化2 end
 
 
-	//region 格式化3
+	////region 格式化3
 
 	/**
 	 * 格式化为：yyyy.MM
@@ -412,10 +412,10 @@ public abstract class DateUtils {
 		return format(DateFormatType.DD3, date);
 	}
 
-	//endregion 格式化3 end
+	////endregion 格式化3 end
 
 
-	//region 格式化-UNSIGNED
+	////region 格式化-UNSIGNED
 
 	/**
 	 * 格式化为：yyyyMM
@@ -467,7 +467,7 @@ public abstract class DateUtils {
 		return format(DateFormatType.SSS_UNSIGNED, date);
 	}
 
-	//endregion 格式化-UNSIGNED end
+	////endregion 格式化-UNSIGNED end
 
 	//endregion
 

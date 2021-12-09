@@ -138,7 +138,7 @@ public interface IIdCardOcrTemplate {
 		// 设置为正反面都有
 		doubleResponse.setCardSide(CardSide.BOTH);
 
-		//region 将反面信息合并到双面响应中
+		////region 将反面信息合并到双面响应中
 		doubleResponse.setAuthority(backResponse.getAuthority());
 		doubleResponse.setValidDateStart(backResponse.getValidDateStart());
 		doubleResponse.setValidDateEnd(backResponse.getValidDateEnd());
@@ -146,7 +146,7 @@ public interface IIdCardOcrTemplate {
 		doubleResponse.setBackIdCardBase64(backResponse.getIdCardBase64());
 		// 告警信息
 		doubleResponse.getWarns().addAll(backResponse.getWarns());
-		//endregion
+		////endregion
 
 		//endregion 合并 end
 

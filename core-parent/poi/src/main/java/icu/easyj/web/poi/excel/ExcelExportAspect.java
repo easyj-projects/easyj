@@ -24,6 +24,7 @@ import icu.easyj.core.constant.FileTypeConstants;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.converter.ExcelConverterUtils;
+import icu.easyj.poi.excel.util.ExcelContext;
 import icu.easyj.web.poi.excel.exception.ExcelExportException;
 import icu.easyj.web.util.HttpUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -78,58 +79,65 @@ public class ExcelExportAspect {
 	 */
 	@Around("pointcutExcelExport()")
 	public Object doQueryAndExportExcel(ProceedingJoinPoint jp) throws Throwable {
-		Object result = jp.proceed();
+		try {
+			Object result = jp.proceed();
 
-		if (HttpUtils.isDoExportRequest()) {
-			MethodSignature ms = (MethodSignature)jp.getSignature();
-			Method method = ms.getMethod();
+			if (HttpUtils.isDoExportRequest()) {
+				MethodSignature ms = (MethodSignature)jp.getSignature();
+				Method method = ms.getMethod();
 
-			ExcelExport annotation = method.getAnnotation(ExcelExport.class);
+				ExcelExport annotation = method.getAnnotation(ExcelExport.class);
 
-			// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
-			if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
-				String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
-				if (StringUtils.isNotEmpty(listFieldName)) {
-					try {
-						result = ReflectionUtils.getFieldValue(result, listFieldName);
-					} catch (NoSuchFieldException e) {
-						String errorMsg = "在返回数据的类型中，未找到属性：" + listFieldName + "，返回数据类型为：" + result.getClass().getName();
-						throw new ExcelExportException(errorMsg, "NO_SUCH_FIELD");
+				// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
+				if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
+					String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
+					if (StringUtils.isNotEmpty(listFieldName)) {
+						try {
+							result = ReflectionUtils.getFieldValue(result, listFieldName);
+						} catch (NoSuchFieldException e) {
+							String errorMsg = "在返回数据的类型中，未找到属性：" + listFieldName + "，返回数据类型为：" + result.getClass().getName();
+							throw new ExcelExportException(errorMsg, "NO_SUCH_FIELD");
+						}
+					} else {
+						throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。",
+								"NO_CONFIG");
 					}
-				} else {
-					throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。",
-							"NO_CONFIG");
 				}
+
+				if (result == null) {
+					// 如果数据为空，则设置为空列表，目的是为了输出一个没有数据，只有头行的excel文件。可作为导出模板功能使用。
+					result = Collections.emptyList();
+				} else if (result.getClass().equals(annotation.dataType())) {
+					// 如果数据类型与注解中配置的类型一致，则将它包装成列表
+					result = Collections.singletonList(result);
+				}
+
+				// 将接口返回数据设置到数据持有者中
+				ExcelContext.put("result", result);
+
+				// 数据转换为excel工作薄
+				List dataList = (List)result;
+				Class dataType = annotation.dataType();
+				Workbook workbook = ExcelConverterUtils.toExcel(dataList, dataType);
+
+				// 设置响应头及响应流
+				HttpServletResponse response = HttpUtils.getResponse();
+				String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
+				ExcelExportUtils.exportExcel(response, workbook, fileName);
+
+				// 设为null，方便GC回收
+				result = null;
+				dataList = null;
+				dataType = null;
+				fileName = null;
+
+				// 文件导出，无需返回值
+				return null;
 			}
 
-			if (result == null) {
-				// 如果数据为空，则设置为空列表，目的是为了输出一个没有数据，只有标题行的excel文件。可作为导出模板功能使用。
-				result = Collections.emptyList();
-			} else if (result.getClass().equals(annotation.dataType())) {
-				// 如果数据类型与注解中配置的类型一致，则将它包装成列表
-				result = Collections.singletonList(result);
-			}
-
-			// 数据转换为excel工作薄
-			List dataList = (List)result;
-			Class dataType = annotation.dataType();
-			Workbook workbook = ExcelConverterUtils.toExcel(dataList, dataType);
-
-			// 设置响应头及响应流
-			HttpServletResponse response = HttpUtils.getResponse();
-			String fileName = HttpUtils.generateExportFileName(annotation.fileNamePre(), FileTypeConstants.EXCEL_2007);
-			ExcelExportUtils.exportExcel(response, workbook, fileName);
-
-			// 设为null，方便GC回收
-			result = null;
-			dataList = null;
-			dataType = null;
-			fileName = null;
-
-			// 文件导出，无需返回值
-			return null;
+			return result;
+		} finally {
+			ExcelContext.remove();
 		}
-
-		return result;
 	}
 }

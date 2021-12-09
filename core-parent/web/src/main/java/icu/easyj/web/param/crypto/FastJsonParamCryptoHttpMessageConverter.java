@@ -78,7 +78,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 
 	//region 入参解密
 
-	//region Override，以下两个方法必须重写
+	////region Override，以下两个方法必须重写
 
 	@Override
 	public Object read(Type type, Class<?> contextClass,
@@ -91,7 +91,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 		return readType(getType(clazz, null), inputMessage);
 	}
 
-	//endregion
+	////endregion
 
 	/**
 	 * 入参解密

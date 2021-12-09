@@ -27,6 +27,7 @@ import java.util.function.Predicate;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.ExcelCell;
+import icu.easyj.poi.excel.hook.ListToExcelHookTrigger;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -44,6 +45,7 @@ import org.springframework.lang.Nullable;
  * @author wangliang181230
  */
 public abstract class ExcelUtils {
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelUtils.class);
 
 	//region excel转换为数据
@@ -77,7 +79,7 @@ public abstract class ExcelUtils {
 			return new ArrayList<>(); // 没有数据，返回一个空
 		}
 
-		// 自动检索标题行号
+		// 自动检索头行号
 		Integer headRowNum = findHeadRowNum(sheet, rowStart, mapping);
 		if (headRowNum != null) {
 			rowStart = headRowNum + 1;
@@ -193,20 +195,21 @@ public abstract class ExcelUtils {
 	}
 
 	/**
-	 * 获取标题行号
+	 * 获取头行号
 	 *
 	 * @param sheet       表格
 	 * @param firstRowNum 起始行号
 	 * @param mapping     表格映射
-	 * @return 标题行号
+	 * @return 头行号
 	 */
 	@Nullable
 	private static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
+		// 只检测5行
 		int i = 0;
 		while (i < 5) {
-			Row row = sheet.getRow(firstRowNum);
+			Row row = sheet.getRow(firstRowNum + i);
 			if (row != null && ExcelRowUtils.isHeadRow(row, mapping)) {
-				return firstRowNum + i;
+				return row.getRowNum();
 			}
 
 			i++;
@@ -242,6 +245,9 @@ public abstract class ExcelUtils {
 
 		Workbook book = null;
 		try {
+			// 将列表数据设置到上下文中
+			ExcelContext.put("dataList", dataList);
+
 			// 创建工作簿
 			book = new HSSFWorkbook();
 			// 创建表
@@ -252,13 +258,23 @@ public abstract class ExcelUtils {
 				sheet = book.createSheet(mapping.getSheetName());
 			}
 			// 写文件前，设置样式
-			ExcelCellUtils.setCellStyle(sheet, mapping, true);
+			ExcelCellUtils.setCellStyle(sheet, mapping, -1, true);
+
+			// 触发勾子：beforeCreateHeadRow
+			ListToExcelHookTrigger.onBeforeCreateHeadRow(sheet, mapping);
+
+			// 除去自定义行以外的首行
+			int firstRowNum = sheet.getLastRowNum() + 1;
 			// 创建头行
 			ExcelRowUtils.createHeadRow(sheet, mapping);
 			// 创建数据行
 			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
+
+			// 触发勾子：afterCreateDataRows
+			ListToExcelHookTrigger.onAfterCreateDataRows(sheet, mapping);
+
 			// 写文件后，设置样式：如自适应宽度等
-			ExcelCellUtils.setCellStyle(sheet, mapping, false);
+			ExcelCellUtils.setCellStyle(sheet, mapping, firstRowNum, false);
 		} catch (Exception e) {
 			try {
 				if (book != null) {
@@ -268,6 +284,8 @@ public abstract class ExcelUtils {
 			}
 			LOGGER.error("数据转换为excel失败：" + e.getMessage(), e);
 			throw new RuntimeException("数据转换为excel失败", e);
+		} finally {
+			ExcelContext.remove("dataList");
 		}
 
 		return book;

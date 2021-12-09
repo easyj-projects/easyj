@@ -63,7 +63,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 
 	//region Override start
 
-	//region 身份证识别 start
+	////region 身份证识别 start
 
 	/**
 	 * 身份证识别
@@ -133,7 +133,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 		}
 	}
 
-	//endregion 身份证识别 end
+	////endregion 身份证识别 end
 
 	//endregion Override end
 

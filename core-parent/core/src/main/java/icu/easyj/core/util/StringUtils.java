@@ -616,7 +616,7 @@ public abstract class StringUtils {
 		return STRING_SERVICE.toCharArray(str);
 	}
 
-	//region toString
+	////region toString
 
 	/**
 	 * 将对象转换为字符串
@@ -743,7 +743,7 @@ public abstract class StringUtils {
 		});
 	}
 
-	//endregion
+	////endregion
 
 	//endregion
 }

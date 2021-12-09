@@ -264,6 +264,8 @@ public class JSONUtilsTest {
 		}
 	}
 
+	//endregion
+
 
 	//region 测试Fastjson的BUG通过临时方案是否得到解决，并确认当前版本的fastjson的BUG是否还存在
 
@@ -292,6 +294,9 @@ public class JSONUtilsTest {
 
 		this.testFastjsonBeforeBugfix();
 	}
+
+
+	////region Private
 
 	/**
 	 * BUG修复前
@@ -400,6 +405,8 @@ public class JSONUtilsTest {
 		System.out.println("LinkedHashSet<Long>：正常");
 		Assertions.assertEquals("[\"9223372036854775807\"]", FASTJSON_SERVICE.toJSONString(coll)); // 含双引号，正确的，bug已修复
 	}
+
+	////endregion
 
 	//endregion
 }
