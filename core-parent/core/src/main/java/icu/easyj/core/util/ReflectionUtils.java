@@ -73,7 +73,7 @@ public abstract class ReflectionUtils {
 	private static final Map<Class<?>, Object> SINGLETON_CACHE = new ConcurrentHashMap<>();
 
 
-	//region NULL_XXXX
+	////region NULL_XXXX
 
 	/**
 	 * The NULL_FIELD
@@ -101,7 +101,7 @@ public abstract class ReflectionUtils {
 		}
 	}
 
-	//endregion
+	////endregion
 
 	//endregion
 

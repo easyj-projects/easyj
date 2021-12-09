@@ -182,7 +182,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		//region 加载约定目录下的配置文件
 
 		for (String dirPath : CONFIG_DIRECTORY_PATHS) {
-			//region 替换目录中的表达式
+			////region 替换目录中的表达式
 
 			if (dirPath.contains("${area}")) {
 				if (StringUtils.isNotEmpty(area)) {
@@ -213,7 +213,7 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 				}
 			}
 
-			//endregion
+			////endregion
 
 
 			// 加载目录下的所有配置文件

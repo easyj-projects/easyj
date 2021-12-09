@@ -74,7 +74,7 @@ public class TickClock implements ITickClock {
 
 	//region Override
 
-	//region Override IClock
+	////region Override IClock
 
 	@Override
 	public long currentTimeMillis() {
@@ -91,9 +91,9 @@ public class TickClock implements ITickClock {
 		return this.getPassedNanos() + baseEpochNanos;
 	}
 
-	//endregion
+	////endregion
 
-	//region Override ITickClock
+	////region Override ITickClock
 
 	@Override
 	public long getBaseEpochMicros() {
@@ -105,7 +105,7 @@ public class TickClock implements ITickClock {
 		return this.baseTickNanos;
 	}
 
-	//endregion
+	////endregion
 
 	//endregion
 }

@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import icu.easyj.poi.excel.hook.IListToExcelHook;
+
 /**
  * excel表格对应类的注解
  *
@@ -47,7 +49,7 @@ public @interface Excel {
 	boolean widthAutoSize() default false;
 
 
-	// 是否需要头名称行
+	// 是否需要头行
 	boolean needHeadRow() default true;
 
 	// 是否冻结头行
@@ -72,4 +74,11 @@ public @interface Excel {
 
 	// 配置列信息，主要用于获取基类中的属性
 	ExcelCell[] cells() default {};
+
+	/**
+	 * 转换为Excel时的勾子列表
+	 *
+	 * @return hookClasses
+	 */
+	Class<? extends IListToExcelHook>[] toExcelHookClasses() default {};
 }

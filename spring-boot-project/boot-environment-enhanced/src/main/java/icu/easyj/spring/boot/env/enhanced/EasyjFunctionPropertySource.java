@@ -59,7 +59,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	private static final String NO_CACHE_VALUE = "no-cache";
 
 
-	//region 各函数名的常量
+	////region 各函数名的常量
 
 	/**
 	 * 类函数名
@@ -81,7 +81,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 */
 	private static final String RANDOM_FUN_NAME = "random";
 
-	//endregion
+	////endregion
 
 
 	/**

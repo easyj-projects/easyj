@@ -36,6 +36,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.lang.Nullable;
 
 /**
  * 获取单元格的值的 工具类
@@ -231,9 +232,10 @@ public abstract class ExcelCellUtils {
 	 *
 	 * @param sheet             表格
 	 * @param mapping           表格映射
+	 * @param headRowNum        头行号
 	 * @param isBeforeWriteFile 是否在写文件前
 	 */
-	public static void setCellStyle(Sheet sheet, ExcelMapping mapping, boolean isBeforeWriteFile) {
+	public static void setCellStyle(Sheet sheet, ExcelMapping mapping, int headRowNum, boolean isBeforeWriteFile) {
 		if (isBeforeWriteFile) { // 写文件前设置的样式
 			int cellNum = 0; // 列号
 
@@ -311,41 +313,18 @@ public abstract class ExcelCellUtils {
 				if (StringUtils.isNotBlank(cellMapping.getFormat())) {
 					cellStyle.setDataFormat(book.createDataFormat().getFormat(cellMapping.getFormat()));
 				}
-				//// 创建样式：位置 ////
+
+				//region 创建样式：位置
 				// 创建样式：水平位置
-				if (StringUtils.isNotBlank(cellMapping.getAlign())) {
-					switch (cellMapping.getAlign()) {
-						case "center":
-							cellStyle.setAlignment(HorizontalAlignment.CENTER);
-							break;
-						case "left":
-							cellStyle.setAlignment(HorizontalAlignment.LEFT);
-							break;
-						case "right":
-							cellStyle.setAlignment(HorizontalAlignment.RIGHT);
-							break;
-						default:
-							break;
-					}
+				HorizontalAlignment align = convertAlign(cellMapping.getAlign(), null);
+				if (align != null) {
+					cellStyle.setAlignment(align);
 				}
 				// 创建样式：竖直位置
-				if (StringUtils.isNotBlank(cellMapping.getVerAlign())) {
-					switch (cellMapping.getVerAlign()) {
-						case "middle":
-						case "center":
-							cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 默认
-							break;
-						case "top":
-							cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
-							break;
-						case "bottom":
-							cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
-							break;
-						default:
-							cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 默认
-							break;
-					}
-				}
+				VerticalAlignment verAlign = convertVerAlign(cellMapping.getVerAlign(), VerticalAlignment.CENTER);
+				cellStyle.setVerticalAlignment(verAlign);
+				//endregion
+
 				// 是否允许自动换行
 				cellStyle.setWrapText(cellMapping.isWrapText());
 				// 创建样式：背景颜色
@@ -368,7 +347,7 @@ public abstract class ExcelCellUtils {
 		} else { // 写文件后设置的样式
 			// 设置筛选功能
 			if (mapping.isNeedHeadRow() && mapping.isNeedFilter()) {
-				CellRangeAddress cra = new CellRangeAddress(0, 0, 0, sheet.getRow(0).getLastCellNum() - 1);
+				CellRangeAddress cra = new CellRangeAddress(headRowNum, headRowNum, 0, sheet.getRow(headRowNum).getLastCellNum() - 1);
 				sheet.setAutoFilter(cra);
 			}
 
@@ -381,6 +360,39 @@ public abstract class ExcelCellUtils {
 					}
 				}
 			}
+		}
+	}
+
+	public static HorizontalAlignment convertAlign(String align, @Nullable HorizontalAlignment defaultAlign) {
+		if (align == null) {
+			return defaultAlign;
+		}
+		switch (align.toLowerCase()) {
+			case "center":
+				return HorizontalAlignment.CENTER;
+			case "left":
+				return HorizontalAlignment.LEFT;
+			case "right":
+				return HorizontalAlignment.RIGHT;
+			default:
+				return defaultAlign;
+		}
+	}
+
+	public static VerticalAlignment convertVerAlign(String verAlign, @Nullable VerticalAlignment defaultVerAlign) {
+		if (verAlign == null) {
+			return defaultVerAlign; // 默认
+		}
+		switch (verAlign.toLowerCase()) {
+			case "middle":
+			case "center":
+				return VerticalAlignment.CENTER;
+			case "top":
+				return VerticalAlignment.TOP;
+			case "bottom":
+				return VerticalAlignment.BOTTOM;
+			default:
+				return defaultVerAlign; // 默认
 		}
 	}
 }
