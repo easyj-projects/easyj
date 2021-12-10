@@ -26,6 +26,7 @@ import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.hook.IListToExcelHook;
+import org.springframework.lang.Nullable;
 
 /**
  * model中的属性和excel表格中的列的映射关系
@@ -216,6 +217,7 @@ public class ExcelMapping implements Serializable {
 		return this;
 	}
 
+	@Nullable
 	public List<IListToExcelHook> getToExcelHookList() {
 		if (toExcelHookList == null && ArrayUtils.isNotEmpty(toExcelHookClasses)) {
 			List<IListToExcelHook> list = new ArrayList<>();
