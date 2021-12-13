@@ -32,10 +32,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import static icu.easyj.poi.excel.annotation.ExcelCustomRowConfig.DEFAULT_FONT_BOLD;
-import static icu.easyj.poi.excel.annotation.ExcelCustomRowConfig.DEFAULT_FONT_SIZE;
-import static icu.easyj.poi.excel.annotation.ExcelCustomRowConfig.DEFAULT_ROW_HEIGHT;
-
 /**
  * 列表转Excel时提供的勾子抽象类
  *
@@ -93,7 +89,7 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 	/**
 	 * 生成首行的内容
 	 *
-	 * @param context 表格所需数据
+	 * @param context 表格所需的上下文
 	 * @return 生成首行的内容
 	 */
 	protected String generateCustomFirstRowContent(Map<Object, Object> context) {
@@ -139,7 +135,7 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 	/**
 	 * 生成尾行的内容
 	 *
-	 * @param context 表格所需数据
+	 * @param context 表格所需的上下文
 	 * @return 生成尾行的内容
 	 */
 	protected String generateCustomFooterRowContent(Map<Object, Object> context) {
@@ -157,19 +153,11 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 	 * @param configAnno 表格映射
 	 */
 	protected void setCustomRowStyle(Cell cell, ExcelCustomRowConfig configAnno) {
-		int fontSize = DEFAULT_FONT_SIZE;
-		boolean fontBold = DEFAULT_FONT_BOLD;
-		int rowHeight = DEFAULT_ROW_HEIGHT;
-		HorizontalAlignment align = HorizontalAlignment.CENTER;
-		VerticalAlignment verAlign = VerticalAlignment.CENTER;
-
-		if (configAnno != null) {
-			fontSize = configAnno.fontSize();
-			fontBold = configAnno.fontBold();
-			rowHeight = configAnno.rowHeight();
-			align = ExcelCellUtils.convertAlign(configAnno.align(), align);
-			verAlign = ExcelCellUtils.convertVerAlign(configAnno.verAlign(), verAlign);
-		}
+		int fontSize = configAnno.fontSize();
+		boolean fontBold = configAnno.fontBold();
+		int rowHeight = configAnno.rowHeight();
+		HorizontalAlignment align = ExcelCellUtils.convertAlign(configAnno.align(), HorizontalAlignment.CENTER);
+		VerticalAlignment verAlign = ExcelCellUtils.convertVerAlign(configAnno.verAlign(), VerticalAlignment.CENTER);
 
 		// 设置样式
 		CellStyle cellStyle = cell.getSheet().getWorkbook().createCellStyle();

@@ -22,40 +22,26 @@ package icu.easyj.poi.excel.annotation;
  */
 public @interface ExcelCustomRowConfig {
 
-	//region 常量
-
-	int DEFAULT_FONT_SIZE = 12;
-
-	boolean DEFAULT_FONT_BOLD = true;
-
-	int DEFAULT_ROW_HEIGHT = 20;
-
-	String DEFAULT_ALIGN = "center";
-
-	String DEFAULT_VER_ALIGN = "middle";
-
-	//endregion
-
 	/**
 	 * 字体大小
 	 *
 	 * @return the font size
 	 */
-	int fontSize() default DEFAULT_FONT_SIZE;
+	int fontSize() default 12;
 
 	/**
 	 * 字体粗体
 	 *
 	 * @return the font bold
 	 */
-	boolean fontBold() default DEFAULT_FONT_BOLD;
+	boolean fontBold() default true;
 
 	/**
 	 * 行高
 	 *
 	 * @return the row height
 	 */
-	int rowHeight() default DEFAULT_ROW_HEIGHT;
+	int rowHeight() default 20;
 
 	/**
 	 * 水平位置
@@ -63,7 +49,7 @@ public @interface ExcelCustomRowConfig {
 	 *
 	 * @return the cell alignment
 	 */
-	String align() default DEFAULT_ALIGN;
+	String align() default "center";
 
 	/**
 	 * 竖直位置
@@ -71,5 +57,5 @@ public @interface ExcelCustomRowConfig {
 	 *
 	 * @return the cell vertical alignment
 	 */
-	String verAlign() default DEFAULT_VER_ALIGN;
+	String verAlign() default "middle";
 }
