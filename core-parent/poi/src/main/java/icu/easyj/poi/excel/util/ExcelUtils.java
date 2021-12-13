@@ -103,6 +103,11 @@ public abstract class ExcelUtils {
 				continue; // 空行不读取
 			}
 
+			// 判断是否为合并单元格的特殊
+			if (row.getLastCellNum() == 1 && mapping.getCellMappingList().size() > (mapping.isNeedNumberCell() ? 1 : 2)) {
+				continue;
+			}
+
 			// 行转换为对象
 			t = ExcelRowUtils.rowToObject(row, hasNumberCell, headRow, clazz, mapping);
 

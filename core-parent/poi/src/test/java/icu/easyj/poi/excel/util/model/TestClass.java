@@ -19,7 +19,7 @@ import java.util.Date;
 
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
-import icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig;
+import icu.easyj.poi.excel.annotation.ExcelCustomRowConfig;
 import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 
 /**
@@ -27,8 +27,12 @@ import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
  *
  * @author wangliang181230
  */
-@Excel(toExcelHookClasses = {TestListToExcelHook.class})
-@ExcelCustomFirstRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top")
+@Excel(
+		toExcelHookClasses = {TestListToExcelHook.class},
+		customFirstRow = @ExcelCustomRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top"),
+		showFooterRow = true
+)
+
 public class TestClass {
 
 	@ExcelCell(headName = "姓名", cellNum = 0)
@@ -40,7 +44,7 @@ public class TestClass {
 	@ExcelCell(headName = "周岁", cellNum = 2, column = "age")
 	private TestBClass bClass;
 
-	@ExcelCell(headName = "出生日期", cellNum = 3)
+	@ExcelCell(headName = "出生日期", cellNum = 3, format = "yyyy-MM-dd")
 	private Date birthday;
 
 	// 测试无注解的情况
