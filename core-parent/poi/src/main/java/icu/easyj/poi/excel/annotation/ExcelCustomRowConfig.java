@@ -15,36 +15,26 @@
  */
 package icu.easyj.poi.excel.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
  * 自定义首行配置注解
  *
  * @author wangliang181230
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-public @interface ExcelCustomFirstRowConfig {
+public @interface ExcelCustomRowConfig {
 
 	//region 常量
 
-	int DEFAULT_FONT_SIZE = 14;
+	int DEFAULT_FONT_SIZE = 12;
 
 	boolean DEFAULT_FONT_BOLD = true;
 
-	int DEFAULT_ROW_HEIGHT = 25;
+	int DEFAULT_ROW_HEIGHT = 20;
 
 	String DEFAULT_ALIGN = "center";
 
 	String DEFAULT_VER_ALIGN = "middle";
 
 	//endregion
-
 
 	/**
 	 * 字体大小
