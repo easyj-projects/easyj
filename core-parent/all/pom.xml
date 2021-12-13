@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>easyj-all</artifactId>
-	<version>0.2.4</version>
+	<version>0.2.5-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
