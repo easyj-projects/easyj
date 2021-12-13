@@ -31,26 +31,41 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface ExcelCustomFirstRowConfig {
 
+	//region 常量
+
+	int DEFAULT_FONT_SIZE = 14;
+
+	boolean DEFAULT_FONT_BOLD = true;
+
+	int DEFAULT_ROW_HEIGHT = 25;
+
+	String DEFAULT_ALIGN = "center";
+
+	String DEFAULT_VER_ALIGN = "middle";
+
+	//endregion
+
+
 	/**
 	 * 字体大小
 	 *
 	 * @return the font size
 	 */
-	int fontSize() default 14;
+	int fontSize() default DEFAULT_FONT_SIZE;
 
 	/**
 	 * 字体粗体
 	 *
 	 * @return the font bold
 	 */
-	boolean fontBold() default true;
+	boolean fontBold() default DEFAULT_FONT_BOLD;
 
 	/**
 	 * 行高
 	 *
 	 * @return the row height
 	 */
-	int rowHeight() default 20;
+	int rowHeight() default DEFAULT_ROW_HEIGHT;
 
 	/**
 	 * 水平位置
@@ -58,7 +73,7 @@ public @interface ExcelCustomFirstRowConfig {
 	 *
 	 * @return the cell alignment
 	 */
-	String align() default "center";
+	String align() default DEFAULT_ALIGN;
 
 	/**
 	 * 竖直位置
@@ -66,5 +81,5 @@ public @interface ExcelCustomFirstRowConfig {
 	 *
 	 * @return the cell vertical alignment
 	 */
-	String verAlign() default "middle";
+	String verAlign() default DEFAULT_VER_ALIGN;
 }

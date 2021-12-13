@@ -31,6 +31,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 
+import static icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig.DEFAULT_FONT_BOLD;
+import static icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig.DEFAULT_FONT_SIZE;
+import static icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig.DEFAULT_ROW_HEIGHT;
+
 /**
  * 列表转Excel时提供的勾子抽象类
  *
@@ -85,9 +89,9 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 	 * @param mapping 表格映射
 	 */
 	protected void setCustomFirstRowStyle(Cell cell, ExcelMapping mapping) {
-		int fontSize = 14;
-		boolean fontBold = true;
-		int rowHeight = 25;
+		int fontSize = DEFAULT_FONT_SIZE;
+		boolean fontBold = DEFAULT_FONT_BOLD;
+		int rowHeight = DEFAULT_ROW_HEIGHT;
 		HorizontalAlignment align = HorizontalAlignment.CENTER;
 		VerticalAlignment verAlign = VerticalAlignment.CENTER;
 
