@@ -53,7 +53,7 @@ public class CodeAnalysisResult {
 	 */
 	@NonNull
 	public Object[] chooseParameters(int size) {
-		if (parameters == null || parameters.length == 0) {
+		if (ArrayUtils.isEmpty(parameters)) {
 			return ArrayUtils.EMPTY_OBJECT_ARRAY;
 		}
 		Object[] result = new Object[Math.max(size, this.parameters.length)];

@@ -15,10 +15,11 @@
  */
 package icu.easyj.poi.excel.hook;
 
+import java.util.List;
 import java.util.Map;
 
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.poi.excel.annotation.ExcelCustomFirstRowConfig;
+import icu.easyj.poi.excel.annotation.ExcelCustomRowConfig;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import icu.easyj.poi.excel.util.ExcelCellUtils;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -40,15 +41,22 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 
 	@Override
 	public void onBeforeCreateHeadRow(Map<Object, Object> context, Sheet sheet, ExcelMapping mapping) {
-		// 创建自定义内容的第一行
+		// 创建自定义内容的首行
 		this.createCustomFirstRow(context, sheet, mapping);
 	}
 
+	@Override
+	public void onAfterCreateDataRows(Map<Object, Object> context, Sheet sheet, ExcelMapping mapping) {
+		if (mapping.getAnno().showFooterRow()) {
+			// 创建自定义内容的尾行
+			this.createCustomFooterRow(context, sheet, mapping);
+		}
+	}
 
-	//region 创建自定义内容的第一行
+	//region 创建自定义内容的首行
 
 	/**
-	 * 创建自定义内容的第一行，并合并该所有列（注意：在头行上面的一行）
+	 * 创建自定义内容的首行，并合并该所有列（注意：在头行上面的一行）
 	 *
 	 * @param context 表格所需的上下文
 	 * @param sheet   表格
@@ -57,7 +65,7 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 	protected void createCustomFirstRow(Map<Object, Object> context, Sheet sheet, ExcelMapping mapping) {
 		String firstRowContent = generateCustomFirstRowContent(context);
 		if (StringUtils.isBlank(firstRowContent)) {
-			// 没有内容，不创建自定义的第一行
+			// 没有内容，不创建自定义的首行
 			return;
 		}
 
@@ -71,34 +79,85 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 		Cell cell = row.createCell(0);
 		cell.setCellValue(firstRowContent);
 		// 合并单元格
-		CellRangeAddress cra = new CellRangeAddress(0, 0, 0, cellCount - 1);
+		CellRangeAddress cra = new CellRangeAddress(row.getRowNum(), row.getRowNum(), 0, cellCount - 1);
 		sheet.addMergedRegion(cra);
 
 		// 设置样式
-		this.setCustomFirstRowStyle(cell, mapping);
+		this.setCustomRowStyle(cell, mapping.getAnno().customFirstRow());
 	}
 
 	/**
-	 * 设置首行样式
+	 * 生成首行的内容
 	 *
-	 * @param cell    首行单元格
+	 * @param context 表格所需的上下文
+	 * @return 生成首行的内容
+	 */
+	protected String generateCustomFirstRowContent(Map<Object, Object> context) {
+		return null;
+	}
+
+	//endregion
+
+
+	//region 创建自定义内容的尾行
+
+	/**
+	 * 创建自定义内容的尾行，并合并该所有列
+	 *
+	 * @param context 表格所需的上下文
+	 * @param sheet   表格
 	 * @param mapping 表格映射
 	 */
-	protected void setCustomFirstRowStyle(Cell cell, ExcelMapping mapping) {
-		int fontSize = 14;
-		boolean fontBold = true;
-		int rowHeight = 25;
-		HorizontalAlignment align = HorizontalAlignment.CENTER;
-		VerticalAlignment verAlign = VerticalAlignment.CENTER;
-
-		ExcelCustomFirstRowConfig configAnno = mapping.getClazz().getAnnotation(ExcelCustomFirstRowConfig.class);
-		if (configAnno != null) {
-			fontSize = configAnno.fontSize();
-			fontBold = configAnno.fontBold();
-			rowHeight = configAnno.rowHeight();
-			align = ExcelCellUtils.convertAlign(configAnno.align(), align);
-			verAlign = ExcelCellUtils.convertVerAlign(configAnno.verAlign(), verAlign);
+	protected void createCustomFooterRow(Map<Object, Object> context, Sheet sheet, ExcelMapping mapping) {
+		String footerRowContent = generateCustomFooterRowContent(context);
+		if (StringUtils.isBlank(footerRowContent)) {
+			// 没有内容，不创建自定义的尾行
+			return;
 		}
+
+		int cellCount = mapping.getCellMappingList().size();
+		if (mapping.isNeedNumberCell()) {
+			cellCount++;
+		}
+
+		// 创建行及单元格
+		Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+		Cell cell = row.createCell(0);
+		cell.setCellValue(footerRowContent);
+		// 合并单元格
+		CellRangeAddress cra = new CellRangeAddress(row.getRowNum(), row.getRowNum(), 0, cellCount - 1);
+		sheet.addMergedRegion(cra);
+
+		// 设置样式
+		this.setCustomRowStyle(cell, mapping.getAnno().customFooterRow());
+	}
+
+	/**
+	 * 生成尾行的内容
+	 *
+	 * @param context 表格所需的上下文
+	 * @return 生成尾行的内容
+	 */
+	protected String generateCustomFooterRowContent(Map<Object, Object> context) {
+		List dataList = (List)context.get("dataList");
+		return "总记录数：" + dataList.size();
+	}
+
+	//endregion
+
+
+	/**
+	 * 设置自定义行样式
+	 *
+	 * @param cell       首行单元格
+	 * @param configAnno 表格映射
+	 */
+	protected void setCustomRowStyle(Cell cell, ExcelCustomRowConfig configAnno) {
+		int fontSize = configAnno.fontSize();
+		boolean fontBold = configAnno.fontBold();
+		int rowHeight = configAnno.rowHeight();
+		HorizontalAlignment align = ExcelCellUtils.convertAlign(configAnno.align(), HorizontalAlignment.CENTER);
+		VerticalAlignment verAlign = ExcelCellUtils.convertVerAlign(configAnno.verAlign(), VerticalAlignment.CENTER);
 
 		// 设置样式
 		CellStyle cellStyle = cell.getSheet().getWorkbook().createCellStyle();
@@ -118,16 +177,4 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 		// 设置行高
 		cell.getRow().setHeight((short)(rowHeight * 20));
 	}
-
-	/**
-	 * 生成第一行的内容
-	 *
-	 * @param context 表格所需数据
-	 * @return 生成第一行的内容
-	 */
-	protected String generateCustomFirstRowContent(Map<Object, Object> context) {
-		return null;
-	}
-
-	//endregion
 }

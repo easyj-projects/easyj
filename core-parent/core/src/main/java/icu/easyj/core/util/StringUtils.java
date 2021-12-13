@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import cn.hutool.core.util.ArrayUtil;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.string.IStringService;
 import org.springframework.lang.NonNull;
@@ -192,7 +193,7 @@ public abstract class StringUtils {
 	 * @return true=包含 | false=不包含
 	 */
 	public static boolean contains(char[] chars, char targetChar) {
-		if (chars == null || chars.length == 0) {
+		if (ArrayUtil.isEmpty(chars)) {
 			return false;
 		}
 

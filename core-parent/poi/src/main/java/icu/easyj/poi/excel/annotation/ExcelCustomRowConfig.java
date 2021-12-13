@@ -15,28 +15,19 @@
  */
 package icu.easyj.poi.excel.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
  * 自定义首行配置注解
  *
  * @author wangliang181230
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-public @interface ExcelCustomFirstRowConfig {
+public @interface ExcelCustomRowConfig {
 
 	/**
 	 * 字体大小
 	 *
 	 * @return the font size
 	 */
-	int fontSize() default 14;
+	int fontSize() default 12;
 
 	/**
 	 * 字体粗体

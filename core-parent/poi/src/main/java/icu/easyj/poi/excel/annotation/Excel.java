@@ -81,4 +81,15 @@ public @interface Excel {
 	 * @return hookClasses
 	 */
 	Class<? extends IListToExcelHook>[] toExcelHookClasses() default {};
+
+
+	//region 自定义行
+
+	ExcelCustomRowConfig customFirstRow() default @ExcelCustomRowConfig;
+
+	boolean showFooterRow() default false;
+
+	ExcelCustomRowConfig customFooterRow() default @ExcelCustomRowConfig;
+
+	//endregion
 }
