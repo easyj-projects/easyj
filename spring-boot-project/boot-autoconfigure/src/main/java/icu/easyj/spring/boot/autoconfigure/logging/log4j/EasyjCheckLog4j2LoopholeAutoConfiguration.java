@@ -40,7 +40,7 @@ import org.springframework.core.Ordered;
 		"org.apache.logging.log4j.core.net.JndiManager" // log4j-core中存在漏洞的类
 })
 @ConditionalOnProperty(value = "easyj.loophole-check.log4j2", matchIfMissing = true)
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @EnableConfigurationProperties(LoopholeCheckProperties.class)
 public class EasyjCheckLog4j2LoopholeAutoConfiguration implements Ordered {
 
