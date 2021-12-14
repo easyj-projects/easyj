@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
+
+import icu.easyj.core.util.version.VersionInfo;
+import icu.easyj.core.util.version.VersionUtils;
 
 /**
  * Fastjson BUG修复工具
@@ -67,5 +71,39 @@ public abstract class EasyjFastjsonBugfixUtils {
 		serializeConfig.put(LinkedList.class, ListSerializer.instance);
 		serializeConfig.put(HashSet.class, CollectionCodec.instance);
 		serializeConfig.put(LinkedHashSet.class, CollectionCodec.instance);
+	}
+
+	/**
+	 * 判断是否为存在漏洞的版本
+	 *
+	 * @param version 版本号
+	 * @return 是否为存在漏洞的版本
+	 */
+	public static boolean isLoopholeVersion(String version) {
+		return isLoopholeVersion(VersionUtils.parse(version));
+	}
+
+	/**
+	 * 判断是否为存在漏洞的版本
+	 *
+	 * @param versionInfo 版本信息
+	 * @return 是否为存在漏洞的版本
+	 */
+	public static boolean isLoopholeVersion(VersionInfo versionInfo) {
+		// 小于等于1.2.68版本，且不是最新的特定漏洞修复版本
+		return versionInfo.compareTo("1.2.68") <= 0 && !isLatestSecVersion(versionInfo.getVersion());
+	}
+
+	/**
+	 * 判断是否为最新的特定漏洞修复版本
+	 *
+	 * @param version 版本号
+	 * @return 是否为特定漏洞修复版本
+	 */
+	public static boolean isLatestSecVersion(String version) {
+		// 版本号格式如：1.2.68.sec10
+		// 目前最新的特定漏洞修复版本（即sec后面的数字）为 10，所以正则里判断的是大于10的特定版本号
+		final Pattern pattern = Pattern.compile("^\\d+\\.\\d+\\.\\d+[\\._]sec[1-9]\\d+$");
+		return pattern.matcher(version).matches();
 	}
 }

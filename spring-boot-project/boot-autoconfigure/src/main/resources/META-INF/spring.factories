@@ -2,6 +2,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 icu.easyj.spring.boot.autoconfigure.configs.EasyjConfigsAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.json.fastjson.EasyjCheckFastjsonLoopholeAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.logging.log4j.EasyjCheckLog4j2LoopholeAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.websocket.server.EasyjMiddleWareWebSocketServerAutoConfiguration,\
