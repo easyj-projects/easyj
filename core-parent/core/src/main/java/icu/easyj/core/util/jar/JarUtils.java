@@ -178,54 +178,62 @@ public abstract class JarUtils {
 	private static List<JarInfo> loadJarList(@NonNull ClassLoader classLoader) {
 		List<JarInfo> result = new ArrayList<>();
 
-		Enumeration<URL> urls;
+		long startTime = System.nanoTime();
 		try {
-			urls = classLoader.getResources("META-INF/MANIFEST.MF");
-		} catch (IOException e) {
-			return result;
-		}
-
-		URL url;
-		String jarFilePath;
-		while (urls.hasMoreElements()) {
-			url = urls.nextElement();
-			jarFilePath = url.toString();
+			Enumeration<URL> urls;
 			try {
-				// 跳过不是 '*.jar' 的文件
-				if (!jarFilePath.endsWith(".jar!/META-INF/MANIFEST.MF")) {
-					continue;
-				}
+				urls = classLoader.getResources("META-INF/MANIFEST.MF");
+			} catch (IOException e) {
+				LOGGER.error("加载jar信息列表失败，类加载器：{}", classLoader, e);
+				return result;
+			}
 
-				Manifest manifest = new Manifest(url.openStream());
-				Attributes attributes = manifest.getMainAttributes();
-
-				// 获取版本号
-				String version = attributes.getValue(IMPLEMENTATION_VERSION);
-				if (StringUtils.isBlank(version)) {
-					version = attributes.getValue(BUNDLE_VERSION);
-				}
-
-				// 获取模块名
-				jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/META-INF/MANIFEST.MF"));
-				String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
-				String name = jarFileName.replaceAll("-\\d.*$", "");
-
-				// 如果版本号为空，则尝试获取除模块名以外的内容作为版本号
-				if (StringUtils.isBlank(version) && name.length() != jarFileName.length()) {
-					version = jarFileName.substring(name.length());
-					if (version.startsWith("-")) {
-						version = version.substring(1);
+			URL url;
+			String jarFilePath;
+			while (urls.hasMoreElements()) {
+				url = urls.nextElement();
+				jarFilePath = url.toString();
+				try {
+					// 跳过不是 '*.jar' 的文件
+					if (!jarFilePath.endsWith(".jar!/META-INF/MANIFEST.MF")) {
+						continue;
 					}
-				}
 
-				result.add(new JarInfo(jarFilePath + ".jar", name, attributes, version));
-			} catch (IOException | RuntimeException e) {
-				LOGGER.warn("加载jar信息失败：{}", jarFilePath, e);
+					Manifest manifest = new Manifest(url.openStream());
+					Attributes attributes = manifest.getMainAttributes();
+
+					// 获取版本号
+					String version = attributes.getValue(IMPLEMENTATION_VERSION);
+					if (StringUtils.isBlank(version)) {
+						version = attributes.getValue(BUNDLE_VERSION);
+					}
+
+					// 获取模块名
+					jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/META-INF/MANIFEST.MF"));
+					String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
+					String name = jarFileName.replaceAll("-\\d.*$", "");
+
+					// 如果版本号为空，则尝试获取除模块名以外的内容作为版本号
+					if (StringUtils.isBlank(version) && name.length() != jarFileName.length()) {
+						version = jarFileName.substring(name.length());
+						if (version.startsWith("-")) {
+							version = version.substring(1);
+						}
+					}
+
+					result.add(new JarInfo(jarFilePath + ".jar", name, attributes, version));
+				} catch (IOException | RuntimeException e) {
+					LOGGER.warn("加载jar信息失败：{}", jarFilePath, e);
+				}
+			}
+
+			// 根据jarName排序
+			result.sort(Comparator.comparing(JarInfo::getName));
+		} finally {
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("共加载jar {} 个，耗时: {} ms, 类加载器为：{}", result.size(), (System.nanoTime() - startTime) / 1000000, classLoader);
 			}
 		}
-
-		// 根据jarName排序
-		result.sort(Comparator.comparing(JarInfo::getName));
 
 		return result;
 	}
