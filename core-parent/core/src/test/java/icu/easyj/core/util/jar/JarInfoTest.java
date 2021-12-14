@@ -17,8 +17,8 @@ package icu.easyj.core.util.jar;
 
 import java.util.jar.Attributes;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link JarInfo} 测试类
