@@ -16,6 +16,7 @@
 package icu.easyj.core.util.jar;
 
 import java.util.List;
+import java.util.Map;
 
 import icu.easyj.core.util.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +36,12 @@ public class JarUtilsTest {
 		Assertions.assertNotNull(jarList);
 
 		this.print(jarList);
+	}
+
+	@Test
+	public void testGetJarMap() {
+		Map<String, JarInfo> jarMap = JarUtils.getJarMap();
+		Assertions.assertNotNull(jarMap);
 	}
 
 
