@@ -5,6 +5,10 @@
 			"description": "EasyJ定义的全局配置组."
 		},
 		{
+			"name": "easyj.loophole-check",
+			"description": "EasyJ定义的漏洞检测配置组."
+		},
+		{
 			"name": "easyj.web.param-crypto.filter",
 			"description": "EasyJ参数加密解密过滤器配置组."
 		},
@@ -70,6 +74,13 @@
 		{
 			"name": "easyj.global.configs",
 			"description": "其他全局配置的Map."
+		},
+		{
+			"name": "easyj.loophole-check.log4j2",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.logging.log4j.EasyjCheckLog4j2LoopholeAutoConfiguration",
+			"description": "log4j2的漏洞检测程序开关.",
+			"defaultValue": true
 		},
 		{
 			"name": "easyj.logging.logback.config",
