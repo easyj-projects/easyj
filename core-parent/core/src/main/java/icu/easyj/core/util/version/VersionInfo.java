@@ -75,7 +75,7 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 
 
 	@Override
-	public int compareTo(VersionInfo otherVersionInfo) {
+	public int compareTo(@NonNull VersionInfo otherVersionInfo) {
 		if (otherVersionInfo == null) {
 			return 1;
 		}
@@ -102,6 +102,21 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 		return Long.compare(this.versionLong, otherVersionLong);
 	}
 
+	/**
+	 * 判断是否介于两个版本号之间，即：{@code this.version >= startVersion && this.version <= toVersion}
+	 *
+	 * @param startVersion 起始版本号
+	 * @param toVersion    截止版本号
+	 * @return true=介于 | false=不介于
+	 */
+	public boolean between(String startVersion, String toVersion) {
+		return compareTo(startVersion) >= 0 && compareTo(toVersion) <= 0;
+	}
+
+	public boolean notBetween(String startVersion, String toVersion) {
+		return !between(startVersion, toVersion);
+	}
+
 
 	@NonNull
 	public String getVersion() {
@@ -118,5 +133,25 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 
 	public boolean isSnapshotVersion() {
 		return snapshotVersion;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		VersionInfo versionInfo = (VersionInfo)o;
+		return versionLong == versionInfo.versionLong
+				&& unknownVersion == versionInfo.unknownVersion
+				&& snapshotVersion == versionInfo.snapshotVersion
+				&& Objects.equals(version, versionInfo.version);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(version, versionLong, unknownVersion, snapshotVersion);
 	}
 }

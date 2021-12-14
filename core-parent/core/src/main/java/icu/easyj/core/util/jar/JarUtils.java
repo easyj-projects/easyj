@@ -18,7 +18,6 @@ package icu.easyj.core.util.jar;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -78,7 +77,7 @@ public abstract class JarUtils {
 	 */
 	@NonNull
 	public static List<JarInfo> getJarList(@NonNull ClassLoader classLoader) {
-		return MapUtils.computeIfAbsent(CL_JAR_LIST_CACHE, classLoader, cl -> Collections.unmodifiableList(loadJarList(cl)));
+		return MapUtils.computeIfAbsent(CL_JAR_LIST_CACHE, classLoader, JarUtils::loadJarList);
 	}
 
 	/**
@@ -111,13 +110,13 @@ public abstract class JarUtils {
 			JarInfo previousJar;
 			for (JarInfo jar : jarList) {
 				previousJar = jarMap.put(jar.getName(), jar);
-				if (previousJar != null) {
+				if (previousJar != null && !previousJar.equals(jar)) {
 					LOGGER.warn("存在重名的JAR，'{}:{}' 覆盖了 '{}:{}'",
-							jar.getName(), jar.getVersion(),
-							previousJar.getName(), previousJar.getVersion());
+							jar.getFilePath(), jar.getVersion(),
+							previousJar.getFilePath(), previousJar.getVersion());
 				}
 			}
-			return Collections.unmodifiableMap(jarMap);
+			return jarMap;
 		});
 	}
 

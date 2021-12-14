@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.util.jar;
 
+import java.util.Objects;
 import java.util.jar.Attributes;
 
 import icu.easyj.core.util.StringUtils;
@@ -80,6 +81,21 @@ public class JarInfo {
 		return versionInfo.compareTo(otherVersion);
 	}
 
+	/**
+	 * 是否介于两个版本之间，即：{@code version >= startVersion && version <= endVersion}
+	 *
+	 * @param startVersion 起始版本
+	 * @param toVersion    截止版本
+	 * @return true=介于 | false=不介于
+	 */
+	public boolean betweenVersion(String startVersion, String toVersion) {
+		return versionInfo.between(startVersion, toVersion);
+	}
+
+	public boolean notBetweenVersion(String startVersion, String toVersion) {
+		return versionInfo.notBetween(startVersion, toVersion);
+	}
+
 
 	//region Getter
 
@@ -123,4 +139,25 @@ public class JarInfo {
 	}
 
 	//endregion
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		JarInfo jarInfo = (JarInfo)o;
+		return Objects.equals(filePath, jarInfo.filePath)
+				&& Objects.equals(name, jarInfo.name)
+				&& Objects.equals(versionInfo, jarInfo.versionInfo)
+				&& Objects.equals(manifestAttributes, jarInfo.manifestAttributes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(filePath, name, versionInfo, manifestAttributes);
+	}
 }
