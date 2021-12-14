@@ -39,7 +39,7 @@ import org.springframework.core.Ordered;
 @Lazy(false) // 避免延迟初始化功能启用后导致该类在项目启动过程中未被实例化
 @ConditionalOnClass(JSON.class)
 @ConditionalOnProperty(value = "easyj.loophole-check.fastjson", matchIfMissing = true)
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @EnableConfigurationProperties(LoopholeCheckProperties.class)
 public class EasyjCheckFastjsonLoopholeAutoConfiguration implements Ordered {
 

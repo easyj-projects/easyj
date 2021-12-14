@@ -72,6 +72,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- log4j -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 
 		<!-- 功能：Excel文件导入导出（目前包含easyj、afterturn两种实现） -->
