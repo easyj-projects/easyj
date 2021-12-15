@@ -18,7 +18,7 @@ package icu.easyj.spring.boot.autoconfigure.sequence;
 import javax.sql.DataSource;
 
 import icu.easyj.core.sequence.ISequenceService;
-import icu.easyj.core.sequence.impl.AtomicLongSequenceServiceImpl;
+import icu.easyj.core.sequence.impls.AtomicLongSequenceServiceImpl;
 import icu.easyj.db.sequence.impls.DataBaseSequenceServiceImpl;
 import icu.easyj.redis.sequence.impls.SpringRedisSequenceServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -28,7 +28,7 @@ public abstract class VersionUtils {
 	/**
 	 * 未知版本号
 	 */
-	public static final String UNKNOWN_VERSION = "UNKNOWN";
+	public static final String UNKNOWN_VERSION = "<unknown>";
 
 	/**
 	 * 未知版本号长整形值
@@ -127,7 +127,7 @@ public abstract class VersionUtils {
 	 * @return true=是 | false=否
 	 */
 	public static boolean isUnknownVersion(String version) {
-		return StringUtils.isBlank(version) || UNKNOWN_VERSION.equalsIgnoreCase(version);
+		return StringUtils.isBlank(version) || version.toLowerCase().contains("unknown");
 	}
 
 	/**

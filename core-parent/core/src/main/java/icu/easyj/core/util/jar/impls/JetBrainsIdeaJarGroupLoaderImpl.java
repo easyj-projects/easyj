@@ -13,22 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
+package icu.easyj.core.util.jar.impls;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import icu.easyj.core.util.jar.IJarGroupLoader;
+import icu.easyj.core.util.jar.JarContext;
+import org.springframework.core.Ordered;
 
 /**
- * The type Error hello 1.
+ * JetBrains的IDEA开发工具中，会加载一些JAR进来，但是从JAR中很难读取
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+@LoadLevel(name = "idea", order = Ordered.LOWEST_PRECEDENCE - 100)
+public class JetBrainsIdeaJarGroupLoaderImpl implements IJarGroupLoader {
 
 	@Override
-	public String say() {
-		return "error hello2!";
+	public String load(JarContext jarContext) {
+		switch (jarContext.getName()) {
+			case "debugger-agent":
+			case "idea_rt":
+				return "org.jetbrains.intellij";
+			default:
+				break;
+		}
+		return null;
 	}
 }

@@ -29,7 +29,7 @@ import icu.easyj.core.loader.condition.DependsOnJavaVersion;
 @LoadLevel(name = "ChineseHello")
 @DependsOnJavaVersion(min = 1, max = 999)
 @DependsOnClass(value = Hello.class, name = "icu.easyj.core.loader.model.Hello")
-@DependsOnJarVersion(name = "slf4j-api", minVersion = "0", maxVersion = "99")
+@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "0", maxVersion = "99")
 public class ChineseHello implements Hello {
 
 	@Override

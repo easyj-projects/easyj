@@ -20,8 +20,10 @@ import com.alibaba.fastjson.serializer.EasyjFastjsonBugfixUtils;
 import icu.easyj.core.util.jar.JarInfo;
 import icu.easyj.core.util.jar.JarUtils;
 import icu.easyj.core.util.version.ExistLoopholeVersionError;
+import icu.easyj.spring.boot.autoconfigure.jar.EasyjDependenciesAutoConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -39,13 +41,13 @@ import org.springframework.core.Ordered;
 @ConditionalOnClass(JSON.class)
 @ConditionalOnProperty(value = "easyj.loophole-check.fastjson", matchIfMissing = true)
 @Configuration(proxyBeanMethods = false)
+@AutoConfigureAfter(EasyjDependenciesAutoConfiguration.class)
 @EnableConfigurationProperties(LoopholeCheckProperties.class)
 public class EasyjFastjsonLoopholeCheckAutoConfiguration implements Ordered {
 
 	public EasyjFastjsonLoopholeCheckAutoConfiguration(LoopholeCheckProperties properties) {
 		// 获取 fastjson 的jar信息
-		JarInfo jarInfo = JarUtils.getJar("fastjson");
-		jarInfo = JarUtils.getJar("fastjson");
+		JarInfo jarInfo = JarUtils.getJar("com.alibaba", "fastjson");
 
 		// 判断版本号：1.2.68及以下版本，且不是漏洞修复版本的，就存在漏洞
 		// 漏洞修复版本请查阅：https://repo1.maven.org/maven2/com/alibaba/fastjson

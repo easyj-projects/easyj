@@ -24,7 +24,7 @@ import icu.easyj.core.loader.condition.DependsOnJarVersion;
  * @author wangliang181230
  */
 @LoadLevel(name = "ErrorHello2")
-@DependsOnJarVersion(name = "slf4j-api", maxVersion = "0.0.1")
+@DependsOnJarVersion(name = "org.slf4j:slf4j-api", maxVersion = "0.0.1")
 public class ErrorHello2 implements Hello {
 
 	@Override

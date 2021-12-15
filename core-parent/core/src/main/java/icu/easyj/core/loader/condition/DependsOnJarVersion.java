@@ -34,7 +34,9 @@ public @interface DependsOnJarVersion {
 
 	/**
 	 * 依赖的JAR包名称数组<br>
-	 * 由于部分jar变更过名字，所以可设置多个
+	 * 由于部分jar变更过名字，所以可设置多个。
+	 * <p>
+	 * JAR包名称格式包含组名和包名，用冒号分隔开来，例：icu.easyj:easyj-all、com.alibaba:fastjson
 	 *
 	 * @return the jar names
 	 */

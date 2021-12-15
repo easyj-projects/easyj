@@ -18,8 +18,10 @@ package icu.easyj.spring.boot.autoconfigure.loopholecheck;
 import icu.easyj.core.util.jar.JarInfo;
 import icu.easyj.core.util.jar.JarUtils;
 import icu.easyj.core.util.version.ExistLoopholeVersionError;
+import icu.easyj.spring.boot.autoconfigure.jar.EasyjDependenciesAutoConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -42,6 +44,7 @@ import org.springframework.core.Ordered;
 })
 @ConditionalOnProperty(value = "easyj.loophole-check.log4j2", matchIfMissing = true)
 @Configuration(proxyBeanMethods = false)
+@AutoConfigureAfter(EasyjDependenciesAutoConfiguration.class)
 @EnableConfigurationProperties(LoopholeCheckProperties.class)
 public class EasyjLog4j2LoopholeCheckAutoConfiguration implements Ordered {
 
@@ -52,7 +55,7 @@ public class EasyjLog4j2LoopholeCheckAutoConfiguration implements Ordered {
 		// 判断实现：是否为可能存在漏洞的实现类
 		if ("org.apache.logging.log4j.core.Logger".equals(logger.getClass().getName())) {
 			// 获取log4j-core的jar信息
-			JarInfo jarInfo = JarUtils.getJar("log4j-core");
+			JarInfo jarInfo = JarUtils.getJar("org.apache.logging.log4j", "log4j-core");
 
 			// 判断版本号：2.0.x ~ 2.14.x版本存在漏洞
 			if (jarInfo != null && jarInfo.betweenVersion("2.0.0-SNAPSHOT", "2.14.999")) {
