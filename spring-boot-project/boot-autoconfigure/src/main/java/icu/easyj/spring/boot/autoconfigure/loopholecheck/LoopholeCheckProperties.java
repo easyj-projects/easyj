@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure;
+package icu.easyj.spring.boot.autoconfigure.loopholecheck;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -26,17 +26,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class LoopholeCheckProperties {
 
 	/**
-	 * 检测到漏洞后，是否抛出异常。
+	 * 如果存在漏洞，是否抛出异常。
 	 */
-	private boolean needThrowException = false;
+	private boolean needThrowIfExist = true;
 
 
-	public boolean isNeedThrowException() {
-		return needThrowException;
+	public boolean isNeedThrowIfExist() {
+		return needThrowIfExist;
 	}
 
-	public LoopholeCheckProperties setNeedThrowException(boolean needThrowException) {
-		this.needThrowException = needThrowException;
+	public LoopholeCheckProperties setNeedThrowIfExist(boolean needThrowIfExist) {
+		this.needThrowIfExist = needThrowIfExist;
 		return this;
 	}
 }

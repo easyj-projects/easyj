@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.logging.log4j;
+package icu.easyj.spring.boot.autoconfigure.loopholecheck;
 
 import icu.easyj.core.util.jar.JarInfo;
 import icu.easyj.core.util.jar.JarUtils;
 import icu.easyj.core.util.version.ExistLoopholeVersionError;
-import icu.easyj.spring.boot.autoconfigure.LoopholeCheckProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -32,6 +31,8 @@ import org.springframework.core.Ordered;
  * Log4j漏洞检测程序
  *
  * @author wangliang181230
+ * @see <a href="https://mp.weixin.qq.com/s/0tBE0Y4c-XLPlVdVsYZ4Ig">漏洞复现步骤文章</a>
+ * @see <a href="https://github.com/apache/logging-log4j2/commit/7fe72d6">官方github漏洞修复代码提交记录</a>
  */
 @Lazy(false) // 避免延迟初始化功能启用后导致该类在项目启动过程中未被实例化
 @ConditionalOnClass(name = {
@@ -42,9 +43,9 @@ import org.springframework.core.Ordered;
 @ConditionalOnProperty(value = "easyj.loophole-check.log4j2", matchIfMissing = true)
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(LoopholeCheckProperties.class)
-public class EasyjCheckLog4j2LoopholeAutoConfiguration implements Ordered {
+public class EasyjLog4j2LoopholeCheckAutoConfiguration implements Ordered {
 
-	public EasyjCheckLog4j2LoopholeAutoConfiguration(LoopholeCheckProperties properties) {
+	public EasyjLog4j2LoopholeCheckAutoConfiguration(LoopholeCheckProperties properties) {
 		// 创建一个log4j的日志实例
 		Logger logger = LogManager.getLogger(this.getClass());
 
@@ -55,6 +56,7 @@ public class EasyjCheckLog4j2LoopholeAutoConfiguration implements Ordered {
 
 			// 判断版本号：2.0.x ~ 2.14.x版本存在漏洞
 			if (jarInfo != null && jarInfo.betweenVersion("2.0.0-SNAPSHOT", "2.14.999")) {
+				// 打印漏洞警告日志
 				logger.warn("");
 				logger.warn("==>");
 				logger.warn("log4j2 严重漏洞警告：");
@@ -69,7 +71,7 @@ public class EasyjCheckLog4j2LoopholeAutoConfiguration implements Ordered {
 				logger.warn("<==");
 				logger.warn("");
 
-				if (properties.isNeedThrowException()) {
+				if (properties.isNeedThrowIfExist()) {
 					throw new ExistLoopholeVersionError("当前log4j2版本存在远程代码执行漏洞，请尽快更新至2.15.0及以上版本！");
 				}
 			}

@@ -76,21 +76,21 @@
 			"description": "其他全局配置的Map."
 		},
 		{
-			"name": "easyj.loophole-check.need-throw-exception",
-			"defaultValue": false
-		},
-		{
-			"name": "easyj.loophole-check.log4j2",
-			"type": "java.lang.Boolean",
-			"sourceType": "icu.easyj.spring.boot.autoconfigure.logging.log4j.EasyjCheckLog4j2LoopholeAutoConfiguration",
-			"description": "log4j2的漏洞检测程序开关.",
+			"name": "easyj.loophole-check.need-throw-if-exist",
 			"defaultValue": true
 		},
 		{
 			"name": "easyj.loophole-check.fastjson",
 			"type": "java.lang.Boolean",
-			"sourceType": "icu.easyj.spring.boot.autoconfigure.json.fastjson.EasyjCheckFastjsonLoopholeAutoConfiguration",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjFastjsonLoopholeCheckAutoConfiguration",
 			"description": "fastjson的漏洞检测程序开关.",
+			"defaultValue": true
+		},
+		{
+			"name": "easyj.loophole-check.log4j2",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjLog4j2LoopholeCheckAutoConfiguration",
+			"description": "log4j2的漏洞检测程序开关.",
 			"defaultValue": true
 		},
 		{
