@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+package icu.easyj.core.util.jar;
 
 /**
- * The type Error hello 1.
+ * JAR所属组名加载器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+public interface IJarGroupLoader {
 
-	@Override
-	public String say() {
-		return "error hello2!";
-	}
+	/**
+	 * 加载JAR所属组名
+	 *
+	 * @param jarContext JAR信息上下文
+	 * @return jarGroup JAR所属组名
+	 */
+	String load(JarContext jarContext);
 }

@@ -90,19 +90,19 @@ public abstract class EasyjFastjsonBugfixUtils {
 	 * @return 是否为存在漏洞的版本
 	 */
 	public static boolean isLoopholeVersion(VersionInfo versionInfo) {
-		// 小于等于1.2.68版本，且不是最新的特定漏洞修复版本
+		// 小于等于1.2.68版本，且不是最新的漏洞修复版本
 		return versionInfo.compareTo("1.2.68") <= 0 && !isLatestSecVersion(versionInfo.getVersion());
 	}
 
 	/**
-	 * 判断是否为最新的特定漏洞修复版本
+	 * 判断是否为最新的漏洞修复版本
 	 *
 	 * @param version 版本号
-	 * @return 是否为特定漏洞修复版本
+	 * @return 是否为漏洞修复版本
 	 */
 	public static boolean isLatestSecVersion(String version) {
 		// 版本号格式如：1.2.68.sec10
-		// 目前最新的特定漏洞修复版本（即sec后面的数字）为 10，所以正则里判断的是大于10的特定版本号
+		// 目前最新的漏洞修复版本（即sec后面的数字）为 10，所以正则里判断的是大于等于10的漏洞修复版本
 		final Pattern pattern = Pattern.compile("^\\d+\\.\\d+\\.\\d+[\\._]sec[1-9]\\d+$");
 		return pattern.matcher(version).matches();
 	}

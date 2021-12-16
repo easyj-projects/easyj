@@ -13,22 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
+package icu.easyj.core.util.jar.impls;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import icu.easyj.core.util.jar.IJarGroupLoader;
+import icu.easyj.core.util.jar.JarContext;
+import icu.easyj.core.util.version.VersionInfo;
+import org.springframework.core.Ordered;
 
 /**
- * The type Error hello 1.
+ * HuTool的JAR组名
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+@LoadLevel(name = "hutool", order = Ordered.LOWEST_PRECEDENCE - 500)
+public class HutoolJarGroupLoaderImpl implements IJarGroupLoader {
 
 	@Override
-	public String say() {
-		return "error hello2!";
+	public String load(JarContext jarContext) {
+		String name = jarContext.getName();
+		VersionInfo versionInfo = jarContext.getVersionInfo();
+
+		// hutool，最低版本为4.0.0
+		if (name.startsWith("hutool-") && versionInfo.compareTo("4.0.0-SNAPSHOT") >= 0) {
+			return "cn.hutool";
+		}
+
+		return null;
 	}
 }

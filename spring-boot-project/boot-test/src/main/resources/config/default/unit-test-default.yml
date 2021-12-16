@@ -1,4 +1,7 @@
-easyj.global.in-unit-test: true
+easyj:
+  global.in-unit-test: true #标记全局配置 `GlobalConfig.isInUnitTest()` 为 true
+  print-dependencies: true #测试环境下，打印依赖
+  loophole-check.need-throw-if-exist: true #测试环境下，存在漏洞时，抛出异常
 
 logging.level:
   org.springframework.web.client.RestTemplate: DEBUG #为了在运行单元测试时，能够显示出发送请求的日志，将RestTemplate的日志级别调整为DEBUG

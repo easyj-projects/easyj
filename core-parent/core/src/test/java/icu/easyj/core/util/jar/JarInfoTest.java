@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Assertions;
  */
 public class JarInfoTest {
 
-	static final JarInfo JAR_INFO = new JarInfo("C://a.jar", "a", new Attributes(), "1.0");
+	static final JarInfo JAR_INFO = new JarInfo("C://a:a.jar", "groupA", "nameA", new Attributes(), "1.0");
 
 	@Test
 	public void testCompareToVersion() {

@@ -1,0 +1,10 @@
+icu.easyj.core.util.jar.impls.MavenJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.EasyjJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.SpringJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.JdbcJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.TomcatJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.KafkaJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.HutoolJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.JavaJdkJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.JetBrainsIdeaJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.JunitJarGroupLoaderImpl

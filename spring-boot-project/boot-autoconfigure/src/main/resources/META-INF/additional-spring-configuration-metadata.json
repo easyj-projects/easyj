@@ -76,21 +76,31 @@
 			"description": "其他全局配置的Map."
 		},
 		{
-			"name": "easyj.loophole-check.need-throw-exception",
-			"defaultValue": false
+			"name": "easyj.loophole-check.need-throw-if-exist",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.LoopholeCheckProperties",
+			"description": "当潺潺存在时，是否抛出异常.",
+			"defaultValue": true
 		},
 		{
-			"name": "easyj.loophole-check.log4j2",
+			"name": "easyj.print-dependencies",
 			"type": "java.lang.Boolean",
-			"sourceType": "icu.easyj.spring.boot.autoconfigure.logging.log4j.EasyjCheckLog4j2LoopholeAutoConfiguration",
-			"description": "log4j2的漏洞检测程序开关.",
-			"defaultValue": true
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.jar.EasyjPrintDependenciesPrintRunner",
+			"description": "是否打印所有依赖.",
+			"defaultValue": false
 		},
 		{
 			"name": "easyj.loophole-check.fastjson",
 			"type": "java.lang.Boolean",
-			"sourceType": "icu.easyj.spring.boot.autoconfigure.json.fastjson.EasyjCheckFastjsonLoopholeAutoConfiguration",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjFastjsonLoopholeCheckAutoConfiguration",
 			"description": "fastjson的漏洞检测程序开关.",
+			"defaultValue": true
+		},
+		{
+			"name": "easyj.loophole-check.log4j2",
+			"type": "java.lang.Boolean",
+			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjLog4j2LoopholeCheckAutoConfiguration",
+			"description": "log4j2的漏洞检测程序开关.",
 			"defaultValue": true
 		},
 		{

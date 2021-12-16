@@ -32,10 +32,18 @@ import org.springframework.util.Assert;
  */
 public class JarInfo {
 
+	public static final String UNKNOWN_GROUP = "<unknown>";
+
+
 	/**
 	 * JAR文件路径
 	 */
 	private final String filePath;
+
+	/**
+	 * JAR所属组
+	 */
+	private final String group;
 
 	/**
 	 * JAR名称
@@ -57,18 +65,27 @@ public class JarInfo {
 	 * 构造函数
 	 *
 	 * @param filePath           JAR文件路径
+	 * @param group              JAR所属组名
 	 * @param name               JAR名称
 	 * @param manifestAttributes META-INF/MANIFEST.MF文件的属性集合
-	 * @param version            JAR版本号
+	 * @param versionInfo        JAR版本信息
 	 */
-	public JarInfo(@NonNull String filePath, @NonNull String name, @NonNull Attributes manifestAttributes, @Nullable String version) {
+	public JarInfo(@NonNull String filePath, @NonNull String group, @NonNull String name,
+				   @NonNull Attributes manifestAttributes, @Nullable VersionInfo versionInfo) {
 		Assert.notNull(filePath, "'filePath' must not be null");
+		Assert.isTrue(StringUtils.isNotBlank(group), "'group' must not be null");
 		Assert.isTrue(StringUtils.isNotBlank(name), "'name' must not be null");
 
 		this.filePath = filePath;
+		this.group = group;
 		this.name = name.toLowerCase();
-		this.versionInfo = VersionUtils.parse(version);
+		this.versionInfo = versionInfo;
 		this.manifestAttributes = manifestAttributes;
+	}
+
+	public JarInfo(@NonNull String filePath, @NonNull String group, @NonNull String name,
+				   @NonNull Attributes manifestAttributes, @Nullable String version) {
+		this(filePath, group, name, manifestAttributes, VersionUtils.parse(version));
 	}
 
 	/**
@@ -105,8 +122,17 @@ public class JarInfo {
 	}
 
 	@NonNull
+	public String getGroup() {
+		return group;
+	}
+
+	@NonNull
 	public String getName() {
 		return name;
+	}
+
+	public String getFullName() {
+		return group + ":" + name;
 	}
 
 	@NonNull
@@ -151,6 +177,7 @@ public class JarInfo {
 		}
 		JarInfo jarInfo = (JarInfo)o;
 		return Objects.equals(filePath, jarInfo.filePath)
+				&& Objects.equals(group, jarInfo.group)
 				&& Objects.equals(name, jarInfo.name)
 				&& Objects.equals(versionInfo, jarInfo.versionInfo)
 				&& Objects.equals(manifestAttributes, jarInfo.manifestAttributes);
@@ -158,6 +185,6 @@ public class JarInfo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(filePath, name, versionInfo, manifestAttributes);
+		return Objects.hash(filePath, group, name, versionInfo, manifestAttributes);
 	}
 }

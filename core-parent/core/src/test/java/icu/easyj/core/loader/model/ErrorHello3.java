@@ -24,7 +24,7 @@ import icu.easyj.core.loader.condition.DependsOnJarVersion;
  * @author wangliang181230
  */
 @LoadLevel(name = "ErrorHello3")
-@DependsOnJarVersion(name = "nonexistent_jar")
+@DependsOnJarVersion(name = "xxxx:not_exist_jar")
 public class ErrorHello3 implements Hello {
 
 	@Override
