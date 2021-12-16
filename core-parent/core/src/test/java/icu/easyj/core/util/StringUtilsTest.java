@@ -104,7 +104,7 @@ public class StringUtilsTest {
 		Assertions.assertEquals(1, StringUtils.getCoder("2啊啊啊哦哦哦呃呃呃="));
 		Assertions.assertEquals(1, StringUtils.getCoder("3啊啊啊哦哦哦呃呃呃=="));
 		String s = "asdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfjasdlfkjlasdfj啊";
-		long[] costs = TestUtils.performanceTest(5, 500 * 10000, () -> {
+		long[] costs = TestUtils.performanceTest(5, 100 * 10000, () -> {
 			StringUtils.getCoder(s);
 			return "default";
 		}, () -> {
@@ -166,7 +166,7 @@ public class StringUtilsTest {
 
 		// 比较 StringUtils.remove 方法 和 String.replace方法的性能
 		{
-			TestUtils.performanceTest(1, 50 * 10000, () -> {
+			TestUtils.performanceTest(1, 10 * 10000, () -> {
 				StringUtils.remove(RandomUtil.randomString(20), 'a');
 				return "remove";
 			}, () -> {
@@ -178,7 +178,7 @@ public class StringUtilsTest {
 			});
 		}
 		{
-			TestUtils.performanceTest(5, 50 * 10000, () -> {
+			TestUtils.performanceTest(5, 10 * 10000, () -> {
 				StringUtils.remove(RandomUtil.randomString(20), 'a');
 				return "remove";
 			}, () -> {

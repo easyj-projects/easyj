@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Assertions;
  */
 public class JarInfoTest {
 
-	static final JarInfo JAR_INFO = new JarInfo("C://a:a.jar", "groupA", "nameA", new Attributes(), "1.0");
+	static final JarInfo JAR_INFO = new JarInfo("C://a:a.jar", "groupA", "nameA", new Attributes(), "1.000");
 
 	@Test
 	public void testCompareToVersion() {
@@ -42,21 +42,10 @@ public class JarInfoTest {
 		Assertions.assertTrue(JAR_INFO.betweenVersion("0.999", "1.000"));
 		Assertions.assertTrue(JAR_INFO.betweenVersion("0.999", "1.999"));
 		Assertions.assertTrue(JAR_INFO.betweenVersion("1.000", "1.999"));
+		Assertions.assertTrue(JAR_INFO.betweenVersion("1.000-SNAPSHOT", "1.999"));
 
 		// case: false
 		Assertions.assertFalse(JAR_INFO.betweenVersion("1.999", "2.000"));
 		Assertions.assertFalse(JAR_INFO.betweenVersion("0.001", "0.999"));
-	}
-
-	@Test
-	public void testNotBetweenVersion() {
-		// case: false
-		Assertions.assertFalse(JAR_INFO.notBetweenVersion("0.999", "1.000"));
-		Assertions.assertFalse(JAR_INFO.notBetweenVersion("0.999", "1.999"));
-		Assertions.assertFalse(JAR_INFO.notBetweenVersion("1.000", "1.999"));
-
-		// case: true
-		Assertions.assertTrue(JAR_INFO.notBetweenVersion("1.999", "2.000"));
-		Assertions.assertTrue(JAR_INFO.notBetweenVersion("0.001", "0.999"));
 	}
 }

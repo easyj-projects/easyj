@@ -51,8 +51,8 @@ import static icu.easyj.core.loader.ServiceProviders.JACKSON;
  */
 public class JSONUtilsTest {
 
-	private static final int THREAD_COUNT = 10;
-	private static final int TIMES = 2 * 10000;
+	private static final int THREAD_COUNT = 5;
+	private static final int TIMES = 10000;
 
 	private static final String JSON1 = "{\"Name\":\"某某人1\",\"Age\":31,\"Birthday\":\"1990-10-01\"}";
 	private static final String JSON2 = "{\"Name\":\"某某人2\",\"Age\":32,\"Birthday\":\"1989-10-02\"}";
