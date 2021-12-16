@@ -13,22 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
+package icu.easyj.spring.boot.autoconfigure.loopholecheck;
 
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * The type Error hello 1.
+ * 漏洞检测相关配置
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+@ConfigurationProperties("easyj.loophole-check")
+public class LoopholeCheckProperties {
 
-	@Override
-	public String say() {
-		return "error hello2!";
+	/**
+	 * 如果存在漏洞，是否抛出异常。
+	 */
+	private boolean needThrowIfExist = true;
+
+
+	public boolean isNeedThrowIfExist() {
+		return needThrowIfExist;
+	}
+
+	public LoopholeCheckProperties setNeedThrowIfExist(boolean needThrowIfExist) {
+		this.needThrowIfExist = needThrowIfExist;
+		return this;
 	}
 }

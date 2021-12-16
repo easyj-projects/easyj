@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure;
+package icu.easyj.core.util.jar.impls;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import icu.easyj.core.loader.LoadLevel;
+import icu.easyj.core.util.jar.IJarGroupLoader;
+import icu.easyj.core.util.jar.JarContext;
+import org.springframework.core.Ordered;
 
 /**
- * 漏洞检测相关配置
+ * JetBrains的IDEA开发工具中，会加载一些JAR进来，但是从JAR中很难读取
  *
  * @author wangliang181230
  */
-@ConfigurationProperties("easyj.loophole-check")
-public class LoopholeCheckProperties {
+@LoadLevel(name = "idea", order = Ordered.LOWEST_PRECEDENCE - 100)
+public class JetBrainsIdeaJarGroupLoaderImpl implements IJarGroupLoader {
 
-	/**
-	 * 检测到漏洞后，是否抛出异常。
-	 */
-	private boolean needThrowException = false;
-
-
-	public boolean isNeedThrowException() {
-		return needThrowException;
-	}
-
-	public LoopholeCheckProperties setNeedThrowException(boolean needThrowException) {
-		this.needThrowException = needThrowException;
-		return this;
+	@Override
+	public String load(JarContext jarContext) {
+		switch (jarContext.getName()) {
+			case "debugger-agent":
+			case "idea_rt":
+				return "org.jetbrains.intellij";
+			default:
+				break;
+		}
+		return null;
 	}
 }

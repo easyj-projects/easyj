@@ -18,8 +18,6 @@ package icu.easyj.core.util.jar;
 import java.util.List;
 import java.util.Map;
 
-import icu.easyj.core.util.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,50 +33,20 @@ public class JarUtilsTest {
 		List<JarInfo> jarList = JarUtils.getJarList();
 		Assertions.assertNotNull(jarList);
 
-		this.print(jarList);
+		System.out.println(JarUtils.convertToDescriptionStr(jarList));
 	}
 
 	@Test
 	public void testGetJarMap() {
 		Map<String, JarInfo> jarMap = JarUtils.getJarMap();
 		Assertions.assertNotNull(jarMap);
+
+		JarInfo jarInfo1 = JarUtils.getJar("org.springframework", "spring-core");
+		Assertions.assertNotNull(jarInfo1);
+
+		// TODO: 由于组名加载器还不够完善，如果上面使用全名未获取到JAR信息，则通过 '<unknown>' 作为组名重新获取一遍，等组名加载器足够完善以后，此代码可以删除
+		JarInfo jarInfo2 = JarUtils.getJar("spring-core");
+		Assertions.assertNotNull(jarInfo2);
+		Assertions.assertEquals(jarInfo1, jarInfo2);
 	}
-
-
-	//region Private
-
-	/**
-	 * 格式化打印，方便观察
-	 *
-	 * @param jarList jar列表
-	 */
-	private void print(List<JarInfo> jarList) {
-		int maxNameLength = 0;
-		int maxVersionLength = 0;
-		int maxLongVersionLength = 0;
-		for (JarInfo jar : jarList) {
-			if (maxNameLength < jar.getName().length()) {
-				maxNameLength = jar.getName().length();
-			}
-			if (maxVersionLength < jar.getVersion().length()) {
-				maxVersionLength = jar.getVersion().length();
-			}
-			if (maxLongVersionLength < String.valueOf(jar.getVersionLong()).length()) {
-				maxLongVersionLength = String.valueOf(jar.getVersionLong()).length();
-			}
-		}
-
-		System.out.println("-----------------------------");
-		System.out.println("size: " + jarList.size());
-		System.out.println("-----------------------------");
-		for (JarInfo jar : jarList) {
-			System.out.println(StringUtils.leftPad(jar.getName(), maxNameLength)
-					+ " : " + StringUtils.rightPad(ObjectUtils.defaultIfNull(jar.getVersion(), ""), maxVersionLength)
-					+ " : " + StringUtils.rightPad(String.valueOf(jar.getVersionLong()), maxLongVersionLength)
-					+ "   ->   " + jar.getFilePath());
-		}
-		System.out.println("-----------------------------");
-	}
-
-	//endregion
 }

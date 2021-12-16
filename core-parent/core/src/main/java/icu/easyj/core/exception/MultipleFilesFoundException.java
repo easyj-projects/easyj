@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
-
-import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+package icu.easyj.core.exception;
 
 /**
- * The type Error hello 1.
+ * 找到多个文件的异常
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+public class MultipleFilesFoundException extends RuntimeException {
 
-	@Override
-	public String say() {
-		return "error hello2!";
+	public MultipleFilesFoundException(String message) {
+		super(message);
 	}
 }

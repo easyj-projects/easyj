@@ -42,7 +42,7 @@ public class VersionUtilsTest {
 		Assertions.assertTrue(versionInfo.isSnapshotVersion());
 
 		versionInfo = VersionUtils.parse(null);
-		Assertions.assertEquals("UNKNOWN", versionInfo.getVersion());
+		Assertions.assertEquals(VersionUtils.UNKNOWN_VERSION, versionInfo.getVersion());
 		Assertions.assertEquals(UNKNOWN_VERSION_LONG, versionInfo.getVersionLong());
 		Assertions.assertTrue(versionInfo.isUnknownVersion());
 		Assertions.assertFalse(versionInfo.isSnapshotVersion());

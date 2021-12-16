@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.loader.model;
+package icu.easyj.core.util.jar.impls;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.loader.condition.DependsOnJarVersion;
+import icu.easyj.core.util.jar.IJarGroupLoader;
+import icu.easyj.core.util.jar.JarContext;
+import org.springframework.core.Ordered;
 
 /**
- * The type Error hello 1.
+ * tomcat的JAR所属组名加载器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "ErrorHello1")
-@DependsOnJarVersion(name = "org.slf4j:slf4j-api", minVersion = "2.0.0")
-public class ErrorHello1 implements Hello {
+@LoadLevel(name = "tomcat", order = Ordered.LOWEST_PRECEDENCE - 800)
+public class TomcatJarGroupLoaderImpl implements IJarGroupLoader {
 
 	@Override
-	public String say() {
-		return "error hello2!";
+	public String load(JarContext jarContext) {
+		if (jarContext.getName().startsWith("tomcat-embed")) {
+			return "org.apache.tomcat.embed";
+		} else if (jarContext.getName().startsWith("tomcat")) {
+			return "org.apache.tomcat";
+		}
+		return null;
 	}
 }

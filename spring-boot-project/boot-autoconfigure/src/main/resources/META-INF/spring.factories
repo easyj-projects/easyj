@@ -1,9 +1,10 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 icu.easyj.spring.boot.autoconfigure.configs.EasyjConfigsAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.jar.EasyjDependenciesAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
-icu.easyj.spring.boot.autoconfigure.json.fastjson.EasyjCheckFastjsonLoopholeAutoConfiguration,\
-icu.easyj.spring.boot.autoconfigure.logging.log4j.EasyjCheckLog4j2LoopholeAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjFastjsonLoopholeCheckAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjLog4j2LoopholeCheckAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.websocket.server.EasyjMiddleWareWebSocketServerAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.sdk.tencent.cloud.EasyjTencentCloudAutoConfiguration,\
