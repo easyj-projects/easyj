@@ -15,8 +15,8 @@
  */
 package icu.easyj.core.util.jar.impls;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link MavenJarGroupLoaderImpl} 测试类
