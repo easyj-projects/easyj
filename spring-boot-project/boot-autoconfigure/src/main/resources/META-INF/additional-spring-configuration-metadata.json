@@ -79,8 +79,8 @@
 			"name": "easyj.loophole-check.need-throw-if-exist",
 			"type": "java.lang.Boolean",
 			"sourceType": "icu.easyj.spring.boot.autoconfigure.loopholecheck.LoopholeCheckProperties",
-			"description": "当潺潺存在时，是否抛出异常.",
-			"defaultValue": true
+			"description": "当漏洞存在时，是否抛出异常.",
+			"defaultValue": false
 		},
 		{
 			"name": "easyj.print-dependencies",

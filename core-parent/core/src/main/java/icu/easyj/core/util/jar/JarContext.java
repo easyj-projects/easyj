@@ -23,6 +23,7 @@ import java.util.jar.Manifest;
 
 import cn.hutool.core.io.IORuntimeException;
 import icu.easyj.core.exception.MultipleFilesFoundException;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.version.VersionInfo;
 import icu.easyj.core.util.version.VersionUtils;
 import org.springframework.core.io.Resource;
@@ -133,7 +134,7 @@ public class JarContext {
 			}
 		}
 
-		locationPattern = jarFilePath + locationPattern;
+		locationPattern = this.jarFilePath + locationPattern;
 		return icu.easyj.core.util.ResourceUtils.getResources(locationPattern);
 	}
 
@@ -146,7 +147,7 @@ public class JarContext {
 	@Nullable
 	public Resource getResource(String locationPattern) {
 		Resource[] resources = getResources(locationPattern);
-		if (resources.length == 0) {
+		if (ArrayUtils.isEmpty(resources)) {
 			return null;
 		} else if (resources.length == 1) {
 			return resources[0];

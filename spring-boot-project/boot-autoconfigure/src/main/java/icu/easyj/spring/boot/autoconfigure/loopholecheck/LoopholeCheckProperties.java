@@ -28,7 +28,7 @@ public class LoopholeCheckProperties {
 	/**
 	 * 如果存在漏洞，是否抛出异常。
 	 */
-	private boolean needThrowIfExist = true;
+	private boolean needThrowIfExist = false;
 
 
 	public boolean isNeedThrowIfExist() {
