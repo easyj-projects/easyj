@@ -90,8 +90,8 @@ public abstract class EasyjFastjsonBugfixUtils {
 	 * @return 是否为存在漏洞的版本
 	 */
 	public static boolean isLoopholeVersion(VersionInfo versionInfo) {
-		// 小于等于1.2.68版本，且不是最新的漏洞修复版本
-		return versionInfo.compareTo("1.2.68") <= 0 && !isLatestSecVersion(versionInfo.getVersion());
+		// 小于1.2.69版本，且不是最新的漏洞修复版本
+		return versionInfo.compareTo("1.2.69-SNAPSHOT") < 0 && !isLatestSecVersion(versionInfo.getVersion());
 	}
 
 	/**
