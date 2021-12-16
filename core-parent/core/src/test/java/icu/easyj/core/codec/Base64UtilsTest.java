@@ -186,7 +186,7 @@ public class Base64UtilsTest {
 
 		// 运行次数
 		int threadCount = 5;
-		int times = 50 * 10000;
+		int times = 10 * 10000;
 		// 运行测试，并获取每个函数的耗时
 		long[] costs = TestUtils.performanceTest(threadCount, times,
 				// easyj函数
