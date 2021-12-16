@@ -131,6 +131,18 @@ public abstract class VersionUtils {
 	}
 
 	/**
+	 * 比较版本号
+	 *
+	 * @param versionA 版本号A
+	 * @param versionB 版本号B
+	 * @return 小于0时，A小于B | 等于0时，A相等B | 大于0时，A大于B
+	 */
+	public static int compare(String versionA, String versionB) {
+		VersionInfo versionInfo = parse(versionA);
+		return versionInfo.compareTo(versionB);
+	}
+
+	/**
 	 * 判断是否为快照版本
 	 *
 	 * @param version 版本号
