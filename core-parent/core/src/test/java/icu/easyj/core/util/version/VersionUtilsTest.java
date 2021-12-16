@@ -73,6 +73,27 @@ public class VersionUtilsTest {
 	}
 
 	@Test
+	public void testCompare() {
+		// case: 小于0
+		Assertions.assertTrue(VersionUtils.compare("1.0-SNAPSHOT", "1.0-RELEASE") < 0); // SNAPSHOT为快照版本，非RELEASE，版本号相同时，比任何RELEASE版本要小
+		Assertions.assertTrue(VersionUtils.compare("1.0-RELEASE", "1.0-SNAPSHO") < 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0-RC1", "1.0-RC2") < 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0-Aaaa", "1.0-Bbb") < 0);
+		Assertions.assertTrue(VersionUtils.compare("   ", "1.0") < 0);
+
+		// case: 等于0
+		Assertions.assertEquals(0, VersionUtils.compare("1.0-Aaaa", "1.0-Aaaa"));
+		Assertions.assertEquals(0, VersionUtils.compare("   ", " "));
+
+		// case: 大于0
+		Assertions.assertTrue(VersionUtils.compare("1.0-RELEASE", "1.0-SNAPSHOT") > 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0-SNAPSHO", "1.0-RELEASE") > 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0-RC2", "1.0-RC1") > 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0-Bbb", "1.0-Aaaa") > 0);
+		Assertions.assertTrue(VersionUtils.compare("1.0", "   ") > 0);
+	}
+
+	@Test
 	public void testIsUnknownVersion() {
 		Assertions.assertTrue(VersionUtils.isUnknownVersion(null));
 		Assertions.assertTrue(VersionUtils.isUnknownVersion(""));
