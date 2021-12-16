@@ -18,11 +18,12 @@ package icu.easyj.core.util.jar.impls;
 import java.io.IOException;
 
 import cn.hutool.core.io.IORuntimeException;
-import icu.easyj.core.exception.MultipleFilesFoundException;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.jar.IJarGroupLoader;
 import icu.easyj.core.util.jar.JarContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 /**
@@ -32,6 +33,9 @@ import org.springframework.core.io.Resource;
  */
 @LoadLevel(name = "maven", order = 0)
 public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MavenJarGroupLoaderImpl.class);
+
 
 	@Override
 	public String load(JarContext jarContext) {
@@ -53,25 +57,25 @@ public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
 
 			// 获取所有的group如果全部一样，则返回，否则抛出异常
 			String groupResult = null;
+			boolean hasMultipleGroup = false;
 			for (Resource res : resources) {
 				String group = this.parseGroup(res);
 				if (groupResult == null) {
 					groupResult = group;
 				} else if (groupResult.equals(group)) {
-					groupResult = null;
+					hasMultipleGroup = true;
 					break;
 				}
 			}
-			if (groupResult != null) {
-				return groupResult;
-			} else {
-				// 抛异常
+			if (hasMultipleGroup) {
+				// 记录警告日志
 				StringBuilder sb = new StringBuilder();
 				for (Resource res : resources) {
 					sb.append("\r\n - ").append(res);
 				}
-				throw new MultipleFilesFoundException("JAR '" + jarContext.getName() + "' 中存在多个组名不统一的 'pom.xml' 文件：" + sb);
+				LOGGER.warn("JAR '{}' 中存在多个组名不统一的 'pom.xml' 文件，现直接返回第一个组名，所有pom.xml文件路径如下：{}", jarContext.getName(), sb);
 			}
+			return groupResult;
 		}
 
 		return null;
