@@ -30,7 +30,7 @@ import org.springframework.core.Ordered;
  */
 @Lazy(false)
 @ConditionalOnProperty("easyj.print-dependencies")
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class EasyjDependenciesAutoConfiguration implements Ordered {
 
 	public EasyjDependenciesAutoConfiguration() {
