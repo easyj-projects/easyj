@@ -18,7 +18,6 @@ package icu.easyj.core.util.version;
 import java.io.Serializable;
 import java.util.Objects;
 
-import icu.easyj.core.util.StringUtils;
 import org.springframework.lang.NonNull;
 
 /**
@@ -82,24 +81,36 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 		if (otherVersionInfo == this) {
 			return 0;
 		}
-		if (Objects.equals(version, otherVersionInfo.version)) {
+		if (Objects.equals(this.version, otherVersionInfo.version)) {
 			return 0;
 		}
 
-		return Long.compare(this.versionLong, otherVersionInfo.versionLong);
+		return this.compare(otherVersionInfo.getVersion(), otherVersionInfo.getVersionLong());
 	}
 
 	public int compareTo(String otherVersion) {
-		if (StringUtils.isBlank(otherVersion)) {
+		if (VersionUtils.isUnknownVersion(otherVersion)) {
 			return unknownVersion ? 0 : 1;
+		} else if (unknownVersion) {
+			return -1;
 		}
 
-		if (version.equals(otherVersion)) {
+		if (this.version.equals(otherVersion)) {
 			return 0;
 		}
 
 		long otherVersionLong = VersionUtils.toLong(otherVersion);
-		return Long.compare(this.versionLong, otherVersionLong);
+		return this.compare(otherVersion, otherVersionLong);
+	}
+
+	private int compare(String otherVersion, long otherVersionLong) {
+		int result = Long.compare(this.versionLong, otherVersionLong);
+		if (result == 0) {
+			// 如果long值相等，则再比较一下String值
+			return this.version.compareTo(otherVersion);
+		} else {
+			return result;
+		}
 	}
 
 	/**
