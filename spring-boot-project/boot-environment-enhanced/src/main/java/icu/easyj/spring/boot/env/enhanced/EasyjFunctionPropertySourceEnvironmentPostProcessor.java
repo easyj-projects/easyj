@@ -40,16 +40,19 @@ public class EasyjFunctionPropertySourceEnvironmentPostProcessor implements Envi
 
 		// 添加函数式配置源：${easyj.xxx}
 		// 目前包含：
-		// 1、配置加密：${easyj.crypto.decrypt('xxxxxxxxxxxx')}
-		// 2、获取本地IP：${easyj.net.getIp()}
-		// 3、匹配本地IP：${easyj.net.matchIp('10.10.10.*', '192.168.10.*')}
-		// 4、生成随机内容：${easyj.random.xxx}，支持：端口、数字、UUID
+		// 1、类是否存在：${easyj.class.isExist('类名1', '类名2', ..., '类名n')}
+		// 2、获取存在的类：${easyj.class.getExistingOne('类名1', '类名2', ..., '类名n')}
+		// 3、配置加密：${easyj.crypto.decrypt('xxxxxxxxxxxx')}
+		// 4、获取本地IP：${easyj.net.getIp()}
+		// 5、匹配本地IP：${easyj.net.matchIp('10.10.10.*', '192.168.10.*')}
+		// 6、生成随机内容：${easyj.random.xxx}，支持：端口、数字、UUID
 		propertySources.addLast(new EasyjFunctionPropertySource());
 	}
 
 	@Override
 	public int getOrder() {
-		// 比SpringBoot的配置文件加载器早（为了兼容低版本的springboot，不使用springboot的常量）
+		// 比SpringBoot的配置文件加载器早
+		// 注：为了兼容低版本的springboot，不使用springboot的常量
 		return (Ordered.HIGHEST_PRECEDENCE + 10) - 1; // ConfigDataEnvironmentPostProcessor.ORDER - 1;
 	}
 }
