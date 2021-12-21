@@ -216,6 +216,10 @@
 									<include>${project.groupId}:*:*</include>
 								</includes>
 							</artifactSet>
+							<transformers>
+								<!-- 合并 'META-INF/services' 目录下同名的文件内容 -->
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+							</transformers>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
