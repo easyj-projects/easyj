@@ -56,7 +56,9 @@ import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_SYMMET
 public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
 	/**
-	 * HIGHEST + 20（为了兼容低版本的springboot，不使用springboot的常量）
+	 * HIGHEST + 20，比SpringBoot的配置文件加载器晚
+	 * <p>
+	 * 注：为了兼容低版本的springboot，不使用springboot的常量
 	 */
 	public static final int ORDER = (Ordered.HIGHEST_PRECEDENCE + 10) + 10; // ConfigDataEnvironmentPostProcessor.ORDER + 10;
 

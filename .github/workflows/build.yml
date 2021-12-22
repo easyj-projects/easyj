@@ -13,8 +13,8 @@ jobs:
       matrix:
         java: [ 8, 11, 17 ]
         properties: [
-            #-Dsb=2.6.1,
-            #-Dsb=2.5.7,
+            #-Dsb=2.6.2,
+            #-Dsb=2.5.8,
             #-Dsb=2.4.13,
             #-Dsb=2.3.12.RELEASE,
             #-Dsb=2.2.13.RELEASE,
