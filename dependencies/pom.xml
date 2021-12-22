@@ -208,6 +208,11 @@
 				<artifactId>easypoi-wps</artifactId>
 				<version>${afterturn-easypoi.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-spring-boot-starter</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
 			<!-- alibaba-easyexcel -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
