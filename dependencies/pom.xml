@@ -31,7 +31,7 @@
 
 	<properties>
 		<!-- Spring dependencies version -->
-		<sb>2.6.1</sb>
+		<sb>2.6.2</sb>
 		<spring-boot.version>${sb}</spring-boot.version>
 
 		<!-- Javax dependencies version -->
