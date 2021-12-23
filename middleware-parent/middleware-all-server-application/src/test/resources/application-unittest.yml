@@ -12,6 +12,6 @@ easyj.middleware.dwz.server:
 #日志相关配置
 easyj.logging.logback:
   kafka-appender:
-    enabled: false
+    enabled: false #当前springboot的log4j版本不匹配，暂时禁用
   logstash-appender:
     enabled: true
