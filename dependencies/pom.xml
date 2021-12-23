@@ -30,11 +30,10 @@
 	</issueManagement>
 
 	<properties>
-		<!-- Spring dependencies version -->
-		<sb>2.1.18.RELEASE</sb>
-		<spring-boot.version>${sb}</spring-boot.version>
+		<!-- Spring Boot版本 -->
+		<spring-boot.version>2.1.18.RELEASE</spring-boot.version>
 
-		<!-- Javax dependencies version -->
+		<!-- Javax版本 -->
 		<javax-annotation.version>1.3.2</javax-annotation.version>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
 
@@ -206,6 +205,11 @@
 			<dependency>
 				<groupId>cn.afterturn</groupId>
 				<artifactId>easypoi-wps</artifactId>
+				<version>${afterturn-easypoi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.afterturn</groupId>
+				<artifactId>easypoi-spring-boot-starter</artifactId>
 				<version>${afterturn-easypoi.version}</version>
 			</dependency>
 			<!-- alibaba-easyexcel -->

@@ -20,11 +20,6 @@
 		预计提供：WebSocket服务、UMS（统一消息系统）、UPP（统一支付平台）、验证码服务、...等等。
 	</description>
 
-	<properties>
-		<sb>2.1.18.RELEASE</sb>
-		<spring-boot.version>${sb}</spring-boot.version>
-	</properties>
-
 	<modules>
 		<module>middleware-core</module>
 

@@ -30,11 +30,6 @@
 		<url>https://gitee.com/easyj-projects/easyj/issues</url>
 	</issueManagement>
 
-	<properties>
-		<!-- POI相关版本 -->
-		<afterturn-easypoi.version>4.4.0</afterturn-easypoi.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- 依赖引入：EasyJ Dependencies -->
@@ -53,16 +48,6 @@
 				<version>${project.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-
-
-			<!-- POI相关 -->
-
-			<!-- 依赖定义：Afterturn Spring Boot -->
-			<dependency>
-				<groupId>cn.afterturn</groupId>
-				<artifactId>easypoi-spring-boot-starter</artifactId>
-				<version>${afterturn-easypoi.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
