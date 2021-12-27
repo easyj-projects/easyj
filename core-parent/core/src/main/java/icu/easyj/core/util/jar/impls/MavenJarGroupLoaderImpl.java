@@ -40,25 +40,37 @@ public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
 	@Override
 	public String load(JarContext jarContext) {
 		// 如果存在指定目录的pom.xml文件，则直接解析该pom.xml的文件路径，获取group
-		Resource resource = jarContext.getResource("/META-INF/maven/*/" + jarContext.getName() + "/pom.xml");
-		if (resource != null) {
-			return this.parseGroup(resource);
+		String locationPattern = "/META-INF/maven/*/" + jarContext.getName() + "/pom.xml";
+		Resource[] resources1 = jarContext.getResources(locationPattern);
+		if (resources1.length == 1) {
+			return this.parseGroup(resources1[0]);
+		} else if (resources1.length > 1) {
+			StringBuilder sb = new StringBuilder();
+			for (Resource resource : resources1) {
+				sb.append("\r\n - ");
+				try {
+					sb.append(resource.getURL());
+				} catch (IOException ignore) {
+				}
+			}
+			LOGGER.warn("通过资源路径匹配串 '{}' 找到多个 'pom.xml' 文件，现从第一个文件路径中获取JAR所属组名，多个文件路径如下：{}", locationPattern, sb);
+			return this.parseGroup(resources1[0]);
 		}
 
 		// 查找出所有pom.xml文件，通过两种策略解析
-		Resource[] resources = jarContext.getResources("/META-INF/maven/*/*/pom.xml");
-		if (ArrayUtils.isNotEmpty(resources)) {
-			// 查找包含 "/${name}" 的resource
-			for (Resource res : resources) {
+		Resource[] resources2 = jarContext.getResources("/META-INF/maven/*/*/pom.xml");
+		if (ArrayUtils.isNotEmpty(resources2)) {
+			// 策略1：查找包含 "/${name}" 的resource
+			for (Resource res : resources2) {
 				if (res.toString().contains("/" + jarContext.getName())) {
 					return this.parseGroup(res);
 				}
 			}
 
-			// 获取所有的group如果全部一样，则返回，否则抛出异常
+			// 策略2：获取所有的group如果全部一样，则返回，否则抛出异常
 			String groupResult = null;
 			boolean hasMultipleGroup = false;
-			for (Resource res : resources) {
+			for (Resource res : resources2) {
 				String group = this.parseGroup(res);
 				if (groupResult == null) {
 					groupResult = group;
@@ -70,7 +82,7 @@ public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
 			if (hasMultipleGroup) {
 				// 记录警告日志
 				StringBuilder sb = new StringBuilder();
-				for (Resource res : resources) {
+				for (Resource res : resources2) {
 					sb.append("\r\n - ").append(res);
 				}
 				LOGGER.warn("JAR '{}' 中存在多个组名不统一的 'pom.xml' 文件，现直接返回第一个组名，所有pom.xml文件路径如下：{}", jarContext.getName(), sb);
