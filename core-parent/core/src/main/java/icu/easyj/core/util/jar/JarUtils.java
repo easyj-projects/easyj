@@ -58,7 +58,10 @@ public abstract class JarUtils {
 
 	public static final Attributes.Name IMPLEMENTATION_VERSION = Attributes.Name.IMPLEMENTATION_VERSION;
 
+	public static final Attributes.Name BUNDLE_SYMBOLIC_NAME = new Attributes.Name("Bundle-SymbolicName");
 	public static final Attributes.Name BUNDLE_VERSION = new Attributes.Name("Bundle-Version");
+
+	public static final Attributes.Name AUTOMATIC_MODULE_NAME = new Attributes.Name("Automatic-Module-Name");
 
 	//endregion
 
@@ -309,13 +312,13 @@ public abstract class JarUtils {
 					Manifest manifest = new Manifest(resource.getInputStream());
 					Attributes attributes = manifest.getMainAttributes();
 
-					// 获取版本号
+					// 获取JAR版本号
 					String version = attributes.getValue(IMPLEMENTATION_VERSION);
 					if (StringUtils.isBlank(version)) {
 						version = attributes.getValue(BUNDLE_VERSION);
 					}
 
-					// 获取模块名
+					// 获取JAR名称
 					jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/META-INF/MANIFEST.MF"));
 					String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
 					String name = jarFileName.replaceAll("-\\d.*$", "");

@@ -53,7 +53,7 @@ public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
 				} catch (IOException ignore) {
 				}
 			}
-			LOGGER.warn("通过资源路径匹配串 '{}' 找到多个 'pom.xml' 文件，现从第一个文件路径中获取JAR所属组名，多个文件路径如下：{}", locationPattern, sb);
+			LOGGER.warn("通过资源路径匹配串 '{}' 找到多个 'pom.xml' 文件，现从第一个文件路径中获取JAR所属组名，多个 'pom.xml' 文件路径如下：{}", locationPattern, sb);
 			return this.parseGroup(resources1[0]);
 		}
 
@@ -85,7 +85,7 @@ public class MavenJarGroupLoaderImpl implements IJarGroupLoader {
 				for (Resource res : resources2) {
 					sb.append("\r\n - ").append(res);
 				}
-				LOGGER.warn("JAR '{}' 中存在多个组名不统一的 'pom.xml' 文件，现直接返回第一个组名，所有pom.xml文件路径如下：{}", jarContext.getName(), sb);
+				LOGGER.warn("JAR '{}' 中存在多个组名不统一的 'pom.xml' 文件，现直接返回第一个组名，多个 'pom.xml' 文件路径如下：{}", jarContext.getName(), sb);
 			}
 			return groupResult;
 		}

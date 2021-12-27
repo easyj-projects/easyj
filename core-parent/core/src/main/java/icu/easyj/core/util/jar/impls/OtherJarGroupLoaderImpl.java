@@ -21,20 +21,18 @@ import icu.easyj.core.util.jar.JarContext;
 import org.springframework.core.Ordered;
 
 /**
- * JetBrains的IDEA开发工具中，会加载一些JAR进来，但是从JAR中很难读取
+ * 其他的JAR所属组名加载器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "idea", order = Ordered.LOWEST_PRECEDENCE - 100)
-public class JetBrainsIdeaJarGroupLoaderImpl implements IJarGroupLoader {
+@LoadLevel(name = "other", order = Ordered.LOWEST_PRECEDENCE)
+public class OtherJarGroupLoaderImpl implements IJarGroupLoader {
 
 	@Override
 	public String load(JarContext jarContext) {
 		switch (jarContext.getName()) {
-			case "debugger-agent":
-			case "idea_rt":
-			case "intellij-coverage-agent":
-				return "org.jetbrains.intellij";
+			case "apiguardian-api":
+				return "org.apiguardian";
 			default:
 				break;
 		}
