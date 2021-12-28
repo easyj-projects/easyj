@@ -1,4 +1,4 @@
-name: Tests And Codecov
+name: "Test And Codecov"
 
 on:
   push:
