@@ -17,6 +17,10 @@ package icu.easyj.core.util.jar;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -24,6 +28,7 @@ import java.util.jar.Manifest;
 import cn.hutool.core.io.IORuntimeException;
 import icu.easyj.core.exception.MultipleFilesFoundException;
 import icu.easyj.core.util.ArrayUtils;
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.version.VersionInfo;
 import icu.easyj.core.util.version.VersionUtils;
 import org.springframework.core.io.Resource;
@@ -106,6 +111,15 @@ public class JarContext {
 		return attributes;
 	}
 
+	public String getAttribute(String attributeName) {
+		return attributes.getValue(attributeName);
+	}
+
+	public String getAttribute(Attributes.Name attributeName) {
+		return attributes.getValue(attributeName);
+	}
+
+
 	public JarFile getJarFile() {
 		if (jarFile == null) {
 			try {
@@ -162,5 +176,53 @@ public class JarContext {
 			}
 			throw new MultipleFilesFoundException("通过资源路径匹配串 '" + locationPattern + "' 找到多个资源文件：" + sb);
 		}
+	}
+
+	/**
+	 * 通过所有class文件的路径，获取JAR包中所有类的类路径列表
+	 *
+	 * @return classNames 类路径列表
+	 */
+	@NonNull
+	public List<String> getClassNames() {
+		Resource[] resources = getResources("/**/*.class");
+
+		List<String> classNames = new ArrayList<>();
+
+		String resourcePath;
+		for (Resource resource : resources) {
+			try {
+				resourcePath = resource.getURL().toString();
+			} catch (IOException ignore) {
+				continue;
+			}
+			resourcePath = resourcePath.substring(resourcePath.indexOf(".jar!/") + ".jar!/".length(), resourcePath.length() - 6);
+			resourcePath = resourcePath.replace('/', '.');
+			classNames.add(resourcePath);
+		}
+
+		return classNames;
+	}
+
+	/**
+	 * 获取JAR里面的类的包名集合
+	 *
+	 * @param numberOfTheDot 获取包里面第n个点前面的内容
+	 * @return 包集合
+	 */
+	@NonNull
+	public Set<String> getClassPackages(int numberOfTheDot) {
+		List<String> classNames = getClassNames();
+
+		Set<String> packages = new HashSet<>();
+
+		for (String className : classNames) {
+			int idx = StringUtils.indexOf(className, '.', numberOfTheDot);
+			if (idx > 0) {
+				packages.add(className.substring(0, idx));
+			}
+		}
+
+		return packages;
 	}
 }

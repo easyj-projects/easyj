@@ -222,6 +222,14 @@ public class StringUtilsTest {
 		Assertions.assertEquals(" aabbcc", StringUtils.trimEnd(" aabbcc / /", '/'));
 	}
 
+	@Test
+	public void testIndexOf() {
+		Assertions.assertEquals(4, StringUtils.indexOf("aaccbdb", 'b', 1));
+		Assertions.assertEquals(6, StringUtils.indexOf("aaccbdb", 'b', 2));
+		Assertions.assertEquals(-2, StringUtils.indexOf("aaccbdb", 'b', 3));
+		Assertions.assertEquals(-1, StringUtils.indexOf("11111", 'b', 3));
+	}
+
 
 	//region 测试`StringUtils.toString()`方法和CycleDependency类
 
