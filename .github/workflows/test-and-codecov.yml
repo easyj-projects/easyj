@@ -1,4 +1,4 @@
-name: Tests And Codecov
+name: "Test And Codecov"
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ develop, master, spring-boot_2.1.x, spring-boot_1.x.x-2.0.x ]
 
 jobs:
-  build:
+  test:
+    name: "Test"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,7 +22,7 @@ jobs:
             #2.1.18.RELEASE,
             2.0.9.RELEASE,
             1.5.22.RELEASE,
-            1.4.7.RELEASE
+            1.4.7.RELEASE,
             #1.3.8.RELEASE,
             #1.2.8.RELEASE,
             #1.1.12.RELEASE,

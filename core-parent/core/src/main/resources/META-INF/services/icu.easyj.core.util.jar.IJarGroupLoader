@@ -7,4 +7,5 @@ icu.easyj.core.util.jar.impls.KafkaJarGroupLoaderImpl
 icu.easyj.core.util.jar.impls.HutoolJarGroupLoaderImpl
 icu.easyj.core.util.jar.impls.JavaJdkJarGroupLoaderImpl
 icu.easyj.core.util.jar.impls.JetBrainsIdeaJarGroupLoaderImpl
-icu.easyj.core.util.jar.impls.JunitJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.TestJarGroupLoaderImpl
+icu.easyj.core.util.jar.impls.OtherJarGroupLoaderImpl

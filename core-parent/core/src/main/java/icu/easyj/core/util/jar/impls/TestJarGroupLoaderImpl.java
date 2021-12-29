@@ -20,12 +20,12 @@ import icu.easyj.core.util.jar.IJarGroupLoader;
 import icu.easyj.core.util.jar.JarContext;
 
 /**
- * junit的JAR所属组名加载器
+ * test相关的JAR所属组名加载器
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "junit")
-public class JunitJarGroupLoaderImpl implements IJarGroupLoader {
+@LoadLevel(name = "test")
+public class TestJarGroupLoaderImpl implements IJarGroupLoader {
 
 	@Override
 	public String load(JarContext jarContext) {
@@ -49,6 +49,13 @@ public class JunitJarGroupLoaderImpl implements IJarGroupLoader {
 				return "org.junit.contrib";
 			case "org.junit.source":
 				return "org.junit.source";
+			// mockito
+			case "mockito-core":
+			case "mockito-junit-jupiter":
+				return "org.mockito";
+			// opentest4j
+			case "opentest4j":
+				return "org.opentest4j";
 			default:
 				break;
 		}

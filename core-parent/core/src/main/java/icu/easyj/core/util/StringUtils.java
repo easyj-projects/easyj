@@ -407,6 +407,29 @@ public abstract class StringUtils {
 		return count;
 	}
 
+	/**
+	 * 查找第n个目标字符在字符串的索引值
+	 *
+	 * @param targetChar 目标字符
+	 * @param n          第 n 个目标字符，n必须大于0
+	 * @return index 字符索引，返回-1表示字符串中没有目标字符，返回-2表示字符串中包含的目标字符少于n个
+	 */
+	public static int indexOf(String str, char targetChar, int n) {
+		Assert.isTrue(n > 0, "n必须大于0");
+
+		int count = 0;
+		for (int i = 0; i < str.length(); ++i) {
+			if (str.charAt(i) == targetChar) {
+				count++;
+				if (count == n) {
+					return i;
+				}
+			}
+		}
+
+		return count == 0 ? -1 : -2;
+	}
+
 	//endregion
 
 
