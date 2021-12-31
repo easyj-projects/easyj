@@ -190,15 +190,8 @@ public class JSONUtilsTest {
 		String jsonStr2 = service.toJSONString(user2);
 		System.out.println(service.getName() + ": jsonStr1: " + jsonStr1);
 		System.out.println(service.getName() + ": jsonStr2: " + jsonStr2);
-		try {
-			Assertions.assertTrue(user1.equals(service.toBean(jsonStr1, TestUser.class)));
-			Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
-		} catch (Throwable t) {
-			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!JACKSON.equals(service.getName())) {
-				throw t;
-			}
-		}
+		Assertions.assertTrue(user1.equals(service.toBean(jsonStr1, TestUser.class)));
+		Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
 		Assertions.assertTrue(jsonStr1.contains("\"Name\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Age\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""));
@@ -211,57 +204,29 @@ public class JSONUtilsTest {
 		Assertions.assertNotNull(list2);
 		Assertions.assertEquals(2, list2.size());
 
-		try {
-			Assertions.assertTrue(list1.get(0).equals(list2.get(0)));
-			Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
-		} catch (Throwable t) {
-			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!JACKSON.equals(service.getName())) {
-				throw t;
-			}
-		}
+		Assertions.assertTrue(list1.get(0).equals(list2.get(0)));
+		Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
 	}
 
 	private void assertEquals1(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人1", user.getName());
 		Assertions.assertEquals(31, user.getAge().intValue());
-		try {
-			Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
-		} catch (Throwable t) {
-			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!JACKSON.equals(service.getName())) {
-				throw t;
-			}
-		}
+		Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 	}
 
 	private void assertEquals2(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人2", user.getName());
 		Assertions.assertEquals(32, user.getAge().intValue());
-		try {
-			Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
-		} catch (Throwable t) {
-			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!JACKSON.equals(service.getName())) {
-				throw t;
-			}
-		}
+		Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
 	}
 
 	private void assertEquals3(IJSONService service, TestUser3 user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人3", user.getUserName());
 		Assertions.assertEquals(33, user.getUserAge().intValue());
-		try {
-			Assertions.assertEquals("1988-10-03", DateUtils.format(DateFormatType.DD, user.getUserBirthday()));
-		} catch (Throwable t) {
-			// FIXME: jackson 在 github/actions 上会存在时区问题
-			if (!JACKSON.equals(service.getName())) {
-				throw t;
-			}
-		}
+		Assertions.assertEquals("1988-10-03", DateUtils.format(DateFormatType.DD, user.getUserBirthday()));
 	}
 
 	//endregion
