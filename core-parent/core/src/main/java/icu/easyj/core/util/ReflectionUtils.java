@@ -173,7 +173,7 @@ public abstract class ReflectionUtils {
 	 * @throws SecurityException if the request is denied.
 	 */
 	public static <T extends AccessibleObject> void setAccessible(T accessible) throws SecurityException {
-		if (!accessible.isAccessible()) {
+		if (accessible != null && !accessible.isAccessible()) {
 			accessible.setAccessible(true);
 		}
 	}
