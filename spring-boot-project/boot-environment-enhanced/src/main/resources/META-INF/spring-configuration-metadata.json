@@ -1,20 +1,20 @@
 {
 	"groups": [
 		{
-			"name": "easyj.global.crypto",
-			"description": "EasyJ定义的全局加密算法配置组."
+			"name": "easyj.crypto",
+			"description": "EasyJ定义的全局加解密算法配置组."
 		}
 	],
 	"properties": [
 		{
-			"name": "easyj.global.standard-env",
+			"name": "easyj.env.standard-env",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "手动配置标准环境代码.",
 			"defaultValue": "prod"
 		},
 		{
-			"name": "easyj.global.standard-env-list",
+			"name": "easyj.env.standard-env-list",
 			"type": "java.util.List<java.lang.String>",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "标准环境代码列表，用于自动根据环境代码匹配标准环境代码.",
@@ -26,11 +26,11 @@
 			]
 		},
 		{
-			"name": "easyj.global.default-standard-env",
+			"name": "easyj.env.default-standard-env",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "默认的标准环境代码，当没有匹配到时，使用该值作为标准环境代码.",
-			"defaultValue": "${easyj.global.standard-env-list[0]}"
+			"defaultValue": "${easyj.env.standard-env-list[0]}"
 		},
 		{
 			"name": "easyj.config.activate.on-class",
@@ -39,43 +39,43 @@
 			"description": "配置源过滤器接口实现：基于OnClass条件判断."
 		},
 		{
-			"name": "easyj.global.asymmetric-crypto.algorithm",
+			"name": "easyj.crypto.asymmetric-crypto.algorithm",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的非对称加密算法."
 		},
 		{
-			"name": "easyj.global.asymmetric-crypto.private-key",
+			"name": "easyj.crypto.asymmetric-crypto.private-key",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的非对称加密算法密钥."
 		},
 		{
-			"name": "easyj.global.asymmetric-crypto.public-key",
+			"name": "easyj.crypto.asymmetric-crypto.public-key",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的非对称加密算法公钥."
 		},
 		{
-			"name": "easyj.global.symmetric-crypto.algorithm",
+			"name": "easyj.crypto.symmetric-crypto.algorithm",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法."
 		},
 		{
-			"name": "easyj.global.symmetric-crypto.key",
+			"name": "easyj.crypto.symmetric-crypto.key",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法密钥."
 		},
 		{
-			"name": "easyj.global.symmetric-crypto.iv",
+			"name": "easyj.crypto.symmetric-crypto.iv",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法偏移向量."
 		},
 		{
-			"name": "easyj.global.symmetric-crypto.charset",
+			"name": "easyj.crypto.symmetric-crypto.charset",
 			"type": "java.nio.charset.Charset",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",
 			"description": "全局的对称加密算法编码.",
@@ -180,7 +180,7 @@
 	],
 	"hints": [
 		{
-			"name": "easyj.global.asymmetric-crypto.algorithm",
+			"name": "easyj.crypto.asymmetric-crypto.algorithm",
 			"values": [
 				{
 					"value": "RSA",
@@ -210,7 +210,7 @@
 			]
 		},
 		{
-			"name": "easyj.global.symmetric-crypto.algorithm",
+			"name": "easyj.crypto.symmetric-crypto.algorithm",
 			"values": [
 				{
 					"value": "AES\/CBC\/PKCS7Padding",

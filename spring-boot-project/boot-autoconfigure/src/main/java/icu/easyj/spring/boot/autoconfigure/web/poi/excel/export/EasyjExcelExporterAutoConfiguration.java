@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package icu.easyj.spring.boot.autoconfigure.web.poi.excel.export;
 
+import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.web.poi.excel.ExcelExport;
 import icu.easyj.web.poi.excel.ExcelExportAspect;
 import icu.easyj.web.poi.excel.ExcelExportConfig;
@@ -23,8 +24,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_POI_EXCEL_EXPORT_PREFIX;
 
 /**
  * EasyJ-POI-Excel自动装配类
@@ -42,7 +41,7 @@ public class EasyjExcelExporterAutoConfiguration {
 	 * @return Excel导出配置
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = WEB_POI_EXCEL_EXPORT_PREFIX)
+	@ConfigurationProperties(StarterConstants.WEB_POI_EXCEL_EXPORT_PREFIX)
 	public ExcelExportConfig excelExportConfig() {
 		return new ExcelExportConfig();
 	}

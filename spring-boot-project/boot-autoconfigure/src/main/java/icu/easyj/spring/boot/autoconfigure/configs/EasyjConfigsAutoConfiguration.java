@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,45 @@
 package icu.easyj.spring.boot.autoconfigure.configs;
 
 import cn.hutool.core.lang.Snowflake;
+import icu.easyj.config.EnvironmentConfigs;
 import icu.easyj.config.ServerConfigs;
+import icu.easyj.spring.boot.StarterConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_PREFIX;
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.SERVER_PREFIX;
-
 /**
  * 全局配置自动装配
  *
  * @author wangliang181230
- * @see icu.easyj.config.GlobalConfigs
+ * @see EnvironmentConfigs
  */
 public class EasyjConfigsAutoConfiguration {
 
 	/**
-	 * 创建全局配置bean
+	 * 创建项目及应用配置bean
+	 *
+	 * @return 全局配置
+	 */
+	@Bean
+	@Lazy(false)
+	@ConfigurationProperties(StarterConstants.APP_PREFIX)
+	public AppProperties projectProperties() {
+		return new AppProperties();
+	}
+
+	/**
+	 * 创建环境配置bean
 	 *
 	 * @param activeProfiles 激活的profiles
 	 * @return 全局配置
 	 */
 	@Bean
 	@Lazy(false)
-	@ConfigurationProperties(GLOBAL_PREFIX)
-	public GlobalProperties globalProperties(@Value("${spring.profiles.active:}") String[] activeProfiles) {
-		GlobalProperties properties = new GlobalProperties();
+	@ConfigurationProperties(StarterConstants.ENV_PREFIX)
+	public EnvironmentProperties environmentProperties(@Value("${spring.profiles.active:}") String[] activeProfiles) {
+		EnvironmentProperties properties = new EnvironmentProperties();
 		if (activeProfiles != null && activeProfiles.length > 0) {
 			properties.setEnv(activeProfiles[0]);
 		}
@@ -57,7 +68,7 @@ public class EasyjConfigsAutoConfiguration {
 	 */
 	@Bean
 	@Lazy(false)
-	@ConfigurationProperties(SERVER_PREFIX)
+	@ConfigurationProperties(StarterConstants.SERVER_PREFIX)
 	public ServerProperties serverProperties() {
 		return new ServerProperties();
 	}

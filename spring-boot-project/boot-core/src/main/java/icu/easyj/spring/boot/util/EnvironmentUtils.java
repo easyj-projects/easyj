@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -52,14 +53,13 @@ import org.springframework.lang.Nullable;
  */
 public abstract class EnvironmentUtils {
 
-	public static final String PREFIX = "easyj.global";
+	public static final String AREA_KEY = StarterConstants.APP_PREFIX + ".area";
+	public static final String PROJECT_KEY = StarterConstants.APP_PREFIX + ".project";
 
-	public static final String AREA_KEY = PREFIX + ".area";
-	public static final String PROJECT_KEY = PREFIX + ".project";
-	public static final String ENV_KEY = PREFIX + ".env";
-	public static final String STANDARD_ENV_KEY = PREFIX + ".standard-env";
-	public static final String STANDARD_ENV_LIST_KEY = PREFIX + ".standard-env-list";
-	public static final String DEFAULT_STANDARD_ENV_KEY = PREFIX + ".default-standard-env";
+	public static final String ENV_KEY = StarterConstants.ENV_PREFIX + ".env";
+	public static final String STANDARD_ENV_KEY = StarterConstants.ENV_PREFIX + ".standard-env";
+	public static final String STANDARD_ENV_LIST_KEY = StarterConstants.ENV_PREFIX + ".standard-env-list";
+	public static final String DEFAULT_STANDARD_ENV_KEY = StarterConstants.ENV_PREFIX + ".default-standard-env";
 
 
 	//region 默认配置源 start

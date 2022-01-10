@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -410,6 +410,7 @@ public abstract class StringUtils {
 	/**
 	 * 查找第n个目标字符在字符串的索引值
 	 *
+	 * @param str        字符串
 	 * @param targetChar 目标字符
 	 * @param n          第 n 个目标字符，n必须大于0
 	 * @return index 字符索引，返回-1表示字符串中没有目标字符，返回-2表示字符串中包含的目标字符少于n个

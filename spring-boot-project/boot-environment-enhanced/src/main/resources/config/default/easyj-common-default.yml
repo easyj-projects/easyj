@@ -1,7 +1,7 @@
 #建议将以下配置信息，配置在env、配置中心、k8s等
 easyj:
   #通用-加解密配置
-  global:
+  crypto:
     asymmetric-crypto:
       algorithm: RSA/ECB/PKCS1Padding
       public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtoJS9HacavWwxSiDjzILdATXj7ThClMOkFmyyOO32M6kVWrx2fvC5DBymK2Pc3eTlv3AdlHn0gbOd8CUZx9vjgDB6km5LVKxhP4cfpFPg5AD0N0O9RN3cnN24PI5K4IbBNauJzC8UMX//C14Z7V319BuIj91GyJcNpN47IBpPlwIDAQAB

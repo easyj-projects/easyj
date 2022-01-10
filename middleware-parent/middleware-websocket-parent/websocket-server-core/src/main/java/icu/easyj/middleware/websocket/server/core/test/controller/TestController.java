@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package icu.easyj.middleware.websocket.server.core.test.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import icu.easyj.config.GlobalConfigs;
+import icu.easyj.config.EnvironmentConfigs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class TestController {
 
 	@GetMapping("/test")
 	public String test(HttpServletRequest request) {
-		request.setAttribute("profileActive", GlobalConfigs.getEnv());
+		request.setAttribute("profileActive", EnvironmentConfigs.getEnv());
 		request.setAttribute("serverPort", serverPort);
 		return "test";
 	}

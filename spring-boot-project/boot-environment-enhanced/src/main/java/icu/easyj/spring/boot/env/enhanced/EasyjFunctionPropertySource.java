@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import icu.easyj.core.code.analysis.CodeAnalysisUtils;
 import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.spring.boot.autoconfigure.StarterConstants;
+import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
