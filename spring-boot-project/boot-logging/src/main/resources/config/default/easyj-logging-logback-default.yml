@@ -32,4 +32,4 @@ easyj.logging.logback:
 logging:
   #config: ${easyj.logging.logback.config} #该配置请自行添加
   file:
-    path: ${logging.path:${user.home}/logs/${spring.application.name:${easyj.global.application:${easyj.logging.logback.file-appender.file-name-prefix}}}}
+    path: ${logging.path:${user.home}/logs/${spring.application.name:${easyj.app.application:${easyj.logging.logback.file-appender.file-name-prefix}}}}

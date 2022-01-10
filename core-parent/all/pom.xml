@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.22</version>
+		<version>1.0.25</version>
 		<relativePath/>
 	</parent>
 
@@ -181,23 +181,6 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Clean -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<failOnError>false</failOnError>
-					<filesets>
-						<fileset>
-							<directory>./</directory>
-							<includes>
-								<include>**/*-pom-*.xml</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：Shade -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -224,7 +207,7 @@
 								<filter>
 									<artifact>*:*</artifact>
 									<excludes>
-										<exclude>META-INF/maven/**</exclude>
+										<exclude>**/META-INF/maven/**</exclude>
 									</excludes>
 								</filter>
 							</filters>

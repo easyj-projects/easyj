@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 the original author or authors.
+ * Copyright 2021-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
-import icu.easyj.config.GlobalConfigs;
+import icu.easyj.config.EnvironmentConfigs;
+import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.util.FilterRegistrationUtils;
 import icu.easyj.web.constant.FilterOrderConstants;
 import icu.easyj.web.param.crypto.FastJsonParamCryptoHttpMessageConverter;
@@ -50,8 +51,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_FILTER_PREFIX;
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.WEB_PARAM_CRYPTO_HANDLER_PREFIX;
 
 /**
  * Web参数加密解密自动装配类
@@ -74,7 +73,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(IParamCryptoFilterProperties.class)
-	@ConfigurationProperties(WEB_PARAM_CRYPTO_FILTER_PREFIX)
+	@ConfigurationProperties(StarterConstants.WEB_PARAM_CRYPTO_FILTER_PREFIX)
 	public DefaultParamCryptoFilterPropertiesImpl defaultParamCryptoFilterProperties() {
 		return new DefaultParamCryptoFilterPropertiesImpl();
 	}
@@ -86,7 +85,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(IParamCryptoHandlerProperties.class)
-	@ConfigurationProperties(WEB_PARAM_CRYPTO_HANDLER_PREFIX)
+	@ConfigurationProperties(StarterConstants.WEB_PARAM_CRYPTO_HANDLER_PREFIX)
 	public DefaultParamCryptoHandlerPropertiesImpl defaultParamCryptoHandlerProperties() {
 		return new DefaultParamCryptoHandlerPropertiesImpl();
 	}
@@ -179,7 +178,7 @@ public class EasyjWebParamCryptoAutoConfiguration {
 		}
 
 		private SerializerFeature[] getFeatures() {
-			if (GlobalConfigs.isDebugMode()) {
+			if (EnvironmentConfigs.isDebugMode()) {
 				return new SerializerFeature[]{
 						SerializerFeature.DisableCircularReferenceDetect, // 不使用$ref
 						SerializerFeature.WriteDateUseDateFormat, // 使用时间格式化

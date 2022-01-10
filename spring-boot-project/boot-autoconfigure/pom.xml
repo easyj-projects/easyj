@@ -130,7 +130,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-openfeign-core</artifactId>
-			<version>3.0.5</version>
 			<scope>provided</scope><!--可选功能-->
 		</dependency>
 		<!-- 2.3）基于百度云实现的短链接服务SDK（DWZ） -->
