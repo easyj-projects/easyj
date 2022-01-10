@@ -17,8 +17,8 @@ package icu.easyj.config;
 
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link EnvironmentConfigs} 的测试类

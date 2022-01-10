@@ -15,8 +15,8 @@
  */
 package icu.easyj.config;
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 /**
  * {@link AppConfigs} 的测试类
