@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure;
+package icu.easyj.spring.boot;
 
 import icu.easyj.core.constant.Constants;
 
@@ -28,13 +28,20 @@ public interface StarterConstants {
 	String PREFIX = Constants.PREFIX;
 
 
-	// Global
-	String GLOBAL_PREFIX = PREFIX + ".global";
-	String GLOBAL_ASYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".asymmetric-crypto";
-	String GLOBAL_SYMMETRIC_CRYPTO_PREFIX = GLOBAL_PREFIX + ".symmetric-crypto";
+	// App
+	String APP_PREFIX = PREFIX + ".app";
+
+	// Environment
+	String ENV_PREFIX = PREFIX + ".env";
 
 	// Server
 	String SERVER_PREFIX = PREFIX + ".server";
+
+
+	// Crypto
+	String CRYPTO_PREFIX = PREFIX + ".crypto";
+	String ASYMMETRIC_CRYPTO_PREFIX = CRYPTO_PREFIX + ".asymmetric-crypto";
+	String SYMMETRIC_CRYPTO_PREFIX = CRYPTO_PREFIX + ".symmetric-crypto";
 
 
 	// Web

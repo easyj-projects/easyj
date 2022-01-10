@@ -41,8 +41,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_ASYMMETRIC_CRYPTO_PREFIX;
-import static icu.easyj.spring.boot.autoconfigure.StarterConstants.GLOBAL_SYMMETRIC_CRYPTO_PREFIX;
+import static icu.easyj.spring.boot.StarterConstants.ASYMMETRIC_CRYPTO_PREFIX;
+import static icu.easyj.spring.boot.StarterConstants.SYMMETRIC_CRYPTO_PREFIX;
 
 /**
  * 加载 `EasyJ约定的目录下的配置文件` 的环境处理器
@@ -299,15 +299,15 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		//region 加载全局的非对称加密算法
 
 		// 读取配置：非对称加密算法
-		String algorithm = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".algorithm");
+		String algorithm = environment.getProperty(ASYMMETRIC_CRYPTO_PREFIX + ".algorithm");
 		if (StringUtils.isNotEmpty(algorithm)) {
 			// 读取配置：私钥
-			String privateKey = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key");
-			Assert.notNull(privateKey, "非对称加密私钥 '" + GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局非对称加密算法.");
+			String privateKey = environment.getProperty(ASYMMETRIC_CRYPTO_PREFIX + ".private-key");
+			Assert.notNull(privateKey, "非对称加密私钥 '" + ASYMMETRIC_CRYPTO_PREFIX + ".private-key' 未配置，无法生成全局非对称加密算法.");
 
 			// 读取配置：公钥
-			String publicKey = environment.getProperty(GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".public-key");
-			Assert.notNull(publicKey, "非对称加密公钥 '" + GLOBAL_ASYMMETRIC_CRYPTO_PREFIX + ".public-key' 未配置，无法生成全局非对称加密算法.");
+			String publicKey = environment.getProperty(ASYMMETRIC_CRYPTO_PREFIX + ".public-key");
+			Assert.notNull(publicKey, "非对称加密公钥 '" + ASYMMETRIC_CRYPTO_PREFIX + ".public-key' 未配置，无法生成全局非对称加密算法.");
 
 			// 生成非对称加密算法实例
 			IAsymmetricCrypto asymmetricCrypto = CryptoFactory.getAsymmetricCrypto(algorithm, publicKey, privateKey);
@@ -321,16 +321,16 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		//region 加载全局的对称加密算法
 
 		// 读取配置：非对称加密算法
-		algorithm = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".algorithm");
+		algorithm = environment.getProperty(SYMMETRIC_CRYPTO_PREFIX + ".algorithm");
 		if (StringUtils.isNotEmpty(algorithm)) {
 			// 读取配置：密钥
-			String key = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key");
-			Assert.notNull(key, "对称加密密钥 '" + GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".key' 未配置，无法生成全局对称加密算法.");
+			String key = environment.getProperty(SYMMETRIC_CRYPTO_PREFIX + ".key");
+			Assert.notNull(key, "对称加密密钥 '" + SYMMETRIC_CRYPTO_PREFIX + ".key' 未配置，无法生成全局对称加密算法.");
 
 			// 读取配置：偏移向量
-			String iv = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".iv");
+			String iv = environment.getProperty(SYMMETRIC_CRYPTO_PREFIX + ".iv");
 			// 读取配置：密钥编码
-			Charset charset = environment.getProperty(GLOBAL_SYMMETRIC_CRYPTO_PREFIX + ".charset", Charset.class, StandardCharsets.UTF_8);
+			Charset charset = environment.getProperty(SYMMETRIC_CRYPTO_PREFIX + ".charset", Charset.class, StandardCharsets.UTF_8);
 
 			// 生成对称加密算法实例
 			ISymmetricCrypto symmetricCrypto = CryptoFactory.getSymmetricCrypto(algorithm, key, iv, charset);

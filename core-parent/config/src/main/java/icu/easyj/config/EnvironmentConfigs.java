@@ -15,11 +15,6 @@
  */
 package icu.easyj.config;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import cn.hutool.core.util.ObjectUtil;
 import icu.easyj.core.env.EnvironmentType;
 import icu.easyj.core.env.RunMode;
 
@@ -28,39 +23,9 @@ import icu.easyj.core.env.RunMode;
  *
  * @author wangliang181230
  */
-public class GlobalConfigs {
+public class EnvironmentConfigs {
 
 	//region Fields
-
-	/**
-	 * 项目所属区域代码
-	 */
-	private String area;
-
-	/**
-	 * 项目所属区域名称，如：浙江省宁波市鄞州区
-	 */
-	private String areaName;
-
-	/**
-	 * 项目代码
-	 */
-	private String project;
-
-	/**
-	 * 项目名称
-	 */
-	private String projectName;
-
-	/**
-	 * 应用代码
-	 */
-	private String application;
-
-	/**
-	 * 应用名称
-	 */
-	private String applicationName;
 
 	/**
 	 * 环境代码
@@ -90,93 +55,33 @@ public class GlobalConfigs {
 	 */
 	private boolean inUnitTest = false;
 
-	/**
-	 * 其他全局配置Map
-	 */
-	private final Map<Object, Object> configs = new HashMap<>(4);
-
 	//endregion
 
 
 	//region 全局配置持有者（设计模式-创建型模式-单例模式-枚举实现单例）
 
-	private GlobalConfigs() {
+	private EnvironmentConfigs() {
 	}
 
 	private enum SingletonHolder {
 		// 单例
 		INSTANCE;
 
-		private final GlobalConfigs globalConfigs = new GlobalConfigs();
+		private final EnvironmentConfigs configs = new EnvironmentConfigs();
 
-		public GlobalConfigs getGlobalConfigs() {
-			return globalConfigs;
+		public EnvironmentConfigs getConfigs() {
+			return configs;
 		}
 	}
 
-	private static GlobalConfigs getInstance() {
-		return SingletonHolder.INSTANCE.getGlobalConfigs();
+	private static EnvironmentConfigs getInstance() {
+		return SingletonHolder.INSTANCE.getConfigs();
 	}
 
 	//endregion
 
 
 	//region Getter start
-
-	/**
-	 * 获取项目所属区域代码
-	 *
-	 * @return 项目所属区域代码
-	 */
-	public static String getArea() {
-		return getInstance().area;
-	}
-
-	/**
-	 * 获取项目所属区域名称
-	 *
-	 * @return 项目所属区域名称
-	 */
-	public static String getAreaName() {
-		return getInstance().areaName;
-	}
-
-	/**
-	 * 获取项目偌
-	 *
-	 * @return 项目代码
-	 */
-	public static String getProject() {
-		return getInstance().project;
-	}
-
-	/**
-	 * 获取项目名称
-	 *
-	 * @return 项目名称
-	 */
-	public static String getProjectName() {
-		return getInstance().projectName;
-	}
-
-	/**
-	 * 获取应用代码
-	 *
-	 * @return 应用代码
-	 */
-	public static String getApplication() {
-		return getInstance().application;
-	}
-
-	/**
-	 * 获取应用名称
-	 *
-	 * @return 应用名称
-	 */
-	public static String getApplicationName() {
-		return getInstance().applicationName;
-	}
-
 
 	////region 环境相关 start
 
@@ -322,105 +227,10 @@ public class GlobalConfigs {
 
 	////endregion 运行模式 end
 
-
-	////region 其他全局配置 start
-
-	/**
-	 * 获取全局配置Map
-	 *
-	 * @return 全局配置Map
-	 */
-	public static Map<Object, Object> getConfigs() {
-		return Collections.unmodifiableMap(getInstance().configs);
-	}
-
-	/**
-	 * 获取配置值
-	 *
-	 * @param key 配置键
-	 * @param <T> 配置值类型
-	 * @return 配置值
-	 */
-	public static <T> T getConfig(Object key) {
-		return (T)getInstance().configs.get(key);
-	}
-
-	/**
-	 * 获取配置值
-	 *
-	 * @param key          配置键
-	 * @param defaultValue 默认值
-	 * @param <T>          配置值类型
-	 * @return 配置值
-	 */
-	public static <T> T getConfig(Object key, T defaultValue) {
-		T value = getConfig(key);
-		if (ObjectUtil.isEmpty(value)) {
-			return defaultValue;
-		}
-		return value;
-	}
-
-	////endregion 其他全局配置 end
-
 	//endregion Getter end
 
 
 	//region Setter start
-
-	/**
-	 * 设置项目所属区域代码
-	 *
-	 * @param area 项目所属区域代码
-	 */
-	public static void setArea(String area) {
-		getInstance().area = area;
-	}
-
-	/**
-	 * 设置项目所属区域名称
-	 *
-	 * @param areaName 项目所属区域名称
-	 */
-	public static void setAreaName(String areaName) {
-		getInstance().areaName = areaName;
-	}
-
-	/**
-	 * 设置项目代码
-	 *
-	 * @param project 项目代码
-	 */
-	public static void setProject(String project) {
-		getInstance().project = project;
-	}
-
-	/**
-	 * 设置项目名称
-	 *
-	 * @param projectName 项目名称
-	 */
-	public static void setProjectName(String projectName) {
-		getInstance().projectName = projectName;
-	}
-
-	/**
-	 * 设置应用代码
-	 *
-	 * @param application 应用代码
-	 */
-	public static void setApplication(String application) {
-		getInstance().application = application;
-	}
-
-	/**
-	 * 设置应用名称
-	 *
-	 * @param applicationName 应用名称
-	 */
-	public static void setApplicationName(String applicationName) {
-		getInstance().applicationName = applicationName;
-	}
 
 	/**
 	 * 设置环境代码
@@ -465,31 +275,6 @@ public class GlobalConfigs {
 	 */
 	public static void setInUnitTest(boolean inUnitTest) {
 		getInstance().inUnitTest = inUnitTest;
-	}
-
-	/**
-	 * 添加配置
-	 *
-	 * @param key   配置键
-	 * @param value 配置值
-	 */
-	public static synchronized void addConfig(Object key, Object value) {
-		if (value != null) {
-			getInstance().configs.put(key, value);
-		}
-	}
-
-	/**
-	 * 添加多个配置
-	 *
-	 * @param configs 配置集合
-	 * @param <K>     配置键类型
-	 * @param <V>     配置值类型
-	 */
-	public static synchronized <K, V> void addConfigs(Map<K, V> configs) {
-		if (configs != null && !configs.isEmpty()) {
-			getInstance().configs.putAll(configs);
-		}
 	}
 
 	//endregion Setter end

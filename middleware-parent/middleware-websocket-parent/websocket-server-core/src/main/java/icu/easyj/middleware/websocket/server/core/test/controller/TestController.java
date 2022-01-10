@@ -17,7 +17,7 @@ package icu.easyj.middleware.websocket.server.core.test.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import icu.easyj.config.GlobalConfigs;
+import icu.easyj.config.EnvironmentConfigs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class TestController {
 
 	@GetMapping("/test")
 	public String test(HttpServletRequest request) {
-		request.setAttribute("profileActive", GlobalConfigs.getEnv());
+		request.setAttribute("profileActive", EnvironmentConfigs.getEnv());
 		request.setAttribute("serverPort", serverPort);
 		return "test";
 	}

@@ -1,8 +1,12 @@
 {
 	"groups": [
 		{
-			"name": "easyj.global",
-			"description": "EasyJ定义的全局配置组."
+			"name": "easyj.app",
+			"description": "EasyJ定义的项目及应用配置组."
+		},
+		{
+			"name": "easyj.env",
+			"description": "EasyJ定义的环境配置组."
 		},
 		{
 			"name": "easyj.loophole-check",
@@ -31,49 +35,45 @@
 	],
 	"properties": [
 		{
-			"name": "easyj.global.project",
+			"name": "easyj.app.project",
 			"description": "项目代码."
 		},
 		{
-			"name": "easyj.global.project-name",
+			"name": "easyj.app.project-name",
 			"description": "项目名称."
 		},
 		{
-			"name": "easyj.global.application",
+			"name": "easyj.app.application",
 			"description": "应用代码.",
 			"defaultValue": "${spring.application.name}"
 		},
 		{
-			"name": "easyj.global.application-name",
+			"name": "easyj.app.application-name",
 			"description": "应用名称."
 		},
 		{
-			"name": "easyj.global.env",
+			"name": "easyj.env.env",
 			"description": "环境代码.",
 			"defaultValue": "${spring.profiles.active[0]:prod}"
 		},
 		{
-			"name": "easyj.global.env-name",
+			"name": "easyj.env.env-name",
 			"description": "环境名称."
 		},
 		{
-			"name": "easyj.global.env-type",
+			"name": "easyj.env.env-type",
 			"description": "环境类型：prod|test|dev，默认：prod.",
 			"defaultValue": "prod"
 		},
 		{
-			"name": "easyj.global.run-mode",
+			"name": "easyj.env.run-mode",
 			"description": "运行模式：release|debug，默认：release.",
 			"defaultValue": "release"
 		},
 		{
-			"name": "easyj.global.in-unit-test",
+			"name": "easyj.env.in-unit-test",
 			"description": "是否单元测试中.",
 			"defaultValue": false
-		},
-		{
-			"name": "easyj.global.configs",
-			"description": "其他全局配置的Map."
 		},
 		{
 			"name": "easyj.loophole-check.need-throw-if-exist",

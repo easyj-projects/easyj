@@ -47,7 +47,7 @@ public class EasyjMiddleWareWebSocketServerAutoConfiguration {
 	 */
 	@Lazy
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnProperty(name = "easyj.global.run-mode", havingValue = "debug")
+	@ConditionalOnProperty(name = "easyj.env.run-mode", havingValue = "debug")
 	@Import({TestRestController.class, TestController.class})
 	static class WebSocketServerTestConfiguration {
 	}

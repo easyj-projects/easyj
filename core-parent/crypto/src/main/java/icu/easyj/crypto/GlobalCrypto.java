@@ -19,7 +19,7 @@ import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 
 /**
- * 全局加密算法
+ * 全局加解密算法持有者
  *
  * @author wangliang181230
  */
@@ -27,7 +27,7 @@ public abstract class GlobalCrypto {
 
 	//region 非对称加密算法
 
-	public static final String ASYMMETRIC_ERROR_MESSAGE = "全局非对称加密算法为空，请先配置`easyj.global.asymmetric-crypto.*`中必须的配置项。";
+	public static final String ASYMMETRIC_ERROR_MESSAGE = "全局非对称加密算法为空，请先配置`easyj.crypto.asymmetric-crypto.*`中必须的配置项。";
 
 	private static IAsymmetricCrypto asymmetricCrypto;
 
@@ -44,7 +44,7 @@ public abstract class GlobalCrypto {
 
 	//region 对称加密算法
 
-	public static final String SYMMETRIC_ERROR_MESSAGE = "全局对称加密算法为空，请先配置`easyj.global.symmetric-crypto.*`中必须的配置项。";
+	public static final String SYMMETRIC_ERROR_MESSAGE = "全局对称加密算法为空，请先配置`easyj.crypto.symmetric-crypto.*`中必须的配置项。";
 
 	private static ISymmetricCrypto symmetricCrypto;
 

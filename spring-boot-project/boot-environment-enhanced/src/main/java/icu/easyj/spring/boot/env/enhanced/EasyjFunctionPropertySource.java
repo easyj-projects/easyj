@@ -25,7 +25,7 @@ import icu.easyj.core.code.analysis.CodeAnalysisUtils;
 import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.exception.ConfigurationException;
 import icu.easyj.core.util.StringUtils;
-import icu.easyj.spring.boot.autoconfigure.StarterConstants;
+import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
