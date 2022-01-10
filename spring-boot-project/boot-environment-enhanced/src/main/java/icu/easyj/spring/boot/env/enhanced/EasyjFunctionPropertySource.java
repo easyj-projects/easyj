@@ -163,7 +163,10 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		name = name.substring(PREFIX.length());
 
 		return StrUtil.startWithAny(name,
-				CLASS_FUN_NAME, CRYPTO_FUN_NAME, NET_FUN_NAME, RANDOM_FUN_NAME);
+				CLASS_FUN_NAME,
+				CRYPTO_FUN_NAME + ".decrypt", // easyj.crypto配置组重名了，这里必须明确函数名
+				NET_FUN_NAME,
+				RANDOM_FUN_NAME);
 	}
 
 	/**
