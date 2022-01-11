@@ -18,15 +18,15 @@ jobs:
 
       # 2. 安装 Java JDK 环境
       - name: Setup Java JDK
-        uses: actions/setup-java@v2
-        env:
-          SERVER_USERNAME: ${{ secrets.OSSRH_USER }}
-          SERVER_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PASSPHRASE:  ${{ secrets.GPG_PASSPHRASE }}
+        uses: actions/setup-java@v2.5.0
         with:
+          distribution: 'zulu'
           java-version: 1.8
           server-id: sonatype-nexus-staging
+          server-username: ${{ secrets.OSSRH_USER }}
+          server-password: ${{ secrets.OSSRH_PASSWORD }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase:  ${{ secrets.GPG_PASSPHRASE }}
 
       # 3. 发布到Maven中央仓库
       - name: Publish to OSS
