@@ -16,8 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.4.0
 
-      # 2. 安装Java 环境 这里会用到的参数就是 Git Action secrets中配置的，
-      #    取值要在key前面加  secrets.
+      # 2. 安装 Java JDK 环境
       - name: Setup Java JDK
         uses: actions/setup-java@v2.5.0
         with:
@@ -25,14 +24,16 @@ jobs:
           server-id: sonatype-nexus-staging
           server-username: ${{ secrets.OSSRH_USER }}
           server-password: ${{ secrets.OSSRH_PASSWORD }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase:  ${{ secrets.GPG_PASSPHRASE }}
 
       # 3. 发布到Maven中央仓库
       - name: Publish to OSS
-        # 这里用到了其他人写的action脚本，详细可以去看他的文档。
         uses: samuelmeuli/action-maven-publish@v1.4.0
         with:
+          server_id: sonatype-nexus-staging
           nexus_username:  ${{ secrets.OSSRH_USER }}
           nexus_password:  ${{ secrets.OSSRH_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase:  ${{ secrets.GPG_PASSPHRASE }}
+          maven_profiles: release-ossrh
