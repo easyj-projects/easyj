@@ -2,7 +2,7 @@ name: "Publish To OSS"
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, develop, test ]
 
 jobs:
   publish:
@@ -45,7 +45,7 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
           maven_profiles: publish
-          maven_goals_phases: clean deploy -e
+          maven_goals_phases: clean deploy -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
       # step 4 for develop
       - name: "Publish To OSS For develop"
@@ -57,4 +57,4 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
           maven_profiles: publish-auto
-          maven_goals_phases: clean deploy -e
+          maven_goals_phases: clean deploy -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
