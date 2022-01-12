@@ -2,7 +2,7 @@ name: "Publish To OSS"
 
 on:
   push:
-    branches: [ publish, test ]
+    branches: [ master, publish, test ]
 
 jobs:
   publish:
@@ -35,8 +35,20 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         run: brew install gnupg
 
-      # step 4
-      - name: "Publish To OSS"
+      # step 4 for master
+      - name: "Publish To OSS For master"
+        uses: samuelmeuli/action-maven-publish@v1.4.0
+        if: github.ref == 'refs/heads/master'
+        with:
+          nexus_username: ${{ secrets.OSSRH_USER }}
+          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          maven_profiles: publish-auto
+          maven_goals_phases: clean deploy -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
+      # step 4 for publish
+      - name: "Publish To OSS For publish"
         uses: samuelmeuli/action-maven-publish@v1.4.0
         if: github.ref == 'refs/heads/publish'
         with:
