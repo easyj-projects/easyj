@@ -2,31 +2,59 @@ name: "Publish To OSS"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   publish:
     name: "Publish"
-    runs-on: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [
+            #macos-latest,  #会报错
+            #ubuntu-latest, #会报错
+            windows-latest  #成功
+        ]
+
     steps:
-      # 1. 声明 checkout 仓库代码到工作区
-      - name: Checkout
+      # step 1
+      - name: "Checkout"
         uses: actions/checkout@v2.4.0
 
-      # 2. 安装 Java JDK 环境
-      - name: Setup Java JDK
+      # step 2
+      - name: "Setup Java JDK"
         uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
           java-version: 8
 
-      # 3. 发布到Maven中央仓库
-      - name: Publish To OSS
+      # step 3
+      - name: "Install GPG For MacOS"
+        if: startsWith(matrix.os, 'macos')
+        run: brew install gnupg
+
+      # step 4 for master
+      - name: "Publish To OSS For master"
         uses: samuelmeuli/action-maven-publish@v1.4.0
+        if: github.ref == 'refs/heads/master'
         with:
-          server_id: ossrh
           nexus_username: ${{ secrets.OSSRH_USER }}
           nexus_password: ${{ secrets.OSSRH_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          maven_goals_phases: clean deploy -e
+          maven_profiles: release-ossrh
+          maven_goals_phases: clean deploy -e -Dmaven.gpg.mode="--pinentry-mode" -Dmaven.gpg.loopback=loopback
+
+      # step 4 for develop
+      - name: "Publish To OSS For develop"
+        uses: samuelmeuli/action-maven-publish@v1.4.0
+        if: github.ref == 'refs/heads/develop'
+        with:
+          nexus_username: ${{ secrets.OSSRH_USER }}
+          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          maven_profiles: release-ossrh
+          maven_goals_phases: clean deploy -e -Dmaven.gpg.mode="--pinentry-mode" -Dmaven.gpg.loopback=loopback -Dmaven.gpg.auto=true
