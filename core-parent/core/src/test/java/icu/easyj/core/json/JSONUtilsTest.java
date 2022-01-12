@@ -190,8 +190,8 @@ public class JSONUtilsTest {
 		String jsonStr2 = service.toJSONString(user2);
 		System.out.println(service.getName() + ": jsonStr1: " + jsonStr1);
 		System.out.println(service.getName() + ": jsonStr2: " + jsonStr2);
-		Assertions.assertTrue(user1.equals(service.toBean(jsonStr1, TestUser.class)));
-		Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
+		Assertions.assertEquals(user1.toString(), service.toBean(jsonStr1, TestUser.class).toString());
+		Assertions.assertEquals(user2.toString(), service.toBean(jsonStr2, TestUser.class).toString());
 		Assertions.assertTrue(jsonStr1.contains("\"Name\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Age\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""));
@@ -204,8 +204,8 @@ public class JSONUtilsTest {
 		Assertions.assertNotNull(list2);
 		Assertions.assertEquals(2, list2.size());
 
-		Assertions.assertTrue(list1.get(0).equals(list2.get(0)));
-		Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
+		Assertions.assertEquals(list1.get(0).toString(), list2.get(0).toString());
+		Assertions.assertEquals(list1.get(1).toString(), list2.get(1).toString());
 	}
 
 	private void assertEquals1(IJSONService service, TestUser user) {

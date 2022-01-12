@@ -23,6 +23,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import icu.easyj.core.util.DateUtils;
 
 /**
  * 测试用户类
@@ -99,5 +100,14 @@ public class TestUser {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, age, birthday);
+	}
+
+	@Override
+	public String toString() {
+		return "TestUser{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				", birthday=" + DateUtils.toMilliseconds(birthday) +
+				'}';
 	}
 }
