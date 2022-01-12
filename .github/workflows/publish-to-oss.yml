@@ -2,7 +2,7 @@ name: "Publish To OSS"
 
 on:
   push:
-    branches: [ master, publish, test ]
+    branches: [ master, develop ]
 
 jobs:
   publish:
@@ -31,9 +31,9 @@ jobs:
           java-version: 8
 
       # step 3
-      - name: "Install GPG For MacOS"
-        if: startsWith(matrix.os, 'macos')
-        run: brew install gnupg
+      #- name: "Install GPG For MacOS"
+      #  if: startsWith(matrix.os, 'macos')
+      #  run: brew install gnupg
 
       # step 4 for master
       - name: "Publish To OSS For master"
@@ -44,17 +44,17 @@ jobs:
           nexus_password: ${{ secrets.OSSRH_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          maven_profiles: publish-auto
-          maven_goals_phases: clean deploy -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+          maven_profiles: publish
+          maven_goals_phases: clean deploy -e -Dmaven-javadoc-plugin.version=3.2.0 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
-      # step 4 for publish
-      - name: "Publish To OSS For publish"
+      # step 4 for develop
+      - name: "Publish To OSS For develop"
         uses: samuelmeuli/action-maven-publish@v1.4.0
-        if: github.ref == 'refs/heads/publish'
+        if: github.ref == 'refs/heads/develop'
         with:
           nexus_username: ${{ secrets.OSSRH_USER }}
           nexus_password: ${{ secrets.OSSRH_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
           maven_profiles: publish-auto
-          maven_goals_phases: clean deploy -e -DskipTests -Dmaven.javadoc.skip=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+          maven_goals_phases: clean deploy -e -Dmaven-javadoc-plugin.version=3.2.0 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
