@@ -45,7 +45,7 @@ public class DwzLogEntity {
 	 */
 	private Integer status;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
 	private Date createTime;
 
 	private Date updateTime;

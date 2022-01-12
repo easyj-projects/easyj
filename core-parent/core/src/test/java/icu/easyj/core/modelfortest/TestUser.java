@@ -46,7 +46,7 @@ public class TestUser {
 
 	@JSONField(name = "Birthday") // fastjson键别名
 	@JsonProperty("Birthday") // jackson键别名
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	@SerializedName("Birthday") // gson键别名
 	@Alias("Birthday") // hutool键别名
 	private Date birthday;
