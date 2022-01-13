@@ -23,6 +23,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+import icu.easyj.core.util.DateUtils;
 
 /**
  * 测试用户类
@@ -45,7 +46,7 @@ public class TestUser {
 
 	@JSONField(name = "Birthday") // fastjson键别名
 	@JsonProperty("Birthday") // jackson键别名
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@SerializedName("Birthday") // gson键别名
 	@Alias("Birthday") // hutool键别名
 	private Date birthday;
@@ -99,5 +100,14 @@ public class TestUser {
 	@Override
 	public int hashCode() {
 		return Objects.hash(name, age, birthday);
+	}
+
+	@Override
+	public String toString() {
+		return "TestUser{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				", birthday=" + DateUtils.toMilliseconds(birthday) +
+				'}';
 	}
 }

@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.25</version>
+		<version>1.0.32</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>icu.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot-dependencies</artifactId>
-	<version>0.2.6-SNAPSHOT</version>
+	<version>0.2.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>

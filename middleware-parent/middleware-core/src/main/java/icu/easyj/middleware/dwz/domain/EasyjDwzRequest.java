@@ -34,7 +34,7 @@ public class EasyjDwzRequest implements Serializable {
 	/**
 	 * 有效期
 	 */
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	private Date termOfValidity;
 
 
