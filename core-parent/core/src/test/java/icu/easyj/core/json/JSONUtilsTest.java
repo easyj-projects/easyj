@@ -190,8 +190,8 @@ public class JSONUtilsTest {
 		String jsonStr2 = service.toJSONString(user2);
 		System.out.println(service.getName() + ": jsonStr1: " + jsonStr1);
 		System.out.println(service.getName() + ": jsonStr2: " + jsonStr2);
-		Assertions.assertTrue(user1.equals(service.toBean(jsonStr1, TestUser.class)));
-		Assertions.assertTrue(user2.equals(service.toBean(jsonStr2, TestUser.class)));
+		Assertions.assertEquals(user1.toString(), service.toBean(jsonStr1, TestUser.class).toString());
+		Assertions.assertEquals(user2.toString(), service.toBean(jsonStr2, TestUser.class).toString());
 		Assertions.assertTrue(jsonStr1.contains("\"Name\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Age\""));
 		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""));
@@ -204,29 +204,29 @@ public class JSONUtilsTest {
 		Assertions.assertNotNull(list2);
 		Assertions.assertEquals(2, list2.size());
 
-		Assertions.assertTrue(list1.get(0).equals(list2.get(0)));
-		Assertions.assertTrue(list1.get(1).equals(list2.get(1)));
+		Assertions.assertEquals(list1.get(0).toString(), list2.get(0).toString());
+		Assertions.assertEquals(list1.get(1).toString(), list2.get(1).toString());
 	}
 
 	private void assertEquals1(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人1", user.getName());
 		Assertions.assertEquals(31, user.getAge().intValue());
-		Assertions.assertEquals("1990-10-01", DateUtils.format(DateFormatType.DD, user.getBirthday()));
+		Assertions.assertEquals("1990-10-01 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()));
 	}
 
 	private void assertEquals2(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人2", user.getName());
 		Assertions.assertEquals(32, user.getAge().intValue());
-		Assertions.assertEquals("1989-10-02", DateUtils.format(DateFormatType.DD, user.getBirthday()));
+		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()));
 	}
 
 	private void assertEquals3(IJSONService service, TestUser3 user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人3", user.getUserName());
 		Assertions.assertEquals(33, user.getUserAge().intValue());
-		Assertions.assertEquals("1988-10-03", DateUtils.format(DateFormatType.DD, user.getUserBirthday()));
+		Assertions.assertEquals("1988-10-03 00:00:00.000", DateUtils.toMilliseconds(user.getUserBirthday()));
 	}
 
 	//endregion

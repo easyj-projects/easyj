@@ -1,4 +1,4 @@
-name: "Test And Codecov"
+name: "Test"
 
 on:
   push:
@@ -29,18 +29,15 @@ jobs:
             #1.0.2.RELEASE
         ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
+      - name: "Checkout"
+        uses: actions/checkout@v2.4.0
 
-      - name: Setup Java JDK
-        uses: actions/setup-java@v2.3.1
+      - name: "Set up Java JDK"
+        uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
-      - name: Run Test With Maven
+      - name: "Run Test With Maven"
         # https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context
-        run: mvn clean install -e -B -Pcicd -Dspring-boot.version=${{ matrix.springboot }} -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
-
-      - name: Codecov
-        uses: codecov/codecov-action@v2.1.0
+        run: mvn clean install -e -B -Pcicd -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
