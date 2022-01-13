@@ -12,7 +12,7 @@
 
 	<groupId>icu.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot-test</artifactId>
-	<version>0.2.6</version>
+	<version>0.2.7-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>方便引用测试所需的依赖，并提供一些SpringBoot测试所需的类或功能。</description>
