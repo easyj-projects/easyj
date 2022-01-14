@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.loader;
 
+import icu.easyj.core.loader.factory.IServiceFactory;
 import icu.easyj.core.util.StringUtils;
 
 /**
@@ -23,29 +24,19 @@ import icu.easyj.core.util.StringUtils;
  *
  * @author haozhibei
  */
-final class ExtensionDefinition {
+public final class ExtensionDefinition {
 	private final String name;
 	private final Class<?> serviceClass;
 	private final Integer order;
 	private final Scope scope;
+	private final IServiceFactory factory;
 
-	public Integer getOrder() {
-		return this.order;
-	}
-
-	public Class<?> getServiceClass() {
-		return this.serviceClass;
-	}
-
-	public Scope getScope() {
-		return this.scope;
-	}
-
-	public ExtensionDefinition(String name, Integer order, Scope scope, Class<?> clazz) {
+	public ExtensionDefinition(String name, Integer order, Scope scope, Class<?> serviceClass, IServiceFactory factory) {
 		this.name = name;
 		this.order = order;
 		this.scope = scope;
-		this.serviceClass = clazz;
+		this.serviceClass = serviceClass;
+		this.factory = factory;
 	}
 
 	@Override
@@ -85,5 +76,21 @@ final class ExtensionDefinition {
 
 	public String getName() {
 		return name;
+	}
+
+	public Class<?> getServiceClass() {
+		return this.serviceClass;
+	}
+
+	public Integer getOrder() {
+		return this.order;
+	}
+
+	public Scope getScope() {
+		return this.scope;
+	}
+
+	public IServiceFactory getFactory() {
+		return factory;
 	}
 }
