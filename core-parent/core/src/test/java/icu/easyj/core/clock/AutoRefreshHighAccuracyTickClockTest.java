@@ -43,7 +43,7 @@ public class AutoRefreshHighAccuracyTickClockTest {
 
 			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
 			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -2); // 时钟偏差值不能大于2ms
+			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -3); // 时钟偏差值不能大于3ms
 			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
 			Assertions.assertEquals(11, atomicInteger.get());
 			Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");
@@ -54,7 +54,7 @@ public class AutoRefreshHighAccuracyTickClockTest {
 			tickClock.stopAutoRefresh();
 			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
 			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -2); // 时钟偏差值不能大于2ms
+			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -3); // 时钟偏差值不能大于3ms
 			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
 			//Assertions.assertEquals(21, atomicInteger.get());
 			Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
@@ -65,7 +65,7 @@ public class AutoRefreshHighAccuracyTickClockTest {
 			tickClock.startAutoRefresh();
 			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
 			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -2); // 时钟偏差值不能大于2ms
+			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -3); // 时钟偏差值不能大于3ms
 			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
 			//Assertions.assertEquals(21, atomicInteger.get());
 			Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");

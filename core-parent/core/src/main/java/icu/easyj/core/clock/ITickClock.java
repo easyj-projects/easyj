@@ -47,12 +47,12 @@ public interface ITickClock extends IClock, Comparable<ITickClock> {
 	}
 
 	/**
-	 * 比较两个时钟，哪个时间更大一些
+	 * 比较两个时钟
 	 * <p>
-	 * 注意：比较的不是基准微秒数哪个大，而是哪个记号时钟在同一时间生成的时间更大
+	 * 注意：比较的不是时钟的基准微秒数哪个大，而是比较在同一时间点两个时钟生成的时间
 	 *
 	 * @param otherClock 其他时钟
-	 * @return -1=otherClock大 0=一样大 1=当前时钟大
+	 * @return 小于0：otherClock大 | 等于0：一样大 | 大于0：当前时钟大
 	 */
 	@Override
 	default int compareTo(ITickClock otherClock) {
