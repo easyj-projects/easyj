@@ -30,6 +30,7 @@ import icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
+import icu.easyj.spring.boot.env.enhanced.util.TimePropertyUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
 import org.springframework.lang.Nullable;
@@ -80,6 +81,11 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * 随机函数名
 	 */
 	private static final String RANDOM_FUN_NAME = "random";
+
+	/**
+	 * 时间函数名
+	 */
+	private static final String TIME_FUN_NAME = "time";
 
 	////endregion
 
@@ -166,7 +172,8 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 				CLASS_FUN_NAME,
 				CRYPTO_FUN_NAME + ".decrypt", // easyj.crypto配置组重名了，这里必须明确函数名
 				NET_FUN_NAME,
-				RANDOM_FUN_NAME);
+				RANDOM_FUN_NAME,
+				TIME_FUN_NAME);
 	}
 
 	/**
@@ -190,6 +197,9 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 			case RANDOM_FUN_NAME:
 				// 随机值
 				return RandomPropertyUtils.getProperty(name, result);
+			case TIME_FUN_NAME:
+				// 时间
+				return TimePropertyUtils.getProperty(name, result);
 			default:
 				return null;
 		}
