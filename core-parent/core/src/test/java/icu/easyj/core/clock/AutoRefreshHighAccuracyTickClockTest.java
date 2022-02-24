@@ -30,7 +30,7 @@ public class AutoRefreshHighAccuracyTickClockTest {
 
 	@Test
 	public void test() throws Exception {
-		int i = 20;
+		int i = 100;
 		while (i-- > 0) {
 			final AtomicInteger atomicInteger = new AtomicInteger(0);
 
@@ -41,44 +41,54 @@ public class AutoRefreshHighAccuracyTickClockTest {
 
 			Thread.sleep(100);
 
-			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
-			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -4); // 时钟偏差值不能大于4ms
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
-			Assertions.assertEquals(11, atomicInteger.get());
-			Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");
+			{
+				Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");
+				this.testInternal(tickClock);
+				Assertions.assertEquals(11, atomicInteger.get());
+			}
 
 			//Thread.sleep(15000);
 			Thread.sleep(100);
 
-			tickClock.stopAutoRefresh();
-			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
-			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -4); // 时钟偏差值不能大于4ms
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
-			//Assertions.assertEquals(21, atomicInteger.get());
-			Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
+			{
+				tickClock.stopAutoRefresh();
+				Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
+				this.testInternal(tickClock);
+				//Assertions.assertEquals(21, atomicInteger.get());
+			}
 
 			//Thread.sleep(15000);
 			Thread.sleep(100);
 
-			tickClock.startAutoRefresh();
-			System.out.println(tickClock.currentTimeMillis() - System.currentTimeMillis());
-			System.out.println(DateUtils.toMilliseconds(tickClock.now()));
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() >= -4); // 时钟偏差值不能大于4ms
-			Assertions.assertTrue(tickClock.currentTimeMillis() - System.currentTimeMillis() <= 1); // 时钟偏差值不能大于1ms
-			//Assertions.assertEquals(21, atomicInteger.get());
-			Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");
+			{
+				tickClock.startAutoRefresh();
+				Assertions.assertTrue(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是true");
+				this.testInternal(tickClock);
+				//Assertions.assertEquals(21, atomicInteger.get());
+			}
 
-			tickClock.stopAutoRefresh();
-			Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
+			{
+				tickClock.stopAutoRefresh();
+				Assertions.assertFalse(tickClock.isAutoRefreshing(), "记号时钟自动刷新状态不是false");
+			}
 
 			// 销毁
+			Assertions.assertFalse(tickClock.isDestroyed());
 			tickClock.destroy();
+			Assertions.assertTrue(tickClock.isDestroyed());
 
 			System.out.println();
 			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
 			System.out.println();
 		}
+	}
+
+	private void testInternal(AutoRefreshHighAccuracyTickClock tickClock) {
+		long diff = tickClock.currentTimeMillis() - System.currentTimeMillis();
+		System.out.println("时钟偏差的值：" + diff);
+		System.out.println("时钟当前时间：" + DateUtils.toMilliseconds(tickClock.now()));
+
+		Assertions.assertTrue(diff >= -5, "时钟偏差值: " + diff + " ms < -5 ms"); // 时钟偏差值不能大于5ms
+		Assertions.assertTrue(diff <= 1, "时钟偏差值: " + diff + " ms > 1 ms"); // 时钟偏差值不能大于1ms
 	}
 }
