@@ -29,15 +29,23 @@ jobs:
             #1.0.2.RELEASE
         ]
     steps:
+      # step 1
       - name: "Checkout"
         uses: actions/checkout@v2.4.0
 
-      - name: "Set up Java JDK"
+      # step 2
+      - name: "Setup Java JDK"
         uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
+      # step 3
       - name: "Run Test With Maven"
         # https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context
         run: mvn clean install -e -B -Pcicd -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+
+      # step 4
+      - name: "Codecov"
+        if: matrix.java == '8' && matrix.springboot == '2.6.3' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')
+        uses: codecov/codecov-action@v2.1.0
