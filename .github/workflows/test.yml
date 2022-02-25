@@ -2,9 +2,9 @@ name: "Test"
 
 on:
   push:
-    branches: [ develop, master, spring-boot_2.1.x, spring-boot_1.x.x-2.0.x ]
+    branches: [ develop, master, spring-boot_* ]
   pull_request:
-    branches: [ develop, master, spring-boot_2.1.x, spring-boot_1.x.x-2.0.x ]
+    branches: [ develop, master, spring-boot_* ]
 
 jobs:
   test:
@@ -14,8 +14,8 @@ jobs:
       matrix:
         java: [ 8, 11, 17 ]
         springboot: [
-            #2.6.2,
-            #2.5.8,
+            #2.6.4,
+            #2.5.10,
             #2.4.13,
             #2.3.12.RELEASE,
             #2.2.13.RELEASE,
@@ -29,15 +29,23 @@ jobs:
             #1.0.2.RELEASE
         ]
     steps:
+      # step 1
       - name: "Checkout"
         uses: actions/checkout@v2.4.0
 
-      - name: "Set up Java JDK"
+      # step 2
+      - name: "Setup Java JDK"
         uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
+      # step 3
       - name: "Run Test With Maven"
         # https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context
         run: mvn clean install -e -B -Pcicd -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+
+      # step 4
+      - name: "Codecov"
+        if: matrix.java == '8' && matrix.springboot == '2.6.4' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')
+        uses: codecov/codecov-action@v2.1.0

@@ -18,8 +18,6 @@ package icu.easyj.core.loader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -30,15 +28,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.loader.condition.DependsOnClassValidator;
 import icu.easyj.core.loader.condition.DependsOnJarVersionValidator;
 import icu.easyj.core.loader.condition.DependsOnJavaVersionValidator;
 import icu.easyj.core.loader.condition.IDependsOnValidator;
+import icu.easyj.core.loader.factory.IServiceFactory;
+import icu.easyj.core.loader.factory.impls.DefaultServiceFactory;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.MapUtils;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
@@ -538,14 +537,12 @@ public abstract class EnhancedServiceLoader {
 		}
 
 		private S createNewExtension(ExtensionDefinition definition, ClassLoader loader, Class<?>[] argTypes, Object[] args) {
-			Class clazz = definition.getServiceClass();
-			try {
-				S newInstance = (S)initInstance(clazz, argTypes, args);
-				return newInstance;
-			} catch (Exception e) {
-				throw new IllegalStateException("Extension instance(definition: " + definition + ", class: " +
-						type + ")  could not be instantiated: " + e.getMessage(), e);
+			IServiceFactory factory = definition.getFactory();
+			S service = factory.create(definition, this.type, argTypes, args);
+			if (service == null && !factory.getClass().equals(DefaultServiceFactory.class)) {
+				service = ReflectionUtils.getSingleton(DefaultServiceFactory.class).create(definition, this.type, argTypes, args);
 			}
+			return service;
 		}
 
 		private List<Class<?>> loadAllExtensionClass(ClassLoader loader) {
@@ -651,11 +648,13 @@ public abstract class EnhancedServiceLoader {
 				String serviceName = null;
 				int priority = 0;
 				Scope scope = Scope.SINGLETON;
+				Class<? extends IServiceFactory> factoryClass = DefaultServiceFactory.class;
 				LoadLevel loadLevel = clazz.getAnnotation(LoadLevel.class);
 				if (loadLevel != null) {
 					serviceName = loadLevel.name();
 					priority = loadLevel.order();
 					scope = loadLevel.scope();
+					factoryClass = loadLevel.factory();
 
 					Class<? extends IServiceLoaderValidator>[] validatorClasses = loadLevel.validators();
 					for (Class<? extends IServiceLoaderValidator> validatorClass : validatorClasses) {
@@ -669,7 +668,7 @@ public abstract class EnhancedServiceLoader {
 					}
 				}
 
-				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz);
+				ExtensionDefinition result = new ExtensionDefinition(serviceName, priority, scope, clazz, ReflectionUtils.getSingleton(factoryClass));
 				classToDefinitionMap.put(clazz, result);
 				if (serviceName != null) {
 					MapUtils.computeIfAbsent(nameToDefinitionsMap, serviceName, e -> new ArrayList<>())
@@ -700,32 +699,6 @@ public abstract class EnhancedServiceLoader {
 		private ExtensionDefinition getCachedExtensionDefinition(String activateName) {
 			List<ExtensionDefinition> definitions = nameToDefinitionsMap.get(activateName);
 			return icu.easyj.core.util.CollectionUtils.getFirst(definitions);
-		}
-
-		/**
-		 * init instance
-		 *
-		 * @param implClazz the impl clazz
-		 * @param argTypes  the arg types
-		 * @param args      the args
-		 * @return s
-		 * @throws IllegalAccessException    the illegal access exception
-		 * @throws InstantiationException    the instantiation exception
-		 * @throws NoSuchMethodException     the no such method exception
-		 * @throws InvocationTargetException the invocation target exception
-		 */
-		private S initInstance(Class<S> implClazz, Class<?>[] argTypes, Object[] args)
-				throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-			Constructor<S> constructor = implClazz.getDeclaredConstructor(argTypes != null ? argTypes : ArrayUtils.EMPTY_CLASS_ARRAY);
-			if (!constructor.isAccessible()) {
-				constructor.setAccessible(true);
-			}
-
-			S s = type.cast(constructor.newInstance(args != null ? args : ArrayUtils.EMPTY_OBJECT_ARRAY));
-			if (s instanceof Initialize) {
-				((Initialize)s).init();
-			}
-			return s;
 		}
 
 		/**

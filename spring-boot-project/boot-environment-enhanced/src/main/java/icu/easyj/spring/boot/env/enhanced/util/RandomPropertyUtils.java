@@ -112,7 +112,7 @@ public abstract class RandomPropertyUtils {
 		} finally {
 			// 随机数比较特殊，在这里打印一下信息
 			if (value != null && LOGGER.isInfoEnabled()) {
-				LOGGER.info("函数式配置`${" + name + "}`的值: " + value);
+				LOGGER.info("函数式配置`${{}}`的值: {}", name, value);
 			}
 		}
 	}

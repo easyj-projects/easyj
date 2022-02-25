@@ -40,12 +40,17 @@ public class EasyjFunctionPropertySourceEnvironmentPostProcessor implements Envi
 
 		// 添加函数式配置源：${easyj.xxx}
 		// 目前包含：
-		// 1、类是否存在：${easyj.class.isExist('类名1', '类名2', ..., '类名n')}
-		// 2、获取存在的类：${easyj.class.getExistingOne('类名1', '类名2', ..., '类名n')}
-		// 3、配置加密：${easyj.crypto.decrypt('xxxxxxxxxxxx')}
-		// 4、获取本地IP：${easyj.net.getIp()}
-		// 5、匹配本地IP：${easyj.net.matchIp('10.10.10.*', '192.168.10.*')}
-		// 6、生成随机内容：${easyj.random.xxx}，支持：端口、数字、UUID
+		// 1.1、类是否存在：${easyj.class.isExist('类名1', '类名2', ..., '类名n')}
+		// 1.2、获取存在的类：${easyj.class.getExistingOne('类名1', '类名2', ..., '类名n')}
+
+		// 2.1、配置加密：${easyj.crypto.decrypt('xxxxxxxxxxxx')}
+
+		// 3.1、获取本地IP：${easyj.net.getIp()}
+		// 3.2、匹配本地IP：${easyj.net.matchIp('10.10.10.*', '192.168.10.*')}
+
+		// 4.1、生成随机内容：${easyj.random.xxx}，支持：端口、数字、UUID
+
+		// 5.1、当前时间：${easyj.time.now('yyyy-MM-dd HH:mm:ss.SSS')}
 		propertySources.addLast(new EasyjFunctionPropertySource());
 	}
 

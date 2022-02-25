@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import icu.easyj.core.loader.factory.IServiceFactory;
+import icu.easyj.core.loader.factory.impls.DefaultServiceFactory;
 import org.springframework.core.Ordered;
 
 /**
@@ -60,4 +62,11 @@ public @interface LoadLevel {
 	 * @return the validator classes
 	 */
 	Class<? extends IServiceLoaderValidator>[] validators() default {};
+
+	/**
+	 * Factory class
+	 *
+	 * @return the factory class
+	 */
+	Class<? extends IServiceFactory> factory() default DefaultServiceFactory.class;
 }

@@ -24,11 +24,11 @@ jobs:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
 
     steps:
-      # Checkout
+      # step 1: Checkout
       - name: "Checkout"
         uses: actions/checkout@v2.4.0
 
-      # Initializes the CodeQL tools for scanning.
+      # step 2: Initializes the CodeQL tools for scanning.
       - name: "CodeQL Init"
         uses: github/codeql-action/init@v1
         with:
@@ -38,11 +38,13 @@ jobs:
           # Prefix the list here with "+" to use these queries and those in the config file.
           # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
+      # step 3
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
       - name: "CodeQL Auto Build"
         uses: github/codeql-action/autobuild@v1
 
+      # step 4
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
 
@@ -54,5 +56,6 @@ jobs:
       #   make bootstrap
       #   make release
 
+      # step 5
       - name: "CodeQL Analyze"
         uses: github/codeql-action/analyze@v1

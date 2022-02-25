@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.constant;
+package icu.easyj.core.loader.factory;
 
-import icu.easyj.core.util.version.VersionInfo;
-import icu.easyj.core.util.version.VersionUtils;
+import icu.easyj.core.loader.ExtensionDefinition;
+import org.springframework.lang.Nullable;
 
 /**
- * EasyJ相关常量
+ * 服务工厂接口
  *
  * @author wangliang181230
  */
-public interface Constants {
+public interface IServiceFactory {
 
-	String PREFIX = "easyj";
-
-	String VERSION = "0.2.8-SNAPSHOT";
-
-	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
+	/**
+	 * 创建服务实例
+	 *
+	 * @param definition 服务扩展定义
+	 * @return 服务实例，允许为空；为空时，由默认服务工厂生成实例。
+	 */
+	@Nullable
+	<S> S create(ExtensionDefinition definition, Class<S> type, Class<?>[] argTypes, Object[] args);
 }
