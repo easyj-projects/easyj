@@ -7,9 +7,7 @@ on:
 jobs:
   publish:
     name: "Publish"
-
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [
@@ -17,14 +15,13 @@ jobs:
             #ubuntu-latest, #会报错
             windows-latest  #成功
         ]
-
     steps:
       # step 1
       - name: "Checkout"
         uses: actions/checkout@v2.4.0
 
       # step 2
-      - name: "Set up Java JDK"
+      - name: "Setup Java JDK"
         uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
@@ -43,5 +40,8 @@ jobs:
           nexus_password: ${{ secrets.OSSRH_PASSWORD }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          #命令模板：mvn ${mavenGoalsPhases} --batch-mode --activate-profiles ${mavenProfiles} --settings ${mavenSettingsPath} ${mavenArgs}
+          #命令源码：https://github.com/samuelmeuli/action-maven-publish/blob/master/index.js
+          #以下两个配置会拼接到上面的命令模板中
+          maven_goals_phases: -T 4C clean deploy -e -DskipTests -Dmaven.javadoc.skip=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
           maven_profiles: publish
-          maven_goals_phases: clean deploy -e -Dmaven-javadoc-plugin.version=3.2.0 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn

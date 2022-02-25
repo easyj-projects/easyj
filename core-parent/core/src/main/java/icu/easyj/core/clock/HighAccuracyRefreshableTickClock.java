@@ -48,11 +48,8 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 	public HighAccuracyRefreshableTickClock(@NonNull Supplier<ITickClock> tickClockSupplier, int tryCount) {
 		super(tickClockSupplier);
 
-		// 不能小于最小尝试次数
-		if (tryCount < MIN_TRY_COUNT) {
-			tryCount = MIN_TRY_COUNT;
-		}
-		this.tryCount = tryCount;
+		// 不能小于 最小尝试次数（MIN_TRY_COUNT）
+		this.tryCount = Math.max(tryCount, MIN_TRY_COUNT);
 
 		// 初始化
 		this.init();
