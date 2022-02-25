@@ -31,7 +31,7 @@
 
 	<properties>
 		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.6.3</spring-boot.version>
+		<spring-boot.version>2.6.4</spring-boot.version>
 
 		<!-- Cloud相关 -->
 		<spring-cloud-openfeign.version>3.0.5</spring-cloud-openfeign.version>
