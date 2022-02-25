@@ -2,9 +2,9 @@ name: "Test"
 
 on:
   push:
-    branches: [ develop, master, spring-boot_2.1.x* ]
+    branches: [ develop, master, spring-boot_* ]
   pull_request:
-    branches: [ develop, master, spring-boot_2.*.* ]
+    branches: [ develop, master, spring-boot_* ]
 
 jobs:
   test:
