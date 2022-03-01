@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
-	<if condition='"truetrue".equalsIgnoreCase(property("FILE_ENABLED") + property("FILE_ASYNC_ENABLED"))'>
+	<if condition='"true".equalsIgnoreCase(property("FILE_ENABLED")) &amp;&amp; "true".equalsIgnoreCase(property("FILE_ASYNC_ENABLED"))'>
 		<then>
 			<!-- async-file-appender properties -->
 			<springProperty name="FILE_ASYNC_QUEUE_SIZE" source="easyj.logging.logback.file-appender.async.queue-size"
