@@ -3,6 +3,8 @@ server:
 
 #Spring相关配置
 spring:
+  profiles:
+    active: prod
   application:
     name: easyj-dwz
   datasource:
