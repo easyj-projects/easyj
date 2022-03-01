@@ -2,6 +2,8 @@ server:
   port: 3002
 
 spring:
+  profiles:
+    active: prod
   application:
     name: easyj-websocket
 
