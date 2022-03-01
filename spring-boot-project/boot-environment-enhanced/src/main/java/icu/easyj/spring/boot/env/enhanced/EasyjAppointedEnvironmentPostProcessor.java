@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.env.enhanced;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
@@ -54,6 +55,8 @@ import static icu.easyj.spring.boot.StarterConstants.SYMMETRIC_CRYPTO_PREFIX;
  * @author wangliang181230
  */
 public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
+
+	private static final String CLOUD_SOURCE_CLASS_NAME = "class org.springframework.cloud.bootstrap.BootstrapImportSelectorConfiguration";
 
 	/**
 	 * HIGHEST + 20，比SpringBoot的配置文件加载器晚
@@ -116,6 +119,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+		// 在SpringCloud项目中，如果当前为 BootstrapApplicationListener 在读取环境，那么跳过
+		Optional<Object> firstSource = application.getAllSources().stream().findFirst();
+		if (firstSource.isPresent() && CLOUD_SOURCE_CLASS_NAME.equals(firstSource.get().toString())) {
+			return;
+		}
+
+
 		MutablePropertySources propertySources = environment.getPropertySources();
 
 		String previousPropertySourceName = null;
