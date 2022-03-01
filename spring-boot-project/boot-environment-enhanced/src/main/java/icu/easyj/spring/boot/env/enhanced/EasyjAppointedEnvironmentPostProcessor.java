@@ -55,8 +55,6 @@ import static icu.easyj.spring.boot.StarterConstants.SYMMETRIC_CRYPTO_PREFIX;
  */
 public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
-	private static final String CLOUD_SOURCE_CLASS_NAME = "class org.springframework.cloud.bootstrap.BootstrapImportSelectorConfiguration";
-
 	/**
 	 * HIGHEST + 20，比SpringBoot的配置文件加载器晚
 	 * <p>
