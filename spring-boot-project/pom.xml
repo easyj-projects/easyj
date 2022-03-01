@@ -79,7 +79,7 @@
 
 	<properties>
 		<!-- 项目版本 -->
-		<revision>0.2.8-SNAPSHOT</revision>
+		<revision>0.2.9-SNAPSHOT</revision>
 
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>
