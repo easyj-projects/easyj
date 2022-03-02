@@ -167,7 +167,7 @@
 			"name": "easyj.logging.logback.file-appender.fatal-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用 '*.fatal.log' 日志文件的记录.",
-			"defaultValue": true
+			"defaultValue": false
 		},
 		{
 			"name": "easyj.logging.logback.file-appender.async-appender.enabled",

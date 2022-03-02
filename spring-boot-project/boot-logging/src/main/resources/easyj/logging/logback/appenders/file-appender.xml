@@ -14,7 +14,7 @@
 			<springProperty name="FILE_INFO_ENABLED" source="easyj.logging.logback.file-appender.info-appender.enabled" defaultValue="false"/>
 			<springProperty name="FILE_WARN_ENABLED" source="easyj.logging.logback.file-appender.warn-appender.enabled" defaultValue="true"/>
 			<springProperty name="FILE_ERROR_ENABLED" source="easyj.logging.logback.file-appender.error-appender.enabled" defaultValue="true"/>
-			<springProperty name="FILE_FATAL_ENABLED" source="easyj.logging.logback.file-appender.fatal-appender.enabled" defaultValue="true"/>
+			<springProperty name="FILE_FATAL_ENABLED" source="easyj.logging.logback.file-appender.fatal-appender.enabled" defaultValue="false"/>
 
 
 			<!-- all-appender -->
@@ -184,7 +184,7 @@
 							<cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-true}</cleanHistoryOnStart>
 							<maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-1GB}</maxFileSize>
 							<totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-7GB}</totalSizeCap>
-							<maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY:-3}</maxHistory>
+							<maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY:-30}</maxHistory>
 						</rollingPolicy>
 						<encoder>
 							<pattern>${FILE_LOG_PATTERN}</pattern>
