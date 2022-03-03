@@ -21,7 +21,7 @@ easyj.logging.logback:
     error-appender.enabled: true
     fatal-appender.enabled: false #默认关闭。slf4j的Logger接口中，并没有该日志级别
     #异步执行日志的配置
-    async-appender:
+    async:
       enabled: false #默认使用同步记录日志到文件
       queue-size: 256 #异步队列大小
   #kafka日志附加器

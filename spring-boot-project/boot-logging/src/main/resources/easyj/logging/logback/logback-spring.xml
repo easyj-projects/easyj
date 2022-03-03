@@ -7,7 +7,7 @@
 	<springProperty name="CONSOLE_ENABLED" source="easyj.logging.logback.console-appender.enabled" defaultValue="true"/>
 	<!-- file-appender properties -->
 	<springProperty name="FILE_ENABLED" source="easyj.logging.logback.file-appender.enabled" defaultValue="true"/>
-	<springProperty name="FILE_ASYNC_ENABLED" source="easyj.logging.logback.file-appender.async-appender.enabled" defaultValue="false"/>
+	<springProperty name="FILE_ASYNC_ENABLED" source="easyj.logging.logback.file-appender.async.enabled" defaultValue="false"/>
 	<!-- logstash-appender properties -->
 	<springProperty name="LOGSTASH_ENABLED" source="easyj.logging.logback.logstash-appender.enabled" defaultValue="false"/>
 	<!-- kafka-appender properties -->

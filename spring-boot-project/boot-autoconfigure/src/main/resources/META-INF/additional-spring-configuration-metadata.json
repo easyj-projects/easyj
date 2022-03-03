@@ -170,13 +170,13 @@
 			"defaultValue": false
 		},
 		{
-			"name": "easyj.logging.logback.file-appender.async-appender.enabled",
+			"name": "easyj.logging.logback.file-appender.async.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否使用异步的方式记录日志到文件.",
 			"defaultValue": false
 		},
 		{
-			"name": "easyj.logging.logback.file-appender.async-appender.queue-size",
+			"name": "easyj.logging.logback.file-appender.async.queue-size",
 			"type": "java.lang.Integer",
 			"description": "[logback] 异步记录日志到文件时，日志队列的大小.",
 			"defaultValue": 256
