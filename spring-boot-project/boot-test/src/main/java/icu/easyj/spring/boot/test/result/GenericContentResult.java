@@ -43,6 +43,10 @@ public class GenericContentResult<T> extends BaseResult {
 		this.content = content;
 	}
 
+	public T get() {
+		return content;
+	}
+
 
 	//region 自定义校验方法
 

@@ -33,6 +33,10 @@ public class ContentTypeResult extends BaseResult {
 		this.contentType = contentType.toLowerCase();
 	}
 
+	public String get() {
+		return contentType;
+	}
+
 
 	//region ContentType
 

@@ -34,6 +34,10 @@ public class StatusResult extends BaseResult {
 		this.status = HttpStatus.valueOf(status);
 	}
 
+	public HttpStatus get() {
+		return status;
+	}
+
 
 	//region HttpStatus.value 响应状态值
 
