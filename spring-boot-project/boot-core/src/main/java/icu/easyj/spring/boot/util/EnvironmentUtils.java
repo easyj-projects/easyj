@@ -345,7 +345,7 @@ public abstract class EnvironmentUtils {
 		if (StringUtils.isBlank(env)) {
 			String[] activeProfiles = environment.getActiveProfiles();
 			if (ArrayUtils.isNotEmpty(activeProfiles)) {
-				env = activeProfiles[0];
+				env = activeProfiles[activeProfiles.length - 1]; // 最后一个为active的环境
 			}
 		}
 
