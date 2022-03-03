@@ -29,6 +29,7 @@ public interface IServiceFactory {
 	 * 创建服务实例
 	 *
 	 * @param definition 服务扩展定义
+	 * @param <S>        服务类型
 	 * @return 服务实例，允许为空；为空时，由默认服务工厂生成实例。
 	 */
 	@Nullable

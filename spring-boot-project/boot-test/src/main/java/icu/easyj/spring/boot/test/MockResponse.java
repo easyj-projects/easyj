@@ -106,6 +106,7 @@ public class MockResponse {
 	 * 获取泛型响应内容结果
 	 *
 	 * @param contentType 响应内容类型
+	 * @param <T>         响应类型类
 	 * @return 泛型响应内容结果
 	 */
 	public <T> GenericContentResult<T> content(Type contentType) {
