@@ -16,6 +16,7 @@
 package icu.easyj.spring.boot.test;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 
 import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
@@ -32,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 /**
  * 模拟Response
@@ -99,6 +101,30 @@ public class MockResponse {
 	 */
 	public <T> GenericContentResult<T> content(Class<T> contentClass) {
 		return new GenericContentResult<>(this, this.resultActions, this.getContent(contentClass));
+	}
+
+	/**
+	 * 获取泛型响应内容结果
+	 *
+	 * @param contentClass        响应内容类型
+	 * @param actualTypeArguments 泛型参数实际类型数组
+	 * @param <T>                 响应类型类
+	 * @return 泛型响应内容结果
+	 */
+	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
+		Type type = ParameterizedTypeImpl.make(contentClass, actualTypeArguments, null);
+		return content(type);
+	}
+
+	/**
+	 * 获取泛型响应内容结果
+	 *
+	 * @param contentType 响应内容类型
+	 * @param <T>         响应类型类
+	 * @return 泛型响应内容结果
+	 */
+	public <T> GenericContentResult<T> content(Type contentType) {
+		return new GenericContentResult<>(this, this.resultActions, this.getContent(contentType));
 	}
 
 	/**
@@ -206,6 +232,8 @@ public class MockResponse {
 	/**
 	 * 获取响应内容实例
 	 *
+	 * @param contentClass 响应内容类型
+	 * @param <T>          响应内容类
 	 * @return 响应内容实例
 	 */
 	private <T> T getContent(Class<T> contentClass) {
@@ -214,6 +242,22 @@ public class MockResponse {
 			return (T)content;
 		} else {
 			return JSONUtils.toBean(content, contentClass);
+		}
+	}
+
+	/**
+	 * 获取响应内容实例
+	 *
+	 * @param contentType 响应内容类型
+	 * @param <T>         响应内容类
+	 * @return 响应内容实例
+	 */
+	private <T> T getContent(Type contentType) {
+		String content = getContentAsString();
+		if (contentType.equals(String.class)) {
+			return (T)content;
+		} else {
+			return JSONUtils.toBean(content, contentType);
 		}
 	}
 

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.32</version>
+		<version>1.0.35</version>
 		<relativePath/>
 	</parent>
 
 	<artifactId>easyj-bom</artifactId>
-	<version>0.2.9-SNAPSHOT</version>
+	<version>0.3.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>

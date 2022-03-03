@@ -34,6 +34,10 @@ public class CharacterEncodingResult extends BaseResult {
 		this.characterEncoding = this.toUpperCase(characterEncoding);
 	}
 
+	public String get() {
+		return characterEncoding;
+	}
+
 
 	//region CharacterEncoding
 

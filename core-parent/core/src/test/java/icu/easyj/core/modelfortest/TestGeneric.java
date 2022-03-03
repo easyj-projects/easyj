@@ -13,21 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.constant;
-
-import icu.easyj.core.util.version.VersionInfo;
-import icu.easyj.core.util.version.VersionUtils;
+package icu.easyj.core.modelfortest;
 
 /**
- * EasyJ相关常量
+ * 测试泛型用的类
  *
  * @author wangliang181230
  */
-public interface Constants {
+public class TestGeneric<A, B> {
 
-	String PREFIX = "easyj";
+	private A a;
 
-	String VERSION = "0.3.3-SNAPSHOT";
+	private B b;
 
-	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
+
+	public A getA() {
+		return a;
+	}
+
+	public TestGeneric<A, B> setA(A a) {
+		this.a = a;
+		return this;
+	}
+
+	public B getB() {
+		return b;
+	}
+
+	public TestGeneric<A, B> setB(B b) {
+		this.b = b;
+		return this;
+	}
 }
