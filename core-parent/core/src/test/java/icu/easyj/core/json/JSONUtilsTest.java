@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.json;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +29,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.EasyjFastjsonBugfixUtils;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
-import icu.easyj.core.enums.DateFormatType;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.modelfortest.TestUser;
 import icu.easyj.core.modelfortest.TestUser3;
@@ -89,7 +89,7 @@ public class JSONUtilsTest {
 	public void testToBean() {
 		for (IJSONService service : SERVICES) {
 			assertEquals1(service, service.toBean(JSON1, TestUser.class));
-			assertEquals2(service, service.toBean(JSON2, TestUser.class));
+			assertEquals2(service, service.toBean(JSON2, (Type)TestUser.class)); // 测试重载方法
 
 			// jackson和json不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
 			if (ObjectUtils.notIn(service.getName(), JACKSON, GSON)) {

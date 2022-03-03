@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.json.impls;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -43,6 +44,15 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
 			return new Gson().fromJson(text, targetClazz);
+		} catch (Exception e) {
+			throw new JSONParseException("JSON字符串转Bean失败", e);
+		}
+	}
+
+	@Override
+	public <T> T toBean(@NonNull String text, @NonNull Type targetType) throws JSONParseException {
+		try {
+			return new Gson().fromJson(text, targetType);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转Bean失败", e);
 		}

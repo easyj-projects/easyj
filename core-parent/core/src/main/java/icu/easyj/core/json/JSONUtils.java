@@ -15,6 +15,7 @@
  */
 package icu.easyj.core.json;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
@@ -52,6 +53,25 @@ public abstract class JSONUtils {
 		Assert.notNull(targetClazz, "'targetClazz' must not be null");
 
 		return JSON_SERVICE.toBean(text, targetClazz);
+	}
+
+	/**
+	 * 转换为指定类型的对象
+	 *
+	 * @param text       字符串
+	 * @param targetType 目标类型
+	 * @param <T>        目标类
+	 * @return 目标类型的对象
+	 * @throws JSONParseException JSON解析失败
+	 */
+	public static <T> T toBean(String text, @NonNull Type targetType) {
+		if (text == null) {
+			return null;
+		}
+
+		Assert.notNull(targetType, "'targetType' must not be null");
+
+		return JSON_SERVICE.toBean(text, targetType);
 	}
 
 	/**
