@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.32</version>
+		<version>1.0.35</version>
 		<relativePath/>
 	</parent>
 
@@ -91,7 +91,7 @@
 
 	<properties>
 		<!-- 当前项目版本 -->
-		<revision>0.2.9-SNAPSHOT</revision>
+		<revision>0.3.3-SNAPSHOT</revision>
 
 		<!-- Spring Boot版本 -->
 		<spring-boot.version>2.1.18.RELEASE</spring-boot.version>

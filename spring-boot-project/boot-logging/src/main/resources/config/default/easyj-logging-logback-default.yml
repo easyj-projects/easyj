@@ -2,9 +2,12 @@ easyj.config.activate.on-class:
   - ch.qos.logback.core.FileAppender
 
 easyj.logging.logback:
+  #可引用配置：配置文件路径
   config: classpath:easyj/logging/logback/logback-spring.xml
+  #控制台日志附加器
   console-appender:
     enabled: true
+  #文件日志附加器
   file-appender:
     enabled: true
     #文件名前缀（文件名格式：${前缀}.${logLevel}.log，例子：dwz-server.error.log）
@@ -16,20 +19,23 @@ easyj.logging.logback:
     info-appender.enabled: false #默认关闭
     warn-appender.enabled: true
     error-appender.enabled: true
-    fatal-appender.enabled: true
+    fatal-appender.enabled: false #默认关闭。slf4j的Logger接口中，并没有该日志级别
     #异步执行日志的配置
-    async-appender:
+    async:
       enabled: false #默认使用同步记录日志到文件
-      queue-size: 256
+      queue-size: 256 #异步队列大小
+  #kafka日志附加器
   kafka-appender:
     enabled: false #默认关闭
-    bootstrap-servers: ${spring.kafka.bootstrap-servers:127.0.0.1:9092} #默认同步spring.kafka的配置
+    bootstrap-servers: ${spring.kafka.bootstrap-servers:127.0.0.1:9092} #kafka服务地址列表，默认同步spring.kafka的配置
     topic: logback_to_logstash
+  #logstash日志附加器
   logstash-appender:
     enabled: false #默认关闭
+    destination: 127.0.0.1:4560 #LogStash的TCP通道地址
     queue-size: 8192
 
 logging:
   #config: ${easyj.logging.logback.config} #该配置请自行添加
   file:
-    path: ${logging.path:${user.home}/logs/${spring.application.name:${easyj.app.application:${easyj.logging.logback.file-appender.file-name-prefix}}}}
+    path: ${logging.path:${user.home}/logs/${spring.application.name:spring}}

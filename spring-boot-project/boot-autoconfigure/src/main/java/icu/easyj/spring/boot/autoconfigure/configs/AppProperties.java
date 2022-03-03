@@ -51,7 +51,7 @@ public class AppProperties implements InitializingBean {
 	/**
 	 * 应用代码
 	 */
-	@Value("${easyj.app.application:${spring.application.name:}}")
+	@Value("${easyj.app.application:${spring.application.name:spring}}")
 	private String application;
 
 	/**

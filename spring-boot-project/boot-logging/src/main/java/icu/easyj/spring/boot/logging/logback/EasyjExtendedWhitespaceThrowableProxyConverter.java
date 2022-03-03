@@ -20,7 +20,8 @@ import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.core.CoreConstants;
 
 /**
- * 在堆栈信息前后加一个标记行，更加方便观察
+ * 在堆栈信息前后加一个标记行，更加方便观察。<br>
+ * 主要用于应用于控制台日志附加器（console-appender）和文件日志附加器（file-appender / async-file-appender）
  *
  * @author wangliang181230
  */

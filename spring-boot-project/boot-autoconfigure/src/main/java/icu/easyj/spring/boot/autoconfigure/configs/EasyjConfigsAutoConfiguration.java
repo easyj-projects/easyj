@@ -19,10 +19,11 @@ import cn.hutool.core.lang.Snowflake;
 import icu.easyj.config.EnvironmentConfigs;
 import icu.easyj.config.ServerConfigs;
 import icu.easyj.spring.boot.StarterConstants;
-import org.springframework.beans.factory.annotation.Value;
+import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * 全局配置自动装配
@@ -47,17 +48,15 @@ public class EasyjConfigsAutoConfiguration {
 	/**
 	 * 创建环境配置bean
 	 *
-	 * @param activeProfiles 激活的profiles
+	 * @param environment 环境
 	 * @return 全局配置
 	 */
 	@Bean
 	@Lazy(false)
 	@ConfigurationProperties(StarterConstants.ENV_PREFIX)
-	public EnvironmentProperties environmentProperties(@Value("${spring.profiles.active:}") String[] activeProfiles) {
+	public EnvironmentProperties environmentProperties(ConfigurableEnvironment environment) {
 		EnvironmentProperties properties = new EnvironmentProperties();
-		if (activeProfiles != null && activeProfiles.length > 0) {
-			properties.setEnv(activeProfiles[0]);
-		}
+		properties.setEnv(EnvironmentUtils.getEnv(environment));
 		return properties;
 	}
 
