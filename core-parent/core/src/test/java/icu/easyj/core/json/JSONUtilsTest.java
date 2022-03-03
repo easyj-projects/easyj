@@ -30,6 +30,7 @@ import com.alibaba.fastjson.serializer.EasyjFastjsonBugfixUtils;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.modelfortest.TestGeneric;
 import icu.easyj.core.modelfortest.TestUser;
 import icu.easyj.core.modelfortest.TestUser3;
 import icu.easyj.core.util.DateUtils;
@@ -56,7 +57,8 @@ public class JSONUtilsTest {
 
 	private static final String JSON1 = "{\"Name\":\"某某人1\",\"Age\":31,\"Birthday\":\"1990-10-01\"}";
 	private static final String JSON2 = "{\"Name\":\"某某人2\",\"Age\":32,\"Birthday\":\"1989-10-02\"}";
-	private static final String JSON3 = "{\"user_name\":\"某某人3\",\"user_age\":33,\"user_birthday\":\"1988-10-03\"}";
+	private static final String JSON3 = "{\"a\":" + JSON1 + ",\"b\":" + JSON2 + "}";
+	private static final String JSON4 = "{\"user_name\":\"某某人3\",\"user_age\":33,\"user_birthday\":\"1988-10-03\"}";
 	private static final String LIST_JSON = "[" + JSON1 + "," + JSON2 + "]";
 
 	private static final IJSONService DEFAULT_SERVICE = EnhancedServiceLoader.load(IJSONService.class);
@@ -90,10 +92,11 @@ public class JSONUtilsTest {
 		for (IJSONService service : SERVICES) {
 			assertEquals1(service, service.toBean(JSON1, TestUser.class));
 			assertEquals2(service, service.toBean(JSON2, (Type)TestUser.class)); // 测试重载方法
+			assertEquals3(service, service.toBean(JSON3, TestGeneric.class, TestUser.class, TestUser.class)); // 测试重载方法
 
 			// jackson和json不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
 			if (ObjectUtils.notIn(service.getName(), JACKSON, GSON)) {
-				assertEquals3(service, service.toBean(JSON3, TestUser3.class));
+				assertEquals4(service, service.toBean(JSON4, TestUser3.class));
 			}
 		}
 
@@ -222,7 +225,13 @@ public class JSONUtilsTest {
 		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()));
 	}
 
-	private void assertEquals3(IJSONService service, TestUser3 user) {
+	private void assertEquals3(IJSONService service, TestGeneric<TestUser, TestUser> data) {
+		Assertions.assertNotNull(data);
+		assertEquals1(service, data.getA());
+		assertEquals2(service, data.getB());
+	}
+
+	private void assertEquals4(IJSONService service, TestUser3 user) {
 		Assertions.assertNotNull(user);
 		Assertions.assertEquals("某某人3", user.getUserName());
 		Assertions.assertEquals(33, user.getUserAge().intValue());

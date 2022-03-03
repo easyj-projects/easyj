@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 /**
  * JSON服务
@@ -58,6 +59,20 @@ public interface IJSONService {
 	 * @throws JSONParseException 转换异常
 	 */
 	<T> T toBean(@NonNull String text, @NonNull Type targetType) throws JSONParseException;
+
+	/**
+	 * 转换为指定类型的对象
+	 *
+	 * @param text    字符串
+	 * @param rawType 目标类型
+	 * @param <T>     目标类
+	 * @return 目标类型的对象
+	 * @throws JSONParseException 转换异常
+	 */
+	default <T> T toBean(@NonNull String text, @NonNull Class<?> rawType, Type... actualTypeArguments) throws JSONParseException {
+		Type type = ParameterizedTypeImpl.make(rawType, actualTypeArguments, null);
+		return this.toBean(text, type);
+	}
 
 	/**
 	 * 转换为指定类型的列表
