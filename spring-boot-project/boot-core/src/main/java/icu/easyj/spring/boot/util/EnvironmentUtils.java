@@ -28,7 +28,6 @@ import java.util.Properties;
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.text.StrPool;
 import icu.easyj.core.env.EnvironmentType;
-import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.ResourceUtils;
@@ -37,6 +36,7 @@ import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.exception.NotSupportedConfigFileTypeException;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
@@ -343,9 +343,12 @@ public abstract class EnvironmentUtils {
 	public static String getEnv(@NonNull ConfigurableEnvironment environment) {
 		String env = environment.getProperty(ENV_KEY);
 		if (StringUtils.isBlank(env)) {
-			String[] activeProfiles = environment.getActiveProfiles();
-			if (ArrayUtils.isNotEmpty(activeProfiles)) {
-				env = activeProfiles[activeProfiles.length - 1]; // 最后一个为active的环境
+			env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
+			if (StringUtils.isBlank(env)) {
+				env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME + "[0]");
+				if (StringUtils.isBlank(env)) {
+					env = null;
+				}
 			}
 		}
 
