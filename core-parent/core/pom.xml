@@ -66,18 +66,4 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>cicd</id>
-			<properties>
-				<maven.surefire.argLine>
-					--add-opens java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED
-
-					--illegal-access=permit
-					-Dillegal-access=permit
-				</maven.surefire.argLine>
-			</properties>
-		</profile>
-	</profiles>
 </project>

@@ -18,6 +18,7 @@ package icu.easyj.spring.boot.test;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
+import cn.hutool.core.lang.ParameterizedTypeImpl;
 import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
@@ -33,7 +34,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 /**
  * 模拟Response
@@ -111,8 +111,8 @@ public class MockResponse {
 	 * @param <T>                 响应类型类
 	 * @return 泛型响应内容结果
 	 */
-	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
-		Type type = ParameterizedTypeImpl.make(contentClass, actualTypeArguments, null);
+	public <T> GenericContentResult<T> content(Class<T> contentClass, Class<?>... actualTypeArguments) {
+		Type type = new ParameterizedTypeImpl(actualTypeArguments, null, contentClass);
 		return content(type);
 	}
 
