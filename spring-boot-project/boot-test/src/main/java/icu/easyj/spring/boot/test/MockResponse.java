@@ -111,7 +111,7 @@ public class MockResponse {
 	 * @param <T>                 响应类型类
 	 * @return 泛型响应内容结果
 	 */
-	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
+	public <T> GenericContentResult<T> content(Class<T> contentClass, Class<?>... actualTypeArguments) {
 		Type type = ParameterizedTypeImpl.make(contentClass, actualTypeArguments, null);
 		return content(type);
 	}
