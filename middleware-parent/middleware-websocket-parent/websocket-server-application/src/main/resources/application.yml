@@ -16,5 +16,3 @@ easyj.logging.logback:
   logstash-appender:
     enabled: false
     destination: 10.1.50.114:4560 #对应logstash提供的地址
-logging:
-  config: ${easyj.logging.logback.config} #引用EasyJ定义的 'logback.xml' 配置文件，可将xml配置转为yml配置
