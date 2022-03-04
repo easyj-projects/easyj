@@ -18,9 +18,9 @@ package icu.easyj.spring.boot.test;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
-import cn.hutool.core.lang.ParameterizedTypeImpl;
 import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.TypeBuilder;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;
 import icu.easyj.spring.boot.test.result.ContentTypeResult;
@@ -111,8 +111,8 @@ public class MockResponse {
 	 * @param <T>                 响应类型类
 	 * @return 泛型响应内容结果
 	 */
-	public <T> GenericContentResult<T> content(Class<T> contentClass, Class<?>... actualTypeArguments) {
-		Type type = new ParameterizedTypeImpl(actualTypeArguments, null, contentClass);
+	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
+		Type type = TypeBuilder.buildGeneric(contentClass, actualTypeArguments);
 		return content(type);
 	}
 
