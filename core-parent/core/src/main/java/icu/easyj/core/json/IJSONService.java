@@ -69,7 +69,7 @@ public interface IJSONService {
 	 * @return 目标类型的对象
 	 * @throws JSONParseException 转换异常
 	 */
-	default <T> T toBean(@NonNull String text, @NonNull Class<?> rawType, Type... actualTypeArguments) throws JSONParseException {
+	default <T> T toBean(@NonNull String text, @NonNull Class<?> rawType, Class<?>... actualTypeArguments) throws JSONParseException {
 		Type type = ParameterizedTypeImpl.make(rawType, actualTypeArguments, null);
 		return this.toBean(text, type);
 	}
