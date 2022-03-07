@@ -22,6 +22,8 @@ easyj.sequence:
 
 
 #日志相关配置
+logging:
+  config: ${easyj.logging.logback.config} #引用EasyJ定义的 'logback.xml' 配置文件，可将xml配置转为yml配置
 easyj.logging.logback:
   kafka-appender:
     enabled: false

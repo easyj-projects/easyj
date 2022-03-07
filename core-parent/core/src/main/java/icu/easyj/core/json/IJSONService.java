@@ -18,7 +18,7 @@ package icu.easyj.core.json;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import cn.hutool.core.lang.ParameterizedTypeImpl;
+import icu.easyj.core.util.TypeBuilder;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -69,8 +69,8 @@ public interface IJSONService {
 	 * @return 目标类型的对象
 	 * @throws JSONParseException 转换异常
 	 */
-	default <T> T toBean(@NonNull String text, @NonNull Class<?> rawType, Class<?>... actualTypeArguments) throws JSONParseException {
-		Type type = new ParameterizedTypeImpl(actualTypeArguments, null, rawType);
+	default <T> T toBean(@NonNull String text, @NonNull Class<?> rawType, Type... actualTypeArguments) throws JSONParseException {
+		Type type = TypeBuilder.buildGeneric(rawType, actualTypeArguments);
 		return this.toBean(text, type);
 	}
 

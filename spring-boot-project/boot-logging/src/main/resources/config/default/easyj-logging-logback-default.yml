@@ -36,6 +36,6 @@ easyj.logging.logback:
     queue-size: 8192
 
 logging:
-  config: ${easyj.logging.logback.config}
+  #config: ${easyj.logging.logback.config} #该配置请自行添加
   file:
     path: ${logging.path:${user.home}/logs/${spring.application.name:spring}}
