@@ -84,7 +84,7 @@ public abstract class JSONUtils {
 	 * @return 目标类型的对象
 	 * @throws JSONParseException JSON解析失败
 	 */
-	public static <T> T toBean(String text, @NonNull Class<?> rawType, Class<?>... actualTypeArguments) {
+	public static <T> T toBean(String text, @NonNull Class<?> rawType, Type... actualTypeArguments) {
 		if (text == null) {
 			return null;
 		}

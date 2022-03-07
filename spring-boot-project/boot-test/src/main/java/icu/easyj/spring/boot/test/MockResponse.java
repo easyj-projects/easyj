@@ -17,16 +17,18 @@ package icu.easyj.spring.boot.test;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.List;
 
-import cn.hutool.core.lang.ParameterizedTypeImpl;
 import icu.easyj.core.json.JSONUtils;
 import icu.easyj.core.util.ReflectionUtils;
+import icu.easyj.core.util.TypeBuilder;
 import icu.easyj.spring.boot.test.result.CharacterEncodingResult;
 import icu.easyj.spring.boot.test.result.ContentResult;
 import icu.easyj.spring.boot.test.result.ContentTypeResult;
 import icu.easyj.spring.boot.test.result.FileExportResult;
 import icu.easyj.spring.boot.test.result.GenericContentResult;
 import icu.easyj.spring.boot.test.result.HeaderResult;
+import icu.easyj.spring.boot.test.result.ListContentResult;
 import icu.easyj.spring.boot.test.result.StatusResult;
 import icu.easyj.test.exception.TestException;
 import org.junit.jupiter.api.Assertions;
@@ -93,27 +95,24 @@ public class MockResponse {
 	}
 
 	/**
-	 * 获取泛型响应内容结果
+	 * 获取响应内容结果
 	 *
-	 * @param contentClass 响应内容类型
-	 * @param <T>          响应内容类型
-	 * @return 泛型响应内容结果
+	 * @return 响应内容结果
 	 */
-	public <T> GenericContentResult<T> content(Class<T> contentClass) {
-		return new GenericContentResult<>(this, this.resultActions, this.getContent(contentClass));
+	public ContentResult content() {
+		return new ContentResult(this, this.resultActions, this.getContentAsString());
 	}
 
 	/**
 	 * 获取泛型响应内容结果
 	 *
-	 * @param contentClass        响应内容类型
-	 * @param actualTypeArguments 泛型参数实际类型数组
-	 * @param <T>                 响应类型类
+	 * @param contentClass 响应内容类型
+	 * @param <T>          响应内容类
 	 * @return 泛型响应内容结果
 	 */
-	public <T> GenericContentResult<T> content(Class<T> contentClass, Class<?>... actualTypeArguments) {
-		Type type = new ParameterizedTypeImpl(actualTypeArguments, null, contentClass);
-		return content(type);
+	public <T> GenericContentResult<T> content(Class<T> contentClass) {
+		T content = this.getContent(contentClass);
+		return new GenericContentResult<>(this, this.resultActions, content);
 	}
 
 	/**
@@ -124,16 +123,47 @@ public class MockResponse {
 	 * @return 泛型响应内容结果
 	 */
 	public <T> GenericContentResult<T> content(Type contentType) {
-		return new GenericContentResult<>(this, this.resultActions, this.getContent(contentType));
+		T content = this.getContent(contentType);
+		return new GenericContentResult<>(this, this.resultActions, content);
 	}
 
 	/**
-	 * 获取响应内容结果
+	 * 获取泛型响应内容结果
 	 *
-	 * @return 响应内容结果
+	 * @param contentClass        响应内容类型
+	 * @param actualTypeArguments 泛型参数实际类型数组
+	 * @param <T>                 响应类型类
+	 * @return 泛型响应内容结果
 	 */
-	public ContentResult content() {
-		return new ContentResult(this, this.resultActions, this.getContentAsString());
+	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
+		Type type = TypeBuilder.buildGeneric(contentClass, actualTypeArguments);
+		return content(type);
+	}
+
+	/**
+	 * 获取泛型 {@link List} 响应内容结果
+	 *
+	 * @param contentClass 响应内容类型
+	 * @param actualType   泛型参数实际类型数组
+	 * @param <T>          响应类型类
+	 * @return 泛型 {@link List} 响应内容结果
+	 */
+	public <T> GenericContentResult<T> contentList(Class<T> contentClass, Class<?> actualType) {
+		Type type = TypeBuilder.buildList(actualType);
+		return content(contentClass, type);
+	}
+
+	/**
+	 * 获取列表响应内容结果
+	 *
+	 * @param actualType 列表内的实际内容类型
+	 * @param <T>        列表内的实际内容类
+	 * @return 列表响应内容结果
+	 */
+	public <T> ListContentResult<T> list(Class<T> actualType) {
+		Type type = TypeBuilder.buildList(actualType);
+		List<T> listContent = this.getContent(type);
+		return new ListContentResult<>(this, this.resultActions, listContent);
 	}
 
 	/**
