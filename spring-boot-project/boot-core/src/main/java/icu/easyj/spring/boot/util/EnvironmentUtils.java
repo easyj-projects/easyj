@@ -341,18 +341,26 @@ public abstract class EnvironmentUtils {
 	 */
 	@Nullable
 	public static String getEnv(@NonNull ConfigurableEnvironment environment) {
+		// 尝试获取 'easyj.env.env' 配置值
 		String env = environment.getProperty(ENV_KEY);
-		if (StringUtils.isBlank(env)) {
-			env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
-			if (StringUtils.isBlank(env)) {
-				env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME + "[0]");
-				if (StringUtils.isBlank(env)) {
-					env = null;
-				}
-			}
+		if (StringUtils.isNotBlank(env)) {
+			return env;
 		}
 
-		return env;
+		// 尝试获取 'spring.profiles.active' 配置值
+		env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME);
+		if (StringUtils.isNotBlank(env)) {
+			return env;
+		}
+
+		// 尝试获取 'spring.profiles.active[0]' 配置值
+		env = environment.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME + "[0]");
+		if (StringUtils.isNotBlank(env)) {
+			return env;
+		}
+
+		// 都没有，则返回null
+		return null;
 	}
 
 	/**
