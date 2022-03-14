@@ -75,13 +75,13 @@ public abstract class JSONUtils {
 	}
 
 	/**
-	 * 转换为指定类型的对象
+	 * 转换为指定泛型类型的对象
 	 *
 	 * @param text                字符串
-	 * @param rawType             目标类型
+	 * @param rawType             目标泛型类型
 	 * @param actualTypeArguments 泛型实际类型数组
-	 * @param <T>                 目标类
-	 * @return 目标类型的对象
+	 * @param <T>                 目标泛型类
+	 * @return 目标泛型类型的对象
 	 * @throws JSONParseException JSON解析失败
 	 */
 	public static <T> T toBean(String text, @NonNull Class<T> rawType, Type... actualTypeArguments) {
