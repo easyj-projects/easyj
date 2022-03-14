@@ -119,7 +119,7 @@ public class MockResponse {
 	 * 获取泛型响应内容结果
 	 *
 	 * @param contentType 响应内容类型
-	 * @param <T>         响应类型类
+	 * @param <T>         响应内容类
 	 * @return 泛型响应内容结果
 	 */
 	public <T> GenericContentResult<T> content(Type contentType) {
@@ -131,8 +131,8 @@ public class MockResponse {
 	 * 获取泛型响应内容结果
 	 *
 	 * @param contentClass        响应内容类型
-	 * @param actualTypeArguments 泛型参数实际类型数组
-	 * @param <T>                 响应类型类
+	 * @param actualTypeArguments 泛型实际类型数组
+	 * @param <T>                 响应内容类
 	 * @return 泛型响应内容结果
 	 */
 	public <T> GenericContentResult<T> content(Class<T> contentClass, Type... actualTypeArguments) {
@@ -144,8 +144,8 @@ public class MockResponse {
 	 * 获取泛型 {@link List} 响应内容结果
 	 *
 	 * @param contentClass 响应内容类型
-	 * @param actualType   泛型参数实际类型数组
-	 * @param <T>          响应类型类
+	 * @param actualType   泛型实际类型
+	 * @param <T>          响应内容类
 	 * @return 泛型 {@link List} 响应内容结果
 	 */
 	public <T> GenericContentResult<T> contentList(Class<T> contentClass, Class<?> actualType) {
