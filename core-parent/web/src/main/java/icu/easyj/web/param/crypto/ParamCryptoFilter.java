@@ -118,17 +118,12 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 		try {
 			// 解密
 			String queryString = cryptoHandler.decrypt(encryptedQueryString);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("QueryString入参解密成功！\r\n==>\r\n解密前: {}\r\n解密后: {}\r\n<==", encryptedQueryString, queryString);
-			}
+			LOGGER.debug("QueryString入参解密成功！\r\n==>\r\n解密前: {}\r\n解密后: {}\r\n<==", encryptedQueryString, queryString);
 
 			// 包装Request：将解密后的`QueryString`重新注入到request中
 			return new QueryStringHttpServletRequestWrapper(request, queryString);
 		} catch (RuntimeException e) {
-
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
-			}
+			LOGGER.error("QueryString入参未加密或格式有误，解密失败！\r\n==>\r\nQuery String: {}\r\nErrorMessage: {}\r\n<==", request.getQueryString(), e.getMessage());
 
 			// 如果强制要求调用端加密，则抛出异常，否则直接返回request
 			if (cryptoHandlerProperties.isNeedEncryptInputParam()) {
@@ -164,9 +159,7 @@ public class ParamCryptoFilter extends AbstractFilter<IParamCryptoFilterProperti
 					parameterNames.clear();
 					parameterNames = null;
 
-					if (LOGGER.isInfoEnabled()) {
-						LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
-					}
+					LOGGER.info("{}, queryString: {}", errorMsg, request.getQueryString());
 					throw new ParamNotEncryptedException(errorMsg, "HAS_UN_ENCRYPTED_QUERY_STRING");
 				}
 			}

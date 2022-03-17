@@ -50,9 +50,7 @@ public abstract class NetPropertyUtils {
 	public static String getProperty(String name, CodeAnalysisResult result) {
 		if (StringUtils.isBlank(result.getMethodName())) {
 			String localIp = getFirstIp();
-			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("函数式配置`${" + name + "}`的值: " + localIp);
-			}
+			LOGGER.info("函数式配置`${{}}`的值: {}", name, localIp);
 			return localIp;
 		}
 
@@ -85,8 +83,8 @@ public abstract class NetPropertyUtils {
 					throw new ConfigurationException("不支持的网络函数式配置：${" + name + "}");
 			}
 		} finally {
-			if (localIp != null && LOGGER.isInfoEnabled()) {
-				LOGGER.info("函数式配置`${" + name + "}`的值: " + localIp);
+			if (localIp != null) {
+				LOGGER.info("函数式配置`${{}}`的值: {}", name, localIp);
 			}
 		}
 	}
@@ -155,9 +153,7 @@ public abstract class NetPropertyUtils {
 
 		// 都未匹配到，返回第一个IP地址
 		ip = ipList.get(0);
-		if (LOGGER.isWarnEnabled()) {
-			LOGGER.warn("根据匹配串 [{}] 也未匹配到任何网卡IP，直接获取第一张网卡IP：{}", pattern, ip);
-		}
+		LOGGER.warn("根据匹配串 [{}] 也未匹配到任何网卡IP，直接获取第一张网卡IP：{}", pattern, ip);
 		return ip;
 	}
 

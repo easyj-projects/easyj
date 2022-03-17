@@ -214,9 +214,7 @@ public class TencentEasyjIdCardOcrTemplateImpl implements IIdCardOcrTemplate {
 						builder.enableDetectPsWarn();
 						break;
 					default:
-						if (LOGGER.isWarnEnabled()) {
-							LOGGER.warn("未知的`IdCardOCR`高级功能：{}", advanced.name());
-						}
+						LOGGER.warn("未知的`IdCardOCR`高级功能：{}", advanced.name());
 						break;
 				}
 			}
