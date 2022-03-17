@@ -180,6 +180,13 @@
 				<artifactId>easyj-spring-boot-test</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- Starter: EasyJ Spring Boot Test -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-test</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
