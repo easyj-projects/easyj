@@ -63,9 +63,10 @@ public interface IJSONService {
 	/**
 	 * 转换为指定泛型类型的对象
 	 *
-	 * @param text    字符串
-	 * @param rawType 目标泛型类型
-	 * @param <T>     目标泛型类
+	 * @param text                字符串
+	 * @param rawType             目标泛型类型
+	 * @param actualTypeArguments 泛型实际类型数组
+	 * @param <T>                 目标泛型类
 	 * @return 目标泛型类型的对象
 	 * @throws JSONParseException 转换异常
 	 */

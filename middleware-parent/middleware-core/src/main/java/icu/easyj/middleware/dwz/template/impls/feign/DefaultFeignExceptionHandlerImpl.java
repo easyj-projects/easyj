@@ -60,9 +60,7 @@ public class DefaultFeignExceptionHandlerImpl implements IFeignExceptionHandler 
 						}
 					}
 				} catch (JSONParseException jpe) {
-					if (LOGGER.isInfoEnabled()) {
-						LOGGER.info("响应内容JSON解析失败：\r\ncontent：{}\r\nexception：{}", content, jpe.getMessage());
-					}
+					LOGGER.info("响应内容JSON解析失败：\r\ncontent：{}\r\nexception：{}", content, jpe.getMessage());
 				}
 				if (errorMsg == null) {
 					errorMsg = "未知异常";

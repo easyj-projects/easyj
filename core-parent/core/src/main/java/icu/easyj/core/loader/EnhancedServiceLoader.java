@@ -614,9 +614,7 @@ public abstract class EnhancedServiceLoader {
 								try {
 									ExtensionDefinition extensionDefinition = getUnloadedExtensionDefinition(line, loader);
 									if (extensionDefinition == null) {
-										if (LOGGER.isDebugEnabled()) {
-											LOGGER.debug("The same extension {} has already been loaded, skipped", line);
-										}
+										LOGGER.debug("The same extension {} has already been loaded, skipped", line);
 										continue;
 									}
 									extensions.add(extensionDefinition);

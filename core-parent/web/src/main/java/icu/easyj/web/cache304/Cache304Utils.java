@@ -73,10 +73,8 @@ public abstract class Cache304Utils {
 		try {
 			lastModified = DateUtils.parseAll(ifModifiedSince);
 		} catch (Exception ex) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("解析时间字符串失败，header[\"{}\"] = {}, error = {}",
-						HttpHeaders.IF_MODIFIED_SINCE, ifModifiedSince, ex.getMessage());
-			}
+			LOGGER.warn("解析时间字符串失败，header[\"{}\"] = {}, error = {}",
+					HttpHeaders.IF_MODIFIED_SINCE, ifModifiedSince, ex.getMessage(), ex);
 			// 头信息有误，执行业务并设置缓存响应头
 			return doCallbackAndSetCache304Header(callback, response, config, -1);
 		}
