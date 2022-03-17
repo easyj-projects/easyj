@@ -33,7 +33,8 @@ public abstract class TypeBuilder {
 	 * 创建泛型类型
 	 *
 	 * @param rawType             原始类型
-	 * @param actualTypeArguments 泛型参数实际类型数组
+	 * @param ownerType           所有者类型
+	 * @param actualTypeArguments 泛型实际类型数组
 	 * @return 返回泛型类型
 	 */
 	public static ParameterizedType buildGeneric(Class<?> rawType, Type ownerType, Type[] actualTypeArguments) {
@@ -44,7 +45,7 @@ public abstract class TypeBuilder {
 	 * 创建泛型类型
 	 *
 	 * @param rawType             原始类型
-	 * @param actualTypeArguments 泛型参数实际类型数组
+	 * @param actualTypeArguments 泛型实际类型数组
 	 * @return 返回泛型类型
 	 */
 	public static ParameterizedType buildGeneric(Class<?> rawType, Type... actualTypeArguments) {

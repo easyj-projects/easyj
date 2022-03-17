@@ -22,6 +22,8 @@
 		<module>spring-boot-starter-logging</module>
 		<!-- Web -->
 		<module>spring-boot-starter-web</module>
+		<!-- Test -->
+		<module>spring-boot-starter-test</module>
 
 		<!-- 中间件：DWZ（短链接服务） -->
 		<module>middleware/spring-boot-starter-dwz-server</module>

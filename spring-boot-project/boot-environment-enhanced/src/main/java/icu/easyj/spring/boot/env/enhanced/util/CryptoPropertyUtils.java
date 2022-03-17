@@ -74,8 +74,8 @@ public abstract class CryptoPropertyUtils {
 					throw new ConfigurationException("不支持的加解密函数式配置：${" + name + "}");
 			}
 		} finally {
-			if (property != null && LOGGER.isDebugEnabled()) {
-				LOGGER.debug("函数式配置`${" + name + "}`的值: {}", property);
+			if (property != null) {
+				LOGGER.info("函数式配置`${{}}`的值: {}", name, property);
 			}
 		}
 	}

@@ -125,9 +125,7 @@ public class FastJsonParamCryptoHttpMessageConverter extends FastJsonHttpMessage
 					// 解密，还原入参JSON串
 					bodyJsonStr = this.paramCryptoFilter.getCryptoHandler().decrypt(body);
 				} catch (RuntimeException e) {
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("Body入参未加密或格式有误，解密失败！\r\n==>\r\nBody: {}\r\nErrorMessage: {}\r\n<==", body, e.getMessage());
-					}
+					LOGGER.error("Body入参未加密或格式有误，解密失败！\r\n==>\r\nBody: {}\r\nErrorMessage: {}\r\n<==", body, e.getMessage());
 					if (e instanceof ParamDecryptException) {
 						throw e;
 					} else {
