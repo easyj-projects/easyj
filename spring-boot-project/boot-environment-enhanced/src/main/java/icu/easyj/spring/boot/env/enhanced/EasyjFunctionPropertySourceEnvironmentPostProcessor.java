@@ -56,8 +56,7 @@ public class EasyjFunctionPropertySourceEnvironmentPostProcessor implements Envi
 
 	@Override
 	public int getOrder() {
-		// 比SpringBoot的配置文件加载器早
-		// 注：为了兼容低版本的springboot，不使用springboot的常量
-		return (Ordered.HIGHEST_PRECEDENCE + 10) - 1; // ConfigDataEnvironmentPostProcessor.ORDER - 1;
+		// 优先级最高，以保证尽快能够使用
+		return Ordered.HIGHEST_PRECEDENCE;
 	}
 }
