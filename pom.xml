@@ -91,7 +91,7 @@
 
 	<properties>
 		<!-- 当前项目版本 -->
-		<revision>0.3.5-SNAPSHOT</revision>
+		<revision>0.3.5</revision>
 
 		<!-- Spring Boot版本 -->
 		<spring-boot.version>2.6.4</spring-boot.version>
