@@ -44,4 +44,4 @@ jobs:
           #命令源码：https://github.com/samuelmeuli/action-maven-publish/blob/master/index.js
           #以下两个配置会拼接到上面的命令模板中
           maven_goals_phases: -T 4C clean deploy -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-          maven_profiles: publish
+          maven_profiles: publish-auto
