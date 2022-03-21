@@ -20,6 +20,12 @@
 			<artifactId>easyj-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-logging</artifactId>
@@ -27,8 +33,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
 		</dependency>
 
 
