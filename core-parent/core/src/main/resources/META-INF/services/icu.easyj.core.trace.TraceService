@@ -1,0 +1,2 @@
+icu.easyj.core.trace.impls.MDCTraceServiceImpl
+icu.easyj.core.trace.impls.ZipkinTraceServiceImpl
