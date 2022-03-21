@@ -65,6 +65,10 @@
 			<artifactId>easyj-spring-boot-starter-logging</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.danielwegener</groupId>
+			<artifactId>logback-kafka-appender</artifactId>
+		</dependency>
 
 
 		<!-- Spring-Test -->
