@@ -20,12 +20,6 @@
 			<artifactId>easyj-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>icu.easyj.boot</groupId>
 			<artifactId>easyj-spring-boot-logging</artifactId>
@@ -33,21 +27,17 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
 
 
 		<!-- # logback appenders -->
 		<!-- kafka-appender所需的依赖，可将日志推送到 Kafka 中 -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.github.danielwegener</groupId>
 			<artifactId>logback-kafka-appender</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- logstash-appender所需的依赖，可将日志推送到 LogStash 中 -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>
