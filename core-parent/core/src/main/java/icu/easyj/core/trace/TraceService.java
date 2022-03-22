@@ -28,6 +28,13 @@ import java.util.Map;
 public interface TraceService {
 
 	/**
+	 * 判断当前是否可以执行追踪
+	 *
+	 * @return true=可以 | false=不可以
+	 */
+	boolean canTrace();
+
+	/**
 	 * 设置追踪内容
 	 *
 	 * @param key   键

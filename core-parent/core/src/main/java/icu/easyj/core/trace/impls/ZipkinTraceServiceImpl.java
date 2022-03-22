@@ -15,11 +15,13 @@
  */
 package icu.easyj.core.trace.impls;
 
+import brave.Span;
 import brave.Tracer;
 import cn.hutool.extra.spring.SpringUtil;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import icu.easyj.core.trace.TraceService;
+import org.springframework.lang.Nullable;
 
 /**
  * 基于 {@link Tracer} 的追踪服务
@@ -43,32 +45,44 @@ public class ZipkinTraceServiceImpl implements TraceService {
 		}
 	}
 
-	static Tracer getInstance() {
+	static Tracer getTracer() {
 		return TraceServiceSingletonHolder.INSTANCE.instance;
+	}
+
+	@Nullable
+	static Span currentSpan() {
+		return getTracer().currentSpan();
 	}
 
 	//endregion
 
 
 	@Override
+	public boolean canTrace() {
+		Span span = currentSpan();
+		return span != null && !span.isNoop();
+	}
+
+	@Override
 	public void put(String key, String value) {
-		if (key == null) {
+		Span span = currentSpan();
+		if (span == null) {
 			return;
 		}
-		if (value == null) {
+
+		if (key == null) {
 			key = "null";
 		}
+		if (value == null) {
+			value = "null";
+		}
 
-		getInstance().currentSpan().tag(key, value);
+		span.tag(key, value);
 	}
 
 	@Override
 	public void remove(String key) {
-		if (key == null) {
-			return;
-		}
-
-		getInstance().currentSpan().tag(key, "");
+		// do nothing: zipkin不支持remove
 	}
 
 	@Override

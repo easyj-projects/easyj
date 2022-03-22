@@ -58,15 +58,48 @@ public abstract class TraceUtils {
 
 
 	/**
+	 * 判断当前是否可以执行追踪
+	 *
+	 * @return true=可以 | false=不可以
+	 */
+	public static boolean canTrace() {
+		List<TraceService> tsList = getInstances();
+		if (CollectionUtils.isEmpty(tsList)) {
+			return false;
+		}
+
+		for (TraceService ts : tsList) {
+			if (ts.canTrace()) {
+				// 只要存在一个追踪服务可以追踪，那么就可以执行追踪
+				return true;
+			}
+		}
+
+		// 全部追踪服务都无法追踪
+		return false;
+	}
+
+	/**
+	 * 判断当前是否不可以执行追踪
+	 *
+	 * @return true=可以 | false=不可以
+	 */
+	public static boolean canNotTrace() {
+		return !canTrace();
+	}
+
+
+	/**
 	 * 设置追踪内容
 	 *
 	 * @param key   键
 	 * @param value 值
 	 */
 	public static void put(String key, String value) {
-		if (key == null) {
+		if (canNotTrace()) {
 			return;
 		}
+
 		execute(ts -> ts.put(key, value));
 	}
 
@@ -76,9 +109,10 @@ public abstract class TraceUtils {
 	 * @param map 键值对
 	 */
 	public static void put(Map<String, String> map) {
-		if (CollectionUtils.isNotEmpty(map)) {
-			execute(ts -> ts.put(map));
+		if (CollectionUtils.isEmpty(map) || canNotTrace()) {
+			return;
 		}
+		execute(ts -> ts.put(map));
 	}
 
 	/**
@@ -87,7 +121,7 @@ public abstract class TraceUtils {
 	 * @param key 键
 	 */
 	public static void remove(String key) {
-		if (key == null) {
+		if (canNotTrace()) {
 			return;
 		}
 		execute(ts -> ts.remove(key));
@@ -99,7 +133,7 @@ public abstract class TraceUtils {
 	 * @param keys 键
 	 */
 	public static void remove(String... keys) {
-		if (ArrayUtils.isEmpty(keys)) {
+		if (ArrayUtils.isEmpty(keys) || canNotTrace()) {
 			return;
 		}
 		execute(ts -> ts.remove(keys));

@@ -19,6 +19,8 @@ import icu.easyj.core.context.Context;
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
 import io.netty.util.concurrent.FastThreadLocal;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,16 +46,19 @@ public class FastThreadLocalContextImpl implements Context {
 	}
 
 
+	@Nullable
 	@Override
 	public <V> V put(String key, V value) {
 		return (V)this.map().put(key, value);
 	}
 
+	@Nullable
 	@Override
 	public <V> V get(String key) {
 		return (V)this.map().get(key);
 	}
 
+	@Nullable
 	@Override
 	public <V> V remove(String key) {
 		return (V)this.map().remove(key);
@@ -64,6 +69,7 @@ public class FastThreadLocalContextImpl implements Context {
 		return this.map().containsKey(key);
 	}
 
+	@NonNull
 	@Override
 	public Map<String, Object> entries() {
 		return this.map();

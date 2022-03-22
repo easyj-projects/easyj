@@ -15,6 +15,9 @@
  */
 package icu.easyj.core.context;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -33,6 +36,7 @@ public interface Context {
 	 * @param <V>   上下文数据类型
 	 * @return previousValue 返回以前的值 或 null
 	 */
+	@Nullable
 	<V> V put(String key, V value);
 
 	/**
@@ -42,6 +46,7 @@ public interface Context {
 	 * @param <V> 值类型
 	 * @return value 值
 	 */
+	@Nullable
 	<V> V get(String key);
 
 	/**
@@ -51,6 +56,7 @@ public interface Context {
 	 * @param <V> 值类型
 	 * @return removedValue 返回被移除的值 或 null
 	 */
+	@Nullable
 	<V> V remove(String key);
 
 	/**
@@ -83,6 +89,7 @@ public interface Context {
 	 *
 	 * @return 所有上下文
 	 */
+	@NonNull
 	Map<String, Object> entries();
 
 	/**
