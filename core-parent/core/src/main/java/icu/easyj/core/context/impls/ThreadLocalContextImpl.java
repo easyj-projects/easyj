@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "thread-local", order = 1)
+@LoadLevel(name = "thread-local", order = 10)
 public class ThreadLocalContextImpl implements Context {
 
 	private static final ThreadLocal<Map<String, Object>> CONTEXT = ThreadLocal.withInitial(HashMap::new);
