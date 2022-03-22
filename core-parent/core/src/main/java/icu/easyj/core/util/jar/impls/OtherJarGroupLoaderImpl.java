@@ -33,9 +33,28 @@ public class OtherJarGroupLoaderImpl implements IJarGroupLoader {
 		switch (jarContext.getName()) {
 			case "apiguardian-api":
 				return "org.apiguardian";
+			case "bcprov-jdk15on":
+			case "bcpkix-jdk15on":
+				return "org.bouncycastle";
+			case "hamcrest":
+				return "org.hamcrest";
+			case "json-path":
+			case "json-path-assert":
+				return "com.jayway.jsonpath";
+			case "objenesis":
+			case "objenesis-tck":
+			case "objenesis-tck-android":
+			case "objenesis-exotic":
+			case "com.springsource.org.objenesis":
+				return "org.objenesis";
 			default:
 				break;
 		}
+
+		if (jarContext.getName().startsWith("hamcrest-")) {
+			return "org.hamcrest";
+		}
+
 		return null;
 	}
 }

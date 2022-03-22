@@ -56,6 +56,23 @@ public class TestJarGroupLoaderImpl implements IJarGroupLoader {
 			// opentest4j
 			case "opentest4j":
 				return "org.opentest4j";
+			// android-json
+			case "android-json":
+				return "com.vaadin.external.google";
+			// asm
+			case "asm":
+				if (jarContext.getVersionInfo().compareTo("4.0-SNAPSHOT") >= 0) {
+					return "org.ow2.asm";
+				} else {
+					return "asm";
+				}
+				// aspectjweaver
+			case "aspectjweaver":
+				if (jarContext.getVersionInfo().compareTo("1.6.0-SNAPSHOT") >= 0) {
+					return "org.aspectj";
+				} else {
+					return "aspectj";
+				}
 			default:
 				break;
 		}
