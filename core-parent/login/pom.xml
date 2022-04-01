@@ -3,21 +3,14 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>icu.easyj.sdk</groupId>
-		<artifactId>sdk-parent</artifactId>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
 		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>easyj-ocr-sdk-core</artifactId>
+	<artifactId>easyj-login</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ 文字识别（OCR）核心模块。</description>
-
-	<dependencies>
-		<dependency>
-			<groupId>icu.easyj</groupId>
-			<artifactId>easyj-all</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+	<description>EasyJ 登录功能封装，提供完善的登录相关工具类。</description>
 </project>
