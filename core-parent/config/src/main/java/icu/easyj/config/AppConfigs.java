@@ -57,7 +57,7 @@ public class AppConfigs {
 	//endregion
 
 
-	//region 项目及应用配置持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 项目及应用配置持有者（设计模式-创建型模式-单例模式：枚举实现单例）
 
 	private AppConfigs() {
 	}

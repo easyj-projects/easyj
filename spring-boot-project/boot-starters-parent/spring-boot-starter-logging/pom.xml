@@ -33,10 +33,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
 		</dependency>
@@ -44,10 +40,10 @@
 
 		<!-- # logback appenders -->
 		<!-- kafka-appender所需的依赖，可将日志推送到 Kafka 中 -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.github.danielwegener</groupId>
 			<artifactId>logback-kafka-appender</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- logstash-appender所需的依赖，可将日志推送到 LogStash 中 -->
 		<dependency>
 			<groupId>net.logstash.logback</groupId>

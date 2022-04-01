@@ -39,7 +39,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  * @see DbServiceFactory
  */
-public abstract class DbUtils {
+public abstract class DbUtils extends PrimaryDbUtils {
 
 	/**
 	 * 数据库类型缓存

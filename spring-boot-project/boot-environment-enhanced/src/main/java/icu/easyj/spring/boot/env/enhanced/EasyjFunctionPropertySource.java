@@ -137,7 +137,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 		boolean needCache = this.isNeedCache(result);
 
 		// 获取配置值
-		Object value = this.computeProperty(result);
+		Object value = this.computeProperty(name, result);
 
 		// 设置缓存
 		if (needCache) {
@@ -183,7 +183,7 @@ public class EasyjFunctionPropertySource extends PropertySource<Object> {
 	 * @return 配置值
 	 */
 	@Nullable
-	private Object computeProperty(CodeAnalysisResult result) {
+	private Object computeProperty(String name, CodeAnalysisResult result) {
 		switch (result.getVariableName()) {
 			case CLASS_FUN_NAME:
 				// 类函数

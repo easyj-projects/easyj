@@ -17,6 +17,7 @@ easyj:
     domain: http://${easyj.server.host}:${server.port:8080}
   #数据源配置：主要提供可引用配置
   datasource:
+    driver-class-name: ${easyj.class.getExistingOne('com.mysql.cj.jdbc.Driver', 'com.mysql.jdbc.Driver', 'oracle.jdbc.OracleDriver', 'oracle.jdbc.driver.OracleDriver', 'com.microsoft.sqlserver.jdbc.SQLServerDriver')}
     mysql:
       driver-class-name: ${easyj.class.getExistingOne('com.mysql.cj.jdbc.Driver', 'com.mysql.jdbc.Driver')}
     oracle:

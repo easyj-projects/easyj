@@ -16,6 +16,11 @@
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ中间件：DWZ（短链接服务）服务端</description>
 
+	<properties>
+		<!-- 应用不需要deploy -->
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
+
 	<dependencies>
 		<!-- dwz-server-starter -->
 		<dependency>
@@ -60,6 +65,10 @@
 			<artifactId>easyj-spring-boot-starter-logging</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.danielwegener</groupId>
+			<artifactId>logback-kafka-appender</artifactId>
+		</dependency>
 
 
 		<!-- Spring-Test -->
@@ -89,27 +98,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${spring-boot.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<!-- 当前为spring-boot应用，无需deploy -->
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>${nexus-staging-maven-plugin.version}</version>
-				<configuration>
-					<!-- 当前为spring-boot应用，无需暂存 -->
-					<skipStaging>true</skipStaging>
-					<skipLocalStaging>true</skipLocalStaging>
-					<skipRemoteStaging>true</skipRemoteStaging>
-					<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-					<skipStagingRepositoryClose>true</skipStagingRepositoryClose>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
