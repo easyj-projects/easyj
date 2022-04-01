@@ -52,10 +52,6 @@ public class EnvironmentProperties implements InitializingBean {
 	 */
 	private RunMode runMode;
 
-	/**
-	 * 是否单元测试中
-	 */
-	private Boolean inUnitTest;
 
 	@Override
 	public void afterPropertiesSet() {
@@ -84,10 +80,8 @@ public class EnvironmentProperties implements InitializingBean {
 		if (runMode != null) {
 			EnvironmentConfigs.setRunMode(runMode);
 		}
-		if (inUnitTest != null) {
-			EnvironmentConfigs.setInUnitTest(inUnitTest);
-		}
 	}
+
 
 	//region Getter、Setter
 
@@ -121,14 +115,6 @@ public class EnvironmentProperties implements InitializingBean {
 
 	public void setRunMode(RunMode runMode) {
 		this.runMode = runMode;
-	}
-
-	public Boolean getInUnitTest() {
-		return inUnitTest;
-	}
-
-	public void setInUnitTest(Boolean inUnitTest) {
-		this.inUnitTest = inUnitTest;
 	}
 
 	//endregion

@@ -19,6 +19,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import icu.easyj.config.EnvironmentConfigs;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.ResourceUtils;
@@ -114,6 +115,31 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			"config/${area}/${project}/${env}/"
 	};
 
+	/**
+	 * 需加载的单元测试配置文件的目录，这些目录下的所有*.yml、*.yaml、*.properties文件，都将被加载
+	 * 按优先级倒序排列
+	 */
+	public static final String[] UNIT_TEST_CONFIG_DIRECTORY_PATHS = new String[]{
+			// 标准环境配置
+			"config/standard-unit-test/",
+			// 区域标准环境配置
+			"config/${area}/standard-unit-test/",
+			// 项目标准环境配置
+			"config/${project}/standard-unit-test/",
+			// 区域项目标准环境配置
+			"config/${area}/${project}/standard-unit-test/",
+
+			// 环境配置
+			"config/unit-test/",
+			// 区域环境配置
+			"config/${area}/unit-test/",
+			// 项目环境配置
+			"config/${project}/unit-test/",
+			// 区域项目环境配置
+			"config/${area}/${project}/unit-test/"
+	};
+
+
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
 		// 如果没有配置 spring.profiles.active，则跳过当前配置文件。
@@ -188,95 +214,107 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		//endregion
 
 
-		//region 加载约定目录下的配置文件
-
+		// 加载约定目录下的配置文件
 		for (String dirPath : CONFIG_DIRECTORY_PATHS) {
-			////region 替换目录中的表达式
-
-			if (dirPath.contains("${area}")) {
-				if (StringUtils.isNotEmpty(area)) {
-					dirPath = dirPath.replace("${area}", area);
-				} else {
-					continue;
-				}
-			}
-			if (dirPath.contains("${project}")) {
-				if (StringUtils.isNotEmpty(project)) {
-					dirPath = dirPath.replace("${project}", project);
-				} else {
-					continue;
-				}
-			}
-			if (dirPath.contains("${env}")) {
-				if (StringUtils.isNotEmpty(env)) {
-					dirPath = dirPath.replace("${env}", env);
-				} else {
-					continue;
-				}
-			}
-			if (dirPath.contains("${standardEnv}")) {
-				if (StringUtils.isNotEmpty(standardEnv)) {
-					dirPath = dirPath.replace("${standardEnv}", standardEnv);
-				} else {
-					continue;
-				}
-			}
-
-			////endregion
-
-
-			// 加载目录下的所有配置文件
-			Resource[] configFileResources = loadConfigFileResources(dirPath);
-			if (ArrayUtils.isEmpty(configFileResources)) {
-				continue;
-			}
-
-			// 先加载所有配置源过滤器
-			List<IPropertySourceFilter> filters = EnhancedServiceLoader.loadAll(IPropertySourceFilter.class);
-
-			// 读取配置文件，并添加配置源
-			// 根据文件名倒序加载。文件名越靠前，配置优先级越高
-			Resource resource;
-			for (int i = configFileResources.length - 1; i >= 0; --i) {
-				resource = configFileResources[i];
-
-				// 判断相同文件是否已经添加过
-				currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(resource);
-				if (environment.getPropertySources().contains(currentPropertySourceName)) {
-					continue;
-				}
-
-				// 加载配置文件为配置源
-				MapPropertySource propertySource = EnvironmentUtils.buildPropertySource(resource, true);
-				if (propertySource == null) {
-					// 配置文件不存在或为空
-					continue;
-				}
-
-				// 执行配置源过滤器，用于过滤部分无需加载的配置源
-				if (this.doFilters(propertySource, filters)) {
-					// 过滤掉当前配置源
-					continue;
-				}
-
-				// 添加配置源
-				if (previousPropertySourceName == null) {
-					EnvironmentUtils.addLastButBeforeDefault(propertySource, environment);
-				} else {
-					propertySources.addBefore(previousPropertySourceName, propertySource);
-				}
-
-				previousPropertySourceName = currentPropertySourceName;
+			previousPropertySourceName = this.loadPropertySources(environment, previousPropertySourceName,
+					dirPath, area, project, env, standardEnv);
+		}
+		// 如果是在运行单元测试，则再加载约定的单元测试
+		if (EnvironmentConfigs.isInUnitTest()) {
+			for (String dirPath : UNIT_TEST_CONFIG_DIRECTORY_PATHS) {
+				previousPropertySourceName = this.loadPropertySources(environment, previousPropertySourceName,
+						dirPath, area, project, "unit-test", "unit-test");
 			}
 		}
-
-		//endregion
-
 
 		// 加载全局加密算法配置，并生成加密算法实例到`GlobalCrypto`类中
 		// 在这里就加载的原因：环境加载过程中，有个函数式配置需要用到`GlobalCrypto`：${easyj.crypto.decrypt('xxxxxxxxbase64')}
 		// @see CryptoPropertyUtils
 		this.loadGlobalCrypto(environment);
+	}
+
+	private String loadPropertySources(ConfigurableEnvironment environment, String previousPropertySourceName,
+									   String dirPath, String area, String project, String env, String standardEnv) {
+		////region 替换目录中的表达式
+
+		if (dirPath.contains("${area}")) {
+			if (StringUtils.isNotEmpty(area)) {
+				dirPath = dirPath.replace("${area}", area);
+			} else {
+				return previousPropertySourceName;
+			}
+		}
+		if (dirPath.contains("${project}")) {
+			if (StringUtils.isNotEmpty(project)) {
+				dirPath = dirPath.replace("${project}", project);
+			} else {
+				return previousPropertySourceName;
+			}
+		}
+		if (dirPath.contains("${env}")) {
+			if (StringUtils.isNotEmpty(env)) {
+				dirPath = dirPath.replace("${env}", env);
+			} else {
+				return previousPropertySourceName;
+			}
+		}
+		if (dirPath.contains("${standardEnv}")) {
+			if (StringUtils.isNotEmpty(standardEnv)) {
+				dirPath = dirPath.replace("${standardEnv}", standardEnv);
+			} else {
+				return previousPropertySourceName;
+			}
+		}
+
+		////endregion
+
+
+		// 加载目录下的所有配置文件
+		Resource[] configFileResources = loadConfigFileResources(dirPath);
+		if (ArrayUtils.isEmpty(configFileResources)) {
+			return previousPropertySourceName;
+		}
+
+		// 先加载所有配置源过滤器
+		List<IPropertySourceFilter> filters = EnhancedServiceLoader.loadAll(IPropertySourceFilter.class);
+
+		// 读取配置文件，并添加配置源
+		// 根据文件名倒序加载。文件名越靠前，配置优先级越高
+		Resource resource;
+		String currentPropertySourceName;
+		for (int i = configFileResources.length - 1; i >= 0; --i) {
+			resource = configFileResources[i];
+
+			// 判断相同文件是否已经添加过
+			currentPropertySourceName = EnvironmentUtils.buildPropertySourceNameByPath(resource);
+			if (environment.getPropertySources().contains(currentPropertySourceName)) {
+				continue;
+			}
+
+			// 加载配置文件为配置源
+			MapPropertySource propertySource = EnvironmentUtils.buildPropertySource(resource, true);
+			if (propertySource == null) {
+				// 配置文件不存在或为空
+				continue;
+			}
+
+			// 执行配置源过滤器，用于过滤部分无需加载的配置源
+			if (this.doFilters(propertySource, filters)) {
+				// 过滤掉当前配置源
+				continue;
+			}
+
+			// 添加配置源
+			if (previousPropertySourceName == null) {
+				EnvironmentUtils.addLastButBeforeDefault(propertySource, environment);
+			} else {
+				environment.getPropertySources().addBefore(previousPropertySourceName, propertySource);
+			}
+
+			previousPropertySourceName = currentPropertySourceName;
+		}
+
+		return previousPropertySourceName;
 	}
 
 	/**

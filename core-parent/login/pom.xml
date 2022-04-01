@@ -13,4 +13,17 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ 登录功能封装，提供完善的登录相关工具类。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-jwt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>

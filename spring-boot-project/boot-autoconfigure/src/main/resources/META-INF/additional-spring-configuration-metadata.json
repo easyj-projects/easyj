@@ -72,7 +72,7 @@
 		},
 		{
 			"name": "easyj.env.in-unit-test",
-			"description": "是否单元测试中.",
+			"description": "是否单元测试中，引用easyj-spring-boot-starter-test后，默认值将自动变成true.",
 			"defaultValue": false
 		},
 		{

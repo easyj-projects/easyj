@@ -1,5 +1,4 @@
 easyj:
-  env.in-unit-test: true #标记全局配置 `EnvironmentConfigs.isInUnitTest()` 为 true
   print-dependencies: true #测试环境下，打印依赖
 
 logging.level:

@@ -134,6 +134,22 @@
 					<flattenMode>bom</flattenMode>
 				</configuration>
 			</plugin>
+			<!-- 使用插件：Jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<!--
+								在`MANIFEST.MF`文件中，标记该jar为依赖引用，`spring-boot`插件打包时不将该jar打包进去。
+								这里是为了避免test打包进jar包。
+							 -->
+							<Spring-Boot-Jar-Type>dependencies-starter</Spring-Boot-Jar-Type>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
