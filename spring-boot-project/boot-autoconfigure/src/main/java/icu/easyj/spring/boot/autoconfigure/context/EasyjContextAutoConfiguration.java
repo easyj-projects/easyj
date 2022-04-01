@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.web.filter;
+package icu.easyj.spring.boot.autoconfigure.context;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
+import icu.easyj.config.EnvironmentConfigs;
+import icu.easyj.web.context.ContextCleanerFilter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 
 /**
- * {@link javax.servlet.Filter} 适配器（为了兼容低版本servlet-api）
+ * 上下文相关自动装配
  *
  * @author wangliang181230
+ * @see EnvironmentConfigs
  */
-public interface FilterAdapter extends Filter {
+public class EasyjContextAutoConfiguration {
 
-	@Override
-	default void init(FilterConfig filterConfig) throws ServletException {
-	}
-
-	@Override
-	default void destroy() {
+	/**
+	 * 创建内容清理者过滤器bean
+	 *
+	 * @return 内容清理者过滤器bean
+	 */
+	@Bean
+	@Lazy(false)
+	public ContextCleanerFilter projectProperties() {
+		return new ContextCleanerFilter();
 	}
 }
