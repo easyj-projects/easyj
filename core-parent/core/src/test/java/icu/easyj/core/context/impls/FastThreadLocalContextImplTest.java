@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.constant;
+package icu.easyj.core.context.impls;
 
-import icu.easyj.core.util.version.VersionInfo;
-import icu.easyj.core.util.version.VersionUtils;
+import icu.easyj.core.context.AbstractContextImplTest;
 
 /**
- * EasyJ相关常量
+ * {@link FastThreadLocalContextImpl} 测试类
  *
  * @author wangliang181230
  */
-public interface Constants {
+public class FastThreadLocalContextImplTest extends AbstractContextImplTest {
 
-	String PREFIX = "easyj";
-
-	String VERSION = "0.3.8-SNAPSHOT";
-
-	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
+	public FastThreadLocalContextImplTest() {
+		super(new FastThreadLocalContextImpl());
+	}
 }

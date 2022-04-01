@@ -24,7 +24,7 @@ import icu.easyj.core.loader.EnhancedServiceLoader;
  */
 public abstract class Cache304ConfigManagerFactory {
 
-	//region 配置管理器单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 配置管理器单例持有者（设计模式-创建型模式-单例模式：枚举实现单例）
 
 	private enum Cache304ConfigManagerSingletonHolder {
 		// 单例

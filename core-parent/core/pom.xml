@@ -65,5 +65,17 @@
 			<artifactId>spring-context</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-common</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>io.zipkin.brave</groupId>
+			<artifactId>brave</artifactId>
+			<version>5.13.7</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>

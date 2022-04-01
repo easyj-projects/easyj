@@ -38,6 +38,7 @@ public class EasyjFastjsonBugfixUtilsTest {
 		Assertions.assertFalse(EasyjFastjsonBugfixUtils.isLoopholeVersion("1.2.78-SNAPSHOT"));
 
 		// case: true，即：存在漏洞的版本
+		Assertions.assertTrue(EasyjFastjsonBugfixUtils.isLoopholeVersion("1.1.1"));
 		Assertions.assertTrue(EasyjFastjsonBugfixUtils.isLoopholeVersion("1.2.68"));
 		Assertions.assertTrue(EasyjFastjsonBugfixUtils.isLoopholeVersion("1.2.68-SNAPSHOT"));
 		Assertions.assertTrue(EasyjFastjsonBugfixUtils.isLoopholeVersion("1.2.68.sec1"));

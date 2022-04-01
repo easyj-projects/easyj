@@ -31,7 +31,7 @@ import org.springframework.util.Assert;
  */
 final class DbClockFactory extends AbstractRemotingClockFactory<DataSource> {
 
-	//region 数据库时钟工厂单例持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 数据库时钟工厂单例持有者（设计模式-创建型模式-单例模式：枚举实现单例）
 
 	private DbClockFactory() {
 	}

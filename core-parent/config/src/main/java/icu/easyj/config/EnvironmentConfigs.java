@@ -58,7 +58,7 @@ public class EnvironmentConfigs {
 	//endregion
 
 
-	//region 全局配置持有者（设计模式-创建型模式-单例模式-枚举实现单例）
+	//region 全局配置持有者（设计模式-创建型模式-单例模式：枚举实现单例）
 
 	private EnvironmentConfigs() {
 	}

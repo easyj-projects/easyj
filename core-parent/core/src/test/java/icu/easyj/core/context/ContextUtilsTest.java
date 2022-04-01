@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.core.constant;
-
-import icu.easyj.core.util.version.VersionInfo;
-import icu.easyj.core.util.version.VersionUtils;
+package icu.easyj.core.context;
 
 /**
- * EasyJ相关常量
+ * {@link ContextUtils} 测试类
  *
  * @author wangliang181230
  */
-public interface Constants {
+public class ContextUtilsTest extends AbstractContextImplTest {
 
-	String PREFIX = "easyj";
-
-	String VERSION = "0.3.8-SNAPSHOT";
-
-	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
+	public ContextUtilsTest() {
+		super(ContextUtils.getInstance());
+	}
 }

@@ -28,7 +28,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  * @see IAutoRefreshTickClock
  */
-public abstract class DbClockUtils {
+public abstract class DbClockUtils extends PrimaryDbClockUtils {
 
 	//region 私有方法
 
