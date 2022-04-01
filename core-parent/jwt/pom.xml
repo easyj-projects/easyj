@@ -13,4 +13,18 @@
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ JWT封装，快速生成和解析JWT的方法。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 </project>
