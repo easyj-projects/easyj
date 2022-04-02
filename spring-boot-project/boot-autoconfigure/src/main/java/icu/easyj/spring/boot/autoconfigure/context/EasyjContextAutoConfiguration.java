@@ -35,7 +35,7 @@ public class EasyjContextAutoConfiguration {
 	 */
 	@Bean
 	@Lazy(false)
-	public ContextCleanerFilter projectProperties() {
+	public ContextCleanerFilter contextCleanerFilter() {
 		return new ContextCleanerFilter();
 	}
 }
