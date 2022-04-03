@@ -15,6 +15,10 @@
  */
 package icu.easyj.jwt;
 
+import icu.easyj.core.convert.ConvertUtils;
+import icu.easyj.core.util.MapUtils;
+import org.springframework.lang.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
@@ -42,6 +46,24 @@ public class JwtInfo implements Serializable {
 		this.issuedAt = issuedAt;
 		this.expiresAt = expiresAt;
 	}
+
+	@Nullable
+	public Object getClaims(String key) {
+		if (MapUtils.isEmpty(this.claims)) {
+			return null;
+		}
+		return this.claims.get(key);
+	}
+
+
+	@Nullable
+	public <T> T getClaims(String key, Class<T> targetClass) {
+		if (MapUtils.isEmpty(this.claims)) {
+			return null;
+		}
+		return ConvertUtils.convert(this.claims.get(key), targetClass);
+	}
+
 
 	//region Getter、Setter
 
