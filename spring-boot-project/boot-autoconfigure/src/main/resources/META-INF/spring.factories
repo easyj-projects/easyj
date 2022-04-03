@@ -4,6 +4,7 @@ icu.easyj.spring.boot.autoconfigure.configs.EasyjConfigsAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.context.EasyjContextAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jar.EasyjDependenciesAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.jdbc.EasyjJdbcAutoConfiguration,\
+icu.easyj.spring.boot.autoconfigure.login.EasyjLoginAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjFastjsonLoopholeCheckAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.loopholecheck.EasyjLog4j2LoopholeCheckAutoConfiguration,\
 icu.easyj.spring.boot.autoconfigure.middleware.dwz.server.EasyjMiddleWareDwzServerAutoConfiguration,\

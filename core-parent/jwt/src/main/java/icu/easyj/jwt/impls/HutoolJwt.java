@@ -15,12 +15,17 @@
  */
 package icu.easyj.jwt.impls;
 
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTValidator;
 import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
+import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.jwt.IJwt;
 import icu.easyj.jwt.JwtInfo;
@@ -28,15 +33,12 @@ import icu.easyj.jwt.JwtUtils;
 import icu.easyj.jwt.SecretKeyUtils;
 import org.springframework.util.Assert;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.Map;
-
 /**
  * 基于jjwt实现的JWT生成器
  *
  * @author wangliang181230
  */
+@LoadLevel(name = "hutool", order = 100)
 public class HutoolJwt implements IJwt {
 
 	private final JWTSigner signer;

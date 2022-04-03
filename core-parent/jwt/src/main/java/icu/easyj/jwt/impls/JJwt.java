@@ -15,6 +15,11 @@
  */
 package icu.easyj.jwt.impls;
 
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+
+import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.jwt.IJwt;
 import icu.easyj.jwt.JwtInfo;
@@ -26,15 +31,12 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.util.Assert;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.Map;
-
 /**
  * 基于jjwt实现的JWT生成器
  *
  * @author wangliang181230
  */
+@LoadLevel(name = "jjwt", order = 0)
 public class JJwt implements IJwt {
 
 
