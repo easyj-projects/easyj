@@ -147,6 +147,13 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<!-- Starter: Login -->
+			<dependency>
+				<groupId>icu.easyj.boot</groupId>
+				<artifactId>easyj-spring-boot-starter-login</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 			<!-- ************************* MiddleWare（中间件服务端） ************************* -->
 

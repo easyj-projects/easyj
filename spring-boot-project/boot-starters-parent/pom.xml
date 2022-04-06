@@ -21,6 +21,8 @@
 		<module>spring-boot-starter-logging</module>
 		<!-- Web -->
 		<module>spring-boot-starter-web</module>
+		<!-- Login -->
+		<module>spring-boot-starter-login</module>
 		<!-- Test -->
 		<module>spring-boot-starter-test</module>
 

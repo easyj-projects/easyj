@@ -25,7 +25,7 @@ public class LoginProperties implements ILoginProperties {
 	/**
 	 * 是否启用登录校验功能.
 	 */
-	private boolean enable = false;
+	private boolean enabled = false;
 
 
 	//region 三种 token获取渠道及键名 相关的属性
@@ -101,12 +101,12 @@ public class LoginProperties implements ILoginProperties {
 
 	//region Getter、Setter
 
-	public boolean isEnable() {
-		return enable;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setEnable(boolean enable) {
-		this.enable = enable;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

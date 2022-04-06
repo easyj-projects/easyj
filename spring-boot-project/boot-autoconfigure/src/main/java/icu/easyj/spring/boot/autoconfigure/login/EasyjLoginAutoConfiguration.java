@@ -31,6 +31,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.Assert;
 
 /**
  * 登录相关自动装配类
@@ -38,13 +39,13 @@ import org.springframework.context.annotation.Bean;
  * @author wangliang181230
  */
 @ConditionalOnClass(LoginProperties.class)
-@ConditionalOnProperty(value = "easyj.login.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "easyj.login.enabled")
 public class EasyjLoginAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(ILoginProperties.class)
 	@ConfigurationProperties("easyj.login")
-	public ILoginProperties defaultLoginProperties() {
+	public LoginProperties loginProperties() {
 		return new LoginProperties();
 	}
 
@@ -58,6 +59,9 @@ public class EasyjLoginAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public ILoginTokenBuilder loginTokenBuilder(ILoginProperties properties, JwtLoginTokenBuilderProperties loginTokenBuilderProperties) {
+		Assert.notNull(loginTokenBuilderProperties.getAlgorithmId(), "Login: 'algorithmId' 配置不能为空");
+		Assert.notNull(loginTokenBuilderProperties.getSecretKey(), "Login: 'secretKey' 配置不能为空");
+		Assert.notNull(loginTokenBuilderProperties.getSecretKeyAlgorithm(), "Login: 'secretKeyAlgorithm' 配置不能为空");
 		Object[] jwtArgs = new Object[]{
 				loginTokenBuilderProperties.getAlgorithmId(),
 				loginTokenBuilderProperties.getSecretKey(),
@@ -84,5 +88,4 @@ public class EasyjLoginAutoConfiguration {
 	public LoginValidatorAspect loginValidatorAspect(ILoginValidatorExceptionHandler loginValidatorExceptionHandler) {
 		return new LoginValidatorAspect(loginValidatorExceptionHandler);
 	}
-
 }
