@@ -8,10 +8,10 @@
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>easyj-spring-boot-starter-logging</artifactId>
+	<artifactId>easyj-spring-boot-starter-login</artifactId>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
-	<description>EasyJ快速使用Logging的starter</description>
+	<description>EasyJ快速使用登录相关功能的starter</description>
 
 	<dependencies>
 		<dependency>
