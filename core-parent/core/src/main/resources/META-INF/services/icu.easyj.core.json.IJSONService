@@ -1,4 +1,5 @@
 icu.easyj.core.json.impls.AlibabaFastJSONServiceImpl
+icu.easyj.core.json.impls.AlibabaFastJSON2ServiceImpl
 icu.easyj.core.json.impls.JacksonJSONServiceImpl
 icu.easyj.core.json.impls.GoogleGsonJSONServiceImpl
 icu.easyj.core.json.impls.HutoolJSONServiceImpl

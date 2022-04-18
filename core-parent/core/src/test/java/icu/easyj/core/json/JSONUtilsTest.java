@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON2;
 import static icu.easyj.core.loader.ServiceProviders.GSON;
 import static icu.easyj.core.loader.ServiceProviders.HUTOOL;
 import static icu.easyj.core.loader.ServiceProviders.JACKSON;
@@ -64,6 +65,7 @@ public class JSONUtilsTest {
 	private static final IJSONService DEFAULT_SERVICE = EnhancedServiceLoader.load(IJSONService.class);
 
 	private static final IJSONService FASTJSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, FASTJSON);
+	private static final IJSONService FASTJSON2_SERVICE = EnhancedServiceLoader.load(IJSONService.class, FASTJSON2);
 	private static final IJSONService JACKSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, JACKSON);
 	private static final IJSONService GSON_SERVICE = EnhancedServiceLoader.load(IJSONService.class, GSON);
 	private static final IJSONService HUTOOL_SERVICE = EnhancedServiceLoader.load(IJSONService.class, HUTOOL);
@@ -77,13 +79,16 @@ public class JSONUtilsTest {
 		Assertions.assertEquals(FASTJSON_SERVICE, SERVICES.get(0));
 		Assertions.assertEquals("AlibabaFastJSONServiceImpl", FASTJSON_SERVICE.getClass().getSimpleName());
 
-		Assertions.assertEquals(JACKSON_SERVICE, SERVICES.get(1));
+		Assertions.assertEquals(FASTJSON2_SERVICE, SERVICES.get(1));
+		Assertions.assertEquals("AlibabaFastJSON2ServiceImpl", FASTJSON2_SERVICE.getClass().getSimpleName());
+
+		Assertions.assertEquals(JACKSON_SERVICE, SERVICES.get(2));
 		Assertions.assertEquals("JacksonJSONServiceImpl", JACKSON_SERVICE.getClass().getSimpleName());
 
-		Assertions.assertEquals(GSON_SERVICE, SERVICES.get(2));
+		Assertions.assertEquals(GSON_SERVICE, SERVICES.get(3));
 		Assertions.assertEquals("GoogleGsonJSONServiceImpl", GSON_SERVICE.getClass().getSimpleName());
 
-		Assertions.assertEquals(HUTOOL_SERVICE, SERVICES.get(3));
+		Assertions.assertEquals(HUTOOL_SERVICE, SERVICES.get(4));
 		Assertions.assertEquals("HutoolJSONServiceImpl", HUTOOL_SERVICE.getClass().getSimpleName());
 	}
 
@@ -94,8 +99,8 @@ public class JSONUtilsTest {
 			assertEquals2(service, service.toBean(JSON2, (Type)TestUser.class)); // 测试重载方法
 			assertEquals3(service, service.toBean(JSON3, TestGeneric.class, TestUser.class, TestUser.class)); // 测试重载方法
 
-			// jackson和json不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
-			if (ObjectUtils.notIn(service.getName(), JACKSON, GSON)) {
+			// jackson、json、fastjson2不会自动匹配Key的下划线格式，必须手动添加注解@JsonProperty("xxx_yyy")
+			if (ObjectUtils.notIn(service.getName(), JACKSON, GSON, FASTJSON2)) {
 				assertEquals4(service, service.toBean(JSON4, TestUser3.class));
 			}
 		}
@@ -193,49 +198,49 @@ public class JSONUtilsTest {
 		String jsonStr2 = service.toJSONString(user2);
 		System.out.println(service.getName() + ": jsonStr1: " + jsonStr1);
 		System.out.println(service.getName() + ": jsonStr2: " + jsonStr2);
-		Assertions.assertEquals(user1.toString(), service.toBean(jsonStr1, TestUser.class).toString());
-		Assertions.assertEquals(user2.toString(), service.toBean(jsonStr2, TestUser.class).toString());
-		Assertions.assertTrue(jsonStr1.contains("\"Name\""));
-		Assertions.assertTrue(jsonStr1.contains("\"Age\""));
-		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""));
+		Assertions.assertEquals(user1.toString(), service.toBean(jsonStr1, TestUser.class).toString(), service.getName());
+		Assertions.assertEquals(user2.toString(), service.toBean(jsonStr2, TestUser.class).toString(), service.getName());
+		Assertions.assertTrue(jsonStr1.contains("\"Name\""), service.getName());
+		Assertions.assertTrue(jsonStr1.contains("\"Age\""), service.getName());
+		Assertions.assertTrue(jsonStr1.contains("\"Birthday\""), service.getName());
 
 		List<TestUser> list1 = new ArrayList<>();
 		list1.add(user1);
 		list1.add(user2);
 
 		List<TestUser> list2 = service.toList(service.toJSONString(list1), TestUser.class);
-		Assertions.assertNotNull(list2);
-		Assertions.assertEquals(2, list2.size());
+		Assertions.assertNotNull(list2, service.getName());
+		Assertions.assertEquals(2, list2.size(), service.getName());
 
-		Assertions.assertEquals(list1.get(0).toString(), list2.get(0).toString());
-		Assertions.assertEquals(list1.get(1).toString(), list2.get(1).toString());
+		Assertions.assertEquals(list1.get(0).toString(), list2.get(0).toString(), service.getName());
+		Assertions.assertEquals(list1.get(1).toString(), list2.get(1).toString(), service.getName());
 	}
 
 	private void assertEquals1(IJSONService service, TestUser user) {
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals("某某人1", user.getName());
-		Assertions.assertEquals(31, user.getAge().intValue());
-		Assertions.assertEquals("1990-10-01 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()));
+		Assertions.assertNotNull(user, service.getName());
+		Assertions.assertEquals("某某人1", user.getName(), service.getName());
+		Assertions.assertEquals(31, user.getAge().intValue(), service.getName());
+		Assertions.assertEquals("1990-10-01 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), service.getName());
 	}
 
 	private void assertEquals2(IJSONService service, TestUser user) {
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals("某某人2", user.getName());
-		Assertions.assertEquals(32, user.getAge().intValue());
-		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()));
+		Assertions.assertNotNull(user, service.getName());
+		Assertions.assertEquals("某某人2", user.getName(), service.getName());
+		Assertions.assertEquals(32, user.getAge().intValue(), service.getName());
+		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), service.getName());
 	}
 
 	private void assertEquals3(IJSONService service, TestGeneric<TestUser, TestUser> data) {
-		Assertions.assertNotNull(data);
+		Assertions.assertNotNull(data, service.getName());
 		assertEquals1(service, data.getA());
 		assertEquals2(service, data.getB());
 	}
 
 	private void assertEquals4(IJSONService service, TestUser3 user) {
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals("某某人3", user.getUserName());
-		Assertions.assertEquals(33, user.getUserAge().intValue());
-		Assertions.assertEquals("1988-10-03 00:00:00.000", DateUtils.toMilliseconds(user.getUserBirthday()));
+		Assertions.assertNotNull(user, service.getName());
+		Assertions.assertEquals("某某人3", user.getUserName(), service.getName());
+		Assertions.assertEquals(33, user.getUserAge().intValue(), service.getName());
+		Assertions.assertEquals("1988-10-03 00:00:00.000", DateUtils.toMilliseconds(user.getUserBirthday()), service.getName());
 	}
 
 	//endregion

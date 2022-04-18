@@ -33,18 +33,21 @@ import icu.easyj.core.util.DateUtils;
 public class TestUser {
 
 	@JSONField(name = "Name") // fastjson键别名
+	@com.alibaba.fastjson2.annotation.JSONField(name = "Name")
 	@JsonProperty("Name") // jackson键别名
 	@SerializedName("Name") // gson键别名
 	@Alias("Name") // hutool键别名
 	private String name;
 
 	@JSONField(name = "Age") // fastjson键别名
+	@com.alibaba.fastjson2.annotation.JSONField(name = "Age") // fastjson2键别名
 	@JsonProperty("Age") // jackson键别名
 	@SerializedName("Age") // gson键别名
 	@Alias("Age") // hutool键别名
 	private Integer age;
 
 	@JSONField(name = "Birthday") // fastjson键别名
+	@com.alibaba.fastjson2.annotation.JSONField(name = "Birthday") // fastjson2键别名
 	@JsonProperty("Birthday") // jackson键别名
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@SerializedName("Birthday") // gson键别名

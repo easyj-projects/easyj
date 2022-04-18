@@ -18,9 +18,7 @@ package icu.easyj.core.json.impls;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
+import com.alibaba.fastjson2.JSON;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
 import icu.easyj.core.loader.LoadLevel;
@@ -28,22 +26,22 @@ import icu.easyj.core.loader.condition.DependsOnClass;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-import static icu.easyj.core.loader.ServiceProviders.GSON;
+import static icu.easyj.core.loader.ServiceProviders.FASTJSON2;
 
 /**
- * 基于 Google-Gson 实现的JSON服务
+ * 基于 Alibaba-FastJSON2 实现的JSON服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = GSON, order = 40)
-@DependsOnClass(Gson.class)
-class GoogleGsonJSONServiceImpl implements IJSONService {
+@LoadLevel(name = FASTJSON2, order = 20)
+@DependsOnClass(JSON.class)
+class AlibabaFastJSON2ServiceImpl implements IJSONService {
 
 	@NonNull
 	@Override
 	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
-			return new Gson().fromJson(text, targetClazz);
+			return JSON.parseObject(text, targetClazz);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转Bean失败", e);
 		}
@@ -52,7 +50,7 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> T toBean(@NonNull String text, @NonNull Type targetType) throws JSONParseException {
 		try {
-			return new Gson().fromJson(text, targetType);
+			return JSON.parseObject(text, targetType);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转Bean失败", e);
 		}
@@ -62,11 +60,7 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
-			// 为了兼容低版本Gson，使用下面的代码
-			//TypeToken<?> typeToken = TypeToken.getParameterized(List.class, targetClazz);
-			TypeToken<?> typeToken = TypeToken.get($Gson$Types.newParameterizedTypeWithOwner(null, List.class, targetClazz));
-
-			return new Gson().fromJson(text, typeToken.getType());
+			return JSON.parseArray(text, targetClazz);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转List失败", e);
 		}
@@ -76,7 +70,7 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@Override
 	public String toJSONString(@Nullable Object obj) throws JSONParseException {
 		try {
-			return new Gson().toJson(obj);
+			return JSON.toJSONString(obj);
 		} catch (Exception e) {
 			throw new JSONParseException("obj转JSON字符串失败", e);
 		}
@@ -86,6 +80,6 @@ class GoogleGsonJSONServiceImpl implements IJSONService {
 	@NonNull
 	@Override
 	public String getName() {
-		return GSON;
+		return FASTJSON2;
 	}
 }

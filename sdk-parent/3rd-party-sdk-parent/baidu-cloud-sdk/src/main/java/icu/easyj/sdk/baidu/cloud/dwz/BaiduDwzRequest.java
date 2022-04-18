@@ -35,6 +35,7 @@ public class BaiduDwzRequest {
 	 * 长链接
 	 */
 	@JSONField(name = "LongUrl") // fastjson键别名
+	@com.alibaba.fastjson2.annotation.JSONField(name = "LongUrl") // fastjson2键别名
 	@JsonProperty("LongUrl") // jackson键别名
 	@SerializedName("LongUrl") // gson键别名
 	@Alias("LongUrl") // hutool键别名
@@ -49,6 +50,7 @@ public class BaiduDwzRequest {
 	 * </ul>
 	 */
 	@JSONField(name = "TermOfValidity") // fastjson键别名
+	@com.alibaba.fastjson2.annotation.JSONField(name = "TermOfValidity") // fastjson2键别名
 	@JsonProperty("TermOfValidity") // jackson键别名
 	@SerializedName("TermOfValidity") // gson键别名
 	@Alias("TermOfValidity") // hutool键别名

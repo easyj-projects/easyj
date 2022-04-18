@@ -33,7 +33,7 @@ import static icu.easyj.core.loader.ServiceProviders.JACKSON;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = JACKSON, order = 20)
+@LoadLevel(name = JACKSON, order = 30)
 @DependsOnClass(ObjectMapper.class)
 class JacksonJSONServiceImpl implements IJSONService {
 

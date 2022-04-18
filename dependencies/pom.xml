@@ -54,6 +54,7 @@
 
 		<!-- JSON dependencies version -->
 		<fastjson.version>1.2.76</fastjson.version>
+		<fastjson2.version>2.0.1</fastjson2.version>
 
 		<!-- DB dependencies version -->
 		<!-- Oracle -->
@@ -168,6 +169,11 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.fastjson2</groupId>
+				<artifactId>fastjson2</artifactId>
+				<version>${fastjson2.version}</version>
 			</dependency>
 
 
