@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import icu.easyj.core.constant.AspectOrderConstants;
 import icu.easyj.core.exception.SkipCallbackWrapperException;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.web.cache304.annotation.Cache304;
@@ -34,7 +35,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -43,7 +43,7 @@ import org.springframework.core.annotation.Order;
  * @author wangliang181230
  */
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(AspectOrderConstants.CACHE304)
 public class Cache304Aspect {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Cache304Aspect.class);

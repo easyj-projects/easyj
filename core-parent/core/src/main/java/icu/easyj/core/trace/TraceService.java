@@ -18,6 +18,7 @@ package icu.easyj.core.trace;
 import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -69,6 +70,19 @@ public interface TraceService {
 	 */
 	default void remove(String... keys) {
 		if (ArrayUtils.isNotEmpty(keys)) {
+			for (String key : keys) {
+				this.remove(key);
+			}
+		}
+	}
+
+	/**
+	 * 移除追踪内容
+	 *
+	 * @param keys 键
+	 */
+	default void remove(Collection<String> keys) {
+		if (CollectionUtils.isNotEmpty(keys)) {
 			for (String key : keys) {
 				this.remove(key);
 			}

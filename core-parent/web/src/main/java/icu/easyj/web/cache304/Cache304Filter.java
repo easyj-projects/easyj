@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import icu.easyj.core.exception.SkipCallbackWrapperException;
 import icu.easyj.web.cache304.config.Cache304Config;
 import icu.easyj.web.cache304.config.Cache304ConfigManagerFactory;
+import icu.easyj.web.constant.FilterOrderConstants;
 import icu.easyj.web.filter.FilterAdapter;
 import icu.easyj.web.util.HttpUtils;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -36,7 +36,7 @@ import org.springframework.core.annotation.Order;
  *
  * @author wangliang181230
  */
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(FilterOrderConstants.CACHE304)
 public class Cache304Filter implements FilterAdapter {
 
 	@Override

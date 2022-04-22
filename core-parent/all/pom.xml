@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.42</version>
+		<version>1.0.43</version>
 		<relativePath/>
 	</parent>
 
 	<artifactId>easyj-all</artifactId>
-	<version>0.3.8-SNAPSHOT</version>
+	<version>0.3.9-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
@@ -102,6 +101,20 @@
 		<dependency>
 			<groupId>icu.easyj</groupId>
 			<artifactId>easyj-db</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- JWT -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-jwt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Login -->
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-login</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

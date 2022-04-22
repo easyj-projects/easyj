@@ -28,7 +28,7 @@ import org.springframework.lang.Nullable;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "Zipkin-Tracer", order = 2, validators = ZipkinTraceServiceValidate.class)
+@LoadLevel(name = "zipkin", order = 2, validators = {ZipkinTraceServiceValidate.class})
 @DependsOnClass({Tracer.class})
 public class ZipkinTraceServiceImpl implements TraceService {
 
@@ -66,7 +66,7 @@ public class ZipkinTraceServiceImpl implements TraceService {
 	@Override
 	public void put(String key, String value) {
 		Span span = currentSpan();
-		if (span == null) {
+		if (span == null || span.isNoop()) {
 			return;
 		}
 

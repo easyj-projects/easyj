@@ -19,6 +19,7 @@ import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -134,6 +135,18 @@ public abstract class TraceUtils {
 	 */
 	public static void remove(String... keys) {
 		if (ArrayUtils.isEmpty(keys) || canNotTrace()) {
+			return;
+		}
+		execute(ts -> ts.remove(keys));
+	}
+
+	/**
+	 * 移除追踪内容
+	 *
+	 * @param keys 键
+	 */
+	public static void remove(Collection<String> keys) {
+		if (CollectionUtils.isEmpty(keys) || canNotTrace()) {
 			return;
 		}
 		execute(ts -> ts.remove(keys));

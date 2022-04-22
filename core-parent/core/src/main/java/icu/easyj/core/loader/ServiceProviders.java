@@ -26,6 +26,12 @@ public interface ServiceProviders {
 	 * 提供的服务有：JSON服务
 	 * 开发者：阿里巴巴（Alibaba）
 	 */
+	String FASTJSON2 = "fastjson2";
+
+	/**
+	 * 提供的服务有：JSON服务
+	 * 开发者：阿里巴巴（Alibaba）
+	 */
 	String FASTJSON = "fastjson";
 
 	/**

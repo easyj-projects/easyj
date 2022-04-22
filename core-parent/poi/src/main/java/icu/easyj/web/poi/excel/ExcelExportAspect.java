@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import icu.easyj.core.constant.AspectOrderConstants;
 import icu.easyj.core.constant.FileTypeConstants;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
@@ -33,7 +34,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 
@@ -43,7 +43,7 @@ import org.springframework.util.Assert;
  * @author wangliang181230
  */
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(AspectOrderConstants.EXCEL_EXPORT)
 public class ExcelExportAspect {
 
 	/**
