@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.42</version>
+		<version>1.0.43</version>
 		<relativePath/>
 	</parent>
 
@@ -61,6 +60,8 @@
 		<module>core-parent/crypto</module>
 		<module>core-parent/data</module>
 		<module>core-parent/db</module>
+		<module>core-parent/jwt</module>
+		<module>core-parent/login</module>
 		<module>core-parent/poi</module>
 		<module>core-parent/redis</module>
 		<module>core-parent/web</module>
@@ -91,7 +92,7 @@
 
 	<properties>
 		<!-- 当前项目版本 -->
-		<revision>0.3.8-SNAPSHOT</revision>
+		<revision>0.3.9-SNAPSHOT</revision>
 
 		<!-- Spring Boot版本 -->
 		<spring-boot.version>1.5.22.RELEASE</spring-boot.version>

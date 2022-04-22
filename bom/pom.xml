@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.42</version>
+		<version>1.0.43</version>
 		<relativePath/>
 	</parent>
 
 	<artifactId>easyj-bom</artifactId>
-	<version>0.3.8-SNAPSHOT</version>
+	<version>0.3.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
@@ -63,6 +62,16 @@
 			<dependency>
 				<groupId>icu.easyj</groupId>
 				<artifactId>easyj-db</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-jwt</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>icu.easyj</groupId>
+				<artifactId>easyj-login</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

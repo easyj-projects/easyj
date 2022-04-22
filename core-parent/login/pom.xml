@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>icu.easyj</groupId>
+		<artifactId>easyj-parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>easyj-login</artifactId>
+
+	<name>${project.groupId} :: ${project.artifactId}</name>
+	<description>EasyJ 登录功能封装，提供完善的登录相关工具类。</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-jwt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>icu.easyj</groupId>
+			<artifactId>easyj-web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Aspect -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<!--不传递该依赖，如要使用相关功能，请自行引用该依赖。-->
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+</project>

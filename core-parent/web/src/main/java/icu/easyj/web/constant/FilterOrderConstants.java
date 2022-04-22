@@ -15,6 +15,8 @@
  */
 package icu.easyj.web.constant;
 
+import org.springframework.core.Ordered;
+
 /**
  * 各Filter的Order值
  * 值越大越晚执行
@@ -22,6 +24,16 @@ package icu.easyj.web.constant;
  * @author wangliang181230
  */
 public interface FilterOrderConstants {
+
+	/**
+	 * 上下文清理者
+	 */
+	int CONTEXT_CLEANER = Ordered.HIGHEST_PRECEDENCE;
+
+	/**
+	 * Cache304过滤器
+	 */
+	int CACHE304 = Ordered.HIGHEST_PRECEDENCE + 10;
 
 	/**
 	 * SpringMVC将Request存入ThreadLocal的过滤器的Order值。
@@ -59,4 +71,9 @@ public interface FilterOrderConstants {
 	 * 参数加密解密
 	 */
 	int PARAM_ENCRYPT = -75;
+
+	/**
+	 * 登录过滤器
+	 */
+	int LOGIN = -70;
 }

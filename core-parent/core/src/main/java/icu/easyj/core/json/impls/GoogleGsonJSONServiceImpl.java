@@ -35,7 +35,7 @@ import static icu.easyj.core.loader.ServiceProviders.GSON;
  *
  * @author wangliang181230
  */
-@LoadLevel(name = GSON, order = 30)
+@LoadLevel(name = GSON, order = 40)
 @DependsOnClass(Gson.class)
 class GoogleGsonJSONServiceImpl implements IJSONService {
 

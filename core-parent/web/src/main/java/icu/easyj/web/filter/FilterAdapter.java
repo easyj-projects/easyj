@@ -20,7 +20,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 
 /**
- * {@link javax.servlet.Filter} 适配器（为了兼容低版本）
+ * {@link javax.servlet.Filter} 适配器（为了兼容低版本servlet-api）
  *
  * @author wangliang181230
  */

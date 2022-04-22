@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-build</artifactId>
-		<version>1.0.42</version>
+		<version>1.0.43</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>icu.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot-test</artifactId>
-	<version>0.3.8-SNAPSHOT</version>
+	<version>0.3.9-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>方便引用测试所需的依赖，并提供一些SpringBoot测试所需的类或功能。</description>
@@ -133,6 +132,22 @@
 				<artifactId>flatten-maven-plugin</artifactId>
 				<configuration>
 					<flattenMode>bom</flattenMode>
+				</configuration>
+			</plugin>
+			<!-- 使用插件：Jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<!--
+								在`MANIFEST.MF`文件中，标记该jar为依赖引用，`spring-boot`插件打包时不将该jar打包进去。
+								这里是为了避免test打包进jar包。
+							 -->
+							<Spring-Boot-Jar-Type>dependencies-starter</Spring-Boot-Jar-Type>
+						</manifestEntries>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>

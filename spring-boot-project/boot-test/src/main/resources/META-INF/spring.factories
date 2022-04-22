@@ -1,0 +1,3 @@
+# Environment Post Processors
+org.springframework.boot.env.EnvironmentPostProcessor=\
+icu.easyj.spring.boot.test.EasyjUnitTestEnvironmentPostProcessor
