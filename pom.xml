@@ -95,7 +95,7 @@
 		<revision>0.3.9-SNAPSHOT</revision>
 
 		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.6.6</spring-boot.version>
+		<spring-boot.version>2.6.7</spring-boot.version>
 
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>
