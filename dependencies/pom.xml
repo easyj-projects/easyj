@@ -36,6 +36,9 @@
 		<spring-cloud-openfeign.version>3.0.5</spring-cloud-openfeign.version>
 		<openfeign.version>10.12</openfeign.version>
 
+		<!-- Netty版本 -->
+		<netty.version>4.1.76.Final</netty.version>
+
 		<!-- Javax版本 -->
 		<javax-annotation.version>1.3.2</javax-annotation.version>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
@@ -85,7 +88,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- 依赖引入：SpringBoot BOM -->
+			<!-- 依赖定义：SpringBoot BOM -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -105,6 +108,16 @@
 				<groupId>io.github.openfeign</groupId>
 				<artifactId>feign-core</artifactId>
 				<version>${openfeign.version}</version>
+			</dependency>
+
+
+			<!-- 依赖定义：netty -->
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-bom</artifactId>
+				<version>${netty.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 
 
