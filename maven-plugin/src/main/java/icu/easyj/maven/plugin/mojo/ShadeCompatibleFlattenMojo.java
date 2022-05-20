@@ -30,7 +30,7 @@ import org.apache.maven.project.MavenProject;
  * maven-shade-plugin 兼容 flatten-maven-plugin（resolveCiFriendliesOnly模式） 的 Goal
  *
  * @author wangliang181230
- * @since 0.4.0
+ * @since 0.3.9
  */
 @Mojo(name = "shade-compatible-flatten", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
 public class ShadeCompatibleFlattenMojo extends AbstractMojo {
