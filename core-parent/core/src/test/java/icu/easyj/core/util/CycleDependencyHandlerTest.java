@@ -33,7 +33,7 @@ public class CycleDependencyHandlerTest {
 		Set<Object> objSet = new HashSet<>();
 
 		long startNanoTime = System.nanoTime();
-		int count = 5 * 10000;
+		int count = 4 * 10000;
 		int i = count;
 		Object obj;
 		while (i-- > 0) {
