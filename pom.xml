@@ -159,6 +159,19 @@
 					<flattenMode>resolveCiFriendliesOnly</flattenMode>
 				</configuration>
 			</plugin>
+			<!-- 使用插件：EasyJ -->
+			<plugin>
+				<groupId>icu.easyj.maven.plugins</groupId>
+				<artifactId>easyj-maven-plugin</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>simplify-pom</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- 使用插件：Javadoc -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
