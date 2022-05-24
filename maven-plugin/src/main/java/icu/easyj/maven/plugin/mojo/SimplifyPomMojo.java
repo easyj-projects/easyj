@@ -66,11 +66,16 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	private boolean copyParentItems;
 
 	/**
-	 * 是否移除Properties属性
+	 * 是否移除Properties
 	 */
 	@Parameter(defaultValue = "false")
 	private boolean removeProperties;
 
+	/**
+	 * 是否移除Parent
+	 */
+	@Parameter(defaultValue = "true")
+	private boolean removeParent;
 
 	/**
 	 * 是否更新POM文件
@@ -101,6 +106,12 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
 		if (removeProperties) {
 			pomSimplifier.removeProperties();
+		}
+
+		if (removeParent) {
+			pomSimplifier.removeParent();
+		} else {
+			pomSimplifier.revertParent();
 		}
 
 		//endregion

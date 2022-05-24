@@ -169,6 +169,14 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
+	public void revertParent() {
+		if (this.originalModelParent != null && this.originalModel.getParent() == null) {
+			this.log.info("Revert Parent.");
+			this.originalModel.setParent(this.originalModelParent);
+			this.replaceParentRevision();
+		}
+	}
+
 	public void removeBuild() {
 		if (this.originalModel.getBuild() != null) {
 			this.log.info("Remove Build.");
