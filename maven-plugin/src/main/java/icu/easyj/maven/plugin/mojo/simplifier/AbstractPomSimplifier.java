@@ -44,6 +44,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	protected final Parent modelParent;
 
 	private boolean isCopiedParentItems = false;
+	private boolean isCopiedParentItemsForOpenSourceProject = false;
 	private boolean isCopiedDependenciesVersion = false;
 
 
@@ -69,16 +70,32 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		this.log.info("Copy parent items:");
 
 		String[] itemNameArr = new String[]{
-				"Licenses",
 				"InceptionYear",
-				"Scm",
-				"IssueManagement",
-				"CiManagement",
-				"Developers",
 				"Contributors",
-				"Organization",
 				"MailingLists",
-				"Url"
+				"CiManagement",
+		};
+		this.copyParentItems(itemNameArr);
+
+		this.copyParentForOpenSourceProject();
+	}
+
+	public void copyParentForOpenSourceProject() {
+		if (this.isCopiedParentItemsForOpenSourceProject) {
+			return;
+		}
+
+		this.isCopiedParentItemsForOpenSourceProject = true;
+
+		this.log.info("Copy parent items for open source project:");
+
+		String[] itemNameArr = new String[]{
+				"Url",
+				"Organization",
+				"Licenses",
+				"Developers",
+				"Scm",
+				"IssueManagement"
 		};
 		this.copyParentItems(itemNameArr);
 	}

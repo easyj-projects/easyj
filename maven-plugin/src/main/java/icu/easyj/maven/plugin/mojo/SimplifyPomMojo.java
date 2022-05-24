@@ -78,6 +78,12 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	private boolean removeParent;
 
 	/**
+	 * 是否用于开源项目
+	 */
+	@Parameter(defaultValue = "true")
+	private boolean isOpenSourceProject;
+
+	/**
 	 * 是否更新POM文件
 	 */
 	@Parameter(defaultValue = "true")
@@ -112,6 +118,10 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 			pomSimplifier.removeParent();
 		} else {
 			pomSimplifier.revertParent();
+		}
+
+		if (isOpenSourceProject) {
+			pomSimplifier.copyParentForOpenSourceProject();
 		}
 
 		//endregion
