@@ -77,17 +77,19 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		};
 		this.copyParentItems(itemNameArr);
 
-		this.copyParentForOpenSourceProject();
+		this.copyParentForOpenSourceProject(false);
 	}
 
-	public void copyParentForOpenSourceProject() {
+	public void copyParentForOpenSourceProject(boolean needPrintLog) {
 		if (this.isCopiedParentItemsForOpenSourceProject) {
 			return;
 		}
 
 		this.isCopiedParentItemsForOpenSourceProject = true;
 
-		this.log.info("Copy parent items for open source project:");
+		if (needPrintLog) {
+			this.log.info("Copy parent items for open source project:");
+		}
 
 		String[] itemNameArr = new String[]{
 				"Url",
@@ -252,6 +254,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	public void removeDependencyManagement() {
 		if (this.originalModel.getDependencyManagement() != null) {
+			this.copyDependenciesGroupIdAndVersion();
 			this.log.info("Remove DependencyManagement.");
 			this.originalModel.setDependencyManagement(null);
 		}

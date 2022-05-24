@@ -33,8 +33,7 @@ public class ShadeJarPomSimplifier extends JarPomSimplifier {
 
 	@Override
 	public void doSimplify() {
+		this.copyParent();
 		super.doSimplify();
-		super.copyParent();
-		super.removeDependencyManagement();
 	}
 }

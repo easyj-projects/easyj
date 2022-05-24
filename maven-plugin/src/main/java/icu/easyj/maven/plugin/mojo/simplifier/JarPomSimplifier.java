@@ -33,14 +33,15 @@ public class JarPomSimplifier extends AbstractPomSimplifier {
 
 	@Override
 	public void doSimplify() {
-		super.removeParent();
-		super.removeBuild();
-		super.removeReporting();
-		super.removePrerequisites();
-		super.removeDistributionManagement();
-		super.removeRepositories();
-		super.removePluginRepositories();
-		super.removeProfiles();
-		super.resetName();
+		this.removeParent();
+		this.removeBuild();
+		this.removeReporting();
+		this.removePrerequisites();
+		this.removeDistributionManagement();
+		this.removeRepositories();
+		this.removePluginRepositories();
+		this.removeProfiles();
+		this.resetName();
+		this.removeDependencyManagement();
 	}
 }

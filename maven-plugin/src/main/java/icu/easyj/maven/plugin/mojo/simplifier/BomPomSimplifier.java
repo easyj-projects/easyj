@@ -33,10 +33,15 @@ public class BomPomSimplifier extends JarPomSimplifier {
 
 	@Override
 	public void doSimplify() {
-		super.copyParent();
-		super.removeDependencies();
-		super.resetDependencyManagement();
-		super.removeProperties();
+		this.copyParent();
+		this.removeDependencies();
+		this.resetDependencyManagement();
+		this.removeProperties();
 		super.doSimplify();
+	}
+
+	@Override
+	public void removeDependencyManagement() {
+		// do nothing
 	}
 }

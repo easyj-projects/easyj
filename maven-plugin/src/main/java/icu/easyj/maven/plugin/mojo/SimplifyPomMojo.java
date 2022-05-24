@@ -121,7 +121,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		}
 
 		if (isOpenSourceProject) {
-			pomSimplifier.copyParentForOpenSourceProject();
+			pomSimplifier.copyParentForOpenSourceProject(true);
 		}
 
 		//endregion
