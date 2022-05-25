@@ -13,35 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier;
+package icu.easyj.maven.plugin.mojo.simplifier.pom;
 
+import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * JAR的POM 简化器
+ * POM的pom.xml 简化器
  *
  * @author wangliang181230
- * @since 0.4.0
+ * @since 0.4.2
  */
-public class JarPomSimplifier extends AbstractPomSimplifier {
+public class PomSimplifier extends AbstractPomSimplifier {
 
-	public JarPomSimplifier(MavenProject project, Log log) {
-		super(project, log);
+	public PomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+		super(project, config, log);
 	}
 
 
 	@Override
-	public void doSimplify() {
-		this.removeParent();
-		this.removeBuild();
-		this.removeReporting();
-		this.removePrerequisites();
-		this.removeDistributionManagement();
-		this.removeRepositories();
-		this.removePluginRepositories();
-		this.removeProfiles();
-		this.resetName();
-		this.removeDependencyManagement();
+	public void removeDependencyManagement() {
+		// do nothing
+	}
+
+	@Override
+	protected void optimizeDependenciesByConfig() {
+		// do nothing
 	}
 }

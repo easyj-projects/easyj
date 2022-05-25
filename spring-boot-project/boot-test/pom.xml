@@ -126,14 +126,6 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<configuration>
-					<flattenMode>bom</flattenMode>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：Jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

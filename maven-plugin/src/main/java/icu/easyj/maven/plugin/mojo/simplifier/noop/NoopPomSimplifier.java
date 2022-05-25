@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier;
+package icu.easyj.maven.plugin.mojo.simplifier.noop;
 
+import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
+import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * 空 POM 简化器
+ * 空的 简化器
  *
  * @author wangliang181230
  * @since 0.4.0
  */
 public class NoopPomSimplifier extends AbstractPomSimplifier {
 
-	public NoopPomSimplifier(MavenProject project, Log log) {
-		super(project, log);
-	}
-
-
-	@Override
-	public void doSimplify() {
-		super.replaceParentRevision();
+	public NoopPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+		super(project, config, log);
 	}
 }

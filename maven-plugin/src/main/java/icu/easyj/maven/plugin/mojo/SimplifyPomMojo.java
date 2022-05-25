@@ -22,8 +22,9 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Set;
 
-import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.PomSimplifierFactory;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
@@ -55,39 +56,30 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	/**
 	 * 简化模式
 	 */
-	@Parameter(defaultValue = "AUTO", property = "maven.simplify.mode")
+	@Parameter(property = "maven.simplify.mode")
 	private String simplifyMode;
-
-
-	/**
-	 * 是否复制父POM的部分信息
-	 */
-	@Parameter(defaultValue = "false")
-	private boolean copyParentItems;
-
-	/**
-	 * 是否移除Properties
-	 */
-	@Parameter(defaultValue = "false")
-	private boolean removeProperties;
-
-	/**
-	 * 是否移除Parent
-	 */
-	@Parameter(defaultValue = "true")
-	private boolean removeParent;
-
-	/**
-	 * 是否用于开源项目
-	 */
-	@Parameter(defaultValue = "true")
-	private boolean isOpenSourceProject;
 
 	/**
 	 * 是否更新POM文件
 	 */
 	@Parameter(defaultValue = "true")
-	private boolean updatePomFile;
+	boolean updatePomFile;
+
+	/**
+	 * 是否用于开源项目
+	 */
+	@Parameter(defaultValue = "true")
+	boolean isOpenSourceProject;
+
+
+	@Parameter(defaultValue = "false")
+	boolean keepProvidedAndOptionalDependencies;
+
+	@Parameter(defaultValue = "false")
+	boolean keepTestDependencies;
+
+	@Parameter
+	Set<String> excludeDependencies;
 
 
 	@Override
@@ -97,43 +89,29 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 			return;
 		}
 
+		// 读取配置
+		SimplifyPomMojoConfig config = new SimplifyPomMojoConfig(this);
+
+		// 创建简化器
 		getLog().info("Create PomSimplifier by mode: " + this.simplifyMode);
-		AbstractPomSimplifier pomSimplifier = PomSimplifierFactory.create(this.project, this.simplifyMode, getLog());
+		IPomSimplifier pomSimplifier = PomSimplifierFactory.create(this.project, this.simplifyMode, config, getLog());
 		getLog().info("Do simplify by the POM simplifier: " + pomSimplifier.getClass().getSimpleName());
 
-
-		//region 处理POM
-
+		// 使用简化器处理pom.xml
+		pomSimplifier.beforeSimplify();
 		pomSimplifier.doSimplify();
-
-		if (copyParentItems) {
-			pomSimplifier.copyParent();
-		}
-
-		if (removeProperties) {
-			pomSimplifier.removeProperties();
-		}
-
-		if (removeParent) {
-			pomSimplifier.removeParent();
-		} else {
-			pomSimplifier.revertParent();
-		}
-
-		if (isOpenSourceProject) {
-			pomSimplifier.copyParentForOpenSourceProject(true);
-		}
-
-		//endregion
+		pomSimplifier.doSimplifyByConfig();
+		pomSimplifier.afterSimplify();
 
 
 		// Create simplified POM file
-		getLog().info("Update the POM file to '" + this.simplifiedPomFileName + "'.");
+		getLog().info("Create the POM file to '" + this.simplifiedPomFileName + "'.");
 
 		File simplifiedPomFile = getSimplifiedPomFile();
 		writePom(this.project.getOriginalModel(), simplifiedPomFile);
 
 		if (updatePomFile) {
+			getLog().info("Set the POM file '" + this.simplifiedPomFileName + "' to the project object.");
 			project.setFile(simplifiedPomFile);
 		}
 	}

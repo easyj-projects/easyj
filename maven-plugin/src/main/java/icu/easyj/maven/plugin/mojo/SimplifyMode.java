@@ -26,11 +26,6 @@ import javax.annotation.Nullable;
 public enum SimplifyMode {
 
 	/**
-	 * 自动根据当前POM的属性判断
-	 */
-	AUTO,
-
-	/**
 	 * 空模式，通过自定义配置来简化POM
 	 */
 	NOOP,
@@ -64,7 +59,12 @@ public enum SimplifyMode {
 	//region 特殊的构件
 
 	/**
-	 * 组件集（特殊的POM）
+	 * 管理依赖模块（特殊的POM）
+	 */
+	DEPENDENCIES,
+
+	/**
+	 * 组件清单（特殊的DEPENDENCIES，只包含当前项目自己的组件）
 	 */
 	BOM,
 

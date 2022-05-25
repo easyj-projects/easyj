@@ -198,14 +198,6 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<configuration>
-					<flattenMode>bom</flattenMode>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：EasyJ -->
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
@@ -217,7 +209,7 @@
 							<goal>simplify-pom</goal>
 						</goals>
 						<configuration>
-							<simplifyMode>BOM</simplifyMode>
+							<simplifyMode>bom</simplifyMode>
 						</configuration>
 					</execution>
 				</executions>

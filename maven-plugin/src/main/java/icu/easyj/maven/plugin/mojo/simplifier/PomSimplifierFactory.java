@@ -16,8 +16,21 @@
 package icu.easyj.maven.plugin.mojo.simplifier;
 
 import icu.easyj.maven.plugin.mojo.SimplifyMode;
+import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplifier.jar.JarPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.jar.ShadeJarPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.mavenplugin.MavenPluginPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.noop.NoopPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.pom.BomPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.pom.DependenciesPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.JAR;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.MAVEN_PLUGIN;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.POM;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.WAR;
 
 /**
  * POM简化器工厂类
@@ -27,11 +40,37 @@ import org.apache.maven.project.MavenProject;
  */
 public abstract class PomSimplifierFactory {
 
-	public static AbstractPomSimplifier create(MavenProject project, String modeStr, Log log) {
+	public static AbstractPomSimplifier create(MavenProject project, String modeStr, SimplifyPomMojoConfig config, Log log) {
 		SimplifyMode mode = null;
 
 		if (modeStr == null || modeStr.isEmpty() || "auto".equalsIgnoreCase(modeStr)) {
 			modeStr = project.getPackaging();
+		} else {
+			switch (modeStr.toLowerCase().replace('_', '-')) {
+				case POM:
+				case JAR:
+				case WAR:
+				case MAVEN_PLUGIN:
+					if (!modeStr.equalsIgnoreCase(project.getPackaging())) {
+						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+						modeStr = project.getPackaging();
+					}
+					break;
+				case "shade":
+					if (!"jar".equals(project.getPackaging())) {
+						log.warn("The mode 'shade' can't used for packaging '" + project.getPackaging() + "'.");
+						modeStr = project.getPackaging();
+					}
+					break;
+				case "bom":
+					if (!"pom".equals(project.getPackaging())) {
+						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+						modeStr = project.getPackaging();
+					}
+					break;
+				default:
+					break;
+			}
 		}
 
 		try {
@@ -44,29 +83,34 @@ public abstract class PomSimplifierFactory {
 			mode = SimplifyMode.NOOP;
 		}
 
-		return createInternal(project, mode, log);
+		log.info("The simplify mode is: " + mode);
+
+		config.setMode(mode);
+		return createInternal(project, config, log);
 	}
 
 
-	private static AbstractPomSimplifier createInternal(MavenProject project, SimplifyMode mode, Log log) {
-		log.info("The mode is " + mode);
-
-		switch (mode) {
+	private static AbstractPomSimplifier createInternal(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+		switch (config.getMode()) {
 			case JAR:
-				return new JarPomSimplifier(project, log);
-
+			case WAR:
+				return new JarPomSimplifier(project, config, log);
 			case SHADE:
-				return new ShadeJarPomSimplifier(project, log);
+				return new ShadeJarPomSimplifier(project, config, log);
 
-			case BOM:
-				return new BomPomSimplifier(project, log);
+			case MAVEN_PLUGIN:
+				return new MavenPluginPomSimplifier(project, config, log);
 
 			case POM:
-			case MAVEN_PLUGIN:
+				return new PomSimplifier(project, config, log);
+			case DEPENDENCIES:
+				return new DependenciesPomSimplifier(project, config, log);
+			case BOM:
+				return new BomPomSimplifier(project, config, log);
+
 			case NOOP:
-			case WAR:
 			default:
-				return new NoopPomSimplifier(project, log);
+				return new NoopPomSimplifier(project, config, log);
 		}
 	}
 }

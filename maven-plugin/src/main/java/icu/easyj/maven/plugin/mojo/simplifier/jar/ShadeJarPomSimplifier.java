@@ -13,44 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier;
+package icu.easyj.maven.plugin.mojo.simplifier.jar;
+
+import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.project.MavenProject;
 
 /**
- * POM简化器 接口
+ * 合并的JAR的pom.xml 简化器
  *
  * @author wangliang181230
  * @since 0.4.0
  */
-public interface IPomSimplifier {
+public class ShadeJarPomSimplifier extends JarPomSimplifier {
 
-	String REVISION = "${revision}";
-
-	String POM = "pom";
-	String JAR = "jar";
-	String WAR = "war";
-	String MAVEN_PLUGIN = "maven-plugin";
-
-	/**
-	 * 简化前的操作
-	 */
-	default void beforeSimplify() {
+	public ShadeJarPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+		super(project, config, log);
 	}
 
-	/**
-	 * 执行简化
-	 */
-	default void doSimplify() {
-	}
 
-	/**
-	 * 简化后的操作
-	 */
-	default void afterSimplify() {
-	}
-
-	/**
-	 * 根据配置进行一些操作
-	 */
-	default void doSimplifyByConfig() {
+	@Override
+	public void doSimplify() {
+		this.copyProjectInfoFromParent();
+		super.doSimplify();
 	}
 }

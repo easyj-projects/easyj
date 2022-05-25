@@ -111,14 +111,6 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<configuration>
-					<flattenMode>resolveCiFriendliesOnly</flattenMode>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：Javadoc -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

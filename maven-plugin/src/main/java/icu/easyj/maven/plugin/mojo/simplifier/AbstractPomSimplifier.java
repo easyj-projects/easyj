@@ -16,15 +16,19 @@
 package icu.easyj.maven.plugin.mojo.simplifier;
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.model.Dependency;
+import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+
+import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isEmpty;
+import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isNotEmpty;
 
 /**
  * 抽象POM 简化器
@@ -36,71 +40,59 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	protected final Log log;
 
+	protected final SimplifyPomMojoConfig config;
+
+
 	protected final MavenProject project;
 	protected final MavenProject parent;
+
 	protected final Model originalModel;
 	protected final Parent originalModelParent;
+	protected final List<Dependency> originalDependencies;
+
 	protected final Model model;
 	protected final Parent modelParent;
 
+
 	private boolean isCopiedParentItems = false;
 	private boolean isCopiedParentItemsForOpenSourceProject = false;
-	private boolean isCopiedDependenciesVersion = false;
+	private boolean isResetDependencies = false;
 
 
-	protected AbstractPomSimplifier(MavenProject project, Log log) {
+	protected AbstractPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
 		this.project = project;
 		this.parent = project.getParent();
 		this.originalModel = project.getOriginalModel();
 		this.originalModelParent = this.originalModel.getParent();
+		this.originalDependencies = originalModel.getDependencies();
 		this.model = project.getModel();
 		this.modelParent = this.model.getParent();
+
+		this.config = config;
 
 		this.log = log;
 	}
 
 
-	public void copyParent() {
-		if (this.isCopiedParentItems) {
-			return;
-		}
-
-		this.isCopiedParentItems = true;
-
-		this.log.info("Copy parent items:");
-
-		String[] itemNameArr = new String[]{
-				"InceptionYear",
-				"Contributors",
-				"MailingLists",
-				"CiManagement",
-		};
-		this.copyParentItems(itemNameArr);
-
-		this.copyParentForOpenSourceProject(false);
+	@Override
+	public void afterSimplify() {
+		this.replaceParentRevision();
+		this.resetNameAndDescription();
+		this.optimizeDependencies();
 	}
 
-	public void copyParentForOpenSourceProject(boolean needPrintLog) {
-		if (this.isCopiedParentItemsForOpenSourceProject) {
-			return;
+	/**
+	 * 根据配置进行一些操作
+	 */
+	@Override
+	public void doSimplifyByConfig() {
+		if (this.config.isOpenSourceProject()) {
+			this.copyProjectInfoFromParentForOpenSourceProject();
 		}
 
-		this.isCopiedParentItemsForOpenSourceProject = true;
-
-		if (needPrintLog) {
-			this.log.info("Copy parent items for open source project:");
-		}
-
-		String[] itemNameArr = new String[]{
-				"Url",
-				"Organization",
-				"Licenses",
-				"Developers",
-				"Scm",
-				"IssueManagement"
-		};
-		this.copyParentItems(itemNameArr);
+		this.optimizeDependenciesByConfig();
 	}
+
 
 	private void copyParentItems(String... itemNameArr) {
 		for (String itemName : itemNameArr) {
@@ -112,7 +104,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				Object originalValue = getMethod.invoke(this.originalModel);
 				Object value = getMethod.invoke(this.model);
 
-				if (isNullOrEmpty(originalValue) && !isNullOrEmpty(value)) {
+				if (isEmpty(originalValue) && isNotEmpty(value)) {
 					this.log.info("   Copy " + itemName + ".");
 					Method setMethod = Model.class.getMethod("set" + itemName, value instanceof List ? List.class : (value instanceof Map ? Map.class : value.getClass()));
 					setMethod.invoke(this.originalModel, value);
@@ -123,76 +115,317 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	private boolean isNullOrEmpty(Object obj) {
-		if (obj == null) {
-			return true;
+	private int getDependenciesSize(DependencyManagement dm) {
+		if (dm == null) {
+			return 0;
 		}
-
-		if (obj instanceof String) {
-			String str = obj.toString();
-			return str.isEmpty();
-		} else if (obj instanceof Collection) {
-			Collection list = (Collection)obj;
-			return list.isEmpty();
-		} else if (obj instanceof Map) {
-			Map map = (Map)obj;
-			return map.isEmpty();
-		}
-
-		return false;
+		return getDependenciesSize(dm.getDependencies());
 	}
 
-	public void copyGroupIdAndVersion() {
-		if (!this.model.getGroupId().equals(this.originalModel.getGroupId())) {
-			this.log.info("Set groupId from '" + this.originalModel.getGroupId() + "' to '" + this.model.getGroupId() + "'.");
-			this.originalModel.setGroupId(this.model.getGroupId());
+	private int getDependenciesSize(List<Dependency> dependencies) {
+		if (dependencies == null) {
+			return 0;
 		}
-		if (!this.model.getVersion().equals(this.originalModel.getVersion())) {
-			this.log.info("Set version from '" + this.originalModel.getVersion() + "' to '" + this.model.getVersion() + "'.");
-			this.originalModel.setVersion(this.model.getVersion());
+		return dependencies.size();
+	}
+
+	protected void printLine() {
+		this.log.info("-------------------------------------------");
+	}
+
+
+	//region # 对POM中各元素的操作
+
+
+	//region --- Parent ---
+
+
+	/**
+	 * 移除Parent
+	 */
+	public void removeParent() {
+		if (this.originalModel.getParent() != null) {
+			printLine();
+			this.log.info("Remove Parent.");
+			this.originalModel.setParent(null);
+			this.resetArtifactIdentification();
+			this.resetDependencyManagement();
+			this.resetDependencies();
+			printLine();
 		}
 	}
 
+	/**
+	 * 替换Parent的版本号表达式 '${revision}' 为具体的版本号
+	 */
 	public void replaceParentRevision() {
-		if (this.originalModelParent != null && REVISION.equals(this.originalModelParent.getVersion())) {
+		if (this.originalModel.getParent() != null && this.originalModelParent != null && REVISION.equals(this.originalModelParent.getVersion())) {
 			this.log.info("Set parent version from '" + this.originalModelParent.getVersion() + "' to '" + this.modelParent.getVersion() + "'.");
 			this.originalModelParent.setVersion(this.modelParent.getVersion());
 		}
 	}
 
-	public void copyDependenciesGroupIdAndVersion() {
-		if (!isNullOrEmpty(this.originalModel.getDependencies()) && !isCopiedDependenciesVersion) {
-			isCopiedDependenciesVersion = true;
+	//endregion ##
 
+
+	//region -------------------- GroupId、ArtifactId、Version、Packaging --------------------
+
+	private void resetArtifactIdentification() {
+		if (!this.model.getGroupId().equals(this.originalModel.getGroupId())) {
+			this.log.info("Set GroupId from '" + this.originalModel.getGroupId() + "' to '" + this.model.getGroupId() + "'.");
+			this.originalModel.setGroupId(this.model.getGroupId());
+		}
+		if (!this.model.getArtifactId().equals(this.originalModel.getArtifactId())) {
+			this.log.info("Set ArtifactId from '" + this.originalModel.getArtifactId() + "' to '" + this.model.getArtifactId() + "'.");
+			this.originalModel.setArtifactId(this.model.getArtifactId());
+		}
+		if (!this.model.getVersion().equals(this.originalModel.getVersion())) {
+			this.log.info("Set Version from '" + this.originalModel.getVersion() + "' to '" + this.model.getVersion() + "'.");
+			this.originalModel.setVersion(this.model.getVersion());
+		}
+		if (isNotEmpty(this.model.getPackaging()) && !this.model.getPackaging().equals(this.originalModel.getPackaging()) && !JAR.equalsIgnoreCase(this.model.getPackaging())) {
+			this.log.info("Set Packaging from '" + this.originalModel.getPackaging() + "' to '" + this.model.getPackaging() + "'.");
+			this.originalModel.setPackaging(this.model.getPackaging());
+		}
+	}
+
+	//endregion ##
+
+
+	//region -------------------- Name、Description --------------------
+
+	public void resetNameAndDescription() {
+		if (isNotEmpty(this.model.getName()) && isNotEmpty(this.originalModel.getName()) && !this.model.getName().equals(this.originalModel.getName())) {
+			this.log.info("Set Name from '" + this.originalModel.getName() + "' to '" + this.model.getName() + "'.");
+			this.originalModel.setName(this.model.getName());
+		}
+		if (isNotEmpty(this.model.getDescription()) && isNotEmpty(this.originalModel.getDescription()) && !this.model.getDescription().equals(this.originalModel.getDescription())) {
+			this.log.info("Set Description from '" + this.originalModel.getDescription() + "' to '" + this.model.getDescription() + "'.");
+			this.originalModel.setDescription(this.model.getDescription());
+		}
+	}
+
+	//endregion ##
+
+
+	//region -------------------- Organization、Url、Licenses、Developers、Scm、IssueManagement --------------------
+
+	public void copyProjectInfoFromParentForOpenSourceProject() {
+		if (this.isCopiedParentItemsForOpenSourceProject && !this.config.isOpenSourceProject()) {
+			return;
+		}
+		this.isCopiedParentItemsForOpenSourceProject = true;
+
+		printLine();
+		this.log.info("Copy project info from parent for open source project.");
+
+		String[] itemNameArr = new String[]{
+				// 开源必须
+				"Url",
+				"Licenses",
+				"Developers",
+				"Scm",
+
+				// 开源非必须，但加着比较好
+				"Organization",
+				"IssueManagement",
+		};
+		this.copyParentItems(itemNameArr);
+		printLine();
+	}
+
+	//endregion ##
+
+
+	//region -------------------- InceptionYear、Contributors、MailingLists、CiManagement --------------------
+
+	public void copyProjectInfoFromParent() {
+		if (this.isCopiedParentItems && !this.config.isOpenSourceProject()) {
+			return;
+		}
+		this.isCopiedParentItems = true;
+
+		printLine();
+		this.log.info("Copy project info from parent:");
+
+		String[] itemNameArr = new String[]{
+				"InceptionYear",
+				"Contributors",
+				"MailingLists",
+				"CiManagement"
+		};
+		this.copyParentItems(itemNameArr);
+
+		this.copyProjectInfoFromParentForOpenSourceProject();
+		printLine();
+	}
+
+	//endregion ##
+
+
+	//region -------------------- DependencyManagement、Dependencies --------------------
+
+	public void removeDependencyManagement() {
+		if (this.originalModel.getDependencyManagement() != null) {
+			this.resetDependencies();
+			this.log.info("Remove DependencyManagement.");
+			this.originalModel.setDependencyManagement(null);
+		} else {
+			this.resetDependencies();
+		}
+	}
+
+	public void resetDependencyManagement() {
+		if (isNotEmpty(this.model.getDependencyManagement()) && this.model.getDependencyManagement() != this.originalModel.getDependencyManagement()) {
+			int originalSize = this.getDependenciesSize(this.originalModel.getDependencyManagement());
+			int size = this.getDependenciesSize(this.model.getDependencyManagement());
+			this.log.info("Reset DependencyManagement: " + originalSize + " -> " + size);
+			this.originalModel.setDependencyManagement(this.model.getDependencyManagement());
+		}
+	}
+
+	public void removeDependencies() {
+		if (isNotEmpty(this.originalModel.getDependencies())) {
+			this.log.info("Remove Dependencies.");
+			this.originalModel.setDependencies(null);
+		}
+	}
+
+	public void resetDependencies() {
+		if (isResetDependencies) {
+			return;
+		}
+		isResetDependencies = true;
+
+		if (!isEmpty(this.originalModel.getDependencies())) {
+			printLine();
 			this.log.info("Copy dependencies groupId and version (" + this.originalModel.getDependencies().size() + "):");
-			for (int i = 0; i < this.originalModel.getDependencies().size(); i++) {
-				Dependency originalDependency = this.originalModel.getDependencies().get(i);
+			for (int i = 0; i < this.model.getDependencies().size(); i++) {
 				Dependency dependency = this.model.getDependencies().get(i);
-				if (dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
-					this.log.info("  Copy dependency groupId and version: " + dependency + " -> " + originalDependency);
-					originalDependency.setGroupId(dependency.getGroupId());
-					originalDependency.setVersion(dependency.getVersion());
-				} else {
-					this.log.warn("  Copy dependency groupId and version failed: " + dependency + " != " + originalDependency);
+				if (i < this.originalModel.getDependencies().size()) {
+					Dependency originalDependency = this.originalModel.getDependencies().get(i);
+
+					if (dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
+						this.log.info("  Copy dependency groupId and version and exclusions: " + dependency + " -> " + originalDependency);
+						originalDependency.setGroupId(dependency.getGroupId());
+						originalDependency.setVersion(dependency.getVersion());
+						originalDependency.setExclusions(dependency.getExclusions());
+					} else {
+						this.log.warn("  Copy dependency groupId and version failed: " + dependency + " != " + originalDependency);
+					}
+				} else if (!isNeedRemoved(dependency)) {
+					this.log.info("  Add dependency: " + dependency);
+					this.originalModel.getDependencies().add(dependency);
 				}
+			}
+			printLine();
+		}
+	}
+
+	protected void optimizeDependencies() {
+		if (isEmpty(this.originalModel.getDependencies())) {
+			return;
+		}
+
+		for (Dependency dependency : this.originalModel.getDependencies()) {
+			if ("compile".equalsIgnoreCase(dependency.getScope())) {
+				dependency.setScope(null);
 			}
 		}
 	}
 
-	public void removeParent() {
-		if (this.originalModel.getParent() != null) {
-			this.log.info("Remove Parent.");
-			this.originalModel.setParent(null);
-			this.copyGroupIdAndVersion();
-			this.copyDependenciesGroupIdAndVersion();
+	protected void optimizeDependenciesByConfig() {
+		if (isEmpty(this.originalModel.getDependencies())) {
+			return;
+		}
+
+		int size = this.originalModel.getDependencies().size();
+
+		printLine();
+		Dependency dependency;
+		for (int i = 0; i < this.originalModel.getDependencies().size(); i++) {
+			dependency = this.originalModel.getDependencies().get(i);
+
+			if (!this.config.isKeepProvidedAndOptionalDependencies()) {
+				if ("provided".equalsIgnoreCase(dependency.getScope())) {
+					this.removeOneDependencies(dependency, i--, "scope=provided");
+					continue;
+				}
+				if (dependency.isOptional()) {
+					this.removeOneDependencies(dependency, i--, "optional=true");
+					continue;
+				}
+			}
+
+			if (!this.config.isKeepTestDependencies()) {
+				if ("test".equalsIgnoreCase(dependency.getScope())) {
+					this.removeOneDependencies(dependency, i--, "scope=test");
+					continue;
+				}
+			}
+
+			if (this.config.isExcludeDependency(dependency)) {
+				this.removeOneDependencies(dependency, i--, "isExclude=true");
+				continue;
+			}
+		}
+
+		if (size > this.originalModel.getDependencies().size()) {
+			this.log.info("Remove dependencies: " + (size - this.originalModel.getDependencies().size()) + ".");
+		}
+		printLine();
+	}
+
+	private boolean isNeedRemoved(Dependency dependency) {
+		if (!this.config.isKeepProvidedAndOptionalDependencies()) {
+			if ("provided".equalsIgnoreCase(dependency.getScope())) {
+				return true;
+			}
+			if (dependency.isOptional()) {
+				return true;
+			}
+		}
+
+		if (!this.config.isKeepTestDependencies()) {
+			if ("test".equalsIgnoreCase(dependency.getScope())) {
+				return true;
+			}
+		}
+
+		if (this.config.isExcludeDependency(dependency)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void removeOneDependencies(Dependency dependency, int i, String cause) {
+		this.originalModel.getDependencies().remove(i);
+		this.log.info("Remove dependency by " + cause + ": " + dependency);
+	}
+
+	//endregion ##
+
+
+	//region -------------------- Properties --------------------
+
+	public void removeProperties() {
+		if (isNotEmpty(this.originalModel.getProperties())) {
+			this.log.info("Remove Properties.");
+			this.originalModel.setProperties(null);
+			this.resetDependencies();
 		}
 	}
 
-	public void revertParent() {
-		if (this.originalModelParent != null && this.originalModel.getParent() == null) {
-			this.log.info("Revert Parent.");
-			this.originalModel.setParent(this.originalModelParent);
-			this.replaceParentRevision();
+	//endregion
+
+
+	//region -------------------- Prerequisites、Build、Reporting、Profiles --------------------
+
+	public void removePrerequisites() {
+		if (this.originalModel.getPrerequisites() != null) {
+			this.log.info("Remove Prerequisites.");
+			this.originalModel.setPrerequisites(null);
 		}
 	}
 
@@ -210,10 +443,22 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	public void removePrerequisites() {
-		if (this.originalModel.getPrerequisites() != null) {
-			this.log.info("Remove Prerequisites.");
-			this.originalModel.setPrerequisites(null);
+	//endregion ##
+
+
+	//region -------------------- Repositories、PluginRepositories、DistributionManagement --------------------
+
+	public void removeRepositories() {
+		if (isNotEmpty(this.originalModel.getRepositories())) {
+			this.log.info("Remove Repositories.");
+			this.originalModel.setRepositories(null);
+		}
+	}
+
+	public void removePluginRepositories() {
+		if (isNotEmpty(this.originalModel.getPluginRepositories())) {
+			this.log.info("Remove PluginRepositories.");
+			this.originalModel.setPluginRepositories(null);
 		}
 	}
 
@@ -224,60 +469,20 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	public void removeRepositories() {
-		if (!isNullOrEmpty(this.originalModel.getRepositories())) {
-			this.log.info("Remove Repositories.");
-			this.originalModel.setRepositories(null);
-		}
-	}
+	//endregion ##
 
-	public void removePluginRepositories() {
-		if (!isNullOrEmpty(this.originalModel.getPluginRepositories())) {
-			this.log.info("Remove PluginRepositories.");
-			this.originalModel.setPluginRepositories(null);
-		}
-	}
+
+	//region -------------------- Profiles --------------------
 
 	public void removeProfiles() {
-		if (!isNullOrEmpty(this.originalModel.getProfiles())) {
+		if (isNotEmpty(this.originalModel.getProfiles())) {
 			this.log.info("Remove Profiles.");
 			this.originalModel.setProfiles(null);
 		}
 	}
 
-	public void removeDependencies() {
-		if (!isNullOrEmpty(this.originalModel.getDependencies())) {
-			this.log.info("Remove Dependencies.");
-			this.originalModel.setDependencies(null);
-		}
-	}
+	//endregion ##
 
-	public void removeDependencyManagement() {
-		if (this.originalModel.getDependencyManagement() != null) {
-			this.copyDependenciesGroupIdAndVersion();
-			this.log.info("Remove DependencyManagement.");
-			this.originalModel.setDependencyManagement(null);
-		}
-	}
 
-	public void removeProperties() {
-		if (!isNullOrEmpty(this.originalModel.getProperties())) {
-			this.log.info("Remove Properties.");
-			this.originalModel.setProperties(null);
-		}
-	}
-
-	public void resetName() {
-		if (!isNullOrEmpty(this.model.getName()) && !this.model.getName().equals(this.originalModel.getName())) {
-			this.log.info("Reset Name.");
-			this.originalModel.setName(this.model.getName());
-		}
-	}
-
-	public void resetDependencyManagement() {
-		if (!isNullOrEmpty(this.model.getDependencyManagement()) && this.model.getDependencyManagement() != this.originalModel.getDependencyManagement()) {
-			this.log.info("Reset DependencyManagement.");
-			this.originalModel.setDependencyManagement(this.model.getDependencyManagement());
-		}
-	}
+	//endregion #
 }
