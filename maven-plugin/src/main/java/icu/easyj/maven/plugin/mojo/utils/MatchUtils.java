@@ -15,6 +15,9 @@
  */
 package icu.easyj.maven.plugin.mojo.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 字符串匹配工具类
  *
@@ -32,6 +35,18 @@ public abstract class MatchUtils {
 	 * @return 是否匹配：true=匹配 | false=不匹配
 	 */
 	public static boolean match(String pattern, String str, boolean ignoreCase) {
+		if (pattern == null || pattern.isEmpty()) {
+			return false;
+		}
+
+		// 如果是正则表达式，则使用正则判断
+		if (pattern.charAt(0) == '^') {
+			Pattern pat = ignoreCase ? Pattern.compile(pattern, Pattern.CASE_INSENSITIVE) : Pattern.compile(pattern);
+			Matcher matcher = pat.matcher(str);
+			return matcher.matches();
+		}
+
+
 		char[] patArr = pattern.toCharArray();
 		char[] strArr = str.toCharArray();
 		int patIdxStart = 0;
