@@ -465,6 +465,9 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 								break;
 							}
 						}
+						if (children.length == 0) {
+							plugin.setConfiguration(null);
+						}
 						break;
 					}
 				}
