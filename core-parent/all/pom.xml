@@ -194,6 +194,9 @@
 				<artifactId>easyj-maven-plugin</artifactId>
 				<configuration>
 					<simplifyMode>shade</simplifyMode>
+					<excludeDependencies>
+						<excludeDependency>${project.groupId}:*:*</excludeDependency>
+					</excludeDependencies>
 				</configuration>
 			</plugin>
 			<!-- 忽略插件：Source -->

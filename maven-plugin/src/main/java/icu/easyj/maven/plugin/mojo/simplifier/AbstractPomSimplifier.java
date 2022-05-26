@@ -97,7 +97,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				Method getMethod = Model.class.getMethod("get" + itemName);
 
 				Object originalValue = getMethod.invoke(this.originalModel);
-				Object value = getMethod.invoke(this.model);
+				Object value = getMethod.invoke(this.project.getParent().getModel());
 
 				if (isEmpty(originalValue) && isNotEmpty(value)) {
 					this.log.info("   Copy " + itemName + ".");

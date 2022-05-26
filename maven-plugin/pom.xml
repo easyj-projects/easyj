@@ -17,6 +17,19 @@
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ开发的Maven插件，包含：简化POM功能、Shade兼容Flatten功能</description>
 
+	<url>https://easyj.icu</url>
+
+	<scm>
+		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
+		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
+		<url>https://gitee.com/easyj-projects/easyj</url>
+	</scm>
+
+	<issueManagement>
+		<system>gitee</system>
+		<url>https://gitee.com/easyj-projects/easyj/issues</url>
+	</issueManagement>
+
 	<properties>
 		<mavenVersion>3.8.5</mavenVersion>
 		<mavenAnnotationsVersion>3.6.4</mavenAnnotationsVersion>
@@ -94,7 +107,7 @@
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>${project.artifactId}</artifactId>
-				<version>${project.version}</version>
+				<version>0.4.2</version><!-- 使用历史版本 -->
 				<executions>
 					<execution>
 						<goals>
