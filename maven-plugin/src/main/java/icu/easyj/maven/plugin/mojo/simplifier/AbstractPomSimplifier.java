@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
@@ -155,6 +156,58 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				+ (isEmpty(dependency.getScope()) ? "" : ":" + dependency.getScope())
 				+ (isEmpty(dependency.getOptional()) ? "" : ":" + dependency.getOptional())
 				+ "]";
+	}
+
+	protected String replaceVariable(String str) {
+		if (str == null) {
+			return null;
+		}
+
+		Properties properties = this.model.getProperties();
+		if (properties == null || properties.isEmpty()) {
+			return str;
+		}
+
+		while (str.contains("${") && str.contains("}")) {
+			int start = str.indexOf("${");
+			int end = str.indexOf("}");
+			String varName = str.substring(start + 2, end).trim();
+			String varValue = this.getProperty(varName);
+			varValue = varValue == null ? "" : varValue.trim();
+			str = str.substring(0, start) + varValue + str.substring(end + 1);
+		}
+
+		return str;
+	}
+
+	protected String getProperty(String key) {
+		if (key == null || key.isEmpty()) {
+			return null;
+		}
+
+		switch (key.toLowerCase()) {
+			case "project.groupid":
+				return project.getGroupId();
+			case "project.version":
+				return project.getVersion();
+			case "project.artifactid":
+				return project.getArtifactId();
+			case "project.parent.groupid":
+			case "parent.groupid":
+				return project.getParent().getGroupId();
+			case "project.parent.version":
+			case "parent.version":
+				return project.getParent().getVersion();
+			case "project.parent.artifactid":
+			case "parent.artifactid":
+				return project.getParent().getArtifactId();
+			default:
+				Properties properties = this.model.getProperties();
+				if (properties == null || properties.isEmpty()) {
+					return null;
+				}
+				return this.model.getProperties().getProperty(key);
+		}
 	}
 
 	protected void printLine() {
@@ -344,14 +397,17 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		if (!isEmpty(this.originalModel.getDependencies())) {
 			int originalSize = getDependenciesSize(this.originalModel.getDependencies());
 			printLine();
-			this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + "):");
+			this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + " dependencies):");
 			for (int i = 0, n = 0; i < this.model.getDependencies().size(); i++, n++) {
 				Dependency dependency = this.model.getDependencies().get(i);
 				if (i < originalSize) {
 					Dependency originalDependency = this.originalModel.getDependencies().get(n);
+					originalDependency.setGroupId(this.replaceVariable(originalDependency.getGroupId()));
+					originalDependency.setArtifactId(this.replaceVariable(originalDependency.getArtifactId()));
 
 					// 重置groupId、version和exclusions
-					if (dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
+					if (dependency.getGroupId().equals(originalDependency.getGroupId())
+							&& dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
 						//region 判断是否需要移除
 
 						if (!this.config.isKeepProvidedAndOptionalDependencies()) {
@@ -380,18 +436,21 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 						//endregion
 
 						this.log.info("  Reset dependency: " + dependencyToString(originalDependency) + " -> " + dependencyToString(dependency));
-						originalDependency.setGroupId(dependency.getGroupId());
 						originalDependency.setVersion(dependency.getVersion());
 						originalDependency.setExclusions(dependency.getExclusions());
 					} else {
-						this.log.warn("  Reset dependency failed: " + dependencyToString(originalDependency) + " != " + dependencyToString(dependency));
+						// 基本上是重复引用导致，直接移除当前dependency
+						this.log.info("  Remove duple dependency: " + dependencyToString(originalDependency));
+						this.originalModel.getDependencies().remove(n--);
+						originalSize--;
+						i--;
 					}
 				} else if (!isNeedRemoved(dependency)) {
 					this.log.info("  Add dependency: " + dependencyToString(dependency));
 					this.originalModel.getDependencies().add(dependency);
 				}
 			}
-			this.log.info("End: " + this.originalModel.getDependencies().size());
+			this.log.info("Remain " + this.originalModel.getDependencies().size() + " dependencies.");
 			printLine();
 		}
 	}
@@ -431,8 +490,8 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		return false;
 	}
 
-	private void removeOneDependencies(Dependency dependency, int i, String cause) {
-		this.originalModel.getDependencies().remove(i);
+	private void removeOneDependencies(Dependency dependency, int n, String cause) {
+		this.originalModel.getDependencies().remove(n);
 		this.log.info("  Remove dependency by " + cause + ": " + dependencyToString(dependency));
 	}
 
