@@ -15,6 +15,8 @@
  */
 package icu.easyj.maven.plugin.mojo;
 
+import java.util.Map;
+
 import icu.easyj.maven.plugin.mojo.utils.MatchUtils;
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
 import org.apache.maven.model.Dependency;
@@ -75,6 +77,10 @@ public class SimplifyPomMojoConfig {
 		}
 
 		return false;
+	}
+
+	public Map<String, String> getCreateProperties() {
+		return mojo.createProperties;
 	}
 
 	//endregion

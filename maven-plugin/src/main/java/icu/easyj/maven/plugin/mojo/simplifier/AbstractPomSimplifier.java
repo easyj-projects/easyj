@@ -25,8 +25,10 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
+import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isEmpty;
 import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isNotEmpty;
@@ -87,6 +89,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	@Override
 	public void doSimplifyByConfig() {
 		this.copyProjectInfoFromParentForOpenSourceProject();
+		this.createPropertiesByConfig();
 	}
 
 
@@ -423,6 +426,49 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			this.log.info("Remove Properties.");
 			this.originalModel.setProperties(null);
 			this.resetDependencies();
+		}
+	}
+
+	/**
+	 * 该功能的应用场景：<br>
+	 * 举例1：框架中，添加一个模块，simplifyMode=pom，但是希望设置parent为框架中的此模块的子模块中，采用simplifyMode=bom.
+	 */
+	public void createPropertiesByConfig() {
+		if (isEmpty(this.config.getCreateProperties())) {
+			return;
+		}
+
+		try {
+			if (this.originalModel.getProperties() == null) {
+				return;
+			}
+
+			this.config.getCreateProperties().forEach((key, value) -> {
+				if (isNotEmpty(key) && isNotEmpty(value)) {
+					this.log.info("Create Properties: " + key + " = " + value);
+					this.originalModel.getProperties().put(key, value);
+				}
+			});
+		} finally {
+			if (this.originalModel.getBuild() != null && isNotEmpty(this.originalModel.getBuild().getPlugins())) {
+				for (Plugin plugin : this.originalModel.getBuild().getPlugins()) {
+					if ("icu.easyj.maven.plugins".equalsIgnoreCase(plugin.getGroupId())
+							&& "easyj-maven-plugin".equalsIgnoreCase(plugin.getArtifactId())
+							&& plugin.getConfiguration() instanceof Xpp3Dom) {
+						Xpp3Dom configDom = (Xpp3Dom)plugin.getConfiguration();
+						Xpp3Dom[] children = configDom.getChildren();
+						for (int i = 0; i < children.length; i++) {
+							Xpp3Dom child = children[i];
+							if ("createProperties".equals(child.getName())) {
+								this.log.info("Remove createProperties from the configuration of the plugin.");
+								configDom.removeChild(i);
+								break;
+							}
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 

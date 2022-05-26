@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 
 import icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier;
@@ -83,6 +84,9 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
 	@Parameter
 	Set<String> excludeDependencies;
+
+	@Parameter
+	Map<String, String> createProperties;
 
 
 	@Override
