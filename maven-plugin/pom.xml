@@ -107,7 +107,7 @@
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>${project.artifactId}</artifactId>
-				<version>0.4.2</version><!-- 使用历史版本 -->
+				<version>0.4.2</version><!-- 使用历史版本，否则会报错。 -->
 				<executions>
 					<execution>
 						<goals>
