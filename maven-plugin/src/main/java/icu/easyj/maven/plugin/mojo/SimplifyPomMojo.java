@@ -96,6 +96,8 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		getLog().info("Create PomSimplifier by mode: " + this.simplifyMode);
 		IPomSimplifier pomSimplifier = PomSimplifierFactory.create(this.project, this.simplifyMode, config, getLog());
 		getLog().info("Do simplify by the POM simplifier: " + pomSimplifier.getClass().getSimpleName());
+		getLog().info("");
+		getLog().info("====================  start simplify  ====================");
 
 		// 使用简化器处理pom.xml
 		pomSimplifier.beforeSimplify();
@@ -103,9 +105,11 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		pomSimplifier.doSimplifyByConfig();
 		pomSimplifier.afterSimplify();
 
+		getLog().info("====================   end  simplify  ====================");
+		getLog().info("");
 
 		// Create simplified POM file
-		getLog().info("Create the POM file to '" + this.simplifiedPomFileName + "'.");
+		getLog().info("Create the POM file '" + this.simplifiedPomFileName + "'.");
 
 		File simplifiedPomFile = getSimplifiedPomFile();
 		writePom(this.project.getOriginalModel(), simplifiedPomFile);

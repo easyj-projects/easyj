@@ -77,7 +77,6 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	@Override
 	public void afterSimplify() {
 		this.replaceParentRevision();
-		this.resetNameAndDescription();
 		this.optimizeDependencies();
 	}
 
@@ -86,11 +85,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	 */
 	@Override
 	public void doSimplifyByConfig() {
-		if (this.config.isOpenSourceProject()) {
-			this.copyProjectInfoFromParentForOpenSourceProject();
-		}
-
-		this.optimizeDependenciesByConfig();
+		this.copyProjectInfoFromParentForOpenSourceProject();
 	}
 
 
@@ -139,19 +134,13 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	//region --- Parent ---
 
-
 	/**
 	 * 移除Parent
 	 */
 	public void removeParent() {
 		if (this.originalModel.getParent() != null) {
-			printLine();
 			this.log.info("Remove Parent.");
 			this.originalModel.setParent(null);
-			this.resetArtifactIdentification();
-			this.resetDependencyManagement();
-			this.resetDependencies();
-			printLine();
 		}
 	}
 
@@ -170,7 +159,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	//region -------------------- GroupId、ArtifactId、Version、Packaging --------------------
 
-	private void resetArtifactIdentification() {
+	public void resetArtifactIdentification() {
 		if (!this.model.getGroupId().equals(this.originalModel.getGroupId())) {
 			this.log.info("Set GroupId from '" + this.originalModel.getGroupId() + "' to '" + this.model.getGroupId() + "'.");
 			this.originalModel.setGroupId(this.model.getGroupId());
@@ -211,13 +200,13 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//region -------------------- Organization、Url、Licenses、Developers、Scm、IssueManagement --------------------
 
 	public void copyProjectInfoFromParentForOpenSourceProject() {
-		if (this.isCopiedParentItemsForOpenSourceProject && !this.config.isOpenSourceProject()) {
+		if (this.isCopiedParentItemsForOpenSourceProject || !this.config.isOpenSourceProject()) {
 			return;
 		}
 		this.isCopiedParentItemsForOpenSourceProject = true;
 
 		printLine();
-		this.log.info("Copy project info from parent for open source project.");
+		this.log.info("Copy project info from parent for the open source project:");
 
 		String[] itemNameArr = new String[]{
 				// 开源必须
@@ -240,7 +229,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//region -------------------- InceptionYear、Contributors、MailingLists、CiManagement --------------------
 
 	public void copyProjectInfoFromParent() {
-		if (this.isCopiedParentItems && !this.config.isOpenSourceProject()) {
+		if (this.isCopiedParentItems || !this.config.isOpenSourceProject()) {
 			return;
 		}
 		this.isCopiedParentItems = true;
@@ -298,31 +287,61 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		isResetDependencies = true;
 
 		if (!isEmpty(this.originalModel.getDependencies())) {
+			int originalSize = getDependenciesSize(this.originalModel.getDependencies());
 			printLine();
-			this.log.info("Copy dependencies groupId and version (" + this.originalModel.getDependencies().size() + "):");
-			for (int i = 0; i < this.model.getDependencies().size(); i++) {
+			this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + "):");
+			for (int i = 0, n = 0; i < this.model.getDependencies().size(); i++, n++) {
 				Dependency dependency = this.model.getDependencies().get(i);
-				if (i < this.originalModel.getDependencies().size()) {
-					Dependency originalDependency = this.originalModel.getDependencies().get(i);
+				if (i < originalSize) {
+					Dependency originalDependency = this.originalModel.getDependencies().get(n);
 
+					// 重置groupId、version和exclusions
 					if (dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
-						this.log.info("  Copy dependency groupId and version and exclusions: " + dependency + " -> " + originalDependency);
+						//region 判断是否需要移除
+
+						if (!this.config.isKeepProvidedAndOptionalDependencies()) {
+							if ("provided".equalsIgnoreCase(dependency.getScope())) {
+								this.removeOneDependencies(dependency, n--, "scope=provided");
+								continue;
+							}
+							if (dependency.isOptional()) {
+								this.removeOneDependencies(dependency, n--, "optional=true");
+								continue;
+							}
+						}
+
+						if (!this.config.isKeepTestDependencies()) {
+							if ("test".equalsIgnoreCase(dependency.getScope())) {
+								this.removeOneDependencies(dependency, n--, "scope=test");
+								continue;
+							}
+						}
+
+						if (this.config.isExcludeDependency(dependency)) {
+							this.removeOneDependencies(dependency, n--, "isExclude=true");
+							continue;
+						}
+
+						//endregion
+
+						this.log.info("  Reset dependency groupId and version and exclusions: " + dependency + " -> " + originalDependency);
 						originalDependency.setGroupId(dependency.getGroupId());
 						originalDependency.setVersion(dependency.getVersion());
 						originalDependency.setExclusions(dependency.getExclusions());
 					} else {
-						this.log.warn("  Copy dependency groupId and version failed: " + dependency + " != " + originalDependency);
+						this.log.warn("  Reset dependency groupId and version and exclusions failed: " + dependency + " != " + originalDependency);
 					}
 				} else if (!isNeedRemoved(dependency)) {
 					this.log.info("  Add dependency: " + dependency);
 					this.originalModel.getDependencies().add(dependency);
 				}
 			}
+			this.log.info("End: " + this.originalModel.getDependencies().size());
 			printLine();
 		}
 	}
 
-	protected void optimizeDependencies() {
+	private void optimizeDependencies() {
 		if (isEmpty(this.originalModel.getDependencies())) {
 			return;
 		}
@@ -332,48 +351,6 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				dependency.setScope(null);
 			}
 		}
-	}
-
-	protected void optimizeDependenciesByConfig() {
-		if (isEmpty(this.originalModel.getDependencies())) {
-			return;
-		}
-
-		int size = this.originalModel.getDependencies().size();
-
-		printLine();
-		Dependency dependency;
-		for (int i = 0; i < this.originalModel.getDependencies().size(); i++) {
-			dependency = this.originalModel.getDependencies().get(i);
-
-			if (!this.config.isKeepProvidedAndOptionalDependencies()) {
-				if ("provided".equalsIgnoreCase(dependency.getScope())) {
-					this.removeOneDependencies(dependency, i--, "scope=provided");
-					continue;
-				}
-				if (dependency.isOptional()) {
-					this.removeOneDependencies(dependency, i--, "optional=true");
-					continue;
-				}
-			}
-
-			if (!this.config.isKeepTestDependencies()) {
-				if ("test".equalsIgnoreCase(dependency.getScope())) {
-					this.removeOneDependencies(dependency, i--, "scope=test");
-					continue;
-				}
-			}
-
-			if (this.config.isExcludeDependency(dependency)) {
-				this.removeOneDependencies(dependency, i--, "isExclude=true");
-				continue;
-			}
-		}
-
-		if (size > this.originalModel.getDependencies().size()) {
-			this.log.info("Remove dependencies: " + (size - this.originalModel.getDependencies().size()) + ".");
-		}
-		printLine();
 	}
 
 	private boolean isNeedRemoved(Dependency dependency) {
@@ -401,7 +378,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	private void removeOneDependencies(Dependency dependency, int i, String cause) {
 		this.originalModel.getDependencies().remove(i);
-		this.log.info("Remove dependency by " + cause + ": " + dependency);
+		this.log.info("  Remove dependency by " + cause + ": " + dependency);
 	}
 
 	//endregion ##
@@ -420,7 +397,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//endregion
 
 
-	//region -------------------- Prerequisites、Build、Reporting、Profiles --------------------
+	//region -------------------- Prerequisites、Build、Reporting --------------------
 
 	public void removePrerequisites() {
 		if (this.originalModel.getPrerequisites() != null) {

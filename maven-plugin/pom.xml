@@ -51,6 +51,7 @@
 
 	<build>
 		<plugins>
+			<!-- 使用插件：Maven Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
@@ -72,6 +73,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 使用插件：Source -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -88,10 +90,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 使用插件：Easyj:Simplify-POM 使用当前插件简化自己的pom -->
 			<plugin>
-				<groupId>icu.easyj.maven.plugins</groupId>
-				<artifactId>easyj-maven-plugin</artifactId>
-				<version>0.4.2</version>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${project.artifactId}</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>

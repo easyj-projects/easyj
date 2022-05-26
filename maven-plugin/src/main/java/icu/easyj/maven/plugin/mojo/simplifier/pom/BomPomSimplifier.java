@@ -34,10 +34,15 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 
 	@Override
 	public void doSimplify() {
-		this.copyProjectInfoFromParent();
-		this.resetDependencyManagement();
-
 		this.removeParent();
+
+		this.resetArtifactIdentification();
+		this.resetNameAndDescription();
+
+		this.copyProjectInfoFromParent();
+
+		this.resetDependencyManagement();
+		this.resetDependencies();
 
 		this.removeProperties();
 
