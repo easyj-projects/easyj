@@ -17,8 +17,11 @@ package icu.easyj.maven.plugin.mojo.simplifier;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.model.Dependency;
@@ -137,6 +140,21 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			return 0;
 		}
 		return dependencies.size();
+	}
+
+	protected String dependencyToString(Dependency dependency) {
+		if (dependency == null) {
+			return "null";
+		}
+
+		return "[" + dependency.getGroupId()
+				+ ":" + dependency.getArtifactId()
+				+ ":" + dependency.getVersion()
+				+ ":" + dependency.getType()
+				+ (isEmpty(dependency.getClassifier()) ? "" : ":" + dependency.getClassifier())
+				+ (isEmpty(dependency.getScope()) ? "" : ":" + dependency.getScope())
+				+ (isEmpty(dependency.getOptional()) ? "" : ":" + dependency.getOptional())
+				+ "]";
 	}
 
 	protected void printLine() {
@@ -361,15 +379,15 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 						//endregion
 
-						this.log.info("  Reset dependency: " + dependency + " -> " + originalDependency);
+						this.log.info("  Reset dependency: " + dependencyToString(originalDependency) + " -> " + dependencyToString(dependency));
 						originalDependency.setGroupId(dependency.getGroupId());
 						originalDependency.setVersion(dependency.getVersion());
 						originalDependency.setExclusions(dependency.getExclusions());
 					} else {
-						this.log.warn("  Reset dependency failed: " + dependency + " != " + originalDependency);
+						this.log.warn("  Reset dependency failed: " + dependencyToString(originalDependency) + " != " + dependencyToString(dependency));
 					}
 				} else if (!isNeedRemoved(dependency)) {
-					this.log.info("  Add dependency: " + dependency);
+					this.log.info("  Add dependency: " + dependencyToString(dependency));
 					this.originalModel.getDependencies().add(dependency);
 				}
 			}
@@ -415,7 +433,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	private void removeOneDependencies(Dependency dependency, int i, String cause) {
 		this.originalModel.getDependencies().remove(i);
-		this.log.info("  Remove dependency by " + cause + ": " + dependency);
+		this.log.info("  Remove dependency by " + cause + ": " + dependencyToString(dependency));
 	}
 
 	//endregion ##
@@ -436,44 +454,48 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	 * 举例1：框架中，添加一个模块，simplifyMode=pom，但是希望设置parent为框架中的此模块的子模块中，采用simplifyMode=bom.
 	 */
 	public void createPropertiesByConfig() {
-		if (isEmpty(this.config.getCreateProperties())) {
-			return;
-		}
-
 		try {
 			if (this.originalModel.getProperties() == null) {
 				return;
 			}
 
-			this.config.getCreateProperties().forEach((key, value) -> {
-				if (isNotEmpty(key) && isNotEmpty(value)) {
-					this.log.info("Create Properties: " + key + " = " + value);
-					this.originalModel.getProperties().put(key, value);
-				}
-			});
+			if (isNotEmpty(this.config.getCreateProperties())) {
+				this.config.getCreateProperties().forEach((key, value) -> {
+					if (isNotEmpty(key) && isNotEmpty(value)) {
+						this.log.info("Create Properties: " + key + " = " + value);
+						this.originalModel.getProperties().put(key, value);
+					}
+				});
+			}
 		} finally {
 			if (this.originalModel.getBuild() != null && isNotEmpty(this.originalModel.getBuild().getPlugins())) {
 				for (Plugin plugin : this.originalModel.getBuild().getPlugins()) {
 					if ("icu.easyj.maven.plugins".equalsIgnoreCase(plugin.getGroupId())
 							&& "easyj-maven-plugin".equalsIgnoreCase(plugin.getArtifactId())
 							&& plugin.getConfiguration() instanceof Xpp3Dom) {
-						Xpp3Dom configDom = (Xpp3Dom)plugin.getConfiguration();
-						Xpp3Dom[] children = configDom.getChildren();
-						for (int i = 0; i < children.length; i++) {
-							Xpp3Dom child = children[i];
-							if ("createProperties".equals(child.getName())) {
-								this.log.info("Remove createProperties from the configuration of the plugin.");
-								configDom.removeChild(i);
-								break;
-							}
-						}
-						if (children.length == 0) {
-							plugin.setConfiguration(null);
-						}
+						this.removeConfiguration(plugin, "createProperties", "removeParent");
 						break;
 					}
 				}
 			}
+		}
+	}
+
+	private void removeConfiguration(Plugin plugin, String... removeConfigNames) {
+		Set<String> removeConfigSet = new HashSet<>(Arrays.asList(removeConfigNames));
+		removeConfigSet.remove(null);
+
+		Xpp3Dom configDom = (Xpp3Dom)plugin.getConfiguration();
+		for (int i = 0; i < configDom.getChildren().length; i++) {
+			Xpp3Dom child = configDom.getChildren()[i];
+			if (removeConfigSet.contains(child.getName())) {
+				this.log.info("Remove one config '" + child.getName() + "' from the plugin '" + plugin.getId() + "'.");
+				configDom.removeChild(i--);
+			}
+		}
+		if (configDom.getChildren().length == 0) {
+			this.log.info("Remove Configuration from the plugin '" + plugin.getId() + "'.");
+			plugin.setConfiguration(null);
 		}
 	}
 
