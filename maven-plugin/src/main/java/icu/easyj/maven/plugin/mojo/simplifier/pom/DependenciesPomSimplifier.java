@@ -34,12 +34,11 @@ public class DependenciesPomSimplifier extends PomSimplifier {
 
 	@Override
 	public void doSimplify() {
-		this.removeParent();
+		this.removeParentByConfig();
+		this.removeParentRelativePath();
 
-		this.resetArtifactIdentification();
+		this.resetVersion();
 		this.resetNameAndDescription();
-
-		this.copyProjectInfoFromParentForOpenSourceProject();
 
 		this.removePrerequisites();
 		this.removeBuild();

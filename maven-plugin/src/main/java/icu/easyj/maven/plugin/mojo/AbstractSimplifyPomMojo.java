@@ -31,7 +31,7 @@ public abstract class AbstractSimplifyPomMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.basedir}")
 	private File outputDirectory;
 
-	@Parameter(property = "simplifiedPomFileName", defaultValue = ".simplified-pom.xml")
+	@Parameter(property = "maven.simplify.simplifiedPomFileName", defaultValue = ".simplified-pom.xml")
 	protected String simplifiedPomFileName;
 
 

@@ -71,6 +71,9 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	@Parameter(defaultValue = "true")
 	boolean isOpenSourceProject;
 
+	@Parameter
+	boolean removeParent;
+
 
 	@Parameter(defaultValue = "false")
 	boolean keepProvidedAndOptionalDependencies;
@@ -97,7 +100,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		IPomSimplifier pomSimplifier = PomSimplifierFactory.create(this.project, this.simplifyMode, config, getLog());
 		getLog().info("Do simplify by the POM simplifier: " + pomSimplifier.getClass().getSimpleName());
 		getLog().info("");
-		getLog().info("====================  start simplify  ====================");
+		getLog().info("==================================  start simplify  ==================================");
 
 		// 使用简化器处理pom.xml
 		pomSimplifier.beforeSimplify();
@@ -105,7 +108,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		pomSimplifier.doSimplifyByConfig();
 		pomSimplifier.afterSimplify();
 
-		getLog().info("====================   end  simplify  ====================");
+		getLog().info("==================================   end  simplify  ==================================");
 		getLog().info("");
 
 		// Create simplified POM file

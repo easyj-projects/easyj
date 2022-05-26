@@ -45,7 +45,8 @@ public interface IPomSimplifier {
 	/**
 	 * 简化后的操作
 	 */
-	void afterSimplify();
+	default void afterSimplify() {
+	}
 
 	/**
 	 * 根据配置进行一些操作

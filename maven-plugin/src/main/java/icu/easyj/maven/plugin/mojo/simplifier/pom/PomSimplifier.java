@@ -35,6 +35,9 @@ public class PomSimplifier extends AbstractPomSimplifier {
 
 	@Override
 	public void doSimplify() {
+		this.removeParentByConfig();
+		this.removeParentRelativePath();
+
 		this.resetVersion();
 		this.resetNameAndDescription();
 	}

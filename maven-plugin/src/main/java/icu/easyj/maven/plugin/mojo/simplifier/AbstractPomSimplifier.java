@@ -15,6 +15,7 @@
  */
 package icu.easyj.maven.plugin.mojo.simplifier;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				Method getMethod = Model.class.getMethod("get" + itemName);
 
 				Object originalValue = getMethod.invoke(this.originalModel);
-				Object value = getMethod.invoke(this.project.getParent().getModel());
+				Object value = this.findParentValue(this.project.getParent(), getMethod);
 
 				if (isEmpty(originalValue) && isNotEmpty(value)) {
 					this.log.info("   Copy " + itemName + ".");
@@ -108,6 +109,17 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 				this.log.warn("   Copy " + itemName + " failed:", e);
 			}
 		}
+	}
+
+	private Object findParentValue(MavenProject parent, Method getMethod) throws InvocationTargetException, IllegalAccessException {
+		if (parent == null) {
+			return null;
+		}
+		Object value = getMethod.invoke(parent.getOriginalModel());
+		if (isEmpty(value)) {
+			return findParentValue(parent.getParent(), getMethod);
+		}
+		return value;
 	}
 
 	private int getDependenciesSize(DependencyManagement dm) {
@@ -144,6 +156,12 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
+	public void removeParentByConfig() {
+		if (this.config.needRemoveParent()) {
+			removeParent();
+		}
+	}
+
 	/**
 	 * 替换Parent的版本号表达式 '${revision}' 为具体的版本号
 	 */
@@ -151,6 +169,13 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		if (this.originalModel.getParent() != null && this.originalModelParent != null && REVISION.equals(this.originalModelParent.getVersion())) {
 			this.log.info("Set parent version from '" + this.originalModelParent.getVersion() + "' to '" + this.modelParent.getVersion() + "'.");
 			this.originalModelParent.setVersion(this.modelParent.getVersion());
+		}
+	}
+
+	public void removeParentRelativePath() {
+		if (this.originalModel.getParent() != null && isNotEmpty(this.originalModel.getParent().getRelativePath())) {
+			this.log.info("Remove Parent RelativePath.");
+			this.originalModel.getParent().setRelativePath(null);
 		}
 	}
 
@@ -207,7 +232,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//region -------------------- Organization、Url、Licenses、Developers、Scm、IssueManagement --------------------
 
 	public void copyProjectInfoFromParentForOpenSourceProject() {
-		if (this.isCopiedParentItemsForOpenSourceProject || !this.config.isOpenSourceProject()) {
+		if (this.isCopiedParentItemsForOpenSourceProject || !this.config.isOpenSourceProject() || this.originalModel.getParent() != null) {
 			return;
 		}
 		this.isCopiedParentItemsForOpenSourceProject = true;
@@ -224,7 +249,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 				// 开源非必须，但加着比较好
 				"Organization",
-				"IssueManagement",
+				"IssueManagement"
 		};
 		this.copyParentItems(itemNameArr);
 		printLine();
@@ -236,7 +261,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//region -------------------- InceptionYear、Contributors、MailingLists、CiManagement --------------------
 
 	public void copyProjectInfoFromParent() {
-		if (this.isCopiedParentItems || !this.config.isOpenSourceProject()) {
+		if (this.isCopiedParentItems || !this.config.isOpenSourceProject() || this.originalModel.getParent() != null) {
 			return;
 		}
 		this.isCopiedParentItems = true;

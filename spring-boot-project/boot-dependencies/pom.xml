@@ -46,6 +46,7 @@
 				<artifactId>easyj-maven-plugin</artifactId>
 				<configuration>
 					<simplifyMode>dependencies</simplifyMode>
+					<removeParent>true</removeParent>
 				</configuration>
 			</plugin>
 		</plugins>
