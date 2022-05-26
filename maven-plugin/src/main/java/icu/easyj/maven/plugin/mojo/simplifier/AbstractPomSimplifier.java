@@ -359,12 +359,12 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 						//endregion
 
-						this.log.info("  Reset dependency groupId and version and exclusions: " + dependency + " -> " + originalDependency);
+						this.log.info("  Reset dependency: " + dependency + " -> " + originalDependency);
 						originalDependency.setGroupId(dependency.getGroupId());
 						originalDependency.setVersion(dependency.getVersion());
 						originalDependency.setExclusions(dependency.getExclusions());
 					} else {
-						this.log.warn("  Reset dependency groupId and version and exclusions failed: " + dependency + " != " + originalDependency);
+						this.log.warn("  Reset dependency failed: " + dependency + " != " + originalDependency);
 					}
 				} else if (!isNeedRemoved(dependency)) {
 					this.log.info("  Add dependency: " + dependency);
