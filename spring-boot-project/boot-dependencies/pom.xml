@@ -4,30 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-build</artifactId>
-		<version>1.0.43</version>
-		<relativePath/>
+		<artifactId>build</artifactId>
+		<version>${revision}</version>
+		<relativePath>../../build/pom.xml</relativePath>
 	</parent>
 
 	<groupId>icu.easyj.boot</groupId>
 	<artifactId>easyj-spring-boot-dependencies</artifactId>
-	<version>0.4.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ Spring Boot统一管理第三方依赖</description>
-	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -53,21 +40,13 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：EasyJ -->
+			<!-- 使用插件：Easyj:Simplify-POM -->
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>
-				<version>${project.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>simplify-pom</goal>
-						</goals>
-						<configuration>
-							<simplifyMode>dependencies</simplifyMode>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<simplifyMode>dependencies</simplifyMode>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

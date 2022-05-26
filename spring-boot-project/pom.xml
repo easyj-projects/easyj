@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-build</artifactId>
-		<version>1.0.43</version>
-		<relativePath/>
+		<artifactId>build</artifactId>
+		<version>${revision}</version>
+		<relativePath>../build/pom.xml</relativePath>
 	</parent>
 
 	<groupId>icu.easyj.boot</groupId><!--二级分组：/boot-->
@@ -20,36 +20,6 @@
 		此项目提供了EasyJ每个功能的starter，方便快速引用功能所需的依赖同时提供了自动装配类。
 		同时，一些仅spring-boot项目才能用的功能，都在此仓库中开发和维护。
 	</description>
-	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<inceptionYear>2021</inceptionYear>
-
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<id>wangliang181230</id>
-			<name>王良</name>
-			<email>841369634@qq.com</email>
-			<url>https://gitee.com/wangliang181230</url>
-			<organization>浙江蕙康科技有限公司</organization>
-			<organizationUrl>https://www.jyhk.com</organizationUrl>
-			<roles>
-				<role>Java架构师</role>
-			</roles>
-		</developer>
-	</developers>
 
 	<modules>
 		<module>boot-dependencies</module>
@@ -64,29 +34,6 @@
 
 		<module>boot-test</module>
 	</modules>
-
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
-
-	<properties>
-		<!-- 项目版本 -->
-		<revision>0.4.3-SNAPSHOT</revision>
-
-		<!-- 编译配置 -->
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -115,19 +62,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<!-- 使用插件：EasyJ -->
-			<plugin>
-				<groupId>icu.easyj.maven.plugins</groupId>
-				<artifactId>easyj-maven-plugin</artifactId>
-				<version>${project.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>simplify-pom</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

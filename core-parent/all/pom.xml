@@ -4,57 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-build</artifactId>
-		<version>1.0.43</version>
-		<relativePath/>
+		<artifactId>build</artifactId>
+		<version>${revision}</version>
+		<relativePath>../../build/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-all</artifactId>
-	<version>0.4.3-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
-	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<inceptionYear>2021</inceptionYear>
-
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<id>wangliang181230</id>
-			<name>王良</name>
-			<email>841369634@qq.com</email>
-			<url>https://gitee.com/wangliang181230</url>
-			<organization>浙江蕙康科技有限公司</organization>
-			<organizationUrl>https://www.jyhk.com</organizationUrl>
-			<roles>
-				<role>Java架构师</role>
-			</roles>
-		</developer>
-	</developers>
-
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -230,21 +188,13 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- 使用插件：EasyJ -->
+			<!-- 使用插件：Easyj:Simplify-POM -->
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>
-				<version>${project.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>simplify-pom</goal>
-						</goals>
-						<configuration>
-							<simplifyMode>shade</simplifyMode>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<simplifyMode>shade</simplifyMode>
+				</configuration>
 			</plugin>
 			<!-- 忽略插件：Source -->
 			<plugin>

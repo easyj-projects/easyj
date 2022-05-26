@@ -178,6 +178,13 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
+	public void resetVersion() {
+		if (isNotEmpty(this.originalModel.getVersion()) && !this.model.getVersion().equals(this.originalModel.getVersion())) {
+			this.log.info("Set Version from '" + this.originalModel.getVersion() + "' to '" + this.model.getVersion() + "'.");
+			this.originalModel.setVersion(this.model.getVersion());
+		}
+	}
+
 	//endregion ##
 
 

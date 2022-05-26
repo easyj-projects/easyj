@@ -34,7 +34,14 @@ public class PomSimplifier extends AbstractPomSimplifier {
 
 
 	@Override
-	public void removeDependencyManagement() {
+	public void doSimplify() {
+		this.resetVersion();
 		this.resetNameAndDescription();
+	}
+
+
+	@Override
+	public void removeDependencyManagement() {
+		// do nothing
 	}
 }
