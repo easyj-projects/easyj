@@ -37,9 +37,6 @@ public class JarPomSimplifier extends AbstractPomSimplifier {
 	public void doSimplify() {
 		this.removeParent();
 
-		this.resetArtifactIdentification();
-		this.resetNameAndDescription();
-
 		this.copyProjectInfoFromParentForOpenSourceProject();
 
 		this.removeDependencyManagement();

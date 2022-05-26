@@ -36,9 +36,6 @@ public class ShadeJarPomSimplifier extends JarPomSimplifier {
 	public void doSimplify() {
 		this.removeParent();
 
-		this.resetArtifactIdentification();
-		this.resetNameAndDescription();
-
 		this.copyProjectInfoFromParent();
 
 		this.removeDependencyManagement();

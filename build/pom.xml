@@ -18,7 +18,7 @@
 
 	<properties>
 		<!-- 当前项目版本号 -->
-		<revision>0.4.5</revision>
+		<revision>0.4.6</revision>
 
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>

@@ -36,9 +36,6 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 	public void doSimplify() {
 		this.removeParent();
 
-		this.resetArtifactIdentification();
-		this.resetNameAndDescription();
-
 		this.copyProjectInfoFromParent();
 
 		this.resetDependencyManagement();

@@ -157,11 +157,13 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			this.log.info("Remove Parent.");
 			this.originalModel.setParent(null);
 		}
+		this.resetArtifactIdentification();
+		this.resetNameAndDescription();
 	}
 
 	public void removeParentByConfig() {
 		if (this.config.needRemoveParent()) {
-			removeParent();
+			this.removeParent();
 		}
 	}
 
