@@ -25,10 +25,16 @@ public interface IPomSimplifier {
 
 	String REVISION = "${revision}";
 
+	String AUTO = "auto";
+
 	String POM = "pom";
 	String JAR = "jar";
 	String WAR = "war";
 	String MAVEN_PLUGIN = "maven-plugin";
+
+	String DEPENDENCIES = "dependencies";
+	String BOM = "bom";
+	String SHADE = "shade";
 
 	/**
 	 * 简化前的操作

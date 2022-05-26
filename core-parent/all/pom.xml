@@ -193,7 +193,6 @@
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>
 				<configuration>
-					<simplifyMode>shade</simplifyMode>
 					<excludeDependencies>
 						<excludeDependency>${project.groupId}:*:*</excludeDependency>
 					</excludeDependencies>

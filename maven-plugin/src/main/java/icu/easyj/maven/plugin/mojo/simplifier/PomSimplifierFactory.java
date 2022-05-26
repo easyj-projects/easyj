@@ -27,9 +27,13 @@ import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.AUTO;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.BOM;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.DEPENDENCIES;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.JAR;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.MAVEN_PLUGIN;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.POM;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.SHADE;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.WAR;
 
 /**
@@ -43,7 +47,22 @@ public abstract class PomSimplifierFactory {
 	public static AbstractPomSimplifier create(MavenProject project, String modeStr, SimplifyPomMojoConfig config, Log log) {
 		SimplifyMode mode = null;
 
-		if (modeStr == null || modeStr.isEmpty() || "auto".equalsIgnoreCase(modeStr)) {
+		// auto模式时，自动根据构建标识判断
+		if (AUTO.equalsIgnoreCase(modeStr)) {
+			modeStr = null;
+			String artifactId = project.getArtifactId().toLowerCase();
+			if (POM.equals(project.getPackaging()) && artifactId.endsWith("-bom")) {
+				modeStr = BOM;
+				log.info("Set mode to '" + modeStr + "'," +
+						" because the artifactId \"" + project.getArtifactId() + "\".endsWith(\"-bom\").");
+			} else if (JAR.equals(project.getPackaging()) && artifactId.endsWith("-all")) {
+				modeStr = SHADE;
+				log.info("Set mode to '" + modeStr + "'," +
+						" because the artifactId \"" + project.getArtifactId() + "\".endsWith(\"-all\").");
+			}
+		}
+
+		if (modeStr == null || modeStr.isEmpty()) {
 			modeStr = project.getPackaging();
 		} else {
 			switch (modeStr.toLowerCase().replace('_', '-')) {
@@ -56,13 +75,14 @@ public abstract class PomSimplifierFactory {
 						modeStr = project.getPackaging();
 					}
 					break;
-				case "shade":
+				case SHADE:
 					if (!"jar".equals(project.getPackaging())) {
-						log.warn("The mode 'shade' can't used for packaging '" + project.getPackaging() + "'.");
+						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
 						modeStr = project.getPackaging();
 					}
 					break;
-				case "bom":
+				case DEPENDENCIES:
+				case BOM:
 					if (!"pom".equals(project.getPackaging())) {
 						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
 						modeStr = project.getPackaging();

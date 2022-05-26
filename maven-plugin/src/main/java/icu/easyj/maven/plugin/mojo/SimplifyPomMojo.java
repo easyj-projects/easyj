@@ -35,6 +35,8 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.AUTO;
+
 /**
  * 简化 POM 的 Goal
  *
@@ -57,7 +59,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	/**
 	 * 简化模式
 	 */
-	@Parameter(property = "maven.simplify.mode")
+	@Parameter(defaultValue = AUTO, property = "maven.simplify.mode")
 	private String simplifyMode;
 
 	/**
