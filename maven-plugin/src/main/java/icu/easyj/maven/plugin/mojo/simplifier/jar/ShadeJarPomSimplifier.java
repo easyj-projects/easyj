@@ -38,6 +38,11 @@ public class ShadeJarPomSimplifier extends JarPomSimplifier {
 
 		this.copyProjectInfoFromParent();
 
+		// shade模块的pom是由maven-shade-plugin生成的，在此之前先把相关的scope=compile改为scope=null，以此来简化最终生成的pom
+		if (this.model.getDependencies() != null) {
+			this.clearDependencyCompileScope(this.model.getDependencies());
+		}
+
 		super.doSimplify();
 	}
 }
