@@ -433,69 +433,83 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 		isResetDependencies = true;
 
-		if (!isEmpty(this.originalModel.getDependencies())) {
-			int originalSize = getDependenciesSize(this.originalModel.getDependencies());
-			printLine();
-			this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + " dependencies):");
-			for (int i = 0, n = 0; i < this.model.getDependencies().size(); i++, n++) {
-				Dependency dependency = this.model.getDependencies().get(i);
-				if (i < originalSize) {
-					Dependency originalDependency = this.originalModel.getDependencies().get(n);
-					originalDependency.setGroupId(this.replaceVariable(originalDependency.getGroupId()));
-					originalDependency.setArtifactId(this.replaceVariable(originalDependency.getArtifactId()));
+		if (isEmpty(this.originalModel.getDependencies())) {
+			return;
+		}
 
-					// 重置groupId、version和exclusions
-					if (dependency.getGroupId().equals(originalDependency.getGroupId())
-							&& dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
-						//region 判断是否需要移除
+		int originalSize = getDependenciesSize(this.originalModel.getDependencies());
+		printLine();
+		this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + " dependencies):");
+		for (int i = 0, n = 0; i < this.model.getDependencies().size(); i++, n++) {
+			Dependency dependency = this.model.getDependencies().get(i);
+			if (i < originalSize) {
+				Dependency originalDependency = this.originalModel.getDependencies().get(n);
+				originalDependency.setGroupId(this.replaceVariable(originalDependency.getGroupId()));
+				originalDependency.setArtifactId(this.replaceVariable(originalDependency.getArtifactId()));
 
-						if (!this.config.isKeepProvidedAndOptionalDependencies()) {
-							if ("provided".equalsIgnoreCase(dependency.getScope())) {
-								this.removeOneDependencies(dependency, n--, "scope=provided");
-								continue;
-							}
-							if (dependency.isOptional()) {
-								this.removeOneDependencies(dependency, n--, "optional=true");
-								continue;
-							}
-						}
+				// 重置groupId、version和exclusions
+				if (dependency.getGroupId().equals(originalDependency.getGroupId())
+						&& dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
+					//region 判断是否需要移除
 
-						if (!this.config.isKeepTestDependencies()) {
-							if ("test".equalsIgnoreCase(dependency.getScope())) {
-								this.removeOneDependencies(dependency, n--, "scope=test");
-								continue;
-							}
-						}
-
-						if (this.config.isExcludeDependency(dependency)) {
-							this.removeOneDependencies(dependency, n--, "isExclude=true");
+					if (!this.config.isKeepProvidedAndOptionalDependencies()) {
+						if ("provided".equalsIgnoreCase(dependency.getScope())) {
+							this.removeOneDependencies(dependency, n--, "scope=provided");
 							continue;
 						}
-
-						//endregion
-
-						this.log.info("  Reset dependency: " + dependencyToString(originalDependency) + " -> " + dependencyToString(dependency));
-						originalDependency.setVersion(dependency.getVersion());
-						originalDependency.setExclusions(dependency.getExclusions());
-					} else {
-						// 基本上是重复引用导致，直接移除当前dependency
-						this.log.info("  Remove duple dependency: " + dependencyToString(originalDependency));
-						this.originalModel.getDependencies().remove(n--);
-						originalSize--;
-						i--;
+						if (dependency.isOptional()) {
+							this.removeOneDependencies(dependency, n--, "optional=true");
+							continue;
+						}
 					}
-				} else if (!isNeedRemoved(dependency)) {
-					this.log.info("  Add dependency: " + dependencyToString(dependency));
-					this.originalModel.getDependencies().add(dependency);
+
+					if (!this.config.isKeepTestDependencies()) {
+						if ("test".equalsIgnoreCase(dependency.getScope())) {
+							this.removeOneDependencies(dependency, n--, "scope=test");
+							continue;
+						}
+					}
+
+					if (this.config.isExcludeDependency(dependency)) {
+						this.removeOneDependencies(dependency, n--, "isExclude=true");
+						continue;
+					}
+
+					//endregion
+
+					this.log.info("  Reset dependency: " + dependencyToString(originalDependency) + " -> " + dependencyToString(dependency));
+					originalDependency.setVersion(dependency.getVersion());
+					originalDependency.setExclusions(dependency.getExclusions());
+				} else {
+					// 基本上是重复引用导致，直接移除当前dependency
+					this.log.info("  Remove duple dependency: " + dependencyToString(originalDependency));
+					this.originalModel.getDependencies().remove(n--);
+					originalSize--;
+					i--;
 				}
+			} else if (!isNeedRemoved(dependency)) {
+				this.log.info("  Add dependency: " + dependencyToString(dependency));
+				this.originalModel.getDependencies().add(dependency);
 			}
-			this.log.info("Remain " + this.originalModel.getDependencies().size() + " dependencies.");
-			printLine();
 		}
+		this.log.info("Remain " + this.originalModel.getDependencies().size() + " dependencies.");
+		printLine();
 	}
 
 	protected void optimizeDependencies() {
-		this.optimizeDependencies(this.originalModel.getDependencies());
+		if (isEmpty(this.originalModel.getDependencies())) {
+			return;
+		}
+
+		if (isResetDependencies) {
+			for (Dependency dependency : this.originalModel.getDependencies()) {
+				if ("compile".equalsIgnoreCase(dependency.getScope())) {
+					dependency.setScope(null);
+				}
+			}
+		} else {
+			this.optimizeDependencies(this.originalModel.getDependencies());
+		}
 	}
 
 	private void optimizeDependencies(List<Dependency> dependencies) {
@@ -513,6 +527,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 		for (Dependency dependency : dependencies) {
 			dependency.setGroupId(fun.apply(dependency.getGroupId()));
+			dependency.setArtifactId(fun.apply(dependency.getArtifactId()));
 			dependency.setVersion(fun.apply(dependency.getVersion()));
 
 			if ("compile".equalsIgnoreCase(dependency.getScope())) {

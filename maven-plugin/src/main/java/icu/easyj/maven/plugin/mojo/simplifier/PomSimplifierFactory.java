@@ -71,20 +71,20 @@ public abstract class PomSimplifierFactory {
 				case WAR:
 				case MAVEN_PLUGIN:
 					if (!modeStr.equalsIgnoreCase(project.getPackaging())) {
-						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+						printWarnLog(project, modeStr, log);
 						modeStr = project.getPackaging();
 					}
 					break;
 				case SHADE:
-					if (!"jar".equals(project.getPackaging())) {
-						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+					if (!JAR.equalsIgnoreCase(project.getPackaging())) {
+						printWarnLog(project, modeStr, log);
 						modeStr = project.getPackaging();
 					}
 					break;
 				case DEPENDENCIES:
 				case BOM:
-					if (!"pom".equals(project.getPackaging())) {
-						log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+					if (!POM.equalsIgnoreCase(project.getPackaging())) {
+						printWarnLog(project, modeStr, log);
 						modeStr = project.getPackaging();
 					}
 					break;
@@ -93,6 +93,7 @@ public abstract class PomSimplifierFactory {
 			}
 		}
 
+		// string to enum
 		try {
 			mode = SimplifyMode.getByModeStr(modeStr);
 		} catch (Exception e) {
@@ -109,6 +110,10 @@ public abstract class PomSimplifierFactory {
 		return createInternal(project, config, log);
 	}
 
+
+	private static void printWarnLog(MavenProject project, String modeStr, Log log) {
+		log.warn("The mode '" + modeStr + "' can't used for packaging '" + project.getPackaging() + "'.");
+	}
 
 	private static AbstractPomSimplifier createInternal(MavenProject project, SimplifyPomMojoConfig config, Log log) {
 		switch (config.getMode()) {
