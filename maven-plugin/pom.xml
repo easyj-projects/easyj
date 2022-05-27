@@ -103,11 +103,11 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- 使用插件：Easyj:Simplify-POM 使用当前插件简化自己的pom -->
+			<!-- 使用插件：Easyj:Simplify-POM 使用当前插件简化自己的pom.xml -->
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>${project.artifactId}</artifactId>
-				<version>0.4.2</version><!-- 使用历史版本，否则会报错。 -->
+				<version>0.5.0</version><!-- 使用历史版本，否则会报错。 -->
 				<executions>
 					<execution>
 						<goals>

@@ -272,9 +272,20 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	 * 替换Parent的版本号表达式 '${revision}' 为具体的版本号
 	 */
 	public void replaceParentRevision() {
-		if (this.originalModel.getParent() != null && this.originalModelParent != null && REVISION.equals(this.originalModelParent.getVersion())) {
-			this.log.info("Set parent version from '" + this.originalModelParent.getVersion() + "' to '" + this.modelParent.getVersion() + "'.");
-			this.originalModelParent.setVersion(this.modelParent.getVersion());
+		// replace parent version
+		Parent originalParent = this.originalModel.getParent();
+		if (originalParent != null) {
+			if (REVISION.equals(originalParent.getVersion())) {
+				this.log.info("Set parent version from '" + originalParent.getVersion() + "' to '" + this.modelParent.getVersion() + "'.");
+				originalParent.setVersion(this.modelParent.getVersion());
+			}
+		}
+
+		// remove the property named 'revision', if the value is equals to the version of current project.
+		Properties properties = this.originalModel.getProperties();
+		if (isNotEmpty(properties) && this.model.getVersion().equals(properties.getProperty(REVISION_KEY))) {
+			this.log.info("Remove Property '" + REVISION_KEY + "'.");
+			properties.remove(REVISION_KEY);
 		}
 	}
 

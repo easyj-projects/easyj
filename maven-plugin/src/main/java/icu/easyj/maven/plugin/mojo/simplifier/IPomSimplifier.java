@@ -23,7 +23,8 @@ package icu.easyj.maven.plugin.mojo.simplifier;
  */
 public interface IPomSimplifier {
 
-	String REVISION = "${revision}";
+	String REVISION_KEY = "revision";
+	String REVISION = "${" + REVISION_KEY + "}";
 
 	String AUTO = "auto";
 
