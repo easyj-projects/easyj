@@ -31,6 +31,7 @@ public abstract class SecretKeyUtils {
 	 *
 	 * @param secretKey          密钥串
 	 * @param secretKeyAlgorithm 与密钥关联的算法名称
+	 * @return 返回Key
 	 */
 	public static Key generate(String secretKey, String secretKeyAlgorithm) {
 		byte[] encodedKey = Base64.getDecoder().decode(secretKey);

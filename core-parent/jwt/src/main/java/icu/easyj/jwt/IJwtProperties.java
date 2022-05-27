@@ -70,7 +70,9 @@ public interface IJwtProperties {
 	void setTokenNameForQueryString(String tokenNameForQueryString);
 
 	/**
-	 * @return
+	 * token过期时间
+	 *
+	 * @return 返回token过期时间
 	 */
 	int getTokenExpiredTime();
 

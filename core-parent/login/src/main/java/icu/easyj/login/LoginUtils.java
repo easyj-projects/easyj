@@ -196,6 +196,8 @@ public abstract class LoginUtils {
 	 * 获取登录关联数据<br>
 	 * 建议使用 {@link #getData(String, Class)} 方法
 	 *
+	 * @param key 键
+	 * @param <D> 数据类型
 	 * @return 返回登录关联数据
 	 */
 	@Nullable
@@ -211,6 +213,9 @@ public abstract class LoginUtils {
 	/**
 	 * 获取登录关联数据
 	 *
+	 * @param key   键
+	 * @param clazz 数据类
+	 * @param <D>   数据类型
 	 * @return 返回登录关联数据
 	 */
 	@Nullable
