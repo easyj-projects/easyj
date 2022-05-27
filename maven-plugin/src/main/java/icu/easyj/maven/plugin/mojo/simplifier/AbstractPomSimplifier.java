@@ -282,10 +282,11 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 
 		// remove the property named 'revision', if the value is equals to the version of current project.
-		Properties properties = this.originalModel.getProperties();
-		if (isNotEmpty(properties) && this.model.getVersion().equals(properties.getProperty(REVISION_KEY))) {
-			this.log.info("Remove Property '" + REVISION_KEY + "'.");
-			properties.remove(REVISION_KEY);
+		Properties originalProperties = this.originalModel.getProperties();
+		if (isNotEmpty(originalProperties) && originalProperties.containsKey(REVISION_KEY)
+				&& this.model.getVersion().equals(this.model.getProperties().getProperty(REVISION_KEY))) {
+			this.log.info("Remove the special property '<" + REVISION_KEY + ">'.");
+			originalProperties.remove(REVISION_KEY);
 		}
 	}
 
@@ -641,7 +642,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//endregion
 
 
-	//region -------------------- Prerequisites、Build、Reporting --------------------
+	//region -------------------- Prerequisites、Build、Reporting、Reports --------------------
 
 	public void removePrerequisites() {
 		if (this.originalModel.getPrerequisites() != null) {
@@ -661,6 +662,12 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		if (this.originalModel.getReporting() != null) {
 			this.log.info("Remove Reporting.");
 			this.originalModel.setReporting(null);
+		}
+	}
+
+	public void removeReports() {
+		if (this.originalModel.getReports() != null) {
+			this.originalModel.setReports(null);
 		}
 	}
 

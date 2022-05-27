@@ -43,6 +43,7 @@ public class DependenciesPomSimplifier extends PomSimplifier {
 		this.removePrerequisites();
 		this.removeBuild();
 		this.removeReporting();
+		this.removeReports();
 
 		this.removeRepositories();
 		this.removePluginRepositories();

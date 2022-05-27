@@ -38,19 +38,6 @@ public class ShadeJarPomSimplifier extends JarPomSimplifier {
 
 		this.copyProjectInfoFromParent();
 
-		this.removeDependencyManagement();
-		this.resetDependencies();
-
-		this.removeProperties();
-
-		this.removePrerequisites();
-		this.removeBuild();
-		this.removeReporting();
-
-		this.removeRepositories();
-		this.removePluginRepositories();
-		this.removeDistributionManagement();
-
-		this.removeProfiles();
+		super.doSimplify();
 	}
 }

@@ -20,7 +20,8 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * BOM（组件清单）的pom.xml 简化器
+ * BOM（组件清单）的pom.xml 简化器<br>
+ * 它比dependencies类型的pom.xml更加简单，dependencies是为了提供一批依赖，而BOM仅仅是为了提供当前项目的组件。
  *
  * @author wangliang181230
  * @since 0.4.0
@@ -38,8 +39,8 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 
 		this.copyProjectInfoFromParent();
 
-		this.resetDependencyManagement();
 		this.resetDependencies();
+		this.resetDependencyManagement();
 
 		this.removeProperties();
 

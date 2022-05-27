@@ -93,15 +93,6 @@
 				<configuration>
 					<attach>true</attach>
 				</configuration>
-				<executions>
-					<execution>
-						<id>package-source</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<!-- 使用插件：Easyj:Simplify-POM 使用当前插件简化自己的pom.xml -->
 			<plugin>
