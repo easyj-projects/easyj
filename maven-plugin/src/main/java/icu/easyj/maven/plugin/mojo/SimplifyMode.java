@@ -82,7 +82,7 @@ public enum SimplifyMode {
 	 *
 	 * @param modeStr 模式字符串
 	 * @return 返回模式枚举
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException 参数错误
 	 */
 	@Nullable
 	public static SimplifyMode getByModeStr(String modeStr) throws IllegalArgumentException {
