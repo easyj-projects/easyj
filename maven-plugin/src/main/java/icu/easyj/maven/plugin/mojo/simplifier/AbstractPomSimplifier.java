@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Function;
 
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.model.Dependency;
@@ -85,6 +86,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	public void afterSimplify() {
 		this.replaceParentRevision();
 		this.optimizeDependencies();
+		this.optimizeDependencyManagement();
 	}
 
 	/**
@@ -159,8 +161,8 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	}
 
 	protected String replaceVariable(String str) {
-		if (str == null) {
-			return null;
+		if (str == null || str.isEmpty()) {
+			return str;
 		}
 
 		Properties properties = this.model.getProperties();
@@ -180,34 +182,62 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		return str;
 	}
 
-	protected String getProperty(String key) {
+	protected String getProjectProperty(String key) {
 		if (key == null || key.isEmpty()) {
-			return null;
+			return key;
 		}
 
 		switch (key.toLowerCase()) {
+			// project
 			case "project.groupid":
-				return project.getGroupId();
-			case "project.version":
-				return project.getVersion();
+			case "${project.groupid}":
+				return this.project.getGroupId();
 			case "project.artifactid":
-				return project.getArtifactId();
+			case "${project.artifactid}":
+				return this.project.getArtifactId();
+			case "project.version":
+			case "${project.version}":
+				return this.project.getVersion();
+
+			// parent
 			case "project.parent.groupid":
+			case "${project.parent.groupid}":
 			case "parent.groupid":
-				return project.getParent().getGroupId();
-			case "project.parent.version":
-			case "parent.version":
-				return project.getParent().getVersion();
+			case "${parent.groupid}":
+				return this.project.getParent() != null ? this.project.getParent().getGroupId() : this.project.getGroupId();
 			case "project.parent.artifactid":
+			case "${project.parent.artifactid}":
 			case "parent.artifactid":
-				return project.getParent().getArtifactId();
+			case "${parent.artifactid}":
+				return this.project.getParent() != null ? this.project.getParent().getArtifactId() : this.project.getArtifactId();
+			case "project.parent.version":
+			case "${project.parent.version}":
+			case "parent.version":
+			case "${parent.version}":
+				return this.project.getParent() != null ? this.project.getParent().getVersion() : this.project.getVersion();
+
 			default:
-				Properties properties = this.model.getProperties();
-				if (properties == null || properties.isEmpty()) {
-					return null;
-				}
-				return this.model.getProperties().getProperty(key);
+				return key;
 		}
+	}
+
+	protected String getProperty(String key) {
+		if (key == null || key.isEmpty()) {
+			return key;
+		}
+
+		String value = this.getProjectProperty(key);
+		// 如果不相等，说明是获取到了项目属性
+		if (!key.equals(value)) {
+			return value;
+		}
+
+		// properties
+		Properties properties = this.model.getProperties();
+		if (properties == null || properties.isEmpty()) {
+			return null;
+		}
+		return this.model.getProperties().getProperty(key);
 	}
 
 	protected void printLine() {
@@ -381,6 +411,15 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
+	public void optimizeDependencyManagement() {
+		DependencyManagement dm = this.originalModel.getDependencyManagement();
+		if (dm == null || isEmpty(dm.getDependencies())) {
+			return;
+		}
+
+		this.optimizeDependencies(dm.getDependencies());
+	}
+
 	public void removeDependencies() {
 		if (isNotEmpty(this.originalModel.getDependencies())) {
 			this.log.info("Remove Dependencies.");
@@ -455,12 +494,27 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	private void optimizeDependencies() {
-		if (isEmpty(this.originalModel.getDependencies())) {
+	protected void optimizeDependencies() {
+		this.optimizeDependencies(this.originalModel.getDependencies());
+	}
+
+	private void optimizeDependencies(List<Dependency> dependencies) {
+		if (isEmpty(dependencies)) {
 			return;
 		}
 
-		for (Dependency dependency : this.originalModel.getDependencies()) {
+		Function<String, String> fun;
+		// parent不存在时，
+		if (this.originalModel.getParent() != null) {
+			fun = this::getProjectProperty;
+		} else {
+			fun = this::replaceVariable;
+		}
+
+		for (Dependency dependency : dependencies) {
+			dependency.setGroupId(fun.apply(dependency.getGroupId()));
+			dependency.setVersion(fun.apply(dependency.getVersion()));
+
 			if ("compile".equalsIgnoreCase(dependency.getScope())) {
 				dependency.setScope(null);
 			}
