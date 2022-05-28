@@ -57,8 +57,12 @@ public class SimplifyPomMojoConfig {
 		return mojo.isOpenSourceProject;
 	}
 
-	public boolean isKeepProvidedAndOptionalDependencies() {
-		return mojo.keepProvidedAndOptionalDependencies;
+	public boolean isKeepProvidedDependencies() {
+		return mojo.keepProvidedDependencies;
+	}
+
+	public boolean isKeepOptionalDependencies() {
+		return mojo.keepOptionalDependencies;
 	}
 
 	public boolean isKeepTestDependencies() {

@@ -85,6 +85,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	@Override
 	public void afterSimplify() {
 		this.replaceParentRevision();
+		this.removeGroupIdAndVersionIfEqualsToParent();
 		this.optimizeDependencies();
 		this.optimizeDependencyManagement();
 	}
@@ -291,7 +292,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	}
 
 	public void removeParentRelativePath() {
-		if (this.originalModel.getParent() != null && isNotEmpty(this.originalModel.getParent().getRelativePath())) {
+		if (this.originalModel.getParent() != null && this.originalModel.getParent().getRelativePath() != null) {
 			this.log.info("Remove Parent RelativePath.");
 			this.originalModel.getParent().setRelativePath(null);
 		}
@@ -303,6 +304,8 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	//region -------------------- GroupId、ArtifactId、Version、Packaging --------------------
 
 	public void resetArtifactIdentification() {
+		this.removeGroupIdAndVersionIfEqualsToParent();
+
 		if (!this.model.getGroupId().equals(this.originalModel.getGroupId())) {
 			this.log.info("Set GroupId from '" + this.originalModel.getGroupId() + "' to '" + this.model.getGroupId() + "'.");
 			this.originalModel.setGroupId(this.model.getGroupId());
@@ -325,6 +328,22 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		if (isNotEmpty(this.originalModel.getVersion()) && !this.model.getVersion().equals(this.originalModel.getVersion())) {
 			this.log.info("Set Version from '" + this.originalModel.getVersion() + "' to '" + this.model.getVersion() + "'.");
 			this.originalModel.setVersion(this.model.getVersion());
+		}
+	}
+
+	public void removeGroupIdAndVersionIfEqualsToParent() {
+		if (this.originalModel.getParent() == null) {
+			return;
+		}
+
+		Parent parent = this.model.getParent();
+		if (parent.getGroupId().equals(this.model.getGroupId()) && isNotEmpty(this.originalModel.getGroupId())) {
+			this.log.info("Remove GroupId, because it's equals to the groupId of the parent.");
+			this.originalModel.setGroupId(null);
+		}
+		if (parent.getVersion().equals(this.model.getVersion()) && isNotEmpty(this.originalModel.getVersion())) {
+			this.log.info("Remove Version, because it's equals to the version of the parent.");
+			this.originalModel.setVersion(null);
 		}
 	}
 
@@ -483,22 +502,19 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 						&& dependency.getArtifactId().equals(originalDependency.getArtifactId())) {
 					//region 判断是否需要移除
 
-					if (!this.config.isKeepProvidedAndOptionalDependencies()) {
-						if ("provided".equalsIgnoreCase(dependency.getScope())) {
-							this.removeOneDependencies(dependency, n--, "scope=provided");
-							continue;
-						}
-						if (dependency.isOptional()) {
-							this.removeOneDependencies(dependency, n--, "optional=true");
-							continue;
-						}
+					if (!this.config.isKeepProvidedDependencies() && "provided".equalsIgnoreCase(dependency.getScope())) {
+						this.removeOneDependencies(dependency, n--, "scope=provided");
+						continue;
 					}
 
-					if (!this.config.isKeepTestDependencies()) {
-						if ("test".equalsIgnoreCase(dependency.getScope())) {
-							this.removeOneDependencies(dependency, n--, "scope=test");
-							continue;
-						}
+					if (!this.config.isKeepTestDependencies() && "test".equalsIgnoreCase(dependency.getScope())) {
+						this.removeOneDependencies(dependency, n--, "scope=test");
+						continue;
+					}
+
+					if (!this.config.isKeepOptionalDependencies() && dependency.isOptional()) {
+						this.removeOneDependencies(dependency, n--, "optional=true");
+						continue;
 					}
 
 					if (this.config.isExcludeDependency(dependency)) {
@@ -565,19 +581,16 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	}
 
 	private boolean isNeedRemoved(Dependency dependency) {
-		if (!this.config.isKeepProvidedAndOptionalDependencies()) {
-			if ("provided".equalsIgnoreCase(dependency.getScope())) {
-				return true;
-			}
-			if (dependency.isOptional()) {
-				return true;
-			}
+		if (!this.config.isKeepProvidedDependencies() && "provided".equalsIgnoreCase(dependency.getScope())) {
+			return true;
 		}
 
-		if (!this.config.isKeepTestDependencies()) {
-			if ("test".equalsIgnoreCase(dependency.getScope())) {
-				return true;
-			}
+		if (!this.config.isKeepTestDependencies() && "test".equalsIgnoreCase(dependency.getScope())) {
+			return true;
+		}
+
+		if (!this.config.isKeepOptionalDependencies() && dependency.isOptional()) {
+			return true;
 		}
 
 		if (this.config.isExcludeDependency(dependency)) {

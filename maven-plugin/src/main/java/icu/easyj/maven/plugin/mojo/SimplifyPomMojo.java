@@ -79,7 +79,9 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
 
 	@Parameter(defaultValue = "false")
-	boolean keepProvidedAndOptionalDependencies;
+	boolean keepProvidedDependencies;
+	@Parameter(defaultValue = "false")
+	boolean keepOptionalDependencies;
 
 	@Parameter(defaultValue = "false")
 	boolean keepTestDependencies;
