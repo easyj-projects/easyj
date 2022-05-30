@@ -46,9 +46,6 @@ import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.AUTO;
 @Mojo(name = "simplify-pom", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
 public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
-	private static final int POM_WRITER_SIZE = 4096;
-
-
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
@@ -75,7 +72,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	boolean isOpenSourceProject;
 
 	@Parameter
-	boolean removeParent;
+	Boolean removeParent;
 
 
 	@Parameter(defaultValue = "false")
@@ -123,68 +120,11 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 		getLog().info("Create the POM file '" + this.simplifiedPomFileName + "'.");
 
 		File simplifiedPomFile = getSimplifiedPomFile();
-		writePom(this.project.getOriginalModel(), simplifiedPomFile);
+		this.writePom(this.project.getOriginalModel(), simplifiedPomFile);
 
 		if (updatePomFile) {
 			getLog().info("Set the POM file '" + this.simplifiedPomFileName + "' to the project object.");
 			project.setFile(simplifiedPomFile);
-		}
-	}
-
-	private void writePom(Model model, File pomFile) throws MojoExecutionException {
-		// Create dir
-		File parentFile = pomFile.getParentFile();
-		if (!parentFile.exists()) {
-			boolean success = parentFile.mkdirs();
-			if (!success) {
-				throw new MojoExecutionException("Failed to create directory " + pomFile.getParent());
-			}
-		}
-
-		// Write POM
-		MavenXpp3Writer pomWriter = new MavenXpp3Writer();
-		StringWriter stringWriter = new StringWriter(POM_WRITER_SIZE);
-		try {
-			pomWriter.write(stringWriter, model);
-		} catch (IOException e) {
-			throw new MojoExecutionException("Internal I/O error!", e);
-		}
-		StringBuffer buffer = stringWriter.getBuffer();
-		writeStringToFile(buffer.toString(), pomFile, model.getModelEncoding());
-	}
-
-	protected void writeStringToFile(String data, File file, String encoding)
-			throws MojoExecutionException {
-		if (System.getProperty("os.name").contains("Windows")) {
-			data = data.replaceAll("\r?\n", "\r\n");
-		}
-		byte[] binaryData;
-
-		try {
-			binaryData = data.getBytes(encoding);
-			if (file.isFile() && file.canRead() && file.length() == binaryData.length) {
-				try (InputStream inputStream = Files.newInputStream(file.toPath())) {
-					byte[] buffer = new byte[binaryData.length];
-					inputStream.read(buffer);
-					if (Arrays.equals(buffer, binaryData)) {
-						getLog().debug("Arrays.equals( buffer, binaryData ) ");
-						return;
-					}
-					getLog().debug("Not Arrays.equals( buffer, binaryData ) ");
-				} catch (IOException e) {
-					// ignore those exceptions, we will overwrite the file
-					getLog().debug("Issue reading file: " + file.getPath(), e);
-				}
-			} else {
-				getLog().debug("file: " + file + ",file.length(): " + file.length() + ", binaryData.length: " + binaryData.length);
-			}
-		} catch (IOException e) {
-			throw new MojoExecutionException("cannot read String as bytes", e);
-		}
-		try (OutputStream outStream = Files.newOutputStream(file.toPath())) {
-			outStream.write(binaryData);
-		} catch (IOException e) {
-			throw new MojoExecutionException("Failed to write to " + file, e);
 		}
 	}
 }

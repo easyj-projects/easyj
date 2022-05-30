@@ -17,6 +17,7 @@ package icu.easyj.maven.plugin.mojo.simplifier;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -255,7 +256,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	 * 移除Parent
 	 */
 	public void removeParent() {
-		if (this.originalModel.getParent() != null) {
+		if (this.originalModel.getParent() != null && !Boolean.FALSE.equals(this.config.needRemoveParent())) {
 			this.log.info("Remove Parent.");
 			this.originalModel.setParent(null);
 		}
@@ -264,7 +265,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	}
 
 	public void removeParentByConfig() {
-		if (this.config.needRemoveParent()) {
+		if (this.originalModel.getParent() != null && Boolean.TRUE.equals(this.config.needRemoveParent())) {
 			this.removeParent();
 		}
 	}
@@ -458,19 +459,22 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	public void clearDependencyCompileScope(Dependency dependency) {
-		if (dependency != null && "compile".equalsIgnoreCase(dependency.getScope())) {
+	public void clearDependencyScopeCompileAndOptionalFalse(Dependency dependency) {
+		if ("compile".equalsIgnoreCase(dependency.getScope())) {
 			dependency.setScope(null);
+		}
+		if (!"true".equalsIgnoreCase(dependency.getOptional())) {
+			dependency.setOptional(null);
 		}
 	}
 
-	public void clearDependencyCompileScope(List<Dependency> dependencies) {
+	public void clearDependencyScopeCompileAndOptionalFalse(List<Dependency> dependencies) {
 		if (isEmpty(dependencies)) {
 			return;
 		}
 
 		for (Dependency dependency : dependencies) {
-			this.clearDependencyCompileScope(dependency);
+			this.clearDependencyScopeCompileAndOptionalFalse(dependency);
 		}
 	}
 
@@ -486,7 +490,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 		int originalSize = getDependenciesSize(this.originalModel.getDependencies());
 		printLine();
-		this.log.info("Reset dependency groupId and version and exclusions (" + this.originalModel.getDependencies().size() + " dependencies):");
+		this.log.info("Reset dependencies: groupId, version, exclusions (Contains " + this.originalModel.getDependencies().size() + " dependencies)");
 		for (int i = 0, n = 0; i < this.model.getDependencies().size(); i++, n++) {
 			Dependency dependency = this.model.getDependencies().get(i);
 			if (i < originalSize) {
@@ -524,8 +528,17 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 					//endregion
 
+					originalDependency.setType(dependency.getType());
 					originalDependency.setVersion(dependency.getVersion());
+					originalDependency.setClassifier(dependency.getClassifier());
+
+					originalDependency.setScope("compile".equalsIgnoreCase(dependency.getScope()) ? null : dependency.getScope());
+					originalDependency.setOptional(dependency.isOptional() ? "true" : null);
+
+					originalDependency.setSystemPath(dependency.getSystemPath());
+
 					originalDependency.setExclusions(dependency.getExclusions());
+
 					this.log.info("  Reset dependency: " + beforeDependencyStr + " -> " + dependencyToString(originalDependency));
 				} else {
 					// 基本上是重复引用导致，直接移除当前dependency
@@ -535,27 +548,39 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 					i--;
 				}
 			} else if (!isNeedRemoved(dependency)) {
-				this.clearDependencyCompileScope(dependency);
-				this.log.info("  Add dependency: " + dependencyToString(dependency));
-				this.originalModel.getDependencies().add(dependency);
+				Dependency originalDependency = this.copyDependency(dependency); // 复制一份出来再添加
+				this.log.info("  Add dependency: " + dependencyToString(originalDependency));
+				this.originalModel.getDependencies().add(originalDependency);
 			}
 		}
-		this.log.info("Remain " + this.originalModel.getDependencies().size() + " dependencies.");
+		this.log.info("Remaining " + this.originalModel.getDependencies().size() + " dependencies.");
 		printLine();
 	}
 
-	protected void optimizeDependencies() {
-		if (isEmpty(this.originalModel.getDependencies())) {
-			return;
-		}
+	/**
+	 * 为避免修改了model里的依赖数据，影响maven的正常运行。所以复制一份出来。设置到originalModel中。
+	 */
+	protected Dependency copyDependency(Dependency dependency) {
+		Dependency originalDependency = new Dependency();
 
-		if (isResetDependencies) {
-			for (Dependency dependency : this.originalModel.getDependencies()) {
-				this.clearDependencyCompileScope(dependency);
-			}
-		} else {
-			this.optimizeDependencies(this.originalModel.getDependencies());
-		}
+		originalDependency.setGroupId(dependency.getGroupId());
+		originalDependency.setArtifactId(dependency.getArtifactId());
+		originalDependency.setVersion(dependency.getVersion());
+		originalDependency.setType(dependency.getType());
+		originalDependency.setClassifier(dependency.getClassifier());
+
+		originalDependency.setScope("compile".equalsIgnoreCase(dependency.getScope()) ? null : dependency.getScope());
+		originalDependency.setOptional(dependency.isOptional() ? "true" : null);
+
+		originalDependency.setSystemPath(dependency.getSystemPath());
+
+		originalDependency.setExclusions(new ArrayList<>(dependency.getExclusions()));
+
+		return originalDependency;
+	}
+
+	protected void optimizeDependencies() {
+		this.optimizeDependencies(this.originalModel.getDependencies());
 	}
 
 	private void optimizeDependencies(List<Dependency> dependencies) {
@@ -576,7 +601,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			dependency.setArtifactId(fun.apply(dependency.getArtifactId()));
 			dependency.setVersion(fun.apply(dependency.getVersion()));
 
-			this.clearDependencyCompileScope(dependency);
+			this.clearDependencyScopeCompileAndOptionalFalse(dependency);
 		}
 	}
 

@@ -192,9 +192,18 @@
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-pom-file</id>
+						<goals>
+							<goal>create-pom-file</goal><!-- 由于shade生成的pom.xml不是最简单的，所以使用该goal重新生成一遍。 -->
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
+					<!-- simplify-pom插件的配置 -->
 					<excludeDependencies>
-						<excludeDependency>${project.groupId}:*:*</excludeDependency>
+						<dependency>${project.groupId}:*:*</dependency>
 					</excludeDependencies>
 				</configuration>
 			</plugin>

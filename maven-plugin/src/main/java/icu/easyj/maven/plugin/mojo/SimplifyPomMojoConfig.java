@@ -49,8 +49,8 @@ public class SimplifyPomMojoConfig {
 		this.mode = mode;
 	}
 
-	public boolean needRemoveParent() {
-		return Boolean.TRUE.equals(mojo.removeParent);
+	public Boolean needRemoveParent() {
+		return mojo.removeParent;
 	}
 
 	public boolean isOpenSourceProject() {
