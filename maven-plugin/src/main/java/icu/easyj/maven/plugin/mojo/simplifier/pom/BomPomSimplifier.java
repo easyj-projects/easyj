@@ -39,8 +39,8 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 
 		this.copyProjectInfoFromParent();
 
-		this.resetDependencies();
 		this.resetDependencyManagement();
+		this.removeDependencies();
 
 		this.removeProperties();
 

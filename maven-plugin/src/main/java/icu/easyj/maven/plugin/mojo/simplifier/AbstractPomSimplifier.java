@@ -434,12 +434,26 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
+	/**
+	 * 目前仅用于BOM模式
+	 */
 	public void resetDependencyManagement() {
-		if (isNotEmpty(this.model.getDependencyManagement()) && this.model.getDependencyManagement() != this.originalModel.getDependencyManagement()) {
+		if (this.model.getDependencyManagement() != null && isNotEmpty(this.model.getDependencyManagement().getDependencies())) {
 			int originalSize = this.getDependenciesSize(this.originalModel.getDependencyManagement());
 			int size = this.getDependenciesSize(this.model.getDependencyManagement());
 			this.log.info("Reset DependencyManagement: " + originalSize + " -> " + size);
+
+			// 复制一份出来，避免对maven的运行造成影响。
+			DependencyManagement originalDM = new DependencyManagement();
+			List<Dependency> dependenciesForDM = new ArrayList<>();
+			for (Dependency dependency : this.model.getDependencyManagement().getDependencies()) {
+				dependenciesForDM.add(this.copyDependency(dependency));
+			}
+			originalDM.setDependencies(dependenciesForDM);
+
 			this.originalModel.setDependencyManagement(this.model.getDependencyManagement());
+		} else {
+			this.log.warn("In BOM mode, the <dependencyManagement> cannot be null or empty, which is meaningless.");
 		}
 	}
 
