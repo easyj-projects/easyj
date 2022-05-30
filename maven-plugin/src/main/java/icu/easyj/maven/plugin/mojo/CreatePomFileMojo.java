@@ -37,21 +37,16 @@ public class CreatePomFileMojo extends AbstractSimplifyPomMojo {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
-	@Parameter(defaultValue = "true")
-	private boolean createByOriginalModel;
-
 	@Override
 	public void execute() throws MojoExecutionException {
 		// Create simplified POM file
 		getLog().info("Create the POM file '" + this.simplifiedPomFileName + "'.");
 
-		if (createByOriginalModel) {
-			IPomSimplifier pomSimplifier = new PomSimplifier(this.project, null, getLog());
-			pomSimplifier.afterSimplify();
-		}
+		IPomSimplifier pomSimplifier = new PomSimplifier(this.project, null, getLog());
+		pomSimplifier.afterSimplify();
 
 		File simplifiedPomFile = getSimplifiedPomFile();
-		writePom(createByOriginalModel ? this.project.getOriginalModel() : this.project.getModel(), simplifiedPomFile);
+		writePom(this.project.getOriginalModel(), simplifiedPomFile);
 
 		getLog().info("Set the POM file '" + this.simplifiedPomFileName + "' to the project object.");
 		project.setFile(simplifiedPomFile);

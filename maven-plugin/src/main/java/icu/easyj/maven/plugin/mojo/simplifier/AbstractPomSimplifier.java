@@ -87,8 +87,8 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	public void afterSimplify() {
 		this.replaceParentRevision();
 		this.removeGroupIdAndVersionIfEqualsToParent();
-		this.optimizeDependencies();
 		this.optimizeDependencyManagement();
+		this.optimizeDependencies();
 	}
 
 	/**
@@ -463,6 +463,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			return;
 		}
 
+		this.log.info("Optimize DependencyManagement:");
 		this.optimizeDependencies(dm.getDependencies());
 	}
 
@@ -474,10 +475,12 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	}
 
 	public void clearDependencyScopeCompileAndOptionalFalse(Dependency dependency) {
-		if ("compile".equalsIgnoreCase(dependency.getScope())) {
+		if (dependency.getScope() != null && "compile".equalsIgnoreCase(dependency.getScope())) {
+			this.log.info("  Set scope from '" + dependency.getScope() + "' to null: " + dependency.getManagementKey());
 			dependency.setScope(null);
 		}
-		if (!"true".equalsIgnoreCase(dependency.getOptional())) {
+		if (dependency.getOptional() != null && !"true".equalsIgnoreCase(dependency.getOptional())) {
+			this.log.info("  Set optional from '" + dependency.getOptional() + "' to null: " + dependency.getManagementKey());
 			dependency.setOptional(null);
 		}
 	}
@@ -593,7 +596,11 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		return originalDependency;
 	}
 
-	protected void optimizeDependencies() {
+	public void optimizeDependencies() {
+		if (isEmpty(this.originalModel.getDependencies())) {
+			return;
+		}
+		this.log.info("Optimize Dependencies:");
 		this.optimizeDependencies(this.originalModel.getDependencies());
 	}
 
