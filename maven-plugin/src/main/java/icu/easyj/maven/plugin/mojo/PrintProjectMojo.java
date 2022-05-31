@@ -41,6 +41,9 @@ public class PrintProjectMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
+	@Parameter(defaultValue = "false", property = "maven.print.skip")
+	private boolean skip;
+
 	@Parameter(defaultValue = "true")
 	private boolean printModel;
 
@@ -52,6 +55,11 @@ public class PrintProjectMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
+		if (skip) {
+			getLog().info("Print-Project has been skipped.");
+			return;
+		}
+
 		if (this.project == null) {
 			getLog().info("The project is null");
 			return;

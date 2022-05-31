@@ -16,19 +16,11 @@
 package icu.easyj.maven.plugin.mojo;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
 import icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.PomSimplifierFactory;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -49,7 +41,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
-	@Parameter(defaultValue = "false")
+	@Parameter(defaultValue = "false", property = "maven.simplify.skip")
 	private boolean skip;
 
 

@@ -31,7 +31,9 @@ import org.apache.maven.project.MavenProject;
  *
  * @author wangliang181230
  * @since 0.3.9
+ * @deprecated 0.4.2 直接使用 {@link SimplifyPomMojo} 替换掉 flatten 插件，不再需要此插件。
  */
+@Deprecated
 @Mojo(name = "shade-compatible-flatten", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
 public class ShadeCompatibleFlattenMojo extends AbstractMojo {
 
@@ -39,6 +41,7 @@ public class ShadeCompatibleFlattenMojo extends AbstractMojo {
 
 	private static final String GROUP_ID = "icu.easyj.maven.plugins";
 	private static final String ARTIFACT_ID = "easyj-maven-plugin";
+
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
@@ -48,6 +51,7 @@ public class ShadeCompatibleFlattenMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "false")
 	private boolean removeCurrentPluginFromPom;
+
 
 	@Override
 	public void execute() {
