@@ -24,6 +24,7 @@ import icu.easyj.maven.plugin.mojo.simplifier.noop.NoopPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.BomPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.DependenciesPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.pom.StarterPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
@@ -34,6 +35,7 @@ import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.JAR;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.MAVEN_PLUGIN;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.POM;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.SHADE;
+import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.STARTER;
 import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.WAR;
 
 /**
@@ -50,21 +52,31 @@ public abstract class PomSimplifierFactory {
 		// auto模式时，自动根据构建标识判断
 		if (AUTO.equalsIgnoreCase(modeStr)) {
 			modeStr = null;
-			String artifactId = project.getArtifactId().toLowerCase();
-			if (POM.equals(project.getPackaging()) && artifactId.endsWith("-bom")) {
+
+			if (isBom(project)) {
 				modeStr = BOM;
 				log.info("Set mode to '" + modeStr + "'," +
 						" because the artifactId \"" + project.getArtifactId() + "\".endsWith(\"-bom\").");
-			} else if (JAR.equals(project.getPackaging()) && artifactId.endsWith("-all")) {
+			} else if (isShade(project)) {
 				modeStr = SHADE;
 				log.info("Set mode to '" + modeStr + "'," +
 						" because the artifactId \"" + project.getArtifactId() + "\".endsWith(\"-all\").");
+			} else if (isStarter(project)) {
+				modeStr = STARTER;
+				if (project.getArtifactId().endsWith("-starter")) {
+					log.info("Set mode to '" + modeStr + "'," +
+							" because the artifactId \"" + project.getArtifactId() + "\".endsWith(\"-starter\").");
+				} else {
+					log.info("Set mode to '" + modeStr + "'," +
+							" because the artifactId \"" + project.getArtifactId() + "\".contains(\"-starter-\").");
+				}
 			}
 		}
 
 		if (modeStr == null || modeStr.isEmpty()) {
 			modeStr = project.getPackaging();
 		} else {
+			// 校验模式是否与当前pom匹配，如果不匹配，则打印warn日志
 			switch (modeStr.toLowerCase().replace('_', '-')) {
 				case POM:
 				case JAR:
@@ -72,20 +84,22 @@ public abstract class PomSimplifierFactory {
 				case MAVEN_PLUGIN:
 					if (!modeStr.equalsIgnoreCase(project.getPackaging())) {
 						printWarnLog(project, modeStr, log);
-						modeStr = project.getPackaging();
 					}
 					break;
 				case SHADE:
-					if (!JAR.equalsIgnoreCase(project.getPackaging())) {
+					if (!isJar(project)) {
 						printWarnLog(project, modeStr, log);
-						modeStr = project.getPackaging();
 					}
 					break;
 				case DEPENDENCIES:
 				case BOM:
-					if (!POM.equalsIgnoreCase(project.getPackaging())) {
+					if (!isPom(project)) {
 						printWarnLog(project, modeStr, log);
-						modeStr = project.getPackaging();
+					}
+					break;
+				case STARTER:
+					if (!isJarOrPom(project)) {
+						printWarnLog(project, modeStr, log);
 					}
 					break;
 				default:
@@ -130,6 +144,8 @@ public abstract class PomSimplifierFactory {
 				return new PomSimplifier(project, config, log);
 			case DEPENDENCIES:
 				return new DependenciesPomSimplifier(project, config, log);
+			case STARTER:
+				return new StarterPomSimplifier(project, config, log);
 			case BOM:
 				return new BomPomSimplifier(project, config, log);
 
@@ -137,5 +153,31 @@ public abstract class PomSimplifierFactory {
 			default:
 				return new NoopPomSimplifier(project, config, log);
 		}
+	}
+
+
+	private static boolean isJar(MavenProject project) {
+		return JAR.equalsIgnoreCase(project.getPackaging());
+	}
+
+	private static boolean isPom(MavenProject project) {
+		return POM.equalsIgnoreCase(project.getPackaging());
+	}
+
+	private static boolean isJarOrPom(MavenProject project) {
+		return isJar(project) || isPom(project);
+	}
+
+
+	private static boolean isBom(MavenProject project) {
+		return isPom(project) && project.getArtifactId().endsWith("-bom");
+	}
+
+	private static boolean isStarter(MavenProject project) {
+		return isJarOrPom(project) && (project.getArtifactId().endsWith("-starter") || project.getArtifactId().contains("-starter-"));
+	}
+
+	private static boolean isShade(MavenProject project) {
+		return isJar(project) && project.getArtifactId().endsWith("-all");
 	}
 }

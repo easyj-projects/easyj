@@ -69,6 +69,11 @@ public enum SimplifyMode {
 	BOM,
 
 	/**
+	 * 启动器（可以是jar，也可以是pom）
+	 */
+	STARTER,
+
+	/**
 	 * 合并的JAR包
 	 */
 	SHADE,

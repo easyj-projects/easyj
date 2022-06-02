@@ -35,6 +35,7 @@ public interface IPomSimplifier {
 
 	String DEPENDENCIES = "dependencies";
 	String BOM = "bom";
+	String STARTER = "starter";
 	String SHADE = "shade";
 
 	/**
