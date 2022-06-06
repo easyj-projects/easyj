@@ -19,12 +19,12 @@ import icu.easyj.maven.plugin.mojo.SimplifyMode;
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import icu.easyj.maven.plugin.mojo.simplifier.jar.JarPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.jar.ShadeJarPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplifier.jar.StarterPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.mavenplugin.MavenPluginPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.noop.NoopPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.BomPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.DependenciesPomSimplifier;
 import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.pom.StarterPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
@@ -134,6 +134,8 @@ public abstract class PomSimplifierFactory {
 			case JAR:
 			case WAR:
 				return new JarPomSimplifier(project, config, log);
+			case STARTER:
+				return new StarterPomSimplifier(project, config, log);
 			case SHADE:
 				return new ShadeJarPomSimplifier(project, config, log);
 
@@ -144,8 +146,6 @@ public abstract class PomSimplifierFactory {
 				return new PomSimplifier(project, config, log);
 			case DEPENDENCIES:
 				return new DependenciesPomSimplifier(project, config, log);
-			case STARTER:
-				return new StarterPomSimplifier(project, config, log);
 			case BOM:
 				return new BomPomSimplifier(project, config, log);
 
