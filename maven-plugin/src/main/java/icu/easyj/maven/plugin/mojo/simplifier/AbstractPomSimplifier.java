@@ -575,6 +575,9 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	/**
 	 * 为避免修改了model里的依赖数据，影响maven的正常运行。所以复制一份出来。设置到originalModel中。
+	 *
+	 * @param dependency 需复制的依赖项
+	 * @return 复制的依赖项
 	 */
 	protected Dependency copyDependency(Dependency dependency) {
 		Dependency originalDependency = new Dependency();
