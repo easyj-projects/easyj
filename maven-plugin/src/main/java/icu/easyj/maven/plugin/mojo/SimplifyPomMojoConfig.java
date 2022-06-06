@@ -87,5 +87,9 @@ public class SimplifyPomMojoConfig {
 		return mojo.createProperties;
 	}
 
+	public boolean isExpandImportDependencyManagement() {
+		return mojo.expandImportDependencyManagement;
+	}
+
 	//endregion
 }

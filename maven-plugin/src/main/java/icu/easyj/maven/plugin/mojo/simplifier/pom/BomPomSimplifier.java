@@ -15,6 +15,8 @@
  */
 package icu.easyj.maven.plugin.mojo.simplifier.pom;
 
+import java.util.function.Function;
+
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -45,5 +47,11 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 		this.removeProperties();
 
 		super.doSimplify();
+	}
+
+	@Override
+	protected Function<String, String> getReplaceVariableFunction() {
+		this.log.info(" - Optimize with 'replaceVariable'");
+		return this::replaceVariable;
 	}
 }

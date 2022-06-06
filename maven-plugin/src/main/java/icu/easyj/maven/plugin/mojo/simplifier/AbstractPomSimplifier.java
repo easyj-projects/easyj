@@ -133,14 +133,14 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		return value;
 	}
 
-	private int getDependenciesSize(DependencyManagement dm) {
+	protected int getDependenciesSize(DependencyManagement dm) {
 		if (dm == null) {
 			return 0;
 		}
 		return getDependenciesSize(dm.getDependencies());
 	}
 
-	private int getDependenciesSize(List<Dependency> dependencies) {
+	protected int getDependenciesSize(List<Dependency> dependencies) {
 		if (dependencies == null) {
 			return 0;
 		}
@@ -164,11 +164,6 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	protected String replaceVariable(String str) {
 		if (str == null || str.isEmpty()) {
-			return str;
-		}
-
-		Properties properties = this.model.getProperties();
-		if (properties == null || properties.isEmpty()) {
 			return str;
 		}
 
@@ -439,21 +434,23 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 	 */
 	public void resetDependencyManagement() {
 		if (this.model.getDependencyManagement() != null && isNotEmpty(this.model.getDependencyManagement().getDependencies())) {
-			int originalSize = this.getDependenciesSize(this.originalModel.getDependencyManagement());
-			int size = this.getDependenciesSize(this.model.getDependencyManagement());
-			this.log.info("Reset DependencyManagement: " + originalSize + " -> " + size);
+			if (this.config.isExpandImportDependencyManagement()) {
+				int originalSize = this.getDependenciesSize(this.originalModel.getDependencyManagement());
+				int size = this.getDependenciesSize(this.model.getDependencyManagement());
+				this.log.info("Reset DependencyManagement: " + originalSize + " -> " + size);
 
-			// 复制一份DependencyManagement出来，避免对maven的运行造成影响
-			DependencyManagement originalDependencyManagement = new DependencyManagement();
-			List<Dependency> dependenciesForDependencyManagement = new ArrayList<>();
-			for (Dependency dependency : this.model.getDependencyManagement().getDependencies()) {
-				dependenciesForDependencyManagement.add(this.copyDependency(dependency));
+				// 复制一份DependencyManagement出来，避免对maven的运行造成影响
+				DependencyManagement originalDependencyManagement = new DependencyManagement();
+				List<Dependency> dependenciesForDependencyManagement = new ArrayList<>();
+				for (Dependency dependency : this.model.getDependencyManagement().getDependencies()) {
+					dependenciesForDependencyManagement.add(this.copyDependency(dependency));
+				}
+				originalDependencyManagement.setDependencies(dependenciesForDependencyManagement);
+
+				this.originalModel.setDependencyManagement(originalDependencyManagement);
 			}
-			originalDependencyManagement.setDependencies(dependenciesForDependencyManagement);
-
-			this.originalModel.setDependencyManagement(originalDependencyManagement);
 		} else {
-			this.log.warn("In BOM mode, the <dependencyManagement> cannot be null or empty, which is meaningless.");
+			this.log.warn("In BOM mode, the <dependencyManagement> cannot be null or empty, otherwise the POM will be meaningless.");
 		}
 	}
 
@@ -463,8 +460,10 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 			return;
 		}
 
-		this.log.info("Optimize DependencyManagement:");
+		this.printLine();
+		this.log.info("Optimize DependencyManagement: (" + dm.getDependencies().size() + ")");
 		this.optimizeDependencies(dm.getDependencies());
+		this.printLine();
 	}
 
 	public void removeDependencies() {
@@ -600,33 +599,46 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		if (isEmpty(this.originalModel.getDependencies())) {
 			return;
 		}
-		this.log.info("Optimize Dependencies:");
+		this.printLine();
+		this.log.info("Optimize Dependencies: (" + this.originalModel.getDependencies().size() + ")");
 		this.optimizeDependencies(this.originalModel.getDependencies());
 	}
 
-	private void optimizeDependencies(List<Dependency> dependencies) {
+	protected void optimizeDependencies(List<Dependency> dependencies) {
 		if (isEmpty(dependencies)) {
 			return;
 		}
 
-		Function<String, String> fun;
-		// parent不存在时，
-		if (this.originalModel.getParent() != null) {
-			fun = this::getProjectProperty;
-		} else {
-			fun = this::replaceVariable;
-		}
+		Function<String, String> fun = this.getReplaceVariableFunction();
 
 		for (Dependency dependency : dependencies) {
+			String dependencyBefore = dependencyToString(dependency);
+
 			dependency.setGroupId(fun.apply(dependency.getGroupId()));
 			dependency.setArtifactId(fun.apply(dependency.getArtifactId()));
 			dependency.setVersion(fun.apply(dependency.getVersion()));
 
 			this.clearDependencyScopeCompileAndOptionalFalse(dependency);
+
+			String dependencyAfter = dependencyToString(dependency);
+
+			if (!dependencyBefore.equals(dependencyAfter)) {
+				this.log.info("  optimize dependency: " + dependencyBefore + " -> " + dependencyAfter);
+			}
 		}
 	}
 
-	private boolean isNeedRemoved(Dependency dependency) {
+	protected Function<String, String> getReplaceVariableFunction() {
+		if (this.originalModel.getParent() != null || isEmpty(this.model.getProperties())) {
+			this.log.info(" - Optimize with 'getProjectProperty'");
+			return this::getProjectProperty;
+		} else {
+			this.log.info(" - Optimize with 'replaceVariable'");
+			return this::replaceVariable;
+		}
+	}
+
+	protected boolean isNeedRemoved(Dependency dependency) {
 		if (!this.config.isKeepProvidedDependencies() && "provided".equalsIgnoreCase(dependency.getScope())) {
 			return true;
 		}
@@ -646,7 +658,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		return false;
 	}
 
-	private void removeOneDependencies(Dependency dependency, int n, String cause) {
+	protected void removeOneDependencies(Dependency dependency, int n, String cause) {
 		this.originalModel.getDependencies().remove(n);
 		this.log.info("  Remove dependency by " + cause + ": " + dependencyToString(dependency));
 	}
@@ -666,7 +678,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 
 	/**
 	 * 该功能的应用场景：<br>
-	 * 举例1：框架中，添加一个模块，simplifyMode=pom，但是希望设置parent为框架中的此模块的子模块中，采用simplifyMode=bom.
+	 * 举例1：框架中，添加一个模块，simplifyMode=pom，但是希望设置parent为此模块的子模块中，采用simplifyMode=bom.
 	 */
 	public void createPropertiesByConfig() {
 		try {
@@ -696,7 +708,7 @@ public abstract class AbstractPomSimplifier implements IPomSimplifier {
 		}
 	}
 
-	private void removeConfiguration(Plugin plugin, String... removeConfigNames) {
+	protected void removeConfiguration(Plugin plugin, String... removeConfigNames) {
 		Set<String> removeConfigSet = new HashSet<>(Arrays.asList(removeConfigNames));
 		removeConfigSet.remove(null);
 

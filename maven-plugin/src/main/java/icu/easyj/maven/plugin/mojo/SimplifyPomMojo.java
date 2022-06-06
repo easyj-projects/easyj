@@ -51,6 +51,9 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 	@Parameter(defaultValue = AUTO, property = "maven.simplify.mode")
 	private String simplifyMode;
 
+	@Parameter(defaultValue = "false", property = "maven.simplify.expandImportDependencyManagement")
+	boolean expandImportDependencyManagement;
+
 	/**
 	 * 是否更新POM文件
 	 */

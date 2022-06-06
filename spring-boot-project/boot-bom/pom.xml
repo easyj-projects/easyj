@@ -16,6 +16,11 @@
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ Spring Boot的组件清单</description>
 
+	<properties>
+		<!-- 展开scope=import的depemdencyManagement依赖项，减少引用该BOM时的POM数量。 -->
+		<maven.simplify.expandImportDependencyManagement>true</maven.simplify.expandImportDependencyManagement>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- ************************* Base ************************* -->

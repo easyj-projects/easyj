@@ -15,8 +15,10 @@
  */
 package icu.easyj.maven.plugin.mojo.simplifier.jar;
 
-import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
+import java.util.function.Function;
+
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
@@ -54,5 +56,11 @@ public class JarPomSimplifier extends AbstractPomSimplifier {
 		this.removeDistributionManagement();
 
 		this.removeProfiles();
+	}
+
+	@Override
+	protected Function<String, String> getReplaceVariableFunction() {
+		this.log.info(" - Optimize with 'replaceVariable'");
+		return this::replaceVariable;
 	}
 }

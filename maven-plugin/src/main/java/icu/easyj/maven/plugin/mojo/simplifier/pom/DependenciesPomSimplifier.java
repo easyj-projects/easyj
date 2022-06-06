@@ -15,9 +15,13 @@
  */
 package icu.easyj.maven.plugin.mojo.simplifier.pom;
 
+import java.util.function.Function;
+
 import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+
+import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isEmpty;
 
 /**
  * 管理依赖的的pom.xml 简化器
@@ -39,6 +43,10 @@ public class DependenciesPomSimplifier extends PomSimplifier {
 
 		this.resetVersion();
 		this.resetNameAndDescription();
+
+		if (this.originalModel.getParent() == null) {
+			this.removeProperties();
+		}
 
 		this.removePrerequisites();
 		this.removeBuild();
