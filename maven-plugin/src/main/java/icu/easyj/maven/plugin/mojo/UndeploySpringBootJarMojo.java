@@ -39,6 +39,11 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
+		if (!"jar".equalsIgnoreCase(project.getPackaging())) {
+			getLog().info("Skip this project, cause by 'packaging != jar'.");
+			return;
+		}
+
 		boolean isSpringBootJar = false;
 
 		List<Plugin> plugins = project.getBuildPlugins();
