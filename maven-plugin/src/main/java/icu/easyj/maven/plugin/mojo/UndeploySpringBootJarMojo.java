@@ -37,10 +37,21 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
+	@Parameter(defaultValue = "true")
+	private boolean skipInstall;
+
+	@Parameter(defaultValue = "true")
+	private boolean skipDeploy;
+
 	@Override
 	public void execute() throws MojoExecutionException {
+		if (!skipInstall && !skipDeploy) {
+			getLog().info("Skip this goal, cause by \"skipInstall == false && skipDeploy == false\".");
+			return;
+		}
+
 		if (!"jar".equalsIgnoreCase(project.getPackaging())) {
-			getLog().info("Skip this project, cause by 'packaging != jar'.");
+			getLog().info("Skip this goal, cause by \"packaging != 'jar'\"'.");
 			return;
 		}
 
@@ -56,9 +67,19 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 		}
 
 		if (isSpringBootJar) {
-			getLog().info("The current project is a springboot application, it will not be deployed.");
-			project.getProperties().put("maven.deploy.skip", "true");
-			getLog().info("Put properties 'maven.deploy.skip = true'.");
+			getLog().info("The current project is a springboot application, it will not be installed or deployed.");
+
+			if (skipInstall) {
+				project.getProperties().put("maven.install.skip", "true");
+				getLog().info("Put properties 'maven.install.skip = true'.");
+			}
+
+			if (skipDeploy) {
+				project.getProperties().put("maven.deploy.skip", "true");
+				getLog().info("Put properties 'maven.deploy.skip = true'.");
+			}
+		} else {
+			getLog().info("Skip this goal, cause by this project is not a spring-boot application.");
 		}
 	}
 }
