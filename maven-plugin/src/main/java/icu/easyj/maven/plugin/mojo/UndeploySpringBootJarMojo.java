@@ -31,7 +31,7 @@ import org.apache.maven.project.MavenProject;
  * @author wangliang181230
  * @since 0.5.9
  */
-@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.INSTALL, threadSafe = true)
+@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = true)
 public class UndeploySpringBootJarMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
