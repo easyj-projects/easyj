@@ -16,6 +16,7 @@
 package icu.easyj.maven.plugin.mojo;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
@@ -69,13 +70,14 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 		if (isSpringBootJar) {
 			getLog().info("The current project is a springboot application, it will not be installed or deployed.");
 
-			if (skipInstall) {
-				project.getProperties().put("maven.install.skip", "true");
+			Properties properties = project.getProperties();
+			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
+				properties.put("maven.install.skip", "true");
 				getLog().info("Put properties 'maven.install.skip = true'.");
 			}
 
-			if (skipDeploy) {
-				project.getProperties().put("maven.deploy.skip", "true");
+			if (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip"))) {
+				properties.put("maven.deploy.skip", "true");
 				getLog().info("Put properties 'maven.deploy.skip = true'.");
 			}
 		} else {
