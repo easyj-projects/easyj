@@ -83,7 +83,7 @@
 		</pluginManagement>
 
 		<plugins>
-			<!-- 使用插件：Easyj:Simplify-POM -->
+			<!-- 使用插件：Easyj：Simplify-POM、跳过install和deploy -->
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>
@@ -92,6 +92,13 @@
 						<id>simplify-pom</id>
 						<goals>
 							<goal>simplify-pom</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>skip-install-deploy</id>
+						<inherited>false</inherited>
+						<goals>
+							<goal>skip-install-deploy</goal>
 						</goals>
 					</execution>
 				</executions>

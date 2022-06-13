@@ -188,7 +188,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- 使用插件：Easyj:Simplify-POM -->
+			<!-- 使用插件：Easyj：Simplify-POM -->
 			<plugin>
 				<groupId>icu.easyj.maven.plugins</groupId>
 				<artifactId>easyj-maven-plugin</artifactId>

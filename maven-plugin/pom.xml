@@ -94,7 +94,7 @@
 					<attach>true</attach>
 				</configuration>
 			</plugin>
-			<!-- 使用插件：Easyj:Simplify-POM 使用当前插件简化自己的pom.xml -->
+			<!-- 使用插件：Easyj：Simplify-POM 使用当前插件简化自己的pom.xml -->
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>${project.artifactId}</artifactId>

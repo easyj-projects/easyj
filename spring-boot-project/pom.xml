@@ -63,6 +63,20 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
+			<!-- 使用插件：Easyj：跳过install和deploy -->
+			<plugin>
+				<groupId>icu.easyj.maven.plugins</groupId>
+				<artifactId>easyj-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>skip-install-deploy</id>
+						<inherited>false</inherited>
+						<goals>
+							<goal>skip-install-deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
