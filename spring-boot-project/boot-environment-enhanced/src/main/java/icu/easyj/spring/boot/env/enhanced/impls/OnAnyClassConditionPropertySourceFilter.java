@@ -21,16 +21,17 @@ import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.spring.boot.env.enhanced.AbstractConditionPropertySourceFilter;
 
 /**
- * 如果所有类都存在，则添加配置源；反之，则不添加。
+ * 只要存在任意一个类，则添加配置源；反之，则不添加。
  *
  * @author wangliang181230
+ * @since 0.6.4
  */
-@LoadLevel(name = "on-class", order = 10)
-public class OnClassConditionPropertySourceFilter extends AbstractConditionPropertySourceFilter {
+@LoadLevel(name = "on-any-class", order = 20)
+public class OnAnyClassConditionPropertySourceFilter extends AbstractConditionPropertySourceFilter {
 
-	public static final String PROPERTY_NAME = "easyj.config.activate.on-class";
+	public static final String PROPERTY_NAME = "easyj.config.activate.on-any-class";
 
-	public OnClassConditionPropertySourceFilter() {
+	public OnAnyClassConditionPropertySourceFilter() {
 		super(PROPERTY_NAME);
 	}
 
@@ -39,17 +40,19 @@ public class OnClassConditionPropertySourceFilter extends AbstractConditionPrope
 
 	@Override
 	public boolean doConditionFilter(List<String> conditionPropertyList) {
-		try {
-			for (String property : conditionPropertyList) {
+		for (String property : conditionPropertyList) {
+			try {
 				// 尝试加载类
 				this.loadClass(property);
+
+				// 存在任意一个类，不过滤
+				return false;
+			} catch (ClassNotFoundException ignore) {
+				// do nothing, continue
 			}
-			// 所有类都存在，不过滤
-			return false;
-		} catch (ClassNotFoundException ignore) {
-			// 有一个类不存在，过滤掉
-			return true;
 		}
+		// 所有类都不存在，过滤掉
+		return true;
 	}
 
 	//endregion
