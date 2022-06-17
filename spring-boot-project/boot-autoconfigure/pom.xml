@@ -33,6 +33,16 @@
 			<optional>true</optional>
 		</dependency>
 
+
+		<!-- Spring Cloud -->
+		<!-- 暂时仅用于引入 @RefreshScope 注解 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-context</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- Spring Web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
