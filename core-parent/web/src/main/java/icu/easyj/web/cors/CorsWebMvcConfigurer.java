@@ -15,8 +15,13 @@
  */
 package icu.easyj.web.cors;
 
+import java.lang.reflect.InvocationTargetException;
+
 import icu.easyj.core.util.ArrayUtils;
+import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -28,6 +33,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 0.6.5
  */
 public class CorsWebMvcConfigurer implements WebMvcConfigurer {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CorsWebMvcConfigurer.class);
+
 
 	private final CorsProperties properties;
 
@@ -57,7 +65,13 @@ public class CorsWebMvcConfigurer implements WebMvcConfigurer {
 			registration.allowedOrigins(properties.getAllowedOrigins());
 		}
 		if (ArrayUtils.isNotEmpty(properties.getAllowedOriginPatterns())) {
-			registration.allowedOriginPatterns(properties.getAllowedOriginPatterns());
+			try {
+				ReflectionUtils.invokeMethod(registration, "allowedOriginPatterns", new Class[]{String[].class}, properties.getAllowedOriginPatterns());
+			} catch (NoSuchMethodException e) {
+				LOGGER.warn("Spring版本太低，方法 'CorsRegistration.allowedOriginPatterns(String[])' 不存在，allowedOriginPatterns配置无效。");
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException("调用 'allowedOriginPatterns' 方法失败", e);
+			}
 		}
 
 		if (ArrayUtils.isNotEmpty(properties.getAllowedMethods())) {

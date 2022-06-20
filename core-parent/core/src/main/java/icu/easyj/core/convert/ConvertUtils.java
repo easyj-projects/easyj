@@ -127,6 +127,10 @@ public abstract class ConvertUtils {
 			return null;
 		}
 
+		if (Object.class.equals(targetClass)) {
+			return (T)source;
+		}
+
 		try {
 			return getConversionService().convert(source, targetClass);
 		} catch (ConversionException | IllegalArgumentException e) {
@@ -165,10 +169,10 @@ public abstract class ConvertUtils {
 	public static <T> T convert(@Nullable Object source, DataType targetType) {
 		if (source == null) {
 			return null;
-		} else {
-			Assert.notNull(targetType, "'targetType' must not be null");
-			return convert(source, targetType.getTypeDesc());
 		}
+
+		Assert.notNull(targetType, "'targetType' must not be null");
+		return convert(source, targetType.getTypeDesc());
 	}
 
 	/**
@@ -225,10 +229,10 @@ public abstract class ConvertUtils {
 	public static <T> T convert(@Nullable Object source, DataType targetType, @Nullable T defaultValue) {
 		if (source == null) {
 			return defaultValue;
-		} else {
-			Assert.notNull(targetType, "'targetType' must not be null");
-			return convert(source, targetType.getTypeDesc(), defaultValue);
 		}
+
+		Assert.notNull(targetType, "'targetType' must not be null");
+		return convert(source, targetType.getTypeDesc(), defaultValue);
 	}
 
 	/**
@@ -285,10 +289,10 @@ public abstract class ConvertUtils {
 	public static <T> List<T> convertList(@Nullable Collection<?> sourceList, DataType targetType) {
 		if (sourceList == null) {
 			return new ArrayList<>();
-		} else {
-			Assert.notNull(targetType, "'targetType' must not be null");
-			return convertList(sourceList, targetType.getTypeDesc());
 		}
+
+		Assert.notNull(targetType, "'targetType' must not be null");
+		return convertList(sourceList, targetType.getTypeDesc());
 	}
 
 	//endregion

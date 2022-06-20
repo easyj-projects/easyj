@@ -15,10 +15,14 @@
  */
 package icu.easyj.core.util;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import icu.easyj.core.convert.ConvertUtils;
+import org.springframework.util.Assert;
 
 /**
  * Map工具类
@@ -168,6 +172,56 @@ public abstract class MapUtils {
 			return value;
 		}
 		return map.computeIfAbsent(key, mappingFunction);
+	}
+
+	//endregion
+
+
+	//region toMap
+
+	/**
+	 * 将对象转换为Map<br>
+	 * 注意：暂时不支持
+	 *
+	 * @param obj        对象
+	 * @param valueClass 值类型
+	 * @param <V>        值类
+	 * @return map
+	 * @since 0.6.5
+	 */
+	public static <V> Map<String, V> toMap(Object obj, Class<V> valueClass) {
+		if (obj == null) {
+			return new HashMap<>();
+		}
+
+		Assert.notNull(valueClass, "'valueClass' must be not null");
+
+		Map<String, V> map = new HashMap<>();
+
+		Field[] fields = ReflectionUtils.getAllFields(obj.getClass());
+
+		if (Object.class.equals(valueClass)) {
+			for (Field field : fields) {
+				map.put(field.getName(), ReflectionUtils.getFieldValue(obj, field));
+			}
+		} else {
+			for (Field field : fields) {
+				map.put(field.getName(), ConvertUtils.convert(ReflectionUtils.getFieldValue(obj, field), valueClass));
+			}
+		}
+
+		return map;
+	}
+
+	/**
+	 * 将对象转换为Map
+	 *
+	 * @param obj 对象
+	 * @return map
+	 * @since 0.6.5
+	 */
+	public static Map<String, String> toMap(Object obj) {
+		return toMap(obj, String.class);
 	}
 
 	//endregion
