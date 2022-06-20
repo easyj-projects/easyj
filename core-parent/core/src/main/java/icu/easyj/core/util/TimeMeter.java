@@ -19,6 +19,7 @@ package icu.easyj.core.util;
  * 计时器
  *
  * @author wangliang181230
+ * @since 0.6.5
  */
 public class TimeMeter {
 	private final long startNanoTime;
