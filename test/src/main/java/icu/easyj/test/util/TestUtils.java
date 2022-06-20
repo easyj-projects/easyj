@@ -84,7 +84,7 @@ public abstract class TestUtils {
 		}
 
 		// 计算总耗时
-		long endTime = System.nanoTime();
+		long endTime = System.nanoTime();//
 		long cost = (endTime - startTime) / 1000000;
 		String costStr = String.valueOf(cost);
 		// 计算单次耗时
@@ -163,7 +163,7 @@ public abstract class TestUtils {
 	 * @return 起始纳秒时间
 	 */
 	public static long getStartTime() {
-		return System.nanoTime();
+		return System.nanoTime();//
 	}
 
 	/**

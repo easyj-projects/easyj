@@ -33,12 +33,16 @@ public class TimeMeter {
 		return System.nanoTime() - startNanoTime;
 	}
 
-	public long spendMicorsTime() {
-		return spendNanoTime() / 1000;
+	public long spendMicroSeconds() {
+		return spendNanoTime() / 1_000;
 	}
 
-	public long spendMillisTime() {
-		return spendNanoTime() / 1000000;
+	public long spendMilliSeconds() {
+		return spendNanoTime() / 1_000_000;
+	}
+
+	public long spendSeconds() {
+		return spendNanoTime() / 1000_000_000;
 	}
 
 

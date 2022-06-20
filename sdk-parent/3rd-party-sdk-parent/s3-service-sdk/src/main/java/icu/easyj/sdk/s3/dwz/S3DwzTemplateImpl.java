@@ -23,6 +23,7 @@ import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.core.util.TimeMeter;
 import icu.easyj.core.util.UrlUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
@@ -88,7 +89,7 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 		Assert.notNull(request.getLongUrl(), "'longUrl' must not be null");
 
 		// 调用开始时间
-		long startTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 
 		// 将入参配置与通用配置合并，生成当前请求所使用的配置
 		S3DwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
@@ -141,13 +142,13 @@ public class S3DwzTemplateImpl implements IDwzTemplate {
 			if (t == null) {
 				if (LOGGER.isInfoEnabled()) {
 					LOGGER.info("S-3短链接服务调用成功：\r\n==>\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
-							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+							url, respStr, tm.spendMilliSeconds());
 				}
 			} else {
 				if (LOGGER.isErrorEnabled()) {
 					LOGGER.error("S-3短链接服务调用失败：{}\r\n==>\r\n -  url: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
 							t.getMessage(),
-							url, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+							url, respStr, tm.spendMilliSeconds());
 				}
 			}
 		}

@@ -18,7 +18,6 @@ package icu.easyj.core.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -32,7 +31,7 @@ public class CycleDependencyHandlerTest {
 	public void testGetUniqueSubstituteObject() {
 		Set<Object> objSet = new HashSet<>();
 
-		long startNanoTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 		int count = 4 * 10000;
 		int i = count;
 		Object obj;
@@ -43,7 +42,6 @@ public class CycleDependencyHandlerTest {
 			}
 			objSet.add(obj);
 		}
-		long cost = System.nanoTime() - startNanoTime;
-		System.out.println("getUniqueSubstituteObject方法测试通过，执行了" + count + "次，没有出现重复对象。耗时：" + (cost / 1000000) + " ms。");
+		System.out.println("getUniqueSubstituteObject方法测试通过，执行了" + count + "次，没有出现重复对象。耗时：" + tm.spendMilliSeconds() + " ms。");
 	}
 }
