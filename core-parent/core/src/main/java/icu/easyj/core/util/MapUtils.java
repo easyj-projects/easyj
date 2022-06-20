@@ -181,7 +181,7 @@ public abstract class MapUtils {
 
 	/**
 	 * 将对象转换为Map<br>
-	 * 注意：暂时不支持
+	 * 注意：暂时不支持嵌套类。
 	 *
 	 * @param obj        对象
 	 * @param valueClass 值类型
@@ -214,7 +214,8 @@ public abstract class MapUtils {
 	}
 
 	/**
-	 * 将对象转换为Map
+	 * 将对象转换为Map<br>
+	 * 注意：暂时不支持嵌套类。
 	 *
 	 * @param obj 对象
 	 * @return map
