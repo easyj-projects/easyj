@@ -19,6 +19,7 @@ import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
@@ -133,6 +134,28 @@ public class JSONUtilsTest {
 			};
 		}
 		TestUtils.performanceTest(THREAD_COUNT, TIMES, suppliers);
+	}
+
+	@Test
+	public void testToMap() {
+		String text;
+
+		// case 1
+		text = "{\"a\": \"1\", \"b\": \"2\"}";
+		for (IJSONService service : SERVICES) {
+			Map<String, String> map = service.toMap2(text, String.class);
+			Assertions.assertEquals(2, map.size());
+			Assertions.assertEquals("1", map.get("a"));
+			Assertions.assertEquals("2", map.get("b"));
+		}
+
+		// case 2
+		for (IJSONService service : SERVICES) {
+			Map<String, Integer> map = service.toMap(text, String.class, Integer.class);
+			Assertions.assertEquals(2, map.size());
+			Assertions.assertEquals(1, map.get("a"));
+			Assertions.assertEquals(2, map.get("b"));
+		}
 	}
 
 	@Test

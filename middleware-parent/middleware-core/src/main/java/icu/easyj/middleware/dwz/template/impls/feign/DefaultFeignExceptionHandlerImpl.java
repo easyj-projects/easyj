@@ -50,7 +50,7 @@ public class DefaultFeignExceptionHandlerImpl implements IFeignExceptionHandler 
 			String errorMsg = null;
 			if (StringUtils.isNotEmpty(content)) {
 				try {
-					Map<String, Object> contentMap = JSONUtils.toBean(content, Map.class);
+					Map<String, Object> contentMap = JSONUtils.toMap(content, String.class);
 					for (String errorMessageKey : ERROR_MESSAGE_KEYS) {
 						if (contentMap.containsKey(errorMessageKey)) {
 							errorMsg = (String)contentMap.get(errorMessageKey);
