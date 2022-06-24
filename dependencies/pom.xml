@@ -16,9 +16,6 @@
 	<description>EasyJ 统一管理第三方依赖</description>
 
 	<properties>
-		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.7.1</spring-boot.version>
-
 		<!-- Spring Cloud版本 -->
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 

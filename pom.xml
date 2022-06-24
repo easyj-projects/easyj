@@ -53,11 +53,6 @@
 		<module>maven-plugin</module>
 	</modules>
 
-	<properties>
-		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.7.1</spring-boot.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
