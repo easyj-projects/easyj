@@ -26,6 +26,9 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Spring Boot版本 -->
+		<spring-boot.version>1.5.22.RELEASE</spring-boot.version>
 	</properties>
 
 	<url>https://easyj.icu</url>
