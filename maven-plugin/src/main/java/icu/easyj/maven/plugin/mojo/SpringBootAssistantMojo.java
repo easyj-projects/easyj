@@ -81,7 +81,7 @@ public class SpringBootAssistantMojo extends AbstractMojo {
 
 		//endregion
 
-		getLog().info("The current project is a springboot application.\r\n");
+		getLog().info("The current project is a springboot application.");
 
 
 		// skip install or deploy
@@ -116,35 +116,40 @@ public class SpringBootAssistantMojo extends AbstractMojo {
 			return;
 		}
 
+		// string 转为 set
 		Set<String> includeGroupIds = this.convertIncludeGroupIds(this.includeGroupIds);
 		if (includeGroupIds.isEmpty()) {
 			return;
 		}
+		// 打印 includeGroupIds
+		getLog().info("");
+		getLog().info("The includeGroupIds: " + includeGroupIds);
 
-		getLog().info(includeGroupIds.toString());
-
-		// 因为spring-boot没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
+		// 因为spring-boot:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
 		Set<String> excludeGroupIds = new HashSet<>();
-		project.setArtifactFilter(artifact -> !includeGroupIds.contains(artifact.getGroupId()));
-		getLog().info("Artifacts size: " + project.getArtifacts().size());
-		for (Artifact artifact : project.getArtifacts()) {
-			// 不在 includeGroupIds 中，那就加入 excludeGroupIds
-			getLog().info("  - " + artifact.toString());
-			//if (!includeGroupIds.contains(artifact.getGroupId())) {
-			excludeGroupIds.add(artifact.getGroupId());
-			//}
+		// 设置过滤器
+		project.setArtifactFilter(artifact -> !includeGroupIds.contains(artifact.getGroupId()) && this.isRuntimeScope(artifact.getScope()));
+		// 获取需排除的artifacts
+		Set<Artifact> excludeArtifacts = project.getArtifacts();
+		// 需排除的artifacts的所有groupId添加到excludeGroupIds
+		for (Artifact excludeArtifact : excludeArtifacts) {
+			excludeGroupIds.add(excludeArtifact.getGroupId());
 		}
+		// 清空过滤器
 		project.setArtifactFilter(null);
 
+		// 设置 'spring-boot.excludeGroupIds'
 		if (!excludeGroupIds.isEmpty()) {
 			Properties properties = project.getProperties();
 
 			// 打印下当前值
 			String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
 			if (ObjectUtils.isNotEmpty(propertyValue)) {
-				getLog().info("The origin values of the properties 'spring-boot.excludeGroupIds': " + propertyValue);
+				getLog().info("");
+				getLog().info("The origin values of the properties 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 			}
 
+			getLog().info("");
 			getLog().info("Put properties 'spring-boot.excludeGroupIds' to the following values: (" + excludeGroupIds.size() + ")");
 			// set转string
 			StringBuilder sb = new StringBuilder();
@@ -158,13 +163,14 @@ public class SpringBootAssistantMojo extends AbstractMojo {
 			// 设置 'spring-boot.excludeGroupIds'
 			properties.put("spring-boot.excludeGroupIds", sb.toString());
 
-			// 设置 'spring-boot.repackage.layout=ZIP'
+			// 设置 'spring-boot.repackage.layout = ZIP'
 			if (!"ZIP".equals(properties.getProperty("spring-boot.repackage.layout"))) {
 				properties.put("spring-boot.repackage.layout", "ZIP");
+				getLog().info("");
 				getLog().info("Put properties 'spring-boot.repackage.layout = ZIP' for the goal 'spring-boot:repackage'.");
 			}
 		} else {
-			getLog().info("'excludeGroupIds' is empty, do not put the properties 'spring-boot.excludeGroupIds'.");
+			getLog().info("The 'excludeGroupIds' is empty, do not put the properties 'spring-boot.excludeGroupIds'.");
 		}
 	}
 
@@ -182,5 +188,12 @@ public class SpringBootAssistantMojo extends AbstractMojo {
 		}
 
 		return result;
+	}
+
+	private boolean isRuntimeScope(String scope) {
+		return scope == null
+				|| scope.trim().isEmpty()
+				|| "compile".equalsIgnoreCase(scope)
+				|| "runtime".equalsIgnoreCase(scope);
 	}
 }
