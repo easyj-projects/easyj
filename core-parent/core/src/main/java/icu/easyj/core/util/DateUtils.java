@@ -256,10 +256,12 @@ public abstract class DateUtils {
 	 * @param date       时间
 	 * @return dateStr 格式化的时间字符串
 	 */
-	@NonNull
-	public static String format(@NonNull String dateFormat, @NonNull Date date) {
+	public static String format(@NonNull String dateFormat, Date date) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
-		Assert.notNull(date, "'date' must not be null");
+
+		if (date == null) {
+			return null;
+		}
 
 		return DateFormatFactory.get(dateFormat).format(date);
 	}
@@ -271,10 +273,12 @@ public abstract class DateUtils {
 	 * @param date       时间
 	 * @return dateStr 格式化的时间字符串
 	 */
-	@NonNull
-	public static String format(@NonNull DateFormatType dateFormat, @NonNull Date date) {
+	public static String format(@NonNull DateFormatType dateFormat, Date date) {
 		Assert.notNull(dateFormat, "'dateFormat' must not be null");
-		Assert.notNull(date, "'date' must not be null");
+
+		if (date == null) {
+			return null;
+		}
 
 		return DateFormatFactory.get(dateFormat).format(date);
 	}

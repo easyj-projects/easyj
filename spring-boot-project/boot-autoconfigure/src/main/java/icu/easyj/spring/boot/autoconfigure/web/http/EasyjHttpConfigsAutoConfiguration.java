@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.spring.boot.autoconfigure.web.httpconfigs;
+package icu.easyj.spring.boot.autoconfigure.web.http;
 
 import icu.easyj.web.util.HttpConfigs;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -23,18 +23,18 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Web相关配置自动装配类
+ * Http配置相关配置自动装配类
  *
  * @author wangliang181230
- * @see HttpConfigs // HTTP相关配置持有者
+ * @see HttpConfigs
  */
 @Lazy(false)
 @Configuration
 @ConditionalOnClass({WebApplicationContext.class, HttpConfigs.class})
 @ConditionalOnWebApplication
-public class EasyjWebConfigAutoConfiguration {
+public class EasyjHttpConfigsAutoConfiguration {
 
-	public EasyjWebConfigAutoConfiguration(WebApplicationContext context) {
+	public EasyjHttpConfigsAutoConfiguration(WebApplicationContext context) {
 		HttpConfigs.loadFromWebApplicationContext(context);
 	}
 }

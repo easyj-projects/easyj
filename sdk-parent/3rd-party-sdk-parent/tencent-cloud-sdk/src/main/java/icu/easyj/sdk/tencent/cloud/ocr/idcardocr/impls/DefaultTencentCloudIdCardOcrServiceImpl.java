@@ -24,6 +24,7 @@ import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRRequest;
 import com.tencentcloudapi.ocr.v20181119.models.IDCardOCRResponse;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.core.util.TimeMeter;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.ITencentCloudIdCardOcrService;
 import icu.easyj.sdk.tencent.cloud.ocr.idcardocr.TencentCloudIdCardOcrConfig;
 import org.slf4j.Logger;
@@ -84,7 +85,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 		Assert.notNull(config.getSecretKey(), "'secretKey' must not be null");
 		Assert.notNull(config.getRegion(), "'region' must not be null");
 
-		long startTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 		try {
 			// 实例化要请求产品的client对象,clientProfile是可选的
 			OcrClient client;
@@ -109,7 +110,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 							icu.easyj.core.util.StringUtils.toString(request),
 							icu.easyj.core.util.StringUtils.toString(response),
 							icu.easyj.core.util.StringUtils.toString(config),
-							(System.nanoTime() - startTime) / 1000000);
+							tm.spendMilliSeconds());
 				} finally {
 					request.setImageBase64(imageBase64Bak);
 					response.setAdvancedInfo(advancedInfoBak);
@@ -125,7 +126,7 @@ public class DefaultTencentCloudIdCardOcrServiceImpl implements ITencentCloudIdC
 						e.getMessage(),
 						icu.easyj.core.util.StringUtils.toString(request),
 						icu.easyj.core.util.StringUtils.toString(config),
-						(System.nanoTime() - startTime) / 1000000);
+						tm.spendMilliSeconds());
 			} finally {
 				request.setImageBase64(imageBase64Bak);
 			}

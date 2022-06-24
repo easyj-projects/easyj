@@ -31,11 +31,15 @@ public @interface LoginValidator {
 
 	/**
 	 * 允许调用当前Action的人员角色列表
+	 *
+	 * @return 人员角色列表
 	 */
 	String[] value() default {};
 
 	/**
 	 * 允许调用当前Action的登录状态
+	 *
+	 * @return 允许的登录状态
 	 */
 	AllowLoginStatus allowState() default AllowLoginStatus.LOGIN_ONLY; // 默认：仅登录可调用
 
@@ -45,6 +49,8 @@ public @interface LoginValidator {
 	 * 值域：<br>
 	 * true  = 生效（默认）：会校验登录用户角色。<br>
 	 * false = 不生效：不会校验。使用场景：接口类上添加了当前注解，但想排除众多方法中的某个方法时使用。
+	 *
+	 * @return 是否生效
 	 */
 	boolean exist() default true; // 默认：生效
 }

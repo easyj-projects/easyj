@@ -4,28 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-build</artifactId>
-		<version>1.0.43</version>
-		<relativePath/>
+		<artifactId>build</artifactId>
+		<version>${revision}</version>
+		<relativePath>../build/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-test</artifactId>
-	<version>0.3.9-SNAPSHOT</version>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>方便引用测试所需的依赖，并提供一些测试所需的类或功能。</description>
-	<url>https://gitee.com/easyj-projects/easyj</url>
-
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -82,14 +69,6 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<configuration>
-					<flattenMode>bom</flattenMode>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：Jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

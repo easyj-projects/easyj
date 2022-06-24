@@ -27,6 +27,7 @@ public interface ILoginValidatorExceptionHandler {
 	 *
 	 * @param errorCode 错误代码
 	 * @param errorMsg  错误信息
+	 * @throws Exception 异常
 	 */
 	void handle(String errorCode, String errorMsg) throws Exception;
 

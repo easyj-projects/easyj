@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import icu.easyj.core.util.DateUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.core.util.ThrowableUtils;
+import icu.easyj.core.util.TimeMeter;
 import icu.easyj.web.cache304.config.Cache304Config;
 import icu.easyj.web.cache304.config.Cache304ConfigManagerFactory;
 import icu.easyj.web.util.HttpUtils;
@@ -153,12 +154,12 @@ public abstract class Cache304Utils {
 		}
 
 		// 先执行业务代码
-		long startTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 		Object result = callback.get();
 
-		// 如果
+		// 如果配置的是按日期计算
 		if (config.getCacheDays() > 0) {
-			long runSeconds = (System.nanoTime() - startTime) / 1000000000;
+			long runSeconds = tm.spendSeconds();
 			if (runSeconds > 0) {
 				cacheSeconds -= runSeconds;
 				if (cacheSeconds <= 0) {

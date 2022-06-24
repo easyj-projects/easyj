@@ -18,15 +18,14 @@ package icu.easyj.spring.boot.env.enhanced.impls;
 import java.util.List;
 
 import icu.easyj.core.loader.LoadLevel;
-import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.env.enhanced.AbstractConditionPropertySourceFilter;
 
 /**
- * 如果类存在，则添加配置源；反之，则不添加。
+ * 如果所有类都存在，则添加配置源；反之，则不添加。
  *
  * @author wangliang181230
  */
-@LoadLevel(name = "on-class", order = 1)
+@LoadLevel(name = "on-class", order = 10)
 public class OnClassConditionPropertySourceFilter extends AbstractConditionPropertySourceFilter {
 
 	public static final String PROPERTY_NAME = "easyj.config.activate.on-class";
@@ -42,15 +41,13 @@ public class OnClassConditionPropertySourceFilter extends AbstractConditionPrope
 	public boolean doConditionFilter(List<String> conditionPropertyList) {
 		try {
 			for (String property : conditionPropertyList) {
-				if (StringUtils.isNotEmpty(property)) {
-					// 尝试加载类
-					this.loadClass(property);
-				}
+				// 尝试加载类
+				this.loadClass(property);
 			}
-			// 类存在，不过滤
+			// 所有类都存在，不过滤
 			return false;
 		} catch (ClassNotFoundException ignore) {
-			// 类不存在，过滤掉
+			// 有一个类不存在，过滤掉
 			return true;
 		}
 	}

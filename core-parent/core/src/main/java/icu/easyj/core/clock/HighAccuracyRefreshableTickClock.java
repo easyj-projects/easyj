@@ -73,7 +73,7 @@ public class HighAccuracyRefreshableTickClock extends RefreshableTickClock {
 //		ITickClock newTickClock, currentTickClock = null;
 //		long currentCost, minCost = Long.MAX_VALUE;
 //		do {
-//			currentNanoTime = System.nanoTime();
+//			currentNanoTime = System.nanoTime();//
 //			newTickClock = this.createClock();
 //			currentCost = newTickClock.getBaseTickNanos() - currentNanoTime;
 //

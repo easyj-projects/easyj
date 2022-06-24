@@ -26,4 +26,23 @@
 		<module>3rd-party-sdk-parent/s3-service-sdk</module>
 		<module>3rd-party-sdk-parent/tencent-cloud-sdk</module>
 	</modules>
+
+	<build>
+		<plugins>
+			<!-- 使用插件：Easyj：跳过install和deploy -->
+			<plugin>
+				<groupId>icu.easyj.maven.plugins</groupId>
+				<artifactId>easyj-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>skip-install-deploy</id>
+						<inherited>false</inherited>
+						<goals>
+							<goal>skip-install-deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

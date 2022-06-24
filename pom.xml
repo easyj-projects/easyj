@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>icu.easyj</groupId>
-		<artifactId>easyj-build</artifactId>
-		<version>1.0.43</version>
-		<relativePath/>
+		<artifactId>build</artifactId>
+		<version>${revision}</version>
+		<relativePath>./build/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>easyj-parent</artifactId>
@@ -16,38 +16,9 @@
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ项目提供了一系列的工具类、封装类、异常类、常量等等，降低各API的学习成本，提高开发效率，同时使Java代码能够更加简洁易懂。</description>
 
-	<url>https://easyj.icu</url>
-
-	<inceptionYear>2021</inceptionYear>
-
-	<organization>
-		<name>EasyJ开源社区</name>
-		<url>https://gitee.com/easyj-projects</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<id>wangliang181230</id>
-			<name>王良</name>
-			<email>841369634@qq.com</email>
-			<url>https://gitee.com/wangliang181230</url>
-			<organization>浙江蕙康科技有限公司</organization>
-			<organizationUrl>https://www.jyhk.com</organizationUrl>
-			<roles>
-				<role>Java架构师</role>
-			</roles>
-		</developer>
-	</developers>
-
 	<modules>
+		<module>build</module>
+
 		<module>dependencies</module>
 
 		<module>bom</module>
@@ -77,32 +48,14 @@
 
 		<!-- Test -->
 		<module>test</module>
+
+		<!-- Maven Plugin -->
+		<module>maven-plugin</module>
 	</modules>
 
-	<scm>
-		<connection>scm:git@gitee.com:easyj-projects/easyj.git</connection>
-		<developerConnection>scm:git@gitee.com:easyj-projects/easyj.git</developerConnection>
-		<url>https://gitee.com/easyj-projects/easyj</url>
-	</scm>
-
-	<issueManagement>
-		<system>gitee</system>
-		<url>https://gitee.com/easyj-projects/easyj/issues</url>
-	</issueManagement>
-
 	<properties>
-		<!-- 当前项目版本 -->
-		<revision>0.3.9-SNAPSHOT</revision>
-
 		<!-- Spring Boot版本 -->
 		<spring-boot.version>2.1.18.RELEASE</spring-boot.version>
-
-		<!-- 编译配置 -->
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencyManagement>
@@ -148,18 +101,24 @@
 
 	<build>
 		<plugins>
-			<!-- 使用插件：Flatten -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>flatten-maven-plugin</artifactId>
-				<configuration>
-					<flattenMode>resolveCiFriendliesOnly</flattenMode>
-				</configuration>
-			</plugin>
 			<!-- 使用插件：Javadoc -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<!-- 使用插件：Easyj：跳过install和deploy -->
+			<plugin>
+				<groupId>icu.easyj.maven.plugins</groupId>
+				<artifactId>easyj-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>skip-install-deploy</id>
+						<inherited>false</inherited>
+						<goals>
+							<goal>skip-install-deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
