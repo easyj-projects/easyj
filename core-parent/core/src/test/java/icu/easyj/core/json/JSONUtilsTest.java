@@ -141,7 +141,7 @@ public class JSONUtilsTest {
 		String text;
 
 		// case 1
-		text = "{\"a\": \"1\", \"b\": \"2\"}";
+		text = "{\"a\": \"1\", \"b\": 2}";
 		for (IJSONService service : SERVICES) {
 			Map<String, String> map = service.toMap2(text, String.class);
 			Assertions.assertEquals(2, map.size());
@@ -150,11 +150,28 @@ public class JSONUtilsTest {
 		}
 
 		// case 2
+		text = "{\"a\": \"1\", \"b\": \"2\"}";
 		for (IJSONService service : SERVICES) {
 			Map<String, Integer> map = service.toMap(text, String.class, Integer.class);
 			Assertions.assertEquals(2, map.size());
 			Assertions.assertEquals(1, (long)map.get("a"));
 			Assertions.assertEquals(2, (long)map.get("b"));
+		}
+
+		// case 3: 警告：解析Map时，不推荐使用toBean方法，因为数据类型会不符合泛型变量的泛型类型。在调用Map.get方法时，会抛出ClassCastException异常
+		text = "{\"a\": \"1\", \"b\": 2}";
+		for (IJSONService service : SERVICES) {
+			Map<String, String> map = service.toBean(text, Map.class); // 不推荐toBean方法，推荐toMap方法
+			final Map<String, String> finalMap = map;
+			Assertions.assertEquals(2, map.size());
+			Assertions.assertEquals("1", map.get("a"));
+			Assertions.assertThrows(ClassCastException.class, () -> System.out.println("b的类型：" + finalMap.get("b").getClass()), service.getName() + ", "); // 会抛异常
+
+			// 如果用toBean方法，则请使用重载方法（toMap方法其实就是以下代码的封装）
+			map = service.toBean(text, Map.class, String.class, String.class);
+			Assertions.assertEquals(2, map.size());
+			Assertions.assertEquals("1", (long)map.get("a"));
+			Assertions.assertEquals("2", (long)map.get("b"));
 		}
 	}
 
