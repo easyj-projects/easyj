@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.web.spring.WebMvcConfigurerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
@@ -32,7 +33,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author wangliang181230
  * @since 0.6.5
  */
-public class CorsWebMvcConfigurer implements WebMvcConfigurer {
+public class CorsWebMvcConfigurer implements WebMvcConfigurerAdapter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CorsWebMvcConfigurer.class);
 
