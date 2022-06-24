@@ -119,7 +119,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
 		if (updatePomFile) {
 			getLog().info("Set the POM file '" + this.simplifiedPomFileName + "' to the project object.");
-			project.setFile(simplifiedPomFile);
+			project.setPomFile(simplifiedPomFile);
 		}
 	}
 }

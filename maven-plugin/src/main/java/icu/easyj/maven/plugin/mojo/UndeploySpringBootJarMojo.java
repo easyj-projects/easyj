@@ -31,18 +31,22 @@ import org.apache.maven.project.MavenProject;
  *
  * @author wangliang181230
  * @since 0.5.9
+ * @deprecated 请使用 {@link SpringBootAssistantMojo}
  */
-@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = true)
+@Deprecated
+@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
 public class UndeploySpringBootJarMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
+
 
 	@Parameter(defaultValue = "true")
 	private boolean skipInstall;
 
 	@Parameter(defaultValue = "true")
 	private boolean skipDeploy;
+
 
 	@Override
 	public void execute() throws MojoExecutionException {
