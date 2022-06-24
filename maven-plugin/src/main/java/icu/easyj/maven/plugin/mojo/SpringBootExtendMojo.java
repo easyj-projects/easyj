@@ -34,10 +34,10 @@ import org.apache.maven.project.MavenProject;
  * spring-boot插件的协助插件
  *
  * @author wangliang181230
- * @since 0.6.7
+ * @since 0.6.8
  */
-@Mojo(name = "spring-boot-assist", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
-public class SpringBootAssistantMojo extends AbstractMojo {
+@Mojo(name = "spring-boot-extend", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
+public class SpringBootExtendMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
@@ -97,6 +97,7 @@ public class SpringBootAssistantMojo extends AbstractMojo {
 
 		if ((skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip")))
 				|| (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip")))) {
+			getLog().info("");
 			getLog().info("It will skip `install` and `deploy`:");
 
 			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {

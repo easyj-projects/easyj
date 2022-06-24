@@ -31,7 +31,7 @@ import org.apache.maven.project.MavenProject;
  *
  * @author wangliang181230
  * @since 0.5.9
- * @deprecated 请使用 {@link SpringBootAssistantMojo}
+ * @deprecated 请使用 {@link SpringBootExtendMojo}
  */
 @Deprecated
 @Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
