@@ -25,6 +25,7 @@ import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.core.util.TimeMeter;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import icu.easyj.sdk.dwz.DwzSdkClientException;
@@ -90,7 +91,7 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 		BaiduDwzConfig config = ObjectUtils.mergeData(this.config, request.getConfigs());
 
 		// 调用开始时间
-		long startTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 
 		String body = null;
 		String respStr = null;
@@ -145,13 +146,13 @@ public class BaiduDwzTemplateImpl implements IDwzTemplate {
 			if (ex == null) {
 				if (LOGGER.isInfoEnabled()) {
 					LOGGER.info("百度云短链接服务调用成功：\r\n==>\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms\r\n==>\r\n",
-							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+							config.getServiceUrl(), body, respStr, tm.spendMilliSeconds());
 				}
 			} else {
 				if (LOGGER.isErrorEnabled()) {
 					LOGGER.error("{}{}\r\n==>\r\n -  url: {}\r\n - body: {}\r\n - resp: {}\r\n - cost: {} ms\r\n<==\r\n",
 							ex instanceof DwzSdkException ? "" : "百度云短链接服务调用失败：", ex,
-							config.getServiceUrl(), body, respStr, (float)(System.nanoTime() - startTime) / 1000000);
+							config.getServiceUrl(), body, respStr, tm.spendMilliSeconds());
 				}
 			}
 		}

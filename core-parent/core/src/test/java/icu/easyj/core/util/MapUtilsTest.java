@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import icu.easyj.core.modelfortest.TestClass;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -52,5 +53,18 @@ public class MapUtilsTest {
 			return sb.toString();
 		}));
 		Assertions.assertEquals("1", sb.toString());
+	}
+
+	@Test
+	public void testToMap() {
+		TestClass test = new TestClass();
+		test.setF1("1");
+		test.setF2("2");
+
+		Map<String, Long> map = MapUtils.toMap(test, Long.class);
+		Assertions.assertEquals(2, map.size());
+
+		Assertions.assertEquals(1L, map.get("f1"));
+		Assertions.assertEquals(2L, map.get("f2"));
 	}
 }

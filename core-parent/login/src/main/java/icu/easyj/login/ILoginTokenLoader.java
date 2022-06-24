@@ -29,7 +29,8 @@ public interface ILoginTokenLoader {
 	/**
 	 * 从请求中加载登录token
 	 *
-	 * @param request 请求
+	 * @param request    请求
+	 * @param properties 配置
 	 * @return token 返回登录token
 	 */
 	@Nullable

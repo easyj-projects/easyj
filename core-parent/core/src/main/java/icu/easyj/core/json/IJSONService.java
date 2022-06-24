@@ -17,6 +17,7 @@ package icu.easyj.core.json;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import icu.easyj.core.util.TypeBuilder;
 import org.springframework.lang.NonNull;
@@ -87,6 +88,52 @@ public interface IJSONService {
 	@NonNull
 	<T> List<T> toList(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException;
 
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text       字符串
+	 * @param keyClazz   键类型
+	 * @param valueClazz 值类型
+	 * @param <K>        键类
+	 * @param <V>        值类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	@SuppressWarnings("all")
+	default <K, V> Map<K, V> toMap(String text, @NonNull Class<K> keyClazz, @NonNull Class<V> valueClazz) {
+		return this.toBean(text, Map.class, keyClazz, valueClazz);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text     字符串
+	 * @param keyClazz 键类型
+	 * @param <K>      键类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	default <K> Map<K, Object> toMap(String text, @NonNull Class<K> keyClazz) {
+		return this.toMap(text, keyClazz, Object.class);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text          字符串
+	 * @param keyValueClazz 键值类型
+	 * @param <KV>          键值类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	default <KV> Map<KV, KV> toMap2(String text, @NonNull Class<KV> keyValueClazz) {
+		return this.toMap(text, keyValueClazz, keyValueClazz);
+	}
+
 	/**
 	 * 转换为字符串
 	 *
@@ -95,6 +142,5 @@ public interface IJSONService {
 	 * @throws JSONParseException 转换异常
 	 */
 	@NonNull
-	@SuppressWarnings("all")
 	String toJSONString(@Nullable Object obj) throws JSONParseException;
 }

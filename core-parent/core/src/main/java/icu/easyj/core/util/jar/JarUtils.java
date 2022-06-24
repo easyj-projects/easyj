@@ -29,6 +29,7 @@ import icu.easyj.core.loader.EnhancedServiceLoader;
 import icu.easyj.core.util.MapUtils;
 import icu.easyj.core.util.ObjectUtils;
 import icu.easyj.core.util.ResourceUtils;
+import icu.easyj.core.util.TimeMeter;
 import icu.easyj.core.util.version.VersionInfo;
 import icu.easyj.core.util.version.VersionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -294,7 +295,7 @@ public abstract class JarUtils {
 	private static List<JarInfo> loadJarList(@NonNull ClassLoader classLoader) {
 		List<JarInfo> result = new ArrayList<>();
 
-		long startTime = System.nanoTime();
+		TimeMeter tm = TimeMeter.create();
 		try {
 			Resource[] resources = ResourceUtils.getResources("classpath*:/META-INF/MANIFEST.MF");
 
@@ -359,7 +360,7 @@ public abstract class JarUtils {
 			});
 		} finally {
 			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("共加载JAR信息 {} 个，耗时: {} ms, 类加载器为：{}", result.size(), (System.nanoTime() - startTime) / 1000000, classLoader);
+				LOGGER.info("共加载JAR信息 {} 个，耗时: {} ms, 类加载器为：{}", result.size(), tm.spendMilliSeconds(), classLoader);
 			}
 		}
 

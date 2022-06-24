@@ -39,6 +39,12 @@
 			"description": "配置源过滤器接口实现：基于OnClass条件判断."
 		},
 		{
+			"name": "easyj.config.activate.on-any-class",
+			"type": "java.util.List<java.lang.Class>",
+			"sourceType": "icu.easyj.spring.boot.env.enhanced.impls.OnAnyClassConditionPropertySourceFilter",
+			"description": "配置源过滤器接口实现：基于OnAnyClass条件判断."
+		},
+		{
 			"name": "easyj.crypto.asymmetric-crypto.algorithm",
 			"type": "java.lang.String",
 			"sourceType": "icu.easyj.spring.boot.env.enhanced.EasyjAppointedEnvironmentPostProcessor",

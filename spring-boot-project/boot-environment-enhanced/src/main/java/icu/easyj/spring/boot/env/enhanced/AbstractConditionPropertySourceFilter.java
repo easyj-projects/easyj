@@ -17,6 +17,7 @@ package icu.easyj.spring.boot.env.enhanced;
 
 import java.util.List;
 
+import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
 import org.springframework.core.env.MapPropertySource;
 
@@ -36,6 +37,11 @@ public abstract class AbstractConditionPropertySourceFilter implements IProperty
 	@Override
 	public boolean doFilter(MapPropertySource propertySource) {
 		List<String> propertyList = EnvironmentUtils.getPropertyList(propertySource, propertyName);
+
+		if (!propertyList.isEmpty()) {
+			propertyList.removeIf(StringUtils::isBlank);
+		}
+
 		if (propertyList.isEmpty()) {
 			// 配置不存在，不过滤
 			return false;

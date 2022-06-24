@@ -17,6 +17,7 @@ package icu.easyj.core.json;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import icu.easyj.core.loader.EnhancedServiceLoader;
 import org.springframework.lang.NonNull;
@@ -113,6 +114,57 @@ public abstract class JSONUtils {
 		Assert.notNull(targetClazz, "'targetClazz' must not be null");
 
 		return JSON_SERVICE.toList(text, targetClazz);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text       字符串
+	 * @param keyClazz   键类型
+	 * @param valueClazz 值类型
+	 * @param <K>        键类
+	 * @param <V>        值类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	public static <K, V> Map<K, V> toMap(String text, @NonNull Class<K> keyClazz, @NonNull Class<V> valueClazz) {
+		if (text == null) {
+			return null;
+		}
+
+		Assert.notNull(keyClazz, "'keyClazz' must not be null");
+		Assert.notNull(valueClazz, "'valueClazz' must not be null");
+
+		return JSON_SERVICE.toMap(text, keyClazz, valueClazz);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text     字符串
+	 * @param keyClazz 键类型
+	 * @param <K>      键类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	public static <K> Map<K, Object> toMap(String text, @NonNull Class<K> keyClazz) {
+		return toMap(text, keyClazz, Object.class);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text          字符串
+	 * @param keyValueClazz 键值类型
+	 * @param <KV>          键值类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.6.6
+	 */
+	public static <KV> Map<KV, KV> toMap2(String text, @NonNull Class<KV> keyValueClazz) {
+		return toMap(text, keyValueClazz, keyValueClazz);
 	}
 
 	/**

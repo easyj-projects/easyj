@@ -18,6 +18,7 @@ package icu.easyj.core.util;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.hutool.core.lang.ParameterizedTypeImpl;
@@ -70,5 +71,17 @@ public abstract class TypeBuilder {
 	 */
 	public static ParameterizedType buildSet(Class<?> actualType) {
 		return buildGeneric(Set.class, actualType);
+	}
+
+	/**
+	 * 创建 {@link Map} 泛型类型
+	 *
+	 * @param keyActualType   键泛型参数实际类型
+	 * @param valueActualType 值泛型参数实际类型
+	 * @return 返回 {@link Map} 泛型类型
+	 * @since 0.6.6
+	 */
+	public static ParameterizedType buildMap(Class<?> keyActualType, Class<?> valueActualType) {
+		return buildGeneric(Map.class, keyActualType, valueActualType);
 	}
 }

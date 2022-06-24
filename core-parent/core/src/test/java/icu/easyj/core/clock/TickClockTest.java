@@ -28,7 +28,7 @@ public class TickClockTest {
 	@Test
 	public void testCompareTo() {
 		long currentTimeMicros = System.currentTimeMillis() * 1000;
-		long nanoTime = System.nanoTime();
+		long nanoTime = System.nanoTime();//
 
 		TickClock tickClock = new TickClock(currentTimeMicros, nanoTime);
 		Assertions.assertEquals(0, tickClock.compareTo(new TickClock(currentTimeMicros, nanoTime)));
