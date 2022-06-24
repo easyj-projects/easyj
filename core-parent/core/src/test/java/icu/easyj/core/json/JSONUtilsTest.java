@@ -153,8 +153,8 @@ public class JSONUtilsTest {
 		for (IJSONService service : SERVICES) {
 			Map<String, Integer> map = service.toMap(text, String.class, Integer.class);
 			Assertions.assertEquals(2, map.size());
-			Assertions.assertEquals(1, map.get("a"));
-			Assertions.assertEquals(2, map.get("b"));
+			Assertions.assertEquals(1, (long)map.get("a"));
+			Assertions.assertEquals(2, (long)map.get("b"));
 		}
 	}
 

@@ -64,7 +64,7 @@ public class MapUtilsTest {
 		Map<String, Long> map = MapUtils.toMap(test, Long.class);
 		Assertions.assertEquals(2, map.size());
 
-		Assertions.assertEquals(1L, map.get("f1"));
-		Assertions.assertEquals(2L, map.get("f2"));
+		Assertions.assertEquals(1L, (long)map.get("f1"));
+		Assertions.assertEquals(2L, (long)map.get("f2"));
 	}
 }
