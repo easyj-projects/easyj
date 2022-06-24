@@ -170,8 +170,8 @@ public class JSONUtilsTest {
 			// 如果用toBean方法，则请使用重载方法（toMap方法其实就是以下代码的封装）
 			map = service.toBean(text, Map.class, String.class, String.class);
 			Assertions.assertEquals(2, map.size());
-			Assertions.assertEquals("1", (long)map.get("a"));
-			Assertions.assertEquals("2", (long)map.get("b"));
+			Assertions.assertEquals("1", map.get("a"));
+			Assertions.assertEquals("2", map.get("b"));
 		}
 	}
 
