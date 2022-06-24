@@ -154,8 +154,8 @@ public class JSONUtilsTest {
 		for (IJSONService service : SERVICES) {
 			Map<String, Integer> map = service.toMap(text, String.class, Integer.class);
 			Assertions.assertEquals(2, map.size());
-			Assertions.assertEquals(1, map.get("a"));
-			Assertions.assertEquals(2, map.get("b"));
+			Assertions.assertEquals(1, (long)map.get("a"));
+			Assertions.assertEquals(2, (long)map.get("b"));
 		}
 
 		// case 3: 警告：解析Map时，不推荐使用toBean方法，因为数据类型会不符合泛型变量的泛型类型。在调用Map.get方法时，会抛出ClassCastException异常
