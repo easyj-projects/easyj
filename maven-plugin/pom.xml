@@ -11,7 +11,7 @@
 
 	<groupId>icu.easyj.maven.plugins</groupId>
 	<artifactId>easyj-maven-plugin</artifactId>
-	<version>0.6.6</version>
+	<version>0.6.7</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>${project.groupId} :: ${project.artifactId}</name>
