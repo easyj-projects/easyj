@@ -30,4 +30,9 @@ public class ContextEmptyException extends RuntimeException {
 	public ContextEmptyException(String message, Throwable cause) {
 		super(message, cause);
 	}
+
+
+	public static ContextEmptyException create(String contextKey) {
+		return new ContextEmptyException("上下文 '" + contextKey + "' 不能为空");
+	}
 }
