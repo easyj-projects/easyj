@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
@@ -144,7 +145,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		getLog().info("The includeGroupIds: " + includeGroupIds);
 
 		// 因为spring-boot:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
-		Set<String> excludeGroupIds = new HashSet<>();
+		Set<String> excludeGroupIds = new TreeSet<>(String::compareTo); // 使用TreeSet，为了下面的日志按groupId顺序打印
 		// 设置过滤器
 		AtomicInteger includeCount = new AtomicInteger(0);
 		project.setArtifactFilter(artifact -> {
@@ -184,9 +185,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				// set转string
 				StringBuilder sb = new StringBuilder();
 
-				List<String> excludeGroupIdList = new ArrayList<>(excludeGroupIds); // 为了排序打印groupId
-				excludeGroupIdList.sort(String::compareTo);
-				for (String excludeGroupId : excludeGroupIdList) {
+				for (String excludeGroupId : excludeGroupIds) {
 					getLog().info("  - " + excludeGroupId);
 					if (sb.length() > 0) {
 						sb.append(",");
