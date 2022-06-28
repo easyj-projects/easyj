@@ -15,12 +15,18 @@
  */
 package icu.easyj.maven.plugin.mojo.springboot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
+import icu.easyj.maven.plugin.mojo.utils.ZipUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
@@ -42,6 +48,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
 
+	@Parameter(defaultValue = "${project.basedir}")
+	private File outputDirectory;
+
 
 	@Parameter(defaultValue = "false")
 	private boolean skipInstall;
@@ -55,6 +64,12 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	 */
 	@Parameter(property = "maven.spring-boot-extend.includeGroupIds")
 	private String includeGroupIds;
+
+	/**
+	 * 是否将排除掉的lib打包进lib.zip中
+	 */
+	@Parameter(defaultValue = "true")
+	private boolean packageExcludedDependenciesToZip;
 
 
 	@Override
@@ -166,24 +181,34 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				properties.put("spring-boot.excludeGroupIds", sb.toString());
 			}
 
-			// 设置 'excludeGroupIds'，用于 'maven-dependency-plugin:copy-dependencies'
-			{
-				// 打印下当前值
-				String propertyValue = properties.getProperty("excludeGroupIds");
-				if (ObjectUtils.isNotEmpty(propertyValue)) {
-					getLog().info("");
-					getLog().info("The origin values of the property 'excludeGroupIds' for the goal 'maven-dependency-plugin:copy-dependencies':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
-				}
-
-				getLog().info("Copy the includeGroupIds to the property 'excludeGroupIds' for the goal 'maven-dependency-plugin:copy-dependencies'");
-				properties.put("excludeGroupIds", includeGroupIds);
-			}
-
 			// 设置 'spring-boot.repackage.layout = ZIP'
 			if (!"ZIP".equals(properties.getProperty("spring-boot.repackage.layout"))) {
 				properties.put("spring-boot.repackage.layout", "ZIP");
 				getLog().info("");
 				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot:repackage'.");
+			}
+
+			// 将依赖打包进lib.zip中
+			if (packageExcludedDependenciesToZip) {
+				List<File> excludeLibFiles = new ArrayList<>(excludeArtifacts.size());
+				for (Artifact excludeArtifact : excludeArtifacts) {
+					excludeLibFiles.add(excludeArtifact.getFile());
+				}
+
+				FileOutputStream fos;
+				try {
+					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib.zip");
+				} catch (FileNotFoundException e) {
+					throw new RuntimeException("New FileOutputStream of 'lib.zip' failed.", e);
+				}
+
+				try {
+					ZipUtils.toZip(excludeLibFiles, fos, false, "lib");
+				} catch (IOException e) {
+					throw new RuntimeException("Package 'lib.zip' failed.", e);
+				}
+
+				getLog().info("Package 'lib.zip' success, contains " + excludeLibFiles.size() + " JARs.");
 			}
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");

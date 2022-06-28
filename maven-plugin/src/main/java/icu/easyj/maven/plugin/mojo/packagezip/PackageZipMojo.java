@@ -41,7 +41,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 public class PackageZipMojo extends AbstractMojo {
 
 	@Parameter
-	private List<String> directories;
+	private List<String> paths;
 
 	@Parameter
 	private String outputFilePathname;
@@ -49,20 +49,34 @@ public class PackageZipMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		if (ObjectUtils.isEmpty(directories)) {
-			getLog().warn("directories 不能为空");
+		if (ObjectUtils.isEmpty(paths)) {
+			getLog().warn("paths 不能为空");
+			return;
+		}
+		if (ObjectUtils.isEmpty(outputFilePathname)) {
+			getLog().warn("outputFile 不能为空");
 			return;
 		}
 
 		List<File> files = new ArrayList<>();
-		for (String directory : directories) {
+		for (String directory : paths) {
 			if (directory != null && !directory.trim().isEmpty()) {
-				files.add(new File(directory.trim()));
+				File file = new File(directory.trim());
+				if (file.exists()) {
+					files.add(file);
+				} else {
+					getLog().info("The file is not exists: " + directory);
+				}
 			}
 		}
 
+		if (files.isEmpty()) {
+			getLog().info("No file exists, skip this goal.");
+			return;
+		}
+
 		// 打印日志
-		getLog().info("The target directories: (" + files.size() + ")");
+		getLog().info("The files: (" + files.size() + ")");
 		for (File file : files) {
 			getLog().info(" - " + file.getPath());
 		}
@@ -78,7 +92,7 @@ public class PackageZipMojo extends AbstractMojo {
 		getLog().info("The output file: " + outputFilePathname);
 
 		try {
-			ZipUtils.toZip(files, fos, true);
+			ZipUtils.toZip(files, fos, true, null);
 		} catch (IOException e) {
 			throw new RuntimeException("压缩文件流失败", e);
 		}
