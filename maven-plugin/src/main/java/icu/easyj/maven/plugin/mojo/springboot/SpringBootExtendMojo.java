@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
 import icu.easyj.maven.plugin.mojo.utils.ZipUtils;
@@ -66,10 +67,11 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	private String includeGroupIds;
 
 	/**
-	 * 是否将排除掉的lib打包进lib.zip中
+	 * 是否将排除掉的lib打包进lib.zip中。
+	 * {@link #includeGroupIds} 不为空时，才有作用。
 	 */
-	@Parameter(defaultValue = "true")
-	private boolean packageExcludedDependenciesToZip;
+	@Parameter(property = "maven.spring-boot-extend.zipLib", defaultValue = "true")
+	private boolean zipLib;
 
 
 	@Override
@@ -144,7 +146,17 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		// 因为spring-boot:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
 		Set<String> excludeGroupIds = new HashSet<>();
 		// 设置过滤器
-		project.setArtifactFilter(artifact -> !includeGroupIds.contains(artifact.getGroupId()) && this.isRuntimeScope(artifact.getScope()));
+		AtomicInteger includeCount = new AtomicInteger(0);
+		project.setArtifactFilter(artifact -> {
+			if (this.isRuntimeScope(artifact.getScope())) {
+				if (!includeGroupIds.contains(artifact.getGroupId())) {
+					return true;
+				} else {
+					includeCount.incrementAndGet();
+				}
+			}
+			return false;
+		});
 		// 获取需排除的artifacts
 		Set<Artifact> excludeArtifacts = project.getArtifacts();
 		// 需排除的artifacts的所有groupId添加到excludeGroupIds
@@ -189,7 +201,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			}
 
 			// 将依赖打包进lib.zip中
-			if (packageExcludedDependenciesToZip) {
+			if (zipLib) {
 				List<File> excludeLibFiles = new ArrayList<>(excludeArtifacts.size());
 				for (Artifact excludeArtifact : excludeArtifacts) {
 					excludeLibFiles.add(excludeArtifact.getFile());
@@ -208,7 +220,8 @@ public class SpringBootExtendMojo extends AbstractMojo {
 					throw new RuntimeException("Package 'lib.zip' failed.", e);
 				}
 
-				getLog().info("Package 'lib.zip' success, contains " + excludeLibFiles.size() + " JARs.");
+				getLog().info("Package 'lib.zip' succeeded, contains " + excludeLibFiles.size() + " JARs.");
+				getLog().info("Total JARs: " + (includeCount.get() + excludeLibFiles.size()));
 			}
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
