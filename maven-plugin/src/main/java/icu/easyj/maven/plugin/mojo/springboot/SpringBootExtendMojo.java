@@ -53,7 +53,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	/**
 	 * 由于springboot官方不提供该功能，只提供 excludeGroupIds，所以这里提供该功能
 	 */
-	@Parameter
+	@Parameter(property = "maven.spring-boot-extend.includeGroupIds")
 	private String includeGroupIds;
 
 
@@ -143,35 +143,50 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		if (!excludeGroupIds.isEmpty()) {
 			Properties properties = project.getProperties();
 
-			// 打印下当前值
-			String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
-			if (ObjectUtils.isNotEmpty(propertyValue)) {
+			// 设置 'spring-boot.excludeGroupIds'，用于 spring-boot-maven-plugin:repackage
+			{
+				// 打印下当前值
+				String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
+				if (ObjectUtils.isNotEmpty(propertyValue)) {
+					getLog().info("");
+					getLog().info("The origin values of the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
+				}
+
 				getLog().info("");
-				getLog().info("The origin values of the properties 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
+				getLog().info("Put the following values to the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage': (" + excludeGroupIds.size() + ")");
+				// set转string
+				StringBuilder sb = new StringBuilder();
+				for (String excludeGroupId : excludeGroupIds) {
+					getLog().info("  - " + excludeGroupId);
+					if (sb.length() > 0) {
+						sb.append(",");
+					}
+					sb.append(excludeGroupId);
+				}
+				properties.put("spring-boot.excludeGroupIds", sb.toString());
 			}
 
-			getLog().info("");
-			getLog().info("Put properties 'spring-boot.excludeGroupIds' to the following values: (" + excludeGroupIds.size() + ")");
-			// set转string
-			StringBuilder sb = new StringBuilder();
-			for (String excludeGroupId : excludeGroupIds) {
-				getLog().info("  - " + excludeGroupId);
-				if (sb.length() > 0) {
-					sb.append(",");
+			// 设置 'excludeGroupIds'，用于 'maven-dependency-plugin:copy-dependencies'
+			{
+				// 打印下当前值
+				String propertyValue = properties.getProperty("excludeGroupIds");
+				if (ObjectUtils.isNotEmpty(propertyValue)) {
+					getLog().info("");
+					getLog().info("The origin values of the property 'excludeGroupIds' for the goal 'maven-dependency-plugin:copy-dependencies':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 				}
-				sb.append(excludeGroupId);
+
+				getLog().info("Copy the includeGroupIds to the property 'excludeGroupIds' for the goal 'maven-dependency-plugin:copy-dependencies'");
+				properties.put("excludeGroupIds", includeGroupIds);
 			}
-			// 设置 'spring-boot.excludeGroupIds'
-			properties.put("spring-boot.excludeGroupIds", sb.toString());
 
 			// 设置 'spring-boot.repackage.layout = ZIP'
 			if (!"ZIP".equals(properties.getProperty("spring-boot.repackage.layout"))) {
 				properties.put("spring-boot.repackage.layout", "ZIP");
 				getLog().info("");
-				getLog().info("Put properties 'spring-boot.repackage.layout = ZIP' for the goal 'spring-boot:repackage'.");
+				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot:repackage'.");
 			}
 		} else {
-			getLog().info("The 'excludeGroupIds' is empty, do not put the properties 'spring-boot.excludeGroupIds'.");
+			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
 		}
 	}
 
