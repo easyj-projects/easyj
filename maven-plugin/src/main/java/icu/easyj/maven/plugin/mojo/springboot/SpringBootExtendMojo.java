@@ -183,7 +183,10 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				getLog().info("Put the following values to the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage': (" + excludeGroupIds.size() + ")");
 				// set转string
 				StringBuilder sb = new StringBuilder();
-				for (String excludeGroupId : excludeGroupIds) {
+
+				List<String> excludeGroupIdList = new ArrayList<>(excludeGroupIds); // 为了排序打印groupId
+				excludeGroupIdList.sort(String::compareTo);
+				for (String excludeGroupId : excludeGroupIdList) {
 					getLog().info("  - " + excludeGroupId);
 					if (sb.length() > 0) {
 						sb.append(",");
