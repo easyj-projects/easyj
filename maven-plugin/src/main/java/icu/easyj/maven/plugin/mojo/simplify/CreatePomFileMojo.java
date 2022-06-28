@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo;
+package icu.easyj.maven.plugin.mojo.simplify;
 
 import java.io.File;
 
-import icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.pom.PomSimplifier;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;

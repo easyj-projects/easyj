@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.jar;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier.mavenplugin;
 
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.jar.JarPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * starter的pom.xml 简化器
+ * maven插件的pom.xml 简化器
  *
  * @author wangliang181230
- * @since 0.5.7
+ * @since 0.4.2
  */
-public class StarterPomSimplifier extends JarPomSimplifier {
+public class MavenPluginPomSimplifier extends JarPomSimplifier {
 
-	public StarterPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+	public MavenPluginPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
 		super(project, config, log);
 	}
 }

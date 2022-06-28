@@ -13,38 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.jar;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier.pom;
 
-import java.util.function.Function;
-
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
-import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * JAR的pom.xml 简化器
+ * 管理依赖的的pom.xml 简化器
  *
  * @author wangliang181230
- * @since 0.4.0
+ * @since 0.4.2
  */
-public class JarPomSimplifier extends AbstractPomSimplifier {
+public class DependenciesPomSimplifier extends PomSimplifier {
 
-	public JarPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+	public DependenciesPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
 		super(project, config, log);
 	}
 
 
 	@Override
 	public void doSimplify() {
-		this.removeParent();
+		this.removeParentByConfig();
+		this.removeParentRelativePath();
 
-		this.copyProjectInfoFromParentForOpenSourceProject();
+		this.resetVersion();
+		this.resetNameAndDescription();
 
-		this.removeDependencyManagement();
-		this.resetDependencies();
-
-		this.removeProperties();
+		if (this.originalModel.getParent() == null) {
+			this.removeProperties();
+		}
 
 		this.removePrerequisites();
 		this.removeBuild();
@@ -56,11 +54,7 @@ public class JarPomSimplifier extends AbstractPomSimplifier {
 		this.removeDistributionManagement();
 
 		this.removeProfiles();
-	}
 
-	@Override
-	protected Function<String, String> getReplaceVariableFunction() {
-		this.log.info(" - Optimize with 'replaceVariable'");
-		return this::replaceVariable;
+		super.doSimplify();
 	}
 }

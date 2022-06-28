@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo;
+package icu.easyj.maven.plugin.mojo.skipinstalldeploy;
 
 import java.util.Properties;
 
