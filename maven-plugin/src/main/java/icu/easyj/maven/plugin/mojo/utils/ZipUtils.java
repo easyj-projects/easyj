@@ -40,7 +40,7 @@ public abstract class ZipUtils {
 	 * @param srcDir           压缩文件夹路径
 	 * @param out              压缩文件输出流
 	 * @param keepDirStructure 是否保留原来的目录结构
-	 * @throws RuntimeException 压缩失败会抛出运行时异常
+	 * @throws IOException 压缩失败会抛出运行时异常
 	 */
 	public static void toZip(String srcDir, OutputStream out, boolean keepDirStructure) throws IOException {
 		try (ZipOutputStream zos = new ZipOutputStream(out)) {
@@ -52,8 +52,9 @@ public abstract class ZipUtils {
 	/**
 	 * 压缩成ZIP 方法2
 	 *
-	 * @param srcFiles 需要压缩的文件列表
-	 * @param out      压缩文件输出流
+	 * @param srcFiles         需要压缩的文件列表
+	 * @param out              压缩文件输出流
+	 * @param keepDirStructure 是否保留原来的目录结构
 	 * @throws IOException 压缩失败会抛出运行时异常
 	 */
 	public static void toZip(List<File> srcFiles, OutputStream out, boolean keepDirStructure) throws IOException {
