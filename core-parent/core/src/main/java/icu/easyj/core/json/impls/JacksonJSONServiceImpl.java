@@ -18,6 +18,7 @@ package icu.easyj.core.json.impls;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import icu.easyj.core.json.IJSONService;
 import icu.easyj.core.json.JSONParseException;
@@ -44,6 +45,10 @@ class JacksonJSONServiceImpl implements IJSONService {
 	@Override
 	public <T> T toBean(@NonNull String text, @NonNull Class<T> targetClazz) throws JSONParseException {
 		try {
+			if (String.class.equals(targetClazz)) {
+				return JSONUtil.toBean(text, targetClazz);
+			}
+
 			return mapper.readValue(text, targetClazz);
 		} catch (Exception e) {
 			throw new JSONParseException("JSON字符串转Bean失败", e);
