@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.packagedir;
+package icu.easyj.maven.plugin.mojo.packagezip;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,12 +61,21 @@ public class PackageZipMojo extends AbstractMojo {
 			}
 		}
 
+		// 打印日志
+		getLog().info("The target directories: (" + files.size() + ")");
+		for (File file : files) {
+			getLog().info(" - " + file.getPath());
+		}
+
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(outputFilePathname);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("创建文件流失败", e);
 		}
+
+		getLog().info("");
+		getLog().info("The output file: " + outputFilePathname);
 
 		try {
 			ZipUtils.toZip(files, fos, true);
