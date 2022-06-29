@@ -74,6 +74,18 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	@Parameter(property = "maven.spring-boot-extend.zipLib", defaultValue = "true")
 	private boolean zipLib;
 
+	/**
+	 * 是否需要创建startup文件
+	 */
+	@Parameter(property = "maven.spring-boot-extend.needCreateStartupFile", defaultValue = "true")
+	private boolean needCreateStartupFile;
+
+	/**
+	 * spring-boot应用的startup脚本
+	 */
+	@Parameter(property = "maven.spring-boot-extend.startupScript", defaultValue = "java -jar {loaderPath} {finalName}.jar")
+	private String startupScript;
+
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -107,7 +119,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 
 
 		// includeGroupIds
-		this.includeDependencies();
+		boolean createdLib = this.includeDependencies();
+		// create startup files
+		this.createStartupFile(createdLib);
 	}
 
 	private void skipInstallAndDeploy() {
@@ -130,15 +144,15 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		}
 	}
 
-	private void includeDependencies() {
+	private boolean includeDependencies() {
 		if (ObjectUtils.isEmpty(includeGroupIds)) {
-			return;
+			return false;
 		}
 
 		// string 转为 set
 		Set<String> includeGroupIds = this.convertIncludeGroupIds(this.includeGroupIds);
 		if (includeGroupIds.isEmpty()) {
-			return;
+			return false;
 		}
 		String includeGroupIdsStr = includeGroupIds.toString();
 		// 打印 includeGroupIds
@@ -246,41 +260,38 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				getLog().info("Total JARs: " + (includeCount.get() + excludeJarFiles.size()));
 			}
 
-			getLog().info("");
-
-			// 创建startup.bat文件
-			try {
-				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.bat"), "chcp 65001\r\njava -jar -Dloader.path=lib " + project.getBuild().getFinalName() + ".jar\r\ncmd");
-				getLog().info("Create '/target/startup.bat'.");
-			} catch (IOException e) {
-				getLog().error("Create startup.bat failed", e);
-			}
-			// 创建startup.sh文件
-			try {
-				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.sh"), "#!/bin/sh\r\njava -jar -Dloader.path=lib " + project.getBuild().getFinalName() + ".jar");
-				getLog().info("Create '/target/startup.sh'.");
-			} catch (IOException e) {
-				getLog().error("Create startup.sh failed", e);
-			}
+			return true;
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
+			return false;
+		}
+	}
 
-			getLog().info("");
+	private void createStartupFile(boolean addLoaderPath) {
+		if (!needCreateStartupFile) {
+			return;
+		}
 
-			// 创建startup.bat文件
-			try {
-				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.bat"), "chcp 65001\r\njava -jar " + project.getBuild().getFinalName() + ".jar\r\ncmd");
-				getLog().info("Create '/target/startup.bat'.");
-			} catch (IOException e) {
-				getLog().error("Create startup.bat failed", e);
-			}
-			// 创建startup.sh文件
-			try {
-				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.sh"), "#!/bin/sh\r\njava -jar " + project.getBuild().getFinalName() + ".jar");
-				getLog().info("Create '/target/startup.sh'.");
-			} catch (IOException e) {
-				getLog().error("Create startup.sh failed", e);
-			}
+		getLog().info("");
+
+		String startupScript = this.startupScript
+				.replaceAll("\\s*\\{\\s*loaderPath\\s*\\}", (addLoaderPath ? " -Dloader.path=\"lib/\"" : ""))
+				.replaceAll("\\s*\\{\\s*(finalName)\\s*\\}", " " + project.getBuild().getFinalName())
+				.replaceAll("\\s*\\{\\s*(artifactId)\\s*\\}", " " + project.getArtifactId());
+
+		// 创建startup.bat文件
+		createStartupFile("bat", "chcp 65001\r\n" + startupScript + "\r\ncmd");
+		// 创建startup.sh文件
+		createStartupFile("sh", "#!/bin/sh\r\n" + startupScript + "\r\n");
+	}
+
+	private void createStartupFile(String fileSuffix, String startupScriptText) {
+		File file = new File(outputDirectory.getPath() + "\\target\\startup." + fileSuffix);
+		try {
+			IOUtils.createFile(file, startupScriptText);
+			getLog().info("Create startup file succeeded: " + file.getName());
+		} catch (IOException e) {
+			getLog().error("Create startup file failed: " + file.getName(), e);
 		}
 	}
 
