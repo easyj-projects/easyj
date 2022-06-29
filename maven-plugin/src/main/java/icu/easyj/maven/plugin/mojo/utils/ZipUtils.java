@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.attribute.FileTime;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -82,7 +83,9 @@ public abstract class ZipUtils {
 		byte[] buf = new byte[BUFFER_SIZE];
 		if (sourceFile.isFile()) {
 			// 向zip输出流中添加一个zip实体，构造器中name为zip实体的文件的名字
-			zos.putNextEntry(new ZipEntry(pathInZip + name));
+			ZipEntry zipEntry = new ZipEntry(pathInZip + name);
+			zipEntry.setLastModifiedTime(FileTime.fromMillis(sourceFile.lastModified()));
+			zos.putNextEntry(zipEntry);
 			// copy文件到zip输出流中
 			int len;
 			try (FileInputStream in = new FileInputStream(sourceFile)) {

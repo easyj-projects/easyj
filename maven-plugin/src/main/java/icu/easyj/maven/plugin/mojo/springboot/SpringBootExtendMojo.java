@@ -20,13 +20,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import icu.easyj.maven.plugin.mojo.utils.IOUtils;
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
 import icu.easyj.maven.plugin.mojo.utils.ZipUtils;
 import org.apache.maven.artifact.Artifact;
@@ -140,9 +140,10 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		if (includeGroupIds.isEmpty()) {
 			return;
 		}
+		String includeGroupIdsStr = includeGroupIds.toString();
 		// 打印 includeGroupIds
 		getLog().info("");
-		getLog().info("The includeGroupIds: " + includeGroupIds);
+		getLog().info("The includeGroupIds: " + includeGroupIdsStr.substring(1, includeGroupIdsStr.length() - 1).replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 
 		// 因为spring-boot:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
 		Set<String> excludeGroupIds = new TreeSet<>(String::compareTo); // 使用TreeSet，为了下面的日志按groupId顺序打印
@@ -202,16 +203,35 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot:repackage'.");
 			}
 
+
+			List<File> excludeLibFiles = new ArrayList<>(excludeArtifacts.size());
+			for (Artifact excludeArtifact : excludeArtifacts) {
+				excludeLibFiles.add(excludeArtifact.getFile());
+			}
+
+			// 将依赖复制到 /target/lib 目录下
+			getLog().info("");
+			File libDir = new File(outputDirectory.getPath() + "\\target\\lib");
+			if (!libDir.exists()) {
+				getLog().info("Create directory: " + libDir.getPath());
+				if (!libDir.mkdir()) {
+					throw new RuntimeException("Create directory failed: " + libDir.getPath());
+				}
+			}
+			getLog().info("Copy " + excludeArtifacts.size() + " JARs to the directory: " + libDir.getPath());
+			for (Artifact excludeArtifact : excludeArtifacts) {
+				try {
+					IOUtils.copy(excludeArtifact.getFile(), new File(libDir, excludeArtifact.getFile().getName()));
+				} catch (IOException e) {
+					throw new RuntimeException("Copy '" + excludeArtifact.getFile().getName() + "' to the directory '" + libDir.getPath() + "' failed.", e);
+				}
+			}
+
 			// 将依赖打包进lib.zip中
 			if (zipLib) {
-				List<File> excludeLibFiles = new ArrayList<>(excludeArtifacts.size());
-				for (Artifact excludeArtifact : excludeArtifacts) {
-					excludeLibFiles.add(excludeArtifact.getFile());
-				}
-
 				FileOutputStream fos;
 				try {
-					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib.zip");
+					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib-" + excludeLibFiles.size() + "-JARs.zip");
 				} catch (FileNotFoundException e) {
 					throw new RuntimeException("New FileOutputStream of 'lib.zip' failed.", e);
 				}
@@ -231,7 +251,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	}
 
 	private Set<String> convertIncludeGroupIds(String includeGroupIds) {
-		Set<String> result = new HashSet<>();
+		Set<String> result = new TreeSet<>(String::compareTo);
 
 		String[] includeGroupIdArr = includeGroupIds.split(",");
 		for (String includeGroupId : includeGroupIdArr) {
