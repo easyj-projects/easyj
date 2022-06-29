@@ -203,10 +203,10 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot:repackage'.");
 			}
 
-
-			List<File> excludeLibFiles = new ArrayList<>(excludeArtifacts.size());
+			// 从artifact中获取file
+			List<File> excludeJarFiles = new ArrayList<>(excludeArtifacts.size());
 			for (Artifact excludeArtifact : excludeArtifacts) {
-				excludeLibFiles.add(excludeArtifact.getFile());
+				excludeJarFiles.add(excludeArtifact.getFile());
 			}
 
 			// 将依赖复制到 /target/lib 目录下
@@ -231,22 +231,52 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			if (zipLib) {
 				FileOutputStream fos;
 				try {
-					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib--" + excludeLibFiles.size() + "-JARs.zip");
+					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib--" + excludeJarFiles.size() + "-JARs.zip");
 				} catch (FileNotFoundException e) {
 					throw new RuntimeException("New FileOutputStream of 'lib.zip' failed.", e);
 				}
 
 				try {
-					ZipUtils.toZip(excludeLibFiles, fos, false, "lib");
+					ZipUtils.toZip(excludeJarFiles, fos, false, "lib");
 				} catch (IOException e) {
 					throw new RuntimeException("Package 'lib.zip' failed.", e);
 				}
 
-				getLog().info("Package 'lib.zip' succeeded, contains " + excludeLibFiles.size() + " JARs.");
-				getLog().info("Total JARs: " + (includeCount.get() + excludeLibFiles.size()));
+				getLog().info("Package 'lib.zip' succeeded, contains " + excludeJarFiles.size() + " JARs.");
+				getLog().info("Total JARs: " + (includeCount.get() + excludeJarFiles.size()));
+			}
+
+			// 创建startup.bat文件
+			try {
+				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.bat"), "chcp 65001\r\njava -jar -Dloader.path=lib " + project.getBuild().getFinalName() + ".jar\r\ncmd");
+				getLog().info("Create '/target/startup.bat'.");
+			} catch (IOException e) {
+				getLog().error("Create startup.bat failed", e);
+			}
+			// 创建startup.sh文件
+			try {
+				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.sh"), "#!/bin/sh\r\njava -jar -Dloader.path=lib " + project.getBuild().getFinalName() + ".jar");
+				getLog().info("Create '/target/startup.sh'.");
+			} catch (IOException e) {
+				getLog().error("Create startup.sh failed", e);
 			}
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
+
+			// 创建startup.bat文件
+			try {
+				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.bat"), "chcp 65001\r\njava -jar " + project.getBuild().getFinalName() + ".jar\r\ncmd");
+				getLog().info("Create '/target/startup.bat'.");
+			} catch (IOException e) {
+				getLog().error("Create startup.bat failed", e);
+			}
+			// 创建startup.sh文件
+			try {
+				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.sh"), "#!/bin/sh\r\njava -jar " + project.getBuild().getFinalName() + ".jar");
+				getLog().info("Create '/target/startup.sh'.");
+			} catch (IOException e) {
+				getLog().error("Create startup.sh failed", e);
+			}
 		}
 	}
 

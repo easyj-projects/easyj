@@ -48,4 +48,18 @@ public abstract class IOUtils {
 		} catch (Exception ignore) {
 		}
 	}
+
+	/**
+	 * 创建文件
+	 *
+	 * @param newFile 文件
+	 * @param text    文件内容
+	 * @throws IOException IO异常
+	 */
+	public static void createFile(File newFile, String text) throws IOException {
+		try (FileOutputStream out = new FileOutputStream(newFile)) {
+			out.write(text.getBytes());
+			out.flush();
+		}
+	}
 }
