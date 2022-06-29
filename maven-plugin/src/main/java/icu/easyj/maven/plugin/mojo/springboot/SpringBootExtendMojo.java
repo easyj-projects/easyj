@@ -246,6 +246,8 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				getLog().info("Total JARs: " + (includeCount.get() + excludeJarFiles.size()));
 			}
 
+			getLog().info("");
+
 			// 创建startup.bat文件
 			try {
 				IOUtils.createFile(new File(outputDirectory.getPath() + "\\target\\startup.bat"), "chcp 65001\r\njava -jar -Dloader.path=lib " + project.getBuild().getFinalName() + ".jar\r\ncmd");
@@ -262,6 +264,8 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			}
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
+
+			getLog().info("");
 
 			// 创建startup.bat文件
 			try {
