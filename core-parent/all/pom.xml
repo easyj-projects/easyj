@@ -154,7 +154,6 @@
 		<plugins>
 			<!-- 使用插件：Shade -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
@@ -209,7 +208,6 @@
 			</plugin>
 			<!-- 忽略插件：Source -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<configuration>
 					<skipSource>true</skipSource>
