@@ -231,7 +231,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			if (zipLib) {
 				FileOutputStream fos;
 				try {
-					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib-" + excludeLibFiles.size() + "-JARs.zip");
+					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib--" + excludeLibFiles.size() + "-JARs.zip");
 				} catch (FileNotFoundException e) {
 					throw new RuntimeException("New FileOutputStream of 'lib.zip' failed.", e);
 				}
