@@ -182,7 +182,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		AtomicInteger includeCount = new AtomicInteger(0);
 		// 设置过滤器
 		project.setArtifactFilter(artifact -> {
-			if (this.isRuntimeScope(artifact.getScope())) {
+			if (this.isRuntimeArtifact(artifact)) {
 				if (!includeGroupIds.contains(artifact.getGroupId())) {
 					return true;
 				} else {
@@ -375,11 +375,16 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		return false;
 	}
 
-	private boolean isRuntimeScope(String scope) {
-		return scope == null
+	private boolean isRuntimeArtifact(Artifact artifact) {
+		if (artifact.isOptional()) {
+			return false;
+		}
+
+		String scope = artifact.getScope();
+		return (scope == null
 				|| scope.trim().isEmpty()
 				|| "compile".equalsIgnoreCase(scope)
-				|| "runtime".equalsIgnoreCase(scope);
+				|| "runtime".equalsIgnoreCase(scope));
 	}
 
 	private void emptyLine() {
