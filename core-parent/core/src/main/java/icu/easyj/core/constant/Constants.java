@@ -27,7 +27,7 @@ public interface Constants {
 
 	String PREFIX = "easyj";
 
-	String VERSION = "0.7.1";
+	String VERSION = "0.7.2";
 
 	VersionInfo VERSION_INFO = VersionUtils.parse(VERSION);
 }
