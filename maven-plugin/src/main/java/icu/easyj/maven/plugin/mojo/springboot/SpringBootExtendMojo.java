@@ -147,7 +147,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 
 		if ((skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip")))
 				|| (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip")))) {
-			getLog().info("");
+			this.emptyLine();
 			getLog().info("It will skip `install` and `deploy`:");
 
 			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
@@ -174,7 +174,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		}
 		String includeGroupIdsStr = includeGroupIds.toString();
 		// 打印 includeGroupIds
-		getLog().info("");
+		this.emptyLine();
 		getLog().info("The includeGroupIds: " + includeGroupIdsStr.substring(1, includeGroupIdsStr.length() - 1).replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 
 		// 因为spring-boot-maven-plugin:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
@@ -209,12 +209,12 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			// 打印下当前值
 			String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
 			if (ObjectUtils.isNotEmpty(propertyValue)) {
-				getLog().info("");
+				this.emptyLine();
 				getLog().info("The origin values of the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot-maven-plugin:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 			}
 
 			// set转string
-			getLog().info("");
+			this.emptyLine();
 			getLog().info("Put the following values to the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot-maven-plugin:repackage': (" + excludeGroupIds.size() + ")");
 			StringBuilder sb = new StringBuilder();
 			for (String excludeGroupId : excludeGroupIds) {
@@ -233,7 +233,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			// 设置 'spring-boot.repackage.layout = ZIP'
 			if (!"ZIP".equals(properties.getProperty("spring-boot.repackage.layout"))) {
 				properties.put("spring-boot.repackage.layout", "ZIP");
-				getLog().info("");
+				this.emptyLine();
 				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot-maven-plugin:repackage'.");
 				// spring-boot-maven-plugin
 				if (springBootMavenPluginVersion.startsWith("0")
@@ -254,6 +254,11 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			if (ObjectUtils.isNotEmpty(this.commonDependencyPatternSet)) {
 				commonDependencyPatternSet.addAll(this.commonDependencyPatternSet);
 			}
+			if (!commonDependencyPatternSet.isEmpty()) {
+				String str = commonDependencyPatternSet.toString();
+				this.emptyLine();
+				getLog().info("The commonDependencyPatterns: " + str.substring(1, str.length() - 1).replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
+			}
 
 			// 从 artifact 中获取 file
 			for (Artifact excludeArtifact : excludeArtifacts) {
@@ -267,7 +272,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			//endregion
 
 			int total = (includeCount.get() + excludeArtifacts.size());
-			getLog().info("");
+			this.emptyLine();
 			getLog().info("  Total: " + total + " JARs");
 			getLog().info("Include: " + StringUtils.padLeft(includeCount.get(), String.valueOf(total).length()) + " JARs");
 			getLog().info("Exclude: " + StringUtils.padLeft(excludeArtifacts.size(), String.valueOf(total).length()) + " JARs（lib: " + jarFiles.size() + ", lib-common: " + commonJarFiles.size() + "）");
@@ -295,7 +300,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		}
 
 		// 将依赖复制到 /target/lib 目录下
-		getLog().info("");
+		this.emptyLine();
 		File libDir = new File(outputDirectory.getPath() + "\\target\\" + libDirName);
 		if (!libDir.exists()) {
 			getLog().info("Create directory: " + libDir.getPath());
@@ -338,7 +343,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			return;
 		}
 
-		getLog().info("");
+		this.emptyLine();
 
 		String startupScript = this.startupScript
 				.replaceAll("\\s*\\{\\s*loaderPath\\s*\\}", (ObjectUtils.isNotEmpty(loaderPath) ? " -Dloader.path=\"" + loaderPath + "\"" : ""))
@@ -375,5 +380,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				|| scope.trim().isEmpty()
 				|| "compile".equalsIgnoreCase(scope)
 				|| "runtime".equalsIgnoreCase(scope);
+	}
+
+	private void emptyLine() {
+		getLog().info("");
 	}
 }
