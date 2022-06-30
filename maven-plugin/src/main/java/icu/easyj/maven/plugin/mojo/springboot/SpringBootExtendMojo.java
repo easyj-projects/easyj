@@ -27,7 +27,9 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import icu.easyj.maven.plugin.mojo.utils.IOUtils;
+import icu.easyj.maven.plugin.mojo.utils.MatchUtils;
 import icu.easyj.maven.plugin.mojo.utils.ObjectUtils;
+import icu.easyj.maven.plugin.mojo.utils.StringUtils;
 import icu.easyj.maven.plugin.mojo.utils.ZipUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
@@ -54,18 +56,27 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	private File outputDirectory;
 
 
+	//region skip install and deploy
+
 	@Parameter(defaultValue = "false")
 	private boolean skipInstall;
 
 	@Parameter(defaultValue = "false")
 	private boolean skipDeploy;
 
+	//endregion
+
+
+	//region includeGroupIds
 
 	/**
 	 * 由于springboot官方不提供该功能，只提供 excludeGroupIds，所以这里提供该功能
 	 */
 	@Parameter(property = "maven.spring-boot-extend.includeGroupIds")
 	private String includeGroupIds;
+
+	@Parameter(property = "maven.spring-boot-extend.commonDependencyPatterns")
+	private String commonDependencyPatterns;
 
 	/**
 	 * 是否将排除掉的lib打包进lib.zip中。
@@ -86,12 +97,15 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	@Parameter(property = "maven.spring-boot-extend.startupScript", defaultValue = "java -jar {loaderPath} {finalName}.jar")
 	private String startupScript;
 
+	//endregion
+
 
 	@Override
 	public void execute() throws MojoExecutionException {
 		//region 判断是否为springboot应用
 
 		boolean isSpringBootJar = false;
+		String springBootMavenPluginVersion = null;
 
 		if ("jar".equalsIgnoreCase(project.getPackaging())) {
 			List<Plugin> plugins = project.getBuildPlugins();
@@ -99,6 +113,7 @@ public class SpringBootExtendMojo extends AbstractMojo {
 				if ("org.springframework.boot".equalsIgnoreCase(plugin.getGroupId())
 						&& "spring-boot-maven-plugin".equalsIgnoreCase(plugin.getArtifactId())) {
 					isSpringBootJar = true;
+					springBootMavenPluginVersion = plugin.getVersion();
 					break;
 				}
 			}
@@ -119,9 +134,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 
 
 		// includeGroupIds
-		boolean createdLib = this.includeDependencies();
+		String loaderPath = this.includeDependencies(springBootMavenPluginVersion);
 		// create startup files
-		this.createStartupFile(createdLib);
+		this.createStartupFile(loaderPath);
 	}
 
 	private void skipInstallAndDeploy() {
@@ -134,35 +149,35 @@ public class SpringBootExtendMojo extends AbstractMojo {
 
 			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
 				properties.put("maven.install.skip", "true");
-				getLog().info("  - Put properties 'maven.install.skip = true' for skip `install`.");
+				getLog().info("  - Put property 'maven.install.skip = true' for skip `install`.");
 			}
 
 			if (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip"))) {
 				properties.put("maven.deploy.skip", "true");
-				getLog().info("  - Put properties 'maven.deploy.skip = true' for skip `deploy`.");
+				getLog().info("  - Put property 'maven.deploy.skip = true' for skip `deploy`.");
 			}
 		}
 	}
 
-	private boolean includeDependencies() {
+	private String includeDependencies(String springBootMavenPluginVersion) {
 		if (ObjectUtils.isEmpty(includeGroupIds)) {
-			return false;
+			return null;
 		}
 
 		// string 转为 set
-		Set<String> includeGroupIds = this.convertIncludeGroupIds(this.includeGroupIds);
+		Set<String> includeGroupIds = StringUtils.toTreeSet(this.includeGroupIds);
 		if (includeGroupIds.isEmpty()) {
-			return false;
+			return null;
 		}
 		String includeGroupIdsStr = includeGroupIds.toString();
 		// 打印 includeGroupIds
 		getLog().info("");
 		getLog().info("The includeGroupIds: " + includeGroupIdsStr.substring(1, includeGroupIdsStr.length() - 1).replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 
-		// 因为spring-boot:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
+		// 因为spring-boot-maven-plugin:repackage没有includeGroupIds，所以反过来使用excludeGroupIds来达到include的效果
 		Set<String> excludeGroupIds = new TreeSet<>(String::compareTo); // 使用TreeSet，为了下面的日志按groupId顺序打印
-		// 设置过滤器
 		AtomicInteger includeCount = new AtomicInteger(0);
+		// 设置过滤器
 		project.setArtifactFilter(artifact -> {
 			if (this.isRuntimeScope(artifact.getScope())) {
 				if (!includeGroupIds.contains(artifact.getGroupId())) {
@@ -186,88 +201,133 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		if (!excludeGroupIds.isEmpty()) {
 			Properties properties = project.getProperties();
 
-			// 设置 'spring-boot.excludeGroupIds'，用于 spring-boot-maven-plugin:repackage
-			{
-				// 打印下当前值
-				String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
-				if (ObjectUtils.isNotEmpty(propertyValue)) {
-					getLog().info("");
-					getLog().info("The origin values of the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
-				}
+			//region 设置 'spring-boot.excludeGroupIds'，用于 spring-boot-maven-plugin:repackage
 
+			// 打印下当前值
+			String propertyValue = properties.getProperty("spring-boot.excludeGroupIds");
+			if (ObjectUtils.isNotEmpty(propertyValue)) {
 				getLog().info("");
-				getLog().info("Put the following values to the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot:repackage': (" + excludeGroupIds.size() + ")");
-				// set转string
-				StringBuilder sb = new StringBuilder();
-
-				for (String excludeGroupId : excludeGroupIds) {
-					getLog().info("  - " + excludeGroupId);
-					if (sb.length() > 0) {
-						sb.append(",");
-					}
-					sb.append(excludeGroupId);
-				}
-				properties.put("spring-boot.excludeGroupIds", sb.toString());
+				getLog().info("The origin values of the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot-maven-plugin:repackage':" + propertyValue.trim().replaceAll("^|\\s*,\\s*", "\r\n[INFO]   - "));
 			}
+
+			// set转string
+			getLog().info("");
+			getLog().info("Put the following values to the property 'spring-boot.excludeGroupIds' for the goal 'spring-boot-maven-plugin:repackage': (" + excludeGroupIds.size() + ")");
+			StringBuilder sb = new StringBuilder();
+			for (String excludeGroupId : excludeGroupIds) {
+				getLog().info("  - " + excludeGroupId);
+				if (sb.length() > 0) {
+					sb.append(",");
+				}
+				sb.append(excludeGroupId);
+			}
+
+			// 设置 properties
+			properties.put("spring-boot.excludeGroupIds", sb.toString());
+
+			//endregion
 
 			// 设置 'spring-boot.repackage.layout = ZIP'
 			if (!"ZIP".equals(properties.getProperty("spring-boot.repackage.layout"))) {
 				properties.put("spring-boot.repackage.layout", "ZIP");
 				getLog().info("");
-				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot:repackage'.");
+				getLog().info("Put property 'spring-boot.repackage.layout' = 'ZIP' for the goal 'spring-boot-maven-plugin:repackage'.");
+				// spring-boot-maven-plugin
+				if (springBootMavenPluginVersion.startsWith("0")
+						|| springBootMavenPluginVersion.startsWith("1.")
+						|| springBootMavenPluginVersion.startsWith("2.0.")
+						|| springBootMavenPluginVersion.startsWith("2.1.")) {
+					// 不使用WARN日志
+					getLog().info("WARN: The version of the 'spring-boot-maven-plugin' is less than '2.2.0.RELEASE', please set 'layout' to 'ZIP' by yourself.");
+				}
 			}
 
-			// 从artifact中获取file
-			List<File> excludeJarFiles = new ArrayList<>(excludeArtifacts.size());
+			//region lib 和 lib-common，根据 commonDependencyPatterns 配置，分开来
+
+			List<File> jarFiles = new ArrayList<>();
+			List<File> commonJarFiles = new ArrayList<>();
+
+			Set<String> commonDependencyPatternSet = StringUtils.toSet(this.commonDependencyPatterns);
+
+			// 从 artifact 中获取 file
 			for (Artifact excludeArtifact : excludeArtifacts) {
-				excludeJarFiles.add(excludeArtifact.getFile());
+				if (this.isCommonJar(excludeArtifact, commonDependencyPatternSet)) {
+					commonJarFiles.add(excludeArtifact.getFile());
+				} else {
+					jarFiles.add(excludeArtifact.getFile());
+				}
 			}
 
-			// 将依赖复制到 /target/lib 目录下
+			//endregion
+
+			int total = (includeCount.get() + excludeArtifacts.size());
 			getLog().info("");
-			File libDir = new File(outputDirectory.getPath() + "\\target\\lib");
-			if (!libDir.exists()) {
-				getLog().info("Create directory: " + libDir.getPath());
-				if (!libDir.mkdir()) {
-					throw new RuntimeException("Create directory failed: " + libDir.getPath());
-				}
+			getLog().info("  Total: " + total + " JARs");
+			getLog().info("Include: " + StringUtils.padLeft(includeCount.get(), String.valueOf(total).length()) + " JARs");
+			getLog().info("Exclude: " + StringUtils.padLeft(excludeArtifacts.size(), String.valueOf(total).length()) + " JARs（lib: " + jarFiles.size() + ", lib-common: " + commonJarFiles.size() + "）");
+
+			String loaderPath = "";
+
+			if (this.createLibDirAndZip("lib", jarFiles)) {
+				loaderPath = "lib/";
 			}
-			getLog().info("Copy " + excludeArtifacts.size() + " JARs to the directory: " + libDir.getPath());
-			for (Artifact excludeArtifact : excludeArtifacts) {
-				try {
-					IOUtils.copy(excludeArtifact.getFile(), new File(libDir, excludeArtifact.getFile().getName()));
-				} catch (IOException e) {
-					throw new RuntimeException("Copy '" + excludeArtifact.getFile().getName() + "' to the directory '" + libDir.getPath() + "' failed.", e);
-				}
+			if (this.createLibDirAndZip("lib-common", commonJarFiles)) {
+				if (loaderPath.length() > 0) loaderPath += ", ";
+				loaderPath += "lib-common/";
 			}
 
-			// 将依赖打包进lib.zip中
-			if (zipLib) {
-				FileOutputStream fos;
-				try {
-					fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\lib--" + excludeJarFiles.size() + "-JARs.zip");
-				} catch (FileNotFoundException e) {
-					throw new RuntimeException("New FileOutputStream of 'lib.zip' failed.", e);
-				}
-
-				try {
-					ZipUtils.toZip(excludeJarFiles, fos, false, "lib");
-				} catch (IOException e) {
-					throw new RuntimeException("Package 'lib.zip' failed.", e);
-				}
-
-				getLog().info("Package 'lib.zip' succeeded, contains " + excludeJarFiles.size() + " JARs.");
-				getLog().info("Total JARs: " + (includeCount.get() + excludeJarFiles.size()));
-			}
-
-			return true;
+			return loaderPath;
 		} else {
 			getLog().info("The 'excludeGroupIds' is empty, do not put the property 'spring-boot.excludeGroupIds'.");
-			return false;
+			return null;
 		}
 	}
 
-	private void createStartupFile(boolean addLoaderPath) {
+	private boolean createLibDirAndZip(String libDirName, List<File> jarFiles) {
+		if (jarFiles.isEmpty()) {
+			return false;
+		}
+
+		// 将依赖复制到 /target/lib 目录下
+		getLog().info("");
+		File libDir = new File(outputDirectory.getPath() + "\\target\\" + libDirName);
+		if (!libDir.exists()) {
+			getLog().info("Create directory: " + libDir.getPath());
+			if (!libDir.mkdir()) {
+				throw new RuntimeException("Create directory failed: " + libDir.getPath());
+			}
+		}
+		getLog().info("Copy " + jarFiles.size() + " JARs to the directory: " + libDir.getPath());
+		for (File jarFile : jarFiles) {
+			try {
+				IOUtils.copy(jarFile, new File(libDir, jarFile.getName()));
+			} catch (IOException e) {
+				throw new RuntimeException("Copy '" + jarFile.getName() + "' to the directory '" + libDir.getPath() + "' failed.", e);
+			}
+		}
+
+		// 将依赖打包进lib.zip中
+		if (zipLib) {
+			FileOutputStream fos;
+			try {
+				fos = new FileOutputStream(outputDirectory.getPath() + "\\target\\" + libDirName + "---" + jarFiles.size() + "-JARs.zip");
+			} catch (FileNotFoundException e) {
+				throw new RuntimeException("New FileOutputStream of '" + libDirName + ".zip' failed.", e);
+			}
+
+			try {
+				ZipUtils.toZip(jarFiles, fos, false, libDirName);
+			} catch (IOException e) {
+				throw new RuntimeException("Package '" + libDirName + ".zip' failed.", e);
+			}
+
+			getLog().info("Package '" + libDirName + ".zip' succeeded, contains " + jarFiles.size() + " JARs.");
+		}
+
+		return true;
+	}
+
+	private void createStartupFile(String loaderPath) {
 		if (!needCreateStartupFile) {
 			return;
 		}
@@ -275,12 +335,12 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		getLog().info("");
 
 		String startupScript = this.startupScript
-				.replaceAll("\\s*\\{\\s*loaderPath\\s*\\}", (addLoaderPath ? " -Dloader.path=\"lib/\"" : ""))
+				.replaceAll("\\s*\\{\\s*loaderPath\\s*\\}", (ObjectUtils.isNotEmpty(loaderPath) ? " -Dloader.path=\"" + loaderPath + "\"" : ""))
 				.replaceAll("\\s*\\{\\s*(finalName)\\s*\\}", " " + project.getBuild().getFinalName())
 				.replaceAll("\\s*\\{\\s*(artifactId)\\s*\\}", " " + project.getArtifactId());
 
 		// 创建startup.bat文件
-		createStartupFile("bat", "chcp 65001\r\n" + startupScript + "\r\ncmd");
+		createStartupFile("bat", startupScript + "\r\ncmd");
 		// 创建startup.sh文件
 		createStartupFile("sh", "#!/bin/sh\r\n" + startupScript + "\r\n");
 	}
@@ -295,20 +355,13 @@ public class SpringBootExtendMojo extends AbstractMojo {
 		}
 	}
 
-	private Set<String> convertIncludeGroupIds(String includeGroupIds) {
-		Set<String> result = new TreeSet<>(String::compareTo);
-
-		String[] includeGroupIdArr = includeGroupIds.split(",");
-		for (String includeGroupId : includeGroupIdArr) {
-			includeGroupId = includeGroupId.trim();
-			if (includeGroupId.isEmpty()) {
-				continue;
+	private boolean isCommonJar(Artifact artifact, Set<String> commonDependencyPatternSet) {
+		for (String commonArtifactPattern : commonDependencyPatternSet) {
+			if (MatchUtils.match(commonArtifactPattern, artifact.getGroupId() + ":" + artifact.getArtifactId())) {
+				return true;
 			}
-
-			result.add(includeGroupId);
 		}
-
-		return result;
+		return false;
 	}
 
 	private boolean isRuntimeScope(String scope) {

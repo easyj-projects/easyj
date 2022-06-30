@@ -77,12 +77,12 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 			Properties properties = project.getProperties();
 			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
 				properties.put("maven.install.skip", "true");
-				getLog().info("Put properties 'maven.install.skip = true'.");
+				getLog().info("Put property 'maven.install.skip = true'.");
 			}
 
 			if (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip"))) {
 				properties.put("maven.deploy.skip", "true");
-				getLog().info("Put properties 'maven.deploy.skip = true'.");
+				getLog().info("Put property 'maven.deploy.skip = true'.");
 			}
 		} else {
 			getLog().info("Skip this goal, cause by this project is not a spring-boot application.");
