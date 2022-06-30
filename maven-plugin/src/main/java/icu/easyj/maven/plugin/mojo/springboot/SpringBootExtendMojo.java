@@ -78,6 +78,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	@Parameter(property = "maven.spring-boot-extend.commonDependencyPatterns")
 	private String commonDependencyPatterns;
 
+	@Parameter(property = "maven.spring-boot-extend.commonDependencyPatternSet")
+	private Set<String> commonDependencyPatternSet;
+
 	/**
 	 * 是否将排除掉的lib打包进lib.zip中。
 	 * {@link #includeGroupIds} 不为空时，才有作用。
@@ -248,6 +251,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 			List<File> commonJarFiles = new ArrayList<>();
 
 			Set<String> commonDependencyPatternSet = StringUtils.toSet(this.commonDependencyPatterns);
+			if (ObjectUtils.isNotEmpty(this.commonDependencyPatternSet)) {
+				commonDependencyPatternSet.addAll(this.commonDependencyPatternSet);
+			}
 
 			// 从 artifact 中获取 file
 			for (Artifact excludeArtifact : excludeArtifacts) {
