@@ -54,8 +54,18 @@ public abstract class StringUtils {
 
 	//region toSet
 
-	public static Set<String> addToSet(final Set<String> set, final String str) {
+	public static Set<String> addToSet(final Set<String> set, String str) {
 		assert set != null;
+
+		// maven插件中，使用的字符串两边都不要双引号，方便mvn命令上加参数
+		if (str != null) {
+			while (str.startsWith("\"")) {
+				str = str.substring(1);
+			}
+			while (str.endsWith("\"")) {
+				str = str.substring(0, str.length() - 1);
+			}
+		}
 
 		if (isNotEmpty(str)) {
 			String[] strArr = str.split(",");
