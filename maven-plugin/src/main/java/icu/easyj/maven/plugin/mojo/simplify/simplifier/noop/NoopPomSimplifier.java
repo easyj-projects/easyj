@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.noop;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier.noop;
 
-import icu.easyj.maven.plugin.mojo.simplifier.AbstractPomSimplifier;
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.AbstractPomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 

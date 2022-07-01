@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo;
+package icu.easyj.maven.plugin.mojo.simplify;
 
 import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
-import icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.PomSimplifierFactory;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.PomSimplifierFactory;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.AUTO;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.AUTO;
 
 /**
  * 简化 POM 的 Goal
@@ -119,7 +119,7 @@ public class SimplifyPomMojo extends AbstractSimplifyPomMojo {
 
 		if (updatePomFile) {
 			getLog().info("Set the POM file '" + this.simplifiedPomFileName + "' to the project object.");
-			project.setFile(simplifiedPomFile);
+			project.setPomFile(simplifiedPomFile);
 		}
 	}
 }

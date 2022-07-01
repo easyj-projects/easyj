@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier;
 
-import icu.easyj.maven.plugin.mojo.SimplifyMode;
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
-import icu.easyj.maven.plugin.mojo.simplifier.jar.JarPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.jar.ShadeJarPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.jar.StarterPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.mavenplugin.MavenPluginPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.noop.NoopPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.pom.BomPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.pom.DependenciesPomSimplifier;
-import icu.easyj.maven.plugin.mojo.simplifier.pom.PomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyMode;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.jar.JarPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.jar.ShadeJarPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.jar.StarterPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.mavenplugin.MavenPluginPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.noop.NoopPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.pom.BomPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.pom.DependenciesPomSimplifier;
+import icu.easyj.maven.plugin.mojo.simplify.simplifier.pom.PomSimplifier;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.AUTO;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.BOM;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.DEPENDENCIES;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.JAR;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.MAVEN_PLUGIN;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.POM;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.SHADE;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.STARTER;
-import static icu.easyj.maven.plugin.mojo.simplifier.IPomSimplifier.WAR;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.AUTO;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.BOM;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.DEPENDENCIES;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.JAR;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.MAVEN_PLUGIN;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.POM;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.SHADE;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.STARTER;
+import static icu.easyj.maven.plugin.mojo.simplify.simplifier.IPomSimplifier.WAR;
 
 /**
  * POM简化器工厂类
