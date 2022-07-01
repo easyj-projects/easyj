@@ -26,8 +26,10 @@ import javax.annotation.Nullable;
 public enum SimplifyMode {
 
 	/**
-	 * 空模式，通过自定义配置来简化POM
+	 * 空模式，通过自定义配置来简化POM.
+	 * 以下两个枚举一样的作用。
 	 */
+	NONE,
 	NOOP,
 
 

@@ -150,6 +150,7 @@ public abstract class PomSimplifierFactory {
 				return new BomPomSimplifier(project, config, log);
 
 			case NOOP:
+			case NONE:
 			default:
 				return new NoopPomSimplifier(project, config, log);
 		}
