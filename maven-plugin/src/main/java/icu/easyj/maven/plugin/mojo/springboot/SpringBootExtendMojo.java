@@ -78,6 +78,9 @@ public class SpringBootExtendMojo extends AbstractMojo {
 	@Parameter(property = "maven.spring-boot-extend.commonDependencyPatterns")
 	private String commonDependencyPatterns;
 
+	/**
+	 * @since 0.7.3
+	 */
 	@Parameter(property = "maven.spring-boot-extend.commonDependencyPatternSet")
 	private Set<String> commonDependencyPatternSet;
 
