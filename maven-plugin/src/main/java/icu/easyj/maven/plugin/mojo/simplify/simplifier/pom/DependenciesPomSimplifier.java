@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.pom;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier.pom;
 
-import java.util.function.Function;
-
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
-
-import static icu.easyj.maven.plugin.mojo.utils.ObjectUtils.isEmpty;
 
 /**
  * 管理依赖的的pom.xml 简化器

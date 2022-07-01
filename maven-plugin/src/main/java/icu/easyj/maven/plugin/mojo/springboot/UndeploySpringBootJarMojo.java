@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo;
+package icu.easyj.maven.plugin.mojo.springboot;
 
 import java.util.List;
 import java.util.Properties;
@@ -31,18 +31,22 @@ import org.apache.maven.project.MavenProject;
  *
  * @author wangliang181230
  * @since 0.5.9
+ * @deprecated 请使用 {@link SpringBootExtendMojo}
  */
-@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PACKAGE, threadSafe = true)
+@Deprecated
+@Mojo(name = "undeploy-spring-boot-jar", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, threadSafe = true)
 public class UndeploySpringBootJarMojo extends AbstractMojo {
 
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	private MavenProject project;
+
 
 	@Parameter(defaultValue = "true")
 	private boolean skipInstall;
 
 	@Parameter(defaultValue = "true")
 	private boolean skipDeploy;
+
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -73,12 +77,12 @@ public class UndeploySpringBootJarMojo extends AbstractMojo {
 			Properties properties = project.getProperties();
 			if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
 				properties.put("maven.install.skip", "true");
-				getLog().info("Put properties 'maven.install.skip = true'.");
+				getLog().info("Put property 'maven.install.skip = true'.");
 			}
 
 			if (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip"))) {
 				properties.put("maven.deploy.skip", "true");
-				getLog().info("Put properties 'maven.deploy.skip = true'.");
+				getLog().info("Put property 'maven.deploy.skip = true'.");
 			}
 		} else {
 			getLog().info("Skip this goal, cause by this project is not a spring-boot application.");

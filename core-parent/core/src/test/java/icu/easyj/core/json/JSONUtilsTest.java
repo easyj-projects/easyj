@@ -115,6 +115,22 @@ public class JSONUtilsTest {
 	}
 
 	@Test
+	public void testToBeanString() {
+		String s = "{\"aabbcc\":1}";
+		for (IJSONService service : SERVICES) {
+			Assertions.assertEquals(s, service.toBean(s, String.class), service.getName());
+		}
+	}
+
+	@Test
+	public void testToBeanStringThrows() {
+		String s = "{\"aabbcc:1}"; // 错误的JSON
+		for (IJSONService service : SERVICES) {
+			Assertions.assertThrows(JSONParseException.class, () -> service.toBean(s, String.class), service.getName());
+		}
+	}
+
+	@Test
 	public void testToList() {
 		for (IJSONService service : SERVICES) {
 			testToList(service);

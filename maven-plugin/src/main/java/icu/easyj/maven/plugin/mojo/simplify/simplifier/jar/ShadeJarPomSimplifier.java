@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.pom;
+package icu.easyj.maven.plugin.mojo.simplify.simplifier.jar;
 
-import java.util.function.Function;
-
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
+import icu.easyj.maven.plugin.mojo.simplify.SimplifyPomMojoConfig;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
 /**
- * BOM（组件清单）的pom.xml 简化器<br>
- * 它比dependencies类型的pom.xml更加简单，dependencies是为了提供一批依赖，而BOM仅仅是为了提供当前项目的组件。
+ * 合并的JAR的pom.xml 简化器
  *
  * @author wangliang181230
  * @since 0.4.0
  */
-public class BomPomSimplifier extends DependenciesPomSimplifier {
+public class ShadeJarPomSimplifier extends JarPomSimplifier {
 
-	public BomPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
+	public ShadeJarPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
 		super(project, config, log);
 	}
 
@@ -41,17 +38,6 @@ public class BomPomSimplifier extends DependenciesPomSimplifier {
 
 		this.copyProjectInfoFromParent();
 
-		this.resetDependencyManagement();
-		this.removeDependencies();
-
-		this.removeProperties();
-
 		super.doSimplify();
-	}
-
-	@Override
-	protected Function<String, String> getReplaceVariableFunction() {
-		this.log.info(" - Optimize with 'replaceVariable'");
-		return this::replaceVariable;
 	}
 }

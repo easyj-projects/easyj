@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo;
+package icu.easyj.maven.plugin.mojo.skipinstalldeploy;
 
 import java.util.Properties;
 
@@ -52,12 +52,12 @@ public class SkipInstallDeployMojo extends AbstractMojo {
 		Properties properties = project.getProperties();
 		if (skipInstall && !"true".equalsIgnoreCase(properties.getProperty("maven.install.skip"))) {
 			properties.put("maven.install.skip", "true");
-			getLog().info("Put properties 'maven.install.skip = true'.");
+			getLog().info("Put property 'maven.install.skip = true'.");
 		}
 
 		if (skipDeploy && !"true".equalsIgnoreCase(properties.getProperty("maven.deploy.skip"))) {
 			properties.put("maven.deploy.skip", "true");
-			getLog().info("Put properties 'maven.deploy.skip = true'.");
+			getLog().info("Put property 'maven.deploy.skip = true'.");
 		}
 	}
 }

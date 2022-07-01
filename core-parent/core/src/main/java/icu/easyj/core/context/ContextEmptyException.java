@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icu.easyj.maven.plugin.mojo.simplifier.mavenplugin;
-
-import icu.easyj.maven.plugin.mojo.SimplifyPomMojoConfig;
-import icu.easyj.maven.plugin.mojo.simplifier.jar.JarPomSimplifier;
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.project.MavenProject;
+package icu.easyj.core.context;
 
 /**
- * maven插件的pom.xml 简化器
+ * 上下文为空的异常
  *
  * @author wangliang181230
- * @since 0.4.2
+ * @since 0.6.9
  */
-public class MavenPluginPomSimplifier extends JarPomSimplifier {
+public class ContextEmptyException extends RuntimeException {
 
-	public MavenPluginPomSimplifier(MavenProject project, SimplifyPomMojoConfig config, Log log) {
-		super(project, config, log);
+	public ContextEmptyException(String message) {
+		super(message);
+	}
+
+	public ContextEmptyException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+
+	public static ContextEmptyException create(String contextKey) {
+		return new ContextEmptyException("上下文 '" + contextKey + "' 不能为空");
 	}
 }
