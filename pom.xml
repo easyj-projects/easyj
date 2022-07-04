@@ -49,8 +49,8 @@
 		<!-- Test -->
 		<module>test</module>
 
-		<!-- Maven Plugin -->
-		<module>maven-plugin</module>
+		<!-- Maven Plugin：源码已迁移到 https://github.com/easyj-projects/easyj-maven-plugin 中。 -->
+		<!--<module>maven-plugin</module>-->
 	</modules>
 
 	<dependencyManagement>

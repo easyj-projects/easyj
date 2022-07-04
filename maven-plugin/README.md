@@ -1,0 +1,1 @@
+`easyj-maven-plugin` 源码已迁移到 https://github.com/easyj-projects/easyj-maven-plugin 中。

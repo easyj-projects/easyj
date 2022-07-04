@@ -20,6 +20,9 @@
 		<!-- 当前项目版本号 -->
 		<revision>0.7.3</revision>
 
+		<!-- easyj-maven-plugin插件版本：由于源码迁移出去了，所以版本号也单独配置。 -->
+		<easyj-maven-plugin.version>0.7.3</easyj-maven-plugin.version>
+
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
@@ -80,7 +83,7 @@
 				<plugin>
 					<groupId>icu.easyj.maven.plugins</groupId>
 					<artifactId>easyj-maven-plugin</artifactId>
-					<version>${project.version}</version>
+					<version>${easyj-maven-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
