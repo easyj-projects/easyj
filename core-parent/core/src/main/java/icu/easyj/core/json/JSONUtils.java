@@ -98,7 +98,7 @@ public abstract class JSONUtils {
 	}
 
 	/**
-	 * 转换为指定类型的列表
+	 * 转换为指定类型的List
 	 *
 	 * @param text        字符串
 	 * @param targetClazz 目标类型
@@ -154,6 +154,20 @@ public abstract class JSONUtils {
 	}
 
 	/**
+	 * 转换为 Key类型为String.class，Value类型为指定类型的Map
+	 *
+	 * @param text       字符串
+	 * @param valueClazz 键值类型
+	 * @param <V>        键值类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.7.4
+	 */
+	public static <V> Map<String, V> toMap2(String text, @NonNull Class<V> valueClazz) {
+		return toMap(text, String.class, valueClazz);
+	}
+
+	/**
 	 * 转换为指定类型的Map
 	 *
 	 * @param text          字符串
@@ -163,7 +177,7 @@ public abstract class JSONUtils {
 	 * @throws JSONParseException JSON解析失败
 	 * @since 0.6.6
 	 */
-	public static <KV> Map<KV, KV> toMap2(String text, @NonNull Class<KV> keyValueClazz) {
+	public static <KV> Map<KV, KV> toMap3(String text, @NonNull Class<KV> keyValueClazz) {
 		return toMap(text, keyValueClazz, keyValueClazz);
 	}
 
