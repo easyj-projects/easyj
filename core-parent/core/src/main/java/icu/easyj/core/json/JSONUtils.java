@@ -142,6 +142,18 @@ public abstract class JSONUtils {
 	/**
 	 * 转换为指定类型的Map
 	 *
+	 * @param text 字符串
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.7.4
+	 */
+	public static Map<String, Object> toMap(String text) {
+		return toMap(text, String.class, Object.class);
+	}
+
+	/**
+	 * 转换为指定类型的Map
+	 *
 	 * @param text     字符串
 	 * @param keyClazz 键类型
 	 * @param <K>      键类

@@ -121,6 +121,18 @@ public interface IJSONService {
 	}
 
 	/**
+	 * 转换为指定类型的Map
+	 *
+	 * @param text 字符串
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.7.4
+	 */
+	default Map<String, Object> toMap(String text) {
+		return this.toMap(text, String.class, Object.class);
+	}
+
+	/**
 	 * 转换为 Key类型为String.class，Value类型为指定类型的Map
 	 *
 	 * @param text       字符串
