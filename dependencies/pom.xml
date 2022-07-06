@@ -36,7 +36,7 @@
 		<jjwt.version>0.9.1</jjwt.version>
 
 		<!-- JSON dependencies version -->
-		<fastjson.version>1.2.80</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 		<fastjson2.version>2.0.1</fastjson2.version>
 
 		<!-- DB dependencies version -->
