@@ -99,25 +99,11 @@ public interface IJSONService {
 	 * @param <V>        值类
 	 * @return 目标类型的Map对象
 	 * @throws JSONParseException JSON解析失败
-	 * @since 0.6.6
+	 * @since 0.7.4
 	 */
 	@SuppressWarnings("all")
 	default <K, V> Map<K, V> toMap(String text, @NonNull Class<K> keyClazz, @NonNull Class<V> valueClazz) {
 		return this.toBean(text, Map.class, keyClazz, valueClazz);
-	}
-
-	/**
-	 * 转换为指定类型的Map
-	 *
-	 * @param text     字符串
-	 * @param keyClazz 键类型
-	 * @param <K>      键类
-	 * @return 目标类型的Map对象
-	 * @throws JSONParseException JSON解析失败
-	 * @since 0.6.6
-	 */
-	default <K> Map<K, Object> toMap(String text, @NonNull Class<K> keyClazz) {
-		return this.toMap(text, keyClazz, Object.class);
 	}
 
 	/**
@@ -133,7 +119,7 @@ public interface IJSONService {
 	}
 
 	/**
-	 * 转换为 Key类型为String.class，Value类型为指定类型的Map
+	 * 转换为 Key类型为String.class，Value类型为指定类型 的Map
 	 *
 	 * @param text       字符串
 	 * @param valueClazz 键值类型
@@ -142,19 +128,33 @@ public interface IJSONService {
 	 * @throws JSONParseException JSON解析失败
 	 * @since 0.7.4
 	 */
-	default <V> Map<String, V> toMap2(String text, @NonNull Class<V> valueClazz) {
+	default <V> Map<String, V> toMap(String text, @NonNull Class<V> valueClazz) {
 		return this.toMap(text, String.class, valueClazz);
 	}
 
 	/**
-	 * 转换为指定类型的Map
+	 * 转换为 Key类型为指定类型，Value类型为Object.class 的Map
+	 *
+	 * @param text     字符串
+	 * @param keyClazz 键类型
+	 * @param <K>      键类
+	 * @return 目标类型的Map对象
+	 * @throws JSONParseException JSON解析失败
+	 * @since 0.7.4
+	 */
+	default <K> Map<K, Object> toMap2(String text, @NonNull Class<K> keyClazz) {
+		return this.toMap(text, keyClazz, Object.class);
+	}
+
+	/**
+	 * 转换为 Key类型和Value类型均为指定类型 的Map
 	 *
 	 * @param text          字符串
 	 * @param keyValueClazz 键值类型
 	 * @param <KV>          键值类
 	 * @return 目标类型的Map对象
 	 * @throws JSONParseException JSON解析失败
-	 * @since 0.6.6
+	 * @since 0.7.4
 	 */
 	default <KV> Map<KV, KV> toMap3(String text, @NonNull Class<KV> keyValueClazz) {
 		return this.toMap(text, keyValueClazz, keyValueClazz);

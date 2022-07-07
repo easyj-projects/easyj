@@ -159,7 +159,7 @@ public class JSONUtilsTest {
 		// case 1
 		text = "{\"a\": \"1\", \"b\": 2}";
 		for (IJSONService service : SERVICES) {
-			Map<String, String> map = service.toMap2(text, String.class);
+			Map<String, String> map = service.toMap(text, String.class);
 			Assertions.assertEquals(2, map.size());
 			Assertions.assertEquals("1", map.get("a"));
 			Assertions.assertEquals("2", map.get("b"));
