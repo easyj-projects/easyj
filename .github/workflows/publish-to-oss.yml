@@ -2,7 +2,7 @@ name: "Publish To OSS"
 
 on:
   push:
-    branches: [ develop, 0.*.*, 1.*.*, 2.*.* ]
+    branches: [ master, 0.*.*, 1.*.*, 2.*.* ]
 
 jobs:
   publish:
