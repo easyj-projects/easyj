@@ -72,11 +72,15 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 			"config/global.properties",
 			"config/global.yaml",
 			"config/global.yml",
-			// 区域配置文件，主要配置区域代码、区域名称或其他区域所需的配置，相同配置会覆盖全局配置文件
+			// 产品配置文件，主要配置产品代码、产品名称或产品所需的其他配置，相同配置会覆盖全局配置文件
+			"config/product.properties",
+			"config/product.yaml",
+			"config/product.yml",
+			// 区域配置文件，主要配置区域代码、区域名称或区域所需的其他配置，相同配置会覆盖全局配置文件
 			"config/area.properties",
 			"config/area.yaml",
 			"config/area.yml",
-			// 项目配置文件，主要配置项目代码、项目名称或其他项目所需的配置，相同配置会覆盖区域配置文件
+			// 项目配置文件，主要配置项目代码、项目名称或项目所需的其他配置，相同配置会覆盖区域配置文件
 			"config/project.properties",
 			"config/project.yaml",
 			"config/project.yml"
