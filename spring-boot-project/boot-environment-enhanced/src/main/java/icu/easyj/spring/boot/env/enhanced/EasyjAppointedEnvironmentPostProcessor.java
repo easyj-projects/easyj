@@ -89,30 +89,30 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	public static final String[] CONFIG_DIRECTORY_PATHS = new String[]{
 			// 全局默认配置
 			"config/default/",
+			// 产品默认配置
+			"config/${product}/default/",
 			// 区域默认配置
 			"config/${area}/default/",
 			// 项目默认配置
 			"config/${project}/default/",
-			// 区域项目默认配置
-			"config/${area}/${project}/default/",
 
 			// 标准环境配置
 			"config/standard-${standardEnv}/",
+			// 产品标准环境配置
+			"config/${product}/standard-${standardEnv}/",
 			// 区域标准环境配置
 			"config/${area}/standard-${standardEnv}/",
 			// 项目标准环境配置
 			"config/${project}/standard-${standardEnv}/",
-			// 区域项目标准环境配置
-			"config/${area}/${project}/standard-${standardEnv}/",
 
 			// 环境配置
 			"config/${env}/",
+			// 产品环境配置
+			"config/${product}/${env}/",
 			// 区域环境配置
 			"config/${area}/${env}/",
 			// 项目环境配置
 			"config/${project}/${env}/",
-			// 区域项目环境配置
-			"config/${area}/${project}/${env}/"
 	};
 
 	/**
@@ -122,21 +122,21 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	public static final String[] UNIT_TEST_CONFIG_DIRECTORY_PATHS = new String[]{
 			// 标准环境配置
 			"config/standard-unit-test/",
+			// 产品标准环境配置
+			"config/${product}/standard-unit-test/",
 			// 区域标准环境配置
 			"config/${area}/standard-unit-test/",
 			// 项目标准环境配置
 			"config/${project}/standard-unit-test/",
-			// 区域项目标准环境配置
-			"config/${area}/${project}/standard-unit-test/",
 
 			// 环境配置
 			"config/unit-test/",
+			// 产品环境配置
+			"config/${product}/unit-test/",
 			// 区域环境配置
 			"config/${area}/unit-test/",
 			// 项目环境配置
 			"config/${project}/unit-test/",
-			// 区域项目环境配置
-			"config/${area}/${project}/unit-test/"
 	};
 
 
@@ -183,6 +183,8 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 
 		//region 从应用配置及上面优先加载的配置中，获取以下配置信息
 
+		// 产品代码
+		String product = environment.getProperty(EnvironmentUtils.PRODUCT_KEY);
 		// 项目所属区域代码
 		String area = environment.getProperty(EnvironmentUtils.AREA_KEY);
 		// 项目代码
@@ -217,13 +219,13 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 		// 加载约定目录下的配置文件
 		for (String dirPath : CONFIG_DIRECTORY_PATHS) {
 			previousPropertySourceName = this.loadPropertySources(environment, previousPropertySourceName,
-					dirPath, area, project, env, standardEnv);
+					dirPath, product, area, project, env, standardEnv);
 		}
 		// 如果是在运行单元测试，则再加载约定的单元测试
 		if (EnvironmentConfigs.isInUnitTest()) {
 			for (String dirPath : UNIT_TEST_CONFIG_DIRECTORY_PATHS) {
 				previousPropertySourceName = this.loadPropertySources(environment, previousPropertySourceName,
-						dirPath, area, project, "unit-test", "unit-test");
+						dirPath, product, area, project, "unit-test", "unit-test");
 			}
 		}
 
@@ -234,9 +236,16 @@ public class EasyjAppointedEnvironmentPostProcessor implements EnvironmentPostPr
 	}
 
 	private String loadPropertySources(ConfigurableEnvironment environment, String previousPropertySourceName,
-									   String dirPath, String area, String project, String env, String standardEnv) {
+									   String dirPath, String product, String area, String project, String env, String standardEnv) {
 		////region 替换目录中的表达式
 
+		if (dirPath.contains("${product}")) {
+			if (StringUtils.isNotEmpty(product)) {
+				dirPath = dirPath.replace("${product}", product);
+			} else {
+				return previousPropertySourceName;
+			}
+		}
 		if (dirPath.contains("${area}")) {
 			if (StringUtils.isNotEmpty(area)) {
 				dirPath = dirPath.replace("${area}", area);

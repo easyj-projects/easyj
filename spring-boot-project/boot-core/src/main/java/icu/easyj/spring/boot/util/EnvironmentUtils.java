@@ -53,6 +53,7 @@ import org.springframework.lang.Nullable;
  */
 public abstract class EnvironmentUtils {
 
+	public static final String PRODUCT_KEY = StarterConstants.APP_PREFIX + ".product";
 	public static final String AREA_KEY = StarterConstants.APP_PREFIX + ".area";
 	public static final String PROJECT_KEY = StarterConstants.APP_PREFIX + ".project";
 

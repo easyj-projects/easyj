@@ -25,6 +25,16 @@ public class AppConfigs {
 	//region Fields
 
 	/**
+	 * 产品代码
+	 */
+	private String product;
+
+	/**
+	 * 产品名称
+	 */
+	private String productName;
+
+	/**
 	 * 项目所属区域代码
 	 */
 	private String area;
@@ -81,6 +91,24 @@ public class AppConfigs {
 
 
 	//region Getter start
+
+	/**
+	 * 获取产品代码
+	 *
+	 * @return 产品代码
+	 */
+	public static String getProduct() {
+		return getInstance().product;
+	}
+
+	/**
+	 * 获取产品名称
+	 *
+	 * @return 产品名称
+	 */
+	public static String getProductName() {
+		return getInstance().productName;
+	}
 
 	/**
 	 * 获取项目所属区域代码
@@ -140,6 +168,24 @@ public class AppConfigs {
 
 
 	//region Setter start
+
+	/**
+	 * 设置产品代码
+	 *
+	 * @param product 产品代码
+	 */
+	public static void setProduct(String product) {
+		getInstance().product = product;
+	}
+
+	/**
+	 * 设置产品名称
+	 *
+	 * @param productName 项目产品名称
+	 */
+	public static void setProductName(String productName) {
+		getInstance().productName = productName;
+	}
 
 	/**
 	 * 设置项目所属区域代码

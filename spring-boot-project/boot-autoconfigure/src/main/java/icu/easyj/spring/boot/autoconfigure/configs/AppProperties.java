@@ -29,6 +29,16 @@ import org.springframework.beans.factory.annotation.Value;
 public class AppProperties implements InitializingBean {
 
 	/**
+	 * 产品代码
+	 */
+	private String product;
+
+	/**
+	 * 产品名称
+	 */
+	private String productName;
+
+	/**
 	 * 项目所属区域代码
 	 */
 	private String area;
@@ -61,6 +71,12 @@ public class AppProperties implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
+		if (StringUtils.isNotBlank(product)) {
+			AppConfigs.setProduct(product.trim());
+		}
+		if (StringUtils.isNotBlank(productName)) {
+			AppConfigs.setProductName(productName.trim());
+		}
 		if (StringUtils.isNotBlank(area)) {
 			AppConfigs.setArea(area.trim());
 		}
@@ -82,6 +98,22 @@ public class AppProperties implements InitializingBean {
 	}
 
 	//region Getter、Setter
+
+	public String getProduct() {
+		return product;
+	}
+
+	public void setProduct(String product) {
+		this.product = product;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
 	public String getArea() {
 		return area;
