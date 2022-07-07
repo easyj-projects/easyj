@@ -18,7 +18,7 @@
 
 	<properties>
 		<!-- 当前项目版本号 -->
-		<revision>0.7.3</revision>
+		<revision>0.7.4</revision>
 
 		<!-- easyj-maven-plugin插件版本：由于源码迁移出去了，所以版本号也单独配置。 -->
 		<easyj-maven-plugin.version>0.7.3</easyj-maven-plugin.version>
