@@ -30,11 +30,6 @@ import org.slf4j.MDC;
 public class MDCTraceServiceImpl implements TraceService {
 
 	@Override
-	public boolean canTrace() {
-		return true;
-	}
-
-	@Override
 	public void put(String key, String value) {
 		if (key == null) {
 			key = "null";

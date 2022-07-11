@@ -33,7 +33,9 @@ public interface TraceService {
 	 *
 	 * @return true=可以 | false=不可以
 	 */
-	boolean canTrace();
+	default boolean canTrace() {
+		return true;
+	}
 
 	/**
 	 * 设置追踪内容
