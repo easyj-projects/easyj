@@ -157,6 +157,7 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>shade-jar</id>
 						<phase>package</phase>
 						<goals>
 							<goal>shade</goal>
@@ -165,7 +166,6 @@
 							<createSourcesJar>true</createSourcesJar>
 							<promoteTransitiveDependencies>false</promoteTransitiveDependencies>
 							<keepDependenciesWithProvidedScope>false</keepDependenciesWithProvidedScope>
-							<createDependencyReducedPom>true</createDependencyReducedPom>
 							<artifactSet>
 								<includes>
 									<include>${project.groupId}:*:*</include>
@@ -200,7 +200,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!-- simplify-pom插件的配置 -->
+					<!-- simplify-pom插件功能的配置 -->
 					<excludeDependencies>
 						<dependency>${project.groupId}:*:*</dependency>
 					</excludeDependencies>

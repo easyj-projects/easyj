@@ -19,6 +19,11 @@
 		预计提供：WebSocket服务、UMS（统一消息系统）、UPP（统一支付平台）、验证码服务、...等等。
 	</description>
 
+	<properties>
+		<!-- 当前模块不执行install和deploy，子模块不会继承此配置。 -->
+		<maven.easyj.skipInstallAndDeploy>true</maven.easyj.skipInstallAndDeploy>
+	</properties>
+
 	<modules>
 		<module>middleware-core</module>
 
@@ -32,23 +37,4 @@
 		<module>middleware-websocket-parent/websocket-server-application</module>
 		<module>middleware-websocket-parent/websocket-server-core</module>
 	</modules>
-
-	<build>
-		<plugins>
-			<!-- 使用插件：Easyj：跳过install和deploy -->
-			<plugin>
-				<groupId>icu.easyj.maven.plugins</groupId>
-				<artifactId>easyj-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>skip-install-deploy</id>
-						<inherited>false</inherited>
-						<goals>
-							<goal>skip-install-deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

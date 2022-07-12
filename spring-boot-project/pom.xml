@@ -21,6 +21,11 @@
 		同时，一些仅spring-boot项目才能用的功能，都在此仓库中开发和维护。
 	</description>
 
+	<properties>
+		<!-- 当前模块不执行install和deploy，子模块不会继承此配置。 -->
+		<maven.easyj.skipInstallAndDeploy>true</maven.easyj.skipInstallAndDeploy>
+	</properties>
+
 	<modules>
 		<module>boot-dependencies</module>
 		<module>boot-bom</module>
@@ -61,20 +66,6 @@
 			<!-- 使用插件：Javadoc -->
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<!-- 使用插件：Easyj：跳过install和deploy -->
-			<plugin>
-				<groupId>icu.easyj.maven.plugins</groupId>
-				<artifactId>easyj-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>skip-install-deploy</id>
-						<inherited>false</inherited>
-						<goals>
-							<goal>skip-install-deploy</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

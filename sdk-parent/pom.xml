@@ -15,6 +15,11 @@
 	<name>${project.groupId} :: ${project.artifactId}</name>
 	<description>EasyJ依赖于第三方API服务的模块，提供方便调用第三方服务的SDK包，如：阿里云、腾讯云、百度云等等。</description>
 
+	<properties>
+		<!-- 当前模块不执行install和deploy，子模块不会继承此配置。 -->
+		<maven.easyj.skipInstallAndDeploy>true</maven.easyj.skipInstallAndDeploy>
+	</properties>
+
 	<modules>
 		<!--各SDK的核心模块-->
 		<module>ocr-sdk-core</module>
@@ -26,23 +31,4 @@
 		<module>3rd-party-sdk-parent/s3-service-sdk</module>
 		<module>3rd-party-sdk-parent/tencent-cloud-sdk</module>
 	</modules>
-
-	<build>
-		<plugins>
-			<!-- 使用插件：Easyj：跳过install和deploy -->
-			<plugin>
-				<groupId>icu.easyj.maven.plugins</groupId>
-				<artifactId>easyj-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>skip-install-deploy</id>
-						<inherited>false</inherited>
-						<goals>
-							<goal>skip-install-deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
