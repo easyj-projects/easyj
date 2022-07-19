@@ -46,6 +46,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class StringUtilsTest {
 
 	@Test
+	public void test() {
+		JavaInfo javaInfo = SystemUtil.getJavaInfo();
+		System.out.println("Java version: " + javaInfo.getVersionFloat());
+
+		if (javaInfo.getVersionInt() >= 1700) {
+			throw new RuntimeException("故意抛异常，测试 fail-fast: false 的效果");
+		}
+	}
+
+	@Test
 	public void testIsEmptyAndIsBlank() {
 		// isEmpty
 		Assertions.assertTrue(StringUtils.isEmpty(null));
