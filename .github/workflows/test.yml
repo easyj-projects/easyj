@@ -2,7 +2,7 @@ name: "Test"
 
 on:
   push:
-    branches: [ develop, master, test*, spring-boot_* ]
+    branches: [ develop, master, spring-boot_* ]
   pull_request:
     branches: [ develop ]
 
@@ -11,6 +11,7 @@ jobs:
     name: "Test"
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         java: [ 8, 11, 17 ]
         springboot: [
