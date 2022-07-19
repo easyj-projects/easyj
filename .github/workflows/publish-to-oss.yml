@@ -11,9 +11,9 @@ jobs:
     strategy:
       matrix:
         os: [
-            #macos-latest,  #会报错
-            #ubuntu-latest, #会报错
-            windows-latest  #成功
+          #macos-latest,  #会报错
+          #ubuntu-latest, #会报错
+          windows-latest  #成功
         ]
     steps:
       # step 1
