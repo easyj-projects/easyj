@@ -15,8 +15,6 @@
  */
 package icu.easyj.spring.boot;
 
-import icu.easyj.core.constant.Constants;
-
 /**
  * EasyJ-Starter相关的常量
  *
@@ -25,7 +23,7 @@ import icu.easyj.core.constant.Constants;
 public interface StarterConstants {
 
 	// Root
-	String PREFIX = Constants.PREFIX;
+	String PREFIX = "easyj";
 
 
 	// App

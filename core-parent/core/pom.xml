@@ -82,4 +82,26 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>icu.easyj.maven.plugins</groupId>
+				<artifactId>easyj-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>replace-java</id>
+						<goals>
+							<goal>replace-java</goal>
+						</goals>
+						<configuration>
+							<mainPaths>
+								<path>icu/easyj/core/constant/Constants.java.template</path>
+							</mainPaths>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
