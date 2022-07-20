@@ -5,8 +5,8 @@
 name: "Publish To OSS for easyj-samples"
 
 on:
-  push:
-    branches: [ develop ]
+  schedule:
+    - cron: '0 1 * * 6'
 
 jobs:
   publish:
