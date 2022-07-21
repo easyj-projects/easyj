@@ -274,18 +274,18 @@ public class JSONUtilsTest {
 		Assertions.assertNotNull(user, service.getName());
 		Assertions.assertEquals("某某人1", user.getName(), service.getName());
 		Assertions.assertEquals(31, user.getAge().intValue(), service.getName());
-		Assertions.assertEquals("1990-10-01 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), service.getName());
+		Assertions.assertEquals("1990-10-01 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), "assertEquals1 " + service.getName());
 	}
 
 	private void assertEquals2(IJSONService service, TestUser user) {
 		Assertions.assertNotNull(user, service.getName());
 		Assertions.assertEquals("某某人2", user.getName(), service.getName());
 		Assertions.assertEquals(32, user.getAge().intValue(), service.getName());
-		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), service.getName());
+		Assertions.assertEquals("1989-10-02 00:00:00.000", DateUtils.toMilliseconds(user.getBirthday()), "assertEquals2 " + service.getName());
 	}
 
 	private void assertEquals3(IJSONService service, TestGeneric<TestUser, TestUser> data) {
-		Assertions.assertNotNull(data, service.getName());
+		Assertions.assertNotNull(data, "assertEquals3 " + service.getName());
 		assertEquals1(service, data.getA());
 		assertEquals2(service, data.getB());
 	}
@@ -294,7 +294,7 @@ public class JSONUtilsTest {
 		Assertions.assertNotNull(user, service.getName());
 		Assertions.assertEquals("某某人3", user.getUserName(), service.getName());
 		Assertions.assertEquals(33, user.getUserAge().intValue(), service.getName());
-		Assertions.assertEquals("1988-10-03 00:00:00.000", DateUtils.toMilliseconds(user.getUserBirthday()), service.getName());
+		Assertions.assertEquals("1988-10-03 00:00:00.000", DateUtils.toMilliseconds(user.getUserBirthday()), "assertEquals4 " + service.getName());
 	}
 
 	//endregion
