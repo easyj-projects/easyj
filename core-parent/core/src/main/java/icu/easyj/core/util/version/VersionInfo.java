@@ -146,6 +146,9 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 		return snapshotVersion;
 	}
 
+
+	//region Override
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -154,15 +157,27 @@ public class VersionInfo implements Comparable<VersionInfo>, Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		VersionInfo versionInfo = (VersionInfo)o;
-		return versionLong == versionInfo.versionLong
-				&& unknownVersion == versionInfo.unknownVersion
-				&& snapshotVersion == versionInfo.snapshotVersion
-				&& Objects.equals(version, versionInfo.version);
+		VersionInfo that = (VersionInfo)o;
+		return this.versionLong == that.versionLong
+				&& this.unknownVersion == that.unknownVersion
+				&& this.snapshotVersion == that.snapshotVersion
+				&& Objects.equals(this.version, that.version);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(version, versionLong, unknownVersion, snapshotVersion);
 	}
+
+	@Override
+	public String toString() {
+		return "VersionInfo{" +
+				"version='" + version + '\'' +
+				", versionLong=" + versionLong +
+				", unknownVersion=" + unknownVersion +
+				", snapshotVersion=" + snapshotVersion +
+				'}';
+	}
+
+	//endregion
 }

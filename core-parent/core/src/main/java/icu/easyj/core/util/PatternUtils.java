@@ -60,6 +60,13 @@ public abstract class PatternUtils {
 
 	////endregion 代码匹配的正则 end
 
+
+	/**
+	 * 典型的版本号格式：数字和点组成，快照版本末尾带 '-SNAPSHOT'
+	 */
+	public final static String REGEX_NORMAL_VERSION = "^\\d+(\\.\\d+)*(-SNAPSHOT)?$";
+	public static final Pattern P_NORMAL_VERSION = Pattern.compile(REGEX_NORMAL_VERSION);
+
 	//endregion
 
 
