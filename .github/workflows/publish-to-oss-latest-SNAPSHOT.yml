@@ -2,7 +2,7 @@
 # 此action会发布一个固定的 'latest-SNAPSHOT' 版本，用于 'easyj-samples' 每周自动化测试. #
 #################################################################################
 
-name: "Publish To OSS for easyj-samples"
+name: "Publish To OSS - latest-SNAPSHOT"
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish:
-    name: "Publish To OSS for easyj-samples"
+    name: "Publish To OSS - latest-SNAPSHOT"
     runs-on: ubuntu-latest
     steps:
       # step 1
@@ -28,7 +28,7 @@ jobs:
           server-password: OSSRH_PASSWORD
 
       # step 3
-      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSS"
+      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSS-latest-SNAPSHOT"
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
