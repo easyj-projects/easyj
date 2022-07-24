@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import icu.easyj.core.exception.MultipleFilesFoundException;
@@ -297,7 +298,7 @@ public abstract class JarUtils {
 
 		TimeMeter tm = TimeMeter.create();
 		try {
-			Resource[] resources = ResourceUtils.getResources("classpath*:/META-INF/MANIFEST.MF");
+			Resource[] resources = ResourceUtils.getResources("classpath*:/" + JarFile.MANIFEST_NAME);
 
 			String jarFilePath;
 			for (Resource resource : resources) {
@@ -306,7 +307,7 @@ public abstract class JarUtils {
 					jarFilePath = resource.getURL().toString();
 
 					// 跳过不是 '*.jar' 的文件
-					if (!jarFilePath.endsWith(".jar!/META-INF/MANIFEST.MF")) {
+					if (!jarFilePath.endsWith(".jar!/" + JarFile.MANIFEST_NAME)) {
 						continue;
 					}
 
@@ -320,7 +321,7 @@ public abstract class JarUtils {
 					}
 
 					// 获取JAR名称
-					jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/META-INF/MANIFEST.MF"));
+					jarFilePath = jarFilePath.substring(0, jarFilePath.lastIndexOf(".jar!/" + JarFile.MANIFEST_NAME));
 					String jarFileName = jarFilePath.substring(jarFilePath.lastIndexOf("/") + 1);
 					String name = jarFileName.replaceAll("-\\d.*$", "");
 					jarFilePath += ".jar";
