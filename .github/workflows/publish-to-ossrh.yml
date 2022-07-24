@@ -1,4 +1,4 @@
-name: "Publish To OSS"
+name: "Publish To OSSRH"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: "Publish To OSS"
+    name: "Publish To OSSRH"
     runs-on: ubuntu-latest
     steps:
       # step 1
@@ -24,10 +24,10 @@ jobs:
           server-password: OSSRH_PASSWORD
 
       # step 3
-      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSS"
+      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSSRH"
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         run: |
           cat <(echo -e "${{ secrets.GPG_SECRET_KEY }}") | gpg --batch --import;
-          mvn -T 4C clean deploy -Ppublish-auto -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Duser.timezone=GMT+0 --batch-mode -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+          mvn -T 4C clean deploy -Ppublish-auto -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Duser.timezone=GMT+0 -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;

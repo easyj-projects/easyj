@@ -2,7 +2,7 @@
 # 此action会发布一个固定的 'latest-SNAPSHOT' 版本，用于 'easyj-samples' 每周自动化测试. #
 #################################################################################
 
-name: "Publish To OSS - latest-SNAPSHOT"
+name: "Publish To OSSRH - latest-SNAPSHOT"
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish:
-    name: "Publish To OSS - latest-SNAPSHOT"
+    name: "Publish To OSSRH - latest-SNAPSHOT"
     runs-on: ubuntu-latest
     steps:
       # step 1
@@ -28,10 +28,10 @@ jobs:
           server-password: OSSRH_PASSWORD
 
       # step 3
-      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSS-latest-SNAPSHOT"
+      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSSRH-latest-SNAPSHOT"
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         run: |
           cat <(echo -e "${{ secrets.GPG_SECRET_KEY }}") | gpg --batch --import;
-          mvn -T 4C clean deploy -Ppublish-auto -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Drevision=latest-SNAPSHOT -Duser.timezone=GMT+0 --batch-mode -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+          mvn clean deploy -Drevision=latest-SNAPSHOT -Ppublish-auto -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} -Duser.timezone=GMT+0 -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
