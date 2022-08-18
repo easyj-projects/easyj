@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import cn.hutool.core.io.IORuntimeException;
+import org.slf4j.LoggerFactory;
 
 import static org.springframework.util.SocketUtils.PORT_RANGE_MAX;
 import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
@@ -36,6 +36,9 @@ import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
  * @author wangliang181230
  */
 public abstract class NetUtils {
+
+	public static final String LOCALHOST = "127.0.0.1";
+
 
 	/**
 	 * 类型：sun.net.www.protocol.http.HttpURLConnection
@@ -112,7 +115,8 @@ public abstract class NetUtils {
 			InetAddress addr = InetAddress.getLocalHost();
 			return addr.getHostAddress();
 		} catch (UnknownHostException e) {
-			throw new IORuntimeException("获取本机IP失败", e);
+			LoggerFactory.getLogger(NetUtils.class).warn("获取本机IP失败", e);
+			return LOCALHOST;
 		}
 	}
 
