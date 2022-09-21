@@ -1,4 +1,4 @@
-name: "Publish To OSSRH - 1 - ${{ github.ref_name }}"
+name: "Publish To OSSRH"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: "Publish To OSSRH - 2 - ${{ github.ref_name }}"
+    name: "Publish To OSSRH - ${{ github.ref_name }}"
     runs-on: ubuntu-latest
     steps:
       # step 1
