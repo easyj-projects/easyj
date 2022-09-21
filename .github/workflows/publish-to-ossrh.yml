@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    name: "Publish To OSSRH"
+    name: "Publish To OSSRH - ${{ github.ref }}"
     runs-on: ubuntu-latest
     steps:
       # step 1
