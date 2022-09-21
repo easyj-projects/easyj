@@ -54,5 +54,5 @@ jobs:
 
       # step 4
       - name: "Codecov"
-        if: matrix.java == '8' && matrix.springboot == '2.7.3' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')
+        if: matrix.java == '8' && matrix.springboot == '2.7.3' && (github.ref_name == 'develop' || github.ref_name == 'master')
         uses: codecov/codecov-action@v2.1.0
