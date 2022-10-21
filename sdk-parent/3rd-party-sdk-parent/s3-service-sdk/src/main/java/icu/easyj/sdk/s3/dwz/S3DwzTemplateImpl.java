@@ -45,6 +45,8 @@ import org.springframework.web.client.RestClientResponseException;
  * @author wangliang181230
  * @see IDwzTemplate
  * @see S3DwzConfig
+ * @see <a href="http://dwz.doc.s-3.cn">S-3短链接服务API文档</a>
+ * @see <a href="https://s-3.cn">S-3短链接服务在线生成</a>
  */
 public class S3DwzTemplateImpl implements IDwzTemplate {
 
