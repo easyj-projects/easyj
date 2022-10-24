@@ -57,13 +57,23 @@ public class ConvertUtilsTest {
 
 		// String -> Character
 		{
-			Character c = ConvertUtils.convert("c", Character.class);
+			Character c = ConvertUtils.convert("c", char.class);
 			Assertions.assertEquals('c', c.charValue());
+			c = ConvertUtils.convert("c", Character.class);
+			Assertions.assertEquals('c', c.charValue());
+
+			c = ConvertUtils.convert("1", char.class);
+			Assertions.assertEquals('1', c.charValue());
+			c = ConvertUtils.convert("1", Character.class);
+			Assertions.assertEquals('1', c.charValue());
 		}
 
 
 		// String -> Boolean
 		{
+			Assertions.assertTrue(ConvertUtils.convert("True", boolean.class));
+			Assertions.assertFalse(ConvertUtils.convert("False", boolean.class));
+
 			Assertions.assertTrue(ConvertUtils.convert("True", Boolean.class));
 			Assertions.assertFalse(ConvertUtils.convert("False", Boolean.class));
 		}
@@ -71,8 +81,8 @@ public class ConvertUtilsTest {
 
 		// String -> Byte
 		{
-			Assertions.assertEquals((byte)1, ConvertUtils.convert("1", Byte.class).byteValue());
 			Assertions.assertEquals((byte)0, ConvertUtils.convert("0", byte.class).byteValue());
+			Assertions.assertEquals((byte)1, ConvertUtils.convert("1", Byte.class).byteValue());
 		}
 
 
