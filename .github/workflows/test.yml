@@ -7,6 +7,7 @@ on:
     branches: [ develop ]
 
 jobs:
+  # job 1
   test:
     name: "Test"
     runs-on: ubuntu-latest
@@ -15,8 +16,8 @@ jobs:
       matrix:
         java: [ 8, 11, 17 ]
         springboot: [
-          2.7.5,
-          2.6.13,
+          2.7.6,
+          2.6.14,
           2.5.14,
           2.4.13,
           2.3.12.RELEASE,
@@ -34,25 +35,47 @@ jobs:
       # step 1
       - name: "Checkout"
         uses: actions/checkout@v2.4.0
-
       # step 2
       - name: "Setup Java JDK"
         uses: actions/setup-java@v2.5.0
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
-
       # step 3
       - name: "Run Test With Maven"
-        # https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context
         run: |
           if [ "${{ matrix.java }}" == "8" ]; then
             mvn clean test -Pcicd8 -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
           else
             mvn clean test -Pcicd  -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
           fi
-
       # step 4
       - name: "Codecov"
-        if: matrix.java == '8' && matrix.springboot == '2.7.5' && (github.ref_name == 'develop' || github.ref_name == 'master')
+        if: matrix.java == '8' && matrix.springboot == '2.7.6' && (github.ref_name == 'develop' || github.ref_name == 'master')
         uses: codecov/codecov-action@v2.1.0
+
+  # job 2
+  test-springboot3x:
+    name: "Test spring-boot:3.x"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 17 ]
+        springboot: [
+          3.0.0
+        ]
+    steps:
+      # step 1
+      - name: "Checkout"
+        uses: actions/checkout@v2.4.0
+      # step 2
+      - name: "Setup Java JDK"
+        uses: actions/setup-java@v2.5.0
+        with:
+          distribution: 'zulu'
+          java-version: ${{ matrix.java }}
+      # step 3
+      - name: "Run Test With Maven"
+        run: |
+          mvn clean test -Pcicd  -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
