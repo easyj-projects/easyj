@@ -19,6 +19,9 @@
 		<!-- Spring Cloud版本 -->
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 
+		<!-- Javax版本 -->
+		<javax.xml-bind-api.version>2.3.1</javax.xml-bind-api.version>
+
 		<!-- Findbugs dependencies version -->
 		<findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
 
@@ -80,6 +83,14 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+
+
+			<!-- 依赖定义：javax -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${javax.xml-bind-api.version}</version>
 			</dependency>
 
 
