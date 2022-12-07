@@ -20,7 +20,7 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 
 /**
- * {@link javax.servlet.Filter} 适配器（为了兼容低版本servlet-api）
+ * {@link Filter} 适配器（为了兼容低版本servlet-api）
  *
  * @author wangliang181230
  */

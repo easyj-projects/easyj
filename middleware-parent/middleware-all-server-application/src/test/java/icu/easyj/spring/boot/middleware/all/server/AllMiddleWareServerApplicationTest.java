@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.middleware.all.server;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;

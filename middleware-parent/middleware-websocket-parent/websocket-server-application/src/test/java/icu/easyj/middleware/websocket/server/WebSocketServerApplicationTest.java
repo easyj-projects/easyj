@@ -15,7 +15,7 @@
  */
 package icu.easyj.middleware.websocket.server;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
 import org.junit.jupiter.api.Assertions;

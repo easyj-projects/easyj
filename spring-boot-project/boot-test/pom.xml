@@ -91,11 +91,10 @@
 			<artifactId>spring-web</artifactId>
 		</dependency>
 
-		<!-- javax -->
+		<!-- annotation-api -->
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<scope>provided</scope>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
 		</dependency>
 
 		<!-- 引用依赖：Provided dependencies。（注：仅参与编译，无需被继承的依赖。） -->

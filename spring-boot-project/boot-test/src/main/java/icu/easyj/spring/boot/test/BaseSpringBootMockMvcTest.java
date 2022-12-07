@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.test;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import jakarta.servlet.Filter;
 
 import org.junit.Before;
