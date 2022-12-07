@@ -15,7 +15,7 @@
  */
 package icu.easyj.middleware.websocket.server.core.test.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import icu.easyj.config.EnvironmentConfigs;
 import org.springframework.beans.factory.annotation.Value;

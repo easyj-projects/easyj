@@ -226,12 +226,7 @@ public class MockRequest {
 	@SuppressWarnings("deprecation")
 	public MockRequest file(String multipartParamName, String filePath) {
 		if (this.multipartBuilder == null) {
-			MockMultipartHttpServletRequestBuilder newMultipartBuilder;
-			try {
-				newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-			} catch (NoSuchMethodError e) {
-				newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
-			}
+			MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
 			newMultipartBuilder.merge(this.builder);
 			this.multipartBuilder = newMultipartBuilder;
 			this.builder = newMultipartBuilder;

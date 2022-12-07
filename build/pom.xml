@@ -18,7 +18,7 @@
 
 	<properties>
 		<!-- 当前项目版本号 -->
-		<revision>0.7.6-SNAPSHOT</revision>
+		<revision>0.7.6-for-springboot3-SNAPSHOT</revision>
 
 		<!-- 编译配置 -->
 		<java.version>1.8</java.version>
@@ -28,7 +28,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.7.6</spring-boot.version>
+		<spring-boot.version>3.0.0</spring-boot.version>
 
 		<!-- 当前模块不执行install和deploy，子模块不会继承此配置。 -->
 		<maven.easyj.skipInstallAndDeploy>true</maven.easyj.skipInstallAndDeploy>

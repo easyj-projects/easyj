@@ -18,7 +18,7 @@ package icu.easyj.web.poi.excel;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.constant.AspectOrderConstants;
 import icu.easyj.core.constant.FileTypeConstants;

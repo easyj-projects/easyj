@@ -16,7 +16,7 @@
 package icu.easyj.middleware.dwz.server.core.controller;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.middleware.dwz.server.core.service.IDwzServerService;

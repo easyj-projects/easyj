@@ -18,7 +18,7 @@ package icu.easyj.web.poi.excel;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import icu.easyj.web.constant.ContentTypeConstants;
 import icu.easyj.web.util.HttpUtils;

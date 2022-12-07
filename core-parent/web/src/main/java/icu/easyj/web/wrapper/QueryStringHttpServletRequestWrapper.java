@@ -18,8 +18,8 @@ package icu.easyj.web.wrapper;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.web.util.QueryStringUtils;

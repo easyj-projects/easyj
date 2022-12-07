@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 
 import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -28,10 +29,12 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author wangliang181230
  */
 @SpringBootTest
+@Disabled
 public class WebSocketServerApplicationTest {
 
 	@Resource
 	WebSocketService webSocketService;
+
 
 	@Test
 	public void testStartup() {

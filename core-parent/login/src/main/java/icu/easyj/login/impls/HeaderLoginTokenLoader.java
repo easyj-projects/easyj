@@ -15,7 +15,7 @@
  */
 package icu.easyj.login.impls;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.login.ILoginProperties;

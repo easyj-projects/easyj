@@ -17,8 +17,8 @@ package icu.easyj.web.cache304;
 
 import java.util.Date;
 import java.util.function.Supplier;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import icu.easyj.core.util.DateUtils;
 import icu.easyj.core.util.StringUtils;

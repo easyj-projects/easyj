@@ -15,7 +15,7 @@
  */
 package icu.easyj.web.util;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.springframework.lang.NonNull;
 import org.springframework.web.context.WebApplicationContext;

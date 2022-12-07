@@ -16,7 +16,7 @@
 package icu.easyj.spring.boot.test;
 
 import javax.annotation.Resource;
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -145,12 +145,7 @@ public abstract class BaseSpringBootMockMvcTest {
 	 */
 	@SuppressWarnings("deprecation")
 	protected MockRequest mockPostMultipart(String urlTemplate, Object... uriVars) {
-		MockMultipartHttpServletRequestBuilder newMultipartBuilder;
-		try {
-			newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
-		} catch (NoSuchMethodError e) {
-			newMultipartBuilder = MockMvcRequestBuilders.fileUpload(urlTemplate, uriVars);
-		}
+		MockMultipartHttpServletRequestBuilder newMultipartBuilder = MockMvcRequestBuilders.multipart(urlTemplate, uriVars);
 		return new MockRequest(this.mockMvc, newMultipartBuilder, urlTemplate, uriVars);
 	}
 

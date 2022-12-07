@@ -16,7 +16,7 @@
 package icu.easyj.web.cache304.config;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import icu.easyj.core.util.MapUtils;
 import org.springframework.util.Assert;

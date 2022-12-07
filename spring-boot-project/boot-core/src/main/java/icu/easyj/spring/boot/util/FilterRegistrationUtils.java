@@ -15,7 +15,7 @@
  */
 package icu.easyj.spring.boot.util;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.web.exception.FilterDisabledException;

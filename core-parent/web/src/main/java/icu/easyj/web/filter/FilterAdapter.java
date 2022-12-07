@@ -15,9 +15,9 @@
  */
 package icu.easyj.web.filter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
 
 /**
  * {@link javax.servlet.Filter} 适配器（为了兼容低版本servlet-api）
