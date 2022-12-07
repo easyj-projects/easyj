@@ -21,6 +21,7 @@ import icu.easyj.middleware.dwz.server.core.controller.DwzRedirectController;
 import icu.easyj.middleware.dwz.server.core.controller.DwzRestController;
 import icu.easyj.middleware.websocket.server.core.service.WebSocketService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -32,6 +33,7 @@ import org.springframework.test.context.ActiveProfiles;
  */
 @SpringBootTest
 @ActiveProfiles("unittest")
+@Disabled
 public class AllMiddleWareServerApplicationTest {
 
 	// dwz
