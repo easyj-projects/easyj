@@ -27,9 +27,6 @@ import java.util.List;
 
 import org.slf4j.LoggerFactory;
 
-import static org.springframework.util.SocketUtils.PORT_RANGE_MAX;
-import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
-
 /**
  * 网络工具类
  *
@@ -39,6 +36,9 @@ public abstract class NetUtils {
 
 	public static final String LOCALHOST = "127.0.0.1";
 
+
+	public static final int PORT_RANGE_MIN = 1024;
+	public static final int PORT_RANGE_MAX = 65535;
 
 	/**
 	 * 类型：sun.net.www.protocol.http.HttpURLConnection

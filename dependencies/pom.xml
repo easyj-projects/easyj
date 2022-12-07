@@ -20,8 +20,8 @@
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 
 		<!-- Javax版本 -->
-		<javax-annotation.version>1.3.2</javax-annotation.version>
 		<javax-jaxb.version>2.3.1</javax-jaxb.version>
+		<javax-annotation.version>1.3.2</javax-annotation.version>
 
 		<!-- Findbugs dependencies version -->
 		<findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
@@ -87,16 +87,16 @@
 			</dependency>
 
 
-			<!-- javax -->
-			<dependency>
-				<groupId>javax.annotation</groupId>
-				<artifactId>javax.annotation-api</artifactId>
-				<version>${javax-annotation.version}</version>
-			</dependency>
+			<!-- 依赖定义：javax -->
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
 				<version>${javax-jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>javax.annotation-api</artifactId>
+				<version>${javax-annotation.version}</version>
 			</dependency>
 
 

@@ -90,17 +90,15 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+
+		<!-- javax -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
-
-
-		<!-- javax -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- 引用依赖：Provided dependencies。（注：仅参与编译，无需被继承的依赖。） -->

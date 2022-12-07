@@ -32,6 +32,7 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
 
 import static icu.easyj.core.loader.ServiceProviders.FASTJSON;
 import static icu.easyj.core.loader.ServiceProviders.FASTJSON2;
@@ -44,6 +45,7 @@ import static icu.easyj.core.loader.ServiceProviders.JACKSON;
  *
  * @author wangliang181230
  */
+@DisabledOnOs(org.junit.jupiter.api.condition.OS.WINDOWS)
 public class JSONUtilsTest {
 
 	private static final int THREAD_COUNT = 5;

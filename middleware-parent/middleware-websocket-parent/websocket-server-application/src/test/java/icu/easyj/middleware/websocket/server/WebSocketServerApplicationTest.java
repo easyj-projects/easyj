@@ -33,6 +33,7 @@ public class WebSocketServerApplicationTest {
 	@Resource
 	WebSocketService webSocketService;
 
+
 	@Test
 	public void testStartup() {
 		Assertions.assertNotNull(webSocketService);

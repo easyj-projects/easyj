@@ -28,8 +28,8 @@ import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.springframework.util.SocketUtils.PORT_RANGE_MAX;
-import static org.springframework.util.SocketUtils.PORT_RANGE_MIN;
+import static icu.easyj.core.util.NetUtils.PORT_RANGE_MAX;
+import static icu.easyj.core.util.NetUtils.PORT_RANGE_MIN;
 
 /**
  * 随机内容配置工具类

@@ -50,7 +50,7 @@ public class ConstantsTest {
 
 
 	private void validateVersion(String version, boolean expected) {
-		boolean result = PatternUtils.validate("^(\\d+(\\.\\d+)*|latest)(-SNAPSHOT)?$", version);
+		boolean result = PatternUtils.validate("^(\\d+(\\.\\d+)*|latest)(-\\w+)*(-SNAPSHOT)?$", version);
 		if (expected) {
 			Assertions.assertTrue(result, "version = " + version);
 		} else {

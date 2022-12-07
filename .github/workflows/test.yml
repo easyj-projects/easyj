@@ -44,7 +44,6 @@ jobs:
 
       # step 3
       - name: "Run Test With Maven"
-        # https://docs.github.com/cn/free-pro-team@latest/actions/reference/context-and-expression-syntax-for-github-actions#github-context
         run: |
           if [ "${{ matrix.java }}" == "8" ]; then
             mvn clean test -Pcicd8 -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
