@@ -25,6 +25,6 @@ import icu.easyj.jwt.impls.JJwt;
 public class JJwtTest extends AbstractJwtTest {
 
 	public JJwtTest() {
-		super.setJwt(new JJwt("HS256", "1234567890123456", "AES"));
+		super.setJwt(new JJwt("HS256", "123456789012345612345678901234560123456789123456", "HmacSHA256"));
 	}
 }
