@@ -26,11 +26,16 @@ jobs:
           server-id: ossrh
           server-username: OSSRH_USERNAME
           server-password: OSSRH_PASSWORD
-          gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
       # step 3
-      - name: "Import GPG-SECRET-KEY, Package and Publish-To-OSSRH"
+      - name: "Print maven version"
+        run: |
+          mvn -version
+
+      # step 4
+      - name: "Publish-To-OSSRH"
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
