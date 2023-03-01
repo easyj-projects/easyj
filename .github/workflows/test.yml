@@ -15,7 +15,7 @@ jobs:
       matrix:
         java: [ 8, 11, 17 ]
         springboot: [
-          2.7.5,
+          2.7.9,
           2.6.13,
           2.5.14,
           2.4.13,
@@ -43,6 +43,11 @@ jobs:
           java-version: ${{ matrix.java }}
 
       # step 3
+      - name: "Print maven version"
+        run: |
+          mvn -version
+
+      # step 4
       - name: "Run Test With Maven"
         run: |
           if [ "${{ matrix.java }}" == "8" ]; then
@@ -51,7 +56,7 @@ jobs:
             mvn clean test -Pcicd  -Duser.timezone=GMT+0 -Dspring-boot.version=${{ matrix.springboot }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
           fi
 
-      # step 4
+      # step 5
       - name: "Codecov"
-        if: matrix.java == '8' && matrix.springboot == '2.7.5' && (github.ref_name == 'develop' || github.ref_name == 'master')
+        if: matrix.java == '8' && matrix.springboot == '2.7.9' && (github.ref_name == 'develop' || github.ref_name == 'master')
         uses: codecov/codecov-action@v2.1.0
