@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 赋予普通接口Excel文件导出功能
+ * 赋予 列表数据查询的GET接口，导出为Excel文件的能力
  *
  * @author wangliang181230
  */
@@ -32,7 +32,8 @@ import java.lang.annotation.Target;
 public @interface ExcelExport {
 
 	/**
-	 * 导出的Excel文件名前缀，格式如：{fileNamePre}_{yyyyMMddHHmmssSSS}.xlsx
+	 * 导出的Excel文件的文件名前缀<br>
+	 * 最终生成的文件名格式如：{fileNamePre}_{yyyyMMddHHmmssSSS}.xlsx
 	 *
 	 * @return fileNamePre 文件名前缀
 	 */
@@ -55,4 +56,12 @@ public @interface ExcelExport {
 	 * @see ExcelExportConfig
 	 */
 	String listFieldName() default "";
+
+	/**
+	 * 是否直接导出Excel文件，而不再根据GET参数 `doExport=true` 来判断是否导出。<br>
+	 * 当设置为 `true` 时，这个接口就是一个导出Excel文件的接口，而不再是一个列表数据查询的接口。
+	 *
+	 * @since 0.7.6
+	 */
+	boolean doExportDirect() default false;
 }
