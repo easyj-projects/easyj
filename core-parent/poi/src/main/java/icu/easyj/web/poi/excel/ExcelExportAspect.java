@@ -88,7 +88,9 @@ public class ExcelExportAspect {
 			ExcelExport annotation = method.getAnnotation(ExcelExport.class);
 
 			// 判断是否需要将列表数据导出为Excel文件
-			if (annotation.doExportDirect() && HttpUtils.isDoExportRequest()) {
+			if (annotation.doExportDirect() // 注解直接标记强制执行导出
+					|| HttpUtils.isDoExportRequest() // 当前请求指定要导出
+			) {
 				// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
 				if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
 					String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
