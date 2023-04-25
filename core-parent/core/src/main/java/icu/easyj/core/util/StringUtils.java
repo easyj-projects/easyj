@@ -336,15 +336,16 @@ public abstract class StringUtils {
 			return 0;
 		}
 
-		final int length = cs.length();
-		int resultLength = length; // 返回长度
-		for (int i = 0; i < length; ++i) {
-			if (isChinese(cs.charAt(i))) {
-				++resultLength;
+		char[] chars = toCharArray(cs);
+
+		int length = chars.length;
+		for (char c : chars) {
+			if (isChinese(c)) {
+				length++;
 			}
 		}
 
-		return resultLength;
+		return length;
 	}
 
 	//endregion
