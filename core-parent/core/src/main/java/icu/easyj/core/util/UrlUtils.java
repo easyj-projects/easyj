@@ -212,13 +212,13 @@ public abstract class UrlUtils {
 	 * - 1、编码入参也由String直接变成了Charset；
 	 * - 2、StringBuffer变为StringBuilderc
 	 *
-	 * @param s                  字符串
-	 * @param charset            字符集
-	 * @param needHandlePlusChar 是否需要处理 '+' 字符
+	 * @param s           字符串
+	 * @param charset     字符集
+	 * @param isForBase64 是否用于base64编码
 	 * @return 解码后的字符串
 	 * @throws IllegalArgumentException s或charset为空时，将抛出该异常
 	 */
-	private static String decode(String s, Charset charset, boolean needHandlePlusChar) {
+	private static String decodeInternal(String s, Charset charset, boolean isForBase64) {
 		Assert.notNull(s, "'s' must not be null");
 		Assert.notNull(charset, "'charset' must not be null");
 
@@ -233,16 +233,25 @@ public abstract class UrlUtils {
 			c = s.charAt(i);
 			switch (c) {
 				case '+':
-					if (needHandlePlusChar) {
+					if (!isForBase64) {
 						sb.append(' ');
 						i++;
 						needToChange = true;
-						break;
 					} else {
 						sb.append(c);
 						i++;
-						break;
 					}
+					break;
+				case ' ':
+					if (isForBase64) {
+						sb.append('+');
+						i++;
+						needToChange = true;
+					} else {
+						sb.append(c);
+						i++;
+					}
+					break;
 				case '%':
 					try {
 						if (bytes == null) {
@@ -283,17 +292,6 @@ public abstract class UrlUtils {
 	}
 
 	/**
-	 * 字符串进行URL解码
-	 *
-	 * @param s                  字符串
-	 * @param needHandlePlusChar 是否需要处理 '+' 字符
-	 * @return 解码后的字符串
-	 */
-	private static String decode(String s, boolean needHandlePlusChar) {
-		return decode(s, StandardCharsets.UTF_8, needHandlePlusChar);
-	}
-
-	/**
 	 * 字符串进行URL解码.<br>
 	 * 代码是从 OpenJDK8 {@link java.net.URLDecoder#decode(String, String)} 中复制过来，并进行了优化：
 	 * - 1、编码入参也由String直接变成了Charset；
@@ -305,17 +303,17 @@ public abstract class UrlUtils {
 	 * @throws IllegalArgumentException s或charset为空时，将抛出该异常
 	 */
 	public static String decode(String s, Charset charset) {
-		return decode(s, charset, true);
+		return decodeInternal(s, charset, false);
 	}
 
 	/**
-	 * 字符串进行URL解码
+	 * 字符串进行URL解码，默认采用UTF_8编码
 	 *
 	 * @param s 字符串
 	 * @return 解码后的字符串
 	 */
 	public static String decode(String s) {
-		return decode(s, StandardCharsets.UTF_8, true);
+		return decodeInternal(s, StandardCharsets.UTF_8, false);
 	}
 
 	/**
@@ -330,17 +328,17 @@ public abstract class UrlUtils {
 	 * @throws IllegalArgumentException s或charset为空时，将抛出该异常
 	 */
 	public static String decodeForBase64(String s, Charset charset) {
-		return decode(s, charset, false);
+		return decodeInternal(s, charset, true);
 	}
 
 	/**
-	 * 字符串进行URL解码（用于反编译Base64串）.
+	 * 字符串进行URL解码，用于反编译Base64串，默认采用UTF_8编码.
 	 *
 	 * @param s 字符串
 	 * @return 解码后的字符串
 	 */
 	public static String decodeForBase64(String s) {
-		return decode(s, StandardCharsets.UTF_8, false);
+		return decodeInternal(s, StandardCharsets.UTF_8, true);
 	}
 
 	////endregion
