@@ -28,7 +28,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring Boot版本 -->
-		<spring-boot.version>2.7.11</spring-boot.version>
+		<spring-boot.version>2.7.13</spring-boot.version>
 
 		<!-- 当前模块不执行install和deploy，子模块不会继承此配置。 -->
 		<maven.easyj.skipInstallAndDeploy>true</maven.easyj.skipInstallAndDeploy>
