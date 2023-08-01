@@ -1,3 +1,4 @@
+icu.easyj.db.dialect.impls.DmDbDialect
 icu.easyj.db.dialect.impls.MySqlDbDialect
 icu.easyj.db.dialect.impls.OracleDbDialect
 icu.easyj.db.dialect.impls.MsSqlServerDbDialect

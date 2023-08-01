@@ -29,4 +29,9 @@ public interface DbDriverConstants {
 	String ORACLE_DRIVER_OLD = "oracle.jdbc.driver.OracleDriver";
 
 	String MS_SQL_SERVER_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+
+	/**
+	 * @since 0.7.7
+	 */
+	String DM_DRIVER = "dm.jdbc.driver.DmDriver";
 }

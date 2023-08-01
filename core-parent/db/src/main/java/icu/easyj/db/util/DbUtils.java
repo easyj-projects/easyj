@@ -54,6 +54,12 @@ public abstract class DbUtils extends PrimaryDbUtils {
 			return DbTypeConstants.MS_SQL_SERVER;
 		}
 
+		// 达梦数据库返回的也太长了
+		// @since 0.7.7
+		if ("dm dbms".equalsIgnoreCase(dbType)) {
+			return DbTypeConstants.DM;
+		}
+
 		return dbType;
 	}
 

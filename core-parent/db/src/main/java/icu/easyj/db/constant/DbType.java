@@ -28,5 +28,10 @@ public enum DbType {
 
 	MS_SQL_SERVER,
 
+	/**
+	 * @since 0.7.7
+	 */
+	DM,
+
 	;
 }
