@@ -1,3 +1,4 @@
+icu.easyj.db.service.impls.DmDbServiceImpl
 icu.easyj.db.service.impls.MySqlDbServiceImpl
 icu.easyj.db.service.impls.OracleDbServiceImpl
 icu.easyj.db.service.impls.MsSqlServerDbServiceImpl

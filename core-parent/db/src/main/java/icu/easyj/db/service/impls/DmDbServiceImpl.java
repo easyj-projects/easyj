@@ -17,22 +17,23 @@ package icu.easyj.db.service.impls;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
+import icu.easyj.core.loader.condition.ValidateStrategy;
 
 import javax.sql.DataSource;
 
-import static icu.easyj.db.constant.DbDriverConstants.MS_SQL_SERVER_DRIVER;
-import static icu.easyj.db.constant.DbTypeConstants.MS_SQL_SERVER;
+import static icu.easyj.db.constant.DbDriverConstants.DM_DRIVER;
+import static icu.easyj.db.constant.DbTypeConstants.DM;
 
 /**
- * MS SQL SERVER 数据库服务
+ * DM数据库服务
  *
  * @author wangliang181230
  */
-@LoadLevel(name = MS_SQL_SERVER, order = 40)
-@DependsOnClass(name = MS_SQL_SERVER_DRIVER)
-class MsSqlServerDbServiceImpl extends CommonDbServiceImpl {
+@LoadLevel(name = DM, order = 30)
+@DependsOnClass(name = {DM_DRIVER}, strategy = ValidateStrategy.ANY_ONE)
+class DmDbServiceImpl extends CommonDbServiceImpl {
 
-	public MsSqlServerDbServiceImpl(DataSource dataSource) {
+	public DmDbServiceImpl(DataSource dataSource) {
 		super(dataSource);
 	}
 }
