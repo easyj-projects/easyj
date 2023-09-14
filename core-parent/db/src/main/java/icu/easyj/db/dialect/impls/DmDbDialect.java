@@ -51,19 +51,19 @@ class DmDbDialect implements IDbDialect {
 	@Override
 	public String getSeqCurrValSql(String seqName) {
 		// TODO: 待开发
-		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
+		throw new NotSupportedException("暂不支持DM设置序列值");
 	}
 
 	@Override
 	public String getSeqNextValSql(String seqName) {
 		// TODO: 待开发
-		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
+		throw new NotSupportedException("暂不支持DM设置序列值");
 	}
 
 	@Override
 	public String getSeqSetValSql(String seqName, long newVal) {
 		// TODO: 待开发
-		throw new NotSupportedException("暂不支持MS SQL Server设置序列值");
+		throw new NotSupportedException("暂不支持DM设置序列值");
 	}
 
 	//endregion
