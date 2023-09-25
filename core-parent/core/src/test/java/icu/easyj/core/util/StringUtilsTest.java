@@ -34,6 +34,7 @@ import cn.hutool.system.SystemUtil;
 import icu.easyj.test.util.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -252,7 +253,12 @@ public class StringUtilsTest {
 		//case: Charset
 		assertEquals("UTF-8", StringUtils.toString(StandardCharsets.UTF_8));
 		//case: Thread
-		assertEquals("Thread[main,5,main]", StringUtils.toString(Thread.currentThread()));
+		try {
+			assertEquals("Thread[main,5,main]", StringUtils.toString(Thread.currentThread()));
+		} catch (AssertionFailedError ignore) {
+			// for java21 and above
+			assertEquals("Thread[#" + Thread.currentThread().getId() + ",main,5,main]", StringUtils.toString(Thread.currentThread()));
+		}
 
 		//case: Date
 		Date date = new Date(2021 - 1900, 6 - 1, 15);
