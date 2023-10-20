@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import icu.easyj.core.convert.ConvertUtils;
+import icu.easyj.core.util.NumberUtils;
+import icu.easyj.core.util.PatternUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
@@ -96,7 +98,14 @@ public abstract class ExcelCellUtils {
 	public static Object getCellValue(Cell cell) {
 		switch (cell.getCellType()) {
 			case STRING: // 字符串
-				return cell.getStringCellValue().trim();
+				String str = cell.getStringCellValue().trim();
+
+				// 如果第一个字符为 ` 或 '，且后面都是数字，说明前面这个是转义符，将其移除掉
+				if (StringUtils.isNotEmpty(str) && PatternUtils.validate("[`']\\d+(\\.\\d*)?", str)) {
+					str = str.substring(1);
+				}
+
+				return str;
 			case NUMERIC: // 数字
 				return cell.getNumericCellValue();
 			case FORMULA: // 公式
@@ -150,7 +159,22 @@ public abstract class ExcelCellUtils {
 		}
 
 		// 转换类型
-		return ConvertUtils.convert(value, cellMapping.getField().getType());
+		return convert(value, cellMapping.getField().getType());
+	}
+
+	public static <T> T convert(Object value, Class<T> targetClass) {
+		if (value == null) {
+			return null;
+		}
+
+		// Double 转 String 特殊处理：不使用科学记数法
+		if (value instanceof Double && String.class.equals(targetClass)) {
+			Double d = (Double) value;
+			//noinspection unchecked
+			return (T) NumberUtils.doubleToString(d);
+		}
+
+		return ConvertUtils.convert(value, targetClass);
 	}
 
 	/**
