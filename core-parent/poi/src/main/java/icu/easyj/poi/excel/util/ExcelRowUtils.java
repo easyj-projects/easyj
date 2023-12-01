@@ -296,21 +296,19 @@ public abstract class ExcelRowUtils {
 	 * @param mapping  表格映射
 	 */
 	public static void createDataRows(Sheet sheet, List<?> dataList, ExcelMapping mapping) {
-		int rowNum = sheet.getLastRowNum() + 1; // 开始行号
-		int cellNum; // 当前列号
-		int number = 1; // 序号
+		final int firstRowNum = sheet.getLastRowNum() + 1; // 开始行号
+		int rowNum = firstRowNum; // 标记当前行号
+		int numberCellValue = 1; // 序号列的值
 
-		Row row; // 行
-		Cell cell; // 列
 		for (Object data : dataList) {
-			cellNum = 0;
+			int cellNum = 0; // 标记当前列号
 
 			// 创建行
-			row = sheet.createRow(rowNum++);
+			Row row = sheet.createRow(rowNum++);
 			// 创建序号列
 			if (mapping.isNeedNumberCell()) { // 判断是否需要序号列
-				cell = row.createCell(cellNum++);
-				cell.setCellValue(number++);
+				Cell numberCell = row.createCell(cellNum++);
+				numberCell.setCellValue(numberCellValue++);
 			}
 			// 循环创建各数据列
 			for (ExcelCellMapping cellMapping : mapping.getCellMappingList()) {
@@ -319,7 +317,7 @@ public abstract class ExcelRowUtils {
 				}
 
 				// 创建数据列
-				cell = row.createCell(cellNum++);
+				Cell cell = row.createCell(cellNum++);
 				// 设置单元格的值
 				try {
 					ExcelCellUtils.setCellValue(cell, data, cellMapping);

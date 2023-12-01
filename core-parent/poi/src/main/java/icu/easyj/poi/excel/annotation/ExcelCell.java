@@ -79,6 +79,9 @@ public @interface ExcelCell {
 	// 背景颜色
 	String backgroundColor() default ""; // 默认：白色
 
+	// 是否自动合并单元格
+	boolean autoMerge() default false; // 默认：不自动合并
+
 	// 是否隐藏列
 	boolean hidden() default false;
 }

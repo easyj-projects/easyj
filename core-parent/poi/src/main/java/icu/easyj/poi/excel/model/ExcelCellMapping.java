@@ -62,6 +62,7 @@ public class ExcelCellMapping implements Serializable {
 	private short colorIndex; // 字体颜色的索引
 	private String backgroundColor; // 背景颜色
 	private short backgroundColorIndex; // 背景颜色的索引
+	private boolean autoMerge = false; // 是否自动合并单元格
 	private String format; // 格式化（应用于Date数据、数字等等的格式化输出）
 	private String align; // 水平位置：left、center、right
 	private String verAlign; // 竖直位置：top、middle|center、bottom
@@ -174,6 +175,14 @@ public class ExcelCellMapping implements Serializable {
 
 	public void setBackgroundColorIndex(short backgroundColorIndex) {
 		this.backgroundColorIndex = backgroundColorIndex;
+	}
+
+	public boolean isAutoMerge() {
+		return autoMerge;
+	}
+
+	public void setAutoMerge(boolean autoMerge) {
+		this.autoMerge = autoMerge;
 	}
 
 	public String getFormat() {
@@ -354,6 +363,7 @@ public class ExcelCellMapping implements Serializable {
 		cellMapping.setColorIndex(getColorIndex(cellMapping.getColor())); // 字体颜色的索引号
 		cellMapping.setBackgroundColor(anno.backgroundColor().toUpperCase()); // 背景颜色
 		cellMapping.setBackgroundColorIndex(getColorIndex(cellMapping.getBackgroundColor())); // 背景颜色的索引号
+		cellMapping.setAutoMerge(anno.autoMerge()); // 是否自动合并单元格
 		cellMapping.setFormat(anno.format()); // 格式化
 		cellMapping.setAlign(anno.align().toLowerCase().trim()); // 水平位置
 		cellMapping.setVerAlign(anno.verAlign().toLowerCase().trim()); // 竖直位置
