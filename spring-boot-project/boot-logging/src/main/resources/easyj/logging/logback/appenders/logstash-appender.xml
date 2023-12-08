@@ -7,6 +7,8 @@
 							defaultValue="127.0.0.1:4560"/>
 			<springProperty name="LOGSTASH_QUEUE_SIZE" source="easyj.logging.logback.logstash-appender.queue-size"
 							defaultValue="8192"/>
+			<springProperty name="ENV" source="spring.profiles.active"
+							defaultValue="UNKNOWN"/>
 
 			<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 				<!-- the TCP address of the logstash -->
@@ -19,6 +21,7 @@
 					<customFields>
 						{
 						"app_name": "${APPLICATION_NAME}",
+						"env": "${ENV}",
 						"server_host": "${SERVER_HOST}",
 						"server_port": ${SERVER_PORT},
 						"pid": ${PID:-0}
