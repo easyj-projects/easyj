@@ -65,9 +65,8 @@ public interface IExcelConverter {
 	 *
 	 * @param list  数据列表
 	 * @param clazz 数据类
-	 * @param <T>   数据类型
 	 * @return workbook 返回excel的Workbook实例
 	 * @throws Exception 转换失败
 	 */
-	<T> Workbook toExcel(List<T> list, Class<T> clazz) throws Exception;
+	Workbook toExcel(List<?> list, Class<?> clazz) throws Exception;
 }

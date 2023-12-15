@@ -17,7 +17,6 @@ package icu.easyj.poi.excel.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.validation.constraints.Null;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -51,9 +50,10 @@ public abstract class ExcelContext {
 	 * @param <T> 值类型
 	 * @return 值或null
 	 */
-	@Null
+	@Nullable
+	@SuppressWarnings("cast")
 	public static <T> T get(Object key) {
-		return (T)CONTEXT.get().get(key);
+		return (T) CONTEXT.get().get(key);
 	}
 
 	/**

@@ -61,7 +61,7 @@ public class EasyjExcelConverter implements IExcelConverter {
 	}
 
 	@Override
-	public <T> Workbook toExcel(List<T> list, Class<T> clazz) throws Exception {
+	public Workbook toExcel(List<?> list, Class<?> clazz) throws Exception {
 		return ExcelUtils.toExcel(list, clazz);
 	}
 }

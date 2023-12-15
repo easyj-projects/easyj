@@ -44,7 +44,14 @@ public @interface ExcelExport {
 	 *
 	 * @return dataType 数据类型
 	 */
-	Class<?> dataType();
+	Class<?> dataType() default Object.class;
+
+	/**
+	 * 数据类型解析器
+	 *
+	 * @return dataTypeParser 数据类型解析器
+	 */
+	Class<? extends DataTypeParser> dataTypeParser() default NonDataTypeParser.class;
 
 	/**
 	 * 列表属性在返回数据中的属性名。

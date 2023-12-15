@@ -232,15 +232,14 @@ public abstract class ExcelUtils {
 	 *
 	 * @param dataList 数据列表
 	 * @param clazz    数据类
-	 * @param <T>      数据类型
 	 * @return wbk 返回excel文件流
 	 */
-	public static <T> Workbook toExcel(List<T> dataList, Class<T> clazz) {
+	public static Workbook toExcel(List<?> dataList, Class<?> clazz) {
 		if (clazz == null) {
 			if (CollectionUtils.isEmpty(dataList)) {
 				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
 			}
-			clazz = (Class<T>)dataList.get(0).getClass();
+			clazz = dataList.get(0).getClass();
 		}
 
 		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
