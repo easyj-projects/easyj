@@ -30,13 +30,11 @@ import java.util.Enumeration;
  */
 public class ApplicationJsonHttpServletRequestWrapper extends BodyHttpServletRequestWrapper {
 
-	private final Enumeration<String> contentTypeEnumeration;
+	private final static Enumeration<String> CONTENT_TYPE_ENUMERATION = Collections.enumeration(Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
 
 
 	public ApplicationJsonHttpServletRequestWrapper(HttpServletRequest request, String jsonData) {
 		super(request, jsonData);
-
-		this.contentTypeEnumeration = Collections.enumeration(Collections.singletonList(MediaType.APPLICATION_JSON_VALUE));
 	}
 
 
@@ -57,7 +55,7 @@ public class ApplicationJsonHttpServletRequestWrapper extends BodyHttpServletReq
 	@Override
 	public Enumeration<String> getHeaders(String name) {
 		if (HttpHeaders.CONTENT_TYPE.equalsIgnoreCase(name)) {
-			return contentTypeEnumeration;
+			return CONTENT_TYPE_ENUMERATION;
 		}
 
 		return super.getHeaders(name);
