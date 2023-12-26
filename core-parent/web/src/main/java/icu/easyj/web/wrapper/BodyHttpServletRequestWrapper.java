@@ -44,7 +44,6 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 
 	private final int contentLength;
-	private final Enumeration<String> contentLengthEnumeration;
 
 	@Nonnull
 	private ServletInputStream inputStream;
@@ -66,7 +65,6 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		byte[] bodyBytes = body.getBytes(DEFAULT_CHARSET);
 
 		this.contentLength = bodyBytes.length;
-		this.contentLengthEnumeration = Collections.enumeration(Collections.singletonList(String.valueOf(contentLength)));
 		this.inputStream = new BodyServletInputStream(bodyBytes);
 	}
 
@@ -124,7 +122,7 @@ public class BodyHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public Enumeration<String> getHeaders(String name) {
 		if (HttpHeaders.CONTENT_LENGTH.equalsIgnoreCase(name)) {
-			return contentLengthEnumeration;
+			return Collections.enumeration(Collections.singletonList(String.valueOf(this.contentLength)));
 		}
 
 		return super.getHeaders(name);
