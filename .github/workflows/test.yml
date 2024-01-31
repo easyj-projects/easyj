@@ -16,7 +16,7 @@ jobs:
       matrix:
         java: [ 8, 11, 17, 21 ]
         springboot: [
-          2.7.16,
+          2.7.18,
           2.6.15,
           2.5.15,
           2.4.13,
@@ -59,7 +59,7 @@ jobs:
 
       # step 5
       - name: "Codecov"
-        if: matrix.java == '8' && matrix.springboot == '2.7.11' && (github.ref_name == 'develop' || github.ref_name == 'master')
+        if: matrix.java == '8' && matrix.springboot == '2.7.18' && (github.ref_name == 'develop' || github.ref_name == 'master')
         uses: codecov/codecov-action@v2.1.0
 
 #  # job 2
