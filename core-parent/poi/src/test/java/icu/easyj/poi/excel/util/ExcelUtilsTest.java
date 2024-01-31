@@ -15,6 +15,7 @@
  */
 package icu.easyj.poi.excel.util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +40,10 @@ public class ExcelUtilsTest {
 	public void testToExcelAndToList() throws Exception {
 		// list to excel
 		List<TestClass> list = new ArrayList<>();
-		list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111"));
-		list.add(new TestClass("bbb", 2, 1, new Date(2019 - 1900, 2 - 1, 2), "desc222"));
-		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333"));
+		list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111", Long.parseLong(Integer.MIN_VALUE + ""), 1.1D, new BigDecimal("1.1")));
+		list.add(new TestClass("bbb", 2, 1, new Date(2019 - 1900, 2 - 1, 2), "desc222", Long.parseLong(Integer.MAX_VALUE + ""), -1.1D, new BigDecimal("-1.1")));
+		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+		list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
 
 		List<TestClass> list2;
 		try (Workbook workbook = ExcelUtils.toExcel(list, TestClass.class)) {
@@ -62,12 +64,20 @@ public class ExcelUtilsTest {
 			Assertions.assertEquals(a.getAge(), b.getAge());
 			Assertions.assertEquals(a.getbClass().getAge(), b.getbClass().getAge());
 			Assertions.assertEquals(a.getBirthday(), b.getBirthday());
+			Assertions.assertEquals(a.getTestLong(), b.getTestLong());
+			Assertions.assertEquals(a.getTestDouble(), b.getTestDouble());
+			Assertions.assertEquals(a.getTestBigDecimal(), b.getTestBigDecimal());
+
+
+			// 上面的示例数据中，testDouble和testBigDecimal的值故意设置成相同的值了，这里也比较一下
+			Assertions.assertEquals(a.getTestDouble(), b.getTestBigDecimal().doubleValue());
+			Assertions.assertEquals(a.getTestBigDecimal().doubleValue(), b.getTestDouble());
 
 			// 无注解，不会解析，所以值为空。可以在导出的excel文件中查看效果。
 			Assertions.assertNull(b.getDesc());
+			a.setDesc(null); // a中，无注解的字段设置为null，方便后面的比较
 
 			// 整体对象转为string后比较
-			a.setDesc(null); // 无注解的字段设置为null
 			Assertions.assertEquals(StringUtils.toString(a), StringUtils.toString(b));
 		}
 	}

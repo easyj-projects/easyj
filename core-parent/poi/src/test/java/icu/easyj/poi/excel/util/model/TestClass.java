@@ -15,6 +15,7 @@
  */
 package icu.easyj.poi.excel.util.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import icu.easyj.poi.excel.annotation.Excel;
@@ -32,7 +33,6 @@ import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 		customFirstRow = @ExcelCustomRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top"),
 		showFooterRow = true
 )
-
 public class TestClass {
 
 	@ExcelCell(headName = "姓名", cellNum = 0)
@@ -50,15 +50,28 @@ public class TestClass {
 	// 测试无注解的情况
 	private String desc;
 
+	@ExcelCell(headName = "测试Long", cellNum = 4, width = 150)
+	private Long testLong;
+
+	@ExcelCell(headName = "测试Double", cellNum = 5, width = 200)
+	private Double testDouble;
+
+	@ExcelCell(headName = "测试BigDecimal", cellNum = 6, width = 200)
+	private BigDecimal testBigDecimal;
+
+
 	public TestClass() {
 	}
 
-	public TestClass(String name, Integer age, Integer age2, Date birthday, String desc) {
+	public TestClass(String name, Integer age, Integer age2, Date birthday, String desc, Long testLong, Double testDouble, BigDecimal testBigDecimal) {
 		this.name = name;
 		this.age = age;
 		this.bClass = new TestBClass(null, age2);
 		this.birthday = birthday;
 		this.desc = desc;
+		this.testLong = testLong;
+		this.testDouble = testDouble;
+		this.testBigDecimal = testBigDecimal;
 	}
 
 	public String getName() {
@@ -99,5 +112,29 @@ public class TestClass {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public Long getTestLong() {
+		return testLong;
+	}
+
+	public void setTestLong(Long testLong) {
+		this.testLong = testLong;
+	}
+
+	public Double getTestDouble() {
+		return testDouble;
+	}
+
+	public void setTestDouble(Double testDouble) {
+		this.testDouble = testDouble;
+	}
+
+	public BigDecimal getTestBigDecimal() {
+		return testBigDecimal;
+	}
+
+	public void setTestBigDecimal(BigDecimal testBigDecimal) {
+		this.testBigDecimal = testBigDecimal;
 	}
 }

@@ -15,7 +15,6 @@
  */
 package icu.easyj.poi.excel.util;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import icu.easyj.core.convert.ConvertUtils;
@@ -101,7 +100,7 @@ public abstract class ExcelCellUtils {
 				String str = cell.getStringCellValue().trim();
 
 				// 如果第一个字符为 ` 或 '，且后面都是数字，说明前面这个是转义符，将其移除掉
-				if (StringUtils.isNotEmpty(str) && PatternUtils.validate("[`']\\d+(\\.\\d*)?", str)) {
+				if (StringUtils.isNotEmpty(str) && PatternUtils.validate("[`']-?\\d+(\\.\\d*([eE]-?\\d+)?)?", str)) {
 					str = str.substring(1);
 				}
 
@@ -227,14 +226,8 @@ public abstract class ExcelCellUtils {
 		// 设置字段值到单元格中
 		if (fieldValue instanceof Date) {
 			cell.setCellValue((Date)fieldValue);
-		} else if (fieldValue instanceof Double) {
-			cell.setCellValue((Double)fieldValue);
-		} else if (fieldValue instanceof Float) {
-			cell.setCellValue((Float)fieldValue);
-		} else if (fieldValue instanceof BigDecimal) {
-			cell.setCellValue(((BigDecimal)fieldValue).doubleValue());
 		} else if (fieldValue instanceof Number) {
-			cell.setCellValue(((Number)fieldValue).doubleValue());
+			setCellNumberValue(cell, ((Number)fieldValue));
 		} else if (fieldValue instanceof Boolean) {
 			if ((Boolean)fieldValue) {
 				cell.setCellValue(cellMapping.getTrueText());
@@ -248,6 +241,15 @@ public abstract class ExcelCellUtils {
 			} else {
 				cell.setCellValue(fieldValueStr);
 			}
+		}
+	}
+
+	private static void setCellNumberValue(Cell cell, Number numberValue) {
+		double doubleValue = numberValue.doubleValue();
+		if (doubleValue > Integer.MAX_VALUE || doubleValue < Integer.MIN_VALUE) {
+			cell.setCellValue("'" + numberValue);
+		} else {
+			cell.setCellValue(doubleValue);
 		}
 	}
 
