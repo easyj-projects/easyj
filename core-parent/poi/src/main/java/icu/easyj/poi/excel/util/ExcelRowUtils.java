@@ -22,17 +22,7 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ClientAnchor;
-import org.apache.poi.ss.usermodel.Comment;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Drawing;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.RichTextString;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
@@ -272,7 +262,7 @@ public abstract class ExcelRowUtils {
 				cs = sheet.getWorkbook().createCellStyle();
 				cs.cloneStyleFrom(cell.getCellStyle());
 				cs.setFont(font);
-				cs.setAlignment(cellStyle.getAlignment());
+				cs.setAlignment(ExcelCellUtils.getCellStyleAlignment(cellStyle));
 			} else {
 				cs = cellStyle;
 			}

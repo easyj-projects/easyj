@@ -15,6 +15,7 @@
  */
 package icu.easyj.poi.excel.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import icu.easyj.core.convert.ConvertUtils;
@@ -26,16 +27,7 @@ import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.lang.Nullable;
 
@@ -57,8 +49,11 @@ public abstract class ExcelCellUtils {
 			return true;
 		}
 
+		// 获取CellType枚举
+		CellType cellType = getCellType(cell);
+
 		String str;
-		switch (cell.getCellType()) {
+		switch (cellType) {
 			// 返回值为字符串的两种，需要验证值
 			case STRING: // 字符串
 				str = cell.getStringCellValue();
@@ -95,7 +90,10 @@ public abstract class ExcelCellUtils {
 	 * @return cellValue 单元格的值
 	 */
 	public static Object getCellValue(Cell cell) {
-		switch (cell.getCellType()) {
+		// 获取CellType枚举
+		CellType cellType = getCellType(cell);
+
+		switch (cellType) {
 			case STRING: // 字符串
 				String str = cell.getStringCellValue().trim();
 
@@ -420,5 +418,55 @@ public abstract class ExcelCellUtils {
 			default:
 				return defaultVerAlign; // 默认
 		}
+	}
+
+	/**
+	 * 兼容低版本POI
+	 */
+	public static CellType getCellType(Cell cell) {
+		final CellType cellType;
+
+		// 兼容性处理
+		Object cellTypeValue;
+		try {
+			cellTypeValue = ReflectionUtils.invokeMethod(cell, "getCellType");
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("No such method: " + Cell.class.getName() + ".getCellType()", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Invoke method failed: " + Cell.class.getName() + ".getCellType()", e);
+		}
+
+		if (cellTypeValue instanceof CellType) {
+			cellType = (CellType) cellTypeValue;
+		} else {
+			cellType = CellType.forInt(Integer.parseInt(cellTypeValue.toString()));
+		}
+
+		return cellType;
+	}
+
+	/**
+	 * 兼容低版本POI
+	 */
+	public static HorizontalAlignment getCellStyleAlignment(CellStyle cellStyle) {
+		final HorizontalAlignment alignment;
+
+		// 兼容性处理
+		Object alignmentValue;
+		try {
+			alignmentValue = ReflectionUtils.invokeMethod(cellStyle, "getAlignment");
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("No such method: " + CellStyle.class.getName() + ".getAlignment()", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Invoke method failed: " + CellStyle.class.getName() + ".getAlignment()", e);
+		}
+
+		if (alignmentValue instanceof HorizontalAlignment) {
+			alignment = (HorizontalAlignment) alignmentValue;
+		} else {
+			alignment = HorizontalAlignment.forInt(Integer.parseInt(alignmentValue.toString()));
+		}
+
+		return alignment;
 	}
 }
