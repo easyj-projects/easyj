@@ -218,7 +218,7 @@ public abstract class ExcelRowUtils {
 		CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
 		// 设置粗体
 		Font font = sheet.getWorkbook().createFont();
-		font.setColor(HSSFColor.HSSFColorPredefined.TEAL.getIndex()); // 字体颜色：湖蓝色
+		font.setColor(ExcelColorUtils.TEAL_INDEX); // 字体颜色：湖蓝色
 		font.setBold(true); // 低版本
 //		font.setBoldweight((short) 1000); // 高版本
 		cellStyle.setFont(font);
@@ -244,7 +244,7 @@ public abstract class ExcelRowUtils {
 		// 得到一个POI的工具类
 		CreationHelper factory = sheet.getWorkbook().getCreationHelper();
 		// 得到一个换图的对象
-		Drawing<?> drawing = sheet.createDrawingPatriarch();
+		Drawing drawing = sheet.createDrawingPatriarch();
 		// ClientAnchor是附属在WorkSheet上的一个对象，  其固定在一个单元格的左上角和右下角.
 		ClientAnchor anchor = factory.createClientAnchor();
 

@@ -50,7 +50,7 @@ public class TestClass {
 	// 测试无注解的情况
 	private String desc;
 
-	@ExcelCell(headName = "测试Long", cellNum = 4, width = 150)
+	@ExcelCell(headName = "测试Long", cellNum = 4, width = 150, color = "red")
 	private Long testLong;
 
 	@ExcelCell(headName = "测试Double", cellNum = 5, width = 200)

@@ -301,7 +301,7 @@ public abstract class ExcelCellUtils {
 				}
 				// 字体
 				Font font = sheet.getWorkbook().createFont();
-				font.setColor(HSSFColor.HSSFColorPredefined.TEAL.getIndex()); // 字体颜色：湖蓝色
+				font.setColor(ExcelColorUtils.TEAL_INDEX); // 字体颜色：湖蓝色
 				numberCellStyle.setFont(font);
 				// 竖直居中
 				numberCellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 默认竖直居中

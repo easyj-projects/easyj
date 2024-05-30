@@ -32,8 +32,8 @@ import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.annotation.ExcelCells;
 import icu.easyj.poi.excel.style.ExcelFormats;
+import icu.easyj.poi.excel.util.ExcelColorUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.poi.hssf.util.HSSFColor;
 
 /**
  * model中的属性和excel表格中的列的映射关系
@@ -351,9 +351,9 @@ public class ExcelCellMapping implements Serializable {
 		cellMapping.setWrapText(anno.wrapText()); // 是否允许自动换行
 		cellMapping.setHidden(anno.hidden()); // 是否隐藏列
 		cellMapping.setColor(anno.color().toUpperCase()); // 字体颜色
-		cellMapping.setColorIndex(getColorIndex(cellMapping.getColor())); // 字体颜色的索引号
+		cellMapping.setColorIndex(ExcelColorUtils.getColorIndex(cellMapping.getColor())); // 字体颜色的索引号
 		cellMapping.setBackgroundColor(anno.backgroundColor().toUpperCase()); // 背景颜色
-		cellMapping.setBackgroundColorIndex(getColorIndex(cellMapping.getBackgroundColor())); // 背景颜色的索引号
+		cellMapping.setBackgroundColorIndex(ExcelColorUtils.getColorIndex(cellMapping.getBackgroundColor())); // 背景颜色的索引号
 		cellMapping.setFormat(anno.format()); // 格式化
 		cellMapping.setAlign(anno.align().toLowerCase().trim()); // 水平位置
 		cellMapping.setVerAlign(anno.verAlign().toLowerCase().trim()); // 竖直位置
@@ -441,51 +441,5 @@ public class ExcelCellMapping implements Serializable {
 	public static int getCellWidthByText(String text, int size, boolean isBold) {
 		int textLength = icu.easyj.core.util.StringUtils.chineseLength(text);
 		return (int)(textLength * (isBold ? 7.2 : 6.8) * (size / 10)) + 10;
-	}
-
-	/**
-	 * 获取颜色的数字值，即颜色值从16进制转换为10进制后的值
-	 *
-	 * @param color 颜色
-	 * @return colorIndex 颜色index值
-	 */
-	public static short getColorIndex(String color) {
-		if (StringUtils.isEmpty(color)) {
-			return 0;
-		}
-
-		// 从 HSSFColor.HSSFColorPredefined 枚举中匹配颜色
-		HSSFColor.HSSFColorPredefined hssfColorPredefined = HSSFColor.HSSFColorPredefined.valueOf(color);
-		if (hssfColorPredefined != null) {
-			return hssfColorPredefined.getIndex();
-		}
-
-		short colorIndexRet = 0;
-
-		if (color.contains("#")) {
-			color = StringUtils.remove(color, '#');
-		}
-
-		if (color.length() == 3) {
-			color = "" + color.charAt(0) + color.charAt(0) + color.charAt(1) + color.charAt(1) + color.charAt(2) + color.charAt(2);
-		}
-
-		if (color.length() == 6) {
-			// 将颜色字符串转换为
-			Color awtColor = Color.getColor(null, Integer.valueOf(color, 16));
-			for (Integer colorIndex : HSSFColor.getIndexHash().keySet()) {
-				HSSFColor hssfColor = HSSFColor.getIndexHash().get(colorIndex);
-				short[] triplet = hssfColor.getTriplet();
-				if (triplet == null || triplet.length < 3) {
-					continue;
-				}
-				if (awtColor.getRed() == triplet[0] && awtColor.getGreen() == triplet[1] && awtColor.getBlue() == triplet[2]) {
-					colorIndexRet = Short.parseShort(colorIndex.toString());
-					break;
-				}
-			}
-		}
-
-		return colorIndexRet;
 	}
 }

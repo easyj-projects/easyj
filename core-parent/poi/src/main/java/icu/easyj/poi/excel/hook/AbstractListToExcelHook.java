@@ -22,7 +22,7 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.ExcelCustomRowConfig;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import icu.easyj.poi.excel.util.ExcelCellUtils;
-import org.apache.poi.hssf.util.HSSFColor;
+import icu.easyj.poi.excel.util.ExcelColorUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -164,7 +164,7 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 		// 设置粗体
 		Font font = cell.getSheet().getWorkbook().createFont();
 		font.setFontHeight((short)(fontSize * 20));
-		font.setColor(HSSFColor.HSSFColorPredefined.TEAL.getIndex()); // 字体颜色：湖蓝色
+		font.setColor(ExcelColorUtils.TEAL_INDEX); // 字体颜色：湖蓝色
 		if (fontBold) {
 			font.setBold(true); // 低版本
 //			font.setBoldweight((short) 1000); // 高版本
