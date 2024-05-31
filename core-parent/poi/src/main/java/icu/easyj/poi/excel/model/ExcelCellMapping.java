@@ -15,7 +15,6 @@
  */
 package icu.easyj.poi.excel.model;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -376,7 +375,7 @@ public class ExcelCellMapping implements Serializable {
 				}
 			}
 
-			if (convertMap.keySet().size() == 0) {
+			if (convertMap.keySet().isEmpty()) {
 				throw new RuntimeException("在类“" + clazz.getName() + "”中的“" + f.getName() + "”属性上的@ExcelCellMapping注解所配置的convert属性有误，请检查格式。");
 			}
 
