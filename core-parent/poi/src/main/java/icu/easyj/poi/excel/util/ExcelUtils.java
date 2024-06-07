@@ -66,9 +66,9 @@ public abstract class ExcelUtils {
 		// 获取映射
 		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
 
-		// 获取数据实际的起始行号
+		// 获取数据实际的起止行号
 		int rowStart = sheet.getFirstRowNum();
-		int rowEnd = sheet.getLastRowNum();
+		int rowEnd = sheet.getPhysicalNumberOfRows() - 1;
 		while (ExcelRowUtils.isEmptyRow(sheet.getRow(rowStart))) {
 			rowStart++; // 过滤起始的空行
 		}
@@ -179,7 +179,7 @@ public abstract class ExcelUtils {
 		Row row;
 		Cell cell;
 		Object cellValue;
-		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+		for (int i = 0; i <= sheet.getPhysicalNumberOfRows() - 1; i++) {
 			row = sheet.getRow(i);
 			if (ExcelRowUtils.isEmptyRow(row)) {
 				continue;
@@ -209,9 +209,9 @@ public abstract class ExcelUtils {
 	 */
 	@Nullable
 	private static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
-		// 只检测5行
+		// 只检测前3行
 		int i = 0;
-		while (i < 5) {
+		while (i < 3) {
 			Row row = sheet.getRow(firstRowNum + i);
 			if (row != null && ExcelRowUtils.isHeadRow(row, mapping)) {
 				return row.getRowNum();
@@ -268,7 +268,7 @@ public abstract class ExcelUtils {
 			ListToExcelHookTrigger.onBeforeCreateHeadRow(sheet, mapping);
 
 			// 除去自定义行以外的首行
-			int firstRowNum = sheet.getLastRowNum() + 1;
+			int firstRowNum = sheet.getPhysicalNumberOfRows();
 			// 创建头行
 			ExcelRowUtils.createHeadRow(sheet, mapping);
 			// 创建数据行
@@ -277,7 +277,7 @@ public abstract class ExcelUtils {
 			// 触发勾子：afterCreateDataRows
 			ListToExcelHookTrigger.onAfterCreateDataRows(sheet, mapping);
 
-			// 写文件后，设置样式：如自适应宽度等
+			// 表格内容填充完后，设置样式：如自适应宽度等
 			ExcelCellUtils.setCellStyle(sheet, mapping, firstRowNum, false);
 		} catch (Exception e) {
 			try {

@@ -121,7 +121,7 @@ public abstract class AbstractListToExcelHook implements IListToExcelHook {
 		}
 
 		// 创建行及单元格
-		Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+		Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
 		Cell cell = row.createCell(0);
 		cell.setCellValue(footerRowContent);
 		// 合并单元格

@@ -230,7 +230,7 @@ public abstract class ExcelRowUtils {
 		}
 
 		// 创建行
-		Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+		Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
 		int cellNum = 0; // 标记当前列号
 
 		// 创建序号列头
@@ -286,7 +286,7 @@ public abstract class ExcelRowUtils {
 	 * @param mapping  表格映射
 	 */
 	public static void createDataRows(Sheet sheet, List<?> dataList, ExcelMapping mapping) {
-		int rowNum = sheet.getLastRowNum() + 1; // 开始行号
+		int rowNum = sheet.getPhysicalNumberOfRows(); // 开始行号
 		int cellNum; // 当前列号
 		int number = 1; // 序号
 
