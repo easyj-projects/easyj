@@ -17,6 +17,7 @@ package icu.easyj.web.poi.excel;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 赋予 列表数据查询的GET接口，导出为Excel文件的能力
@@ -28,5 +29,8 @@ public interface DataTypeParser {
 
 	@Nullable
 	Class<?> parse(Object result, List<?> dataList, ExcelExport annotation);
+
+	@Nullable
+	Class<?> parse(Object result, Map<?, List<?>> dataMap, ExcelExport annotation);
 
 }

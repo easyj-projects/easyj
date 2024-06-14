@@ -21,6 +21,7 @@ import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.converter.ExcelConverterUtils;
 import icu.easyj.poi.excel.util.ExcelContext;
+import icu.easyj.poi.excel.util.ExcelUtils;
 import icu.easyj.web.poi.excel.exception.ExcelExportException;
 import icu.easyj.web.util.HttpUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -37,6 +38,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Excel文件导出切面类
@@ -112,8 +114,8 @@ public class ExcelExportAspect {
 	 * @throws IOException IO异常
 	 */
 	private void doExport(Object result, ExcelExport annotation) throws IOException {
-		// 如果返回数据不是列表，并且配置过列表属性名，则从数据的属性中获取列表数据
-		if (result != null && !(result instanceof List) && !result.getClass().equals(annotation.dataType())) {
+		// 如果返回数据不是List或Map，并且配置过列表属性名，则从数据的属性中获取List或Map数据
+		if (result != null && !(result instanceof List || result instanceof Map) && !result.getClass().equals(annotation.dataType())) {
 			String listFieldName = StringUtils.findNotEmptyOne(annotation.listFieldName(), config.getListFieldName());
 			if (StringUtils.isNotEmpty(listFieldName)) {
 				try {
@@ -123,7 +125,7 @@ public class ExcelExportAspect {
 					throw new ExcelExportException(errorMsg, "NO_SUCH_FIELD");
 				}
 			} else {
-				throw new ExcelExportException("返回数据不是列表数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。",
+				throw new ExcelExportException("返回数据不是List或Map数据，请在注解上设置`listFieldName`或全局配置`easyj.web.poi.excel.export.list-field-name`，从数据的属性中获取列表数据。",
 						"NO_CONFIG");
 			}
 		}
@@ -140,9 +142,28 @@ public class ExcelExportAspect {
 		ExcelContext.put("result", result);
 
 		// 数据转换为excel工作薄
-		List<?> dataList = (List<?>) result;
-		Class<?> dataType = this.getDataType(result, dataList, annotation);
-		Workbook workbook = ExcelConverterUtils.toExcel(dataList, dataType);
+		Workbook workbook;
+		if (result instanceof List) {
+			List<?> dataList = (List<?>) result;
+			Class<?> dataType = this.getDataType(result, dataList, annotation);
+			workbook = ExcelConverterUtils.toExcel(dataList, dataType);
+
+			// 设为null，方便GC回收
+			dataList = null;
+			dataType = null;
+		} else if (result instanceof Map) {
+			Map<String, List<?>> dataMap = (Map<String, List<?>>) result;
+			Class<?> dataType = this.getDataType(result, dataMap, annotation);
+			workbook = ExcelConverterUtils.toExcel(dataMap, dataType);
+
+			// 设为null，方便GC回收
+			dataMap = null;
+			dataType = null;
+		} else {
+			throw new ExcelExportException("返回数据类型不是List或Map，无法导出Excel文件。", "DATA_TYPE_ERROR");
+		}
+		// 设为null，方便GC回收
+		result = null;
 
 		// 设置响应头及响应流
 		HttpServletResponse response = HttpUtils.getResponse();
@@ -150,9 +171,6 @@ public class ExcelExportAspect {
 		ExcelExportUtils.exportExcel(response, workbook, fileName);
 
 		// 设为null，方便GC回收
-		result = null;
-		dataList = null;
-		dataType = null;
 		fileName = null;
 	}
 
@@ -182,4 +200,34 @@ public class ExcelExportAspect {
 		}
 		return dataType;
 	}
+
+	/**
+	 * 获取数据类型
+	 *
+	 * @param dataMap    数据列表
+	 * @param annotation 注解
+	 * @return 数据类型
+	 */
+	private Class<?> getDataType(Object result, Map<String, List<?>> dataMap, ExcelExport annotation) {
+		Class<?> dataType = annotation.dataType();
+		if (dataType == Object.class) {
+			Class<? extends DataTypeParser> dataTypeParserClass = annotation.dataTypeParser();
+			if (dataTypeParserClass != null) {
+				Class<?> dataTypeTemp = ReflectionUtils.getSingleton(dataTypeParserClass).parse(result, dataMap, annotation);
+				if (dataTypeTemp != null) {
+					dataType = dataTypeTemp;
+				}
+			}
+
+			if (!dataMap.isEmpty()) {
+				dataType = ExcelUtils.getClassFromMap(dataMap);
+			}
+
+			if (dataType == null && ExcelContext.get("dataType") != null) {
+				dataType = ExcelContext.get("dataType");
+			}
+		}
+		return dataType;
+	}
+
 }

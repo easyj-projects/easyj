@@ -18,6 +18,7 @@ package icu.easyj.poi.excel.converter;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -69,4 +70,16 @@ public interface IExcelConverter {
 	 * @throws Exception 转换失败
 	 */
 	Workbook toExcel(List<?> list, Class<?> clazz) throws Exception;
+
+	/**
+	 * 列表转换为excel
+	 *
+	 * @param map   数据集合
+	 * @param clazz 数据类
+	 * @return workbook 返回excel的Workbook实例
+	 * @throws Exception 转换失败
+	 */
+	default Workbook toExcel(Map<String, List<?>> map, Class<?> clazz) throws Exception {
+		throw new UnsupportedOperationException("当前实现类暂不支持的Map数据转excel：" + this.getClass().getSimpleName());
+	}
 }

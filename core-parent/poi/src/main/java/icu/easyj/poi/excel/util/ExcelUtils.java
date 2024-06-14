@@ -20,8 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 import icu.easyj.core.util.CollectionUtils;
@@ -227,6 +226,40 @@ public abstract class ExcelUtils {
 
 	//region 数据转换为excel
 
+	private static Sheet generateSheet(Workbook book, List<?> dataList, ExcelMapping mapping, String sheetName) {
+		// 将列表数据设置到上下文中
+		ExcelContext.put("dataList", dataList);
+
+		// 创建表
+		Sheet sheet;
+		if (StringUtils.isBlank(sheetName)) {
+			sheet = book.createSheet();
+		} else {
+			sheet = book.createSheet(sheetName);
+		}
+		// 写文件前，设置样式
+		ExcelCellUtils.setCellStyle(sheet, mapping, -1, true);
+
+		// 触发勾子：beforeCreateHeadRow
+		ListToExcelHookTrigger.onBeforeCreateHeadRow(sheet, mapping);
+
+		// 除去自定义行以外的首行
+		int firstRowNum = sheet.getPhysicalNumberOfRows();
+		// 创建头行
+		ExcelRowUtils.createHeadRow(sheet, mapping);
+		// 创建数据行
+		ExcelRowUtils.createDataRows(sheet, dataList, mapping);
+
+		// 触发勾子：afterCreateDataRows
+		ListToExcelHookTrigger.onAfterCreateDataRows(sheet, mapping);
+
+		// 表格内容填充完后，设置样式：如自适应宽度等
+		ExcelCellUtils.setCellStyle(sheet, mapping, firstRowNum, false);
+
+		return sheet;
+	}
+
+
 	/**
 	 * 数据转换为excel
 	 *
@@ -249,36 +282,11 @@ public abstract class ExcelUtils {
 
 		Workbook book = null;
 		try {
-			// 将列表数据设置到上下文中
-			ExcelContext.put("dataList", dataList);
-
 			// 创建工作簿
 			book = new HSSFWorkbook();
-			// 创建表
-			Sheet sheet;
-			if (StringUtils.isBlank(mapping.getSheetName())) {
-				sheet = book.createSheet();
-			} else {
-				sheet = book.createSheet(mapping.getSheetName());
-			}
-			// 写文件前，设置样式
-			ExcelCellUtils.setCellStyle(sheet, mapping, -1, true);
 
-			// 触发勾子：beforeCreateHeadRow
-			ListToExcelHookTrigger.onBeforeCreateHeadRow(sheet, mapping);
-
-			// 除去自定义行以外的首行
-			int firstRowNum = sheet.getPhysicalNumberOfRows();
-			// 创建头行
-			ExcelRowUtils.createHeadRow(sheet, mapping);
-			// 创建数据行
-			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
-
-			// 触发勾子：afterCreateDataRows
-			ListToExcelHookTrigger.onAfterCreateDataRows(sheet, mapping);
-
-			// 表格内容填充完后，设置样式：如自适应宽度等
-			ExcelCellUtils.setCellStyle(sheet, mapping, firstRowNum, false);
+			// 生成表格
+			generateSheet(book, dataList, mapping, mapping.getSheetName());
 		} catch (Exception e) {
 			try {
 				if (book != null) {
@@ -315,6 +323,70 @@ public abstract class ExcelUtils {
 			}
 		}
 	}
+
+	@Nullable
+	public static Class<?> getClassFromMap(Map<String, List<?>> dataMap) {
+		if (!dataMap.isEmpty()) {
+			for (List<?> list : dataMap.values()) {
+				if (!list.isEmpty()) {
+					return list.get(0).getClass();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 数据转换为excel
+	 *
+	 * @param dataMap 数据列表
+	 * @param clazz    数据类
+	 * @return wbk 返回excel文件流
+	 */
+	public static Workbook toExcel(Map<String, List<?>> dataMap, Class<?> clazz) {
+		if (clazz == null) {
+			if (CollectionUtils.isEmpty(dataMap)) {
+				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
+			}
+			clazz = getClassFromMap(dataMap);
+			if (clazz == null) {
+				throw new RuntimeException("数据为空且类型未知，无法转换为excel文件");
+			}
+		}
+
+		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
+		if (CollectionUtils.isEmpty(mapping.getCellMappingList())) {
+			throw new RuntimeException("“" + clazz.getName() + "” 类中未使用@" + ExcelCell.class.getSimpleName() + "配置任何列信息");
+		}
+
+		Workbook book = null;
+		try {
+			// 创建工作簿
+			book = new HSSFWorkbook();
+
+			for (Map.Entry<String, List<?>> entry : dataMap.entrySet()) {
+				String sheetName = entry.getKey();
+				List<?> dataList = entry.getValue() == null ? Collections.emptyList() : entry.getValue();
+
+				// 生成sheet
+				generateSheet(book, dataList, mapping, sheetName);
+			}
+		} catch (Exception e) {
+			try {
+				if (book != null) {
+					book.close();
+				}
+			} catch (IOException ignore) {
+			}
+			LOGGER.error("数据转换为excel失败：{}", e.getMessage(), e);
+			throw new RuntimeException("数据转换为excel失败", e);
+		} finally {
+			ExcelContext.remove("dataList");
+		}
+
+		return book;
+	}
+
 
 	//endregion
 }

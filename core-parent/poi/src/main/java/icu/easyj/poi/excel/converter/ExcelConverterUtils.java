@@ -139,5 +139,26 @@ public abstract class ExcelConverterUtils {
 		}
 	}
 
+	/**
+	 * Map转换为Excel的workbook实例
+	 *
+	 * @param map   map数据
+	 * @param clazz 数据类
+	 * @return excel的workbook实例
+	 * @throws ConverterNotFoundException 转换器不存在 或 未匹配到合适的转换器
+	 * @throws ConvertException           转换失败的异常
+	 */
+	public static Workbook toExcel(Map<String, List<?>> map, Class<?> clazz) throws ConvertException, ConverterNotFoundException {
+		IExcelConverter converter = getConverter(clazz);
+
+		try {
+			return converter.toExcel(map, clazz);
+		} catch (ConvertException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ConvertException("excel转换为数据列表失败", "EXCEL_TO_LIST_FAILED", e);
+		}
+	}
+
 	//endregion
 }

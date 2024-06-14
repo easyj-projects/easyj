@@ -17,6 +17,7 @@ package icu.easyj.web.poi.excel;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据类型解析器的空实现
@@ -29,6 +30,12 @@ public class NonDataTypeParser implements DataTypeParser {
 	@Nullable
 	@Override
 	public Class<?> parse(Object result, List<?> dataList, ExcelExport annotation) {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public Class<?> parse(Object result, Map<?, List<?>> dataMap, ExcelExport annotation) {
 		return null;
 	}
 }

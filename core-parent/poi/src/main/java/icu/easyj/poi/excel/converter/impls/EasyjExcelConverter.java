@@ -18,6 +18,7 @@ package icu.easyj.poi.excel.converter.impls;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import icu.easyj.core.loader.LoadLevel;
 import icu.easyj.core.loader.condition.DependsOnClass;
@@ -63,5 +64,10 @@ public class EasyjExcelConverter implements IExcelConverter {
 	@Override
 	public Workbook toExcel(List<?> list, Class<?> clazz) throws Exception {
 		return ExcelUtils.toExcel(list, clazz);
+	}
+
+	@Override
+	public Workbook toExcel(Map<String, List<?>> map, Class<?> clazz) throws Exception {
+		return ExcelUtils.toExcel(map, clazz);
 	}
 }

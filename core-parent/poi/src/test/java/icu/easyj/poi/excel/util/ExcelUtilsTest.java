@@ -16,9 +16,7 @@
 package icu.easyj.poi.excel.util;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import icu.easyj.core.util.DateUtils;
 import icu.easyj.core.util.StringUtils;
@@ -79,6 +77,38 @@ public class ExcelUtilsTest {
 
 			// 整体对象转为string后比较
 			Assertions.assertEquals(StringUtils.toString(a), StringUtils.toString(b));
+		}
+	}
+
+	@Test
+	@SuppressWarnings("deprecation")
+	public void testMapToExcel() throws Exception {
+		Map<String, List<?>> map = new HashMap<>();
+
+		{
+			// list to excel
+			List<TestClass> list = new ArrayList<>();
+			list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111", Long.parseLong(Integer.MIN_VALUE + ""), 1.1D, new BigDecimal("1.1")));
+			list.add(new TestClass("bbb", 2, 1, new Date(2019 - 1900, 2 - 1, 2), "desc222", Long.parseLong(Integer.MAX_VALUE + ""), -1.1D, new BigDecimal("-1.1")));
+			list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+			list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
+
+			map.put("list1", list);
+		}
+		{
+			// list to excel
+			List<TestClass> list = new ArrayList<>();
+			list.add(new TestClass("eee", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111", Long.parseLong(Integer.MIN_VALUE + ""), 1.1D, new BigDecimal("1.1")));
+			list.add(new TestClass("fff", 2, 1, new Date(2019 - 1900, 2 - 1, 2), "desc222", Long.parseLong(Integer.MAX_VALUE + ""), -1.1D, new BigDecimal("-1.1")));
+			list.add(new TestClass("ggg", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+			list.add(new TestClass("hhh", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
+
+			map.put("list2", list);
+		}
+
+		try (Workbook workbook = ExcelUtils.toExcel(map, TestClass.class)) {
+			// 如果想看一下导出的excel文件是什么样的，可以放开此注释。执行完测试方法后，去D盘根目录下，找到文件即可。
+			ExcelExportUtils.saveToFile(workbook, "D:\\ExcelUtilsTest2_" + DateUtils.toSecondsUnsigned(new Date()) + ".xlsx");
 		}
 	}
 }
