@@ -61,6 +61,9 @@ public abstract class ExcelUtils {
 	 */
 	public static <T> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
 		Sheet sheet = book.getSheetAt(0);
+		if (sheet == null || sheet.getPhysicalNumberOfRows() == 0) {
+			return new ArrayList<>(); // 没有数据，直接返回空
+		}
 
 		// 获取映射
 		ExcelMapping mapping = ExcelMapping.getMapping(clazz);
@@ -70,6 +73,9 @@ public abstract class ExcelUtils {
 		int rowEnd = sheet.getPhysicalNumberOfRows() - 1;
 		while (ExcelRowUtils.isEmptyRow(sheet.getRow(rowStart))) {
 			rowStart++; // 过滤起始的空行
+			if (rowStart > rowEnd) {
+				return new ArrayList<>(); // 没有数据了
+			}
 		}
 		if (rowStart > rowEnd) {
 			return new ArrayList<>(); // 没有数据了
