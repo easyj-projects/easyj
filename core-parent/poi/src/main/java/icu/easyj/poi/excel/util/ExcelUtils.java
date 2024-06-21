@@ -60,8 +60,8 @@ public abstract class ExcelUtils {
 	 * @throws Exception 异常
 	 */
 	public static <T> List<T> toList(Workbook book, Class<T> clazz, Predicate<T> validDataFun) throws Exception {
-		Sheet sheet = book.getSheetAt(0);
-		if (sheet == null || sheet.getPhysicalNumberOfRows() == 0) {
+		Sheet sheet = getHasDataSheet(book);
+		if (sheet == null) {
 			return new ArrayList<>(); // 没有数据，直接返回空
 		}
 
@@ -346,7 +346,7 @@ public abstract class ExcelUtils {
 	 * 数据转换为excel
 	 *
 	 * @param dataMap 数据列表
-	 * @param clazz    数据类
+	 * @param clazz   数据类
 	 * @return wbk 返回excel文件流
 	 */
 	public static Workbook toExcel(Map<String, List<?>> dataMap, Class<?> clazz) {
@@ -393,6 +393,28 @@ public abstract class ExcelUtils {
 		return book;
 	}
 
-
 	//endregion
+
+
+	/**
+	 * 获取有数据的Sheet
+	 *
+	 * @param book 工作簿
+	 * @return 有数据的Sheet
+	 */
+	@Nullable
+	public static Sheet getHasDataSheet(Workbook book) {
+		if (book == null) {
+			return null;
+		}
+
+		for (int i = 0; i < book.getNumberOfSheets(); i++) {
+			Sheet sheet = book.getSheetAt(i);
+			if (sheet.getPhysicalNumberOfRows() > 0) {
+				return sheet;
+			}
+		}
+
+		return null;
+	}
 }
