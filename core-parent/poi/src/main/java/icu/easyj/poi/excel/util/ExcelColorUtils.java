@@ -47,8 +47,8 @@ public abstract class ExcelColorUtils {
 		// 从 HSSFColor.HSSFColorPredefined 枚举中匹配颜色
 		try {
 			// 使用反射，为了兼容低版本POI
-			Class<?> HSSFColorPredefinedClass = Class.forName(HSSFColor.class.getName() + "$HSSFColorPredefined");
-			Object[] colors = HSSFColorPredefinedClass.getEnumConstants();
+			Class<?> hssfColorPredefinedClass = Class.forName(HSSFColor.class.getName() + "$HSSFColorPredefined");
+			Object[] colors = hssfColorPredefinedClass.getEnumConstants();
 			for (Object colorEnum : colors) {
 				if (colorEnum.toString().equalsIgnoreCase(color)) {
 					try {
