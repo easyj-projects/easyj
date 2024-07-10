@@ -69,6 +69,8 @@ public class ExcelMapping implements Serializable {
 	/**
 	 * 相同单元格合并
 	 * 要注意多组合并的字段名不能相同
+	 *
+	 * @since 0.7.8
 	 */
 	private String[] mergeSameCells;
 
@@ -214,10 +216,16 @@ public class ExcelMapping implements Serializable {
 		this.cellMappingList = cellMappingList;
 	}
 
+	/**
+	 * @since 0.7.8
+	 */
 	public String[] getMergeSameCells() {
 		return mergeSameCells;
 	}
 
+	/**
+	 * @since 0.7.8
+	 */
 	public void setMergeSameCells(String[] mergeSameCells) {
 		this.mergeSameCells = mergeSameCells;
 	}
@@ -247,6 +255,9 @@ public class ExcelMapping implements Serializable {
 
 	//endregion
 
+	/**
+	 * @since 0.7.8
+	 */
 	public ExcelCellMapping getCellMappingByFieldName(String fieldName) {
 		for (ExcelCellMapping cellMapping : cellMappingList) {
 			if (cellMapping.getColumn() != null && cellMapping.getColumn().equals(fieldName)) {

@@ -323,6 +323,9 @@ public abstract class ExcelRowUtils {
 		}
 	}
 
+	/**
+	 * @since 0.7.8
+	 */
 	public static void mergeSameCells(Sheet sheet, ExcelMapping mapping) {
 		if (ArrayUtils.isEmpty(mapping.getMergeSameCells())) {
 			return; // 未定义需要合并的单元格

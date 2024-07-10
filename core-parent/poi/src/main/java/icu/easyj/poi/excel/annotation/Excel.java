@@ -77,6 +77,8 @@ public @interface Excel {
 
 	/**
 	 * 相同单元格合并定义
+	 *
+	 * @since 0.7.8
 	 */
 	String[] mergeSameCells() default {};
 

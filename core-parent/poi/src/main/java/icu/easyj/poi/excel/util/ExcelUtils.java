@@ -257,7 +257,7 @@ public abstract class ExcelUtils {
 		if (CollectionUtils.isNotEmpty(dataList)) {
 			// 创建数据行
 			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
-			// 合并单元格
+			// 合并单元格 @since 0.7.8
 			ExcelRowUtils.mergeSameCells(sheet, mapping);
 		}
 
