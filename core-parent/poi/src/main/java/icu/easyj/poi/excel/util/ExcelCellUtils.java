@@ -26,7 +26,6 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.lang.Nullable;
