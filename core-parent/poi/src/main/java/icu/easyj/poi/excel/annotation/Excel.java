@@ -76,6 +76,11 @@ public @interface Excel {
 	ExcelCell[] cells() default {};
 
 	/**
+	 * 相同单元格合并定义
+	 */
+	String[] mergeSameCells() default {};
+
+	/**
 	 * 转换为Excel时的勾子列表
 	 *
 	 * @return hookClasses

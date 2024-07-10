@@ -254,7 +254,12 @@ public abstract class ExcelUtils {
 		// 创建头行
 		ExcelRowUtils.createHeadRow(sheet, mapping);
 		// 创建数据行
-		ExcelRowUtils.createDataRows(sheet, dataList, mapping);
+		if (CollectionUtils.isNotEmpty(dataList)) {
+			// 创建数据行
+			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
+			// 合并单元格
+			ExcelRowUtils.mergeSameCells(sheet, mapping);
+		}
 
 		// 触发勾子：afterCreateDataRows
 		ListToExcelHookTrigger.onAfterCreateDataRows(sheet, mapping);

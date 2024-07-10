@@ -441,4 +441,13 @@ public class ExcelCellMapping implements Serializable {
 		int textLength = icu.easyj.core.util.StringUtils.chineseLength(text);
 		return (int)(textLength * (isBold ? 7.2 : 6.8) * (size / 10)) + 10;
 	}
+
+	@Override
+	public String toString() {
+		return "{" +
+				"headName='" + headName + '\'' +
+				", cellNum=" + cellNum +
+				", column='" + column + '\'' +
+				'}';
+	}
 }

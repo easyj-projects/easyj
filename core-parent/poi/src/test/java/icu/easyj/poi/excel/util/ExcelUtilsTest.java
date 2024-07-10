@@ -39,8 +39,16 @@ public class ExcelUtilsTest {
 		// list to excel
 		List<TestClass> list = new ArrayList<>();
 		list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111", Long.parseLong(Integer.MIN_VALUE + ""), 1.1D, new BigDecimal("1.1")));
+		list.add(new TestClass("aaa", 1, 0, new Date(2020 - 1900, 1 - 1, 1), "desc111", Long.parseLong(Integer.MIN_VALUE + ""), 1.1D, new BigDecimal("1.1")));
 		list.add(new TestClass("bbb", 2, 1, new Date(2019 - 1900, 2 - 1, 2), "desc222", Long.parseLong(Integer.MAX_VALUE + ""), -1.1D, new BigDecimal("-1.1")));
+		list.add(new TestClass("bbb", 2, 2, new Date(2019 - 1900, 2 - 1, 2), "desc222", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
 		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+		list.add(new TestClass("ccc", 3, 2, new Date(2018 - 1900, 3 - 1, 3), "desc333", Long.MIN_VALUE, -Double.MAX_VALUE, new BigDecimal(-Double.MAX_VALUE)));
+		list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
+		list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
+		list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
 		list.add(new TestClass("ddd", 4, 3, new Date(2017 - 1900, 4 - 1, 4), "desc444", Long.MAX_VALUE, Double.MAX_VALUE, new BigDecimal(Double.MAX_VALUE)));
 
 		List<TestClass> list2;

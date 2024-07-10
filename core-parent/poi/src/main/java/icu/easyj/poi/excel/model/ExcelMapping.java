@@ -67,6 +67,12 @@ public class ExcelMapping implements Serializable {
 	private List<ExcelCellMapping> cellMappingList;
 
 	/**
+	 * 相同单元格合并
+	 * 要注意多组合并的字段名不能相同
+	 */
+	private String[] mergeSameCells;
+
+	/**
 	 * 勾子类型列表
 	 */
 	private Class<? extends IListToExcelHook>[] toExcelHookClasses;
@@ -208,6 +214,14 @@ public class ExcelMapping implements Serializable {
 		this.cellMappingList = cellMappingList;
 	}
 
+	public String[] getMergeSameCells() {
+		return mergeSameCells;
+	}
+
+	public void setMergeSameCells(String[] mergeSameCells) {
+		this.mergeSameCells = mergeSameCells;
+	}
+
 	public Class<? extends IListToExcelHook>[] getToExcelHookClasses() {
 		return toExcelHookClasses;
 	}
@@ -232,6 +246,18 @@ public class ExcelMapping implements Serializable {
 	}
 
 	//endregion
+
+	public ExcelCellMapping getCellMappingByFieldName(String fieldName) {
+		for (ExcelCellMapping cellMapping : cellMappingList) {
+			if (cellMapping.getColumn() != null && cellMapping.getColumn().equals(fieldName)) {
+				return cellMapping;
+			}
+			if (cellMapping.getField() != null && cellMapping.getField().getName().equals(fieldName)) {
+				return cellMapping;
+			}
+		}
+		return null;
+	}
 
 
 	//region Static
@@ -265,6 +291,7 @@ public class ExcelMapping implements Serializable {
 				mapping.setFreezeDataCells(anno.freezeDataCells()); // 冻结的数据列的数量，不包含序号列
 				mapping.setNeedFilter(anno.needFilter()); // 是否需要列筛选功能
 				mapping.setToExcelHookClasses(anno.toExcelHookClasses()); // 勾子列表
+				mapping.setMergeSameCells(anno.mergeSameCells());
 			}
 			// 读取列信息列表
 			List<ExcelCellMapping> cellMappingList = ExcelCellMapping.getCellMappingList(clazz, mapping);

@@ -31,7 +31,8 @@ import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 @Excel(
 		toExcelHookClasses = {TestListToExcelHook.class},
 		customFirstRow = @ExcelCustomRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top"),
-		showFooterRow = true
+		showFooterRow = true,
+		mergeSameCells = {"name", "age", "bClass.age"}
 )
 public class TestClass {
 
@@ -136,5 +137,19 @@ public class TestClass {
 
 	public void setTestBigDecimal(BigDecimal testBigDecimal) {
 		this.testBigDecimal = testBigDecimal;
+	}
+
+	@Override
+	public String toString() {
+		return "TestClass{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				", bClass=" + bClass +
+				", birthday=" + birthday +
+				", desc='" + desc + '\'' +
+				", testLong=" + testLong +
+				", testDouble=" + testDouble +
+				", testBigDecimal=" + testBigDecimal +
+				'}';
 	}
 }

@@ -15,14 +15,17 @@
  */
 package icu.easyj.poi.excel.util;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
@@ -314,9 +317,84 @@ public abstract class ExcelRowUtils {
 				try {
 					ExcelCellUtils.setCellValue(cell, data, cellMapping);
 				} catch (Exception e) {
-					LOGGER.error("设置列“" + cellMapping.getHeadName() + "”的信息失败：" + e.getMessage(), e);
+					LOGGER.error("设置列“{}”的信息失败：{}", cellMapping.getHeadName(), e.getMessage(), e);
 				}
 			}
 		}
+	}
+
+	public static void mergeSameCells(Sheet sheet, ExcelMapping mapping) {
+		if (ArrayUtils.isEmpty(mapping.getMergeSameCells())) {
+			return; // 未定义需要合并的单元格
+		}
+
+		String[] mergeFieldNames = mapping.getMergeSameCells();
+		int[] mergeCellNums = getMergeCellNums(mapping, mergeFieldNames);
+
+		// 列号进行排序
+		Arrays.sort(mergeCellNums);
+
+		if (mapping.isNeedNumberCell()) {
+			for (int i = 0; i < mergeCellNums.length; i++) {
+				mergeCellNums[i]++;
+			}
+		}
+
+		int mergeStartRow = -1;
+		int mergeEndRow = -1;
+
+		int startRow = mapping.isNeedHeadRow() ? 3 : 2;
+		for (int i = startRow; i < sheet.getPhysicalNumberOfRows(); i++) {
+			if (isSameCells(sheet.getRow(i - 1), sheet.getRow(i), mergeCellNums)) {
+				if (mergeStartRow == -1) {
+					mergeStartRow = i - 1;
+					mergeEndRow = i;
+				} else {
+					mergeEndRow++;
+				}
+				continue;
+			}
+
+			if (mergeStartRow >= 0) {
+				for (int mergeCellNum : mergeCellNums) {
+					sheet.addMergedRegion(new CellRangeAddress(mergeStartRow, mergeEndRow, mergeCellNum, mergeCellNum));
+				}
+				mergeStartRow = -1;
+				mergeEndRow = -1;
+			}
+		}
+
+		if (mergeStartRow >= 0) {
+			for (int mergeCellNum : mergeCellNums) {
+				sheet.addMergedRegion(new CellRangeAddress(mergeStartRow, mergeEndRow, mergeCellNum, mergeCellNum));
+			}
+		}
+	}
+
+	private static int[] getMergeCellNums(ExcelMapping mapping, String[] mergeFieldNames) {
+		int[] mergeCellNums = new int[mergeFieldNames.length];
+		for (int i = 0; i < mergeFieldNames.length; i++) {
+			String mergeFieldName = mergeFieldNames[i];
+			ExcelCellMapping cellMapping = mapping.getCellMappingByFieldName(mergeFieldName);
+			if (cellMapping == null) {
+				throw new IllegalArgumentException("找不到需要合并单元格的列名：" + mergeFieldName);
+			}
+			mergeCellNums[i] = cellMapping.getCellNum();
+		}
+		return mergeCellNums;
+	}
+
+	private static boolean isSameCells(Row row1, Row row2, int[] cellNums) {
+		for (int cellNum : cellNums) {
+			Cell row1Cell = row1.getCell(cellNum);
+			Cell row2Cell = row2.getCell(cellNum);
+
+			Object value1 = ExcelCellUtils.getCellValue(row1Cell);
+			Object value2 = ExcelCellUtils.getCellValue(row2Cell);
+			if (!Objects.equals(value1, value2)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
