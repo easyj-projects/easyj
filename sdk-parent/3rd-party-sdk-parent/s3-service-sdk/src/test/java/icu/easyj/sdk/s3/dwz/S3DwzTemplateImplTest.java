@@ -19,6 +19,7 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.sdk.dwz.DwzRequest;
 import icu.easyj.sdk.dwz.DwzResponse;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author wangliang181230
  */
+@Disabled("服务失效了，手动测试")
 public class S3DwzTemplateImplTest {
 
 	/**

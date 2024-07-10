@@ -1,0 +1,46 @@
+name: "Test POI"
+
+on:
+  push:
+    branches: [ develop, master, spring-boot_* ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  # job 1
+  test-poi:
+    name: "Test POI"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 8, 11, 17, 21 ]
+        poi: [
+          5.0.0,
+          3.15
+        ]
+    steps:
+      # step 1
+      - name: "Checkout"
+        uses: actions/checkout@v2.4.0
+
+      # step 2
+      - name: "Setup Java JDK"
+        uses: actions/setup-java@v2.5.0
+        with:
+          distribution: 'zulu'
+          java-version: ${{ matrix.java }}
+
+      # step 3
+      - name: "Print maven version"
+        run: |
+          mvn -version
+
+      # step 4
+      - name: "Run Test With Maven"
+        run: |
+          if [ "${{ matrix.java }}" == "8" ]; then
+            mvn clean test -Pcicd8 -Duser.timezone=GMT+0 -Dapache-poi.version=${{ matrix.poi }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+          else
+            mvn clean test -Pcicd  -Duser.timezone=GMT+0 -Dapache-poi.version=${{ matrix.poi }} -e -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn;
+          fi
