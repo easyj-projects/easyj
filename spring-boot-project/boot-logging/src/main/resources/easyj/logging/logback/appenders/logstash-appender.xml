@@ -35,6 +35,12 @@
 					<excludeProvider>net.logstash.logback.composite.loggingevent.TagsJsonProvider</excludeProvider>
 					<excludeProvider>net.logstash.logback.composite.loggingevent.LogstashMarkersJsonProvider</excludeProvider>
 					<excludeProvider>net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider</excludeProvider>
+
+					<!-- zipkin中重复的MDC数据 -->
+					<excludeMdcKeyName>X-B3-TraceId</excludeMdcKeyName>
+					<excludeMdcKeyName>X-B3-SpanId</excludeMdcKeyName>
+					<excludeMdcKeyName>X-B3-ParentSpanId</excludeMdcKeyName>
+					<excludeMdcKeyName>X-Span-Export</excludeMdcKeyName>
 				</encoder>
 			</appender>
 		</then>
