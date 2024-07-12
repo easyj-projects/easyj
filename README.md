@@ -17,7 +17,7 @@
 	<dependencies>
 		<groupId>icu.easyj.boot</groupId>
 		<artifactId>easyj-spring-boot-bom</artifactId>
-		<version>0.7.8</version>
+		<version>0.7.9-SNAPSHOT</version>
 		<type>pom</type>
 		<scope>import</scope>
 	</dependencies>
@@ -50,7 +50,7 @@
 	<dependency>
 		<groupId>icu.easyj</groupId>
 		<artifactId>easyj-all</artifactId>
-		<version>0.7.8</version>
+		<version>0.7.9-SNAPSHOT</version>
 	</dependency>
 </dependencies>
 ```
