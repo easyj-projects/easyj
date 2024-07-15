@@ -356,7 +356,7 @@ public abstract class ExcelRowUtils {
 		int mergeStartRow = -1;
 		int mergeEndRow = -1;
 
-		int startRow = mapping.isNeedHeadRow() ? 3 : 2;
+		int startRow = mapping.isNeedHeadRow() ? 2 : 1;
 		for (int i = startRow; i < sheet.getPhysicalNumberOfRows(); i++) {
 			if (isSameCells(sheet.getRow(i - 1), sheet.getRow(i), mergeCellNums)) {
 				if (mergeStartRow == -1) {
@@ -397,6 +397,14 @@ public abstract class ExcelRowUtils {
 		return mergeCellNums;
 	}
 
+	/**
+	 * 判断两行对应的多列是否完全相同
+	 *
+	 * @param row1     行1
+	 * @param row2     行2
+	 * @param cellNums 列号数组
+	 * @return 是否相同
+	 */
 	private static boolean isSameCells(Row row1, Row row2, int[] cellNums) {
 		for (int cellNum : cellNums) {
 			Cell row1Cell = row1.getCell(cellNum);
