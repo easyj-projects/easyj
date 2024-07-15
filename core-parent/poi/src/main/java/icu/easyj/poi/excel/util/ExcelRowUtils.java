@@ -353,33 +353,32 @@ public abstract class ExcelRowUtils {
 			}
 		}
 
-		int mergeStartRow = -1;
-		int mergeEndRow = -1;
-
-		int startRow = mapping.isNeedHeadRow() ? 2 : 1;
-		for (int i = startRow; i < sheet.getPhysicalNumberOfRows(); i++) {
+		int mergeStartRowNum = -1;
+		int mergeEndRowNum = -1;
+		int startRowNum = mapping.isNeedHeadRow() ? 2 : 1;
+		for (int i = startRowNum; i < sheet.getPhysicalNumberOfRows(); i++) {
 			if (isSameCells(sheet.getRow(i - 1), sheet.getRow(i), mergeCellNums)) {
-				if (mergeStartRow == -1) {
-					mergeStartRow = i - 1;
-					mergeEndRow = i;
+				if (mergeStartRowNum == -1) {
+					mergeStartRowNum = i - 1;
+					mergeEndRowNum = i;
 				} else {
-					mergeEndRow++;
+					mergeEndRowNum++;
 				}
 				continue;
 			}
 
-			if (mergeStartRow >= 0) {
+			if (mergeStartRowNum >= 0) {
 				for (int mergeCellNum : mergeCellNums) {
-					sheet.addMergedRegion(new CellRangeAddress(mergeStartRow, mergeEndRow, mergeCellNum, mergeCellNum));
+					sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, mergeCellNum, mergeCellNum));
 				}
-				mergeStartRow = -1;
-				mergeEndRow = -1;
+				mergeStartRowNum = -1;
+				mergeEndRowNum = -1;
 			}
 		}
 
-		if (mergeStartRow >= 0) {
+		if (mergeStartRowNum >= 0) {
 			for (int mergeCellNum : mergeCellNums) {
-				sheet.addMergedRegion(new CellRangeAddress(mergeStartRow, mergeEndRow, mergeCellNum, mergeCellNum));
+				sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, mergeCellNum, mergeCellNum));
 			}
 		}
 	}
