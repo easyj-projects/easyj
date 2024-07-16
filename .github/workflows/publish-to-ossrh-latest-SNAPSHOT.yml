@@ -35,6 +35,11 @@ jobs:
           mvn -version
 
       # step 4
+      - name: "Install pinentry"
+        run: |
+          sudo apt-get update && sudo apt-get install -y pinentry-curses
+
+      # step 5
       - name: "Publish-To-OSSRH"
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
