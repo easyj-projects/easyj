@@ -201,7 +201,6 @@ public abstract class JSONUtils {
 	 * @throws JSONParseException JSON解析失败
 	 */
 	@NonNull
-	@SuppressWarnings("all")
 	public static String toJSONString(@Nullable Object obj) {
 		if (obj == null) {
 			return "null";

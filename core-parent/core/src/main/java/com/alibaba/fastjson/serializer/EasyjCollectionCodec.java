@@ -79,7 +79,7 @@ public class EasyjCollectionCodec implements ObjectSerializer, ObjectDeserialize
 				Class<?> clazz = item.getClass();
 
 				if (clazz == Integer.class) {
-					out.writeInt(((Integer)item).intValue());
+					out.writeInt((Integer)item);
 					continue;
 				}
 
@@ -108,7 +108,7 @@ public class EasyjCollectionCodec implements ObjectSerializer, ObjectDeserialize
 		}
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({"unchecked"})
 	@Override
 	public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
 		if (parser.lexer.token() == JSONToken.NULL) {
@@ -122,7 +122,7 @@ public class EasyjCollectionCodec implements ObjectSerializer, ObjectDeserialize
 			return (T)array;
 		}
 
-		Collection list = TypeUtils.createCollection(type);
+		Collection<?> list = TypeUtils.createCollection(type);
 
 		Type itemType = TypeUtils.getCollectionItemType(type);
 		parser.parseArray(itemType, list, fieldName);

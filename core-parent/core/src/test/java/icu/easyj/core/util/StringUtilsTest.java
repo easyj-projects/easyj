@@ -396,7 +396,7 @@ public class StringUtilsTest {
 		void test();
 	}
 
-	abstract class TestAbstractClass {
+	abstract static class TestAbstractClass {
 		abstract void test();
 	}
 

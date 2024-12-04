@@ -40,7 +40,7 @@ import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
  */
 public class ReflectionUtilsTest {
 
-	@SuppressWarnings("all")
+	@SuppressWarnings("unused")
 	private static final String STRING = "d";
 
 	//Prevent jvm from optimizing final

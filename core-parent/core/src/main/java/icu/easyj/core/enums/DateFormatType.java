@@ -22,7 +22,6 @@ import icu.easyj.core.constant.DateFormatConstants;
  *
  * @author wangliang181230
  */
-@SuppressWarnings("all")
 public enum DateFormatType {
 
 	MM(DateFormatConstants.MM), // 精确到月，长度：7

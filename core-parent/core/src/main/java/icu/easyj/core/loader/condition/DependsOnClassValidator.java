@@ -41,7 +41,7 @@ public class DependsOnClassValidator implements IDependsOnValidator {
 
 		try {
 			// 在java11及以上版本中，必须访问过一次注解的属性值，才会抛出TypeNotPresentException异常
-			@SuppressWarnings("all")
+			@SuppressWarnings("unused")
 			Class<?>[] dependsOnClasses = dependsOnClass.value();
 		} catch (ArrayStoreException | TypeNotPresentException e) {
 			if (dependsOnClass.strategy() == ValidateStrategy.ALL) {
