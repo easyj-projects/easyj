@@ -21,6 +21,7 @@ import java.util.Date;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.annotation.ExcelCustomRowConfig;
+import icu.easyj.poi.excel.util.hook.MyCellMerger;
 import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 
 /**
@@ -31,18 +32,18 @@ import icu.easyj.poi.excel.util.hook.TestListToExcelHook;
 @Excel(
 		toExcelHookClasses = {TestListToExcelHook.class},
 		customFirstRow = @ExcelCustomRowConfig(fontSize = 20, fontBold = false, rowHeight = 40, align = "left", verAlign = "top"),
-		showFooterRow = true,
-		mergeSameCells = {"name", "age", "bClass.age"}
+		showFooterRow = true
+		//mergeSameCells = {"name", "age", "bClass.age"}
 )
 public class TestClass {
 
-	@ExcelCell(headName = "姓名", cellNum = 0)
+	@ExcelCell(headName = "姓名", cellNum = 0, cellMergerClass = MyCellMerger.class)
 	private String name;
 
-	@ExcelCell(headName = "年龄", cellNum = 1)
+	@ExcelCell(headName = "年龄", cellNum = 1, cellMergerClass = MyCellMerger.class)
 	private Integer age;
 
-	@ExcelCell(headName = "周岁", cellNum = 2, column = "age")
+	@ExcelCell(headName = "周岁", cellNum = 2, column = "age", cellMergerClass = MyCellMerger.class)
 	private TestBClass bClass;
 
 	@ExcelCell(headName = "出生日期", cellNum = 3, format = "yyyy-MM-dd")

@@ -22,6 +22,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import icu.easyj.poi.excel.hook.ICellMerger;
+import icu.easyj.poi.excel.hook.NoneCellMerger;
+
 /**
  * excel表格的列对应属性的注解
  *
@@ -58,6 +61,9 @@ public @interface ExcelCell {
 	// 格式化（应用于Date数据、浮点数据等等的格式化输出）
 	String format() default "";
 
+	// 合并单元格控制器
+	Class<? extends ICellMerger<?>> cellMergerClass() default NoneCellMerger.class;
+
 
 	// 显示效果相关属性
 
@@ -81,4 +87,5 @@ public @interface ExcelCell {
 
 	// 是否隐藏列
 	boolean hidden() default false;
+
 }

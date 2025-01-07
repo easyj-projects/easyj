@@ -30,6 +30,7 @@ import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
 import icu.easyj.poi.excel.annotation.ExcelCell;
 import icu.easyj.poi.excel.annotation.ExcelCells;
+import icu.easyj.poi.excel.hook.ICellMerger;
 import icu.easyj.poi.excel.style.ExcelFormats;
 import icu.easyj.poi.excel.util.ExcelColorUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -68,6 +69,8 @@ public class ExcelCellMapping implements Serializable {
 	private String falseText; // boolean型数据为false时，显示的文字
 	private Map<String, String> convertMap; // 值转换
 	private Map<String, String> convertMap2; // 值反向转换
+	private Class<? extends ICellMerger<?>> cellMergerClass;
+
 
 	//******************************** getter and setter *********************************/
 
@@ -231,6 +234,18 @@ public class ExcelCellMapping implements Serializable {
 		this.convertMap2 = convertMap2;
 	}
 
+	public Class<? extends ICellMerger<?>> getCellMergerClass() {
+		return cellMergerClass;
+	}
+
+	public void setCellMergerClass(Class<? extends ICellMerger<?>> cellMergerClass) {
+		this.cellMergerClass = cellMergerClass;
+	}
+
+	public String getColumnFromFieldOrColumn() {
+		return StringUtils.isNotBlank(column) ? column : field.getName();
+	}
+
 
 	//******************************** static *********************************/
 
@@ -382,6 +397,7 @@ public class ExcelCellMapping implements Serializable {
 			cellMapping.setConvertMap(convertMap);
 			cellMapping.setConvertMap2(convertMap2);
 		}
+		cellMapping.setCellMergerClass(anno.cellMergerClass());
 
 		// 处理映射信息，初始化部分情况的映射内容
 		if (StringUtils.isEmpty(cellMapping.getFormat())) {

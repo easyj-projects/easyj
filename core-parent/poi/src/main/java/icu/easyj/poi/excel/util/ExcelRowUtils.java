@@ -22,6 +22,8 @@ import java.util.Objects;
 import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
+import icu.easyj.poi.excel.hook.ICellMerger;
+import icu.easyj.poi.excel.hook.NoneCellMerger;
 import icu.easyj.poi.excel.model.ExcelCellMapping;
 import icu.easyj.poi.excel.model.ExcelMapping;
 import org.apache.poi.ss.usermodel.Cell;
@@ -336,50 +338,105 @@ public abstract class ExcelRowUtils {
 	/**
 	 * @since 0.7.8
 	 */
-	public static void mergeSameCells(Sheet sheet, ExcelMapping mapping) {
-		if (ArrayUtils.isEmpty(mapping.getMergeSameCells())) {
-			return; // 未定义需要合并的单元格
+	public static void mergeSameCells(Sheet sheet, List<?> dataList, ExcelMapping mapping) {
+		if (dataList.size() < 2) {
+			return;
 		}
 
-		String[] mergeFieldNames = mapping.getMergeSameCells();
-		int[] mergeCellNums = getMergeCellNums(mapping, mergeFieldNames);
+		if (ArrayUtils.isNotEmpty(mapping.getMergeSameCells())) {
+			//region 方案1：指定列合并单元格
 
-		// 列号进行排序
-		Arrays.sort(mergeCellNums);
+			String[] mergeFieldNames = mapping.getMergeSameCells();
+			int[] mergeCellNums = getMergeCellNums(mapping, mergeFieldNames);
 
-		if (mapping.isNeedNumberCell()) {
-			for (int i = 0; i < mergeCellNums.length; i++) {
-				mergeCellNums[i]++;
-			}
-		}
+			// 列号进行排序
+			Arrays.sort(mergeCellNums);
 
-		int mergeStartRowNum = -1;
-		int mergeEndRowNum = -1;
-		int startRowNum = mapping.isNeedHeadRow() ? 2 : 1;
-		for (int i = startRowNum; i < sheet.getPhysicalNumberOfRows(); i++) {
-			if (isSameCells(sheet.getRow(i - 1), sheet.getRow(i), mergeCellNums)) {
-				if (mergeStartRowNum == -1) {
-					mergeStartRowNum = i - 1;
-					mergeEndRowNum = i;
-				} else {
-					mergeEndRowNum++;
+			if (mapping.isNeedNumberCell()) {
+				for (int i = 0; i < mergeCellNums.length; i++) {
+					mergeCellNums[i]++;
 				}
-				continue;
+			}
+
+			int mergeStartRowNum = -1;
+			int mergeEndRowNum = -1;
+			int startRowNum = mapping.isNeedHeadRow() ? 2 : 1;
+			for (int i = startRowNum; i < sheet.getPhysicalNumberOfRows(); i++) {
+				if (isSameCells(sheet.getRow(i - 1), sheet.getRow(i), mergeCellNums)) {
+					if (mergeStartRowNum == -1) {
+						mergeStartRowNum = i - 1;
+						mergeEndRowNum = i;
+					} else {
+						mergeEndRowNum++;
+					}
+					continue;
+				}
+
+				if (mergeStartRowNum >= 0) {
+					for (int mergeCellNum : mergeCellNums) {
+						sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, mergeCellNum, mergeCellNum));
+					}
+					mergeStartRowNum = -1;
+					mergeEndRowNum = -1;
+				}
 			}
 
 			if (mergeStartRowNum >= 0) {
 				for (int mergeCellNum : mergeCellNums) {
 					sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, mergeCellNum, mergeCellNum));
 				}
-				mergeStartRowNum = -1;
-				mergeEndRowNum = -1;
 			}
-		}
 
-		if (mergeStartRowNum >= 0) {
-			for (int mergeCellNum : mergeCellNums) {
-				sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, mergeCellNum, mergeCellNum));
+			//endregion 方案1：指定列合并单元格 end
+		} else {
+			//region 方案2：自定义合并单元格
+
+			for (ExcelCellMapping cellMapping : mapping.getCellMappingList()) {
+				if (cellMapping.getCellMergerClass() == null || cellMapping.getCellMergerClass() == NoneCellMerger.class) {
+					continue;
+				}
+
+				int cellNum = cellMapping.getCellNum() + (mapping.isNeedNumberCell() ? 1 : 0);
+				ICellMerger cellMerger = ReflectionUtils.getSingleton(cellMapping.getCellMergerClass());
+
+				int mergeStartRowNum = -1;
+				int mergeEndRowNum = -1;
+				int startRowNum = mapping.isNeedHeadRow() ? 2 : 1;
+				if (mapping.isNeedHeadRow()) {
+					Integer headRowNum = ExcelUtils.findHeadRowNum(sheet, 0, mapping);
+					if (headRowNum != null) {
+						startRowNum = headRowNum + 2;
+					}
+				}
+
+
+				for (int i = startRowNum; i < sheet.getPhysicalNumberOfRows(); i++) {
+					Object previous = dataList.get(i - startRowNum);
+					Object current = dataList.get(i - startRowNum + 1);
+
+					if (cellMerger.needMerge(cellMapping, previous, current)) {
+						if (mergeStartRowNum == -1) {
+							mergeStartRowNum = i - 1;
+							mergeEndRowNum = i;
+						} else {
+							mergeEndRowNum++;
+						}
+						continue;
+					}
+
+					if (mergeStartRowNum >= 0) {
+						sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, cellNum, cellNum));
+						mergeStartRowNum = -1;
+						mergeEndRowNum = -1;
+					}
+				}
+
+				if (mergeStartRowNum >= 0) {
+					sheet.addMergedRegion(new CellRangeAddress(mergeStartRowNum, mergeEndRowNum, cellNum, cellNum));
+				}
 			}
+
+			//endregion
 		}
 	}
 

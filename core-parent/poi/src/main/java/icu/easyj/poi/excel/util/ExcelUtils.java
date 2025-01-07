@@ -216,7 +216,7 @@ public abstract class ExcelUtils {
 	 * @return 头行号
 	 */
 	@Nullable
-	private static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
+	static Integer findHeadRowNum(Sheet sheet, int firstRowNum, ExcelMapping mapping) {
 		// 只检测前3行
 		int i = 0;
 		while (i < 3) {
@@ -261,7 +261,7 @@ public abstract class ExcelUtils {
 			// 创建数据行
 			ExcelRowUtils.createDataRows(sheet, dataList, mapping);
 			// 合并单元格 @since 0.7.8
-			ExcelRowUtils.mergeSameCells(sheet, mapping);
+			ExcelRowUtils.mergeSameCells(sheet, dataList, mapping);
 		}
 
 		// 触发勾子：afterCreateDataRows

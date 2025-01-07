@@ -49,4 +49,12 @@ public class TestBClass {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+
+	@Override
+	public String toString() {
+		return "TestBClass{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				'}';
+	}
 }
