@@ -49,7 +49,7 @@ public class ServiceInfo<S> {
 		}
 
 		ServiceMark mark = service.getClass().getAnnotation(ServiceMark.class);
-		String code = StringUtils.isNotBlank(mark.code()) ? mark.code() : mark.value();
+		String code = mark.code();
 		if (StringUtils.isBlank(code)) {
 			throw new IllegalArgumentException("service的@ServiceMark.code或@ServiceMark.value不能为空");
 		}

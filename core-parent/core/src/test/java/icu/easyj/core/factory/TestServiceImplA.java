@@ -1,5 +1,5 @@
 package icu.easyj.core.factory;
 
-@ServiceMark(value = "A", isDefault = true)
+@ServiceMark(code = "A", isDefault = true)
 class TestServiceImplA implements ITestService {
 }
