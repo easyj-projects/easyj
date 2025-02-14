@@ -73,6 +73,16 @@ public class ServiceFactory<S> {
 	}
 
 	/**
+	 * 获取默认组
+	 *
+	 * @return 默认实现类
+	 */
+	@Nullable
+	public ServiceGroup<S> getDefaultGroup() {
+		return serviceMap.get(DEFAULT_SERVICE_CODE);
+	}
+
+	/**
 	 * 获取默认实现类
 	 *
 	 * @return 默认实现类
@@ -91,6 +101,15 @@ public class ServiceFactory<S> {
 		return serviceGroup.getFirst();
 	}
 
+	@Nullable
+	public S get(String code, boolean getDefaultIfNull) {
+		S service = get(code);
+		if (service == null && getDefaultIfNull) {
+			service = getDefault();
+		}
+		return service;
+	}
+
 	@Nonnull
 	public List<S> getList(String code) {
 		ServiceGroup<S> serviceGroup = serviceMap.get(code);
@@ -103,6 +122,15 @@ public class ServiceFactory<S> {
 	@Nullable
 	public ServiceGroup<S> getGroup(String code) {
 		return serviceMap.get(code);
+	}
+
+	@Nullable
+	public ServiceGroup<S> getGroup(String code, boolean getDefaultIfNull) {
+		ServiceGroup<S> group = getGroup(code);
+		if (group == null && getDefaultIfNull) {
+			group = getDefaultGroup();
+		}
+		return group;
 	}
 
 
