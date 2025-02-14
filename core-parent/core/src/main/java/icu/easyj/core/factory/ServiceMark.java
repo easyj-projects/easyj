@@ -36,6 +36,7 @@ public @interface ServiceMark {
 
 	/**
 	 * 服务代码（同 code 属性，设置一个即可，两个都设置时，优先读取 code 属性）
+	 * 注：大小写不敏感
 	 *
 	 * @return code 返回服务代码
 	 */
@@ -43,6 +44,7 @@ public @interface ServiceMark {
 
 	/**
 	 * 服务代码（同 value 属性，设置一个即可，两个都设置时，优先读取 code 属性）
+	 * 注：大小写不敏感
 	 *
 	 * @return code 返回服务代码
 	 */

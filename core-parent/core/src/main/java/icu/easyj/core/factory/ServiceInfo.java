@@ -36,7 +36,7 @@ public class ServiceInfo<S> {
 	private final int order;
 
 	private ServiceInfo(String code, boolean isDefault, int order, S service) {
-		this.code = code;
+		this.code = code.toLowerCase(); // 转为小写
 		this.isDefault = isDefault;
 		this.order = order;
 		this.service = service;
@@ -112,7 +112,10 @@ public class ServiceInfo<S> {
 
 	@Override
 	public String toString() {
-		return (isDefault ? "[default] " : "")
-				+ code + " -> " + service.getClass().getName();
+		return (isDefault ? "(default) " : "") + (code + " -> " + service.getClass().getName());
+	}
+
+	public String toStringNoCode() {
+		return (isDefault ? "(default) " : "") + service.getClass().getName();
 	}
 }

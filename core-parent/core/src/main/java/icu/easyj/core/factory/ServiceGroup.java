@@ -52,7 +52,7 @@ public class ServiceGroup<S> {
 			throw new IllegalArgumentException("code 不能为空");
 		}
 
-		this.code = code;
+		this.code = code.toLowerCase();
 		this.sortedServiceList = new ArrayList<>();
 	}
 
@@ -164,21 +164,22 @@ public class ServiceGroup<S> {
 	@Override
 	public String toString() {
 		if (this.sortedServiceList.isEmpty()) {
-			return this.code + "[]";
+			return "{ \"code\": \"" + this.code + "\"}";
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(this.code).append('[');
+		sb.append("{ \"code\": \"").append(this.code).append("\", \"list\": [ ");
+		int length = sb.length();
 
 		for (ServiceInfo<S> serviceInfo : this.sortedServiceList) {
-			if (sb.length() > 0) {
-				sb.append(',');
+			if (sb.length() > length) {
+				sb.append(", ");
 			}
-			sb.append(serviceInfo);
+			sb.append('"').append(isDefaultGroup() ? serviceInfo.toString() : serviceInfo.toStringNoCode()).append('"');
 		}
 
-		sb.append(']');
+		sb.append(" ]}");
 
 		return sb.toString();
 	}

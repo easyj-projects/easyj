@@ -13,28 +13,32 @@ class ServiceFactoryTest {
 	void test() {
 		List<ITestService> serviceList = new ArrayList<>();
 
-		serviceList.add(new TestServiceImplA());
-		serviceList.add(new TestServiceImplB1());
-		serviceList.add(new TestServiceImplB2());
+		ITestService a = new TestServiceImplA();
+		ITestService b1 = new TestServiceImplB1();
+		ITestService b2 = new TestServiceImplB2();
+
+		serviceList.add(a);
+		serviceList.add(b2);
+		serviceList.add(b1);
 
 		ServiceFactory<ITestService> serviceFactory = new ServiceFactory<>(ITestService.class, serviceList);
 
 		// getList
-		List<ITestService> aList = serviceFactory.getList("A");
+		List<ITestService> aList = serviceFactory.getList("a");
 		assertEquals(1, aList.size());
-		List<ITestService> bList = serviceFactory.getList("B");
+		List<ITestService> bList = serviceFactory.getList("b");
 		assertEquals(2, bList.size());
 
 		// default
-		assertEquals(serviceList.get(0), serviceFactory.getDefault());
+		assertEquals(a, serviceFactory.getDefault());
 		// A
-		assertEquals(serviceList.get(0), serviceFactory.get("A"));
-		assertEquals(serviceList.get(0), aList.get(0));
+		assertEquals(a, serviceFactory.get("a"));
+		assertEquals(a, aList.get(0));
 		// B1
-		assertEquals(serviceList.get(1), serviceFactory.get("B"));
-		assertEquals(serviceList.get(1), bList.get(0));
+		assertEquals(b1, serviceFactory.get("b"));
+		assertEquals(b1, bList.get(0));
 		// B2
-		assertEquals(serviceList.get(2), bList.get(1));
+		assertEquals(b2, bList.get(1));
 	}
 
 }

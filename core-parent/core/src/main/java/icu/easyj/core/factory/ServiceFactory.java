@@ -37,7 +37,6 @@ public class ServiceFactory<S> {
 
 	private final Class<S> serviceClass;
 	private final HashMap<String, ServiceGroup<S>> serviceMap = new HashMap<>();
-	private final List<ServiceGroup<S>> serviceList = new ArrayList<>();
 
 
 	public ServiceFactory(Class<S> serviceClass) {
@@ -47,8 +46,9 @@ public class ServiceFactory<S> {
 	public ServiceFactory(Class<S> serviceClass, List<S> serviceList) {
 		this(serviceClass);
 
-		this.addAll(serviceList);
+		this.addServiceList(serviceList);
 	}
+
 
 	/**
 	 * 获取服务类
@@ -94,7 +94,7 @@ public class ServiceFactory<S> {
 
 	@Nullable
 	public S get(String code) {
-		ServiceGroup<S> serviceGroup = serviceMap.get(code);
+		ServiceGroup<S> serviceGroup = serviceMap.get(code.toLowerCase());
 		if (serviceGroup == null) {
 			return null;
 		}
@@ -112,7 +112,7 @@ public class ServiceFactory<S> {
 
 	@Nonnull
 	public List<S> getList(String code) {
-		ServiceGroup<S> serviceGroup = serviceMap.get(code);
+		ServiceGroup<S> serviceGroup = serviceMap.get(code.toLowerCase());
 		if (serviceGroup == null) {
 			return new ArrayList<>();
 		}
@@ -121,7 +121,7 @@ public class ServiceFactory<S> {
 
 	@Nullable
 	public ServiceGroup<S> getGroup(String code) {
-		return serviceMap.get(code);
+		return serviceMap.get(code.toLowerCase());
 	}
 
 	@Nullable
@@ -136,8 +136,12 @@ public class ServiceFactory<S> {
 
 	// add ---------------------------------------------------------------
 
-	public void add(S service) {
+	public void addService(S service) {
 		ServiceInfo<S> serviceInfo = ServiceInfo.of(service);
+		this.addServiceInfo(serviceInfo);
+	}
+
+	public void addServiceInfo(ServiceInfo<S> serviceInfo) {
 		this.serviceMap.computeIfAbsent(serviceInfo.getCode(), ServiceGroup::new).add(serviceInfo);
 
 		if (serviceInfo.isDefault() && !DEFAULT_SERVICE_CODE.equals(serviceInfo.getCode())) {
@@ -145,7 +149,7 @@ public class ServiceFactory<S> {
 		}
 	}
 
-	public void addAll(List<S> serviceList) {
+	public void addServiceList(List<S> serviceList) {
 		if (serviceList == null || serviceList.isEmpty()) {
 			return;
 		}
@@ -163,6 +167,26 @@ public class ServiceFactory<S> {
 		map.forEach((code, serviceInfoList) -> {
 			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code, ServiceGroup::new);
 			group.addAll(serviceInfoList);
+		});
+	}
+
+	public void addServiceInfoList(List<ServiceInfo<S>> serviceInfoList) {
+		if (serviceInfoList == null || serviceInfoList.isEmpty()) {
+			return;
+		}
+
+		HashMap<String, List<ServiceInfo<S>>> map = new HashMap<>();
+		for (ServiceInfo<S> serviceInfo : serviceInfoList) {
+			map.computeIfAbsent(serviceInfo.getCode(), k -> new ArrayList<>()).add(serviceInfo);
+
+			if (serviceInfo.isDefault() && !DEFAULT_SERVICE_CODE.equals(serviceInfo.getCode())) {
+				map.computeIfAbsent(DEFAULT_SERVICE_CODE, k -> new ArrayList<>()).add(serviceInfo);
+			}
+		}
+
+		map.forEach((code, serviceInfoList0) -> {
+			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code, ServiceGroup::new);
+			group.addAll(serviceInfoList0);
 		});
 	}
 
