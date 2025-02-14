@@ -18,7 +18,9 @@ package icu.easyj.core.factory;
 import javax.annotation.Nonnull;
 
 import icu.easyj.core.util.StringUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationConfigurationException;
 
 /**
  * 服务信息
@@ -36,7 +38,7 @@ public class ServiceInfo<S> {
 	private final int order;
 
 	private ServiceInfo(String code, boolean isDefault, int order, S service) {
-		this.code = code.toLowerCase(); // 转为小写
+		this.code = code; // 转为小写
 		this.isDefault = isDefault;
 		this.order = order;
 		this.service = service;
@@ -48,7 +50,13 @@ public class ServiceInfo<S> {
 			throw new IllegalArgumentException("service不能为空");
 		}
 
-		ServiceMark mark = service.getClass().getAnnotation(ServiceMark.class);
+		Class<?> serviceClass = AopUtils.getTargetClass(service);
+
+		ServiceMark mark = serviceClass.getAnnotation(ServiceMark.class);
+		if (mark == null) {
+			throw new AnnotationConfigurationException(serviceClass.getName() + " 未添加注解 @ServiceMark(code = \"xxx\")");
+		}
+
 		String code = mark.code();
 		if (StringUtils.isBlank(code)) {
 			throw new IllegalArgumentException("service的@ServiceMark.code或@ServiceMark.value不能为空");

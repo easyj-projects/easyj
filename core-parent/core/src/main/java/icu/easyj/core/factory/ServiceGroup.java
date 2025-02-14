@@ -17,7 +17,6 @@ package icu.easyj.core.factory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,7 +51,7 @@ public class ServiceGroup<S> {
 			throw new IllegalArgumentException("code 不能为空");
 		}
 
-		this.code = code.toLowerCase();
+		this.code = code;
 		this.sortedServiceList = new ArrayList<>();
 	}
 
@@ -133,7 +132,7 @@ public class ServiceGroup<S> {
 			return;
 		}
 
-		if (!Objects.equals(this.code, serviceInfo.getCode())) {
+		if (!this.code.equalsIgnoreCase(serviceInfo.getCode())) {
 			throw new IllegalArgumentException("serviceInfo 的 code 与 ServiceGroup 的 code 不一致");
 		}
 	}

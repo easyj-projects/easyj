@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.annotation.AnnotationConfigurationException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ServiceFactoryTest {
 
@@ -39,6 +42,9 @@ class ServiceFactoryTest {
 		assertEquals(b1, bList.get(0));
 		// B2
 		assertEquals(b2, bList.get(1));
+		// TestServiceImplNoAnnotation
+		assertNull(serviceFactory.get(TestServiceImplNoAnnotation.class.getSimpleName())); // null
+		assertThrows(AnnotationConfigurationException.class, () -> serviceFactory.addService(new TestServiceImplNoAnnotation())); // throw AnnotationConfigurationException
 	}
 
 }

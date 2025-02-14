@@ -142,7 +142,7 @@ public class ServiceFactory<S> {
 	}
 
 	public void addServiceInfo(ServiceInfo<S> serviceInfo) {
-		this.serviceMap.computeIfAbsent(serviceInfo.getCode(), ServiceGroup::new).add(serviceInfo);
+		this.serviceMap.computeIfAbsent(serviceInfo.getCode().toLowerCase(), ServiceGroup::new).add(serviceInfo);
 
 		if (serviceInfo.isDefault() && !DEFAULT_SERVICE_CODE.equals(serviceInfo.getCode())) {
 			this.serviceMap.computeIfAbsent(DEFAULT_SERVICE_CODE, ServiceGroup::new).add(serviceInfo);
@@ -157,7 +157,7 @@ public class ServiceFactory<S> {
 		HashMap<String, List<ServiceInfo<S>>> map = new HashMap<>();
 		for (S service : serviceList) {
 			ServiceInfo<S> serviceInfo = ServiceInfo.of(service);
-			map.computeIfAbsent(serviceInfo.getCode(), k -> new ArrayList<>()).add(serviceInfo);
+			map.computeIfAbsent(serviceInfo.getCode().toLowerCase(), k -> new ArrayList<>()).add(serviceInfo);
 
 			if (serviceInfo.isDefault() && !DEFAULT_SERVICE_CODE.equals(serviceInfo.getCode())) {
 				map.computeIfAbsent(DEFAULT_SERVICE_CODE, k -> new ArrayList<>()).add(serviceInfo);
@@ -165,7 +165,7 @@ public class ServiceFactory<S> {
 		}
 
 		map.forEach((code, serviceInfoList) -> {
-			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code, ServiceGroup::new);
+			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code.toLowerCase(), ServiceGroup::new);
 			group.addAll(serviceInfoList);
 		});
 	}
@@ -177,7 +177,7 @@ public class ServiceFactory<S> {
 
 		HashMap<String, List<ServiceInfo<S>>> map = new HashMap<>();
 		for (ServiceInfo<S> serviceInfo : serviceInfoList) {
-			map.computeIfAbsent(serviceInfo.getCode(), k -> new ArrayList<>()).add(serviceInfo);
+			map.computeIfAbsent(serviceInfo.getCode().toLowerCase(), k -> new ArrayList<>()).add(serviceInfo);
 
 			if (serviceInfo.isDefault() && !DEFAULT_SERVICE_CODE.equals(serviceInfo.getCode())) {
 				map.computeIfAbsent(DEFAULT_SERVICE_CODE, k -> new ArrayList<>()).add(serviceInfo);
@@ -185,7 +185,7 @@ public class ServiceFactory<S> {
 		}
 
 		map.forEach((code, serviceInfoList0) -> {
-			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code, ServiceGroup::new);
+			ServiceGroup<S> group = this.serviceMap.computeIfAbsent(code.toLowerCase(), ServiceGroup::new);
 			group.addAll(serviceInfoList0);
 		});
 	}
