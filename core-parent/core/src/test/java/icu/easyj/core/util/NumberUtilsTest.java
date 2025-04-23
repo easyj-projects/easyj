@@ -37,6 +37,8 @@ public class NumberUtilsTest {
 	 */
 	@Test
 	public void test_toString() {
+		Assertions.assertEquals("1.0", NumberUtils.doubleToString(1.0D));
+		Assertions.assertEquals("1.0", NumberUtils.doubleToString(1.00D));
 		Assertions.assertEquals("123456789", NumberUtils.doubleToString(123456789D));
 		Assertions.assertEquals("123456789.1", NumberUtils.doubleToString(123456789.1D));
 		Assertions.assertEquals("123456789.12", NumberUtils.doubleToString(123456789.120D));
