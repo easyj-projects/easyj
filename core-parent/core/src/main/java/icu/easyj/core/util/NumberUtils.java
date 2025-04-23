@@ -65,7 +65,12 @@ public abstract class NumberUtils {
 	}
 
 	public static String doubleToString(Double d) {
-		return convertScientificToNormal(d.toString());
+		String doubleStr = d.toString();
+		if (doubleStr.contains("E")) {
+			return convertScientificToNormal(doubleStr);
+		} else {
+			return doubleStr;
+		}
 	}
 
 }
