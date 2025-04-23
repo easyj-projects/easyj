@@ -31,6 +31,9 @@ public abstract class NumberUtils {
 	 */
 	public static String convertScientificToNormal(String scientificNumberStr) {
 		int indexE = scientificNumberStr.toUpperCase().indexOf("E");
+		if (indexE < 0) {
+			return scientificNumberStr;
+		}
 
 		int exponential = Integer.parseInt(scientificNumberStr.substring(indexE + 1));
 
@@ -65,12 +68,7 @@ public abstract class NumberUtils {
 	}
 
 	public static String doubleToString(Double d) {
-		String doubleStr = d.toString();
-		if (doubleStr.contains("E")) {
-			return convertScientificToNormal(doubleStr);
-		} else {
-			return doubleStr;
-		}
+		return convertScientificToNormal(d.toString());
 	}
 
 }

@@ -15,6 +15,8 @@ public class NumberUtilsTest {
 	 */
 	@Test
 	public void test_convertScientificToNormal() {
+		Assertions.assertEquals("123456789", NumberUtils.convertScientificToNormal("123456789"));
+
 		Assertions.assertEquals("123456789", NumberUtils.convertScientificToNormal("1.23456789E8"));
 		Assertions.assertEquals("123456789.1", NumberUtils.convertScientificToNormal("1.234567891E8"));
 		Assertions.assertEquals("123456789.12", NumberUtils.convertScientificToNormal("1.2345678912E8"));
