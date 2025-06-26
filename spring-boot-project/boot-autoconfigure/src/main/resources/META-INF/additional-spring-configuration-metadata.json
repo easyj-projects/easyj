@@ -128,10 +128,34 @@
 			"defaultValue": "${spring.application.name:spring}"
 		},
 		{
+			"name": "easyj.logging.logback.file-appender.max-file-size",
+			"type": "java.lang.String",
+			"description": "[logback] 最大日志文件大小，超过时，将被备份.",
+			"defaultValue": "200MB"
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.total-size-cap",
+			"type": "java.lang.String",
+			"description": "[logback] 日志文件总体大小限制.",
+			"defaultValue": "1GB"
+		},
+		{
 			"name": "easyj.logging.logback.file-appender.all-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用 '*.all.log' 日志文件的记录.",
 			"defaultValue": true
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.all-appender.total-size-cap",
+			"type": "java.lang.String",
+			"description": "[logback] all-appender 日志文件总体大小限制（单独配置）.",
+			"defaultValue": "2GB"
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.all-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] all-appender 日志文件最多保存天数.",
+			"defaultValue": 7
 		},
 		{
 			"name": "easyj.logging.logback.file-appender.trace-appender.enabled",
@@ -140,10 +164,22 @@
 			"defaultValue": false
 		},
 		{
+			"name": "easyj.logging.logback.file-appender.trace-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] trace-appender 日志文件最多保存天数.",
+			"defaultValue": 1
+		},
+		{
 			"name": "easyj.logging.logback.file-appender.debug-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用 '*.debug.log' 日志文件的记录.",
 			"defaultValue": false
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.debug-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] debug-appender 日志文件最多保存天数.",
+			"defaultValue": 3
 		},
 		{
 			"name": "easyj.logging.logback.file-appender.info-appender.enabled",
@@ -152,10 +188,22 @@
 			"defaultValue": false
 		},
 		{
+			"name": "easyj.logging.logback.file-appender.info-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] info-appender 日志文件最多保存天数.",
+			"defaultValue": 7
+		},
+		{
 			"name": "easyj.logging.logback.file-appender.warn-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用 '*.warn.log' 日志文件的记录.",
 			"defaultValue": true
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.warn-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] warn-appender 日志文件最多保存天数.",
+			"defaultValue": 15
 		},
 		{
 			"name": "easyj.logging.logback.file-appender.error-appender.enabled",
@@ -164,10 +212,22 @@
 			"defaultValue": true
 		},
 		{
+			"name": "easyj.logging.logback.file-appender.error-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] error-appender 日志文件最多保存天数.",
+			"defaultValue": 30
+		},
+		{
 			"name": "easyj.logging.logback.file-appender.fatal-appender.enabled",
 			"type": "java.lang.Boolean",
 			"description": "[logback] 是否启用 '*.fatal.log' 日志文件的记录.",
 			"defaultValue": false
+		},
+		{
+			"name": "easyj.logging.logback.file-appender.fatal-appender.max-history",
+			"type": "java.lang.Integer",
+			"description": "[logback] fatal-appender 日志文件最多保存天数.",
+			"defaultValue": 30
 		},
 		{
 			"name": "easyj.logging.logback.file-appender.async.enabled",
