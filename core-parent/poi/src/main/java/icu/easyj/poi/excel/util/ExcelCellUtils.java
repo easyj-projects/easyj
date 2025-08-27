@@ -99,6 +99,10 @@ public abstract class ExcelCellUtils {
 	 * @return cellValue 单元格的值
 	 */
 	public static Object getCellValue(Cell cell) {
+		if (cell == null) {
+			return null;
+		}
+
 		// 获取CellType枚举
 		CellType cellType = getCellType(cell);
 
@@ -136,6 +140,10 @@ public abstract class ExcelCellUtils {
 	 * @return cellValue 单元格的值
 	 */
 	public static Object getCellValue(Cell cell, ExcelCellMapping cellMapping) {
+		if (cell == null) {
+			return null;
+		}
+
 		// 当属性类型为日期时，从cell中直接获取日期值
 		try {
 			if (cellMapping.getField().getType().equals(Date.class)) {
@@ -192,6 +200,10 @@ public abstract class ExcelCellUtils {
 	 * @return cellValue 单元格的值
 	 */
 	public static <T> T getCellValue(Cell cell, Class<T> targetClass) {
+		if (cell == null) {
+			return null;
+		}
+
 		// 当属性类型为日期时，从cell中直接获取日期值
 		if (targetClass.equals(Date.class)) {
 			try {
