@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static icu.easyj.core.util.ArrayUtils.EMPTY_FIELD_ARRAY;
-import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
+import static icu.easyj.core.util.ArrayUtils.EMPTY_OBJECT_ARRAY;
 
 /**
  * {@link ReflectionUtils} 测试类

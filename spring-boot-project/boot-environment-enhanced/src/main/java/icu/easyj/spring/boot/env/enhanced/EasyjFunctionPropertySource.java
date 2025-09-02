@@ -24,6 +24,7 @@ import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.code.analysis.CodeAnalysisUtils;
 import icu.easyj.core.exception.AnalysisException;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.spring.boot.StarterConstants;
 import icu.easyj.spring.boot.env.enhanced.util.ClassPropertyUtils;
@@ -31,7 +32,6 @@ import icu.easyj.spring.boot.env.enhanced.util.CryptoPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.NetPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.RandomPropertyUtils;
 import icu.easyj.spring.boot.env.enhanced.util.TimePropertyUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.env.PropertySource;
 import org.springframework.lang.Nullable;
 

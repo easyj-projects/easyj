@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import icu.easyj.core.exception.AnalysisException;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.PatternUtils;
 import icu.easyj.core.util.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 
 /**

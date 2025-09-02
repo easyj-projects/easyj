@@ -19,8 +19,8 @@ import java.util.Date;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.DateUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

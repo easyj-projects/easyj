@@ -33,14 +33,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.hutool.core.text.StrPool;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
+import static icu.easyj.core.util.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static icu.easyj.core.util.ArrayUtils.EMPTY_FIELD_ARRAY;
-import static org.apache.commons.lang3.ArrayUtils.EMPTY_CLASS_ARRAY;
-import static org.apache.commons.lang3.ArrayUtils.EMPTY_OBJECT_ARRAY;
+import static icu.easyj.core.util.ArrayUtils.EMPTY_OBJECT_ARRAY;
 
 /**
  * 反射工具类

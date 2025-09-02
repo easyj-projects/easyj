@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import icu.easyj.core.executor.Initialize;
 import icu.easyj.core.loader.ExtensionDefinition;
 import icu.easyj.core.loader.factory.IServiceFactory;
-import org.apache.commons.lang3.ArrayUtils;
+import icu.easyj.core.util.ArrayUtils;
 
 /**
  * 服务工厂类 的 默认实现

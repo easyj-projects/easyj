@@ -28,6 +28,7 @@ import org.springframework.lang.NonNull;
  *
  * @author wangliang181230
  */
+@SuppressWarnings("unused")
 public abstract class ArrayUtils {
 
 	//region 由于apache的ArrayUtils中，较新版本才有以下常量。为了兼容低版本，将这些常量也添加在这里
@@ -40,7 +41,20 @@ public abstract class ArrayUtils {
 
 	public static final Type[] EMPTY_TYPE_ARRAY = new Type[0];
 
+	public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
+	public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class[0];
+
+	public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
 	//endregion
+
+	public static int getLength(final Object array) {
+		if (array == null) {
+			return 0;
+		}
+		return Array.getLength(array);
+	}
 
 
 	/**
@@ -54,6 +68,42 @@ public abstract class ArrayUtils {
 		return array == null || array.length == 0;
 	}
 
+	//region 基础数据类型数组的 isEmpty
+
+	public static boolean isEmpty(final boolean[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final byte[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final char[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final double[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final float[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final int[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final long[] array) {
+		return getLength(array) == 0;
+	}
+
+	public static boolean isEmpty(final short[] array) {
+		return getLength(array) == 0;
+	}
+
+	//endregion
+
 	/**
 	 * 是否不为空数组
 	 *
@@ -64,6 +114,42 @@ public abstract class ArrayUtils {
 	public static <T> boolean isNotEmpty(final T[] array) {
 		return !isEmpty(array);
 	}
+
+	//region 基础数据类型数组的 isNotEmpty
+
+	public static boolean isNotEmpty(final boolean[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final byte[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final char[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final double[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final float[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final int[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final long[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(final short[] array) {
+		return !isEmpty(array);
+	}
+
+	//endregion
 
 	/**
 	 * 如果为空，则返回默认值

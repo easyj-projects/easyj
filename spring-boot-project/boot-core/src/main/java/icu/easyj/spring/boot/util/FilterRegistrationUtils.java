@@ -17,10 +17,10 @@ package icu.easyj.spring.boot.util;
 
 import javax.servlet.Filter;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.web.exception.FilterDisabledException;
 import icu.easyj.web.filter.IFilterProperties;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.core.Ordered;
 

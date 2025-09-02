@@ -17,10 +17,10 @@ package icu.easyj.spring.boot.env.enhanced.util;
 
 import icu.easyj.core.code.analysis.CodeAnalysisResult;
 import icu.easyj.core.exception.ConfigurationException;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.crypto.GlobalCrypto;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
-import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;

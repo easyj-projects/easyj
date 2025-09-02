@@ -15,7 +15,7 @@
  */
 package icu.easyj.core.code.analysis;
 
-import org.apache.commons.lang3.ArrayUtils;
+import icu.easyj.core.util.ArrayUtils;
 import org.springframework.lang.NonNull;
 
 /**

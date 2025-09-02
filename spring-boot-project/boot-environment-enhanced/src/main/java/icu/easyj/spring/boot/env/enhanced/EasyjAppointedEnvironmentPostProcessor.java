@@ -21,6 +21,7 @@ import java.util.List;
 
 import icu.easyj.config.EnvironmentConfigs;
 import icu.easyj.core.loader.EnhancedServiceLoader;
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.CollectionUtils;
 import icu.easyj.core.util.ResourceUtils;
 import icu.easyj.core.util.StringUtils;
@@ -29,7 +30,6 @@ import icu.easyj.crypto.GlobalCrypto;
 import icu.easyj.crypto.asymmetric.IAsymmetricCrypto;
 import icu.easyj.crypto.symmetric.ISymmetricCrypto;
 import icu.easyj.spring.boot.util.EnvironmentUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.Ordered;

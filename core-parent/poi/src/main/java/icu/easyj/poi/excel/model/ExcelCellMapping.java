@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.ReflectionUtils;
 import icu.easyj.core.util.StringUtils;
 import icu.easyj.poi.excel.annotation.Excel;
@@ -33,7 +34,6 @@ import icu.easyj.poi.excel.annotation.ExcelCells;
 import icu.easyj.poi.excel.hook.ICellMerger;
 import icu.easyj.poi.excel.style.ExcelFormats;
 import icu.easyj.poi.excel.util.ExcelColorUtils;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * model中的属性和excel表格中的列的映射关系

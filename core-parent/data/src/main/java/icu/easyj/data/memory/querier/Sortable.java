@@ -17,8 +17,8 @@ package icu.easyj.data.memory.querier;
 
 import java.util.List;
 
+import icu.easyj.core.util.ArrayUtils;
 import icu.easyj.core.util.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * 可排序的
